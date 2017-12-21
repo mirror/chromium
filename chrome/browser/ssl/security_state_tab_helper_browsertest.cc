@@ -18,6 +18,7 @@
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/ssl/cert_verifier_browser_test.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
+#include "chrome/browser/ssl/ssl_error_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -46,6 +47,7 @@
 #include "content/public/common/page_type.h"
 #include "content/public/common/referrer.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "net/base/net_errors.h"
 #include "net/cert/cert_status_flags.h"
 #include "net/cert/cert_verify_result.h"
@@ -76,6 +78,36 @@ const base::FilePath::CharType kDocRoot[] =
     FILE_PATH_LITERAL("chrome/test/data");
 
 const char kTestCertificateIssuerName[] = "Test Root CA";
+
+bool AreCommittedInterstitialsEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kCommittedInterstitials);
+}
+
+bool IsShowingInterstitial(content::WebContents* tab) {
+  if (AreCommittedInterstitialsEnabled()) {
+    SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+    if (!helper) {
+      return false;
+    }
+    return helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting() !=
+           nullptr;
+  }
+  return tab->GetInterstitialPage() != nullptr;
+}
+
+// Waits until an interstitial is showing.
+void WaitForInterstitial(content::WebContents* tab) {
+  if (!AreCommittedInterstitialsEnabled()) {
+    content::WaitForInterstitialAttach(tab);
+    ASSERT_TRUE(IsShowingInterstitial(tab));
+    ASSERT_TRUE(
+        WaitForRenderFrameReady(tab->GetInterstitialPage()->GetMainFrame()));
+  } else {
+    ASSERT_TRUE(IsShowingInterstitial(tab));
+    ASSERT_TRUE(WaitForRenderFrameReady(tab->GetMainFrame()));
+  }
+}
 
 // Inject a script into every frame in the page. Used by tests that check for
 // visible password fields to wait for notifications about these
@@ -336,15 +368,24 @@ void CheckSecurityInfoForNonSecure(content::WebContents* contents) {
 }
 
 void ProceedThroughInterstitial(content::WebContents* tab) {
-  content::InterstitialPage* interstitial_page = tab->GetInterstitialPage();
-  ASSERT_TRUE(interstitial_page);
-  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
-            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
-  content::WindowedNotificationObserver observer(
-      content::NOTIFICATION_LOAD_STOP,
-      content::Source<content::NavigationController>(&tab->GetController()));
-  interstitial_page->Proceed();
-  observer.Wait();
+  if (AreCommittedInterstitialsEnabled()) {
+    content::TestNavigationObserver nav_observer(tab, 1);
+    SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+    helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting()
+        ->CommandReceived(
+            base::IntToString(security_interstitials::CMD_PROCEED));
+    nav_observer.Wait();
+  } else {
+    content::InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_TRUE(interstitial_page);
+    ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    content::WindowedNotificationObserver observer(
+        content::NOTIFICATION_LOAD_STOP,
+        content::Source<content::NavigationController>(&tab->GetController()));
+    interstitial_page->Proceed();
+    observer.Wait();
+  }
 }
 
 void GetFilePathWithHostAndPortReplacement(
@@ -365,7 +406,8 @@ GURL GetURLWithNonLocalHostname(net::EmbeddedTestServer* server,
   return server->GetURL(path).ReplaceComponents(replace_host);
 }
 
-class SecurityStateTabHelperTest : public CertVerifierBrowserTest {
+class SecurityStateTabHelperTest : public CertVerifierBrowserTest,
+                                   public testing::WithParamInterface<bool> {
  public:
   SecurityStateTabHelperTest()
       : https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
@@ -383,6 +425,9 @@ class SecurityStateTabHelperTest : public CertVerifierBrowserTest {
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Browser will both run and display insecure content.
     command_line->AppendSwitch(switches::kAllowRunningInsecureContent);
+    if (GetParam()) {
+      command_line->AppendSwitch(switches::kCommittedInterstitials);
+    }
   }
 
  protected:
@@ -447,6 +492,10 @@ class SecurityStateTabHelperTest : public CertVerifierBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(SecurityStateTabHelperTest);
 };
 
+INSTANTIATE_TEST_CASE_P(,
+                        SecurityStateTabHelperTest,
+                        ::testing::Values(false, true));
+
 // Same as SecurityStateTabHelperTest, but with Incognito enabled.
 class SecurityStateTabHelperIncognitoTest : public SecurityStateTabHelperTest {
  public:
@@ -462,7 +511,13 @@ class SecurityStateTabHelperIncognitoTest : public SecurityStateTabHelperTest {
   DISALLOW_COPY_AND_ASSIGN(SecurityStateTabHelperIncognitoTest);
 };
 
-class DidChangeVisibleSecurityStateTest : public InProcessBrowserTest {
+INSTANTIATE_TEST_CASE_P(,
+                        SecurityStateTabHelperIncognitoTest,
+                        ::testing::Values(false, true));
+
+class DidChangeVisibleSecurityStateTest
+    : public InProcessBrowserTest,
+      public testing::WithParamInterface<bool> {
  public:
   DidChangeVisibleSecurityStateTest()
       : https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
@@ -472,6 +527,9 @@ class DidChangeVisibleSecurityStateTest : public InProcessBrowserTest {
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Browser will both run and display insecure content.
     command_line->AppendSwitch(switches::kAllowRunningInsecureContent);
+    if (GetParam()) {
+      command_line->AppendSwitch(switches::kCommittedInterstitials);
+    }
   }
 
   void SetUpOnMainThread() override {
@@ -485,7 +543,11 @@ class DidChangeVisibleSecurityStateTest : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(DidChangeVisibleSecurityStateTest);
 };
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, HttpPage) {
+INSTANTIATE_TEST_CASE_P(,
+                        DidChangeVisibleSecurityStateTest,
+                        ::testing::Values(false, true));
+
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, HttpPage) {
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL("/ssl/google.html"));
   content::WebContents* contents =
@@ -508,7 +570,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, HttpPage) {
   EXPECT_EQ(0, security_info.connection_status);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, HttpsPage) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, HttpsPage) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
   ui_test_utils::NavigateToURL(browser(),
@@ -521,7 +583,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, HttpsPage) {
 
 // Tests that interstitial.ssl.visited_site_after_warning is being logged to
 // correctly.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, UMALogsVisitsAfterWarning) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, UMALogsVisitsAfterWarning) {
   const char kHistogramName[] = "interstitial.ssl.visited_site_after_warning";
   base::HistogramTester histograms;
   SetUpMockCertVerifierForHttpsServer(net::CERT_STATUS_DATE_INVALID,
@@ -539,7 +601,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, UMALogsVisitsAfterWarning) {
 
 // Tests that interstitial.ssl.visited_site_after_warning is not being logged
 // to on errors that do not trigger a full site interstitial.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, UMADoesNotLogOnMinorError) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, UMADoesNotLogOnMinorError) {
   const char kHistogramName[] = "interstitial.ssl.visited_site_after_warning";
   base::HistogramTester histograms;
   SetUpMockCertVerifierForHttpsServer(
@@ -551,7 +613,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, UMADoesNotLogOnMinorError) {
 
 // Test security state after clickthrough for a SHA-1 certificate that is
 // blocked by default.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, SHA1CertificateBlocked) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, SHA1CertificateBlocked) {
   SetUpMockCertVerifierForHttpsServer(
       net::CERT_STATUS_SHA1_SIGNATURE_PRESENT |
           net::CERT_STATUS_WEAK_SIGNATURE_ALGORITHM,
@@ -591,7 +653,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, SHA1CertificateBlocked) {
 }
 
 // Test security state for a SHA-1 certificate that is allowed by policy.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, SHA1CertificateWarning) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, SHA1CertificateWarning) {
   SetUpMockCertVerifierForHttpsServer(net::CERT_STATUS_SHA1_SIGNATURE_PRESENT,
                                       net::OK);
 
@@ -614,7 +676,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, SHA1CertificateWarning) {
             explanation.neutral_explanations[0].summary);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContent) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, MixedContent) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
   net::HostPortPair replacement_pair = embedded_test_server()->host_port_pair();
@@ -690,7 +752,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContent) {
       false, false /* expect cert status error */);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        ActiveContentWithCertErrors) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
@@ -718,7 +780,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
             security_info.content_with_cert_errors_status);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PassiveContentWithCertErrors) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
@@ -746,7 +808,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
             security_info.content_with_cert_errors_status);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        ActiveAndPassiveContentWithCertErrors) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
@@ -778,7 +840,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Same as SecurityStateTabHelperTest.ActiveAndPassiveContentWithCertErrors but
 // with a SHA1 cert.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContentWithSHA1Cert) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, MixedContentWithSHA1Cert) {
   SetUpMockCertVerifierForHttpsServer(net::CERT_STATUS_SHA1_SIGNATURE_PRESENT,
                                       net::OK);
 
@@ -843,7 +905,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContentWithSHA1Cert) {
 
 // Tests that the Content Security Policy block-all-mixed-content
 // directive stops mixed content from running.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContentStrictBlocking) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, MixedContentStrictBlocking) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
   // Navigate to an HTTPS page that tries to run mixed content in an
@@ -863,7 +925,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, MixedContentStrictBlocking) {
       false /* expect cert status error */);
 }
 
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, BrokenHTTPS) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, BrokenHTTPS) {
   SetUpMockCertVerifierForHttpsServer(net::CERT_STATUS_DATE_INVALID,
                                       net::ERR_CERT_DATE_INVALID);
 
@@ -898,7 +960,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, BrokenHTTPS) {
 
 // Tests that the security level of data: URLs is always downgraded to
 // HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        SecurityLevelDowngradedOnDataUrl) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -927,7 +989,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests the security level and malicious content status for password reuse
 // threat type.
-IN_PROC_BROWSER_TEST_F(
+IN_PROC_BROWSER_TEST_P(
     SecurityStateTabHelperTest,
     VerifyPasswordReuseMaliciousContentAndSecurityLevelWhenFeatureEnabled) {
   // Setup https server. This makes sure that the DANGEROUS security level is
@@ -974,7 +1036,7 @@ IN_PROC_BROWSER_TEST_F(
             security_info.malicious_content_status);
 }
 
-IN_PROC_BROWSER_TEST_F(
+IN_PROC_BROWSER_TEST_P(
     SecurityStateTabHelperTest,
     VerifyPasswordReuseMaliciousContentAndSecurityLevelWhenFeatureDisabled) {
   // Setup https server. This makes sure that the DANGEROUS security level is
@@ -1014,7 +1076,7 @@ IN_PROC_BROWSER_TEST_F(
 
 // Tests that the security level of ftp: URLs is always downgraded to
 // HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        SecurityLevelDowngradedOnFtpUrl) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1076,7 +1138,9 @@ class PKPModelClientTest : public SecurityStateTabHelperTest {
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 };
 
-IN_PROC_BROWSER_TEST_F(PKPModelClientTest, PKPBypass) {
+INSTANTIATE_TEST_CASE_P(, PKPModelClientTest, ::testing::Values(false, true));
+
+IN_PROC_BROWSER_TEST_P(PKPModelClientTest, PKPBypass) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   SecurityStyleTestObserver observer(web_contents);
@@ -1106,7 +1170,7 @@ IN_PROC_BROWSER_TEST_F(PKPModelClientTest, PKPBypass) {
   EXPECT_FALSE(explanation.info_explanations.empty());
 }
 
-IN_PROC_BROWSER_TEST_F(PKPModelClientTest, PKPEnforced) {
+IN_PROC_BROWSER_TEST_P(PKPModelClientTest, PKPEnforced) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   SecurityStyleTestObserver observer(web_contents);
@@ -1173,9 +1237,13 @@ class SecurityStateLoadingTest : public SecurityStateTabHelperTest {
   DISALLOW_COPY_AND_ASSIGN(SecurityStateLoadingTest);
 };
 
+INSTANTIATE_TEST_CASE_P(,
+                        SecurityStateLoadingTest,
+                        ::testing::Values(false, true));
+
 // Tests that navigation state changes cause the security state to be
 // updated.
-IN_PROC_BROWSER_TEST_F(SecurityStateLoadingTest, NavigationStateChanges) {
+IN_PROC_BROWSER_TEST_P(SecurityStateLoadingTest, NavigationStateChanges) {
   ASSERT_TRUE(https_server_.Start());
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
@@ -1198,7 +1266,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateLoadingTest, NavigationStateChanges) {
 
 // Tests that when a visible password field is detected on an HTTP page
 // load, the security level is downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelDowngraded) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1223,7 +1291,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that when a visible password field is detected on a blob URL, the
 // security level is downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelDowngradedOnBlobUrl) {
   TestPasswordFieldOnBlobOrFilesystemURL(
       "blob",
@@ -1235,7 +1303,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that when no password field is detected on a blob URL, the security
 // level is not downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        DefaultSecurityLevelOnBlobUrl) {
   TestPasswordFieldOnBlobOrFilesystemURL(
       "blob",
@@ -1247,7 +1315,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Same as PasswordSecurityLevelDowngradedOnBlobUrl, but instead of a blob URL,
 // this creates a filesystem URL.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelDowngradedOnFilesystemUrl) {
   TestPasswordFieldOnBlobOrFilesystemURL(
       "filesystem",
@@ -1269,7 +1337,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Same as DefaultSecurityLevelOnBlobUrl, but instead of a blob URL,
 // this creates a filesystem URL.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        DefaultSecurityLevelOnFilesystemUrl) {
   TestPasswordFieldOnBlobOrFilesystemURL(
       "filesystem",
@@ -1291,7 +1359,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that when an invisible password field is present on an HTTP page load,
 // the security level is *not* downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelNotDowngradedForInvisibleInput) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1317,7 +1385,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that when a visible password field is detected inside an iframe on an
 // HTTP page load, the security level is downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelDowngradedFromIframe) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1344,7 +1412,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 // Tests that when a visible password field is detected inside an iframe on an
 // HTTP page load, the security level is downgraded to HTTP_SHOW_WARNING, even
 // if the iframe itself was loaded over HTTPS.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelDowngradedFromHttpsIframe) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
   content::WebContents* contents =
@@ -1376,7 +1444,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that when a visible password field is detected on an HTTPS page load,
 // the security level is *not* downgraded to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        PasswordSecurityLevelNotDowngradedOnHttps) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
   content::WebContents* contents =
@@ -1406,7 +1474,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that the security level of a HTTP page is downgraded to
 // HTTP_SHOW_WARNING after editing a form field in the relevant configurations.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        SecurityLevelDowngradedAfterEditing) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1541,7 +1609,7 @@ void CheckForOneHttpWarningConsoleMessage(
 // Tests that console messages are printed upon a call to
 // GetSecurityInfo() on an HTTP_SHOW_WARNING page, exactly once per
 // main-frame navigation.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, ConsoleMessage) {
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
   content::WebContents* original_contents =
@@ -1608,7 +1676,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
 
 // Tests that additional HTTP_SHOW_WARNING console messages are not
 // printed after subframe navigations.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        ConsoleMessageNotPrintedForFrameNavigation) {
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
@@ -1691,7 +1759,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that additional HTTP_SHOW_WARNING console messages are not
 // printed after pushState navigations.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        ConsoleMessageNotPrintedForPushStateNavigation) {
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
@@ -1768,7 +1836,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that the security state for a WebContents is up to date when the
 // WebContents is inserted into a Browser's TabStripModel.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, AddedTab) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest, AddedTab) {
   SetUpMockCertVerifierForHttpsServer(0, net::OK);
 
   content::WebContents* tab =
@@ -1796,7 +1864,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, AddedTab) {
 
 // Tests that the WebContentsObserver::DidChangeVisibleSecurityState event fires
 // with the current style on HTTP, broken HTTPS, and valid HTTPS pages.
-IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
+IN_PROC_BROWSER_TEST_P(DidChangeVisibleSecurityStateTest,
                        DidChangeVisibleSecurityStateObserver) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_.Start());
@@ -1863,8 +1931,7 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
 
   // An interstitial should show, and an event for the lock icon on the
   // interstitial should fire.
-  content::WaitForInterstitialAttach(web_contents);
-  EXPECT_TRUE(web_contents->ShowingInterstitialPage());
+  WaitForInterstitial(web_contents);
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_DATE_INVALID, browser(),
                            https_test_server_expired.GetCertificate().get());
   ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
@@ -1904,8 +1971,7 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
   // After going back to the interstitial, an event for a broken lock
   // icon should fire again.
   ui_test_utils::NavigateToURL(browser(), expired_url);
-  content::WaitForInterstitialAttach(web_contents);
-  EXPECT_TRUE(web_contents->ShowingInterstitialPage());
+  WaitForInterstitial(web_contents);
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_DATE_INVALID, browser(),
                            https_test_server_expired.GetCertificate().get());
   ASSERT_EQ(2u, observer.latest_explanations().secure_explanations.size());
@@ -1946,7 +2012,7 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
 
 // Tests that the security level of a HTTP page in Incognito mode is downgraded
 // to HTTP_SHOW_WARNING.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperIncognitoTest,
                        SecurityLevelDowngradedForHTTPInIncognito) {
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
@@ -1999,7 +2065,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 
 // Tests that additional HTTP_SHOW_WARNING console messages are not
 // printed after aborted navigations.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperIncognitoTest,
                        ConsoleMessageNotPrintedForAbortedNavigation) {
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
@@ -2065,7 +2131,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 #define MAYBE_SecurityLevelNotDowngradedForHTTPInGuestMode \
   SecurityLevelNotDowngradedForHTTPInGuestMode
 #endif
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperTest,
                        MAYBE_SecurityLevelNotDowngradedForHTTPInGuestMode) {
   // Create a new browser in Guest Mode.
   EXPECT_EQ(1U, BrowserList::GetInstance()->size());
@@ -2120,7 +2186,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
 // Tests that the security level of a HTTP page is downgraded to DANGEROUS when
 // MarkHttpAsDangerous is enabled.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperIncognitoTest,
                        SecurityLevelDangerousWhenMarkHttpAsDangerous) {
   base::test::ScopedCommandLine scoped_command_line;
   scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
@@ -2161,7 +2227,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 #define MAYBE_DidChangeVisibleSecurityStateObserverGoBack \
   DidChangeVisibleSecurityStateObserverGoBack
 #endif
-IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
+IN_PROC_BROWSER_TEST_P(DidChangeVisibleSecurityStateTest,
                        MAYBE_DidChangeVisibleSecurityStateObserverGoBack) {
   ASSERT_TRUE(https_server_.Start());
 
@@ -2206,8 +2272,7 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
 
   ui_test_utils::NavigateToURL(browser(), https_url_different_host);
 
-  content::WaitForInterstitialAttach(web_contents);
-  EXPECT_TRUE(web_contents->ShowingInterstitialPage());
+  WaitForInterstitial(web_contents);
   CheckBrokenSecurityStyle(observer, net::ERR_CERT_COMMON_NAME_INVALID,
                            browser(),
                            https_test_server_expired.GetCertificate().get());
@@ -2404,7 +2469,7 @@ IN_PROC_BROWSER_TEST_F(
 
 // Tests that the Not Secure chip does not show for error pages on http:// URLs.
 // Regression test for https://crbug.com/760647.
-IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest, HttpErrorPage) {
+IN_PROC_BROWSER_TEST_P(SecurityStateTabHelperIncognitoTest, HttpErrorPage) {
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   SecurityStateTabHelper* helper =
