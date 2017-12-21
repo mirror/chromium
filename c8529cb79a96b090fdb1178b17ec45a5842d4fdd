@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "777a733a_2600ba8e",
+        "filename": "remoting/codec/webrtc_video_encoder_vpx.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-21T18:59:28Z",
+      "side": 1,
+      "message": "There is no \"target quantizer above\" in this file. I think we\u0027d want to move kTargetQuantizerForVp8TopOff and the corresponding top-off login to the encoder.",
+      "range": {
+        "startLine": 49,
+        "startChar": 63,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "c8529cb79a96b090fdb1178b17ec45a5842d4fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
