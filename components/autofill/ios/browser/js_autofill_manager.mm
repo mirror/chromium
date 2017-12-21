@@ -31,10 +31,6 @@
 #pragma mark -
 #pragma mark ProtectedMethods
 
-- (NSString*)scriptPath {
-  return @"autofill_controller";
-}
-
 - (void)fillActiveFormField:(NSString*)dataString
           completionHandler:(ProceduralBlock)completionHandler {
   NSString* script =

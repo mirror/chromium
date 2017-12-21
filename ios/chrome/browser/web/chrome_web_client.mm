@@ -186,6 +186,8 @@ NSString* ChromeWebClient::GetEarlyPageScriptForMainFrame(
   NSMutableArray* scripts = [NSMutableArray array];
   [scripts addObject:GetPageScript(@"chrome_bundle")];
 
+  [scripts addObject:GetPageScript(@"autofill_controller")];
+
   if (base::FeatureList::IsEnabled(features::kCredentialManager)) {
     [scripts addObject:GetPageScript(@"credential_manager")];
   }
