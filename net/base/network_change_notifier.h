@@ -253,6 +253,9 @@ class NET_EXPORT NetworkChangeNotifier {
 
   virtual ~NetworkChangeNotifier();
 
+  // Returns current factory.
+  static NetworkChangeNotifierFactory* GetFactory();
+
   // Replaces the default class factory instance of NetworkChangeNotifier class.
   // The method will take over the ownership of |factory| object.
   static void SetFactory(NetworkChangeNotifierFactory* factory);
