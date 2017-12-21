@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6189fda_7442eb58",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-getStats.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-12-21T09:17:48Z",
+      "side": 1,
+      "message": "will this section be deleted or uncommented before checkin?\nSame below",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "637fff2fb089177fbd2b60438cea0daef38e0294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
