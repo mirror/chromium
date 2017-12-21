@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "d904fdda_bb01b57e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "I\u0027d suggest 0. This is basically a debug functionality. If I wanted to run pipeline to experiment with something, I\u0027d want it to run no matter what, especially in the absence of UI that tells me it won\u0027t run because of so and so...\n\nEven removing this and only checking LimitlessPrefetching bit in the condition below would be enough.",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5308cb_daa551f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "This comment is redundant. It says what the variable name says. Especially if it is renamed to say mLimitlessPrefetchingEnabled.",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65794f3b_54dda048",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "Just need to check mLimitlessPrefetching, no battery...",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48908698_47887709",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskScheduler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "Again, lets go all the way down to 0, it\u0027s a pedal to the metal thing for debugging. Still have a scheduled task though.",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d1efbe_dcb42492",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "It\u0027d be clearer if there was ScheduleTaskLimitless(additionalDelay) in addition to standard scheduleTask(). It would auto-document things without need to pass obscure bools...",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb00013_6d8577d4",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
         "patchSetId": 3
@@ -13,6 +98,23 @@
       "writtenOn": "2017-12-20T01:24:12Z",
       "side": 1,
       "message": "oops, my bad, poor naming in my original changelist. Metered is a concept we apply to WiFi networks, we always assume 2G networks are metered.  So, please remove the word \"Metered\" from the test name.  \n\nAlso, set the /* metered */ input to true, since cell connections are always counted as metered.",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b81084f_524d0c69",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_scheduler_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:29:35Z",
+      "side": 1,
+      "message": "Same here, would be cool to have ScheduleLimitless(additional_delay) instead of passing bool parameters that modify behavior.",
       "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
