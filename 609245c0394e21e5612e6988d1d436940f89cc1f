@@ -52,6 +52,24 @@
       "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbfcd17_364308b5",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-21T21:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a6d025_e7a7ad4a",
+      "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
