@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94187a4e_a82691d9",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T10:57:33Z",
+      "side": 1,
+      "message": "Don\u0027t you want to use a task runner for kInternalIndexedDB?",
+      "revId": "70ad17d7082a6d6379852b2f4a39b6e2acbb933e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
