@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41249d8d_915f96e2",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T02:26:42Z",
+      "side": 1,
+      "message": "SplitStringPiece? Especially since you are no longer passing the split result around.",
+      "range": {
+        "startLine": 229,
+        "startChar": 58,
+        "endLine": 229,
+        "endChar": 69
+      },
+      "revId": "a564fde7dae5ebb57914e6dd0cfafb27c52d523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
