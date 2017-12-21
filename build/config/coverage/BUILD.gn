@@ -10,6 +10,8 @@ config("default_coverage") {
       "-fprofile-instr-generate",
       "-fcoverage-mapping",
       "-fno-use-cxa-atexit",
+      "-mllvm",
+      "-limited-coverage-experimental=true",
     ]
     ldflags = [ "-fprofile-instr-generate" ]
   }
