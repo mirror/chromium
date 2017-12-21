@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x301
+  LayoutBlockFlow {HTML} at (0,0) size 800x300.50
+    LayoutBlockFlow {BODY} at (8,33.50) size 784x233.50 [color=#008000]
+      LayoutBlockFlow {H1} at (0,0) size 784x100 [color=#FF0000]
+        LayoutText {#text} at (0,0) size 700x100
+          text run at (0,0) width 700: "This should be"
+          text run at (0,50) width 700: "red, not green"
+      LayoutBlockFlow {H1} at (0,133.50) size 784x100 [color=#000080]
+        LayoutText {#text} at (0,0) size 750x100
+          text run at (0,0) width 700: "This should be"
+          text run at (0,50) width 750: "blue, not green"
