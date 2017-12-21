@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce0ffc6_20bb89f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:31:07Z",
+      "side": 1,
+      "message": "1) Is there a bug to reference?\n2) Can you write a small blurb about in the commit message about what this is doing?",
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d4cb0c_bf5b7a82",
+        "filename": "build/linux/unbundle/harfbuzz-ng.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:31:07Z",
+      "side": 1,
+      "message": "Can we reference third_party/harfbuzz-ng/README.chromium so readers know what \"new enough\" is?",
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573519f2_0baabd93",
+        "filename": "build/linux/unbundle/harfbuzz-ng.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:31:07Z",
+      "side": 1,
+      "message": "s/,/./",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
