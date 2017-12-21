@@ -16,6 +16,24 @@
       "revId": "60f7448cb59db06de63273a4f2a34226c1ebe289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f808a4e6_c416f5e4",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-21T11:06:31Z",
+      "side": 1,
+      "message": "Yes, but the CL to introduce new task types is still under review. I plan to replace all unappropriated task type like kUnthrottled later.",
+      "parentUuid": "3bc5cce6_52b92e2c",
+      "revId": "60f7448cb59db06de63273a4f2a34226c1ebe289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
