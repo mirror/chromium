@@ -95,6 +95,10 @@ class PreviewsIOData : public PreviewsDecider,
   // PreviewsBlackList to |ignored|. Virtualized in testing.
   virtual void SetIgnorePreviewsBlacklistDecision(bool ignored);
 
+  // Reset the status of whether to ignore the decisions made by
+  // PreviewsBlackList to |ignored|. Virtualized in testing.
+  virtual void UnsetIgnorePreviewsBlacklistDecision();
+
   // The previews black list that decides whether a navigation can use previews.
   PreviewsBlackList* black_list() const { return previews_black_list_.get(); }
 
