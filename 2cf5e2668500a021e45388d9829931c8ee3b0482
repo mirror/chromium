@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c632b434_5c3c5760",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a2c76bd4_1cdb9ca7",
+      "revId": "2cf5e2668500a021e45388d9829931c8ee3b0482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61524017_b660765a",
         "filename": "content/renderer/loader/resource_dispatcher.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "2cf5e2668500a021e45388d9829931c8ee3b0482",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e35c8a_ac918c4d",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 0,
+      "message": "According to the comments, with this feature some timestamps are recorded in the IO thread in order to avoid the effect of main thread tasks. I\u0027m not sure how it\u0027s useful, but it\u0027s not working with LoadingWithMojo and no one has complained so far...",
+      "parentUuid": "61524017_b660765a",
+      "revId": "2cf5e2668500a021e45388d9829931c8ee3b0482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a9545d8_ccb4b10c",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf4bb6fd_3b03a0f2",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b23939_01238e16",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247c04da_7262a2c1",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b23939_01238e16",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e281564d_e2ebb75a",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "64da17f9_790c2d6b",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb5ff74_f3bd3e52",
         "filename": "content/browser/loader/resource_message_filter.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7609ff87_8999c66f",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Conceptually no. We may be able to refactor this class further in the future. Until then we need this empty implementation as this function is declared as pure virtual in the parent class.",
+      "parentUuid": "5eb5ff74_f3bd3e52",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f3fdb686_7b78f3c5",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Done (I thought git cl format would do the work...)",
+      "parentUuid": "08d57a26_d9f700aa",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90740bd6_1bda0d3d",
         "filename": "content/renderer/loader/resource_dispatcher_unittest.cc",
         "patchSetId": 12
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "373c93f0_c444af78",
+        "filename": "content/renderer/loader/resource_dispatcher_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90740bd6_1bda0d3d",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99264560_d0efc2a7",
         "filename": "content/renderer/loader/url_response_body_consumer_unittest.cc",
         "patchSetId": 12
@@ -118,6 +226,24 @@
       "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccabd36_a0f3021e",
+        "filename": "content/renderer/loader/url_response_body_consumer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T01:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99264560_d0efc2a7",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
