@@ -630,6 +630,46 @@ TEST(IncrementalMarkingTest, HeapHashSetStrongWeakPair) {
   }
 }
 
+// =============================================================================
+// HeapHashMap support. ========================================================
+// =============================================================================
+
+TEST(IncrementalMarkingTest, HeapHashMapInsertMember) {
+  Object* obj1 = Object::Create();
+  Object* obj2 = Object::Create();
+  HeapHashMap<Member<Object>, Member<Object>> map;
+  {
+    ExpectWriteBarrierFires<Object> scope(ThreadState::Current(), {obj1, obj2});
+    map.insert(obj1, obj2);
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapHashMapSetMember) {
+  Object* obj1 = Object::Create();
+  Object* obj2 = Object::Create();
+  HeapHashMap<Member<Object>, Member<Object>> map;
+  {
+    ExpectWriteBarrierFires<Object> scope(ThreadState::Current(), {obj1, obj2});
+    map.Set(obj1, obj2);
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapHashMapSetMemberOnlyValue) {
+  Object* obj1 = Object::Create();
+  Object* obj2 = Object::Create();
+  Object* obj3 = Object::Create();
+  HeapHashMap<Member<Object>, Member<Object>> map;
+  map.insert(obj1, obj2);
+  {
+    // Only |obj3| is newly added to |map|, so we only expect the barrier to
+    // fire on this one.
+    ExpectWriteBarrierFires<Object> scope(ThreadState::Current(), {obj3});
+    map.Set(obj1, obj3);
+    EXPECT_FALSE(HeapObjectHeader::FromPayload(obj1)->IsMarked());
+    EXPECT_FALSE(HeapObjectHeader::FromPayload(obj2)->IsMarked());
+  }
+}
+
 }  // namespace incremental_marking_test
 }  // namespace blink
 
