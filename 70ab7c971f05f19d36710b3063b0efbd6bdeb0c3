@@ -19,6 +19,64 @@
     },
     {
       "key": {
+        "uuid": "353cbce8_328790b6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-21T18:44:10Z",
+      "side": 1,
+      "message": "It\u0027s always set before being read though so that\u0027s fine.",
+      "parentUuid": "ba597886_2b5735d0",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd99c553_e9e20dd3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-21T18:44:10Z",
+      "side": 1,
+      "message": "Use a static_cast instead.\n\nWe might also want to consider changing line_count and friends to unsigned or would that not work?",
+      "range": {
+        "startLine": 1289,
+        "startChar": 41,
+        "endLine": 1289,
+        "endChar": 44
+      },
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e570b89a_485443f4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-21T18:44:10Z",
+      "side": 1,
+      "message": "Can first_overflowing_line_ ever be more than line_count?",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76dbea1c_43fc5853",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
         "patchSetId": 2
@@ -36,6 +94,40 @@
         "endLine": 211,
         "endChar": 10
       },
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de60f765_d7dfd54f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-21T18:44:10Z",
+      "side": 1,
+      "message": "This won\u0027t work if there are no children as i would be -1 in that case which isn\u0027t a valid index.",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab31144_63b2d458",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-21T18:44:10Z",
+      "side": 1,
+      "message": "How about making this (and line_number) unsigned?",
       "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
