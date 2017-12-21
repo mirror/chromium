@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c1449bb_50954559",
+        "filename": "chrome/browser/loader/chrome_navigation_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-21T09:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2ed8c80_a8417aee",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd157421_3142d9f3",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.cc",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d02872_8a52e235",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-21T09:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd157421_3142d9f3",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bcf23d07_a2a75f3a",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-21T09:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceccdad7_22343d9c",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52f015fb_63e6436c",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h",
         "patchSetId": 12
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-20T17:58:14Z",
       "side": 1,
       "message": "When you rebase, make sure you add support for bool lofi_policy_received_",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0331b814_cc9f5459",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-21T09:49:55Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "52f015fb_63e6436c",
       "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
