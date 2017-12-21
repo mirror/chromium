@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "f0c6a729_7fe98459",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:13:52Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with the content layer - at the extensions layer, we track context validity separately (by listening to DidCreate/WillRelease ScriptContext).\n\nI don\u0027t feel strongly here (since I\u0027m not familiar with what the norm - if any - would be) - Jeremy, do you have a preference/opinion?",
+      "parentUuid": "f2bf78f9_663d0dc8",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a330c1_0468863f",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 7
