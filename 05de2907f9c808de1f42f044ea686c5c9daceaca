@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "f23b6e96_b6d7dd61",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-21T05:30:14Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/content/public/renderer/render_view.h?q\u003drenderview\u0026sq\u003dpackage:chromium\u0026l\u003d114 - that method is only available on Android, which is why you have a build error, and why I suggested only adding the interface on Android (then the compile should work).\n\nUsing the WebView version appears to be a change in how the code works, so I\u0027m pretty hesitant about it. This should do exactly what the previous version did, which is call the method on RenderView.\n\nPut another way: none of this code is compiled on desktop prior to this patch, so retaining that property would be nice.",
+      "parentUuid": "3292554f_d5cba185",
+      "range": {
+        "startLine": 480,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 47
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "818fbb59_1db96213",
         "filename": "chrome/renderer/chrome_render_frame_observer.h",
         "patchSetId": 3
@@ -390,6 +414,30 @@
       "side": 1,
       "message": "We can add conditional flag once \"EnabledIf\" attribute is supported in mojom files. See https://crbug.com/676224\n\nDo you want me to create new mojom file? or continue similar to below change\nhttps://codereview.chromium.org/2477283002/",
       "parentUuid": "3c8358b3_36664793",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36802f0_0ba9b20d",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-21T05:30:14Z",
+      "side": 1,
+      "message": "If the conditional flag works and compiles properly, then you could use that.\n\nThe main point is that to call RenderView::UpdateBrowserControlsState, everything leading to it must only be compiled on Android since that method is #if\u0027d out on all other platforms.",
+      "parentUuid": "bde028e1_0751bbda",
       "range": {
         "startLine": 79,
         "startChar": 7,
