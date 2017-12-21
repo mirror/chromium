@@ -41,10 +41,6 @@ bool SimpleDataProducer::WriteStreamData(QuicStreamId id,
 void SimpleDataProducer::OnStreamFrameAcked(
     const QuicStreamFrame& frame,
     QuicTime::Delta /*ack_delay_time*/) {
-  OnStreamFrameDiscarded(frame);
-}
-
-void SimpleDataProducer::OnStreamFrameDiscarded(const QuicStreamFrame& frame) {
   if (!QuicContainsKey(send_buffer_map_, frame.stream_id)) {
     return;
   }

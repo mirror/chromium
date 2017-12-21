@@ -211,13 +211,6 @@ class QUIC_EXPORT_PRIVATE QuicStream {
                                           QuicByteCount data_length,
                                           bool fin_retransmitted);
 
-  // Called when data [offset, offset + data_length) gets discarded because
-  // stream is cancelled. |fin_discarded| indicates whether the fin is
-  // discarded.
-  void OnStreamFrameDiscarded(QuicStreamOffset offset,
-                              QuicByteCount data_length,
-                              bool fin_discarded);
-
   // Called when data [offset, offset + data_length) is considered as lost.
   // |fin_lost| inidacates whether the fin is considered as lost.
   void OnStreamFrameLost(QuicStreamOffset offset,
@@ -402,10 +395,6 @@ class QUIC_EXPORT_PRIVATE QuicStream {
 
   // Latched value of FLAGS_quic_buffered_data_threshold.
   const QuicByteCount buffered_data_threshold_;
-
-  // Latched value of
-  // FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded.
-  const bool remove_on_stream_frame_discarded_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicStream);
 };

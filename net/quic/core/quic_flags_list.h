@@ -131,12 +131,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window,
           true)
 
-// If true, OnStreamFrameDiscarded is not called on stream cancellation, and
-// canceled stream is immediately closed.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded,
-          true)
-
 // Explicitly send a connection close if the TLP count is greater than 0 when
 // idle timeout occurs.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, true)

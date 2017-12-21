@@ -126,7 +126,6 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   void OnStreamFrameAcked(const QuicStreamFrame& frame,
                           QuicTime::Delta ack_delay_time) override;
   void OnStreamFrameRetransmitted(const QuicStreamFrame& frame) override;
-  void OnStreamFrameDiscarded(const QuicStreamFrame& frame) override;
 
   // TODO(fayang): Add this function to StreamNotifierInterface.
   void OnStreamFrameLost(const QuicStreamFrame& frame);

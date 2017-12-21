@@ -1490,9 +1490,6 @@ TEST_P(QuicSessionTestServer, OnStreamFrameLost) {
 }
 
 TEST_P(QuicSessionTestServer, DonotRetransmitDataOfClosedStreams) {
-  if (!FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded) {
-    return;
-  }
   InSequence s;
 
   TestStream* stream2 = session_.CreateOutgoingDynamicStream();

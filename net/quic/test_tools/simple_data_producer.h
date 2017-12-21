@@ -40,7 +40,6 @@ class SimpleDataProducer : public QuicStreamFrameDataProducer,
   void OnStreamFrameAcked(const QuicStreamFrame& frame,
                           QuicTime::Delta ack_delay_time) override;
   void OnStreamFrameRetransmitted(const QuicStreamFrame& frame) override {}
-  void OnStreamFrameDiscarded(const QuicStreamFrame& frame) override;
 
  private:
   using SendBufferMap =

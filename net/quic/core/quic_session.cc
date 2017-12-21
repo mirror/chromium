@@ -1007,22 +1007,6 @@ void QuicSession::OnStreamFrameRetransmitted(const QuicStreamFrame& frame) {
                                      frame.fin);
 }
 
-void QuicSession::OnStreamFrameDiscarded(const QuicStreamFrame& frame) {
-  QuicStream* stream = GetStream(frame.stream_id);
-  if (stream == nullptr) {
-    QUIC_BUG << "Stream: " << frame.stream_id << " is closed when " << frame
-             << " is discarded.";
-    connection()->CloseConnection(
-        QUIC_INTERNAL_ERROR, "Attempt to discard frame of a closed stream",
-        ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
-    return;
-  }
-  stream->OnStreamFrameDiscarded(frame.offset, frame.data_length, frame.fin);
-  if (!stream->HasPendingRetransmission()) {
-    streams_with_pending_retransmission_.erase(stream->id());
-  }
-}
-
 void QuicSession::OnStreamFrameLost(const QuicStreamFrame& frame) {
   QuicStream* stream = GetStream(frame.stream_id);
   if (stream == nullptr) {

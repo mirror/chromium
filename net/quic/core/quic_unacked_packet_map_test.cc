@@ -22,7 +22,6 @@ class MockStreamNotifier : public StreamNotifierInterface {
   MOCK_METHOD2(OnStreamFrameAcked,
                void(const QuicStreamFrame&, QuicTime::Delta));
   MOCK_METHOD1(OnStreamFrameRetransmitted, void(const QuicStreamFrame&));
-  MOCK_METHOD1(OnStreamFrameDiscarded, void(const QuicStreamFrame&));
 };
 
 class QuicUnackedPacketMapTest : public QuicTest {
@@ -173,7 +172,6 @@ TEST_F(QuicUnackedPacketMapTest, StopRetransmission) {
   VerifyRetransmittablePackets(retransmittable,
                                QUIC_ARRAYSIZE(retransmittable));
 
-  EXPECT_CALL(notifier_, OnStreamFrameDiscarded(_)).Times(1);
   unacked_packets_.CancelRetransmissionsForStream(stream_id);
   VerifyUnackedPackets(unacked, QUIC_ARRAYSIZE(unacked));
   VerifyInFlightPackets(unacked, QUIC_ARRAYSIZE(unacked));
@@ -193,7 +191,6 @@ TEST_F(QuicUnackedPacketMapTest, StopRetransmissionOnOtherStream) {
                                QUIC_ARRAYSIZE(retransmittable));
 
   // Stop retransmissions on another stream and verify the packet is unchanged.
-  EXPECT_CALL(notifier_, OnStreamFrameDiscarded(_)).Times(0);
   unacked_packets_.CancelRetransmissionsForStream(stream_id + 2);
   VerifyUnackedPackets(unacked, QUIC_ARRAYSIZE(unacked));
   VerifyInFlightPackets(unacked, QUIC_ARRAYSIZE(unacked));
@@ -215,7 +212,6 @@ TEST_F(QuicUnackedPacketMapTest, StopRetransmissionAfterRetransmission) {
   VerifyRetransmittablePackets(retransmittable,
                                QUIC_ARRAYSIZE(retransmittable));
 
-  EXPECT_CALL(notifier_, OnStreamFrameDiscarded(_)).Times(1);
   unacked_packets_.CancelRetransmissionsForStream(stream_id);
   VerifyUnackedPackets(unacked, QUIC_ARRAYSIZE(unacked));
   VerifyInFlightPackets(unacked, QUIC_ARRAYSIZE(unacked));

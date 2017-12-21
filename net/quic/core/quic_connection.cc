@@ -1221,10 +1221,7 @@ void QuicConnection::SendRstStream(QuicStreamId id,
     return;
   }
   // Flush stream frames of reset stream.
-  if (GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded) &&
-      packet_generator_.HasPendingStreamFramesOfStream(id)) {
-    QUIC_FLAG_COUNT_N(
-        quic_reloadable_flag_quic_remove_on_stream_frame_discarded, 2, 2);
+  if (packet_generator_.HasPendingStreamFramesOfStream(id)) {
     packet_generator_.FlushAllQueuedFrames();
   }
 
