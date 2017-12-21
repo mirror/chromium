@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d199f3d_ac717977",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T01:46:44Z",
+      "side": 1,
+      "message": "Using a fake world looks more wrong... :/\n\nWould you help me understand why dom_window-\u003eaddEventListener() requires a v8::Context? It looks strange because Attach() is called during DOM node mutations, which may happen regardless of whether V8 is running or not.",
+      "revId": "f66df8b87cf32a683c5d70a5cdc2825f9e45e03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
