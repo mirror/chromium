@@ -777,11 +777,19 @@ void NGLineBreaker::TruncateOverflowingText(NGLineInfo* line_info) {
   item_index_ = saved_item_index;
   offset_ = saved_offset;
 
+  scoped_refptr<const ComputedStyle> style = line_info->LineStyle();
+  if (style = > GetTextDecoration() != TextDecoration::kNone) {
+    scoped_refptr<ComputedStyle> ellipsis_style =
+        ComputedStyle::CreateAnonymousStyleWithDisplay(style,
+                                                       EDisplay::kInline);
+    ellipsis_style->ResetTextDecoration();
+    style = std::move(ellipsis_style);
+  }
+
   // The ellipsis should appear at the logical end of the line.
   // This is stored seprately from other results so that it can be appended
   // after bidi reorder.
-  line_info->SetLineEndShapeResult(std::move(shape_result),
-                                   &line_info->LineStyle());
+  line_info->SetLineEndShapeResult(std::move(shape_result), style);
 }
 
 void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
