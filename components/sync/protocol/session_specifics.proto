@@ -145,7 +145,7 @@ message TabNavigation {
   // The last URL traversed when different from the virtual_url.
   optional string last_navigation_redirect_url = 24;
   // Correct referrer policy. Valid enums are defined in
-  // third_party/WebKit/public/platform/WebReferrerPolicy.h.
+  // services/network/public/cpp/referrer_policy.h.
   optional int32 correct_referrer_policy = 25 [default = 1];
 
   enum PasswordState {

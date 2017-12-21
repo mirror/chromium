@@ -37,11 +37,11 @@
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebReferrerPolicy.h"
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/WebTouchAction.h"
 #include "public/web/WebMeaningfulLayout.h"
 #include "public/web/WebTextDirection.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace blink {
 

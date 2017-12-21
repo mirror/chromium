@@ -35,11 +35,11 @@
 #include "public/platform/WebMenuSourceType.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
-#include "public/platform/WebReferrerPolicy.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/WebVector.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 #define WEBCONTEXT_MEDIATYPEFILE_DEFINED
 

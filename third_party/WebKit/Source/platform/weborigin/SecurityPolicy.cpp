@@ -41,7 +41,7 @@
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/ParsingUtilities.h"
 #include "platform/wtf/text/StringHash.h"
-#include "public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace blink {
 

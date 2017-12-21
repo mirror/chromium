@@ -33,9 +33,9 @@
 
 #include "WebCommon.h"
 #include "WebPrivatePtr.h"
-#include "WebReferrerPolicy.h"
 #include "WebString.h"
 #include "WebURL.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace blink {
 

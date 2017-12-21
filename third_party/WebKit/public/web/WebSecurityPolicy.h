@@ -32,7 +32,7 @@
 #define WebSecurityPolicy_h
 
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace blink {
 

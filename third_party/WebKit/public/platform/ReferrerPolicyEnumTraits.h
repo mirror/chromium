@@ -7,7 +7,7 @@
 
 #include "base/logging.h"
 #include "mojo/public/cpp/bindings/enum_traits.h"
-#include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "third_party/WebKit/public/platform/referrer.mojom-shared.h"
 
 namespace mojo {

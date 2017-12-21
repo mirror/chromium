@@ -8,11 +8,11 @@
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebPrivatePtr.h"
-#include "public/platform/WebReferrerPolicy.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"
 
 #if INSIDE_BLINK

@@ -3,7 +3,7 @@
 # found in the LICENSE file.
 
 mojom = "//third_party/WebKit/public/platform/referrer.mojom"
-public_headers = [ "//third_party/WebKit/public/platform/WebReferrerPolicy.h" ]
+public_headers = [ "//services/network/public/cpp/referrer_policy.h" ]
 traits_headers =
     [ "//third_party/WebKit/public/platform/ReferrerPolicyEnumTraits.h" ]
 type_mappings = [ "blink.mojom.ReferrerPolicy=::blink::WebReferrerPolicy" ]

@@ -8,7 +8,7 @@
 #include "base/logging.h"
 #include "content/common/content_export.h"
 #include "net/url_request/url_request.h"
-#include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "url/gurl.h"
 
 namespace content {

@@ -35,9 +35,9 @@
 #include "WebFrame.h"
 #include "WebNode.h"
 #include "public/platform/WebColor.h"
-#include "public/platform/WebReferrerPolicy.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebVector.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace v8 {
 class Value;

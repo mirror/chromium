@@ -15,7 +15,7 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/common/menu_item.h"
-#include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "third_party/WebKit/public/web/WebContextMenuData.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/gfx/geometry/rect.h"

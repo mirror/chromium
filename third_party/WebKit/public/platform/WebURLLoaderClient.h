@@ -34,8 +34,8 @@
 #include <memory>
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebDataConsumerHandle.h"
-#include "public/platform/WebReferrerPolicy.h"
 #include "public/platform/WebURLRequest.h"
+#include "services/network/public/cpp/referrer_policy.h"
 
 namespace blink {
 

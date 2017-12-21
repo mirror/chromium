@@ -34,8 +34,8 @@
 #include <memory>
 #include "WebCommon.h"
 #include "WebHTTPBody.h"
-#include "WebReferrerPolicy.h"
 #include "WebSecurityOrigin.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "services/network/public/interfaces/cors.mojom-shared.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 #include "services/network/public/interfaces/request_context_frame_type.mojom-shared.h"

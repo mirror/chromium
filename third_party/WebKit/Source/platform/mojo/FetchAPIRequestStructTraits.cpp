@@ -10,7 +10,7 @@
 #include "platform/mojo/KURLStructTraits.h"
 #include "platform/mojo/ReferrerStructTraits.h"
 #include "platform/weborigin/Referrer.h"
-#include "public/platform/WebReferrerPolicy.h"
+#include "services/network/public/cpp/referrer_policy.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace mojo {
