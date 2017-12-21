@@ -25,6 +25,7 @@
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
@@ -155,9 +156,10 @@ class CacheWithRequestsCallbacks
       return;
     ScriptState::Scope scope(resolver_->GetScriptState());
     HeapVector<Member<Request>> requests;
-    for (size_t i = 0; i < web_requests.size(); ++i)
-      requests.push_back(
-          Request::Create(resolver_->GetScriptState(), web_requests[i]));
+    for (size_t i = 0; i < web_requests.size(); ++i) {
+      requests.push_back(ServiceWorkerNetworkUtils::ToRequest(
+          resolver_->GetScriptState(), web_requests[i]));
+    }
     resolver_->Resolve(requests);
     resolver_.Clear();
   }
@@ -369,7 +371,8 @@ class Cache::BlobHandleCallbackForPut final
                            Request* request,
                            Response* response)
       : index_(index), barrier_callback_(barrier_callback) {
-    request->PopulateWebServiceWorkerRequest(web_request_);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                               web_request_);
     response->PopulateWebServiceWorkerResponse(web_response_);
   }
   ~BlobHandleCallbackForPut() override {}
@@ -416,7 +419,8 @@ class Cache::CodeCacheHandleCallbackForPut final
         index_(index),
         barrier_callback_(barrier_callback),
         mime_type_(response->InternalMIMEType()) {
-    request->PopulateWebServiceWorkerRequest(web_request_);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                               web_request_);
     response->PopulateWebServiceWorkerResponse(web_response_);
   }
   ~CodeCacheHandleCallbackForPut() override {}
@@ -629,7 +633,8 @@ ScriptPromise Cache::MatchImpl(ScriptState* script_state,
                                const Request* request,
                                const CacheQueryOptions& options) {
   WebServiceWorkerRequest web_request;
-  request->PopulateWebServiceWorkerRequest(web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                             web_request);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();
@@ -655,7 +660,8 @@ ScriptPromise Cache::MatchAllImpl(ScriptState* script_state,
                                   const Request* request,
                                   const CacheQueryOptions& options) {
   WebServiceWorkerRequest web_request;
-  request->PopulateWebServiceWorkerRequest(web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                             web_request);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();
@@ -708,7 +714,8 @@ ScriptPromise Cache::DeleteImpl(ScriptState* script_state,
   WebVector<WebServiceWorkerCache::BatchOperation> batch_operations(size_t(1));
   batch_operations[0].operation_type =
       WebServiceWorkerCache::kOperationTypeDelete;
-  request->PopulateWebServiceWorkerRequest(batch_operations[0].request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+      *request, batch_operations[0].request);
   batch_operations[0].match_params = ToWebQueryParams(options);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
@@ -781,7 +788,8 @@ ScriptPromise Cache::PutImpl(ScriptState* script_state,
 
     WebServiceWorkerCache::BatchOperation batch_operation;
     batch_operation.operation_type = WebServiceWorkerCache::kOperationTypePut;
-    requests[i]->PopulateWebServiceWorkerRequest(batch_operation.request);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+        *requests[i], batch_operation.request);
     responses[i]->PopulateWebServiceWorkerResponse(batch_operation.response);
     barrier_callback->OnSuccess(i, batch_operation);
   }
@@ -802,7 +810,8 @@ ScriptPromise Cache::KeysImpl(ScriptState* script_state,
                               const Request* request,
                               const CacheQueryOptions& options) {
   WebServiceWorkerRequest web_request;
-  request->PopulateWebServiceWorkerRequest(web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                             web_request);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();

@@ -75,6 +75,7 @@
 #include "modules/serviceworkers/InstallEvent.h"
 #include "modules/serviceworkers/ServiceWorkerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "modules/serviceworkers/ServiceWorkerWindowClient.h"
 #include "modules/serviceworkers/WaitUntilObserver.h"
 #include "platform/CrossThreadFunctional.h"
@@ -298,7 +299,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchFetchEvent(
           web_request.Mode(), web_request.RedirectMode(),
           web_request.GetFrameType(), web_request.GetRequestContext(),
           wait_until_observer);
-  Request* request = Request::Create(
+  Request* request = ServiceWorkerNetworkUtils::ToRequest(
       WorkerGlobalScope()->ScriptController()->GetScriptState(), web_request);
   request->getHeaders()->SetGuard(Headers::kImmutableGuard);
   FetchEventInit event_init;

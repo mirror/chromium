@@ -21,7 +21,6 @@ namespace blink {
 
 class BodyStreamBuffer;
 class RequestInit;
-class WebServiceWorkerRequest;
 
 using RequestInfo = RequestOrUSVString;
 
@@ -49,7 +48,6 @@ class MODULES_EXPORT Request final : public Body {
                          const Dictionary&,
                          ExceptionState&);
   static Request* Create(ScriptState*, FetchRequestData*);
-  static Request* Create(ScriptState*, const WebServiceWorkerRequest&);
 
   // From Request.idl:
   String method() const;
@@ -70,12 +68,13 @@ class MODULES_EXPORT Request final : public Body {
   Request* clone(ScriptState*, ExceptionState&);
 
   FetchRequestData* PassRequestData(ScriptState*);
-  void PopulateWebServiceWorkerRequest(WebServiceWorkerRequest&) const;
   bool HasBody() const;
   BodyStreamBuffer* BodyBuffer() override { return request_->Buffer(); }
   const BodyStreamBuffer* BodyBuffer() const override {
     return request_->Buffer();
   }
+
+  const FetchRequestData& GetRequest() const { return *request_; }
 
   void Trace(blink::Visitor*) override;
 
@@ -83,7 +82,6 @@ class MODULES_EXPORT Request final : public Body {
   Request(ScriptState*, FetchRequestData*, Headers*);
   Request(ScriptState*, FetchRequestData*);
 
-  const FetchRequestData* GetRequest() const { return request_; }
   static Request* CreateRequestWithRequestOrString(ScriptState*,
                                                    Request*,
                                                    const String&,

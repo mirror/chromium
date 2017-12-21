@@ -20,17 +20,16 @@
 #include "platform/weborigin/OriginAccessEntry.h"
 #include "platform/weborigin/Referrer.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 
 namespace blink {
 
 FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
     ScriptState* script_state,
-    const FetchRequestData* original) {
+    const FetchRequestData& original) {
   FetchRequestData* request = FetchRequestData::Create();
-  request->SetURL(original->Url());
-  request->SetMethod(original->Method());
-  request->SetHeaderList(original->HeaderList()->Clone());
+  request->SetURL(original.Url());
+  request->SetMethod(original.Method());
+  request->SetHeaderList(original.HeaderList()->Clone());
   // FIXME: Set client.
   DOMWrapperWorld& world = script_state->World();
   if (world.IsIsolatedWorld()) {
@@ -41,12 +40,12 @@ FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
   }
   // FIXME: Set ForceOriginHeaderFlag.
   request->SetSameOriginDataURLFlag(true);
-  request->SetReferrer(original->GetReferrer());
-  request->SetMode(original->Mode());
-  request->SetCredentials(original->Credentials());
-  request->SetCacheMode(original->CacheMode());
-  request->SetRedirect(original->Redirect());
-  request->SetIntegrity(original->Integrity());
+  request->SetReferrer(original.GetReferrer());
+  request->SetMode(original.Mode());
+  request->SetCredentials(original.Credentials());
+  request->SetCacheMode(original.CacheMode());
+  request->SetRedirect(original.Redirect());
+  request->SetIntegrity(original.Integrity());
   return request;
 }
 
@@ -95,8 +94,8 @@ Request* Request::CreateRequestWithRequestOrString(
   // |request|'s cache mode, redirect mode is |request|'s redirect mode, and
   // integrity metadata is |request|'s integrity metadata."
   FetchRequestData* request = CreateCopyOfFetchRequestDataForFetch(
-      script_state,
-      input_request ? input_request->GetRequest() : FetchRequestData::Create());
+      script_state, input_request ? input_request->GetRequest()
+                                  : *FetchRequestData::Create());
 
   // We don't use fallback values. We set these flags directly in below.
   // - "Let |fallbackMode| be null."
@@ -327,11 +326,11 @@ Request* Request::CreateRequestWithRequestOrString(
   // "Empty |r|'s request's header list."
   r->request_->HeaderList()->ClearList();
   // "If |r|'s request's mode is "no-cors", run these substeps:
-  if (r->GetRequest()->Mode() == network::mojom::FetchRequestMode::kNoCORS) {
+  if (r->GetRequest().Mode() == network::mojom::FetchRequestMode::kNoCORS) {
     // "If |r|'s request's method is not a CORS-safelisted method, throw a
     // TypeError."
-    if (!FetchUtils::IsCORSSafelistedMethod(r->GetRequest()->Method())) {
-      exception_state.ThrowTypeError("'" + r->GetRequest()->Method() +
+    if (!FetchUtils::IsCORSSafelistedMethod(r->GetRequest().Method())) {
+      exception_state.ThrowTypeError("'" + r->GetRequest().Method() +
                                      "' is unsupported in no-cors mode.");
       return nullptr;
     }
@@ -455,13 +454,6 @@ Request* Request::Create(ScriptState* script_state,
 }
 
 Request* Request::Create(ScriptState* script_state, FetchRequestData* request) {
-  return new Request(script_state, request);
-}
-
-Request* Request::Create(ScriptState* script_state,
-                         const WebServiceWorkerRequest& web_request) {
-  FetchRequestData* request =
-      FetchRequestData::Create(script_state, web_request);
   return new Request(script_state, request);
 }
 
@@ -705,36 +697,6 @@ FetchRequestData* Request::PassRequestData(ScriptState* script_state) {
 
 bool Request::HasBody() const {
   return BodyBuffer();
-}
-
-void Request::PopulateWebServiceWorkerRequest(
-    WebServiceWorkerRequest& web_request) const {
-  web_request.SetMethod(method());
-  web_request.SetMode(request_->Mode());
-  web_request.SetCredentialsMode(request_->Credentials());
-  web_request.SetCacheMode(request_->CacheMode());
-  web_request.SetRedirectMode(request_->Redirect());
-  web_request.SetIntegrity(request_->Integrity());
-  web_request.SetRequestContext(request_->Context());
-
-  // Strip off the fragment part of URL. So far, all users of
-  // WebServiceWorkerRequest expect the fragment to be excluded.
-  KURL url(request_->Url());
-  if (request_->Url().HasFragmentIdentifier())
-    url.RemoveFragmentIdentifier();
-  web_request.SetURL(url);
-
-  const FetchHeaderList* header_list = headers_->HeaderList();
-  for (const auto& header : header_list->List()) {
-    web_request.AppendHeader(header.first, header.second);
-  }
-
-  web_request.SetReferrer(
-      request_->ReferrerString(),
-      static_cast<WebReferrerPolicy>(request_->GetReferrerPolicy()));
-  // FIXME: How can we set isReload properly? What is the correct place to load
-  // it in to the Request object? We should investigate the right way to plumb
-  // this information in to here.
 }
 
 String Request::MimeType() const {

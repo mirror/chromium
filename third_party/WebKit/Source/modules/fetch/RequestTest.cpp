@@ -7,6 +7,7 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/text/WTFString.h"
@@ -80,7 +81,8 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
                           WebString::FromUTF8(headers[i].value));
   web_request.SetReferrer(referrer, kReferrerPolicy);
 
-  Request* request = Request::Create(scope.GetScriptState(), web_request);
+  Request* request =
+      ServiceWorkerNetworkUtils::ToRequest(scope.GetScriptState(), web_request);
   DCHECK(request);
   EXPECT_EQ(url, request->url());
   EXPECT_EQ(method, request->method());
@@ -102,7 +104,8 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
   }
 
   WebServiceWorkerRequest second_web_request;
-  request->PopulateWebServiceWorkerRequest(second_web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+      *request, second_web_request);
   EXPECT_EQ(url, KURL(second_web_request.Url()));
   EXPECT_EQ(method, String(second_web_request.Method()));
   EXPECT_EQ(kMode, second_web_request.Mode());
@@ -125,7 +128,8 @@ TEST(ServiceWorkerRequestTest, ToWebRequestStripsURLFragment) {
   DCHECK(request);
 
   WebServiceWorkerRequest web_request;
-  request->PopulateWebServiceWorkerRequest(web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                             web_request);
   EXPECT_EQ(url_without_fragment, KURL(web_request.Url()));
 }
 

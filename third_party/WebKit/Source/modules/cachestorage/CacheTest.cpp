@@ -29,6 +29,7 @@
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
 #include "modules/fetch/ResponseInit.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/modules/cache_storage/cache_storage.mojom-blink.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCache.h"
@@ -494,7 +495,8 @@ TEST_F(CacheStorageTest, BatchOperationArguments) {
     WebServiceWorkerCache::BatchOperation delete_operation;
     delete_operation.operation_type =
         WebServiceWorkerCache::kOperationTypeDelete;
-    request->PopulateWebServiceWorkerRequest(delete_operation.request);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+        *request, delete_operation.request);
     delete_operation.match_params = expected_query_params;
     expected_delete_operations[0] = delete_operation;
   }
@@ -518,7 +520,8 @@ TEST_F(CacheStorageTest, BatchOperationArguments) {
   {
     WebServiceWorkerCache::BatchOperation put_operation;
     put_operation.operation_type = WebServiceWorkerCache::kOperationTypePut;
-    request->PopulateWebServiceWorkerRequest(put_operation.request);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+        *request, put_operation.request);
     response->PopulateWebServiceWorkerResponse(put_operation.response);
     expected_put_operations[0] = put_operation;
   }
@@ -725,7 +728,8 @@ TEST_F(CacheStorageTest, Add) {
   {
     WebServiceWorkerCache::BatchOperation put_operation;
     put_operation.operation_type = WebServiceWorkerCache::kOperationTypePut;
-    request->PopulateWebServiceWorkerRequest(put_operation.request);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+        *request, put_operation.request);
     response->PopulateWebServiceWorkerResponse(put_operation.response);
     expected_put_operations[0] = put_operation;
   }
