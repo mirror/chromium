@@ -86,13 +86,11 @@ XRWebGLDrawingBuffer::XRWebGLDrawingBuffer(
     bool want_stencil_buffer,
     bool multiview_supported)
     : webgl_context_(webgl_context),
-      antialias_(false),
+      discard_framebuffer_supported_(discard_framebuffer_supported),
       depth_(want_depth_buffer),
       stencil_(want_stencil_buffer),
       alpha_(want_alpha_channel),
-      multiview_(false) {
-  contents_changed_ = true;  // TODO: Obviously something better than this.
-}
+      multiview_(false) {}
 
 // TODO(bajones): The GL resources allocated in this function are leaking. Add
 // a way to clean up the buffers when the layer is GCed or the session ends.
@@ -252,8 +250,14 @@ void XRWebGLDrawingBuffer::Resize(const IntSize& new_size) {
   client->DrawingBufferClientRestoreFramebufferBinding();
 }
 
-void XRWebGLDrawingBuffer::MarkFramebufferComplete(bool complete) {
-  framebuffer_->MarkOpaqueBufferComplete(complete);
+void XRWebGLDrawingBuffer::Activate() {
+  framebuffer_->MarkOpaqueBufferComplete(true);
+  framebuffer_->SetHasChanged(false);
+}
+
+bool XRWebGLDrawingBuffer::Finish() {
+  framebuffer_->MarkOpaqueBufferComplete(false);
+  return framebuffer_->HasChanged();
 }
 
 GLuint XRWebGLDrawingBuffer::CreateColorBuffer() {
@@ -323,7 +327,13 @@ void XRWebGLDrawingBuffer::SwapColorBuffers() {
 
   // Swap buffers
   GLuint tmp = back_color_buffer_;
-  back_color_buffer_ = front_color_buffer_;
+
+  if (front_color_buffer_) {
+    back_color_buffer_ = front_color_buffer_;
+  } else {
+    back_color_buffer_ = CreateColorBuffer();
+  }
+
   front_color_buffer_ = tmp;
 
   if (anti_aliasing_mode_ == kMSAAImplicitResolve) {
@@ -335,7 +345,55 @@ void XRWebGLDrawingBuffer::SwapColorBuffers() {
                              GL_TEXTURE_2D, back_color_buffer_, 0);
   }
 
+  if (discard_framebuffer_supported_) {
+    const GLenum kAttachments[3] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT,
+                                    GL_STENCIL_ATTACHMENT};
+    gl->DiscardFramebufferEXT(GL_FRAMEBUFFER, 3, kAttachments);
+  }
+
   client->DrawingBufferClientRestoreFramebufferBinding();
+}
+
+scoped_refptr<StaticBitmapImage>
+XRWebGLDrawingBuffer::TransferToStaticBitmapImage() {
+  gpu::gles2::GLES2Interface* gl = gl_context();
+
+  gpu::Mailbox mailbox;
+  gpu::SyncToken sync_token;
+  bool success = false;
+  GLuint texture_id = 0;
+
+  if (framebuffer_->HasChanged()) {
+    SwapColorBuffers();
+
+    gl->GenMailboxCHROMIUM(mailbox.name);
+    gl->ProduceTextureDirectCHROMIUM(front_color_buffer_, mailbox.name);
+    gl->GenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
+
+    // This should only fail if the context has been lost.
+    if (sync_token.HasData()) {
+      // Once we place the texture in the StaticBitmapImage it's effectively
+      // gone for good. So we'll null out the front_color_buffer_ here to ensure
+      // that a new one is created on the next swap.
+      texture_id = front_color_buffer_;
+      front_color_buffer_ = 0;
+      success = true;
+    }
+  }
+
+  if (!success) {
+    // If we can't get a mailbox, return an transparent black ImageBitmap.
+    // The only situation in which this could happen is when two or more calls
+    // to transferToImageBitmap are made back-to-back, or when the context gets
+    // lost.
+    sk_sp<SkSurface> surface =
+        SkSurface::MakeRasterN32Premul(size_.Width(), size_.Height());
+    return StaticBitmapImage::Create(surface->makeImageSnapshot());
+  }
+
+  return AcceleratedStaticBitmapImage::CreateFromWebGLContextImage(
+      mailbox, sync_token, texture_id,
+      webgl_context_->GetDrawingBuffer()->ContextProviderWeakPtr(), size_);
 }
 
 void XRWebGLDrawingBuffer::Trace(blink::Visitor* visitor) {

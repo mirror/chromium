@@ -8,6 +8,7 @@
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLRenderingContext.h"
+#include "modules/xr/XRFrameProvider.h"
 #include "modules/xr/XRLayer.h"
 #include "modules/xr/XRWebGLLayerInit.h"
 #include "platform/geometry/IntSize.h"
@@ -15,11 +16,13 @@
 
 namespace blink {
 
+class StaticBitmapImage;
 class WebGLFramebuffer;
 
 class XRWebGLDrawingBuffer final
     : public GarbageCollected<XRWebGLDrawingBuffer>,
-      public TraceWrapperBase {
+      public TraceWrapperBase,
+      public XRFrameProvider::ImageSource {
  public:
   static XRWebGLDrawingBuffer* Create(WebGLRenderingContextBase*,
                                       const IntSize&,
@@ -34,7 +37,7 @@ class XRWebGLDrawingBuffer final
   WebGLFramebuffer* framebuffer() const { return framebuffer_; }
   const IntSize& size() const { return size_; }
 
-  bool antialias() const { return antialias_; }
+  bool antialias() const { return anti_aliasing_mode_ != kNone; }
   bool depth() const { return depth_; }
   bool stencil() const { return stencil_; }
   bool alpha() const { return alpha_; }
@@ -42,7 +45,13 @@ class XRWebGLDrawingBuffer final
 
   void Resize(const IntSize&);
 
-  void MarkFramebufferComplete(bool complete);
+  // Activate marks the framebuffer as complete and clears it's changed bit.
+  void Activate();
+  // Finish marks the framebuffer as incomplete and returns whether it was
+  // changed while active.
+  bool Finish();
+
+  scoped_refptr<StaticBitmapImage> TransferToStaticBitmapImage() override;
 
   virtual void Trace(blink::Visitor*);
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
@@ -76,13 +85,11 @@ class XRWebGLDrawingBuffer final
   GLuint depth_stencil_buffer_ = 0;
   IntSize size_;
 
-  bool antialias_;
+  bool discard_framebuffer_supported_;
   bool depth_;
   bool stencil_;
   bool alpha_;
   bool multiview_;
-
-  bool contents_changed_ = false;
 
   enum WebGLVersion {
     kWebGL1,

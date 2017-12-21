@@ -15,6 +15,7 @@
 #include "modules/xr/XRFrameOfReferenceOptions.h"
 #include "modules/xr/XRFrameProvider.h"
 #include "modules/xr/XRLayer.h"
+#include "modules/xr/XRPresentationContext.h"
 #include "modules/xr/XRPresentationFrame.h"
 #include "modules/xr/XRSessionEvent.h"
 #include "modules/xr/XRView.h"
@@ -50,9 +51,12 @@ void UpdateViewFromEyeParameters(
 
 }  // namespace
 
-XRSession::XRSession(XRDevice* device, bool exclusive)
+XRSession::XRSession(XRDevice* device,
+                     bool exclusive,
+                     XRPresentationContext* output_context)
     : device_(device),
       exclusive_(exclusive),
+      output_context_(output_context),
       callback_collection_(device->GetExecutionContext()) {}
 
 void XRSession::setDepthNear(double value) {
@@ -168,6 +172,9 @@ void XRSession::ForceEnd() {
   // Detach this session from the device.
   detached_ = true;
 
+  // TODO: If there's pending frames when we end the session discard them.
+  pending_frame_ = false;
+
   // If this session is the active exclusive session for the device, notify the
   // frameProvider that it's ended.
   if (device_->frameProvider()->exclusive_session() == this) {
@@ -178,11 +185,22 @@ void XRSession::ForceEnd() {
 }
 
 DoubleSize XRSession::IdealFramebufferSize() const {
-  double width = device_->xrDisplayInfoPtr()->leftEye->renderWidth +
-                 device_->xrDisplayInfoPtr()->rightEye->renderWidth;
-  double height = std::max(device_->xrDisplayInfoPtr()->leftEye->renderHeight,
-                           device_->xrDisplayInfoPtr()->rightEye->renderHeight);
-  return DoubleSize(width, height);
+  if (exclusive_) {
+    double width = device_->xrDisplayInfoPtr()->leftEye->renderWidth +
+                   device_->xrDisplayInfoPtr()->rightEye->renderWidth;
+    double height =
+        std::max(device_->xrDisplayInfoPtr()->leftEye->renderHeight,
+                 device_->xrDisplayInfoPtr()->rightEye->renderHeight);
+    return DoubleSize(width, height);
+  }
+
+  double devicePixelRatio = 1.0;
+  LocalFrame* frame = device_->xr()->GetFrame();
+  if (frame) {
+    devicePixelRatio = frame->DevicePixelRatio();
+  }
+  return DoubleSize(last_canvas_width_ * devicePixelRatio,
+                    last_canvas_height_ * devicePixelRatio);
 }
 
 void XRSession::OnFocus() {
@@ -213,6 +231,9 @@ void XRSession::OnFrame(
   if (!base_layer_)
     return;
 
+  // May set views_dirty_
+  UpdateCanvasDimensions();
+
   XRPresentationFrame* presentation_frame = new XRPresentationFrame(this);
   presentation_frame->UpdateBasePose(std::move(base_pose_matrix));
 
@@ -233,6 +254,28 @@ void XRSession::OnFrame(
   }
 }
 
+void XRSession::UpdateCanvasDimensions() {
+  if (outputContext()) {
+    HTMLCanvasElement* canvas = outputContext()->canvas();
+    if (!canvas) {
+      return;
+    }
+    // TODO(bajones): It would be nice if there was a way to listen for size
+    // changes rather than poll them every frame.
+    int new_width = canvas->OffsetWidth();
+    int new_height = canvas->OffsetHeight();
+    if (new_width != last_canvas_width_ || new_height != last_canvas_height_) {
+      views_dirty_ = true;
+      last_canvas_width_ = new_width;
+      last_canvas_height_ = new_height;
+
+      if (!exclusive_ && base_layer_) {
+        base_layer_->OnResize();
+      }
+    }
+  }
+}
+
 const HeapVector<Member<XRView>>& XRSession::views() {
   if (views_dirty_) {
     if (exclusive_) {
@@ -250,6 +293,25 @@ const HeapVector<Member<XRView>>& XRSession::views() {
       UpdateViewFromEyeParameters(views_[XRView::kEyeRight],
                                   device_->xrDisplayInfoPtr()->rightEye,
                                   depth_near_, depth_far_);
+    } else {
+      if (views_.IsEmpty()) {
+        views_.push_back(new XRView(this, XRView::kEyeLeft));
+      }
+
+      float aspect = 1.0f;
+      if (last_canvas_width_ && last_canvas_height_) {
+        aspect = static_cast<float>(last_canvas_width_) /
+                 static_cast<float>(last_canvas_height_);
+      }
+
+      // In non-exclusive mode the projection matrix must be aligned with the
+      // output canvas dimensions and the view matrix should not have any IPD
+      // offset.
+      views_[XRView::kEyeLeft]->UpdateProjectionMatrixFromAspect(
+          M_PI * 0.4f,  // TODO(bajones): Not this! Maybe user configurable?
+          aspect, depth_near_, depth_far_);
+
+      views_[XRView::kEyeLeft]->UpdateOffset(0, 0, 0);
     }
 
     views_dirty_ = false;
@@ -260,6 +322,7 @@ const HeapVector<Member<XRView>>& XRSession::views() {
 
 void XRSession::Trace(blink::Visitor* visitor) {
   visitor->Trace(device_);
+  visitor->Trace(output_context_);
   visitor->Trace(base_layer_);
   visitor->Trace(views_);
   visitor->Trace(callback_collection_);
