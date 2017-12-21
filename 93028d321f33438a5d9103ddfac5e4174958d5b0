@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6822389_1bdb3efa",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T02:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57b338f_e471694b",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc48e4f_eb1d55b9",
         "filename": "chrome/common/chrome_content_client.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2e64085e_12498628",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T02:19:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddc48e4f_eb1d55b9",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fbb914d_a126eac3",
         "filename": "chrome/common/chrome_content_client.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5105f607_2022eae2",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T02:19:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fbb914d_a126eac3",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
