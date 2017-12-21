@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55dbb3fd_00667450",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-21T19:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4955f99d_d035e8c4",
+      "revId": "70744b18a975ae7d615e927c9d5bd7690f5bf2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add0f2ab_23528fa0",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T16:52:29Z",
       "side": 1,
       "message": "Is it important that the order of these two calls changed? If WasResized() needs to be called before the base impl, a comment briefly explaining that here would be useful.",
+      "revId": "70744b18a975ae7d615e927c9d5bd7690f5bf2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ae2e3a_2bce4ab1",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-21T19:28:49Z",
+      "side": 1,
+      "message": "Updated the comment about why this matters.",
+      "parentUuid": "add0f2ab_23528fa0",
       "revId": "70744b18a975ae7d615e927c9d5bd7690f5bf2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
