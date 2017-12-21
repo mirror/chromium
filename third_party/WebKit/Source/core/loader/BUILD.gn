@@ -75,8 +75,6 @@ blink_core_sources("loader") {
     "ThreadableLoadingContext.h",
     "WorkerFetchContext.cpp",
     "WorkerFetchContext.h",
-    "WorkerThreadableLoader.cpp",
-    "WorkerThreadableLoader.h",
     "appcache/ApplicationCache.cpp",
     "appcache/ApplicationCache.h",
     "appcache/ApplicationCacheHost.cpp",

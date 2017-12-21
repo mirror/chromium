@@ -44,7 +44,6 @@
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/WorkerInspectorController.h"
 #include "core/inspector/WorkerThreadDebugger.h"
-#include "core/loader/WorkerThreadableLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/GlobalScopeCreationParams.h"

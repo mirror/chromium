@@ -33,7 +33,7 @@
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/AllowedByNosniff.h"
-#include "core/loader/WorkerThreadableLoader.h"
+#include "core/loader/ThreadableLoader.h"
 #include "core/loader/resource/ScriptResource.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -83,9 +83,8 @@ void WorkerScriptLoader::LoadSynchronously(
   resource_loader_options.parser_disposition =
       ParserDisposition::kNotParserInserted;
 
-  WorkerThreadableLoader::LoadResourceSynchronously(
-      ToWorkerGlobalScope(execution_context), request, *this, options,
-      resource_loader_options);
+  ThreadableLoader::LoadResourceSynchronously(execution_context, request, *this,
+                                              options, resource_loader_options);
 }
 
 void WorkerScriptLoader::LoadAsynchronously(

@@ -563,8 +563,7 @@ void FetchManager::Loader::Start() {
 
   // "2. If |request|'s referrer is not none, set |request|'s referrer to the
   // result of invoking determine |request|'s referrer."
-  // We set the referrer using workerGlobalScope's URL in
-  // WorkerThreadableLoader.
+  // We set the referrer using workerGlobalScope's URL in BaseFetchContext.
 
   // "3. If |request|'s synchronous flag is unset and fetch is not invoked
   // recursively, run the remaining steps asynchronously."

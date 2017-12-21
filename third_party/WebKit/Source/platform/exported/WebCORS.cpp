@@ -66,13 +66,6 @@ String CreateAccessControlRequestHeadersHeader(
       // Exclude CORS-safelisted headers.
       continue;
     }
-    // TODO(hintzed) replace with EqualIgnoringASCIICase()
-    if (DeprecatedEqualIgnoringCase(header.key, "referer")) {
-      // When the request is from a Worker, referrer header was added by
-      // WorkerThreadableLoader. But it should not be added to
-      // Access-Control-Request-Headers header.
-      continue;
-    }
     filtered_headers.push_back(header.key.DeprecatedLower());
   }
   if (!filtered_headers.size())

@@ -34,7 +34,6 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/loader/DocumentThreadableLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
-#include "core/loader/WorkerThreadableLoader.h"
 #include "core/workers/WorkerGlobalScope.h"
 
 namespace blink {
