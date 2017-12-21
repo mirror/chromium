@@ -513,6 +513,24 @@
     },
     {
       "key": {
+        "uuid": "cbe62879_c3cf19dc",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T18:26:19Z",
+      "side": 1,
+      "message": "That sounds good to me. \n\nAdded GetUnsigned()/GetNegative() in CBORValues and removed CHECK/ changed checked_cast to static_cast in CBORWriter. \n\n@jeffrey, please let us know if you have any concerns! :)",
+      "parentUuid": "2fbd8318_14a962c0",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4876823_ba67d060",
         "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
         "patchSetId": 19
@@ -613,6 +631,42 @@
     },
     {
       "key": {
+        "uuid": "6d40b691_773004b8",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T18:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43f8fbf_f4f4f48d",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18178072_0c9f5ffa",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T18:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43f8fbf_f4f4f48d",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccce4b54_2c058ea7",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 19
@@ -663,6 +717,42 @@
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ddc9d5_8508b5e3",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T18:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42708e6_ec790e6b",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b88002c_8d88c63c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T18:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42708e6_ec790e6b",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
