@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e29e1ad9_3b34dae5",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/chromevox_shim.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-21T16:50:34Z",
+      "side": 1,
+      "message": "The thing that\u0027s causing the failure is node.state.visited in ChromeVox\u0027s AutomationPredicate. That doesn\u0027t make sense with what you just said.\n\nBut if I change that to node.state.VISITED, I can remove this line, and compilation works.",
+      "parentUuid": "e133d560_33f6ab53",
+      "revId": "8bc8011a365c4757cbfe9abdda61c910f9466eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "824725db_062724d7",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/manifest.json.jinja2",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8bc8011a365c4757cbfe9abdda61c910f9466eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b70a01_79accc57",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/manifest.json.jinja2",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-21T16:50:34Z",
+      "side": 1,
+      "message": "I think it needs this order because each file might depend on the previous file. If I change the order, various JS will complain at runtime that certain types are not found.",
+      "parentUuid": "824725db_062724d7",
+      "revId": "8bc8011a365c4757cbfe9abdda61c910f9466eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
