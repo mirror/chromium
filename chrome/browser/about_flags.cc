@@ -613,6 +613,8 @@ const FeatureEntry::Choice kWebVrRenderPathChoices[] = {
      "ClientWait"},
     {flag_descriptions::kWebVrRenderPathGpuFence, switches::kWebVrRenderPath,
      "GpuFence"},
+    {flag_descriptions::kWebVrRenderPathSharedBuffer, switches::kWebVrRenderPath,
+     "SharedBuffer"},
 };
 #endif  // OS_ANDROID
 

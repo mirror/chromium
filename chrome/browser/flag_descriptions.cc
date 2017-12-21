@@ -1616,6 +1616,7 @@ const char kWebVrRenderPathDescription[] =
     "Rendering path preference for WebVR";
 const char kWebVrRenderPathClientWait[] = "ClientWait";
 const char kWebVrRenderPathGpuFence[] = "GpuFence";
+const char kWebVrRenderPathSharedBuffer[] = "SharedBuffer";
 
 const char kWebXrName[] = "WebXR Device API";
 const char kWebXrDescription[] =
