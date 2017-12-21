@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "01edbe5a_e2b3cc71",
+        "filename": "ios/web/public/test/web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:57:09Z",
+      "side": 1,
+      "message": "BTW, subclasses can override GetBrowserState to return ChromeBrowserState. Should we follow the same pattern here for WebClient and make GetWebClient virtual?",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ade490ce_2885922f",
         "filename": "ios/web/public/test/web_test.mm",
         "patchSetId": 2
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Ouh I missed that. I think WebTest::GetWebClient() should return a web::WebClient* and the caller should do the casting if necessary. The purpose of this CL is to be able to pass in a ChromeWebClient.",
       "parentUuid": "ade490ce_2885922f",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29befef_8afffcf0",
+        "filename": "ios/web/public/test/web_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:57:09Z",
+      "side": 1,
+      "message": "Returning WebClient breaks the compilation.",
+      "parentUuid": "db65f3e7_26218a12",
       "range": {
         "startLine": 29,
         "startChar": 22,
