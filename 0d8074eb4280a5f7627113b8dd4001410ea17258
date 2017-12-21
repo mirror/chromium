@@ -34,6 +34,24 @@
       "revId": "0d8074eb4280a5f7627113b8dd4001410ea17258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30afd7a9_15118a82",
+        "filename": "third_party/WebKit/Source/modules/beacon/NavigatorBeacon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-21T00:45:42Z",
+      "side": 1,
+      "message": "Ahh. I see. Thanks",
+      "parentUuid": "4448fa8e_4cf8e8c6",
+      "revId": "0d8074eb4280a5f7627113b8dd4001410ea17258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
