@@ -344,10 +344,6 @@ public class OfflinePageUtils {
         // Bail if there is no offline page that can be shared.
         if (offlinePage == null) return null;
 
-        // Only cached pages are supported right now.
-        // TODO(fgorski): Provide sharing support for user requested pages.
-        if (!isCachedPage(offlinePage)) return null;
-
         final File offlineFile = new File(offlinePage.getFilePath());
         final Uri contentUri = ChromeFileProvider.generateUri(activity, offlineFile);
 
@@ -355,14 +351,6 @@ public class OfflinePageUtils {
                 .setShareDirectly(false)
                 .setOfflineUri(contentUri)
                 .build();
-    }
-
-    private static boolean isCachedPage(OfflinePageItem offlinePage) {
-        assert offlinePage != null;
-        String namespace = offlinePage.getClientId().getNamespace();
-        return namespace != OfflinePageBridge.DOWNLOAD_NAMESPACE
-                && namespace != OfflinePageBridge.ASYNC_NAMESPACE
-                && namespace != OfflinePageBridge.BROWSER_ACTIONS_NAMESPACE;
     }
 
     /**
