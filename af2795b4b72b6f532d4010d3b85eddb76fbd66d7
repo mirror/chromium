@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d9a5c7_3f51d94f",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T17:42:24Z",
+      "side": 1,
+      "message": "not this CL, but the more I look at this function, the more fragile it seems to me.  In particular, relying on the current browser is almost never the right answer.  Can you add a TODO that we should clean that up?  (Feel free to assign to me)",
+      "revId": "af2795b4b72b6f532d4010d3b85eddb76fbd66d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
