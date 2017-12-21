@@ -30,6 +30,13 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/window_util.h"
 
+#include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wm/default_window_resizer.h"
+#include "ash/wm/drag_details.h"
+#include "ash/wm/toplevel_window_event_handler.h"
+#include "ash/wm/workspace/workspace_window_resizer.h"
+
 namespace exo {
 namespace {
 ClientControlledShellSurface::DelegateFactoryCallback g_factory_callback;
@@ -81,11 +88,17 @@ class ClientControlledStateDelegate
   }
   void HandleBoundsRequest(ash::wm::WindowState* window_state,
                            const gfx::Rect& bounds) override {
-    // TODO(oshima): Implement this.
+    shell_surface_->OnBoundsChangeEvent(
+        window_state->GetStateType(), bounds, window_state->is_dragged(),
+        (!window_state->is_dragged()
+             ? false
+             : (window_state->drag_details()->bounds_change &
+                ash::WindowResizer::kBoundsChange_Resizes) != 0));
   }
 
  private:
   ClientControlledShellSurface* shell_surface_;
+
   DISALLOW_COPY_AND_ASSIGN(ClientControlledStateDelegate);
 };
 
@@ -95,8 +108,9 @@ class ClientControlledWindowStateDelegate
     : public ash::wm::WindowStateDelegate {
  public:
   explicit ClientControlledWindowStateDelegate(
+      ClientControlledShellSurface* shell_surface,
       ash::wm::ClientControlledState::Delegate* delegate)
-      : delegate_(delegate) {}
+      : shell_surface_(shell_surface), delegate_(delegate) {}
   ~ClientControlledWindowStateDelegate() override {}
 
   // Overridden from ash::wm::WindowStateDelegate:
@@ -156,7 +170,14 @@ class ClientControlledWindowStateDelegate
     return true;
   }
 
+  void StartDrag(int component) override {
+    shell_surface_->StartDrag(component);
+  }
+
+  void EndDrag() override { shell_surface_->EndDrag(); }
+
  private:
+  ClientControlledShellSurface* shell_surface_;
   ash::wm::ClientControlledState::Delegate* delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientControlledWindowStateDelegate);
@@ -281,9 +302,10 @@ void ClientControlledShellSurface::SetTopInset(int height) {
 void ClientControlledShellSurface::SetResizeOutset(int outset) {
   TRACE_EVENT1("exo", "ClientControlledShellSurface::SetResizeOutset", "outset",
                outset);
-
+  /*
   if (root_surface())
     root_surface()->SetInputOutset(outset);
+  */
 }
 
 void ClientControlledShellSurface::OnWindowStateChangeEvent(
@@ -293,6 +315,75 @@ void ClientControlledShellSurface::OnWindowStateChangeEvent(
     state_changed_callback_.Run(current_state, next_state);
 }
 
+void ClientControlledShellSurface::StartMove() {
+  LOG(ERROR) << "StartMove:";
+  ash::Shell::Get()->toplevel_window_event_handler()->AttemptToStartDrag(
+      widget_->GetNativeWindow(), GetMouseLocation(), HTCAPTION,
+      ::wm::WINDOW_MOVE_SOURCE_MOUSE,
+      ash::wm::WmToplevelWindowEventHandler::EndClosure());
+}
+
+void ClientControlledShellSurface::SetCanResize(bool can_resize) {
+  can_resize_ = can_resize;
+}
+
+void ClientControlledShellSurface::SetCanMaximize(bool can_maximize) {
+  can_maximize_ = can_maximize;
+  UpdateFrame();
+}
+
+void ClientControlledShellSurface::SetCanZoom(bool can_zoom) {
+  can_zoom_ = can_zoom;
+  UpdateFrame();
+}
+
+void ClientControlledShellSurface::SetCanRestore(bool can_restore) {
+  can_restore_ = can_restore;
+  UpdateFrame();
+}
+
+void ClientControlledShellSurface::SetMinimumSize(const gfx::Size& minimum_size) {
+  minimum_size_ = minimum_size;
+  /* maybe update the window */
+}
+
+void ClientControlledShellSurface::SetFrameHeight(int frame_height) {
+  /* maybe update the window */
+}
+
+void ClientControlledShellSurface::SetFrameColor(int frame_color) {
+  /* maybe update the window */
+}
+
+void ClientControlledShellSurface::OnBoundsChangeEvent(
+    ash::mojom::WindowStateType current_state,
+    const gfx::Rect& bounds,
+    bool drag,
+    bool resize) {
+  /*
+  if (pending_show_widget_)
+    return;
+  */
+  LOG(ERROR) << "Set Bounds:" << bounds.ToString() << ", drag=" << drag
+             << ", resize==" << resize
+             << ", callback=" << !bounds_changed_callback_.is_null()
+             << ", resizer_ = " << resizer_.get();
+  if (!bounds.IsEmpty() && !bounds_changed_callback_.is_null())
+    bounds_changed_callback_.Run(current_state, bounds, drag, resize);
+}
+
+void ClientControlledShellSurface::StartDrag(int component) {
+  if (component == HTCAPTION)
+    return;
+  LOG(ERROR) << "StartDrag:" << component;
+  if (!start_resize_callback_.is_null())
+    start_resize_callback_.Run(component);
+}
+
+void ClientControlledShellSurface::EndDrag() {
+  if (!end_resize_callback_.is_null())
+    end_resize_callback_.Run();
+}
 ////////////////////////////////////////////////////////////////////////////////
 // SurfaceDelegate overrides:
 
@@ -386,7 +477,11 @@ void ClientControlledShellSurface::OnWindowBoundsChanged(
 // views::WidgetDelegate overrides:
 
 bool ClientControlledShellSurface::CanResize() const {
-  return false;
+  return can_resize_;
+}
+
+bool ClientControlledShellSurface::CanMaximize() const {
+  return can_maximize_;
 }
 
 views::NonClientFrameView*
@@ -397,8 +492,8 @@ ClientControlledShellSurface::CreateNonClientFrameView(views::Widget* widget) {
           ? std::make_unique<ClientControlledStateDelegate>(this)
           : g_factory_callback.Run();
 
-  auto window_delegate =
-      std::make_unique<ClientControlledWindowStateDelegate>(delegate.get());
+  auto window_delegate = std::make_unique<ClientControlledWindowStateDelegate>(
+      this, delegate.get());
   auto state =
       std::make_unique<ash::wm::ClientControlledState>(std::move(delegate));
   client_controlled_state_ = state.get();
@@ -589,6 +684,33 @@ gfx::Point ClientControlledShellSurface::GetSurfaceOrigin() const {
   return gfx::Point() - GetWidgetOrigin().OffsetFromOrigin();
 }
 
+void ClientControlledShellSurface::AttemptToStartDrag(int component) {
+  if (resizer_)
+    return;
+  aura::Window* window = GetDragWindow();
+  if (!window || window->HasCapture())
+    return;
+
+  ash::wm::WindowState* window_state = GetWindowState();
+  DCHECK(!window_state->drag_details());
+  DCHECK(component == HTCAPTION);
+
+  window_state->CreateDragDetails(GetMouseLocation(), component,
+                                  wm::WINDOW_MOVE_SOURCE_MOUSE);
+
+  std::unique_ptr<ash::WindowResizer> resizer(
+      ash::WorkspaceWindowResizer::Create(window_state,
+                                          std::vector<aura::Window*>()));
+  resizer_ = ash::ShellPort::Get()->CreateDragWindowResizer(std::move(resizer),
+                                                            window_state);
+  WMHelper::GetInstance()->AddPreTargetHandler(this);
+  window->SetCapture();
+
+  // Notify client that resizing state has changed.
+  if (IsResizing())
+    Configure();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ClientControlledShellSurface, private:
 
@@ -616,6 +738,9 @@ void ClientControlledShellSurface::
 
 ash::wm::WindowState* ClientControlledShellSurface::GetWindowState() {
   return ash::wm::GetWindowState(widget_->GetNativeWindow());
+}
+
+void ClientControlledShellSurface::UpdateFrame() {
 }
 
 // static

@@ -121,9 +121,9 @@ class CustomFrameView : public ash::CustomFrameViewAsh {
     return client_bounds;
   }
   int NonClientHitTest(const gfx::Point& point) override {
-    if (enabled())
-      return ash::CustomFrameViewAsh::NonClientHitTest(point);
-    return GetWidget()->client_view()->NonClientHitTest(point);
+    // if (enabled())
+    return ash::CustomFrameViewAsh::NonClientHitTest(point);
+    // return GetWidget()->client_view()->NonClientHitTest(point);
   }
   void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask) override {
     if (enabled())
@@ -410,6 +410,8 @@ void ShellSurfaceBase::SetSystemModal(bool system_modal) {
 void ShellSurfaceBase::Move() {
   TRACE_EVENT0("exo", "ShellSurfaceBase::Move");
 
+  LOG(ERROR) << "Move";
+
   if (!widget_)
     return;
 
@@ -604,7 +606,6 @@ void ShellSurfaceBase::OnSurfaceCommit() {
         UpdateSystemModal();
     }
   }
-
   SubmitCompositorFrame();
 }
 
@@ -1109,8 +1110,11 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   }
 
   // 2) When a window is being dragged.
-  if (IsResizing())
+  /*
+  if (IsResizing()) {
     return;
+  }
+  */
 
   // Return early if there is pending configure requests.
   if (!pending_configs_.empty() || scoped_configure_)
@@ -1126,8 +1130,14 @@ void ShellSurfaceBase::UpdateWidgetBounds() {
   // should not result in a configure request.
   DCHECK(!ignore_window_bounds_changes_);
   ignore_window_bounds_changes_ = true;
-  if (new_widget_bounds != widget_->GetWindowBoundsInScreen())
+  if (new_widget_bounds != widget_->GetWindowBoundsInScreen()) {
+    LOG(ERROR) << "Update Bounds:"
+               << widget_->GetWindowBoundsInScreen().ToString() << "=>"
+               << new_widget_bounds.ToString();
     SetWidgetBounds(new_widget_bounds);
+  } else {
+    LOG(ERROR) << "No Update Bounds";
+  }
   ignore_window_bounds_changes_ = false;
 }
 
@@ -1284,6 +1294,7 @@ bool ShellSurfaceBase::OnMouseDragged(const ui::MouseEvent& event) {
 
 void ShellSurfaceBase::AttemptToStartDrag(int component) {
   DCHECK(widget_);
+  LOG(ERROR) << "AttempToStartDrag";
 
   // Cannot start another drag if one is already taking place.
   if (resizer_)
