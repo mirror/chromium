@@ -16,6 +16,24 @@
       "revId": "715a1c5f5b3dd2e40219c5457c15e62f4726a503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c4899d_48b9a65d",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-21T01:59:30Z",
+      "side": 1,
+      "message": "Thank you for letting me know! I\u0027ll fix it in the retry patch:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/836228",
+      "parentUuid": "53e65eef_8860b6f2",
+      "revId": "715a1c5f5b3dd2e40219c5457c15e62f4726a503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
