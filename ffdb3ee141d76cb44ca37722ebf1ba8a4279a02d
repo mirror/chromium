@@ -16,6 +16,24 @@
       "revId": "ffdb3ee141d76cb44ca37722ebf1ba8a4279a02d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1a96c1_edfb3fc6",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-21T04:38:53Z",
+      "side": 1,
+      "message": "Ahh, I realized that Advanced means the VIEW_STATE_ADVANCED. That makes sense.",
+      "parentUuid": "dde46f98_c3b58ffd",
+      "revId": "ffdb3ee141d76cb44ca37722ebf1ba8a4279a02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
