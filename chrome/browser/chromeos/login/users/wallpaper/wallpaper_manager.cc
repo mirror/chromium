@@ -17,14 +17,11 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
-#include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
-#include "base/strings/string_number_conversions.h"
-#include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
@@ -61,14 +58,12 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
-#include "crypto/sha2.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/codec/jpeg_codec.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/skia_util.h"
-#include "url/gurl.h"
 
 using content::BrowserThread;
 using wallpaper::WallpaperInfo;
@@ -83,11 +78,6 @@ WallpaperManager* wallpaper_manager = nullptr;
 const int kMoveCustomWallpaperDelaySeconds = 30;
 
 const int kCacheWallpaperDelayMs = 500;
-
-// The directory and file name to save the downloaded device policy controlled
-// wallpaper.
-const char kDeviceWallpaperDir[] = "device_wallpaper";
-const char kDeviceWallpaperFile[] = "device_wallpaper_image.jpg";
 
 // Default quality for encoding wallpaper.
 const int kDefaultEncodingQuality = 90;
@@ -191,21 +181,6 @@ void SetWallpaper(const gfx::ImageSkia& image, wallpaper::WallpaperInfo info) {
     // In classic ash, interact with the WallpaperController class directly.
     ash::Shell::Get()->wallpaper_controller()->SetWallpaperImage(image, info);
   }
-}
-
-// A helper function to check the existing/downloaded device wallpaper file's
-// hash value matches with the hash value provided in the policy settings.
-bool CheckDeviceWallpaperMatchHash(const base::FilePath& device_wallpaper_file,
-                                   const std::string& hash) {
-  std::string image_data;
-  if (base::ReadFileToString(device_wallpaper_file, &image_data)) {
-    std::string sha_hash = crypto::SHA256HashString(image_data);
-    if (base::ToLowerASCII(base::HexEncode(
-            sha_hash.c_str(), sha_hash.size())) == base::ToLowerASCII(hash)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 bool MoveCustomWallpaperDirectory(const char* sub_dir,
@@ -519,7 +494,6 @@ void WallpaperManager::TestApi::ClearDisposableWallpaperCache() {
 
 WallpaperManager::~WallpaperManager() {
   show_user_name_on_signin_subscription_.reset();
-  device_wallpaper_image_subscription_.reset();
   weak_factory_.InvalidateWeakPtrs();
   // In case there's wallpaper load request being processed.
   for (size_t i = 0; i < loading_.size(); ++i)
@@ -762,9 +736,14 @@ void WallpaperManager::ShowUserWallpaper(const AccountId& account_id) {
 
   // For a enterprise managed user, set the device wallpaper if we're at the
   // login screen.
-  if (!user_manager::UserManager::Get()->IsUserLoggedIn() &&
-      SetDeviceWallpaperIfApplicable(account_id))
+  // TODO(xdai): Replace these two functions ShouldSetDeviceWallpaper() and
+  // OnDeviceWallpaperChanged() with functions in WallpaperController.
+  std::string url;
+  std::string hash;
+  if (ShouldSetDeviceWallpaper(account_id, &url, &hash)) {
+    WallpaperControllerClient::Get()->OnDeviceWallpaperChanged();
     return;
+  }
 
   // Guest user or regular user in ephemeral mode.
   if ((user_manager::UserManager::Get()->IsUserNonCryptohomeDataEphemeral(
@@ -816,7 +795,8 @@ void WallpaperManager::ShowUserWallpaper(const AccountId& account_id) {
         wallpaper_path = GetCustomWallpaperDir(sub_dir);
         wallpaper_path = wallpaper_path.Append(info.location);
       } else {
-        wallpaper_path = GetDeviceWallpaperFilePath();
+        wallpaper_path =
+            ash::WallpaperController::GetDevicePolicyWallpaperFilePath();
       }
 
       ash::CustomWallpaperMap* wallpaper_cache_map = GetWallpaperCacheMap();
@@ -846,8 +826,6 @@ void WallpaperManager::ShowUserWallpaper(const AccountId& account_id) {
 }
 
 void WallpaperManager::ShowSigninWallpaper() {
-  if (SetDeviceWallpaperIfApplicable(user_manager::SignInAccountId()))
-    return;
   WallpaperControllerClient::Get()->ShowSigninWallpaper();
 }
 
@@ -952,11 +930,6 @@ void WallpaperManager::AddObservers() {
       CrosSettings::Get()->AddSettingsObserver(
           kAccountsPrefShowUserNamesOnSignIn,
           base::Bind(&WallpaperManager::InitializeRegisteredDeviceWallpaper,
-                     weak_factory_.GetWeakPtr()));
-  device_wallpaper_image_subscription_ =
-      CrosSettings::Get()->AddSettingsObserver(
-          kDeviceWallpaperImage,
-          base::Bind(&WallpaperManager::OnDeviceWallpaperPolicyChanged,
                      weak_factory_.GetWeakPtr()));
 }
 
@@ -1286,23 +1259,6 @@ void WallpaperManager::InitializeUserWallpaperInfo(
       account_id, is_persistent);
 }
 
-bool WallpaperManager::SetDeviceWallpaperIfApplicable(
-    const AccountId& account_id) {
-  std::string url;
-  std::string hash;
-  if (ShouldSetDeviceWallpaper(account_id, &url, &hash)) {
-    // Check if the device wallpaper exists and matches the hash. If so, use it
-    // directly. Otherwise download it first.
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock()},
-        base::Bind(&base::PathExists, GetDeviceWallpaperFilePath()),
-        base::Bind(&WallpaperManager::OnDeviceWallpaperExists,
-                   weak_factory_.GetWeakPtr(), account_id, url, hash));
-    return true;
-  }
-  return false;
-}
-
 bool WallpaperManager::GetWallpaperFromCache(const AccountId& account_id,
                                              gfx::ImageSkia* image) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -1364,7 +1320,8 @@ void WallpaperManager::CacheUserWallpaper(const AccountId& account_id) {
         info.type == wallpaper::DEVICE) {
       base::FilePath wallpaper_path;
       if (info.type == wallpaper::DEVICE) {
-        wallpaper_path = GetDeviceWallpaperFilePath();
+        wallpaper_path =
+            ash::WallpaperController::GetDevicePolicyWallpaperFilePath();
       } else {
         const char* sub_dir = GetCustomWallpaperSubdirForCurrentResolution();
         wallpaper_path = GetCustomWallpaperDir(sub_dir).Append(info.location);
@@ -1590,16 +1547,6 @@ bool WallpaperManager::ShouldSetDeviceWallpaper(const AccountId& account_id,
     return false;
 
   return true;
-}
-
-base::FilePath WallpaperManager::GetDeviceWallpaperDir() {
-  DCHECK(!ash::WallpaperController::dir_chrome_os_wallpapers_path_.empty());
-  return ash::WallpaperController::dir_chrome_os_wallpapers_path_.Append(
-      kDeviceWallpaperDir);
-}
-
-base::FilePath WallpaperManager::GetDeviceWallpaperFilePath() {
-  return GetDeviceWallpaperDir().Append(kDeviceWallpaperFile);
 }
 
 void WallpaperManager::OnWallpaperDecoded(
@@ -1919,114 +1866,6 @@ void WallpaperManager::SetPolicyControlledWallpaper(
                      wallpaper::POLICY, user_image->image(),
                      user_manager::UserManager::Get()
                          ->IsUserLoggedIn() /* update wallpaper */);
-}
-
-void WallpaperManager::OnDeviceWallpaperPolicyChanged() {
-  SetDeviceWallpaperIfApplicable(
-      user_manager::UserManager::Get()->IsUserLoggedIn()
-          ? user_manager::UserManager::Get()->GetActiveUser()->GetAccountId()
-          : user_manager::SignInAccountId());
-}
-
-void WallpaperManager::OnDeviceWallpaperExists(const AccountId& account_id,
-                                               const std::string& url,
-                                               const std::string& hash,
-                                               bool exist) {
-  if (exist) {
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock()},
-        base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
-                   hash),
-        base::Bind(&WallpaperManager::OnCheckDeviceWallpaperMatchHash,
-                   weak_factory_.GetWeakPtr(), account_id, url, hash));
-  } else {
-    GURL device_wallpaper_url(url);
-    device_wallpaper_downloader_.reset(new CustomizationWallpaperDownloader(
-        g_browser_process->system_request_context(), device_wallpaper_url,
-        GetDeviceWallpaperDir(), GetDeviceWallpaperFilePath(),
-        base::Bind(&WallpaperManager::OnDeviceWallpaperDownloaded,
-                   weak_factory_.GetWeakPtr(), account_id, hash)));
-    device_wallpaper_downloader_->Start();
-  }
-}
-
-void WallpaperManager::OnDeviceWallpaperDownloaded(const AccountId& account_id,
-                                                   const std::string& hash,
-                                                   bool success,
-                                                   const GURL& url) {
-  if (!success) {
-    LOG(ERROR) << "Failed to download the device wallpaper. Fallback to "
-                  "default wallpaper.";
-    GetPendingWallpaper()->SetDefaultWallpaper(account_id);
-    return;
-  }
-
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock()},
-      base::Bind(&CheckDeviceWallpaperMatchHash, GetDeviceWallpaperFilePath(),
-                 hash),
-      base::Bind(&WallpaperManager::OnCheckDeviceWallpaperMatchHash,
-                 weak_factory_.GetWeakPtr(), account_id, url.spec(), hash));
-}
-
-void WallpaperManager::OnCheckDeviceWallpaperMatchHash(
-    const AccountId& account_id,
-    const std::string& url,
-    const std::string& hash,
-    bool match) {
-  if (!match) {
-    if (retry_download_if_failed_) {
-      // We only retry to download the device wallpaper one more time if the
-      // hash doesn't match.
-      retry_download_if_failed_ = false;
-      GURL device_wallpaper_url(url);
-      device_wallpaper_downloader_.reset(new CustomizationWallpaperDownloader(
-          g_browser_process->system_request_context(), device_wallpaper_url,
-          GetDeviceWallpaperDir(), GetDeviceWallpaperFilePath(),
-          base::Bind(&WallpaperManager::OnDeviceWallpaperDownloaded,
-                     weak_factory_.GetWeakPtr(), account_id, hash)));
-      device_wallpaper_downloader_->Start();
-    } else {
-      LOG(ERROR) << "The device wallpaper hash doesn't match with provided "
-                    "hash value. Fallback to default wallpaper! ";
-      GetPendingWallpaper()->SetDefaultWallpaper(account_id);
-
-      // Reset the boolean variable so that it can retry to download when the
-      // next device wallpaper request comes in.
-      retry_download_if_failed_ = true;
-    }
-    return;
-  }
-
-  const base::FilePath file_path = GetDeviceWallpaperFilePath();
-  if (!ash::Shell::HasInstance() || ash_util::IsRunningInMash()) {
-    user_image_loader::StartWithFilePath(
-        task_runner_, GetDeviceWallpaperFilePath(),
-        ImageDecoder::ROBUST_JPEG_CODEC,
-        0,  // Do not crop.
-        base::Bind(&WallpaperManager::OnDeviceWallpaperDecoded,
-                   weak_factory_.GetWeakPtr(), account_id));
-  } else {
-    ash::WallpaperController::ReadAndDecodeWallpaper(
-        base::Bind(&WallpaperManager::OnDeviceWallpaperDecoded,
-                   weak_factory_.GetWeakPtr(), account_id),
-        task_runner_, file_path);
-  }
-}
-
-void WallpaperManager::OnDeviceWallpaperDecoded(
-    const AccountId& account_id,
-    std::unique_ptr<user_manager::UserImage> user_image) {
-  // It might be possible that the device policy controlled wallpaper finishes
-  // decoding after the user logs in. In this case do nothing.
-  if (!user_manager::UserManager::Get()->IsUserLoggedIn()) {
-    WallpaperInfo wallpaper_info = {GetDeviceWallpaperFilePath().value(),
-                                    wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
-                                    wallpaper::DEVICE,
-                                    base::Time::Now().LocalMidnight()};
-    GetPendingWallpaper()->SetWallpaperFromImage(
-        account_id, user_image->image(), wallpaper_info);
-  }
 }
 
 void WallpaperManager::SetCustomizedDefaultWallpaperImpl(

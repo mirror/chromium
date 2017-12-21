@@ -86,7 +86,8 @@ wallpaper::WallpaperFilesId HashWallpaperFilesIdStr(
 
 }  // namespace
 
-WallpaperControllerClient::WallpaperControllerClient() : binding_(this) {
+WallpaperControllerClient::WallpaperControllerClient()
+    : policy_handler_(this), binding_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -101,8 +102,8 @@ void WallpaperControllerClient::Init() {
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &wallpaper_controller_);
   BindAndSetClient();
-  // TODO(xdai): Get current device policy enforced flag from
-  // WallpaperPolicyHandler::IsDeviceWallpaperPolicyEnforced() and set here.
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(
+      policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }
 
 void WallpaperControllerClient::InitForTesting(
@@ -257,7 +258,8 @@ void WallpaperControllerClient::BindAndSetClient() {
   ash::WallpaperController::dir_chrome_os_custom_wallpapers_path_ =
       chromeos_custom_wallpapers_path;
 
-  wallpaper_controller_->SetClientAndPaths(std::move(client), user_data_path,
-                                           chromeos_wallpapers_path,
-                                           chromeos_custom_wallpapers_path);
+  wallpaper_controller_->Init(
+      std::move(client), user_data_path, chromeos_wallpapers_path,
+      chromeos_custom_wallpapers_path,
+      policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }

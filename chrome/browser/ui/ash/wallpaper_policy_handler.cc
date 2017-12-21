@@ -69,7 +69,8 @@ bool WallpaperPolicyHandler::GetDeviceWallpaperPolicyStrings(
     std::string* url,
     std::string* hash) {
   const base::DictionaryValue* dict = nullptr;
-  if (!CrosSettings::Get()->GetDictionary(chromeos::kDeviceWallpaperImage,
+  if (!CrosSettings::Get() ||
+      !CrosSettings::Get()->GetDictionary(chromeos::kDeviceWallpaperImage,
                                           &dict) ||
       !dict->GetStringWithoutPathExpansion("url", url) ||
       !dict->GetStringWithoutPathExpansion("hash", hash)) {
