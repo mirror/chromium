@@ -422,6 +422,24 @@ suite('ChromeCleanupHandler_UserInitiatedCleanupsEnabled', function() {
         settings.ChromeCleanupIdleReason.CLEANING_SUCCEEDED);
   });
 
+  test('scanOfferedOnInitiallyIdle_CleanerDownloadFailed', function() {
+    scanOfferedOnInitiallyIdle(
+        settings.ChromeCleanupIdleReason.CLEANER_DOWNLOAD_FAILED);
+  });
+
+  test('cleanerDownloadFailure', function() {
+    cr.webUIListenerCallback('chrome-cleanup-on-reporter-running');
+    cr.webUIListenerCallback(
+        'chrome-cleanup-on-idle',
+        settings.ChromeCleanupIdleReason.CLEANER_DOWNLOAD_FAILED);
+    Polymer.dom.flush();
+
+    var actionButton = chromeCleanupPage.$$('#action-button');
+    assertTrue(!!actionButton);
+    MockInteractions.tap(actionButton);
+    return ChromeCleanupProxy.whenCalled('startScanning');
+  });
+
   test('reporterFoundNothing', function() {
     cr.webUIListenerCallback('chrome-cleanup-on-reporter-running');
     cr.webUIListenerCallback(
