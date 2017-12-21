@@ -300,8 +300,6 @@ class FakeTransport : public QuartcSessionInterface::PacketTransport {
  public:
   explicit FakeTransport(FakeTransportChannel* channel) : channel_(channel) {}
 
-  bool CanWrite() override { return true; }
-
   int Write(const char* buffer, size_t buf_len) override {
     DCHECK(channel_);
     return channel_->SendPacket(buffer, buf_len);
@@ -422,6 +420,9 @@ class QuartcSessionTest : public ::testing::Test,
         new QuartcPacketWriter(client_transport_.get(), kDefaultMaxPacketSize));
     server_writer_.reset(
         new QuartcPacketWriter(server_transport_.get(), kDefaultMaxPacketSize));
+
+    client_writer_->SetWritable();
+    server_writer_->SetWritable();
   }
 
   // The parameters are used to control whether the handshake will success or

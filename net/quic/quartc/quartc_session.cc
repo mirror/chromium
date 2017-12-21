@@ -282,6 +282,7 @@ void QuartcSession::SetDelegate(
 }
 
 void QuartcSession::OnTransportCanWrite() {
+  connection()->writer()->SetWritable();
   if (HasDataToWrite()) {
     connection()->OnCanWrite();
   }
