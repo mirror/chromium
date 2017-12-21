@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68e2ba4_b0732022",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-21T12:55:13Z",
+      "side": 1,
+      "message": "This is not true anymore. We\u0027ve been cleaning up duplicate symbols and I think the only remaining problem is GL system headers.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "f7a98e7bfb60ba2a37de43031b2cd7b87190ff20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
