@@ -478,12 +478,11 @@ TEST_F(WebContentsImplTest, SimpleNavigation) {
   SiteInstance* instance1 = contents()->GetSiteInstance();
   EXPECT_EQ(nullptr, contents()->GetPendingMainFrame());
 
-  // Navigate to URL
+  // Start the navigation until it is ready to commit.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url, contents());
+  navigation->ReadyToCommit();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(instance1, orig_rfh->GetSiteInstance());
   // Controller's pending entry will have a null site instance until we assign
@@ -493,9 +492,8 @@ TEST_F(WebContentsImplTest, SimpleNavigation) {
       NavigationEntryImpl::FromNavigationEntry(controller().GetVisibleEntry())->
           site_instance());
 
-  // DidNavigate from the page
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  // Commit the navigation.
+  navigation->Commit();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
   EXPECT_EQ(instance1, orig_rfh->GetSiteInstance());
@@ -645,13 +643,7 @@ TEST_F(WebContentsImplTest, CrossSiteBoundariesAfterCrash) {
 
   // Navigate to URL.  First URL should use first RenderViewHost.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
-
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh->GetRenderViewHost(), contents()->GetRenderViewHost());
 
@@ -660,21 +652,20 @@ TEST_F(WebContentsImplTest, CrossSiteBoundariesAfterCrash) {
   orig_rfh->GetProcess()->SimulateCrash();
   EXPECT_FALSE(orig_rfh->IsRenderFrameLive());
 
-  // Navigate to new site.  We should not go into PENDING.
+  // Start navigating to a new site. We should not go into PENDING.
   const GURL url2("http://www.yahoo.com");
-  controller().LoadURL(
-      url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
+  auto navigation_to_url2 =
+      NavigationSimulator::CreateBrowserInitiated(url2, contents());
+  navigation_to_url2->ReadyToCommit();
+
   TestRenderFrameHost* new_rfh = main_test_rfh();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(nullptr, contents()->GetPendingMainFrame());
   EXPECT_NE(orig_rfh, new_rfh);
   EXPECT_EQ(orig_rvh_delete_count, 1);
 
-  // DidNavigate from the new page
-  contents()->TestDidNavigate(new_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  // Commit the navigation.
+  navigation_to_url2->Commit();
   SiteInstance* instance2 = contents()->GetSiteInstance();
 
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
@@ -691,60 +682,36 @@ TEST_F(WebContentsImplTest, CrossSiteBoundariesAfterCrash) {
 // both contentses to a new site will place both contentses in a single
 // SiteInstance.
 TEST_F(WebContentsImplTest, NavigateTwoTabsCrossSite) {
-  TestRenderFrameHost* orig_rfh = main_test_rfh();
+  // TestRenderFrameHost* orig_rfh = main_test_rfh();
   SiteInstance* instance1 = contents()->GetSiteInstance();
 
   // Navigate to URL.  First URL should use first RenderViewHost.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
 
   // Open a new contents with the same SiteInstance, navigated to the same site.
   std::unique_ptr<TestWebContents> contents2(
       TestWebContents::Create(browser_context(), instance1));
-  contents2->GetController().LoadURL(url, Referrer(),
-                                     ui::PAGE_TRANSITION_TYPED,
-                                     std::string());
-  entry_id = contents2->GetController().GetPendingEntry()->GetUniqueID();
-  contents2->GetMainFrame()->PrepareForCommit();
-  // Need this page id to be 2 since the site instance is the same (which is the
-  // scope of page IDs) and we want to consider this a new page.
-  contents2->TestDidNavigate(contents2->GetMainFrame(), entry_id, true, url,
-                             ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents2.get(), url);
 
   // Navigate first contents to a new site.
   const GURL url2a("http://www.yahoo.com");
-  controller().LoadURL(
-      url2a, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  orig_rfh->PrepareForCommit();
-  TestRenderFrameHost* pending_rfh_a = contents()->GetPendingMainFrame();
-  contents()->TestDidNavigate(pending_rfh_a, entry_id, true, url2a,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url2a);
   SiteInstance* instance2a = contents()->GetSiteInstance();
   EXPECT_NE(instance1, instance2a);
 
   // Navigate second contents to the same site as the first tab.
   const GURL url2b("http://mail.yahoo.com");
-  contents2->GetController().LoadURL(url2b, Referrer(),
-                                     ui::PAGE_TRANSITION_TYPED,
-                                     std::string());
-  entry_id = contents2->GetController().GetPendingEntry()->GetUniqueID();
-  TestRenderFrameHost* rfh2 = contents2->GetMainFrame();
-  rfh2->PrepareForCommit();
-  TestRenderFrameHost* pending_rfh_b = contents2->GetPendingMainFrame();
-  EXPECT_NE(nullptr, pending_rfh_b);
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2b, contents2.get());
+  navigation->ReadyToCommit();
+  EXPECT_NE(nullptr, contents2->GetPendingMainFrame());
   EXPECT_TRUE(contents2->CrossProcessNavigationPending());
 
   // NOTE(creis): We used to be in danger of showing a crash page here if the
   // second contents hadn't navigated somewhere first (bug 1145430).  That case
   // is now covered by the CrossSiteBoundariesAfterCrash test.
-  contents2->TestDidNavigate(pending_rfh_b, entry_id, true, url2b,
-                             ui::PAGE_TRANSITION_TYPED);
+  navigation->Commit();
   SiteInstance* instance2b = contents2->GetSiteInstance();
   EXPECT_NE(instance1, instance2b);
 
@@ -768,12 +735,7 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   browser_client.set_assign_site_for_url(false);
   // Navigate to an URL that will not assign a new SiteInstance.
   const GURL native_url("non-site-url://stuffandthings");
-  controller().LoadURL(
-      native_url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, native_url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), native_url);
 
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
@@ -786,16 +748,14 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   browser_client.set_assign_site_for_url(true);
   // Navigate to new site (should keep same site instance).
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url, contents());
+  navigation->ReadyToCommit();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(native_url, contents()->GetLastCommittedURL());
   EXPECT_EQ(url, contents()->GetVisibleURL());
   EXPECT_FALSE(contents()->GetPendingMainFrame());
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  navigation->Commit();
 
   // Keep the number of active frames in orig_rfh's SiteInstance
   // non-zero so that orig_rfh doesn't get deleted when it gets
@@ -811,7 +771,7 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   const GURL url2("http://www.yahoo.com");
   controller().LoadURL(
       url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
+  int entry_id = controller().GetPendingEntry()->GetUniqueID();
   if (IsBrowserSideNavigationEnabled())
     orig_rfh->PrepareForCommit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
@@ -888,12 +848,7 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredSitelessUrl) {
   // Navigate to a regular site and verify that the SiteInstance was kept.
   browser_client.set_assign_site_for_url(true);
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry = controller().GetPendingEntry();
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry->GetUniqueID(), true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_EQ(orig_instance, contents()->GetSiteInstance());
 
   // Cleanup.
@@ -933,13 +888,7 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredRegularUrl) {
 
   // Navigate to another site and verify that a new SiteInstance was created.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry = controller().GetPendingEntry();
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(contents()->GetPendingMainFrame(),
-                              entry->GetUniqueID(), true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_NE(orig_instance, contents()->GetSiteInstance());
 
   // Cleanup.
@@ -949,22 +898,16 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredRegularUrl) {
 // Test that we can find an opener RVH even if it's pending.
 // http://crbug.com/176252.
 TEST_F(WebContentsImplTest, FindOpenerRVHWhenPending) {
-  TestRenderFrameHost* orig_rfh = main_test_rfh();
 
   // Navigate to a URL.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
 
   // Start to navigate first tab to a new site, so that it has a pending RVH.
   const GURL url2("http://www.yahoo.com");
-  controller().LoadURL(
-      url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  orig_rfh->PrepareForCommit();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2, contents());
+  navigation->ReadyToCommit();
   TestRenderFrameHost* pending_rfh = contents()->GetPendingMainFrame();
   SiteInstance* instance = pending_rfh->GetSiteInstance();
 
@@ -987,9 +930,7 @@ TEST_F(WebContentsImplTest, FindOpenerRVHWhenPending) {
   EXPECT_EQ(proxy->GetRoutingID(), opener_frame_routing_id);
 
   // Ensure that committing the navigation removes the proxy.
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  contents()->TestDidNavigate(pending_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  navigation->Commit();
   EXPECT_FALSE(
       contents()->GetRenderManager()->GetRenderFrameProxyHost(instance));
 }
@@ -1007,29 +948,20 @@ TEST_F(WebContentsImplTest, CrossSiteComparesAgainstCurrentPage) {
 
   // Navigate to URL.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
 
   // Open a related contents to a second site.
   std::unique_ptr<TestWebContents> contents2(
       TestWebContents::Create(browser_context(), instance1));
   const GURL url2("http://www.yahoo.com");
-  contents2->GetController().LoadURL(url2, Referrer(),
-                                     ui::PAGE_TRANSITION_TYPED,
-                                     std::string());
-  entry_id = contents2->GetController().GetPendingEntry()->GetUniqueID();
-  contents2->GetMainFrame()->PrepareForCommit();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2, contents2.get());
+  navigation->ReadyToCommit();
 
   // The first RVH in contents2 isn't live yet, so we shortcut the cross site
   // pending.
-  TestRenderFrameHost* rfh2 = contents2->GetMainFrame();
   EXPECT_FALSE(contents2->CrossProcessNavigationPending());
-  contents2->TestDidNavigate(rfh2, entry_id, true, url2,
-                             ui::PAGE_TRANSITION_TYPED);
+  navigation->Commit();
   SiteInstance* instance2 = contents2->GetSiteInstance();
   EXPECT_NE(instance1, instance2);
   EXPECT_FALSE(contents2->CrossProcessNavigationPending());
@@ -1044,13 +976,7 @@ TEST_F(WebContentsImplTest, CrossSiteComparesAgainstCurrentPage) {
   // Navigate to the new site.  Doesn't switch SiteInstancees, because we
   // compare against the current URL, not the SiteInstance's site.
   const GURL url3("http://mail.yahoo.com");
-  controller().LoadURL(
-      url3, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  EXPECT_FALSE(contents()->CrossProcessNavigationPending());
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url3,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url3);
   SiteInstance* instance4 = contents()->GetSiteInstance();
   EXPECT_EQ(instance1, instance4);
 }
@@ -1063,12 +989,7 @@ TEST_F(WebContentsImplTest, CrossSiteUnloadHandlers) {
 
   // Navigate to URL.  First URL should use first RenderViewHost.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
@@ -1087,7 +1008,7 @@ TEST_F(WebContentsImplTest, CrossSiteUnloadHandlers) {
   // Navigate again, but simulate an onbeforeunload approval.
   controller().LoadURL(
       url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
+  int entry_id = controller().GetPendingEntry()->GetUniqueID();
   EXPECT_TRUE(orig_rfh->is_waiting_for_beforeunload_ack());
   now = base::TimeTicks::Now();
   orig_rfh->PrepareForCommit();
@@ -1116,12 +1037,7 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationPreempted) {
 
   // Navigate to URL.  First URL should use first RenderFrameHost.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
@@ -1239,18 +1155,12 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackOldNavigationIgnored) {
   // Start with a web ui page, which gets a new RVH with WebUI bindings.
   GURL url1(std::string(kChromeUIScheme) + "://" +
             std::string(kChromeUIGpuHost));
-  controller().LoadURL(url1, Referrer(), ui::PAGE_TRANSITION_TYPED,
-                       std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url1);
   TestRenderFrameHost* webui_rfh = main_test_rfh();
-  webui_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(webui_rfh, entry_id, true, url1,
-                              ui::PAGE_TRANSITION_TYPED);
   NavigationEntry* entry1 = controller().GetLastCommittedEntry();
   SiteInstance* instance1 = contents()->GetSiteInstance();
 
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
-  EXPECT_EQ(webui_rfh, main_test_rfh());
   EXPECT_EQ(url1, entry1->GetURL());
   EXPECT_EQ(instance1,
             NavigationEntryImpl::FromNavigationEntry(entry1)->site_instance());
@@ -1258,24 +1168,12 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackOldNavigationIgnored) {
 
   // Navigate to new site.
   const GURL url2("http://www.google.com");
-  controller().LoadURL(url2, Referrer(), ui::PAGE_TRANSITION_TYPED,
-                       std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  EXPECT_TRUE(contents()->CrossProcessNavigationPending());
-  TestRenderFrameHost* google_rfh = contents()->GetPendingMainFrame();
-
-  // Simulate beforeunload approval.
-  EXPECT_TRUE(webui_rfh->is_waiting_for_beforeunload_ack());
-  webui_rfh->PrepareForCommit();
-
-  // DidNavigate from the pending page.
-  contents()->TestDidNavigate(google_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url2);
+  TestRenderFrameHost* google_rfh = main_test_rfh();
   NavigationEntry* entry2 = controller().GetLastCommittedEntry();
   SiteInstance* instance2 = contents()->GetSiteInstance();
 
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
-  EXPECT_EQ(google_rfh, main_test_rfh());
   EXPECT_NE(instance1, instance2);
   EXPECT_FALSE(contents()->GetPendingMainFrame());
   EXPECT_EQ(url2, entry2->GetURL());
@@ -1285,13 +1183,7 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationBackOldNavigationIgnored) {
 
   // Navigate to third page on same site.
   const GURL url3("http://news.google.com");
-  controller().LoadURL(url3, Referrer(), ui::PAGE_TRANSITION_TYPED,
-                       std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  EXPECT_FALSE(contents()->CrossProcessNavigationPending());
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(google_rfh, entry_id, true, url3,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url3);
   NavigationEntry* entry3 = controller().GetLastCommittedEntry();
   SiteInstance* instance3 = contents()->GetSiteInstance();
 
@@ -1335,12 +1227,7 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationNotPreemptedByFrame) {
 
   // Navigate to URL.  First URL should use the original RenderFrameHost.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
@@ -1368,7 +1255,7 @@ namespace {
 void SetAsNonUserGesture(FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
   params->gesture = NavigationGestureAuto;
 }
-}
+}  // namespace
 
 // Test that a cross-site navigation is not preempted if the previous
 // renderer sends a FrameNavigate message just before being told to stop.
@@ -1421,37 +1308,33 @@ TEST_F(WebContentsImplTest, NavigationEntryContentState) {
 
   // Navigate to URL.  There should be no committed entry yet.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url, contents());
+  navigation->ReadyToCommit();
   NavigationEntry* entry = controller().GetLastCommittedEntry();
   EXPECT_EQ(nullptr, entry);
 
-  // Committed entry should have page state after DidNavigate.
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  // Committed entry should have page state.
+  navigation->Commit();
   entry = controller().GetLastCommittedEntry();
   EXPECT_TRUE(entry->GetPageState().IsValid());
 
   // Navigate to same site.
   const GURL url2("http://images.google.com");
-  controller().LoadURL(
-      url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
+  auto navigation2 =
+      NavigationSimulator::CreateBrowserInitiated(url2, contents());
+  navigation2->ReadyToCommit();
   entry = controller().GetLastCommittedEntry();
   EXPECT_TRUE(entry->GetPageState().IsValid());
 
-  // Committed entry should have page state after DidNavigate.
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  // Committed entry should have page state.
+  navigation2->Commit();
   entry = controller().GetLastCommittedEntry();
   EXPECT_TRUE(entry->GetPageState().IsValid());
 
   // Now go back.  Committed entry should still have page state.
   controller().GoBack();
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
+  int entry_id = controller().GetPendingEntry()->GetUniqueID();
   orig_rfh->PrepareForCommit();
   contents()->TestDidNavigate(
       orig_rfh, entry_id, false, url,
@@ -1468,9 +1351,7 @@ TEST_F(WebContentsImplTest, NavigationEntryContentStateNewWindow) {
 
   // Navigate to about:blank.
   const GURL url(url::kAboutBlankURL);
-  orig_rfh->SendRendererInitiatedNavigationRequest(url, false);
-  contents()->TestDidNavigate(orig_rfh, 0, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
 
   // Should have a page state here.
   NavigationEntry* entry = controller().GetLastCommittedEntry();
@@ -1484,14 +1365,10 @@ TEST_F(WebContentsImplTest, NavigationEntryContentStateNewWindow) {
 
   // Navigating to a normal page should not cause a process swap.
   const GURL new_url("http://www.google.com");
-  controller().LoadURL(new_url, Referrer(),
-                       ui::PAGE_TRANSITION_TYPED, std::string());
-  entry = controller().GetPendingEntry();
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), new_url);
+
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry->GetUniqueID(), true, new_url,
-                              ui::PAGE_TRANSITION_TYPED);
   NavigationEntryImpl* entry_impl2 = NavigationEntryImpl::FromNavigationEntry(
       controller().GetLastCommittedEntry());
   EXPECT_EQ(site_instance_id, entry_impl2->site_instance()->GetId());
@@ -1507,12 +1384,7 @@ TEST_F(WebContentsImplTest, NavigationExitsFullscreen) {
 
   // Navigate to a site.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
   // Toggle fullscreen mode on (as if initiated via IPC from renderer).
@@ -1525,13 +1397,7 @@ TEST_F(WebContentsImplTest, NavigationExitsFullscreen) {
 
   // Navigate to a new site.
   const GURL url2("http://www.yahoo.com");
-  controller().LoadURL(
-      url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  TestRenderFrameHost* const pending_rfh = contents()->GetPendingMainFrame();
-  contents()->TestDidNavigate(pending_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url2);
 
   // Confirm fullscreen has exited.
   EXPECT_FALSE(contents()->IsFullscreenForCurrentTab());
@@ -1549,23 +1415,12 @@ TEST_F(WebContentsImplTest, HistoryNavigationExitsFullscreen) {
 
   // Navigate to a site.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  orig_rfh->PrepareForCommit();
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
   // Now, navigate to another page on the same site.
   const GURL url2("http://www.google.com/search?q=kittens");
-  controller().LoadURL(
-      url2, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  entry_id = controller().GetPendingEntry()->GetUniqueID();
-  orig_rfh->PrepareForCommit();
-  EXPECT_FALSE(contents()->CrossProcessNavigationPending());
-  contents()->TestDidNavigate(orig_rfh, entry_id, true, url2,
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url2);
   EXPECT_EQ(orig_rfh, main_test_rfh());
 
   // Sanity-check: Confirm we're not starting out in fullscreen mode.
@@ -1584,7 +1439,7 @@ TEST_F(WebContentsImplTest, HistoryNavigationExitsFullscreen) {
       controller().GoBack();
     else
       controller().GoForward();
-    entry_id = controller().GetPendingEntry()->GetUniqueID();
+    int entry_id = controller().GetPendingEntry()->GetUniqueID();
     orig_rfh->PrepareForCommit();
     EXPECT_FALSE(contents()->CrossProcessNavigationPending());
     EXPECT_EQ(orig_rfh, main_test_rfh());
@@ -1624,12 +1479,7 @@ TEST_F(WebContentsImplTest, CrashExitsFullscreen) {
 
   // Navigate to a site.
   const GURL url("http://www.google.com");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  contents()->TestDidNavigate(main_test_rfh(), entry_id, true,
-                              url, ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), url);
 
   // Toggle fullscreen mode on (as if initiated via IPC from renderer).
   EXPECT_FALSE(contents()->IsFullscreenForCurrentTab());
@@ -2566,13 +2416,7 @@ TEST_F(WebContentsImplTest, NoJSMessageOnInterstitials) {
   const GURL kGURL(kUrl);
 
   // Start a navigation to a page
-  contents()->GetController().LoadURL(
-      kGURL, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  main_test_rfh()->PrepareForCommit();
-  // DidNavigate from the page
-  contents()->TestDidNavigate(main_test_rfh(), entry_id, true,
-                              kGURL, ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), kGURL);
 
   // Simulate showing an interstitial while the page is showing.
   TestInterstitialPage::InterstitialState state =
@@ -3600,19 +3444,20 @@ class TestJavaScriptDialogManager : public JavaScriptDialogManager {
 }  // namespace
 
 TEST_F(WebContentsImplTest, ResetJavaScriptDialogOnUserNavigate) {
+  const GURL kUrl("http://www.google.com");
+  const GURL kUrl2("http://www.yahoo.com");
   TestJavaScriptDialogManager dialog_manager;
   contents()->SetJavaScriptDialogManagerForTesting(&dialog_manager);
 
   // A user-initiated navigation.
-  contents()->TestDidNavigate(main_test_rfh(), 0, true,
-                              GURL("about:whatever"),
-                              ui::PAGE_TRANSITION_TYPED);
+  NavigationSimulator::NavigateAndCommitFromBrowser(contents(), kUrl);
   EXPECT_EQ(1u, dialog_manager.reset_count());
 
   // An automatic navigation.
-  main_test_rfh()->SendNavigateWithModificationCallback(
-      0, true, GURL(url::kAboutBlankURL), base::Bind(SetAsNonUserGesture));
-
+  auto navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl2, main_test_rfh());
+  navigation->SetHasUserGesture(false);
+  navigation->CommitSameDocument();
   EXPECT_EQ(1u, dialog_manager.reset_count());
 
   contents()->SetJavaScriptDialogManagerForTesting(nullptr);
