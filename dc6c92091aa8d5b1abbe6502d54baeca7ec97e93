@@ -34,6 +34,24 @@
       "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f833a2e9_3d0fab5f",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-21T00:17:31Z",
+      "side": 1,
+      "message": "I mean, there\u0027s no such thing as delegated_frame_host_surface_id_? Or maybe I completely missed something?",
+      "parentUuid": "2e1f469c_695b06bb",
+      "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
