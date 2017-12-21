@@ -172,21 +172,8 @@ class BeaconFormData final : public Beacon {
   AtomicString content_type_;
 };
 
-// Decide if a beacon with the given size is allowed to go ahead
-// given some overall allowance limit.
-bool AllowBeaconWithSize(int allowance, unsigned long long size) {
-  // If a negative allowance is supplied, no size constraint is imposed.
-  if (allowance < 0)
-    return true;
-
-  if (static_cast<unsigned long long>(allowance) < size)
-    return false;
-
-  return true;
-}
-
 bool SendBeaconCommon(LocalFrame* frame,
-                      int allowance,
+                      size_t allowance,
                       const KURL& url,
                       const Beacon& beacon,
                       size_t& beacon_size) {
@@ -201,7 +188,7 @@ bool SendBeaconCommon(LocalFrame* frame,
   }
 
   unsigned long long size = beacon.size();
-  if (!AllowBeaconWithSize(allowance, size))
+  if (static_cast<unsigned long long>(allowance) < size)
     return false;
 
   beacon_size = size;
@@ -318,7 +305,7 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,
-                            int allowance,
+                            size_t allowance,
                             const KURL& beacon_url,
                             const String& data,
                             size_t& beacon_size) {
@@ -327,7 +314,7 @@ bool PingLoader::SendBeacon(LocalFrame* frame,
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,
-                            int allowance,
+                            size_t allowance,
                             const KURL& beacon_url,
                             DOMArrayBufferView* data,
                             size_t& beacon_size) {
@@ -336,7 +323,7 @@ bool PingLoader::SendBeacon(LocalFrame* frame,
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,
-                            int allowance,
+                            size_t allowance,
                             const KURL& beacon_url,
                             FormData* data,
                             size_t& beacon_size) {
@@ -345,7 +332,7 @@ bool PingLoader::SendBeacon(LocalFrame* frame,
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,
-                            int allowance,
+                            size_t allowance,
                             const KURL& beacon_url,
                             Blob* data,
                             size_t& beacon_size) {
