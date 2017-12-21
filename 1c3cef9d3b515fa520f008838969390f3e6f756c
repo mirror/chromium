@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be2a0ec_49c63b7f",
+        "filename": "ui/file_manager/externs/volume_info.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-21T10:17:26Z",
+      "side": 1,
+      "message": "@fukino: Any idea?",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 7
+      },
+      "revId": "1c3cef9d3b515fa520f008838969390f3e6f756c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9a95a92_e39d0cde",
+        "filename": "ui/file_manager/file_manager/background/js/volume_info_impl.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-21T10:17:26Z",
+      "side": 1,
+      "message": "@fukino: Same here. Do you have any idea why?",
+      "range": {
+        "startLine": 6,
+        "startChar": 36,
+        "endLine": 6,
+        "endChar": 64
+      },
+      "revId": "1c3cef9d3b515fa520f008838969390f3e6f756c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
