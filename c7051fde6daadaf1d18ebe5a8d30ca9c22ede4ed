@@ -258,6 +258,30 @@
       "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c30ffb3_19934274",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10888,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-21T19:23:47Z",
+      "side": 1,
+      "message": "I think some option with \"ForIntrusiveAdsSites\" as a sub-string would definitely add clarity here.\n\nAlso, why is the \"Default\" word used in the policy name? When the policy is set, this setting is forced, while the word \"default\" suggests that it\u0027s an initial value that can be overridden.\n\nAnd if you decide to rename the policy, then please also adjust the \u0027caption\u0027 field accordingly. For instance, change it to \"Ads setting for sites with intrusive ads\".",
+      "parentUuid": "af88b83d_fe5bd347",
+      "range": {
+        "startLine": 10888,
+        "startChar": 41,
+        "endLine": 10888,
+        "endChar": 68
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
