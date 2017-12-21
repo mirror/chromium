@@ -46,6 +46,30 @@
       "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9e12d6_6f4d207a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-21T16:31:13Z",
+      "side": 1,
+      "message": "I thought we\u0027d have to do something like we do for tabbed activity:\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java?q\u003dLaunchIntentDis\u0026sq\u003dpackage:chromium\u0026l\u003d494\n\nThat doesn\u0027t pass the URL as a query param but as the data uri directly and we add the URI permission along in that case.  I don\u0027t think it would hurt to do it outside of the if just in case though.",
+      "parentUuid": "79f7f372_8b4851b8",
+      "range": {
+        "startLine": 415,
+        "startChar": 15,
+        "endLine": 415,
+        "endChar": 23
+      },
+      "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
