@@ -24,6 +24,7 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_data_manager_observer.h"
@@ -765,6 +766,22 @@ void GpuDataManagerImplPrivate::AppendGpuCommandLine(
 void GpuDataManagerImplPrivate::UpdateGpuPreferences(
     gpu::GpuPreferences* gpu_preferences) const {
   DCHECK(gpu_preferences);
+
+  BrowserGpuMemoryBufferManager* gpu_memory_buffer_manager =
+      BrowserGpuMemoryBufferManager::current();
+  DCHECK(gpu_memory_buffer_manager);
+  // For performance reasons, discourage storing videoFrames in a multiplanar
+  // GpuMemoryBuffer if this is not native, see https://crbug.com/791676.
+  if (!gpu_memory_buffer_manager->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YUV_420_BIPLANAR,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE) &&
+      !gpu_memory_buffer_manager->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YVU_420,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE)) {
+    gpu_preferences->disable_multiplanar_gpu_memory_buffers_for_video_frames =
+        true;
+  }
+
   gpu_preferences->gpu_program_cache_size =
       gpu::ShaderDiskCache::CacheSizeBytes();
 }
