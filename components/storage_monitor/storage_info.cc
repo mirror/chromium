@@ -109,7 +109,7 @@ bool StorageInfo::CrackDeviceId(const std::string& device_id,
   } else if (prefix == kMacImageCapturePrefix) {
     found_type = MAC_IMAGE_CAPTURE;
   } else {
-    NOTREACHED();
+    // Old Chrome profiles may refer to devices with no longer supported types.
     return false;
   }
   if (type)
