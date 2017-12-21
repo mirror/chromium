@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dca94cc0_025f61c0",
+        "filename": "ios/web/public/test/web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-21T22:45:19Z",
+      "side": 1,
+      "message": "based on our discussion offline, let\u0027s keep passing the web::Client instance in the constructor since it\u0027s impractical to enforce subclasses to use a ScopedWebClient. However, making GetWebClient virtual so that subclasses can override with a TestWebClient return type for convenience.",
+      "parentUuid": "01edbe5a_e2b3cc71",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ade490ce_2885922f",
         "filename": "ios/web/public/test/web_test.mm",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda28b2f_f90648aa",
+        "filename": "ios/web/public/test/web_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-21T22:45:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e29befef_8afffcf0",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
