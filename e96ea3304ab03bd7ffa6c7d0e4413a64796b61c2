@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9954307_c6312726",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T21:18:44Z",
+      "side": 1,
+      "message": "nit: this could be first ASSERT-ed for existence before dereferencing, otherwise a crash could happen. As it\u0027s very unlikely that could be the case I\u0027m happy either way.",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 78
+      },
+      "revId": "e96ea3304ab03bd7ffa6c7d0e4413a64796b61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ad32bc_2cb889b3",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T21:18:44Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 187,
+        "endChar": 78
+      },
+      "revId": "e96ea3304ab03bd7ffa6c7d0e4413a64796b61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
