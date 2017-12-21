@@ -394,7 +394,7 @@ void UiSceneCreator::CreateSystemIndicators() {
     bool PermissionsModel::*signal;
   };
   const std::vector<Indicator> indicators = {
-      {kAudioCaptureIndicator, vector_icons::kMicrophoneIcon,
+      {kAudioCaptureIndicator, vector_icons::kMicIcon,
        IDS_AUDIO_CALL_NOTIFICATION_TEXT_2,
        &PermissionsModel::audio_capture_enabled},
       {kVideoCaptureIndicator, vector_icons::kVideocamIcon,
@@ -765,7 +765,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
       kVoiceSearchButton, kPhaseForeground,
       base::BindRepeating(&UiBrowserInterface::SetVoiceSearchActive,
                           base::Unretained(browser_), true),
-      vector_icons::kMicrophoneIcon);
+      vector_icons::kMicIcon);
   voice_search_button->SetSize(kVoiceSearchButtonDiameterDMM,
                                kVoiceSearchButtonDiameterDMM);
   voice_search_button->set_hover_offset(kButtonZOffsetHoverDMM);
@@ -843,7 +843,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
 
   auto microphone = base::MakeUnique<VectorIcon>(512);
   microphone->SetName(kSpeechRecognitionResultMicrophoneIcon);
-  microphone->SetIcon(vector_icons::kMicrophoneIcon);
+  microphone->SetIcon(vector_icons::kMicIcon);
   microphone->SetDrawPhase(kPhaseForeground);
   microphone->set_hit_testable(false);
   microphone->SetSize(kCloseButtonWidth, kCloseButtonHeight);
@@ -911,7 +911,7 @@ void UiSceneCreator::CreateVoiceSearchUiGroup() {
   scene_->AddUiElement(kSpeechRecognitionListening, std::move(inner_circle));
 
   auto microphone_icon = base::MakeUnique<VectorIcon>(512);
-  microphone_icon->SetIcon(vector_icons::kMicrophoneIcon);
+  microphone_icon->SetIcon(vector_icons::kMicIcon);
   microphone_icon->SetName(kSpeechRecognitionListeningMicrophoneIcon);
   microphone_icon->SetDrawPhase(kPhaseForeground);
   microphone_icon->set_hit_testable(false);
