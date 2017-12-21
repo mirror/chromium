@@ -249,7 +249,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // CompositorDependencies implementation.
   bool IsGpuRasterizationForced() override;
-  bool IsAsyncWorkerContextEnabled() override;
   int GetGpuRasterizationMSAASampleCount() override;
   bool IsLcdTextEnabled() override;
   bool IsDistanceFieldTextEnabled() override;
@@ -774,7 +773,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Compositor settings.
   bool is_gpu_rasterization_forced_;
-  bool is_async_worker_context_enabled_;
   int gpu_rasterization_msaa_sample_count_;
   bool is_lcd_text_enabled_;
   bool is_distance_field_text_enabled_;

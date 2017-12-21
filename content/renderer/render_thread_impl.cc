@@ -894,8 +894,6 @@ void RenderThreadImpl::Init(
 
   is_gpu_rasterization_forced_ =
       command_line.HasSwitch(switches::kForceGpuRasterization);
-  is_async_worker_context_enabled_ =
-      command_line.HasSwitch(switches::kEnableGpuAsyncWorkerContext);
 
   if (command_line.HasSwitch(switches::kGpuRasterizationMSAASampleCount)) {
     std::string string_value = command_line.GetSwitchValueASCII(
@@ -1646,10 +1644,6 @@ bool RenderThreadImpl::IsGpuRasterizationForced() {
   return is_gpu_rasterization_forced_;
 }
 
-bool RenderThreadImpl::IsAsyncWorkerContextEnabled() {
-  return is_async_worker_context_enabled_;
-}
-
 int RenderThreadImpl::GetGpuRasterizationMSAASampleCount() {
   return gpu_rasterization_msaa_sample_count_;
 }
@@ -2132,12 +2126,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   constexpr bool automatic_flushes = false;
   constexpr bool support_locking = false;
 
-  // The compositor context shares resources with the worker context unless
-  // the worker is async.
-  ui::ContextProviderCommandBuffer* share_context =
-      worker_context_provider.get();
-  if (IsAsyncWorkerContextEnabled())
-    share_context = nullptr;
+  ui::ContextProviderCommandBuffer* share_context = nullptr;
 
   scoped_refptr<ui::ContextProviderCommandBuffer> context_provider(
       new ui::ContextProviderCommandBuffer(
@@ -2447,12 +2436,8 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     return shared_worker_context_provider_;
   }
 
-  int32_t stream_id = kGpuStreamIdDefault;
-  gpu::SchedulingPriority stream_priority = kGpuStreamPriorityDefault;
-  if (is_async_worker_context_enabled_) {
-    stream_id = kGpuStreamIdWorker;
-    stream_priority = kGpuStreamPriorityWorker;
-  }
+  int32_t stream_id = kGpuStreamIdWorker;
+  gpu::SchedulingPriority stream_priority = kGpuStreamPriorityWorker;
 
   bool support_locking = true;
   bool support_oop_rasterization =

@@ -491,6 +491,7 @@ bool VizProcessTransportFactory::CreateContextProviders(
   constexpr bool kCompositorContextSupportsRaster = false;
 
   if (CheckContextLost(compositor_context_provider_.get())) {
+    // TODO(vmiura): Fix this as they're no longer in the same share group.
     // Both will be lost because they are in the same share group.
     shared_worker_context_provider_ = nullptr;
     compositor_context_provider_ = nullptr;
@@ -514,7 +515,7 @@ bool VizProcessTransportFactory::CreateContextProviders(
     compositor_context_provider_ = CreateContextProviderImpl(
         std::move(gpu_channel_host), GetGpuMemoryBufferManager(),
         kCompositorContextSupportsLocking, kCompositorContextSupportsGLES2,
-        kCompositorContextSupportsRaster, shared_worker_context_provider_.get(),
+        kCompositorContextSupportsRaster, nullptr,
         ui::command_buffer_metrics::UI_COMPOSITOR_CONTEXT);
     compositor_context_provider_->SetDefaultTaskRunner(resize_task_runner_);
 
