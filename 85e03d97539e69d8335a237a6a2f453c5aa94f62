@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc966abf_4c81ef33",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:42:59Z",
+      "side": 1,
+      "message": "nit: VISIBLE_LOC isn\u0027t clear to me (I *think* this LOC means \"lines of code\", but to me I think of \"location\").  Maybe MAX_VISIBLE_LINES?",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd263e6_f4ca4430",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:42:59Z",
+      "side": 1,
+      "message": "Hmm... so I think what you have here is probably more efficient, but it\u0027s a bit hard to grok.  How much worse performance-wise would something like:\n\nfunction halfOrFill(desiredCount, oppositeCount) {\n  const VISIBLE_LOC \u003d 1000;\n  let max \u003d Math.max(VISIBLE_LOC / 2, VISIBLE_LOC - oppositeCount);\n  return Math.min(max, desiredCount);\n}\n\nconst linesBefore \u003d before.split(\u0027\\n\u0027);\nconst linesAfter \u003d after.split(\u0027\\n\u0027);\nconst visibleBeforeCount \u003d halfOrFill(linesBefore.length, linesAfter.length);\nconst visibleAfterCount \u003d halfOrFill(linesAfter.length, linesBefore.length);\nconst visibleBefore \u003d linesBefore.slice(linesBefore.length - visibleBeforeCount).join(\u0027\u0027);\nlet visibleAfter \u003d linesAfter.slice(0, visibleAfterCount).join(\u0027\u0027);\n\nAnd then we get rid of nthLineLastIndex(), nthLineIndex(), and lineCount().\n\nThis would be significantly fewer lines of code, and I find it to be much more readable and less fragile.  But it *is* slightly more work (traversing the whole array to split, etc).  That said, is it perceptible (at all)?  Simple JS stuff like this is usually pretty dang fast, and we still avoid the costly part (the rendering).\n\nWDYT?",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2b7c5b_220fd84f",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:42:59Z",
+      "side": 1,
+      "message": "I don\u0027t understand this if-statement.  What characters would return a false-y value?",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
