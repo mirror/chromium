@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "21220427_12ae84c7",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aaeb8e2c_859ce1c3",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfff1ace_755db389",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 4
@@ -116,6 +140,30 @@
       "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0ca1a5_f0242c3e",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "mark this resolved too",
+      "parentUuid": "cfff1ace_755db389",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 17
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +258,30 @@
       "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437c688a_19abe708",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "862ef4bd_b2521058",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

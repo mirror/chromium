@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd4fea2_6262c297",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-fonts/font-display/font-display-change-ref.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cc6871a_d2245de5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-fonts/font-display/font-display-change.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "optional: this kind of variable can be const in ES6. const can not be re-assigned, but an assigned value can perform mutable operations (or can run any methods since method does not have the concept of const)",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4693e4e1_8944fa1b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-fonts/font-display/font-display-change.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "optional: just \u0027update\u0027 or something might be better since here actual operation in each function is behind the abstraction, and should not know.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b46bcb_af3e2d38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-fonts/font-display/font-display-change.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "optional:\ncan this be stable enough?\n1500 would be able to have the biggest margin?",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1b0c4c3_66bfbad2",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T07:30:49Z",
+      "side": 1,
+      "message": "Ah, we have EnumMax :/\nTo avoid this kind of thing, we sometime perefers kFooEnumLast \u003d kFooBar rather than kFooEnumMax, and use kFooEnumLast + 1 instead of kFooEnumMax. But it would be a matter of taste. LG.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
