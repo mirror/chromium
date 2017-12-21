@@ -16,6 +16,24 @@
       "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bae720a_0f097ac8",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-21T19:54:50Z",
+      "side": 1,
+      "message": "I would lean towards not, since it seems unnecessary to put legacy \u0027cruft\u0027 in the codebase just to add a DCHECK. I also think this DCHECK is not necessary anyways, since it\u0027s a situation that could reasonably happen (user could edit their config).\n\nIf you have strong feelings otherwise, I\u0027m flexible, as it doesn\u0027t matter to me much either way.",
+      "parentUuid": "23cf14d4_709ea955",
+      "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
