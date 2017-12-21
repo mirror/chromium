@@ -29,6 +29,7 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/MathExtras.h"
+#include "platform/wtf/SaturatedArithmetic.h"
 #include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkRect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -208,6 +209,13 @@ FloatRect UnionRect(const Vector<FloatRect>& rects) {
     result.Unite(rects[i]);
 
   return result;
+}
+
+IntRect EnclosingIntRect(const FloatRect& rect) {
+  FloatPoint location(floorf(rect.X()), floorf(rect.Y()));
+  FloatPoint max_point(ceilf(rect.MaxX()), ceilf(rect.MaxY()));
+  FloatRect enclosing_rect(location, max_point - location);
+  return IntRect(enclosing_rect);
 }
 
 IntRect EnclosedIntRect(const FloatRect& rect) {
