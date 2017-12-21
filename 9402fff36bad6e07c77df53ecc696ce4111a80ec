@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce24bfb_a9c4a5f7",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T17:18:00Z",
+      "side": 1,
+      "message": "/*user index\u003d*/\n\nCan you add comment that explains why this is 0?",
+      "revId": "9402fff36bad6e07c77df53ecc696ce4111a80ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
