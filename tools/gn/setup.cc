@@ -690,6 +690,7 @@ bool Setup::RunConfigFile() {
     return false;
   }
 
+  dotfile_scope_.AddRelatedFile(SourceFile(SourceFile("//.gn")));
   dotfile_root_->Execute(&dotfile_scope_, &err);
   if (err.has_error()) {
     err.PrintToStdout();
