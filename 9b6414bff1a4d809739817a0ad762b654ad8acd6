@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "7c33abe0_9ceb12a5",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "\u003e Good point.  I\u0027ve added SitePerProcessBrowserTest.CommittedOriginIncompatibleWithOriginLock and verified that it passes after my CL and fails before my CL.\n\u003e \n\u003e I\u0027ve decided to add the test to SitePerProcessBrowserTest and not to SecurityExploitBrowserTest, because my test only makes sense in presence of an origin lock (so - in presence of either --site-per-process or --isolated-origins).\n\nAck.\n\n\u003e \n\u003e When working on the new test, I\u0027ve found out that SecurityExploitBrowserTest.MismatchedOriginOnCommit is broken - it now hits RFH_INTERFACE_PROVIDER_MISSING because it incorrectly simulates DidCommitProvisionalLoad IPC (it doesn\u0027t pass an service_manager::mojom::InterfaceProviderRequest.  Because of this it doesn\u0027t really test the right kills - the test always passes because of another kill that is unrelated to the kill the test wanted to verify.  I\u0027ve fixed the test.\n\nThanks for fixing it!",
+      "parentUuid": "6dabe713_7f2956e7",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05eada5d_30050e62",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 15
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "e332e153_e93ea42e",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3082,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "\u003e Good idea.\n\u003e \n\u003e I should use CreateBrowserInitiated though, because of ui::PAGE_TRANSITION_TYPED, right?\n\nAh, right.\n\n\u003e I am also not sure what you mean by \"after checking for the interstitial\".  AFAICT, the test doesn\u0027t check that the interstitial is actually visible - the first verification (on line 3103) happens after committing the normal page.\n\nSorry, what I meant was what you ended up doing -- calling Commit() after setting the pending entry\u0027s page type to be PAGE_TYPE_INTERSTITIAL. :)",
+      "parentUuid": "bbd5dc6c_542f2899",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6449390e_3e9017de",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 15
@@ -289,6 +325,24 @@
       "side": 1,
       "message": "We still detect a bad message in IsURLSameDocumentNavigation, but we kill another process ( |rph| is the old process from before the swapping that can occur on line 3838 here).  Instead of special-casing AreAllSitesIsolatedForTesting() I should be updating |rph| instead.  Done?",
       "parentUuid": "a41b178c_1b141bfe",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e0108c_d31e368c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3843,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "Makes sense, thanks!",
+      "parentUuid": "7c6b762b_54261282",
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -389,6 +443,30 @@
     },
     {
       "key": {
+        "uuid": "770a824f_316b6637",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "\u003e Thanks for pointing out the other places.\n\u003e \n\u003e \u003e There are a few other places where SetSite may be called, and I\u0027m curious whether we need to fall back to base URL in any of those:\n\u003e \u003e - DidNavigate, which uses params.url.  (I\u0027m assuming it\u0027s not the base URL, because there\u0027s also params.base_url.)\n\u003e \n\u003e Good catch - initially I didn\u0027t see that we have access to |params.base_url| here.  I\u0027ve changed the SetSite callsite above to use |base_url| if possible.\n\u003e \n\u003e One other notes (probably not quite related to the CL under review): I wonder if we should use |params.url| VS |params.origin| when calculating the site URL.  I\u0027ve started a discussion about this at https://groups.google.com/a/chromium.org/d/topic/site-isolation-dev/36Cy9IzLi90/discussion\n\nYup, I\u0027ll try to think more about that and follow up there.  I\u0027ll also note that I\u0027m not thrilled about having to call SetSite in so many places.  Maybe we can try calling SetSite() from OnResponseStarted unconditionally (not just for sites requiring dedicated processes), and just remove the SetSite() call from DidNavigate.\n\n\u003e \n\u003e \u003e - BrowsingInstance::GetSiteInstanceForURL() - which may matter if we are creating a new BrowsingInstance via LoadDataWithBaseURL, if that\u0027s even possible?\n\u003e \n\u003e I think that BrowsingInstance::GetSiteInstanceForURL() would matter only if LoadDataWithBaseURL could create a new frame within an *existing* (not new) browsing instance.  And I think this is not possible - LoadDataWithBaseURL is always a top-level, browser-initiated navigation (and therefore should be happening in a new browsing instance I think).\n\nI\u0027m a bit confused here. :)\n\nI agree LoadDataWithBaseURL should always be browser-initiated: we kill the renderer if it tries to do it in RFHI::BeginNavigation().\n\nWhy is LoadDataWithBaseURL always a navigation in a new BI though?  BrowsingInstance::GetSiteInstanceForURL can be called by both SI::CreateForURL (new BI), and SI::GetRelatedSiteInstance() (same BI). At least in the \u003cwebview\u003e case, it should presumably always stay in the current chrome-guest:// SI/BI (so I don\u0027t know if we\u0027ll actually ever need to determine a new SiteInstance site URL in that case).\n\nAlso, why wouldn\u0027t this matter for the cases with a new browsing instance?\n\n\u003e \n\u003e OTOH, I am not quite sure if all browser-initiated navigations result in a *new* browsing instance.  I don\u0027t think that\u0027s true.  But then - this might be a separate bug (?).\n\nRight, I don\u0027t think browser-initiated navigations always result in a new browsing instance today.  If A opens B and I navigate B to C via omnibox, C\u0027s opener will still be A, right?\n\n\u003e \n\u003e \u003e - a case in DetermineSiteInstanceForURL which may matter for session restore (actually, might be worth trying session restore with a base URL)\n\u003e \n\u003e Good catch.  I think that in this case, we need to ensure that |dest_url| passed to DetermineSiteInstanceForURL takes base URL into account.  This argument comes from either:\n\u003e \n\u003e - RenderFrameHostManager::GetSiteInstanceForNavigationRequest - I\u0027ve made changes to take into account |request.common_params().base_url_for_data_url|.\n\u003e \n\u003e - NavigatorImpl::NavigateToEntry - this is a non-PlzNavigate path.  Nevertheless, I\u0027ve made changes to pass base URL if needed.\n\u003e \n\u003e I do notice that the changed |dest_url| is used in quite a few places.  But it seems to me that all of them should be happy with having the base URL instead:\n\u003e \n\u003e - RenderFrameHostManager::DetermineSiteInstanceForURL passes |dest_url| to:\n\u003e     - constructor of SiteInstanceDescriptor\n\u003e     - ContentBrowserClient::ShouldStayInParentProcessForNTP\n\u003e     - RenderProcessHost::ShouldUseProcessPerSite\n\u003e     - RenderProcessHostImpl::GetProcessHostForSite\n\u003e         - QUESTION: Is it okay that base URL might be a full URL, rather than a \"site\"?\n\u003e                     (this question potentially applies to other uses of |dest_url|)\n\nGetProcessHostForSite() should be ok, because it does its own GetSiteForURL().  Don\u0027t know about the others though...\n\n\u003e     - HasWrongProcessForURL\n\u003e         - This is great.  It matches my changes in NavigationControllerImpl::Reload\n\u003e           which also needs to call HasWrongProcessForURL with the base URL if present.\n\u003e     - WebUIControllerFactoryRegistry::UseWebUIForURL\n\u003e         - Should be fine I think.  Should be a no-op in all legitimate cases I would hope.\n\u003e           (not sure if LoadDataWithBaseURL can be used for chrome://... URLs)\n\u003e     - SiteInstanceImpl::ShouldAssignSiteForURL\n\u003e         - This is great.  It matches my changes above where we also need to call\n\u003e           ShouldAssignSiteForURL with the base URL\n\u003e     - IsRendererDebugURL\n\u003e     - comparison of |dest_url| with about:blank, about:srcdoc and data:...\n\u003e         - Should be fine - this just reuses |source_instance|.\n\u003e           Also - I don\u0027t know why anyone would use about:blank or data:...\n\u003e           as a base URL - seems unlikely.\n\u003e     - IsCurrentlySameSite\n\u003e     - SiteInstanceImpl::DoesSiteRequireDedicatedProcess\n\u003e         - This is great.  It matches my changes above where we also need to call\n\u003e           DoesSiteRequireDedicatedProcess with the base URL\n\u003e \n\u003e - RenderFrameHostManager::GetSiteInstanceForNavigation passes |dest_url| to:\n\u003e     - SiteInstanceImpl::GetEffectiveURL / ShouldSwapBrowsingInstancesForNavigation\n\u003e     - DetermineSiteInstanceForURL (already covered above)\n\u003e \n\u003e - RenderFrameHostManager::UpdateStateForNavigate passes |dest_url| to:\n\u003e     - GetSiteInstanceForNavigation (already covered above)\n\u003e     - CanSubframeSwapProcess\n\u003e     - UpdatePendingWebUI\n\u003e     - UpdatePendingWebUIOnCurrentFrameHost\n\u003e \n\u003e - RenderFrameHostManager::Navigate passes |dest_url| to:\n\u003e     - UpdateStateForNavigate (already covered above)\n\u003e \n\u003e \n\u003e PS. After your comment about SiteInstanceImpl::SetSite, I\u0027ve also looked at callers of\n\u003e \n\u003e - SiteInstanceImpl::ShouldAssignSiteForURL (all callers covered by this CL)\n\u003e - HasWrongProcessForURL\n\u003e     - NavigationControllerImpl::Reload is covered by this CL\n\u003e     - RFHM::DetermineSiteInstanceForURL is covered (after you comment)\n\u003e     - RFHM::IsRendererTransferNeededForNavigation is not covered,\n\u003e       but this is non-PlzNavigate, so maybe this is okay?\n\nThis is actually used in PlzNavigate too, I think, for example in call sites in RFHM::GetSiteInstanceForNavigationRequest and CanSubframeSwapProcess.\n\n\u003e     - RFHM::IsCurrentlySameSite\n\u003e         - Calls from RFHM::RFHM::DetermineSiteInstanceForURL are covered by this CL\n\u003e         - Call from RFHM::IsRendererTransferNeededForNavigation is not covered,\n\u003e           but (as above) this is non-PlzNavigate, so maybe okay?\n\u003e - DoesSiteRequireDedicatedProcess\n\u003e     - NavigationRequest::OnResponseStarted is covered by this CL\n\u003e     - For RFHM::DetermineSiteInstanceForURL + RFHM::IsRendererTransferNeededForNavigation\n\u003e       see the comments above\n\u003e     - SiteInstanceImpl::RequiresDedicatedProcess is fine, because\n\u003e       it passes |site_| which is already covered by SiteInstanceImpl::SetSite analysis\n\u003e     - SiteInstanceImpl::ShouldLockToOrigin\n\u003e         - Called by SiteInstanceImpl::LockToOriginIfNeeded which is fine,\n\u003e           because it passes |site_| which is already covered by\n\u003e           SiteInstanceImpl::SetSite analysis\n\u003e         - Also called by RenderProcessHostImpl::IsSuitableHost.\n\u003e           This seems fine, although I admit that I haven\u0027t gone through all\n\u003e            the transitive callers.",
+      "parentUuid": "cd86fcdc_e01b1235",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 39
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8472e3_c5ee71be",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 15
@@ -424,6 +502,30 @@
       "side": 1,
       "message": "\u003e Since we typically call GetSiteForURL on the URL rather than origin, I\u0027m wondering if it makes sense at all to use |url| instead of |origin_url| here, since both are passed in?  (We\u0027ve already checked that origin_url and url match up above...)\n\n\u003e This would allow it to resolve the right site URL for hosted apps, and maybe that will help with the ShouldLockToOrigin hosted apps issue you mention below?\n\nThat is a really good point and something I haven\u0027t thought about myself - thanks for pointing this out.  I think identifying hosted apps based on |url| (rather than |origin|) has some potential and we could try doing it in the NO_LOCK case that is currently problematic for hosted apps.  OTOH, when doing this we would have to carve out an exception for about:blank and this might require some careful thinking:\n\n1) would the NO_LOCK case still offer a valuable protection in presence of the about:blank protection?  A compromised renderer could just say that is commits about:blank at isolated origin.\n\n2) we would definitely want to keep the WRONG_LOCK case free of any exceptions\n \n\u003e In the future, once we start locking hosted apps to their underlying origin, it seems that we\u0027ll want to also somehow pass that underlying origin to CheckOriginLock() somehow, instead of the site_url?  (Not sure what the plumbing for that will look like yet...)\n\nI don\u0027t know :-(",
       "parentUuid": "1e8472e3_c5ee71be",
+      "range": {
+        "startLine": 3272,
+        "startChar": 63,
+        "endLine": 3272,
+        "endChar": 73
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1815805_9e7f7ab4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "Good points about about:blank, it\u0027s indeed problematic. :)  Like about:srcdoc as well.  A few more thoughts, all fine to explore in followups:\n\n* Maybe one option is to use |url| instead of |origin_url| only if |url-\u003eIsStandard()| is true, because this guarantees that the url and origin matched up on line 3258?  There should be no danger in using |url| in that case, even for HAS_WRONG_LOCK.  (The latter may matter once we start locking hosted apps to an origin.)  That would cover the common http/https cases.\n\n* Maybe we should also do the origin lock check on the |url| when |origin| is unique, at least in some cases (e.g., when |url| is standard)?  Otherwise, a page could bypass this whole sanity check by sandboxing itself (e.g., via CSP sandbox flags), thanks to line 3254.  Since that\u0027d be a check on the URL, it might belong in CanCommitURL instead.\n\n* As a separate potential sanity check, I don\u0027t think |origin_url| can ever be about:*.  If we see that, we should probably kill the renderer.  (the origin should always be inherited for about: or, for browser-initiated navigations to about:blank, it should be null/unique.)",
+      "parentUuid": "13ef5bd7_d3f85038",
       "range": {
         "startLine": 3272,
         "startChar": 63,

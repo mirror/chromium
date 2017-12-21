@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50adb384_02063fff",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "Perhaps add a comment where the corresponding logic is for PlzNav, since it isn\u0027t in the PlzNav path above as one might expect?",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 59
+      },
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe717c2a_343417cb",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "It be nice to check the bad message reason in the tests where we expect renderer kills, to prevent similar problems in the future... I don\u0027t know if we have any facilities for doing that other than checking that the right LogMessage has been logged, or looking up the bad_message_reason crash key.  Perhaps RenderProcessHostWatcher could expose the bad_message value for tests.  In any case, this could benefit more tests than just the two tests here, so no reason to do it in this CL - just throwing the idea out.",
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c554fa_cd51ae37",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 12839,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-21T03:17:34Z",
+      "side": 1,
+      "message": "I recently learned that embedded_test_server() supports \"/hung\", which might obviate the need for stall_delegate.  This seems fine too, though NavigationStallDelegate does have a (stale?) comment that it likely doesn\u0027t work with PlzNavigate. :)",
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
