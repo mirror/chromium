@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-{% macro declare_initial() %}
-void ApplyInitial(StyleResolverState& state) const override {
+{% macro declare_initial(prefix = None) %}
+void {{prefix ~ '::' if prefix}}ApplyInitial(StyleResolverState& state) const override {
 {%- endmacro %}
-{% macro declare_inherit() %}
-void ApplyInherit(StyleResolverState& state) const override {
+{% macro declare_inherit(prefix = None) %}
+void {{prefix ~ '::' if prefix}}ApplyInherit(StyleResolverState& state) const override {
 {%- endmacro %}
-{% macro declare_value() %}
-void ApplyValue(StyleResolverState& state, const CSSValue& value) const override {
+{% macro declare_value(prefix = None) %}
+void {{prefix ~ '::' if prefix}}ApplyValue(StyleResolverState& state, const CSSValue& value) const override {
 {%- endmacro %}
 
 {% macro set_value(property) %}

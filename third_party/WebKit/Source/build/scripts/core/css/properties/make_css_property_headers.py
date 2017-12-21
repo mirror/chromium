@@ -56,15 +56,24 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             self._outputs[class_data.classname + '.h'] = (
                 self.generate_property_h_builder(
                     class_data.classname, property_))
+            if 'generate_cpp' in property_:
+                self._outputs[class_data.classname + '.cpp'] = (
+                    self.generate_property_cpp_builder(
+                        class_data.classname, property_))
         for property_ in self.css_properties.aliases:
             if ('shorthands' in output_dir and property_['longhands']) or \
                ('longhands' in output_dir and not property_['longhands']):
                 class_data = self.get_class(property_)
                 property_['namespace_group'] = namespace_group
+                self.calculate_apply_functions_to_declare(property_)  # check this is needed
                 self.populate_includes(property_)
                 self._outputs[class_data.classname + '.h'] = (
                     self.generate_property_h_builder(
                         class_data.classname, property_))
+                if 'generate_cpp' in property_:  # check this is needed
+                    self._outputs[class_data.classname + '.cpp'] = (
+                        self.generate_property_cpp_builder(
+                            class_data.classname, property_))
 
     def generate_property_h_builder(self, property_classname, property_):
         @template_expander.use_jinja(
@@ -77,6 +86,17 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             }
         return generate_property_h
 
+    def generate_property_cpp_builder(self, property_classname, property_):
+        @template_expander.use_jinja(
+            'core/css/properties/templates/CSSPropertySubclass.cpp.tmpl')
+        def generate_property_cpp():
+            return {
+                'input_files': self._input_files,
+                'property_classname': property_classname,
+                'property': property_,
+            }
+        return generate_property_cpp
+
     def calculate_apply_functions_to_declare(self, property_):
         # Functions should only be declared on the property classes if they are
         # implemented.
@@ -87,21 +107,18 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             and not property_['builder_skip']
         if property_['custom_apply_functions_all']:
             property_name = property_['upper_camel_name']
-            if (property_name in
-                    ['Clip', 'ColumnCount', 'ColumnWidth', 'ZIndex']):
+            if (property_name in ['Clip', 'ColumnCount', 'ColumnWidth', 'ZIndex']):
                 property_['custom_apply'] = "auto"
                 property_['custom_apply_args'] = {'auto_identity': 'CSSValueAuto'}
-            if property_name == 'ColumnGap':
+            elif property_name == 'ColumnGap':
                 property_['custom_apply'] = "auto"
                 property_['custom_apply_args'] = {
                     'auto_getter': 'HasNormalColumnGap',
                     'auto_setter': 'SetHasNormalColumnGap',
                     'auto_identity': 'CSSValueNormal'}
-            if (property_name in
-                    ['BorderImageOutset', 'BorderImageRepeat',
-                     'BorderImageSlice', 'BorderImageWidth',
-                     'WebkitMaskBoxImageOutset', 'WebkitMaskBoxImageRepeat',
-                     'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
+            elif (property_name in [
+                    'BorderImageOutset', 'BorderImageRepeat', 'BorderImageSlice', 'BorderImageWidth', 'WebkitMaskBoxImageOutset',
+                    'WebkitMaskBoxImageRepeat', 'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
                 property_['custom_apply'] = 'border_image'
                 is_mask_box = 'WebkitMaskBox' in property_name
                 getter = 'MaskBoxImage' if is_mask_box else 'BorderImage'
@@ -111,6 +128,19 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                     'modifier_type': modifier_type,
                     'getter': getter,
                     'setter': 'Set' + getter
+                }
+            elif (property_name in [
+                    'BackgroundAttachment', 'BackgroundBlendMode', 'BackgroundClip', 'BackgroundImage', 'BackgroundOrigin',
+                    'BackgroundPositionX', 'BackgroundPositionY', 'BackgroundRepeatX', 'BackgroundRepeatY', 'BackgroundSize',
+                    'MaskSourceType', 'WebkitMaskClip', 'WebkitMaskComposite', 'WebkitMaskImage', 'WebkitMaskOrigin',
+                    'WebkitMaskPositionX', 'WebkitMaskPositionY', 'WebkitMaskRepeatX', 'WebkitMaskRepeatY', 'WebkitMaskSize']):
+                fill_type = property_name if property_name == 'MaskSourceType' else property_name[len('Background'):]
+                property_['generate_cpp'] = True
+                property_['custom_apply'] = 'fill_layer'
+                property_['custom_apply_args'] = {
+                    'layer_type': 'Background' if 'Background' in property_name else 'Mask',
+                    'fill_type': fill_type,
+                    'fill_type_getter': 'Get' + fill_type if fill_type == "Image" else fill_type
                 }
         property_['should_implement_apply_functions'] = (
             property_['should_declare_apply_functions'] and
