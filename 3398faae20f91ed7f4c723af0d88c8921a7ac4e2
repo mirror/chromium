@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d3f6a2f_441e7dea",
+        "filename": "components/data_reduction_proxy/core/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-21T23:26:53Z",
+      "side": 1,
+      "message": "I wish I could just use the first one. But I can just use the 2nd one.",
+      "parentUuid": "b091befb_fa8cbf32",
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc140caa_9bf0a9fd",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff5b595_bc3358de",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-21T23:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc140caa_9bf0a9fd",
+      "range": {
+        "startLine": 169,
+        "startChar": 64,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "355e81c1_fd30c401",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-21T23:26:53Z",
+      "side": 1,
+      "message": "Added inflation value constants and the calculation for test value.",
+      "parentUuid": "5230c149_514b5436",
+      "range": {
+        "startLine": 129,
+        "startChar": 59,
+        "endLine": 129,
+        "endChar": 65
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ebee62_0438ff9a",
         "filename": "components/previews/core/previews_experiments.cc",
         "patchSetId": 7
@@ -102,6 +168,30 @@
       "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70da468d_31020c96",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-21T23:26:53Z",
+      "side": 1,
+      "message": "Added a general note",
+      "parentUuid": "f5ebee62_0438ff9a",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 71
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
