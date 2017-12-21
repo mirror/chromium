@@ -299,7 +299,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
         base::ThreadTaskRunnerHandle::Get(), thread_safe_sender_.get()));
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
-        RenderThreadImpl::current()->GetIOTaskRunner().get()));
+        RenderThreadImpl::current()->GetIOTaskRunner().get(),
+        RenderThreadImpl::current()->GetMainTaskRunner().get()));
     notification_dispatcher_ =
         RenderThreadImpl::current()->notification_dispatcher();
   } else {
