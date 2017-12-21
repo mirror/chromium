@@ -16,6 +16,24 @@
       "revId": "36859b99a229c67534c324f644565239d0a4bf26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4083520_ba315845",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-12-21T03:38:23Z",
+      "side": 1,
+      "message": "The followups CL is https://chromium-review.googlesource.com/c/chromium/src/+/784739/\n\nFor now, it will be only used in vaapi_encoder. \n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/784739/5/media/gpu/vaapi/vaapi_video_decode_accelerator.cc#874\n\nOn other platform, we just check if it meet our expectation. \n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/784739/5/media/gpu/v4l2/v4l2_slice_video_decode_accelerator.cc#1795",
+      "parentUuid": "bdf278f0_fabf7288",
+      "revId": "36859b99a229c67534c324f644565239d0a4bf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
