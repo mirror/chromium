@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e5a15e_556bec13",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-21T16:49:07Z",
+      "side": 1,
+      "message": "nit: add a simple comment \"A textfield that selects all text on focus.\"",
+      "revId": "af8f09e194d0ec98d9eb9ba52576062f1ee51c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95746eae_53288472",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-21T16:49:07Z",
+      "side": 1,
+      "message": "nit: This can still be a views::Textfield*, and the fwd decl above isn\u0027t needed.",
+      "revId": "af8f09e194d0ec98d9eb9ba52576062f1ee51c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
