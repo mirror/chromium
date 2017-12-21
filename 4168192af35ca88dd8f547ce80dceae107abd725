@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2efe9568_2a8212a6",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-21T01:24:50Z",
+      "side": 1,
+      "message": "lite",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "4168192af35ca88dd8f547ce80dceae107abd725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1411a0f2_678a201a",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-21T01:24:50Z",
+      "side": 1,
+      "message": "lite\n\nCould you grep other files in case we weren\u0027t importing paper-spinner somewhere but still using paper-spinner? Something like /paper-spinner([^/-]|$)/",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "4168192af35ca88dd8f547ce80dceae107abd725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
