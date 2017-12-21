@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "242c726f_84ddf7e0",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-21T20:53:36Z",
+      "side": 1,
+      "message": "I would say something like \u0027virtual memory overhead is not considered blocking I/O\u0027.",
+      "range": {
+        "startLine": 346,
+        "startChar": 71,
+        "endLine": 347,
+        "endChar": 27
+      },
+      "revId": "861366c7112985e7478d8428a15b173c43eb9a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f73b682_a0c8d111",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-21T20:53:36Z",
+      "side": 1,
+      "message": "Same as demuxer.reset()?",
+      "range": {
+        "startLine": 364,
+        "startChar": 2,
+        "endLine": 365,
+        "endChar": 21
+      },
+      "revId": "861366c7112985e7478d8428a15b173c43eb9a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
