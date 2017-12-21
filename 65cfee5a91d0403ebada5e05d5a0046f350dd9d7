@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07803bf6_9e62a241",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T01:41:56Z",
+      "side": 1,
+      "message": "Also, this is redundant, see line 160.",
+      "revId": "65cfee5a91d0403ebada5e05d5a0046f350dd9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
