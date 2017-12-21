@@ -520,7 +520,7 @@ public class EditorDialog
 
     @Override
     public void onShow(DialogInterface dialog) {
-        if (mDialogInOutAnimator != null) return;
+        if (mDialogInOutAnimator != null && mIsDismissed) return;
 
         // Hide keyboard and disable EditText views for animation efficiency.
         if (getCurrentFocus() != null) UiUtils.hideKeyboard(getCurrentFocus());
