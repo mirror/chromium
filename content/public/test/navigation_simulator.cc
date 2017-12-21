@@ -755,15 +755,29 @@ void NavigationSimulator::OnWillProcessResponse() {
   num_will_process_response_called_++;
 }
 
+// static
+std::unique_ptr<NavigationSimulator>
+NavigationSimulator::CreateFromPendingBrowserInitiated(WebContents* contents) {
+  NavigationEntry* entry = contents->GetController().GetPendingEntry();
+  DCHECK(entry) << "There must be a pending entry to join with";
+
+  std::unique_ptr<NavigationSimulator> simulator =
+      CreateBrowserInitiated(entry->GetURL(), contents);
+  simulator->started_from_pending_ = true;
+  return simulator;
+}
+
 bool NavigationSimulator::SimulateBrowserInitiatedStart() {
-  if (reload_type_ != ReloadType::NONE) {
-    web_contents_->GetController().Reload(reload_type_,
-                                          false /*check_for_repost */);
-  } else if (session_history_offset_) {
-    web_contents_->GetController().GoToOffset(session_history_offset_);
-  } else {
-    web_contents_->GetController().LoadURL(navigation_url_, referrer_,
-                                           transition_, std::string());
+  if (!started_from_pending_) {
+    if (reload_type_ != ReloadType::NONE) {
+      web_contents_->GetController().Reload(reload_type_,
+                                            false /*check_for_repost */);
+    } else if (session_history_offset_) {
+      web_contents_->GetController().GoToOffset(session_history_offset_);
+    } else {
+      web_contents_->GetController().LoadURL(navigation_url_, referrer_,
+                                             transition_, std::string());
+    }
   }
 
   // The navigation url might have been rewritten by the NavigationController.
