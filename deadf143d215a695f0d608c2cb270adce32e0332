@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "641d9cef_25940f28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "detachSurfaceNow attempts to re-attach new surfaces if these aren\u0027t cleared.",
+      "parentUuid": "b75abe27_910b8a88",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012bc35d_fc62e37a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da8a4828_09c03837",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Because I want to make it clear that the holder isn\u0027t used. I don\u0027t want to be passing nulls in where readers will be expecting an actual SurfaceHolder.",
+      "parentUuid": "012bc35d_fc62e37a",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4781b71c_9f29a66e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 14
@@ -62,6 +110,24 @@
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c38acf_641a97c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4781b71c_9f29a66e",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "eb951254_80543997",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453f6061_e08ccba1",
+      "range": {
+        "startLine": 439,
+        "startChar": 12,
+        "endLine": 439,
+        "endChar": 37
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78f64650_132c93aa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 14
@@ -108,6 +198,30 @@
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d365fe0_44c4b6ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so, because the logic is subtly different in all of the instances we request the surface/set the visibility.",
+      "parentUuid": "78f64650_132c93aa",
+      "range": {
+        "startLine": 441,
+        "startChar": 8,
+        "endLine": 441,
+        "endChar": 33
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b87bafa6_ec85fe9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "We could move this into createVrShell, but I don\u0027t want logic living in there. A non-null TabModelSelector is a necessary but not sufficient condition for being able to create VrShellImpl, and we don\u0027t want to detach until VrShellImpl is created, so that\u0027s why we find a non-null TabModelSelector here, but detach it inside VrShellImpl.",
+      "parentUuid": "45b2b9f2_c6fd9629",
+      "range": {
+        "startLine": 1653,
+        "startChar": 25,
+        "endLine": 1653,
+        "endChar": 41
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da43abf_059e2958",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 14
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "0b525d80_7e552166",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Actually I\u0027m just going to get rid of these limits as they\u0027ll just lead to size mismatch bugs. If we ever get into a situation where the UI starts requesting absurd content window sizes we\u0027ll need to figure something else out.",
+      "parentUuid": "4da43abf_059e2958",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6e96e7_1d21ab33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 14
@@ -165,6 +321,24 @@
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553b75ad_d23dc995",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d6e96e7_1d21ab33",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "2892c464_24a27b83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55d3836_779ba583",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27267c27_b07be840",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
         "patchSetId": 14
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "8cb3d66b_63116e2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "The direct child will be some arbitrary window the framework inserts that may or may not be R.id.content.\n\nThe child will always exist, I don\u0027t see any reason to add a check.",
+      "parentUuid": "27267c27_b07be840",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9da10b_f46bda4f",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
         "patchSetId": 14
@@ -234,6 +456,30 @@
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3b0c8f_770528aa",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-21T20:04:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9da10b_f46bda4f",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
