@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "596b5806_702f80f4",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:59:12Z",
+      "side": 1,
+      "message": "That\u0027s true.  Probably best to continue this discussion offline with all the owners present about the right design, scope and timing to improve route handling.",
+      "parentUuid": "6a7176ce_55bc389d",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f077337a_e649f54c",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -694,6 +712,24 @@
       "side": 1,
       "message": "I\u0027ll follow up with miu@, but it seems intentional to only fire the notification when the window itself goes fullscreen (and not for when it is only fullscreen-in-tab).\n\nSee https://cs.chromium.org/chromium/src/chrome/browser/ui/exclusive_access/fullscreen_controller.cc?dr\u003dCSs\u0026l\u003d120\n\nThe proper fix sounds like it would be using a specific notification for capture (ie crbug/540965) which would then allow this test to wait on that event instead (or since the underlying code wouldn\u0027t be polling anyway, this test might be able to run with no waits at all).",
       "parentUuid": "0d9dbca7_4f2b69e5",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9c4298f_dacf5a82",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:59:12Z",
+      "side": 1,
+      "message": "OK, sounds like the current behavior is WAI.",
+      "parentUuid": "64c7efc5_a6230d3f",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

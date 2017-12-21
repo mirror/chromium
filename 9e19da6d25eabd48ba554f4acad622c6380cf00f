@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0e21cd_682cbad4",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:59:12Z",
+      "side": 1,
+      "message": "Nit: { } are not required for one-line statements, but follow the local style in nearby code.",
+      "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
