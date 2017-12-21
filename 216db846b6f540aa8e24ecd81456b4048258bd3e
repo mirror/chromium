@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82c6586d_b4f202bf",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bffd842d_92d95ba6",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "760ce586_42a56bfd",
         "filename": "media/cast/net/udp_packets_read_write.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b144ae6_3812f4d1",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760ce586_42a56bfd",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "54bcfe7c_3b558505",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done. Removed this DCHECK.",
+      "parentUuid": "6e1d3543_3c2f9dc1",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d52d9c1a_a327e877",
         "filename": "media/cast/net/udp_packets_read_write.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78390cc_9ff1c9ec",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d52d9c1a_a327e877",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "44607e72_8ddc825b",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done. Renamed as UdpPacketPipeReader/Writer.",
+      "parentUuid": "82010a8b_98ed1f9a",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f856f717_67e23b82",
         "filename": "media/cast/net/udp_packets_read_write.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add78688_f6fab6b3",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f856f717_67e23b82",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c8d018be_b71e5e3a",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caad08ac_6cfd3d88",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad1ddab_611d2a7d",
         "filename": "media/cast/net/udp_packets_read_write.h",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "16b2de5f_b9fc9f0f",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad1ddab_611d2a7d",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b67bc257_c751a2bc",
         "filename": "media/cast/net/udp_packets_read_write.h",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b639890_33a013f0",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-21T00:29:31Z",
+      "side": 1,
+      "message": "Done. Removed the buffering.",
+      "parentUuid": "b67bc257_c751a2bc",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
