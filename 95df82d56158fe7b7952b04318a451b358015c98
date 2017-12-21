@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0110936a_bb65524d",
+        "filename": "net/test/embedded_test_server/embedded_test_server.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:01:17Z",
+      "side": 1,
+      "message": "nit: missing period",
+      "range": {
+        "startLine": 104,
+        "startChar": 43,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "95df82d56158fe7b7952b04318a451b358015c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
