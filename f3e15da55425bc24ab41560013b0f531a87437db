@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feacfcea_504e36b1",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "nit: WebVrModel web_vr;",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1beb2a1_7f6a85ed",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "What happens if we enter VR for autopresentation, drop to VR browsing, then present WebVR again? We wouldn\u0027t show the splash screen, would we? I\u0027m having second thoughts about this approach. I think it would be better to have an AutopresentedWebVr state that we stick on the stack. Then we wouldn\u0027t need to have this toast-related boolean in the model. As we chatted about offline, this should be fine in a follow-up, but please flag this with a TODO/crbug.",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65551b2b_b2f39777",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "nit: show_exit_toast",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495474ac_c57f6dcf",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "nit: is_active() or is_enabled()",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9329ceb9_6f2164a3",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "Why not just get everything in the tree that\u0027s not the web vr overlay? With your cleanup (and before we teach UiRenderer how to summon size-optimized buffers from the underlying VR API), that seems like the only real distinction now.",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acba82ea_c4ef74c8",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "Please bind a struct or pair or something here (to send back both the show-splash-screen and are-we-presenting together rather than plumbing the second value into the setter). I think there may actually be a bug here because the setter won\u0027t get called when |web_vr_model.state| changes. If that\u0027s true, can you please add a unit test to cover this case?",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aeb252d_e0f7ccde",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "Since binding to non-model properties is unusual, please add a comment explaining why it\u0027s necessary (i.e., that it\u0027s visibility is indeed tied to the visibility of a particular UI element in addition to model state).",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57328598_5f594d82",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-21T15:56:30Z",
+      "side": 1,
+      "message": "nit: please move to ui_scene_constants.h",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
