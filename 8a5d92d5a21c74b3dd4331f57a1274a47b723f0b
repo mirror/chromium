@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec83bc6f_2fe3619b",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Prefer base::LazyInstance to be explicit about when dtors are run (static variables dtor may or may not be run). I believe Chrome is moving towards a model of leaky shutdown (i.e. dtors not run by default for singletons).\n\nhttps://groups.google.com/a/chromium.org/d/topic/chromium-dev/OLS4JSZvowI/discussion",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4929faab_d9abec0e",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Nit: Extra newline",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b5b1a6_d7f8bae5",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Does CMMS reset all pending tasks using this callback in its dtor (i.e. is binding |this| safe)?",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2012e1_40610842",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Similar comment as above",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdc5599_fc25948a",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE to ensure DMSS/CMSS invoke this on the proper sequence",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b52c2b_afa541f8",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Why?  I see no dependency on UI state (Profile, etc.)",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb3d60a_2438f6f9",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Is this reinventing base::ObserverList?",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c234e40f_b2818b05",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "Does this need to be public?",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d701e9f_04d60fc1",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:50:35Z",
+      "side": 1,
+      "message": "current_sinks_ isn\u0027t POD; please define in .cc and use CamelCase (e.g. GetCurrentSinks)",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
