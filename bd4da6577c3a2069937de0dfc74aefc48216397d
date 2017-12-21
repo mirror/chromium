@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30f0e8e1_7fdc8d66",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-21T23:48:22Z",
+      "side": 1,
+      "message": "I tried to remove ExistingUserControllerSavePasswordHashTest and use ExitingUserControllerTest as the test fixture directly, but the login flow triggers IDS_LOGIN_ERROR_OWNER_KEY_LOST error.  I don\u0027t have enough knowledge to understand what\u0027s happening under the hood. Here are some observations:\n1. if only calls InstallOwnerKey() in SetUpSessionmanager(), problem still exists.\n2. if only calls RefreshDevicePolicy(), IDS_LOGIN_ERROR_OWNER_KEY_LOST error no longer happening.\n\nXiyuan, could you patch this CL and give it a try? Thanks!",
+      "revId": "bd4da6577c3a2069937de0dfc74aefc48216397d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
