@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd92168_803535b9",
+        "filename": "ui/display/win/color_profile_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-21T00:55:55Z",
+      "side": 1,
+      "message": "EnumMonitorForProfilePathCallback would work better here. The enumeration is more interested in the paths.",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "aba918b2c4246b2ac51a1b0b4d08c43087bc1353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afca10d_4d50e85d",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-21T00:55:55Z",
+      "side": 1,
+      "message": "Let\u0027s use EnumMonitorForDisplayInfoCallback. That will make it relatively unique to this set of objects.",
+      "range": {
+        "startLine": 186,
+        "startChar": 14,
+        "endLine": 186,
+        "endChar": 40
+      },
+      "revId": "aba918b2c4246b2ac51a1b0b4d08c43087bc1353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
