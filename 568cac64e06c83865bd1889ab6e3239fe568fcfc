@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef104a9_035cf1c7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T01:51:33Z",
+      "side": 1,
+      "message": "Would be nice to add comment here what exact behavior is modified.",
+      "revId": "568cac64e06c83865bd1889ab6e3239fe568fcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
