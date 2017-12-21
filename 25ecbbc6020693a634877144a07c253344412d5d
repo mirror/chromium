@@ -22,6 +22,30 @@
       "revId": "25ecbbc6020693a634877144a07c253344412d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f81b1b2_21efbb26",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-21T05:04:27Z",
+      "side": 1,
+      "message": "Ah, I see. I think I\u0027ll go with option 2, then.",
+      "parentUuid": "93c87509_64735f65",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "25ecbbc6020693a634877144a07c253344412d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

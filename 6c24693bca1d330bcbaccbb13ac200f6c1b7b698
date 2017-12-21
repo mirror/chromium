@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "164aa61c_1e9796c7",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-21T05:04:27Z",
+      "side": 1,
+      "message": "Noting that offline we figured out that it required CONTENT_EXPORT. Thanks",
+      "parentUuid": "17bf41c2_5f970ea2",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25450864_a6f93fa7",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 1
@@ -262,6 +286,30 @@
       "side": 1,
       "message": "Using unique_ptrs to avoid copies shouldn\u0027t work, given that each unique_ptr owns the pointed to object. \"Copying\" a unique_ptr would always require an explicit deep copy of the underlying object.\n\nTo answer your question: If this operation could ever fail (e.g. you do some verification logic and want to be able to indicate errors) I would return a base::Optional\u003cAttestedCredentialData\u003e. In case it can\u0027t fail (which I think is the case here), I\u0027d simply return a AttestedCredentialData by value.",
       "parentUuid": "922bfb53_08ebb082",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb50c9f_a39aec6d",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-21T05:04:27Z",
+      "side": 1,
+      "message": "Ah, I misspoke. By \u0027avoiding copies\u0027 I simply meant that I using unique_ptr to pass around the  pointer rather than invoking a copy by passing by value. But, moving on!\nCan you see if I\u0027m on the right track for using it by value? I tried to have a copy constructor to deep copy the ECPublicKey unique_ptr, but I\u0027m not quiiite doing it right, it seems:\n\n../../device/u2f/attested_credential_data.h:48:36: note: copy constructor of \u0027AttestedCredentialData\u0027 is implicitly deleted because field \u0027public_key_\u0027 has a deleted copy constructor\n  const std::unique_ptr\u003cPublicKey\u003e public_key_;\n                                   ^\n../../buildtools/third_party/libc++/trunk/include/memory:2388:3: note: copy constructor is implicitly deleted because \u0027unique_ptr\u003cdevice::PublicKey, std::__1::default_delete\u003cdevice::PublicKey\u003e \u003e\u0027 has a user-declared move constructor\n  unique_ptr(unique_ptr\u0026\u0026 __u) noexcept",
+      "parentUuid": "0a35bd3c_1ae6246e",
       "range": {
         "startLine": 25,
         "startChar": 0,
