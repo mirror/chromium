@@ -34,6 +34,24 @@
       "revId": "f34212c7732678b2d07691c149181987ff98a038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f105b877_f338684f",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-21T23:24:17Z",
+      "side": 0,
+      "message": "New checks lgtm.",
+      "parentUuid": "80e5c10c_38535bf2",
+      "revId": "f34212c7732678b2d07691c149181987ff98a038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
