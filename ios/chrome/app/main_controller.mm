@@ -166,9 +166,6 @@ namespace {
 // Preference key used to store which profile is current.
 NSString* kIncognitoCurrentKey = @"IncognitoActive";
 
-// Constants for deferred initialization of preferences observer.
-NSString* const kPrefObserverInit = @"PrefObserverInit";
-
 // Constants for deferring notifying the AuthenticationService of a new cold
 // start.
 NSString* const kAuthenticationServiceNotification =
@@ -260,9 +257,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // Parameters received at startup time when the app is launched from another
   // app.
   AppStartupParameters* _startupParameters;
-
-  // Navigation View controller for the settings.
-  SettingsNavigationController* _settingsNavigationController;
 
   // View controller for switching tabs.
   UIViewController<TabSwitcher>* _tabSwitcherController;
@@ -516,7 +510,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 @synthesize launchOptions = _launchOptions;
 @synthesize startupParameters = _startupParameters;
 @synthesize metricsMediator = _metricsMediator;
-@synthesize settingsNavigationController = _settingsNavigationController;
 @synthesize signinInteractionCoordinator = _signinInteractionCoordinator;
 
 #pragma mark - Application lifecycle
@@ -1406,12 +1399,13 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 - (void)showClearBrowsingDataSettingsFromViewController:
     (UIViewController*)baseViewController {
-  if (_settingsNavigationController)
+  if (SettingsNavigationController.sharedSettingsNavigationController)
     return;
-  _settingsNavigationController = [SettingsNavigationController
-      newClearBrowsingDataController:_mainBrowserState
-                            delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
+  SettingsNavigationController* settingsNavigationController =
+      [SettingsNavigationController
+          newClearBrowsingDataController:_mainBrowserState
+                                delegate:self];
+  [baseViewController presentViewController:settingsNavigationController
                                    animated:YES
                                  completion:nil];
 }
@@ -1419,12 +1413,12 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 // TODO(crbug.com/779791) : Remove showing settings from MainController.
 - (void)showAutofillSettingsFromViewController:
     (UIViewController*)baseViewController {
-  if (_settingsNavigationController)
+  if (SettingsNavigationController.sharedSettingsNavigationController)
     return;
-  _settingsNavigationController =
+  SettingsNavigationController* settingsNavigationController =
       [SettingsNavigationController newAutofillController:_mainBrowserState
                                                  delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
+  [baseViewController presentViewController:settingsNavigationController
                                    animated:YES
                                  completion:nil];
 }
@@ -1436,13 +1430,14 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // This dispatch is necessary to give enough time for the tools menu to
   // disappear before taking a screenshot.
   dispatch_async(dispatch_get_main_queue(), ^{
-    if (_settingsNavigationController)
+    if (SettingsNavigationController.sharedSettingsNavigationController)
       return;
-    _settingsNavigationController = [SettingsNavigationController
-        newUserFeedbackController:_mainBrowserState
-                         delegate:self
-               feedbackDataSource:self];
-    [baseViewController presentViewController:_settingsNavigationController
+    SettingsNavigationController* settingsNavigationController =
+        [SettingsNavigationController
+            newUserFeedbackController:_mainBrowserState
+                             delegate:self
+                   feedbackDataSource:self];
+    [baseViewController presentViewController:settingsNavigationController
                                      animated:YES
                                    completion:nil];
   });
@@ -1534,15 +1529,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
     NOTREACHED();
     return;
   }
-  if (_settingsNavigationController) {
-    [_settingsNavigationController
+  if (SettingsNavigationController.sharedSettingsNavigationController) {
+    [SettingsNavigationController.sharedSettingsNavigationController
         showAccountsSettingsFromViewController:baseViewController];
     return;
   }
-  _settingsNavigationController = [SettingsNavigationController
-      newAccountsController:self.currentBrowserState
-                   delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
+  SettingsNavigationController* settingsNavigationController =
+      [SettingsNavigationController
+          newAccountsController:self.currentBrowserState
+                       delegate:self];
+  [baseViewController presentViewController:settingsNavigationController
                                    animated:YES
                                  completion:nil];
 }
@@ -1550,16 +1546,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 // TODO(crbug.com/779791) : Remove show settings commands from MainController.
 - (void)showSyncSettingsFromViewController:
     (UIViewController*)baseViewController {
-  if (_settingsNavigationController) {
-    [_settingsNavigationController
+  if (SettingsNavigationController.sharedSettingsNavigationController) {
+    [SettingsNavigationController.sharedSettingsNavigationController
         showSyncSettingsFromViewController:baseViewController];
     return;
   }
-  _settingsNavigationController =
+  SettingsNavigationController* settingsNavigationController =
       [SettingsNavigationController newSyncController:_mainBrowserState
                                allowSwitchSyncAccount:YES
                                              delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
+  [baseViewController presentViewController:settingsNavigationController
                                    animated:YES
                                  completion:nil];
 }
@@ -1567,15 +1563,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 // TODO(crbug.com/779791) : Remove show settings commands from MainController.
 - (void)showSyncPassphraseSettingsFromViewController:
     (UIViewController*)baseViewController {
-  if (_settingsNavigationController) {
-    [_settingsNavigationController
+  if (SettingsNavigationController.sharedSettingsNavigationController) {
+    [SettingsNavigationController.sharedSettingsNavigationController
         showSyncPassphraseSettingsFromViewController:baseViewController];
     return;
   }
-  _settingsNavigationController = [SettingsNavigationController
-      newSyncEncryptionPassphraseController:_mainBrowserState
-                                   delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
+  SettingsNavigationController* settingsNavigationController =
+      [SettingsNavigationController
+          newSyncEncryptionPassphraseController:_mainBrowserState
+                                       delegate:self];
+  [baseViewController presentViewController:settingsNavigationController
                                    animated:YES
                                  completion:nil];
 }
@@ -1862,7 +1859,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (BOOL)shouldOpenNTPTabOnActivationOfTabModel:(TabModel*)tabModel {
-  if (_settingsNavigationController) {
+  if (SettingsNavigationController.sharedSettingsNavigationController) {
     return false;
   }
   if (_tabSwitcherIsActive) {
@@ -2043,20 +2040,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                  completion:nil];
 }
 
-- (void)showSettingsFromViewController:(UIViewController*)baseViewController {
-  if (_settingsNavigationController)
-    return;
-  [[DeferredInitializationRunner sharedInstance]
-      runBlockIfNecessary:kPrefObserverInit];
-  DCHECK(_localStatePrefObserverBridge);
-  _settingsNavigationController = [SettingsNavigationController
-      newSettingsMainControllerWithBrowserState:_mainBrowserState
-                                       delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
-                                   animated:YES
-                                 completion:nil];
-}
-
 - (void)dismissSigninInteractionCoordinator {
   // The SigninInteractionCoordinator must not be destroyed at this point, as
   // it may dismiss the sign in UI in a future callback.
@@ -2065,16 +2048,27 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 - (void)closeSettingsAnimated:(BOOL)animated
                    completion:(ProceduralBlock)completion {
-  DCHECK(_settingsNavigationController);
-  UIViewController* presentingViewController =
-      [_settingsNavigationController presentingViewController];
-  DCHECK(presentingViewController);
-  [presentingViewController dismissViewControllerAnimated:animated
-                                               completion:^{
-                                                 if (completion)
-                                                   completion();
-                                               }];
-  _settingsNavigationController = nil;
+  // If MainController is presenting the settings view controller it can be
+  // explicitly dismissed. The Settings main menu is directly
+  // presented from the view controller hierarchy, and in this case there will
+  // be no _settingsNavigationController here in MainController. The
+  // completion block will take care of dismissing the settings UI via the
+  // view controller hierarchy.
+  if (SettingsNavigationController.sharedSettingsNavigationController) {
+    [SettingsNavigationController
+            .sharedSettingsNavigationController settingsWillBeDismissed];
+    UIViewController* presentingViewController =
+        [SettingsNavigationController
+                .sharedSettingsNavigationController presentingViewController];
+    DCHECK(presentingViewController);
+    [presentingViewController dismissViewControllerAnimated:animated
+                                                 completion:^{
+                                                   if (completion)
+                                                     completion();
+                                                 }];
+  } else if (completion) {
+    completion();
+  }
 }
 
 #pragma mark - TabModelObserver
@@ -2264,7 +2258,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   ProceduralBlock completionWithBVC = ^{
     // This will dismiss the SSO view controller.
     [self.currentBVC clearPresentedStateWithCompletion:completion
-                                        dismissOmnibox:dismissOmnibox];
+                                        dismissOmnibox:dismissOmnibox
+                                              animated:YES];
   };
   ProceduralBlock completionWithoutBVC = ^{
     // This will dismiss the SSO view controller.
@@ -2276,11 +2271,12 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // As a top level rule, if the settings are showing, they need to be
   // dismissed. Then, based on whether the BVC is present or not, a different
   // completion callback is called.
-  if (self.currentBVC && _settingsNavigationController) {
+  if (self.currentBVC &&
+      SettingsNavigationController.sharedSettingsNavigationController) {
     // In this case, the settings are up and the BVC is showing. Close the
     // settings then call the BVC completion.
     [self closeSettingsAnimated:NO completion:completionWithBVC];
-  } else if (_settingsNavigationController) {
+  } else if (SettingsNavigationController.sharedSettingsNavigationController) {
     // In this case, the settings are up but the BVC is not showing. Close the
     // settings then call the no-BVC completion.
     [self closeSettingsAnimated:NO completion:completionWithoutBVC];
