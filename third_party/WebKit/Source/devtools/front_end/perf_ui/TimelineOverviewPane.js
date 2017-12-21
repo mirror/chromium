@@ -221,9 +221,10 @@ PerfUI.TimelineOverviewPane = class extends UI.VBox {
 
     var absoluteMin = this._overviewCalculator.minimumBoundary();
     var timeSpan = this._overviewCalculator.maximumBoundary() - absoluteMin;
+    var windowRight = this._overviewGrid.windowRight();
     var windowTimes = {
       startTime: absoluteMin + timeSpan * this._overviewGrid.windowLeft(),
-      endTime: absoluteMin + timeSpan * this._overviewGrid.windowRight()
+      endTime: windowRight === 1.0 ? Infinity : (absoluteMin + timeSpan * windowRight)
     };
     this._windowStartTime = windowTimes.startTime;
     this._windowEndTime = windowTimes.endTime;

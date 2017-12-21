@@ -5,7 +5,7 @@ OverviewPane:
 divider offsets: [0, 500, 1000, 1500]. We are expecting round numbers.
 
 range = 0 - 1
-time range = 1122673092.068 - 1122674564.291
+time range = 1122673092.068 - Infinity
 
 range = 0.25 - 0.75
 time range = 1122673460.12375 - 1122674196.23525
