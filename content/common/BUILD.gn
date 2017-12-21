@@ -588,7 +588,10 @@ mojom("mojo_bindings") {
   ]
 
   if (is_win) {
-    sources += [ "font_cache_win.mojom" ]
+    sources += [
+      "dwrite_font_proxy.mojom",
+      "font_cache_win.mojom",
+    ]
   }
 
   import_dirs = [ "//mojo/services" ]
