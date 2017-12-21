@@ -126,6 +126,7 @@ void NotifierSettingsViewTest::TearDown() {
 void NotifierSettingsViewTest::InitView() {
   notifier_settings_view_.reset();
   notifier_settings_view_ = std::make_unique<NotifierSettingsView>();
+  notifier_settings_view_->EnsureNotifierListLoaded();
 }
 
 NotifierSettingsView* NotifierSettingsViewTest::GetView() const {
