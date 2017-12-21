@@ -89,16 +89,17 @@ bool IsValidRegion(const std::string& region) {
 
 // This function returns the language-region version of language name.
 // e.g. returns hi-IN for hi.
-std::string GetSpellCheckLanguageRegion(const std::string& input_language) {
+base::StringPiece GetSpellCheckLanguageRegion(
+    base::StringPiece input_language) {
   for (const auto& lang_region : kSupportedSpellCheckerLanguages) {
     if (lang_region.language == input_language)
-      return std::string(lang_region.language_region);
+      return base::StringPiece(lang_region.language_region);
   }
 
   return input_language;
 }
 
-base::FilePath GetVersionedFileName(const std::string& input_language,
+base::FilePath GetVersionedFileName(base::StringPiece input_language,
                                     const base::FilePath& dict_dir) {
   // The default dictionary version is 3-0. This version indicates that the bdic
   // file contains a checksum.
@@ -126,7 +127,7 @@ base::FilePath GetVersionedFileName(const std::string& input_language,
 
   // Generate the bdict file name using default version string or special
   // version string, depending on the language.
-  std::string language = GetSpellCheckLanguageRegion(input_language);
+  base::StringPiece language = GetSpellCheckLanguageRegion(input_language);
   std::string version;
   for (size_t i = 0; i < arraysize(special_version_string); ++i) {
     if (language == special_version_string[i].language) {
@@ -136,17 +137,19 @@ base::FilePath GetVersionedFileName(const std::string& input_language,
   }
   if (version.empty())
     version = kDefaultVersionString;
-  std::string versioned_bdict_file_name(language + version + ".bdic");
+  std::string versioned_bdict_file_name = language.as_string();
+  versioned_bdict_file_name.append(version);
+  versioned_bdict_file_name.append(".bdic");
   return dict_dir.AppendASCII(versioned_bdict_file_name);
 }
 
-std::string GetCorrespondingSpellCheckLanguage(const std::string& language) {
+std::string GetCorrespondingSpellCheckLanguage(base::StringPiece language) {
   std::string best_match;
   // Look for exact match in the Spell Check language list.
   for (const auto& lang_region : kSupportedSpellCheckerLanguages) {
     // First look for exact match in the language region of the list.
     if (lang_region.language == language)
-      return language;
+      return language.as_string();
 
     // Next, look for exact match in the language_region part of the list.
     if (lang_region.language_region == language) {
