@@ -104,17 +104,18 @@ void IndexedDBCallbacksImpl::ConvertValue(
   web_value->web_blob_info.Swap(local_blob_info);
 }
 
-
 IndexedDBCallbacksImpl::IndexedDBCallbacksImpl(
     std::unique_ptr<WebIDBCallbacks> callbacks,
     int64_t transaction_id,
     const base::WeakPtr<WebIDBCursorImpl>& cursor,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> callback_runner)
     : internal_state_(new InternalState(std::move(callbacks),
                                         transaction_id,
                                         cursor,
-                                        std::move(io_runner))),
-      callback_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+                                        std::move(io_runner),
+                                        callback_runner)),
+      callback_runner_(std::move(callback_runner)) {}
 
 IndexedDBCallbacksImpl::~IndexedDBCallbacksImpl() {
   callback_runner_->DeleteSoon(FROM_HERE, internal_state_);
@@ -234,11 +235,13 @@ IndexedDBCallbacksImpl::InternalState::InternalState(
     std::unique_ptr<blink::WebIDBCallbacks> callbacks,
     int64_t transaction_id,
     const base::WeakPtr<WebIDBCursorImpl>& cursor,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> callback_runner)
     : callbacks_(std::move(callbacks)),
       transaction_id_(transaction_id),
       cursor_(cursor),
-      io_runner_(std::move(io_runner)) {
+      io_runner_(std::move(io_runner)),
+      callback_runner_(std::move(callback_runner)) {
   IndexedDBDispatcher::ThreadSpecificInstance()->RegisterMojoOwnedCallbacks(
       this);
 }
@@ -277,8 +280,8 @@ void IndexedDBCallbacksImpl::InternalState::UpgradeNeeded(
     blink::WebIDBDataLoss data_loss,
     const std::string& data_loss_message,
     const content::IndexedDBDatabaseMetadata& metadata) {
-  WebIDBDatabase* database =
-      new WebIDBDatabaseImpl(std::move(database_info), io_runner_);
+  WebIDBDatabase* database = new WebIDBDatabaseImpl(
+      std::move(database_info), io_runner_, callback_runner_);
   WebIDBMetadata web_metadata;
   ConvertDatabaseMetadata(metadata, &web_metadata);
   callbacks_->OnUpgradeNeeded(old_version, database, web_metadata, data_loss,
@@ -290,8 +293,10 @@ void IndexedDBCallbacksImpl::InternalState::SuccessDatabase(
     DatabaseAssociatedPtrInfo database_info,
     const content::IndexedDBDatabaseMetadata& metadata) {
   WebIDBDatabase* database = nullptr;
-  if (database_info.is_valid())
-    database = new WebIDBDatabaseImpl(std::move(database_info), io_runner_);
+  if (database_info.is_valid()) {
+    database = new WebIDBDatabaseImpl(std::move(database_info), io_runner_,
+                                      callback_runner_);
+  }
 
   WebIDBMetadata web_metadata;
   ConvertDatabaseMetadata(metadata, &web_metadata);
@@ -308,8 +313,8 @@ void IndexedDBCallbacksImpl::InternalState::SuccessCursor(
   if (value)
     IndexedDBCallbacksImpl::ConvertValue(value, &web_value);
 
-  WebIDBCursorImpl* cursor =
-      new WebIDBCursorImpl(std::move(cursor_info), transaction_id_, io_runner_);
+  WebIDBCursorImpl* cursor = new WebIDBCursorImpl(
+      std::move(cursor_info), transaction_id_, io_runner_, callback_runner_);
   callbacks_->OnSuccess(cursor, WebIDBKeyBuilder::Build(key),
                         WebIDBKeyBuilder::Build(primary_key), web_value);
   callbacks_.reset();
