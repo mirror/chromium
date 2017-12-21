@@ -16,6 +16,24 @@
       "revId": "83bce795e4af7b3a8667ba283d5435fe79db859e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e97a2d_6262260a",
+        "filename": "ui/display/util/display_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-21T19:47:06Z",
+      "side": 1,
+      "message": "Seems that way. Maybe I shouldn\u0027t dip my toe in the constexpr world for code that I don\u0027t even compile locally. :-)",
+      "parentUuid": "7a81ca64_9223b6be",
+      "revId": "83bce795e4af7b3a8667ba283d5435fe79db859e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
