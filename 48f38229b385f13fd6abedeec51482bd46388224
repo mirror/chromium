@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d043d250_50c08cdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T19:23:39Z",
+      "side": 1,
+      "message": "Do you have some numbers for how this improves something? Good for your history, good to motivate this.",
+      "revId": "48f38229b385f13fd6abedeec51482bd46388224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
