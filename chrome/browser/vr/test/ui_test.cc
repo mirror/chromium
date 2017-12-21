@@ -76,7 +76,7 @@ void UiTest::CreateScene(InCct in_cct, InWebVr in_web_vr) {
 }
 
 void UiTest::CreateSceneForAutoPresentation() {
-  CreateSceneInternal(kNotInCct, kNotInWebVr, kAutopresented);
+  CreateSceneInternal(kNotInCct, kInWebVr, kAutopresented);
 }
 
 void UiTest::SetIncognito(bool incognito) {

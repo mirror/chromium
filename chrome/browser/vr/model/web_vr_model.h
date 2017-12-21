@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VR_MODEL_WEB_VR_TIMEOUT_STATE_H_
-#define CHROME_BROWSER_VR_MODEL_WEB_VR_TIMEOUT_STATE_H_
+#ifndef CHROME_BROWSER_VR_MODEL_WEB_VR_MODEL_H_
+#define CHROME_BROWSER_VR_MODEL_WEB_VR_MODEL_H_
 
 namespace vr {
 
 // As we wait for WebVR frames, we may pass through the following states.
-enum WebVrTimeoutState {
+enum WebVrState {
   // We are not awaiting a WebVR frame.
-  kWebVrNoTimeoutPending,
+  kWebVrNoTimeoutPending = 0,
   kWebVrAwaitingFirstFrame,
   // We are awaiting a WebVR frame, and we will soon exceed the amount of time
   // that we're willing to wait. In this state, it could be appropriate to show
@@ -21,8 +21,26 @@ enum WebVrTimeoutState {
   // been entirely exceeded. This would, for example, be an appropriate time to
   // show "sad tab" UI to allow the user to bail on the WebVR content.
   kWebVrTimedOut,
+  // We've received our first WebVR frame and are in WebVR presentation mode.
+  kWebVrPresenting,
+};
+
+struct WebVrModel {
+  WebVrState state = kWebVrNoTimeoutPending;
+
+  // Whether this WebVR session was started in auto-presentation mode.
+  bool started_for_autopresentation = false;
+  bool show_webvr_exit_toast = false;
+
+  bool web_vr_mode() const { return state >= kWebVrAwaitingFirstFrame; }
+  bool show_splash_screen() const {
+    return started_for_autopresentation && state == kWebVrAwaitingFirstFrame;
+  }
+  bool has_produced_frames() const {
+    return web_vr_mode() && state == kWebVrPresenting;
+  }
 };
 
 }  // namespace vr
 
-#endif  // CHROME_BROWSER_VR_MODEL_WEB_VR_TIMEOUT_STATE_H_
+#endif  // CHROME_BROWSER_VR_MODEL_WEB_VR_MODEL_H_
