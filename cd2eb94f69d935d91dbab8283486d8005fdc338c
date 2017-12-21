@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cdcb6e1_36408247",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b12ad7_eedb5bcd",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47432768_ef63c9f6",
         "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bac72b_95a498b8",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "This pref makes HTMLAnchorElement keyboard focusable:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp?l\u003d112",
+      "parentUuid": "47432768_ef63c9f6",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e6e1ff23_8a2d4109",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f98a48_c299077b",
+      "range": {
+        "startLine": 51,
+        "startChar": 80,
+        "endLine": 51,
+        "endChar": 81
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c8093f_e0255d75",
         "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8eb376_e01fc144",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c8093f_e0255d75",
+      "range": {
+        "startLine": 52,
+        "startChar": 78,
+        "endLine": 52,
+        "endChar": 79
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7f1cbee0_34360b10",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb85682_b5bc2331",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 7
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03323d42_f171a1ea",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5e9e85ab_3c39ebe0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03323d42_f171a1ea",
+      "range": {
+        "startLine": 1396,
+        "startChar": 17,
+        "endLine": 1396,
+        "endChar": 29
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a37e3cc8_51cdd00d",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "b76bda66_9841f1b1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Yes, this algorithm still O(K * N) where K is the number of iframe and N is number of entire node(also all \u0027bad\u0027 iframe must be candidate first). But if there is no iframe, time complexity is O(N) because only iframe can be \u0027bad\u0027 container.\nI suggested in other CL that condition for being container should be changed. If that land, overflow container also can be \u0027bad\u0027 container, so we should seriously consider about performance.",
+      "parentUuid": "a37e3cc8_51cdd00d",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23116b7f_4a13cd0c",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -156,6 +306,30 @@
       "writtenOn": "2017-12-20T14:48:38Z",
       "side": 1,
       "message": "What does \"pivot\" refer to here? Could you add a comment here to clarify?",
+      "range": {
+        "startLine": 1402,
+        "startChar": 15,
+        "endLine": 1402,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd9b7ba_21da1ef3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "I added a comment. Do you think added comment explains clearly?",
+      "parentUuid": "23116b7f_4a13cd0c",
       "range": {
         "startLine": 1402,
         "startChar": 15,
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "0d061206_0b937713",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5db5748_1b164254",
+      "range": {
+        "startLine": 1413,
+        "startChar": 9,
+        "endLine": 1413,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "268c2e4f_d47dd333",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -202,6 +400,30 @@
       "writtenOn": "2017-12-20T14:48:38Z",
       "side": 1,
       "message": "nit: Can we rename this to will_remain_offscreen_after_a_scroll ?\n\nWe haven\u0027t yet scrolled anything at this point. \"after scrolling\" makes me think that we have...",
+      "range": {
+        "startLine": 1424,
+        "startChar": 20,
+        "endLine": 1424,
+        "endChar": 48
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fd8830_6dc69320",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "It sounds good to me. But I\u0027ll change this in another cleaning up CL.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d770147#c10",
+      "parentUuid": "268c2e4f_d47dd333",
       "range": {
         "startLine": 1424,
         "startChar": 20,
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "6552f9b3_dd99fe7b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Yes. I added a comment about that.",
+      "parentUuid": "7d43c732_40b344fb",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 16
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "261857bf_7384cf03",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -254,6 +500,24 @@
     },
     {
       "key": {
+        "uuid": "0f79ade6_466096e5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Current implementation depends on a fact that we can consider another candidate in current container only if ensure entire candidate\u0027s subtree is non-navigable(no focusable and no scrollable). So using queue is not proper now.",
+      "parentUuid": "261857bf_7384cf03",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ebc7154_8c93a6f1",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -265,6 +529,24 @@
       "writtenOn": "2017-12-20T14:48:38Z",
       "side": 1,
       "message": "A parent can have many children (read: many sub containers)... Now when we check the parent, we will not dig into the child we came from - but we might dig into other children, possibly deeper down, that have been visited before...",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61b9bda_d6c04c1d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "\u003e that have been visited before\n\nAs far as I know, ElementTraversal::Next() only traverses subtree of a container. If true, we never traverse a subtree that we visited before. Because AdvanceFocusDirectionallyInContainer()\ntraverses only under the container.",
+      "parentUuid": "8ebc7154_8c93a6f1",
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +573,30 @@
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d901748_7e57346c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-21T08:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc47080_4b010311",
+      "range": {
+        "startLine": 129,
+        "startChar": 37,
+        "endLine": 129,
+        "endChar": 53
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
