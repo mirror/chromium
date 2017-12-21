@@ -595,6 +595,10 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
   request_rawptr->timeout_iter = iter;
   if (expiration_time > max_request_expiration_time_)
     max_request_expiration_time_ = expiration_time;
+
+  // S13nServiceWorker: The browser initiates another request, so the worker
+  // runs again even after the idle timer has triggered.
+  trigger_no_work_after_streaming_ = false;
   return request_id;
 }
 
@@ -730,12 +734,18 @@ void ServiceWorkerVersion::OnStreamResponseStarted() {
 void ServiceWorkerVersion::OnStreamResponseFinished() {
   DCHECK_GT(pending_stream_response_count_, 0);
   pending_stream_response_count_--;
-  if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
-    // S13nServiceWorker:
-    // TODO(https://crbug.com/774374): OnNoWork should be triggered here when
-    // the worker is idle since the last termination request.
-    for (auto& observer : listeners_)
-      observer.OnNoWork(this);
+
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    if (trigger_no_work_after_streaming_ && !HasWork()) {
+      for (auto& observer : listeners_)
+        observer.OnNoWork(this);
+      trigger_no_work_after_streaming_ = false;
+    }
+  } else {
+    if (!HasWork()) {
+      for (auto& observer : listeners_)
+        observer.OnNoWork(this);
+    }
   }
 }
 
@@ -1528,6 +1538,8 @@ void ServiceWorkerVersion::StartWorkerInternal() {
 
   StartTimeoutTimer();
 
+  trigger_no_work_after_streaming_ = false;
+
   std::unique_ptr<ServiceWorkerProviderHost> pending_provider_host =
       ServiceWorkerProviderHost::PreCreateForController(context());
   provider_host_ = pending_provider_host->AsWeakPtr();
@@ -1703,7 +1715,7 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
   // skip this check.
   if (!ServiceWorkerUtils::IsServicificationEnabled() &&
       GetTickDuration(idle_time_) > kIdleWorkerTimeout) {
-    StopWorkerIfIdle();
+    StopWorkerIfIdle(false /* requested_from_renderer */);
     return;
   }
 
@@ -1726,29 +1738,53 @@ void ServiceWorkerVersion::OnPingTimeout() {
   // TODO(falken): Change the error code to SERVICE_WORKER_ERROR_TIMEOUT.
   embedded_worker_->AddMessageToConsole(blink::WebConsoleMessage::kLevelVerbose,
                                         kNotRespondingErrorMesage);
-  StopWorkerIfIdle();
+  StopWorkerIfIdle(false /* requested_from_renderer */);
 }
 
-void ServiceWorkerVersion::StopWorkerIfIdle() {
+void ServiceWorkerVersion::StopWorkerIfIdle(bool requested_from_renderer) {
   if (running_status() == EmbeddedWorkerStatus::STOPPED ||
       running_status() == EmbeddedWorkerStatus::STOPPING ||
       !stop_callbacks_.empty()) {
     return;
   }
 
-  // StopWorkerIfIdle() may be called for two reasons: "idle-timeout" or
-  // "ping-timeout". For idle-timeout (i.e. ping hasn't timed out), check if the
-  // worker really is idle.
-  if (!ping_controller_->IsTimedOut() && HasWork())
+  if (!ServiceWorkerUtils::IsServicificationEnabled()) {
+    // StopWorkerIfIdle() may be called for two reasons: "idle-timeout" or
+    // "ping-timeout". For idle-timeout (i.e. ping hasn't timed out), check if
+    // the worker really is idle.
+    if (!ping_controller_->IsTimedOut() && HasWork())
+      return;
+    embedded_worker_->StopIfNotAttachedToDevTools();
     return;
+  }
+
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+
+  // Ping timeout
+  if (ping_controller_->IsTimedOut()) {
+    DCHECK(!requested_from_renderer);
+    embedded_worker_->StopIfNotAttachedToDevTools();
+    return;
+  }
+
+  // Idle timeout
+  DCHECK(requested_from_renderer);
+  DCHECK(start_callbacks_.empty());
+  // If the browser initiates another event before receiving termination
+  // request from the renderer, do nothing.
+  if (!pending_requests_.IsEmpty())
+    return;
+  // If there are no inflight events but there are streaming tasks, wait for
+  // them.
+  if (pending_stream_response_count_ > 0) {
+    trigger_no_work_after_streaming_ = true;
+    return;
+  }
+
   embedded_worker_->StopIfNotAttachedToDevTools();
 
-  // S13nServiceWorker: OnNoWork may trigger activation of the waiting
-  // version.
-  if (ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
-    for (auto& observer : listeners_)
-      observer.OnNoWork(this);
-  }
+  for (auto& observer : listeners_)
+    observer.OnNoWork(this);
 }
 
 bool ServiceWorkerVersion::HasWork() const {

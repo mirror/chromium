@@ -246,7 +246,11 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Stops the worker if it is idle (has no in-flight requests) or timed out
   // ping.
-  void StopWorkerIfIdle();
+  //
+  // S13nServiceWorker:
+  // |requested_from_renderer| should be true if StopWorkerIfIdle() is called by
+  // mojom::EmbeddedWorkerInstanceHost::RequestTermination().
+  void StopWorkerIfIdle(bool requested_from_renderer);
 
   // Skips waiting and forces this version to become activated.
   void SkipWaitingFromDevTools();
@@ -776,6 +780,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // the browser process. We try to not stop the service worker while there is
   // an ongoing response.
   int pending_stream_response_count_ = 0;
+
+  // S13nServiceWorker:
+  // Set to true if the worker has no inflight events and OnNoWork should be
+  // triggered when the streaming ends. Set back to false if another event
+  // starts before finishing the streaming task.
+  bool trigger_no_work_after_streaming_ = false;
 
   // Keeps track of the provider hosting this running service worker for this
   // version. |provider_host_| is always valid as long as this version is
