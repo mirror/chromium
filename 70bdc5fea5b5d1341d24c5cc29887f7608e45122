@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d38d1e3_09bcdbe4",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T01:57:00Z",
+      "side": 1,
+      "message": "nit: Don\u0027t use auto here or just compare return value directly instead of creating a new var.",
+      "revId": "70bdc5fea5b5d1341d24c5cc29887f7608e45122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6930a6_4fdd3396",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T01:57:00Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "70bdc5fea5b5d1341d24c5cc29887f7608e45122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7716cae2_472b7b8b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2133,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T01:57:00Z",
+      "side": 1,
+      "message": "nit: nullptr /* share_context */, (the comment makes it more readable as you don\u0027t have to look up the declaration)",
+      "revId": "70bdc5fea5b5d1341d24c5cc29887f7608e45122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
