@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
+#include "services/network/public/interfaces/data_pipe_getter.mojom.h"
 #include "storage/common/data_element.h"
 #include "url/gurl.h"
 
@@ -69,6 +70,8 @@ class CONTENT_EXPORT ResourceRequestBody
                                  uint64_t length,
                                  const base::Time& expected_modification_time);
   void AppendDataPipe(network::mojom::DataPipeGetterPtr data_pipe_getter);
+
+  scoped_refptr<ResourceRequestBody> Clone() const;
 
   const std::vector<Element>* elements() const { return &elements_; }
   std::vector<Element>* elements_mutable() { return &elements_; }

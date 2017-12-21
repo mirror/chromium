@@ -1523,6 +1523,7 @@ test("content_unittests") {
     "../public/common/drop_data_unittest.cc",
     "../public/common/network_connection_tracker_unittest.cc",
     "../public/common/proxy_config_traits_unittest.cc",
+    "../public/common/resource_request_body_unittest.cc",
     "../public/common/simple_url_loader_unittest.cc",
     "../public/common/url_utils_unittest.cc",
     "../public/network/ignore_errors_cert_verifier_unittest.cc",

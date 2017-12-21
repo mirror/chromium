@@ -95,6 +95,55 @@ std::vector<base::FilePath> ResourceRequestBody::GetReferencedFiles() const {
   return result;
 }
 
+scoped_refptr<ResourceRequestBody> ResourceRequestBody::Clone() const {
+  auto clone = base::MakeRefCounted<ResourceRequestBody>();
+
+  clone->identifier_ = identifier_;
+  clone->contains_sensitive_info_ = contains_sensitive_info_;
+  for (const Element& element : elements_) {
+    Element cloned_element;
+    switch (element.type()) {
+      case Element::TYPE_UNKNOWN:
+      case Element::TYPE_DISK_CACHE_ENTRY:
+      case Element::TYPE_BYTES_DESCRIPTION:
+        NOTREACHED();
+        continue;
+      case Element::TYPE_DATA_PIPE: {
+        network::mojom::DataPipeGetterPtrInfo clone_ptr_info;
+        element.data_pipe()->Clone(mojo::MakeRequest(&clone_ptr_info));
+        network::mojom::DataPipeGetterPtr clone_ptr(std::move(clone_ptr_info));
+        cloned_element.SetToDataPipe(std::move(clone_ptr));
+        break;
+      }
+      case Element::TYPE_RAW_FILE:
+        cloned_element.SetToFileRange(
+            element.file().Duplicate(), element.path(), element.offset(),
+            element.length(), element.expected_modification_time());
+        break;
+      case Element::TYPE_FILE_FILESYSTEM:
+        cloned_element.SetToFileSystemUrlRange(
+            element.filesystem_url(), element.offset(), element.length(),
+            element.expected_modification_time());
+        break;
+      case Element::TYPE_BLOB:
+        cloned_element.SetToBlobRange(element.blob_uuid(), element.offset(),
+                                      element.length());
+        break;
+      case Element::TYPE_FILE:
+        cloned_element.SetToFilePathRange(element.path(), element.offset(),
+                                          element.length(),
+                                          element.expected_modification_time());
+        break;
+      case Element::TYPE_BYTES:
+        cloned_element.SetToBytes(element.bytes(), element.length());
+        break;
+    }
+    clone->elements_.push_back(std::move(cloned_element));
+  }
+
+  return clone;
+}
+
 ResourceRequestBody::~ResourceRequestBody() {}
 
 }  // namespace content
