@@ -3707,6 +3707,8 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
 
   bool did_scroll_x = scroll_state->caused_scroll_x();
   bool did_scroll_y = scroll_state->caused_scroll_y();
+  did_scroll_x_for_scroll_gesture_ |= did_scroll_x;
+  did_scroll_y_for_scroll_gesture_ |= did_scroll_y;
   bool did_scroll_content = did_scroll_x || did_scroll_y;
   if (did_scroll_content) {
     ShowScrollbarsForImplScroll(current_scrolling_node->element_id);
@@ -3787,11 +3789,31 @@ void LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset(
   SetNeedsRedraw();
 }
 
+void LayerTreeHostImpl::SnapAtScrollEnd(ScrollNode* scroll_node,
+                                        bool did_scroll_x,
+                                        bool did_scroll_y) {
+  if (!scroll_node)
+    return;
+
+  ScrollTree& scroll_tree = active_tree()->property_trees()->scroll_tree;
+  gfx::ScrollOffset current_position =
+      scroll_tree.current_scroll_offset(scroll_node->element_id);
+  SnapContainerData data = scroll_node->snap_container_data;
+
+  gfx::ScrollOffset snap_position =
+      data.FindSnapPosition(current_position, did_scroll_x, did_scroll_y);
+  ScrollAnimationCreate(
+      scroll_node, ScrollOffsetToVector2dF(snap_position - current_position),
+      base::TimeDelta());
+}
+
 void LayerTreeHostImpl::ClearCurrentlyScrollingNode() {
   active_tree_->ClearCurrentlyScrollingNode();
   did_lock_scrolling_layer_ = false;
   scroll_affects_scroll_handler_ = false;
   accumulated_root_overscroll_ = gfx::Vector2dF();
+  did_scroll_x_for_scroll_gesture_ = false;
+  did_scroll_y_for_scroll_gesture_ = false;
 }
 
 void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state) {
@@ -3801,6 +3823,14 @@ void LayerTreeHostImpl::ScrollEnd(ScrollState* scroll_state) {
   DistributeScrollDelta(scroll_state);
   browser_controls_offset_manager_->ScrollEnd();
   ClearCurrentlyScrollingNode();
+}
+
+void LayerTreeHostImpl::HandleGestureScrollEnd(ScrollState* scroll_state) {
+  ScrollNode* scroll_node = CurrentlyScrollingNode();
+  bool did_scroll_x = did_scroll_x_for_scroll_gesture_;
+  bool did_scroll_y = did_scroll_y_for_scroll_gesture_;
+  ScrollEnd(scroll_state);
+  SnapAtScrollEnd(scroll_node, did_scroll_x, did_scroll_y);
 }
 
 InputHandler::ScrollStatus LayerTreeHostImpl::FlingScrollBegin() {
