@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2488acf8_d9ff09ef",
+        "filename": "chrome/android/java/res/xml/site_settings_preferences.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-21T15:55:35Z",
+      "side": 1,
+      "message": "See bug referenced at top. In comment 7 you\u0027ll find a link to a doc with the established order. Please have the owners of that doc update it to account for the position of Sensors. Then update this file to reflect that decision.",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "d5e352e34d80d756f6c3d15785912c96b627e2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c39c1b_413ffa48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-21T15:55:35Z",
+      "side": 1,
+      "message": "Is this correct? Can you provide a screenshot?",
+      "range": {
+        "startLine": 159,
+        "startChar": 48,
+        "endLine": 159,
+        "endChar": 60
+      },
+      "revId": "d5e352e34d80d756f6c3d15785912c96b627e2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11718fbe_7c6949ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-21T15:55:35Z",
+      "side": 1,
+      "message": "Move up. This list is alphabetically ordered.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "d5e352e34d80d756f6c3d15785912c96b627e2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
