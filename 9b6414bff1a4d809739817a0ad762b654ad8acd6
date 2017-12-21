@@ -467,6 +467,30 @@
     },
     {
       "key": {
+        "uuid": "3d21cb3b_b0ed65c7",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-21T23:56:21Z",
+      "side": 1,
+      "message": "\u003e \u003e Thanks for pointing out the other places.\n\u003e \u003e \n\u003e \u003e \u003e There are a few other places where SetSite may be called, and I\u0027m curious whether we need to fall back to base URL in any of those:\n\u003e \u003e \u003e - DidNavigate, which uses params.url.  (I\u0027m assuming it\u0027s not the base URL, because there\u0027s also params.base_url.)\n\u003e \u003e \n\u003e \u003e Good catch - initially I didn\u0027t see that we have access to |params.base_url| here.  I\u0027ve changed the SetSite callsite above to use |base_url| if possible.\n\u003e \u003e \n\u003e \u003e One other notes (probably not quite related to the CL under review): I wonder if we should use |params.url| VS |params.origin| when calculating the site URL.  I\u0027ve started a discussion about this at https://groups.google.com/a/chromium.org/d/topic/site-isolation-dev/36Cy9IzLi90/discussion\n\u003e \n\u003e Yup, I\u0027ll try to think more about that and follow up there.  I\u0027ll also note that I\u0027m not thrilled about having to call SetSite in so many places.  Maybe we can try calling SetSite() from OnResponseStarted unconditionally (not just for sites requiring dedicated processes), and just remove the SetSite() call from DidNavigate.\n\nAck.  This makes sense to me I think.  I can try that in a follow-up CL.\n\nWhat about the call to SetSite from RenderFrameHostManager::DetermineSiteInstanceForURL.  This is probably still needed (based on the comment there), right?\n\n\u003e \u003e \u003e - BrowsingInstance::GetSiteInstanceForURL() - which may matter if we are creating a new BrowsingInstance via LoadDataWithBaseURL, if that\u0027s even possible?\n\u003e \u003e \n\u003e \u003e I think that BrowsingInstance::GetSiteInstanceForURL() would matter only if LoadDataWithBaseURL could create a new frame within an *existing* (not new) browsing instance.  And I think this is not possible - LoadDataWithBaseURL is always a top-level, browser-initiated navigation (and therefore should be happening in a new browsing instance I think).\n\u003e \n\u003e I\u0027m a bit confused here. :)\n\u003e \n\u003e I agree LoadDataWithBaseURL should always be browser-initiated: we kill the renderer if it tries to do it in RFHI::BeginNavigation().\n\u003e \n\u003e Why is LoadDataWithBaseURL always a navigation in a new BI though?  BrowsingInstance::GetSiteInstanceForURL can be called by both SI::CreateForURL (new BI), and SI::GetRelatedSiteInstance() (same BI). At least in the \u003cwebview\u003e case, it should presumably always stay in the current chrome-guest:// SI/BI (so I don\u0027t know if we\u0027ll actually ever need to determine a new SiteInstance site URL in that case).\n\nI think I was confused by our *intention* (but not *behavior* AFAICT) to swap BI when navigating *cross-site* via the omnibox.  Since LoadDataWithBaseURL can be for a \"same-site\" (according to base URL) navigation, then it might indeed not swap BI (even if we implemented our intention).\n\n\u003e Also, why wouldn\u0027t this matter for the cases with a new browsing instance?\n\nBecause BrowsingInstance::GetSiteInstanceForURL is only called when reusing an old browsing instance.  If LoadDataWithBaseURL always used a new browsing instance (which we\u0027ve established above is not true) then we wouldn\u0027t have to worry about using base URL in the call to SetSite made by BrowsingInstance::GetSiteInstanceForURL.\n\n\n\nFWIW, in the latest patchset I\u0027ve tried to revert all the changes related to base URL / SetSite.  Instead of making these product code changes, I\u0027ve tweaked 5 NavigationControllerBrowserTest that call LoadDataWithBaseURL to skip these tests when running with --site-per-process.  I\u0027ve also tweaked MessagePortProviderBrowserTest.PostMessage to avoid using LoadDataWithBaseURL (and to improve test verification to also cover the source origin).\n\nWDYT?",
+      "parentUuid": "770a824f_316b6637",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 39
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8472e3_c5ee71be",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 15
@@ -526,6 +550,30 @@
       "side": 1,
       "message": "Good points about about:blank, it\u0027s indeed problematic. :)  Like about:srcdoc as well.  A few more thoughts, all fine to explore in followups:\n\n* Maybe one option is to use |url| instead of |origin_url| only if |url-\u003eIsStandard()| is true, because this guarantees that the url and origin matched up on line 3258?  There should be no danger in using |url| in that case, even for HAS_WRONG_LOCK.  (The latter may matter once we start locking hosted apps to an origin.)  That would cover the common http/https cases.\n\n* Maybe we should also do the origin lock check on the |url| when |origin| is unique, at least in some cases (e.g., when |url| is standard)?  Otherwise, a page could bypass this whole sanity check by sandboxing itself (e.g., via CSP sandbox flags), thanks to line 3254.  Since that\u0027d be a check on the URL, it might belong in CanCommitURL instead.\n\n* As a separate potential sanity check, I don\u0027t think |origin_url| can ever be about:*.  If we see that, we should probably kill the renderer.  (the origin should always be inherited for about: or, for browser-initiated navigations to about:blank, it should be null/unique.)",
       "parentUuid": "13ef5bd7_d3f85038",
+      "range": {
+        "startLine": 3272,
+        "startChar": 63,
+        "endLine": 3272,
+        "endChar": 73
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52e10022_b2b76c1b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-21T23:56:21Z",
+      "side": 1,
+      "message": "\u003e Good points about about:blank, it\u0027s indeed problematic. :)  Like about:srcdoc as well.  A few more thoughts, all fine to explore in followups:\n\u003e \n\u003e * Maybe one option is to use |url| instead of |origin_url| only if |url-\u003eIsStandard()| is true, because this guarantees that the url and origin matched up on line 3258?  There should be no danger in using |url| in that case, even for HAS_WRONG_LOCK.  (The latter may matter once we start locking hosted apps to an origin.)  That would cover the common http/https cases.\n\nYes - I also wondered about something like what you propose.  My main concern here, is that a compromised renderer can easily side-step the checks if we allow exceptions for these special cases (a compromised renderer can just pretend it is one of the special cases).\n\n\u003e * Maybe we should also do the origin lock check on the |url| when |origin| is unique, at least in some cases (e.g., when |url| is standard)?  Otherwise, a page could bypass this whole sanity check by sandboxing itself (e.g., via CSP sandbox flags), thanks to line 3254.  Since that\u0027d be a check on the URL, it might belong in CanCommitURL instead.\n\nI think bypassing these checks for a unique origin / sandboxed frame is fine:\n\n- In theory the frame with unique origin should not have access to the data associated with the origin of its URL.  OTOH, we don\u0027t isolate unique origins today, so I am not sure if the browser process can robustly deny access to such frames (I\u0027ve opened https://crbug.com/796968 to try to answer this question).\n\n- It seems to me that the whole point of sandboxed frames is that they *can* commit a URL, but their origin becomes unique.  SOP is based on the origin, not the URL.  Therefore I think that site isolation and renderer kills should also be focused on the origin, not the URL.  I understand that today site_url is calculated based on the url, but isn\u0027t this a historical accident (that today in the past browser process did not calculate the origin being navigated to and relied on the origin reported via DidCommitProvisionalLoad).\n\n\u003e * As a separate potential sanity check, I don\u0027t think |origin_url| can ever be about:*.  If we see that, we should probably kill the renderer.  (the origin should always be inherited for about: or, for browser-initiated navigations to about:blank, it should be null/unique.)\n\nInteresting idea.  I guess we can try returning false from CanCommitOrigin if |origin.GetURL().SchemeIs(url::kAboutScheme)|.  I can try that in a follow-up CL.",
+      "parentUuid": "d1815805_9e7f7ab4",
       "range": {
         "startLine": 3272,
         "startChar": 63,

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "898d3fa5_4a02b67d",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-21T23:56:21Z",
+      "side": 1,
+      "message": "Not applicable anymore:\n\n- I am exploring disabling LoadDataWithBaseURL tests (5 of them) in the latest patchset.\n\n- The non-PlzNavigate code will be probably removed by clamy@ soon.",
+      "parentUuid": "50adb384_02063fff",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 59
+      },
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe717c2a_343417cb",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 17
@@ -56,6 +80,24 @@
       "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb371dea_f411768f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 12839,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-21T23:56:21Z",
+      "side": 1,
+      "message": "Done (here and in SecurityExploitBrowserTest.MismatchedOriginOnCommit).",
+      "parentUuid": "24c554fa_cd51ae37",
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
