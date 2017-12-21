@@ -60,6 +60,8 @@ class FrameInputHandlerImpl : public mojom::FrameInputHandler {
   void Paste() override;
   void PasteAndMatchStyle() override;
   void Replace(const base::string16& word) override;
+  void ReplaceTextAtRange(const gfx::Range& range,
+                          const base::string16& word) override;
   void ReplaceMisspelling(const base::string16& word) override;
   void Delete() override;
   void SelectAll() override;

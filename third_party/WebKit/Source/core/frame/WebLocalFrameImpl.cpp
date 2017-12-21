@@ -940,12 +940,13 @@ WebAssociatedURLLoader* WebLocalFrameImpl::CreateAssociatedURLLoader(
   return new WebAssociatedURLLoaderImpl(GetFrame()->GetDocument(), options);
 }
 
-void WebLocalFrameImpl::ReplaceSelection(const WebString& text) {
+void WebLocalFrameImpl::ReplaceSelection(const WebString& text,
+                                         bool smart_replace) {
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  GetFrame()->GetEditor().ReplaceSelection(text);
+  GetFrame()->GetEditor().ReplaceSelection(text, smart_replace);
 }
 
 void WebLocalFrameImpl::SetMarkedText(const WebString& text,

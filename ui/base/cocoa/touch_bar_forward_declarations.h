@@ -19,6 +19,8 @@
 @class NSTouchBar, NSTouchBarItem;
 @protocol NSTouchBarDelegate;
 
+@protocol NSCandidateListTouchBarItemDelegate;
+
 typedef float NSTouchBarItemPriority;
 static const NSTouchBarItemPriority NSTouchBarItemPriorityHigh = 1000;
 static const NSTouchBarItemPriority NSTouchBarItemPriorityNormal = 0;
@@ -75,6 +77,14 @@ typedef NSString* NSTouchBarCustomizationIdentifier;
 
 @property(strong) NSTouchBar* groupTouchBar;
 @property(readwrite, copy, null_resettable) NSString* customizationLabel;
+
+@end
+
+@interface NSCandidateListTouchBarItem : NSTouchBarItem
+
+- (void)setCandidates:(NSArray<CandidateType>*)candidates
+     forSelectedRange:(NSRange)selectedRange
+             inString:(NSString*)originalString;
 
 @end
 
