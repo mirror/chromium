@@ -65,6 +65,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
       std::unique_ptr<NavigationData> navigation_data,
       const GlobalRequestID& request_id,
       bool is_download,
+      const base::Optional<std::string>& suggested_filename,
       bool is_stream,
       base::Optional<SubresourceLoaderParams> subresource_loader_params)
       override;
