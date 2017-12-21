@@ -250,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "77144aa0_41fbcdb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-21T16:19:10Z",
+      "side": 1,
+      "message": "Sorry I completely missed the emails. Bernhard is right, with the new FRE flow this comment is obsolete/wrong. SignInStateObserver should be enough for our purposes now.",
+      "parentUuid": "a51b0146_6e1f72f0",
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d8bf8da_6e7a9f53",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
         "patchSetId": 1
