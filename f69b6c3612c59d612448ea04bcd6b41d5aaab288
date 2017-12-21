@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f4cfb59_4c75c53c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3417,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "(This comment no longer applies)",
+      "parentUuid": "f757b507_232c5f29",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a0cbde_684b9644",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95aa9e1_3eab7f64",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3424,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a0cbde_684b9644",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "456b13d9_bfbd0661",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "The comment no longer applies.",
+      "parentUuid": "45c08c05_70922986",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b746655a_fecd7b66",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-31T03:48:02Z",
       "side": 1,
       "message": "how do we know the controller isn\u0027t stopped or stopping?",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a541f76_6459a1c5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Turned this into if.",
+      "parentUuid": "b746655a_fecd7b66",
       "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38f3273a_68651047",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a625bc06_10fe2e2d",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1adb152_e84d309a",
         "filename": "content/common/frame.mojom",
         "patchSetId": 10
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "53edb80e_d50cfaf8",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1adb152_e84d309a",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7a34876_81824836",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 10
@@ -115,6 +223,30 @@
       "writtenOn": "2017-10-31T16:19:19Z",
       "side": 1,
       "message": "What we need is the origin of the client URL to create a ServiceWorkerSubresourceLoaderFactory in ServiceWorkerProviderContext::GetSubresourceLoaderFactory().\n(And ServiceWorkerSubresourceLoaderFactory use this origin to generate Blob URL...)\n\nSo passing the origin to ServiceWorkerNetworkProvider::CreateForNavigation() is enough?",
+      "range": {
+        "startLine": 3689,
+        "startChar": 23,
+        "endLine": 3689,
+        "endChar": 61
+      },
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd50da06_4891b067",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3689,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "We no longer pass this param.",
+      "parentUuid": "c7a34876_81824836",
       "range": {
         "startLine": 3689,
         "startChar": 23,
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "2c79b918_3d404bca",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "This comment no longer applies.",
+      "parentUuid": "85ad2a2b_4f212b55",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d707153b_6994a04c",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "81113704_f9216537",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d707153b_6994a04c",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba53f94_9ab90755",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -172,6 +340,24 @@
       "writtenOn": "2017-10-31T03:48:02Z",
       "side": 1,
       "message": "This is kind of using |should_notify_controllerchange| for a bigger purpose than it was intended for, which is just to know whether we dispatch oncontroller event. It feels like there should be a better name for it... but it\u0027s tricky since we set it to true/false at weird times (cross-site transfer, dissociate registration, associate registration)...\n\nMaybe we can get away with a comment here like:\n// |should_notify_controllerchange| indicates whether the web context should observe that the controller changed from what it was before. In that case, reset the factory so that subsequent loads can use the new controller.",
+      "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd2d954_919c71ca",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Yep... I didn\u0027t like this code either, but wasn\u0027t able to come up with a better (and handy) alternative. Added the comment.",
+      "parentUuid": "7ba53f94_9ab90755",
       "revId": "f69b6c3612c59d612448ea04bcd6b41d5aaab288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

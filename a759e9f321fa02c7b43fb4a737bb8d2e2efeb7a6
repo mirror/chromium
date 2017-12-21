@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c34bc7_987a4882",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "user -\u003e use",
+      "revId": "a759e9f321fa02c7b43fb4a737bb8d2e2efeb7a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841651cc_451087b0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T12:10:59Z",
+      "side": 1,
+      "message": "Almost all layout tests work without this line except for the one for use-counter.",
+      "revId": "a759e9f321fa02c7b43fb4a737bb8d2e2efeb7a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
