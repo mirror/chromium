@@ -70,6 +70,30 @@
       "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98fe47b4_5777beb7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-12-21T16:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9e12d6_6f4d207a",
+      "range": {
+        "startLine": 415,
+        "startChar": 15,
+        "endLine": 415,
+        "endChar": 23
+      },
+      "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
