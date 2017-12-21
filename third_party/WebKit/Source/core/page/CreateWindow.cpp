@@ -145,7 +145,7 @@ NavigationPolicy EffectiveNavigationPolicy(NavigationPolicy policy,
 // parsing window features.
 static bool IsWindowFeaturesSeparator(UChar c) {
   return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '=' ||
-         c == ',' || c == '\0';
+         c == ',' || c == '\f';
 }
 
 WebWindowFeatures GetWindowFeaturesFromString(const String& feature_string) {
@@ -163,8 +163,10 @@ WebWindowFeatures GetWindowFeaturesFromString(const String& feature_string) {
   window_features.tool_bar_visible = false;
   window_features.scrollbars_visible = false;
 
-  // Tread lightly in this code -- it was specifically designed to mimic Win
-  // IE's parsing behavior.
+  // This code was initially written to mimic Win IE's tokenization
+  // behavior, but is now intendende to follow the HTML spec as
+  // closely as possible, specifically
+  // https://html.spec.whatwg.org/#concept-window-open-features-tokenize
   unsigned key_begin, key_end;
   unsigned value_begin, value_end;
 
@@ -176,49 +178,73 @@ WebWindowFeatures GetWindowFeaturesFromString(const String& feature_string) {
       i++;
     key_begin = i;
 
-    // skip to first separator
+    // skip to first separator, but don't skip past the end of the string
     while (i < length && !IsWindowFeaturesSeparator(buffer[i]))
       i++;
     key_end = i;
 
     SECURITY_DCHECK(i <= length);
 
-    // skip to first '=', but don't skip past a ',' or the end of the string
-    while (i < length && buffer[i] != '=') {
-      if (buffer[i] == ',')
-        break;
+    // skip separators past the key name, except '=', and don't skip past
+    // the end of the string
+    while (i < length && IsWindowFeaturesSeparator(buffer[i]) &&
+           buffer[i] != '=')
       i++;
+
+    if (buffer[i] == '=') {
+      // Skip to first non-separator, but don't skip past a ',' or the
+      // end of the string.
+      while (i < length && IsWindowFeaturesSeparator(buffer[i]) &&
+             buffer[i] != ',')
+        i++;
+
+      value_begin = i;
+
+      SECURITY_DCHECK(i <= length);
+
+      // skip to first separator
+      while (i < length && !IsWindowFeaturesSeparator(buffer[i]))
+        i++;
+      value_end = i;
+
+      SECURITY_DCHECK(i <= length);
+    } else {
+      // No '=' found, assume empty value.
+      value_begin = i;
+      value_end = i;
     }
 
-    SECURITY_DCHECK(i <= length);
-
-    // Skip to first non-separator, but don't skip past a ',' or the end of the
-    // string.
-    while (i < length && IsWindowFeaturesSeparator(buffer[i])) {
-      if (buffer[i] == ',')
-        break;
-      i++;
-    }
-    value_begin = i;
-
-    SECURITY_DCHECK(i <= length);
-
-    // skip to first separator
-    while (i < length && !IsWindowFeaturesSeparator(buffer[i]))
-      i++;
-    value_end = i;
-
-    SECURITY_DCHECK(i <= length);
-
-    String key_string(buffer.Substring(key_begin, key_end - key_begin));
-    String value_string(buffer.Substring(value_begin, value_end - value_begin));
+    String key_string(
+        buffer.Substring(key_begin, key_end - key_begin).LowerASCII());
+    String value_string(
+        buffer.Substring(value_begin, value_end - value_begin).LowerASCII());
 
     // Listing a key with no value is shorthand for key=yes
     int value;
-    if (value_string.IsEmpty() || value_string == "yes")
+    if (value_string.IsEmpty() || value_string == "yes") {
       value = 1;
-    else
+    } else {
+      // Truncate value at first non-digit character, taking leading
+      // '+' or '-' into account.
+
+      unsigned j = 0;
+
+      if (value_string[j] == '-' || value_string[j] == '+')
+        j = 1;
+
+      for (; j < value_string.length(); ++j) {
+        if (value_string[j] < '0' || value_string[j] > '9') {
+          value_string.Truncate(j);
+
+          break;
+        }
+      }
+
       value = value_string.ToInt();
+    }
+
+    if (key_string.IsEmpty())
+      continue;
 
     if (key_string == "left" || key_string == "screenx") {
       window_features.x_set = true;
