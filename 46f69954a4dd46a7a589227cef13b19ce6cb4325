@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "3bd003c8_022c97b3",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T08:46:50Z",
+      "side": 1,
+      "message": "What happens in the following case?\n\nclass Y : public GarbageCollected\u003cY\u003e {\n  Y() {\n    vector_.push_back(...);  // This may cause the eager tracing and trace X being constructed.\n  }\n  HeapVector\u003cClassThatHasTrace\u003e vector_;\n};\n\nclass X : Y {\n  X(Z* z) :\n    Y(),\n    z_(z)  // Who traces z_?\n  { }\n  Member\u003cZ\u003e z_;\n};",
+      "parentUuid": "7c2de6c5_1a2674ae",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
