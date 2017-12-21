@@ -46,6 +46,30 @@
       "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eaa00f7_35e12d5b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMetaElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-21T03:38:39Z",
+      "side": 1,
+      "message": "FYI I think I was wrong about Length being CSS pixels.  For example we have CSSPrimitiveValue::ConvertToLength which applies zoom from the CSSToLengthConversionData object, and ValueForLength in LengthFunctions.cpp which constructs LayoutUnit(length.Value()).  So I think Length can be DIPs, or physical pixels with use-zoom-for-dsf.  Sorry for suggesting otherwise. :)\n\nI still think we should treat the fields in ViewportDescription consistently.  So if you want to make them physical pixels then the conversion should occur where they are first assigned, perhaps in HTMLMetaElement::ParseViewportValueAsLength.",
+      "parentUuid": "a7291213_8db5e0c5",
+      "range": {
+        "startLine": 443,
+        "startChar": 44,
+        "endLine": 443,
+        "endChar": 52
+      },
+      "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
