@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d69aabe8_0f040ac5",
+        "filename": "chromeos/components/tether/gms_core_notifications_state_tracker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T01:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e418d27f_57ada83e",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "1eb8bece4caf5387d7e64a728d3fd9e6b52049ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43796c0a_42771f54",
         "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T23:53:02Z",
       "side": 1,
       "message": "Shouldn\u0027t this test actually be changed to test new functionality?",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "1eb8bece4caf5387d7e64a728d3fd9e6b52049ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c102b79c_0b7b40c7",
+        "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T01:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43796c0a_42771f54",
       "range": {
         "startLine": 71,
         "startChar": 10,
