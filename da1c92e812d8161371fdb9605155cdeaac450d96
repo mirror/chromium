@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dde4907_bfbd7cba",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "\"Set at navigation commit time.\"",
+      "range": {
+        "startLine": 137,
+        "startChar": 30,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8659273a_adb0bb1b",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "slightly prefer \"render_process_host_id_\".",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d83cef_7888f30d",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "I wonder if this logic should be extracted to the crash code, since it seems easy to mess up, and widely useful.",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae93fb6b_96de6ca1",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "nit: You have the iterator already, no need to re-search the map with the key.\n\ncrash_map_.erase(iter) should work. Same below.",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c1f569_cdd5eeff",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "Is Unretained really safe here? It seems like you might need a weak ptr.",
+      "range": {
+        "startLine": 248,
+        "startChar": 27,
+        "endLine": 248,
+        "endChar": 37
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a94105a_d51055c3",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "Are we worried that delaying pingback will affect metrics? Maybe we should flush this in the destructor as well.",
+      "range": {
+        "startLine": 249,
+        "startChar": 23,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9497a75_42976bac",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "Could use a more descriptive name.",
+      "range": {
+        "startLine": 54,
+        "startChar": 50,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e58b3d_dc172dd5",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "What is the main thread, the UI thread?",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 70
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2219e827_94b76119",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-21T21:26:53Z",
+      "side": 1,
+      "message": "There should be a better way of doing this if you\u0027re interested. out_of_memory_reporter_unittest.cc has OOM simulations which could be pulled into a helper, which additionally exercises the CrashDumpManager -\u003e Observer connection.",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
