@@ -14,6 +14,7 @@
 #include "chrome/browser/memory/memory_kills_monitor.h"
 #include "chromeos/system/version_loader.h"
 
+class KeyboardShortcutViewerControllerClient;
 class NightLightClient;
 class NotificationPlatformBridge;
 class TabletModeClient;
@@ -131,6 +132,9 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
 
   std::unique_ptr<power::ml::UserActivityLoggingController>
       user_activity_logging_controller_;
+
+  std::unique_ptr<KeyboardShortcutViewerControllerClient>
+      keyboard_shortcut_viewer_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsChromeos);
 };
