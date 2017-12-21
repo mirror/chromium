@@ -396,10 +396,9 @@ SkBitmap ImageOperations::Resize(const SkBitmap& source,
                                  int dest_height,
                                  const SkIRect& dest_subset,
                                  SkBitmap::Allocator* allocator) {
-  SkPixmap pixmap;
-  if (!source.peekPixels(&pixmap))
+  if (!source.getPixels())
     return SkBitmap();
-  return Resize(pixmap, method, dest_width, dest_height, dest_subset,
+  return Resize(source.pixmap(), method, dest_width, dest_height, dest_subset,
                 allocator);
 }
 

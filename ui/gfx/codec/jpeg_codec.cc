@@ -61,12 +61,11 @@ bool JPEGCodec::Encode(const SkPixmap& src,
 bool JPEGCodec::Encode(const SkBitmap& src,
                        int quality,
                        std::vector<unsigned char>* output) {
-  SkPixmap pixmap;
-  if (!src.peekPixels(&pixmap)) {
+  if (!src.getPixels()) {
     return false;
   }
 
-  return JPEGCodec::Encode(pixmap, quality, output);
+  return JPEGCodec::Encode(src.pixmap(), quality, output);
 }
 
 // Decoder --------------------------------------------------------------------

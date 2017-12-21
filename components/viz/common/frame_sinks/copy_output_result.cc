@@ -109,11 +109,10 @@ const SkBitmap& CopyOutputSkBitmapResult::AsSkBitmap() const {
   SkBitmap replacement;
   replacement.allocPixels(image_info);
   replacement.eraseColor(SK_ColorBLACK);
-  SkPixmap src_pixmap;
-  if (bitmap->peekPixels(&src_pixmap)) {
+  if (bitmap->getPixels()) {
     // Note: writePixels() can fail, but then the replacement bitmap will be
     // left with part/all solid black due to the eraseColor() call above.
-    replacement.writePixels(src_pixmap);
+    replacement.writePixels(bitmap->pixmap());
   }
   *bitmap = replacement;
 
