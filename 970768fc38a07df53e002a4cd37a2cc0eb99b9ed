@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e4c6e2dc_3cd4d430",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T18:55:44Z",
+      "side": 1,
+      "message": "That depends on what you mean by \"capture starts.\"  The MR doesn\u0027t create and return a media route until the call to getUserMedia/chrome.tabCapture has returned a media stream.  However, I don\u0027t believe that guarantees that the media stream is generating frames yet (or that it is sending media over the wire via a transport).\n\nRepeating myself, this entire feature would be easier to implement if we had better defined semantics for route startup (e.g. a route status field), which we could then use an observer or callback instead of polling.",
+      "parentUuid": "2ae11145_8c06c125",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f077337a_e649f54c",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -363,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "6e7fca32_949bbc1c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T18:55:44Z",
+      "side": 1,
+      "message": "My reading of Stack Overflow is that calling \u0027delete this\u0027 from a constructor is not safe if the class has a non-trivial destructor, which this class has.\n\nThis class still has a potential double-free:\n\nFullScreenIfContentCaptured() \u003d\u003e Posts \u0027delete this\u0027 task\nWebContentsDestroyed() \u003d\u003e deletes this\n\u0027delete this\u0027 task runs \u003d\u003e CRASH\n\nOne solution is to keep a boolean flag will_delete_soon_ when the task is posted and check it in the observer methods.",
+      "parentUuid": "b78d5e8d_27d8bf1d",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8f65c6f_1f3f6340",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -465,6 +501,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff206f86_c8663691",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T18:55:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93fd4a53_b9d6db97",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -574,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "0d9dbca7_4f2b69e5",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T18:55:44Z",
+      "side": 1,
+      "message": "That seems like a potential bug in WebContentsObserver w.r.t. fullscreen-in-tab.  Maybe check with miu@ to see if that behavior is expected or not.",
+      "parentUuid": "27f0a4cd_a23ba74a",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c13ff90_09f1bc4d",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 9
@@ -603,6 +675,24 @@
       "side": 1,
       "message": "Yes very possible.  I\u0027m not sure of the best way to test this.  Mostly I just want to make sure if we start a video in a new tab but capture doesn\u0027t kick in, that it doesn\u0027t go fullscreen (because it wouldn\u0027t be fullscreen-in-tab and will likely cause confusion).\n\nAny suggestions?",
       "parentUuid": "2c13ff90_09f1bc4d",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4e081d_775a0f2f",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T18:55:44Z",
+      "side": 1,
+      "message": "I don\u0027t see a good solution other than inserting a wait like the other tests.",
+      "parentUuid": "c4d3fac4_35e00ab3",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
