@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "394d60c6_68df142b",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:54:37Z",
+      "side": 1,
+      "message": "Why is this different from the above?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 68
+      },
+      "revId": "9f9d9a6cee8fb5c8717cf202ba53728e89692288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cddd0f3_6d1d709f",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:54:37Z",
+      "side": 1,
+      "message": "I think at this point it is reasonable to assume being a \"snap container\" is rare.\ni.e., most layers won\u0027t really be a snap container.\n\nGiven this, should we actually use something like base::Optional\u003cSnapContainerData\u003e here?\nSo we pay a single pointer cost for layers that are not snap container?",
+      "range": {
+        "startLine": 636,
+        "startChar": 0,
+        "endLine": 637,
+        "endChar": 41
+      },
+      "revId": "9f9d9a6cee8fb5c8717cf202ba53728e89692288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de13640c_f90a6591",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3830,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:54:37Z",
+      "side": 1,
+      "message": "this seems superficial.",
+      "range": {
+        "startLine": 3830,
+        "startChar": 7,
+        "endLine": 3830,
+        "endChar": 19
+      },
+      "revId": "9f9d9a6cee8fb5c8717cf202ba53728e89692288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7db2bbd_60d9b002",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:54:37Z",
+      "side": 1,
+      "message": "That seems incorrect. We don\u0027t want to force SnapContainerData for all layers\nonly those layers that have snapping on them.\n\nHere we should just get one if there is already one available!",
+      "range": {
+        "startLine": 1269,
+        "startChar": 6,
+        "endLine": 1269,
+        "endChar": 48
+      },
+      "revId": "9f9d9a6cee8fb5c8717cf202ba53728e89692288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80898544_4e9c7761",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:54:37Z",
+      "side": 1,
+      "message": "I am not sure if I undestand why ScrollEnd is not used and instead the CL is\nintroducing a new one. We should snap at scroll end whether it is animated or not.",
+      "range": {
+        "startLine": 790,
+        "startChar": 20,
+        "endLine": 790,
+        "endChar": 42
+      },
+      "revId": "9f9d9a6cee8fb5c8717cf202ba53728e89692288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
