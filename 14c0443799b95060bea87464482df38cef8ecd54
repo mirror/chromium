@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c51b2ce0_e1d0d592",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "I do know that the links turn up in results details, but we had discussed this quite a while ago and it seemed like this was the right place to put it.\n\nWe could change the format of the result object, but I think you mentioned that results_details isn\u0027t the only consumer of that object, so maybe it would be better to change the rendering of the results_details page to omit certain links.",
+      "parentUuid": "b322b966_fda5c05b",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1659d5c3_c5e6f3e0",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T06:49:09Z",
       "side": 1,
       "message": "Top-level //build/android probably isn\u0027t the best place for this, though where it belongs is partially a function of who or what will be calling it.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04d50dc_17b729c3",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "It\u0027ll be used manually by developers, I\u0027m easy as to where it ends up (as long as it doesn\u0027t make importing other Python files a pain).",
+      "parentUuid": "1659d5c3_c5e6f3e0",
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "56c31a69_65deceb4",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96cdb8c_506d9475",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad8e577_33cb1b4b",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -101,6 +155,24 @@
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b870b28_434a8afb",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad8e577_33cb1b4b",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "85d4f7e9_6e2a43d7",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e935bae_c3dad84d",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b8c943c_92224a3b",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -135,6 +225,24 @@
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1cc927_ef2a8060",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b8c943c_92224a3b",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "f357521d_b4c45c40",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f10541_aba5bdd2",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d620e1a_32723fa2",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -169,6 +295,24 @@
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d058f131_16e26fd5",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d620e1a_32723fa2",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "25d685d9_137b85ef",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea648b9e_42ea3323",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6441f03f_1c78a079",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "6ed8cf1f_8f7d7e37",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6441f03f_1c78a079",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac749f9_e4c0c843",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -217,6 +397,24 @@
       "writtenOn": "2017-12-21T06:49:09Z",
       "side": 1,
       "message": "I\u0027m curious about your reasoning behind this. It looks reminiscent of Java\u0027s exception causes.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eeb693_86a23e96",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Yeah, basically if reading the file fails I want to throw an exception, but add a bit more context to it. In Python 3 you would be able to do:\n\nexcept IOError as e:\n    raise ReadShardOutputError() from e.\n\nI do think the Python 2 version is a bit ugly though.",
+      "parentUuid": "2ac749f9_e4c0c843",
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "64b29273_8ba10823",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Do you reckon leaving the code as is (reading only from results[0]) is reasonable?",
+      "parentUuid": "57d6b9c3_07b174b5",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec6e447_a04a45bd",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -254,6 +470,24 @@
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9979c13_b17cbfd6",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec6e447_a04a45bd",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +508,24 @@
     },
     {
       "key": {
+        "uuid": "55a01e16_ec8373be",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "This is a good point for the gsutil tasks. I\u0027m not sure what to do for the swarming.py collect commands because that will return the exit code of the shard - which means it will return non-zero for all the shards I\u0027m interested in.",
+      "parentUuid": "e5932351_4d5e0600",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f78758_c92b767c",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
@@ -288,6 +540,24 @@
       "revId": "14c0443799b95060bea87464482df38cef8ecd54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629c335f_998831e4",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-21T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f78758_c92b767c",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
