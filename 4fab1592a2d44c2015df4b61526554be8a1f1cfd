@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af487b2_cd1c3ad5",
+        "filename": "third_party/WebKit/Source/devtools/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-21T19:56:52Z",
+      "side": 1,
+      "message": "If so, why not make this target only be defined under `if (is_linux \u0026\u0026 !is_chromeos)` ?",
+      "revId": "4fab1592a2d44c2015df4b61526554be8a1f1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
