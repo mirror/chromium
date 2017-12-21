@@ -274,6 +274,11 @@ group("exe_and_shlib_deps") {
   if (is_win && generate_order_files && !is_nacl) {
     public_deps += [ "//tools/cygprofile_win" ]
   }
+  if (is_android && (is_component_build || is_asan)) {
+    data_deps = [
+      "//build/android:cpplib_stripped",
+    ]
+  }
 }
 
 # Executable configs -----------------------------------------------------------
