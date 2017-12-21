@@ -22,6 +22,23 @@
       "revId": "690a22197c00a04f7a764f174f199721f65b044f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcef3b89_be547f0e",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-21T18:23:31Z",
+      "side": 1,
+      "message": "nit: I think this is a little less self documenting than an explicit CHECK, i.e. assoc_dict \u003d cached_dict-\u003eFindKey(...); CHECK(assoc_dict); return *assoc_dict;",
+      "revId": "690a22197c00a04f7a764f174f199721f65b044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
