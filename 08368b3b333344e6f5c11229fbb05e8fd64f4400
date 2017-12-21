@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1be6acb2_6185a54f",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:51:10Z",
+      "side": 1,
+      "message": "Actually kept this as \"shared_\", because it meant to be shared among multiple compositors.",
+      "parentUuid": "48c64331_6d7e1c5e",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73438127_0b3e21ec",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
