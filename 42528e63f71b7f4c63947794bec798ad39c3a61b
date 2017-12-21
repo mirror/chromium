@@ -16,6 +16,24 @@
       "revId": "42528e63f71b7f4c63947794bec798ad39c3a61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5221e60_7c5f9bc7",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-21T23:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d71f4f_3a362c15",
+      "revId": "42528e63f71b7f4c63947794bec798ad39c3a61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
