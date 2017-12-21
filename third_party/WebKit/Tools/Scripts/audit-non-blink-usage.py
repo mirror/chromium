@@ -53,6 +53,10 @@ _CONFIG = [
             'base::RepeatingCallback',
             'base::RepeatingClosure',
 
+            # TODO(crbug.com/796799): Deprecate a thin wrapper defined in
+            # platform/WaitableEvent.h.
+            'base::WaitableEvent',
+
             # Debugging helpers from //base/debug are allowed everywhere.
             'base::debug::.+',
 
