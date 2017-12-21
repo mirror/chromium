@@ -16,6 +16,24 @@
       "revId": "2d09f5ba6b4d58fddcf02837a346004355e3827a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946f69f9_7b4e8d38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/text-track-cue-exceptions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-12-21T11:30:56Z",
+      "side": 1,
+      "message": "This has come up in https://chromium-review.googlesource.com/c/chromium/src/+/806254.\nYou have suggeste to use some bindings-helper if there are many tests of this type.\nI just postponed that at that time as there are only 2 tests of this format.\nRemoving this for now from this CL.",
+      "parentUuid": "9554d325_7aa3f478",
+      "revId": "2d09f5ba6b4d58fddcf02837a346004355e3827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
