@@ -66,7 +66,8 @@ void ReadData(scoped_refptr<ResourceResponse> headers,
 
   mojom::URLLoaderClientPtr client;
   client.Bind(std::move(client_info));
-  client->OnReceiveResponse(headers->head, base::nullopt, nullptr);
+  client->OnReceiveResponse(headers->head, base::nullopt, nullptr,
+                            mojom::URLLoaderNavigationDataPtr());
 
   base::StringPiece input(reinterpret_cast<const char*>(bytes->front()),
                           bytes->size());

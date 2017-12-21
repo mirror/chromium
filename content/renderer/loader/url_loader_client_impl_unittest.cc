@@ -88,7 +88,8 @@ class URLLoaderClientImplTest : public ::testing::Test,
 TEST_F(URLLoaderClientImplTest, OnReceiveResponse) {
   ResourceResponseHead response_head;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
 
   EXPECT_FALSE(request_peer_context_.received_response);
   base::RunLoop().RunUntilIdle();
@@ -98,7 +99,8 @@ TEST_F(URLLoaderClientImplTest, OnReceiveResponse) {
 TEST_F(URLLoaderClientImplTest, ResponseBody) {
   ResourceResponseHead response_head;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
 
   EXPECT_FALSE(request_peer_context_.received_response);
   base::RunLoop().RunUntilIdle();
@@ -131,7 +133,8 @@ TEST_F(URLLoaderClientImplTest, OnReceiveRedirect) {
 TEST_F(URLLoaderClientImplTest, OnDataDownloaded) {
   ResourceResponseHead response_head;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnDataDownloaded(8, 13);
   url_loader_client_->OnDataDownloaded(2, 1);
 
@@ -149,7 +152,8 @@ TEST_F(URLLoaderClientImplTest, OnReceiveCachedMetadata) {
   std::vector<uint8_t> metadata;
   metadata.push_back('a');
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnReceiveCachedMetadata(metadata);
 
   EXPECT_FALSE(request_peer_context_.received_response);
@@ -163,7 +167,8 @@ TEST_F(URLLoaderClientImplTest, OnReceiveCachedMetadata) {
 TEST_F(URLLoaderClientImplTest, OnTransferSizeUpdated) {
   ResourceResponseHead response_head;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnTransferSizeUpdated(4);
   url_loader_client_->OnTransferSizeUpdated(4);
 
@@ -178,7 +183,8 @@ TEST_F(URLLoaderClientImplTest, OnCompleteWithoutResponseBody) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnComplete(status);
 
   EXPECT_FALSE(request_peer_context_.received_response);
@@ -192,7 +198,8 @@ TEST_F(URLLoaderClientImplTest, OnCompleteWithResponseBody) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   url_loader_client_->OnStartLoadingResponseBody(
       std::move(data_pipe.consumer_handle));
@@ -226,7 +233,8 @@ TEST_F(URLLoaderClientImplTest, OnCompleteShouldBeTheLastMessage) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   url_loader_client_->OnStartLoadingResponseBody(
       std::move(data_pipe.consumer_handle));
@@ -258,7 +266,8 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveResponse) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   url_loader_client_->OnStartLoadingResponseBody(
       std::move(data_pipe.consumer_handle));
@@ -287,7 +296,8 @@ TEST_F(URLLoaderClientImplTest, CancelOnReceiveData) {
   ASSERT_EQ(MOJO_RESULT_OK, result);
   EXPECT_EQ(5u, size);
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnStartLoadingResponseBody(
       std::move(data_pipe.consumer_handle));
   url_loader_client_->OnComplete(status);
@@ -308,7 +318,8 @@ TEST_F(URLLoaderClientImplTest, Defer) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   url_loader_client_->OnComplete(status);
 
   EXPECT_FALSE(request_peer_context_.received_response);
@@ -333,7 +344,8 @@ TEST_F(URLLoaderClientImplTest, DeferWithResponseBody) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   uint32_t size = 5;
   MojoResult result = data_pipe.producer_handle->WriteData(
@@ -374,7 +386,8 @@ TEST_F(URLLoaderClientImplTest, DeferWithTransferSizeUpdated) {
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   uint32_t size = 5;
   MojoResult result = data_pipe.producer_handle->WriteData(
@@ -422,7 +435,8 @@ TEST_F(URLLoaderClientImplTest, SetDeferredDuringFlushingDeferredMessage) {
   network::URLLoaderCompletionStatus status;
 
   url_loader_client_->OnReceiveRedirect(redirect_info, response_head);
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
   mojo::DataPipe data_pipe(DataPipeOptions());
   uint32_t size = 5;
   MojoResult result = data_pipe.producer_handle->WriteData(
@@ -483,7 +497,8 @@ TEST_F(URLLoaderClientImplTest,
   ResourceResponseHead response_head;
   network::URLLoaderCompletionStatus status;
 
-  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr);
+  url_loader_client_->OnReceiveResponse(response_head, base::nullopt, nullptr,
+                                        mojom::URLLoaderNavigationDataPtr());
 
   url_loader_client_->OnTransferSizeUpdated(4);
   url_loader_client_->OnComplete(status);
