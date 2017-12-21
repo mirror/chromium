@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57da9f4_209f3b1c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-21T05:32:24Z",
+      "side": 1,
+      "message": "Can you elaborate the reason why we don\u0027t have to store the base URL in this case?\n\nLooks like this is not used yet. How about adding this when we really need it?",
+      "revId": "bea8d426d2f0154362138a6a17dd0ca95c7296b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df46725_1e41d64d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-21T05:32:24Z",
+      "side": 1,
+      "message": "How about renaming this to |url_for_debugger_| or something to clarify this should be used only for the debugger?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "bea8d426d2f0154362138a6a17dd0ca95c7296b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
