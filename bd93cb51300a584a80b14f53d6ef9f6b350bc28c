@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9293607a_83bc5ac0",
+        "filename": "components/offline_pages/core/model/offline_page_upgrade_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-21T19:32:26Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "bd93cb51300a584a80b14f53d6ef9f6b350bc28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
