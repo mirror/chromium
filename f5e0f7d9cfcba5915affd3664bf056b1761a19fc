@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043f4fff_affdf554",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T13:21:14Z",
+      "side": 1,
+      "message": "why is this file called \"_test.cc\" while executables has a \"_unittest.cc\" suffix?  can we change them all to _unittest.cc suffixes?",
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfecf65_3e739742",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T13:21:14Z",
+      "side": 1,
+      "message": "what\u0027s the motivation for these member variables?  it doesn\u0027t look like the callback uses them.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7035b5e_ff8d58f7",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T13:21:14Z",
+      "side": 1,
+      "message": "what\u0027s the motivation for this code?  can we just pass nullptr to the call?",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
