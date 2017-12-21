@@ -35,9 +35,23 @@ class MOJO_CPP_SYSTEM_EXPORT StringDataPipeProducer {
   explicit StringDataPipeProducer(ScopedDataPipeProducerHandle producer);
   ~StringDataPipeProducer();
 
+  // Describes what happens to the data when an async writing situation occurs
+  // (where the pipe cannot immediately accept all of the data).
+  enum class AsyncWritingMode {
+    // The pending data is copied and owned by this class until all bytes are
+    // written.
+    COPY_PENDING_DATA,
+    // The pending data is not copied, and the original string given to |Write|
+    // must be valid until the |callback| is called.
+    DO_NOT_COPY_PENDING_DATA
+  };
+
   // Attempts to eventually write all of |data|. Invokes |callback|
   // asynchronously when done. Note that |callback| IS allowed to delete this
   // StringDataPipeProducer.
+  //
+  // If the data cannot be entirely written synchronously, then the |mode|
+  // determines how this class how to hold the pending data.
   //
   // If the write is successful |result| will be |MOJO_RESULT_OK|. Otherwise
   // (e.g. if the producer detects the consumer is closed and the pipe has no
@@ -51,7 +65,9 @@ class MOJO_CPP_SYSTEM_EXPORT StringDataPipeProducer {
   // Multiple writes may be performed in sequence (each one after the last
   // completes), but Write() must not be called before the |callback| for the
   // previous call to Write() (if any) has returned.
-  void Write(const base::StringPiece& data, CompletionCallback callback);
+  void Write(const base::StringPiece& data,
+             AsyncWritingMode mode,
+             CompletionCallback callback);
 
  private:
   void InvokeCallback(MojoResult result);

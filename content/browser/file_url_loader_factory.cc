@@ -222,9 +222,11 @@ class FileURLDirectoryLoader
       return;
 
     transfer_in_progress_ = true;
-    data_producer_->Write(pending_data_,
-                          base::BindOnce(&FileURLDirectoryLoader::OnDataWritten,
-                                         base::Unretained(this)));
+    data_producer_->Write(
+        pending_data_,
+        mojo::StringDataPipeProducer::AsyncWritingMode::COPY_PENDING_DATA,
+        base::BindOnce(&FileURLDirectoryLoader::OnDataWritten,
+                       base::Unretained(this)));
     // The producer above will have already copied any parts of |pending_data_|
     // that couldn't be written immediately, so we can wipe it out here to begin
     // accumulating more data.
