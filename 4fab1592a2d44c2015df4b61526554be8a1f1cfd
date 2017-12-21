@@ -16,6 +16,24 @@
       "revId": "4fab1592a2d44c2015df4b61526554be8a1f1cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1edead8_f6fdac2e",
+        "filename": "third_party/WebKit/Source/devtools/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-21T21:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af487b2_cd1c3ad5",
+      "revId": "4fab1592a2d44c2015df4b61526554be8a1f1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
