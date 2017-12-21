@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02e6dad1_a80cdf9b",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-21T16:08:24Z",
+      "side": 1,
+      "message": "Assert looked reasonable to me and I tried, but the build failed with: \"error: variable cpuAbi might not have been initialized\", which reminds me about the possibility of asserts being disabled :)\n\nWe could initialize |cpuAbi| to some garbage and fail with another exception later. I then prefer less garbage and fail-early. Let me know if there are more elegant ways \u003d\u003e reverting to the previous form.",
+      "parentUuid": "44cd4a68_b36b28ce",
+      "revId": "aaded327d702984d4642b43528411afc6f195421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d2797b7_15ac52fb",
         "filename": "build/config/android/rules.gni",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-20T20:02:18Z",
       "side": 1,
       "message": "could even put the assert here.",
+      "revId": "aaded327d702984d4642b43528411afc6f195421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a35da21_503bdc1b",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-21T16:08:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2797b7_15ac52fb",
       "revId": "aaded327d702984d4642b43528411afc6f195421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
