@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2efcedc9_e9fe71ba",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_overlay_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-21T16:21:55Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t necessary.",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 55
+      },
+      "revId": "63bba032f914a8306ca10b191076f44f54cbea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
