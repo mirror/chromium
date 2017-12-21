@@ -8,10 +8,6 @@
 #include <cstdint>
 #include <vector>
 
-namespace base {
-class FilePath;
-}
-
 namespace cygprofile {
 constexpr size_t kStartOfTextForTesting = 1000;
 constexpr size_t kEndOfTextForTesting = kStartOfTextForTesting + 1000 * 1000;
@@ -22,8 +18,10 @@ void Disable();
 // CHECK()s that the offsets are correctly set up.
 void SanityChecks();
 
-// Stops recording, and dump the results to |path|.
-void StopAndDumpToFile(const base::FilePath& path);
+// Switches to the next recording phase. If called from the last phase, dumps
+// the data to disk, and returns |true|. |pid| is the current process pid, and
+// |start_ns_since_epoch| the process start timestamp.
+bool SwitchToNextPhaseOrDump(int pid, uint64_t start_ns_since_epoch);
 
 // Record an |address|, if recording is enabled. Only for testing.
 void RecordAddressForTesting(size_t address);

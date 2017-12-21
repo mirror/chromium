@@ -8,10 +8,7 @@
 #include <thread>
 
 #include "base/android/library_loader/anchor_functions.h"
-#include "base/files/file.h"
-#include "base/format_macros.h"
 #include "base/logging.h"
-#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "tools/cygprofile/lightweight_cygprofile.h"
 
@@ -34,18 +31,17 @@ class DelayedDumper {
       PLOG(FATAL) << "clock_gettime.";
     uint64_t start_ns_since_epoch =
         static_cast<uint64_t>(ts.tv_sec) * 1000 * 1000 * 1000 + ts.tv_nsec;
+    int pid = getpid();
 
-    std::thread([start_ns_since_epoch]() {
-      sleep(kDelayInSeconds);
-      auto path = base::StringPrintf(
-          "/data/local/tmp/chrome/cyglog/"
-          "cygprofile-instrumented-code-hitmap-%d-%" PRIu64 ".txt",
-          getpid(), start_ns_since_epoch);
-      StopAndDumpToFile(base::FilePath(path));
+    std::thread([pid, start_ns_since_epoch]() {
+      sleep(kInitialDelayInSeconds);
+      while (!SwitchToNextPhaseOrDump(pid, start_ns_since_epoch))
+        sleep(kDelayInSeconds);
     })
         .detach();
   }
 
+  static constexpr int kInitialDelayInSeconds = 5;
   static constexpr int kDelayInSeconds = 30;
 };
 
