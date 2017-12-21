@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "862d7667_b0236d6c",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-21T17:12:51Z",
+      "side": 1,
+      "message": "is robot account managed as well?\nwould it be possible to use enum\n{\nPUBLIC,\nMANAGED,\nROBOT\n}\n?",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 48
+      },
+      "revId": "e7dc0b1113e3735cba0a206c93793777fbf28ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08a979e_779100c7",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-21T17:12:51Z",
+      "side": 1,
+      "message": "we don\u0027t run initial Play Store for robot account.\n\nI would add \n\nif (!arc::IsRobotAccountMode()) {\n\n} else {\n   LOG(ERROR) \u003c\u003c \"It is not expected to run initial Play Store for robot account\"\n}",
+      "range": {
+        "startLine": 615,
+        "startChar": 10,
+        "endLine": 615,
+        "endChar": 35
+      },
+      "revId": "e7dc0b1113e3735cba0a206c93793777fbf28ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
