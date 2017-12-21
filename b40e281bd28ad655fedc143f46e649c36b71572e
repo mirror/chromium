@@ -140,6 +140,30 @@
       "revId": "b40e281bd28ad655fedc143f46e649c36b71572e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0e122e_af47bd77",
+        "filename": "media/cast/net/udp_transport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-21T20:52:46Z",
+      "side": 1,
+      "message": "This was all written long before there was a Media Router. Though, I suppose this can only be activated through the Media Router these days. Since I don\u0027t understand what this policy metadata will be used for, I\u0027m not sure what should go here. It could be equally correct to leave it as-is, or instead remove the whole \"chrome_policy {...}\" block. I\u0027ll leave it up to you.",
+      "parentUuid": "3ab75779_1fe859eb",
+      "range": {
+        "startLine": 289,
+        "startChar": 10,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "b40e281bd28ad655fedc143f46e649c36b71572e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
