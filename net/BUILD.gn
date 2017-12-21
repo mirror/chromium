@@ -2302,9 +2302,7 @@ static_library("http_server") {
     "server/web_socket_encoder.cc",
     "server/web_socket_encoder.h",
   ]
-  configs += [
-    "//build/config/compiler:wexit_time_destructors",
-  ]
+  configs += [ "//build/config/compiler:wexit_time_destructors" ]
   deps = [
     ":net",
     "//base",
@@ -2648,9 +2646,7 @@ static_library("test_support") {
     "url_request/url_request_test_util.h",
   ]
 
-  configs += [
-    "//build/config:precompiled_headers",
-  ]
+  configs += [ "//build/config:precompiled_headers" ]
 
   public_deps = [
     ":traffic_annotation",
@@ -3253,6 +3249,8 @@ source_set("quic_test_tools") {
 
   if (is_linux) {
     sources += [
+      "tools/quic/test_tools/bad_packet_writer.cc",
+      "tools/quic/test_tools/bad_packet_writer.h",
       "tools/quic/test_tools/limited_mtu_test_writer.cc",
       "tools/quic/test_tools/limited_mtu_test_writer.h",
       "tools/quic/test_tools/mock_epoll_server.cc",
@@ -5296,9 +5294,7 @@ test("net_unittests") {
   ]
   net_unfiltered_sources = []
 
-  configs += [
-    "//build/config:precompiled_headers",
-  ]
+  configs += [ "//build/config:precompiled_headers" ]
   defines = []
 
   deps = [
