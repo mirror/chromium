@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0949723c_fd94f6d3",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-21T22:54:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c593fb42_7f3f3f7e",
+      "range": {
+        "startLine": 793,
+        "startChar": 49,
+        "endLine": 793,
+        "endChar": 0
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e9eba2_f33add73",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c8ac01_a4860fc7",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-21T22:54:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe25d054_02608ab9",
+      "range": {
+        "startLine": 909,
+        "startChar": 47,
+        "endLine": 909,
+        "endChar": 48
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
