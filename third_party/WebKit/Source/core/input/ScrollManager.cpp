@@ -188,8 +188,8 @@ bool ScrollManager::LogicalScroll(ScrollDirection direction,
     node = mouse_press_node;
 
   if ((!node || !node->GetLayoutObject()) && frame_->View() &&
-      !frame_->View()->GetLayoutViewItem().IsNull())
-    node = frame_->View()->GetLayoutViewItem().GetNode();
+      frame_->View()->GetLayoutView())
+    node = frame_->View()->GetLayoutView()->GetNode();
 
   if (!node)
     return false;

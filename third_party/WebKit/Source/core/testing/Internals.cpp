@@ -2019,9 +2019,8 @@ LayerRectList* Internals::touchEventTargetLayerRects(
     }
   }
 
-  LayoutViewItem view = document->GetLayoutViewItem();
-  if (!view.IsNull()) {
-    if (PaintLayerCompositor* compositor = view.Compositor()) {
+  if (auto* view = document->GetLayoutView()) {
+    if (PaintLayerCompositor* compositor = view->Compositor()) {
       if (GraphicsLayer* root_layer = compositor->RootGraphicsLayer()) {
         LayerRectList* rects = LayerRectList::Create();
         AccumulateLayerRectList(compositor, root_layer, rects);

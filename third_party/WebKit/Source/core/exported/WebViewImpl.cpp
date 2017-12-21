@@ -3652,7 +3652,7 @@ PaintLayerCompositor* WebViewImpl::Compositor() const {
   if (!document || document->GetLayoutViewItem().IsNull())
     return nullptr;
 
-  return document->GetLayoutViewItem().Compositor();
+  return document->GetLayoutView()->Compositor();
 }
 
 GraphicsLayer* WebViewImpl::RootGraphicsLayer() {
