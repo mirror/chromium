@@ -307,10 +307,22 @@ def WriteAutorun(bin_name, child_args, summary_output, shutdown_machine,
   autorun_file.write('echo Executing ' + os.path.basename(bin_name) + ' ' +
                      ' '.join(child_args) + '\n')
 
+  # Start tracing. Moar dataz!
+  autorun_file.write('trace --help\n')
+  autorun_file.write('trace list-categories\n')
+  #autorun_file.write('exit\n')
+
   # Due to Fuchsia's object name length limit being small, we cd into /system
   # and set PATH to "." to reduce the length of the main executable path.
-  autorun_file.write('cd /system\n')
-  autorun_file.write('PATH=. ' + os.path.basename(bin_name))
+  #autorun_file.write('cd /system\n')
+  #autorun_file.write('PATH=.:$PATH ')
+  #autorun_file.write(os.path.basename(bin_name))
+
+  autorun_file.write('PATH=/system:$PATH ')
+
+  autorun_file.write('trace record --duration=15 --detach --output-file=/volume/results/trace.json --categories=app,benchmark,gfx,input,kernel:meta,kernel:sched,ledger,magma,modular,motown,view,flutter,dart /boot/bin/sh -c ')
+  autorun_file.write('/system/' + os.path.basename(bin_name))
+
   for arg in child_args:
     autorun_file.write(' "%s"' % arg);
   autorun_file.write('\n')
@@ -532,13 +544,17 @@ def _SymbolizeBacktrace(backtrace, symbols_mapping):
   return map(lambda entry: symbolized[entry['frame_id']], backtrace)
 
 
-def _GetResultsFromImg(dry_run, test_launcher_summary_output):
+def _GetResultsFromImg(dry_run, test_launcher_summary_output, trace_output):
   """Extract the results .json out of the .minfs image."""
   if os.path.exists(test_launcher_summary_output):
     os.unlink(test_launcher_summary_output)
   img_filename = test_launcher_summary_output + '.minfs'
   _RunAndCheck(dry_run, [os.path.join(SDK_ROOT, 'tools', 'minfs'), img_filename,
                          'cp', '::/output.json', test_launcher_summary_output])
+  if os.path.exists(trace_output):
+    os.unlink(trace_output)
+  _RunAndCheck(dry_run, [os.path.join(SDK_ROOT, 'tools', 'minfs'), img_filename,
+                         'cp', '::/trace.json', trace_output])
 
 
 def _HandleOutputFromProcess(process, symbols_mapping):
@@ -642,7 +658,7 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         SDK_ROOT, 'qemu', 'bin',
         'qemu-system-' + _TargetCpuToArch(bootfs_data.target_cpu))
     qemu_command = [qemu_path,
-        '-m', '2048',
+        '-m', '4096',
         '-nographic',
         '-kernel', kernel_path,
         '-initrd', bootfs_data.bootfs,
@@ -684,10 +700,10 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         qemu_command.append('-enable-kvm')
 
     if test_launcher_summary_output:
-      # Make and mount a 100M minfs formatted image that is used to copy the
+      # Make and mount a 250M minfs formatted image that is used to copy the
       # results json to, for extraction from the target.
       img_filename = test_launcher_summary_output + '.minfs'
-      _RunAndCheck(dry_run, ['truncate', '-s100M', img_filename,])
+      _RunAndCheck(dry_run, ['truncate', '-s250M', img_filename,])
       _RunAndCheck(dry_run, [os.path.join(SDK_ROOT, 'tools', 'minfs'),
                              img_filename, 'mkfs'])
       # Specifically set an AHCI drive, otherwise the drive won't be mountable
@@ -718,6 +734,7 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
   sys.stdout.flush()
 
   if test_launcher_summary_output:
-    _GetResultsFromImg(dry_run, test_launcher_summary_output)
+    trace_json = os.path.join(os.path.dirname(test_launcher_summary_output), 'trace.json')
+    _GetResultsFromImg(dry_run, test_launcher_summary_output, trace_json)
 
   return 0 if success else 1
