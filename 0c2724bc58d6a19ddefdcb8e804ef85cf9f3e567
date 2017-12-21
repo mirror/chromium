@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "715dc41b_d32ae671",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d354e81b_482e426d",
+      "range": {
+        "startLine": 37,
+        "startChar": 39,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc0728c5_e1bdf4b9",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9b9b51b4_88e18bba",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6858e968_b3d47239",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c5addf3_1528c934",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -74,6 +116,24 @@
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2c3f30_98594530",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "I had a similar thought when writing it, but this seemed more readable and the assertion is just to check that this code succeeds (not the code under test). However, it does hide the details of what\u0027s going on when looking at the test, so I\u0027ve inlined it.",
+      "parentUuid": "5c5addf3_1528c934",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "80afb326_ba781438",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84987e71_0e0e7a01",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790029e9_ab86de2e",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -120,6 +204,30 @@
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cf4075_93098567",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "No, though when Pilot is eventually removed from Chrome\u0027s log list, it won\u0027t work anymore. There\u0027s a TODO on line 147 to make it possible to override the log list for the duration of the test (this isn\u0027t trivial).",
+      "parentUuid": "790029e9_ab86de2e",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "0a048c44_c8bfa4c1",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "I didn\u0027t realise American English spelled that word differently to British English. Fixed.",
+      "parentUuid": "fceab5e5_a803510f",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "835c6570_be05e930",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -201,6 +333,30 @@
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631e3e75_2de3278e",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done. I\u0027ve modelled this test after https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_browsertest.cc and https://cs.chromium.org/chromium/src/chrome/browser/ssl/chrome_expect_ct_reporter_browsertest.cc. The former uses this technique to change the certificate Chrome thinks the server presented, as I\u0027m doing here. It\u0027s not actually changing the certificate used by the server though (given that, I don\u0027t think it actually matters whether the server is started or not when SwapCert() is called). I wasn\u0027t sure \"SwapCert\" was the best name for this method and, given Ryan\u0027s comment above about this method, I\u0027ll just inline it here to make what it\u0027s doing more obvious.",
+      "parentUuid": "835c6570_be05e930",
+      "range": {
+        "startLine": 153,
+        "startChar": 25,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +383,30 @@
     },
     {
       "key": {
+        "uuid": "5af1abaa_7f84c492",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Removed - unnecessary.",
+      "parentUuid": "c41e9b0c_4997a7d8",
+      "range": {
+        "startLine": 161,
+        "startChar": 18,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "694b575e_8acde96d",
         "filename": "components/certificate_transparency/tree_state_tracker.h",
         "patchSetId": 3
@@ -241,6 +421,24 @@
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2398e5_783302de",
+        "filename": "components/certificate_transparency/tree_state_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "694b575e_8acde96d",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +474,24 @@
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04dd8d91_d2e780fd",
+        "filename": "net/data/ssl/certificates/comodo-chain.pem",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-21T14:06:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c077704b_6400b8f9",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
