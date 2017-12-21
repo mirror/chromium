@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "247d98b6_916c33f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-12-21T08:45:40Z",
+      "side": 1,
+      "message": "I\u0027ve added related bugs. Unfortunately I cannot open them, but as agreed with Owen (product owner), new sensors would require settings UI + disclosure UI (wip).",
+      "parentUuid": "bf660647_cbaf5399",
+      "revId": "3df26bb7b8f6695db0924d31d106f0267388f577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "814a24ac_2fef1d2f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3df26bb7b8f6695db0924d31d106f0267388f577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39930d87_f2b3f4b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-12-21T08:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814a24ac_2fef1d2f",
+      "revId": "3df26bb7b8f6695db0924d31d106f0267388f577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
