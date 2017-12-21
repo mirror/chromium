@@ -16,6 +16,24 @@
       "revId": "45007b8b4a074ad428a3c25c4cfaa24c82504f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057e15ff_86e773e6",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4473,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-21T22:15:12Z",
+      "side": 1,
+      "message": "Yes, good follow-up idea.",
+      "parentUuid": "283bc4d0_974b3a94",
+      "revId": "45007b8b4a074ad428a3c25c4cfaa24c82504f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
