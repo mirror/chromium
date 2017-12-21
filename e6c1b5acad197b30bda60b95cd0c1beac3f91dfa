@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b2934ca9_79774b59",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-fonts/font-display/font-display-change.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-21T08:34:56Z",
+      "side": 1,
+      "message": "Oops, you are right. I was confused about what timing is expected here.",
+      "parentUuid": "b24b8404_15bd7297",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "e6c1b5acad197b30bda60b95cd0c1beac3f91dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b0c4c3_66bfbad2",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 6
