@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "908ac7d6_815727a5",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T19:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bacbb6_d932cbb7",
+      "revId": "e27fa4ebb066b7b5ef93e54689fe77915e80367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c9e7a0_4d37c097",
         "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e27fa4ebb066b7b5ef93e54689fe77915e80367c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1653b9d4_d645eb99",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T19:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c9e7a0_4d37c097",
+      "revId": "e27fa4ebb066b7b5ef93e54689fe77915e80367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
