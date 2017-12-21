@@ -282,6 +282,30 @@
       "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890db8cb_750dd711",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10888,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-21T21:07:37Z",
+      "side": 1,
+      "message": "Renamed to AdsSettingForIntrusiveAdsSites",
+      "parentUuid": "5c30ffb3_19934274",
+      "range": {
+        "startLine": 10888,
+        "startChar": 41,
+        "endLine": 10888,
+        "endChar": 68
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
