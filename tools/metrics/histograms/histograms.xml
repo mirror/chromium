@@ -13206,6 +13206,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DataReductionProxy.Pingback.CrashAction"
+    enum="DataReductionProxyPingbackCrashAction">
+  <owner>bengr@chromium.org</owner>
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    Counts various actions related to crash detection in the pingback client.
+    This is recorded only when a renderer crash occurs on a Data Reduction Proxy
+    page load.
+  </summary>
+</histogram>
+
 <histogram name="DataReductionProxy.Pingback.Succeeded" enum="BooleanSuccess">
   <owner>bengr@chromium.org</owner>
   <owner>ryansturm@chromium.org</owner>

@@ -8046,6 +8046,19 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="Network change event"/>
 </enum>
 
+<enum name="DataReductionProxyPingbackCrashAction">
+  <int value="0" label="A crash was detected page load."/>
+  <int value="1"
+      label="A crash was analyzed and the report was added to the pending
+             pingback."/>
+  <int value="2"
+      label="A crash was not analyzed and the report was added to the pending
+             pingback. This is default behavior for non-Android crashes."/>
+  <int value="3" label="A crash report was successfully uploaded."/>
+  <int value="4"
+      label="A crash report was attempted, but finished unsuccessfully."/>
+</enum>
+
 <enum name="DataReductionProxyProbeURLFetchResult">
   <int value="0" label="Internet disconnected"/>
   <int value="1" label="Probe failed, proxy disabled"/>

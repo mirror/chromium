@@ -96,6 +96,9 @@ class CrashDumpManager {
 
   base::ScopedFD CreateMinidumpFileForChild(int process_host_id);
 
+  // True when |details| is a foreground out of memory crash.
+  static bool IsForegroundOom(const CrashDumpDetails& details);
+
  private:
   friend struct base::LazyInstanceTraitsBase<CrashDumpManager>;
 
