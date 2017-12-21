@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65273bfe_8592fb88",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T17:14:53Z",
+      "side": 1,
+      "message": "How about didReceiveWebViewNavigationDelegateCallback ? This method does not always logs.",
+      "revId": "5e9f58b10befcb459b89e1b03f5efd088dda4fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f85352_08d0210f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 69347,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T17:14:53Z",
+      "side": 1,
+      "message": "Add: \"If this histogram ever logged it means that Chrome has to gracefully handle the case when WKNavigationDelegate callbacks are called for the destroyed web controller.\"",
+      "range": {
+        "startLine": 69347,
+        "startChar": 53,
+        "endLine": 69347,
+        "endChar": 0
+      },
+      "revId": "5e9f58b10befcb459b89e1b03f5efd088dda4fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
