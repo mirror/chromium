@@ -436,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "2980df1e_6a9da6ac",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T09:29:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94fd8830_6dc69320",
+      "range": {
+        "startLine": 1424,
+        "startChar": 20,
+        "endLine": 1424,
+        "endChar": 48
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d43c732_40b344fb",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -518,6 +542,24 @@
     },
     {
       "key": {
+        "uuid": "7ac32d5d_af542e38",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T09:29:46Z",
+      "side": 1,
+      "message": "Right... Hmm. I wonder why the current implementation does that :) Can you think of any case where that is needed?",
+      "parentUuid": "0f79ade6_466096e5",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ebc7154_8c93a6f1",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -547,6 +589,24 @@
       "side": 1,
       "message": "\u003e that have been visited before\n\nAs far as I know, ElementTraversal::Next() only traverses subtree of a container. If true, we never traverse a subtree that we visited before. Because AdvanceFocusDirectionallyInContainer()\ntraverses only under the container.",
       "parentUuid": "8ebc7154_8c93a6f1",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3ec097_671c9c22",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T09:29:46Z",
+      "side": 1,
+      "message": "\u003e Because AdvanceFocusDirectionallyInContainer()\ntraverses only under the container.\n\nAck. Ah, right, all the checked sub containers reside in the sub tree we just exited? :)\n\nMaybe rename prev_container to pruned_sub_tree?",
+      "parentUuid": "c61b9bda_d6c04c1d",
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
