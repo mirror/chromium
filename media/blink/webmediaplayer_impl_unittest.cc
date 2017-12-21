@@ -511,6 +511,8 @@ class WebMediaPlayerImplTest : public testing::Test {
 
   NiceMock<MockWebMediaPlayerDelegate> delegate_;
 
+  NiceMock<MockWebMediaPlayerDelegate> delegate_;
+
   std::unique_ptr<StrictMock<MockSurfaceLayerBridge>> surface_layer_bridge_;
   StrictMock<MockSurfaceLayerBridge>* surface_layer_bridge_ptr_ = nullptr;
 
