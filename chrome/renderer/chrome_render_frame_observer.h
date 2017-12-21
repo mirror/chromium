@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
+#include "chrome/common/browser_controls_state_android.mojom.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
 #include "chrome/common/prerender_types.h"
 #include "content/public/renderer/render_frame_observer.h"
@@ -31,7 +32,8 @@ class TranslateHelper;
 // lifetime.
 class ChromeRenderFrameObserver
     : public content::RenderFrameObserver,
-      public chrome::mojom::ChromeRenderFrame {
+      public chrome::mojom::ChromeRenderFrame,
+      public chrome::mojom::BrowserControlsStateInfo {
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
@@ -63,6 +65,15 @@ class ChromeRenderFrameObserver
   void OnPrintNodeUnderContextMenu();
   void OnSetClientSidePhishingDetection(bool enable_phishing_detection);
 
+#if defined(OS_ANDROID)
+  // chrome::mojom::BrowserControlsStateInfo:
+  void UpdateBrowserControlsState(content::BrowserControlsState constraints,
+                                  content::BrowserControlsState current,
+                                  bool animate) override;
+
+  void OnBrowserControlsStateInfoRequest(
+      chrome::mojom::BrowserControlsStateInfoAssociatedRequest request);
+#endif
   // chrome::mojom::ChromeRenderFrame:
   void SetWindowFeatures(
       blink::mojom::WindowFeaturesPtr window_features) override;

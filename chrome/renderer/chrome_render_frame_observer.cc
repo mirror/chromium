@@ -63,6 +63,9 @@
 #include "components/printing/renderer/print_render_frame_helper.h"
 #endif
 
+#if defined(OS_ANDROID)
+using blink::WebBrowserControlsState;
+#endif
 using blink::WebDocumentLoader;
 using blink::WebElement;
 using blink::WebFrameContentDumper;
@@ -463,3 +466,18 @@ void ChromeRenderFrameObserver::SetWindowFeatures(
   render_frame()->GetRenderView()->GetWebView()->SetWindowFeatures(
       content::ConvertMojoWindowFeaturesToWebWindowFeatures(*window_features));
 }
+
+#if defined(OS_ANDROID)
+void ChromeRenderFrameObserver::UpdateBrowserControlsState(
+    content::BrowserControlsState constraints,
+    content::BrowserControlsState current,
+    bool animate) {
+  WebBrowserControlsState constraints_state =
+      static_cast<WebBrowserControlsState>(constraints);
+  WebBrowserControlsState current_state =
+      static_cast<WebBrowserControlsState>(current);
+
+  render_frame()->GetRenderView()->GetWebView()->UpdateBrowserControlsState(
+      constraints_state, current_state, animate);
+}
+#endif
