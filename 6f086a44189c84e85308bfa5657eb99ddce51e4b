@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91be6f71_d392d5e5",
+        "filename": "tools/gn/config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-21T02:43:44Z",
+      "side": 1,
+      "message": "You should explain what the \"related_files\" are here, or link to the explanation in scope.h.",
+      "revId": "6f086a44189c84e85308bfa5657eb99ddce51e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9597c7_df72b63a",
+        "filename": "tools/gn/scope.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-21T02:43:44Z",
+      "side": 1,
+      "message": "nit: \"conservatively\"",
+      "revId": "6f086a44189c84e85308bfa5657eb99ddce51e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5452bcab_028f02e3",
+        "filename": "tools/gn/setup.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-21T02:43:44Z",
+      "side": 1,
+      "message": "Is this right?",
+      "revId": "6f086a44189c84e85308bfa5657eb99ddce51e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
