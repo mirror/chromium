@@ -22,6 +22,30 @@
       "revId": "992d0ecede30cb3aae70e0f6bb8054d600a67cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ee859c_51d7809a",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-12-21T08:35:31Z",
+      "side": 1,
+      "message": "As we talked offline, I created a delegate implemented by TabSwitcherController.",
+      "parentUuid": "974f0e19_217f919c",
+      "range": {
+        "startLine": 1072,
+        "startChar": 6,
+        "endLine": 1074,
+        "endChar": 8
+      },
+      "revId": "992d0ecede30cb3aae70e0f6bb8054d600a67cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
