@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "471e3335_b1c97600",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-21T06:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457b6296_a8200c4d",
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbe3bba_57a86153",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39919f5_aeb933c3",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-21T06:05:06Z",
+      "side": 1,
+      "message": "Done. I\u0027m explicitly logging whether the containing browser is in focus.",
+      "parentUuid": "bfbe3bba_57a86153",
+      "range": {
+        "startLine": 41,
+        "startChar": 45,
+        "endLine": 41,
+        "endChar": 62
+      },
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "56120744_e1c22438",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-21T06:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29007e47_a8515811",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5d68805_acae64d0",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f2698c_76521852",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-21T06:05:06Z",
+      "side": 1,
+      "message": "Done. We now use the map, so it\u0027s clearer.",
+      "parentUuid": "e5d68805_acae64d0",
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83421db_1fe1fc01",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-21T06:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd93442_e9b61e74",
+      "range": {
+        "startLine": 2189,
+        "startChar": 58,
+        "endLine": 2189,
+        "endChar": 64
+      },
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
