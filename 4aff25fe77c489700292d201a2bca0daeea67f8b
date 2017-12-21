@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d0b2f43_e52d7404",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T01:10:37Z",
+      "side": 0,
+      "message": "This test wasnt running at all since GetParam() was never viz::ResourceType::kGpuMemoryBuffer. Reordering here so that the WillOnce() gets set on NextTextureId before it runs, and the right ID is actually returned.",
+      "revId": "4aff25fe77c489700292d201a2bca0daeea67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05c3741_54c5c16f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3285,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T01:10:37Z",
+      "side": 0,
+      "message": "Here is where we see that viz::ResourceType::kGpuMemoryBuffer was never passed as the param.",
+      "revId": "4aff25fe77c489700292d201a2bca0daeea67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d086d7e_2a36ad7f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T01:10:37Z",
+      "side": 1,
+      "message": "Changing the param to be a bool instead of a triple enum. We only ran the tests with 2 of the enum values actually, so this made confusion.",
+      "revId": "08c2f637f12fb376e9a44fc80637988000c7f1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7ff9b8_7d6d018f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T01:10:37Z",
+      "side": 1,
+      "message": "This check got removed recently in a CL and it was an oversight from me, so putting it back.",
+      "revId": "08c2f637f12fb376e9a44fc80637988000c7f1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b8af5b_26e14c1b",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T01:10:37Z",
+      "side": 1,
+      "message": "Dropping the base class here, and just making a LayerTreeResourceProvider that wont make sync tokens explicitly.",
+      "revId": "08c2f637f12fb376e9a44fc80637988000c7f1e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
