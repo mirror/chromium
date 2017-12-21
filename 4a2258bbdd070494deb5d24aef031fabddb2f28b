@@ -70,6 +70,30 @@
       "revId": "4a2258bbdd070494deb5d24aef031fabddb2f28b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fc25b24_9e314ec8",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T22:18:23Z",
+      "side": 1,
+      "message": "Added with https://chromium-review.googlesource.com/c/chromium/src/+/841126.\n\n(Sorry - CL had already landed by the time you commented.)",
+      "parentUuid": "3292e6b1_ac9c3a0d",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 11
+      },
+      "revId": "4a2258bbdd070494deb5d24aef031fabddb2f28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
