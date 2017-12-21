@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9c262457_84733578",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T16:46:23Z",
+      "side": 1,
+      "message": "new window should already be activated.",
+      "parentUuid": "7f28eaab_9cefa6c7",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 29
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d74894d_8b43104a",
         "filename": "ash/extended_desktop_unittest.cc",
         "patchSetId": 7
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "hmm. Do you mean that transient_child-\u003eparent() may be NULL? Then I think we would just skip the move. The movement will be automatic when parented.",
       "parentUuid": "c306387a_e19f645a",
+      "range": {
+        "startLine": 114,
+        "startChar": 29,
+        "endLine": 114,
+        "endChar": 61
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793b9093_065920ce",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T16:46:23Z",
+      "side": 1,
+      "message": "can you add test case for this?",
+      "parentUuid": "922d1085_6f64b5f2",
       "range": {
         "startLine": 114,
         "startChar": 29,

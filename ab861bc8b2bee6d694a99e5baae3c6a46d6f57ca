@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221b0185_159b4b5b",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T16:46:23Z",
+      "side": 1,
+      "message": "should we skip if the window is transient child?",
+      "revId": "ab861bc8b2bee6d694a99e5baae3c6a46d6f57ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
