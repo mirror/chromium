@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc33d202_1cef1c1d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/autofill/AutofillKeyboardAccessoryTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T22:31:31Z",
+      "side": 1,
+      "message": "nit: git cl format at it again?",
+      "revId": "11e451b5346e1dc4fe7328af40d6cd3027a96bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14779df1_a473731f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/UkmIncognitoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T22:31:31Z",
+      "side": 1,
+      "message": "nit: same",
+      "revId": "11e451b5346e1dc4fe7328af40d6cd3027a96bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e9db12_3f4f4fb0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T22:31:31Z",
+      "side": 1,
+      "message": "nit: same",
+      "revId": "11e451b5346e1dc4fe7328af40d6cd3027a96bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
