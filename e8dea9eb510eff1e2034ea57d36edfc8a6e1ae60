@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406137cd_9a156583",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-21T17:12:04Z",
+      "side": 1,
+      "message": "instead of doing this, you can use\n\nukm::GetSourceIdForWebContentsDocument(web_contents);\n\nonce you do this, you should no longer call recorder-\u003eUpdateSourceURL() below, as this is taken care of for you for the shared source id you get via GetSourceIdForWebContentsDocument.\n\nwe\u0027re trying to move UKM clients away from creating their own source ids to using shared source ids, since it allows us to better audit how UKM URLs are recorded.",
+      "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
