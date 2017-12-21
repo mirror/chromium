@@ -100,7 +100,7 @@ declare_args() {
   use_cxx11 = false
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
-  strip_debug_info = false
+  strip_debug_info = true
 
   # Path to an AFDO profile to use while building with clang, if any. Empty
   # implies none.
@@ -2013,6 +2013,8 @@ config("minimal_symbols") {
       if (strip_debug_info) {
         ldflags += [ "-Wl,--strip-debug" ]
       }
+    } else if (!is_mac && !is_nacl && !using_sanitizer && strip_debug_info) {
+      ldflags += [ "-Wl,--strip-debug" ]
     }
 
     # Note: -gsplit-dwarf implicitly turns on -g2 with clang, so don't pass it.
