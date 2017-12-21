@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfacbf7f_6ab75248",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-21T20:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50edd8f8_69d2f352",
+      "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef00869_c15b5380",
         "filename": "ash/wm/overview/window_selector.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T17:06:41Z",
       "side": 1,
       "message": "How do we handle new window in overview mode now?",
+      "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554f15c4_bc56c833",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-21T20:36:52Z",
+      "side": 1,
+      "message": "Currently we cannot add new window while still in overview.",
+      "parentUuid": "7ef00869_c15b5380",
       "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
