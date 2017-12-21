@@ -9,9 +9,17 @@
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/arc/arc_util.h"
 
 namespace arc {
 namespace policy_util {
+
+AccountType GetAccountType(const Profile* profile) {
+  return IsRobotAccountMode()
+             ? AccountType::ROBOT
+             : (IsAccountManaged(profile) ? AccountType::MANAGED
+                                          : AccountType::UNMANAGED);
+}
 
 bool IsAccountManaged(const Profile* profile) {
   return policy::ProfilePolicyConnectorFactory::IsProfileManaged(profile);

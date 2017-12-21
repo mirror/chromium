@@ -36,6 +36,23 @@ enum class EcryptfsMigrationAction : int32_t {
 constexpr size_t kEcryptfsMigrationActionMaxValue =
     static_cast<size_t>(EcryptfsMigrationAction::kAskForEcryptfsArcUsers);
 
+enum class AccountType : int {
+  // Managed user.
+  MANAGED = 0,
+
+  // Unmanaged user.
+  UNMANAGED = 1,
+
+  // Robot account, i.e.Public Session or ARC Kiosk
+  ROBOT = 2,
+
+  // The size of this enum; keep last.
+  SIZE,
+};
+
+// Returns type of the current account with the provided profile.
+AccountType GetAccountType(const Profile* profile);
+
 // Returns true if the account is managed. Otherwise false.
 bool IsAccountManaged(const Profile* profile);
 

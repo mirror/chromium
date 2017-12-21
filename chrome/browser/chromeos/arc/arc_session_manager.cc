@@ -255,9 +255,8 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
 
     UpdateProvisioningTiming(base::Time::Now() - sign_in_start_time_,
                              provisioning_successful,
-                             policy_util::IsAccountManaged(profile_));
-    UpdateProvisioningResultUMA(result,
-                                policy_util::IsAccountManaged(profile_));
+                             policy_util::GetAccountType(profile_));
+    UpdateProvisioningResultUMA(result, policy_util::GetAccountType(profile_));
     if (!provisioning_successful)
       UpdateOptInCancelUMA(OptInCancelReason::CLOUD_PROVISION_FLOW_FAIL);
   }
