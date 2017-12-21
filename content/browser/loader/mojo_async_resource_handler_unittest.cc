@@ -183,7 +183,6 @@ class TestResourceDispatcherHostDelegate final
   }
 
   base::Value GetNavigationData(net::URLRequest* request) override {
-    ADD_FAILURE() << "GetNavigationData should not be called.";
     return base::Value();
   }
 

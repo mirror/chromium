@@ -278,7 +278,8 @@ void AppCacheURLLoaderJob::SendResponseInfo() {
   response_head.load_timing = load_timing_info_;
 
   client_->OnReceiveResponse(response_head, http_info->ssl_info,
-                             mojom::DownloadedTempFilePtr());
+                             mojom::DownloadedTempFilePtr(),
+                             mojom::URLLoaderNavigationDataPtr());
   client_->OnStartLoadingResponseBody(std::move(data_pipe_.consumer_handle));
 }
 

@@ -20,6 +20,7 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_scheduler.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/common/resource_response.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/bindings/message.h"
@@ -101,6 +102,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      resource_type_(resource_type),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
@@ -111,7 +113,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
   binding_.set_connection_error_handler(base::BindOnce(
       &MojoAsyncResourceHandler::Cancel, base::Unretained(this)));
 
-  if (IsResourceTypeFrame(resource_type)) {
+  if (IsResourceTypeFrame(resource_type_)) {
     GetRequestInfo()->set_on_transfer(base::Bind(
         &MojoAsyncResourceHandler::OnTransfer, weak_factory_.GetWeakPtr()));
   } else {
@@ -182,8 +184,28 @@ void MojoAsyncResourceHandler::OnResponseStarted(
                                      response->head.download_file_path);
   }
 
-  url_loader_client_->OnReceiveResponse(response->head, base::nullopt,
-                                        std::move(downloaded_file_ptr));
+  mojom::URLLoaderNavigationDataPtr navigation_data;
+  base::Optional<net::SSLInfo> ssl_info;
+  if (IsResourceTypeFrame(resource_type_)) {
+    navigation_data = mojom::URLLoaderNavigationData::New();
+    navigation_data->is_download = info->IsDownload();
+    navigation_data->is_stream = info->is_stream();
+    navigation_data->request_id = info->GetRequestID();
+    ssl_info = request()->ssl_info();
+
+    // Ask the embedder for a navigation data instance.
+    if (rdh_->delegate()) {
+      navigation_data->embedder_navigation_data = std::make_unique<base::Value>(
+          rdh_->delegate()->GetNavigationData(request()));
+    } else {
+      navigation_data->embedder_navigation_data =
+          std::make_unique<base::Value>();
+    }
+  }
+
+  url_loader_client_->OnReceiveResponse(response->head, ssl_info,
+                                        std::move(downloaded_file_ptr),
+                                        std::move(navigation_data));
 
   net::IOBufferWithSize* metadata = GetResponseMetadata(request());
   if (metadata) {

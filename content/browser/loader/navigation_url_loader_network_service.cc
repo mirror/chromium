@@ -60,6 +60,7 @@ namespace {
 
 // Request ID for browser initiated requests. We start at -2 on the same lines
 // as ResourceDispatcherHostImpl.
+// This is used only when the network service is enabled.
 int g_next_request_id = -2;
 
 size_t GetCertificateChainsSizeInKB(const net::SSLInfo& ssl_info) {
@@ -475,7 +476,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void OnReceiveResponse(
       const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {
     received_response_ = true;
 
     // If the default loader (network) was used to handle the URL load request
@@ -507,7 +509,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
                        owner_, std::move(url_loader_client_endpoints),
                        response->DeepCopy(), ssl_info,
-                       base::Passed(&downloaded_file)));
+                       base::Passed(&downloaded_file),
+                       std::move(navigation_data)));
   }
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -819,7 +822,9 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& maybe_ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
+  DCHECK(response);
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderNetworkService", this, "success",
                          true);
@@ -830,16 +835,28 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
   if (maybe_ssl_info.has_value())
     ssl_info = maybe_ssl_info.value();
 
-  // TODO(arthursonzogni): In NavigationMojoResponse, this is false. The info
-  // coming from the MimeSniffingResourceHandler must be used.
-  DCHECK(response);
-  bool is_download = allow_download_ && IsDownload(*response.get(), url_);
+  bool is_download;
+  bool is_stream;
+  int request_id;
+  base::Value embedder_navigation_data;
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    DCHECK(navigation_data);
+    is_stream = navigation_data->is_stream;
+    is_download = navigation_data->is_download;
+    request_id = navigation_data->request_id;
+    embedder_navigation_data =
+        std::move(*navigation_data->embedder_navigation_data);
+  } else {
+    is_stream = false;
+    is_download = allow_download_ && IsDownload(*response.get(), url_);
+    request_id = g_next_request_id;
+  }
 
   delegate_->OnResponseStarted(
       std::move(response), std::move(url_loader_client_endpoints), nullptr,
-      std::move(ssl_info), base::Value() /* navigation_data */,
-      GlobalRequestID(-1, g_next_request_id), is_download,
-      false /* is_stream */,
+      std::move(ssl_info), std::move(embedder_navigation_data),
+      GlobalRequestID(-1, request_id), is_download, is_stream,
       request_controller_->TakeSubresourceLoaderParams());
 }
 

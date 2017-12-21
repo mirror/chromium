@@ -179,7 +179,8 @@ void ServiceWorkerURLLoaderJob::CommitResponseHeaders() {
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info_,
-                                        nullptr /* downloaded_file */);
+                                        nullptr /* downloaded_file */,
+                                        mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
