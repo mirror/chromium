@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7dd5ee19_d41cec1d",
+        "filename": "chrome/browser/resources/print_preview/new/media_size_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:10:00Z",
+      "side": 1,
+      "message": "I see. Sounds a bit unfortunate that we might be triggering unnecessary work. We can probably get back to this later (after the model is fully functional), and figure out how to prune such work.",
+      "parentUuid": "3817cab9_dd7f3daa",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fd31e5_7d6676f7",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -172,6 +196,24 @@
       "side": 1,
       "message": "Thought about this and I do not think this should ever happen. The values are always populated by JSON strings made from the capability.option values. So it does not make sense for there to be a case when they cannot be parsed.",
       "parentUuid": "07ec9472_31cf93c9",
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb911cb_c14f3198",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:10:00Z",
+      "side": 1,
+      "message": "If we don\u0027t expect this to happen, let\u0027s add an assertNotReached(), or console.error(), or remove the try/catch, otherwise we will never see the error.",
+      "parentUuid": "47338107_fab33365",
       "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
