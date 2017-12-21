@@ -13,15 +13,18 @@
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
 #include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/cursor_manager.h"
+#include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/common/frame_messages.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/events/blink/web_input_event_traits.h"
+#include "ui/gfx/geometry/point.h"
 
 namespace {
 
@@ -43,6 +46,138 @@ blink::WebGestureEvent DummyGestureScrollUpdate(double timeStampSeconds) {
 }  // anonymous namespace
 
 namespace content {
+
+////////////////////////////////////////////////////////////////////////////////
+
+using TargetCallback =
+    base::RepeatingCallback<void(RenderWidgetHostViewBase*,
+                                 const blink::WebInputEvent&,
+                                 gfx::PointF*,
+                                 RenderWidgetHostViewBase** out_target,
+                                 bool* out_ask)>;
+using DispatchCallback =
+    base::RepeatingCallback<void(base::WeakPtr<RenderWidgetHostViewBase>,
+                                 base::WeakPtr<RenderWidgetHostViewBase>,
+                                 const blink::WebInputEvent&,
+                                 const ui::LatencyInfo&)>;
+class RenderWidgetTargeter {
+ public:
+  RenderWidgetTargeter(TargetCallback target_callback,
+                       DispatchCallback dispatch_callback)
+      : target_callback_(std::move(target_callback)),
+        dispatch_callback_(std::move(dispatch_callback)),
+        weak_ptr_factory_(this) {}
+
+  ~RenderWidgetTargeter() = default;
+
+  void FindTargetAndDispatch(RenderWidgetHostViewBase* root_view,
+                             const blink::WebInputEvent& event,
+                             const ui::LatencyInfo& latency) {
+    if (request_in_flight_) {
+      LOG(ERROR) << "Adding event in queue";
+      // XXX(sad): Merge here.
+      requests_.push({root_view->GetWeakPtr(), event, latency});
+      return;
+    }
+
+    RenderWidgetHostViewBase* target = nullptr;
+    gfx::PointF transformed_point;
+    bool ask = false;
+    target_callback_.Run(root_view, event, &transformed_point, &target, &ask);
+    auto* event_ptr = &event;
+    if (!target)
+      return;
+
+    if (ask) {
+      request_in_flight_ = true;
+      const auto& mouse_event = static_cast<const blink::WebMouseEvent&>(event);
+      float scale_factor = 2.f;  // XXX(sad): Get real value.
+      auto* target_client =
+          target->GetRenderWidgetHostImpl()->input_target_client();
+      target_client->FrameSinkIdAt(
+          gfx::ScaleToCeiledPoint(
+              gfx::ToCeiledPoint(mouse_event.PositionInWidget()), scale_factor,
+              scale_factor),
+          base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
+                         weak_ptr_factory_.GetWeakPtr(),
+                         root_view->GetWeakPtr(), mouse_event, latency));
+    } else {
+      FoundTarget(root_view->GetWeakPtr(), target, *event_ptr, latency);
+    }
+  }
+
+ private:
+  void FlushEventQueue() {
+    while (!request_in_flight_ && !requests_.empty()) {
+      auto request = requests_.front();
+      requests_.pop();
+      // The root-view has gone away. Ignore this event, and try to process the
+      // next event.
+      if (!request.root_view)
+        continue;
+      LOG(ERROR) << "Processing event from the queue.";
+      FindTargetAndDispatch(request.root_view.get(), request.event,
+                            request.latency);
+    }
+  }
+
+  void FoundFrameSinkId(base::WeakPtr<RenderWidgetHostViewBase> root_view,
+                        const blink::WebInputEvent& event,
+                        const ui::LatencyInfo& latency,
+                        const viz::FrameSinkId& frame_sink_id) {
+    request_in_flight_ = false;
+    auto* frame_host = RenderFrameHostImpl::FromID(frame_sink_id.client_id(),
+                                                   frame_sink_id.sink_id());
+    if (!frame_host || !root_view) {
+      FlushEventQueue();
+      return;
+    }
+    LOG(ERROR) << "Found target using InputTargetClient";
+    FoundTarget(root_view,
+                static_cast<RenderWidgetHostViewBase*>(frame_host->GetView()),
+                event, latency);
+  }
+
+  void FoundTarget(base::WeakPtr<RenderWidgetHostViewBase> root_view,
+                   RenderWidgetHostViewBase* target,
+                   const blink::WebInputEvent& event,
+                   const ui::LatencyInfo& latency) {
+    if (!root_view)
+      return;
+    const blink::WebInputEvent* event_ptr = &event;
+    blink::WebMouseEvent mouse_event;
+    if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+      mouse_event = static_cast<const blink::WebMouseEvent&>(event);
+      gfx::PointF transformed_point;
+      if (!root_view->TransformPointToCoordSpaceForView(
+              mouse_event.PositionInWidget(), target, &transformed_point)) {
+        return;
+      }
+      mouse_event.SetPositionInWidget(transformed_point.x(),
+                                      transformed_point.y());
+      event_ptr = &mouse_event;
+    }
+    dispatch_callback_.Run(root_view, target->GetWeakPtr(), *event_ptr,
+                           latency);
+  }
+
+  struct TargetingRequest {
+    base::WeakPtr<RenderWidgetHostViewBase> root_view;
+    blink::WebInputEvent event;
+    ui::LatencyInfo latency;
+  };
+
+  bool request_in_flight_ = false;
+  std::queue<TargetingRequest> requests_;
+
+  TargetCallback target_callback_;
+  DispatchCallback dispatch_callback_;
+  base::WeakPtrFactory<RenderWidgetTargeter> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderWidgetTargeter);
+};
+
+////////////////////////////////////////////////////////////////////////////////
 
 void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
     RenderWidgetHostViewBase* view) {
@@ -157,9 +292,16 @@ RenderWidgetHostInputEventRouter::RenderWidgetHostInputEventRouter()
       last_mouse_move_root_view_(nullptr),
       active_touches_(0),
       in_touchscreen_gesture_pinch_(false),
-      gesture_pinch_did_send_scroll_begin_(false) {
+      gesture_pinch_did_send_scroll_begin_(false),
+      weak_ptr_factory_(this) {
   enable_viz_ =
       base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
+  event_targeter_ = std::make_unique<RenderWidgetTargeter>(
+      base::BindRepeating(&RenderWidgetHostInputEventRouter::FindEventTarget,
+                          weak_ptr_factory_.GetWeakPtr()),
+      base::BindRepeating(
+          &RenderWidgetHostInputEventRouter::DispatchEventToTarget,
+          weak_ptr_factory_.GetWeakPtr()));
 }
 
 RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {
@@ -168,7 +310,24 @@ RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {
   ClearAllObserverRegistrations();
 }
 
-RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindEventTarget(
+void RenderWidgetHostInputEventRouter::FindEventTarget(
+    RenderWidgetHostViewBase* root_view,
+    const blink::WebInputEvent& event,
+    gfx::PointF* transformed_point,
+    RenderWidgetHostViewBase** out_target,
+    bool* out_ask) const {
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    *out_target = FindMouseEventTarget(
+        root_view, static_cast<const blink::WebMouseEvent&>(event),
+        transformed_point);
+    *out_ask = true;
+    return;
+  }
+  *out_target = nullptr;
+}
+
+RenderWidgetHostViewBase*
+RenderWidgetHostInputEventRouter::FindMouseEventTarget(
     RenderWidgetHostViewBase* root_view,
     const blink::WebMouseEvent& event,
     gfx::PointF* transformed_point) const {
@@ -229,6 +388,20 @@ RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindEventTarget(
       return nullptr;
   }
   return target;
+}
+
+void RenderWidgetHostInputEventRouter::DispatchEventToTarget(
+    base::WeakPtr<RenderWidgetHostViewBase> root_view,
+    base::WeakPtr<RenderWidgetHostViewBase> target,
+    const blink::WebInputEvent& event,
+    const ui::LatencyInfo& latency) {
+  if (blink::WebInputEvent::IsMouseEventType(event.GetType())) {
+    DispatchMouseEvent(root_view, target,
+                       static_cast<const blink::WebMouseEvent&>(event),
+                       latency);
+    return;
+  }
+  NOTREACHED();
 }
 
 RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindViewAtLocation(
@@ -310,12 +483,18 @@ void RenderWidgetHostInputEventRouter::RouteMouseEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebMouseEvent* event,
     const ui::LatencyInfo& latency) {
-  gfx::PointF transformed_point;
-  RenderWidgetHostViewBase* const target =
-      FindEventTarget(root_view, *event, &transformed_point);
-  if (!target)
-    return;
+  event_targeter_->FindTargetAndDispatch(root_view, *event, latency);
+}
 
+void RenderWidgetHostInputEventRouter::DispatchMouseEvent(
+    base::WeakPtr<RenderWidgetHostViewBase> root_view_ptr,
+    base::WeakPtr<RenderWidgetHostViewBase> target_ptr,
+    const blink::WebMouseEvent& mouse_event,
+    const ui::LatencyInfo& latency) {
+  blink::WebMouseEvent copy_event = mouse_event;
+  auto* root_view = root_view_ptr.get();
+  auto* target = target_ptr.get();
+  auto* event = &copy_event;
   if (event->GetType() == blink::WebInputEvent::kMouseUp)
     mouse_capture_target_.target = nullptr;
   else if (event->GetType() == blink::WebInputEvent::kMouseDown)
@@ -333,7 +512,6 @@ void RenderWidgetHostInputEventRouter::RouteMouseEvent(
       root_view->GetCursorManager()->UpdateViewUnderCursor(target);
   }
 
-  event->SetPositionInWidget(transformed_point.x(), transformed_point.y());
   target->ProcessMouseEvent(*event, latency);
 }
 
