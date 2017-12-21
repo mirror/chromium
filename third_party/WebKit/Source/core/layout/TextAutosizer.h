@@ -72,6 +72,8 @@ class CORE_EXPORT TextAutosizer final
 
   bool PageNeedsAutosizing() const;
 
+  void ResetMultipliers();
+
   void Trace(blink::Visitor*);
 
   class LayoutScope {
@@ -288,7 +290,6 @@ class CORE_EXPORT TextAutosizer final
   bool ShouldHandleLayout() const;
   IntSize WindowSize() const;
   void SetAllTextNeedsLayout(LayoutBlock* container = nullptr);
-  void ResetMultipliers();
   BeginLayoutBehavior PrepareForLayout(LayoutBlock*);
   void PrepareClusterStack(LayoutObject*);
   bool ClusterHasEnoughTextToAutosize(
