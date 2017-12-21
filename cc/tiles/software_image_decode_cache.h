@@ -94,7 +94,7 @@ class CC_EXPORT ImageDecodeCacheKey {
                       ProcessingType type,
                       bool is_nearest_neighbor,
                       const gfx::Rect& src_rect,
-                      const gfx::Size& size,
+                      const gfx::Size& target_size,
                       const gfx::ColorSpace& target_color_space);
 
   PaintImage::FrameKey frame_key_;
@@ -286,12 +286,15 @@ class CC_EXPORT SoftwareImageDecodeCache
   void AddBudgetForImage(const ImageKey& key, CacheEntry* entry);
   void RemoveBudgetForImage(const ImageKey& key, CacheEntry* entry);
 
-  std::unique_ptr<CacheEntry> DoDecodeImage(const ImageKey& key,
+  std::unique_ptr<CacheEntry> DecodeOriginal(const ImageKey& key,
+                                             const PaintImage& image);
+  std::unique_ptr<CacheEntry> DecodeToScale(const ImageKey& key,
                                             const PaintImage& image);
   std::unique_ptr<CacheEntry> GenerateCacheEntryFromCandidate(
       const ImageKey& key,
       const DecodedDrawImage& candidate,
       bool needs_extract_subset);
+  base::Optional<ImageKey> FindCandidateKey(const ImageKey& key);
 
   void UnrefImage(const ImageKey& key);
 
