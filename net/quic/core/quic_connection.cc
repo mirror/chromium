@@ -2364,9 +2364,6 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
   // If caller wants us to include an ack, check the delayed-ack timer to see if
   // there's ack info to be sent.
   if (ShouldSendAck(ack_mode)) {
-    DCHECK(ack_mode == SEND_ACK || connection_->ack_frame_updated() ||
-           connection_->stop_waiting_count_ > 1);
-
     if (!GetQuicReloadableFlag(quic_strict_ack_handling) ||
         !connection_->GetUpdatedAckFrame().ack_frame->packets.Empty()) {
       QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
@@ -2377,6 +2374,9 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
 
 bool QuicConnection::ScopedPacketFlusher::ShouldSendAck(
     AckBundling ack_mode) const {
+  // If the ack alarm is set, make sure the ack has been updated.
+  DCHECK(!connection_->ack_alarm_->IsSet() || connection_->ack_frame_updated())
+      << "ack_mode:" << ack_mode;
   switch (ack_mode) {
     case SEND_ACK:
       return true;
