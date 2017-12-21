@@ -576,11 +576,11 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
       << "Event of type " << static_cast<int>(event_type)
       << " can only be dispatched to an active worker: " << status();
 
-  auto request =
-      std::make_unique<PendingRequest>(std::move(error_callback), clock_->Now(),
-                                       tick_clock_->NowTicks(), event_type);
-  PendingRequest* request_rawptr = request.get();
-  int request_id = pending_requests_.Add(std::move(request));
+  auto request = std::make_unique<InflightRequest>(
+      std::move(error_callback), clock_->Now(), tick_clock_->NowTicks(),
+      event_type);
+  InflightRequest* request_rawptr = request.get();
+  int request_id = inflight_requests_.Add(std::move(request));
   TRACE_EVENT_ASYNC_BEGIN2("ServiceWorker", "ServiceWorkerVersion::Request",
                            request_rawptr, "Request id", request_id,
                            "Event type",
@@ -588,7 +588,7 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
 
   base::TimeTicks expiration_time = tick_clock_->NowTicks() + timeout;
   bool is_inserted = false;
-  std::set<RequestInfo>::iterator iter;
+  std::set<RequestTimeoutInfo>::iterator iter;
   std::tie(iter, is_inserted) = request_timeouts_.emplace(
       request_id, event_type, expiration_time, timeout_behavior);
   DCHECK(is_inserted);
@@ -619,7 +619,7 @@ bool ServiceWorkerVersion::StartExternalRequest(
 bool ServiceWorkerVersion::FinishRequest(int request_id,
                                          bool was_handled,
                                          base::Time dispatch_event_time) {
-  PendingRequest* request = pending_requests_.Lookup(request_id);
+  InflightRequest* request = inflight_requests_.Lookup(request_id);
   if (!request)
     return false;
   if (event_recorder_)
@@ -635,7 +635,7 @@ bool ServiceWorkerVersion::FinishRequest(int request_id,
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                          request, "Handled", was_handled);
   request_timeouts_.erase(request->timeout_iter);
-  pending_requests_.Remove(request_id);
+  inflight_requests_.Remove(request_id);
   // Non-S13nServiceWorker:
   // Trigger OnNoWork() if no inflight events exist.
   //
@@ -676,7 +676,7 @@ bool ServiceWorkerVersion::FinishExternalRequest(
 ServiceWorkerVersion::SimpleEventCallback
 ServiceWorkerVersion::CreateSimpleEventCallback(int request_id) {
   // The weak reference to |this| is safe because storage of the callbacks, the
-  // pending responses of the ServiceWorkerEventDispatcher, is owned by |this|.
+  // inflight responses of the ServiceWorkerEventDispatcher, is owned by |this|.
   return base::Bind(&ServiceWorkerVersion::OnSimpleEventFinished,
                     base::Unretained(this), request_id);
 }
@@ -723,13 +723,13 @@ void ServiceWorkerVersion::RemoveControllee(
 }
 
 void ServiceWorkerVersion::OnStreamResponseStarted() {
-  CHECK_LT(pending_stream_response_count_, std::numeric_limits<int>::max());
-  pending_stream_response_count_++;
+  CHECK_LT(inflight_stream_response_count_, std::numeric_limits<int>::max());
+  inflight_stream_response_count_++;
 }
 
 void ServiceWorkerVersion::OnStreamResponseFinished() {
-  DCHECK_GT(pending_stream_response_count_, 0);
-  pending_stream_response_count_--;
+  DCHECK_GT(inflight_stream_response_count_, 0);
+  inflight_stream_response_count_--;
   if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
     // S13nServiceWorker:
     // TODO(https://crbug.com/774374): OnNoWork should be triggered here when
@@ -873,7 +873,7 @@ ServiceWorkerVersion::GetMainScriptHttpResponseInfo() {
   return main_script_http_info_.get();
 }
 
-ServiceWorkerVersion::RequestInfo::RequestInfo(
+ServiceWorkerVersion::RequestTimeoutInfo::RequestTimeoutInfo(
     int id,
     ServiceWorkerMetrics::EventType event_type,
     const base::TimeTicks& expiration,
@@ -883,17 +883,16 @@ ServiceWorkerVersion::RequestInfo::RequestInfo(
       expiration(expiration),
       timeout_behavior(timeout_behavior) {}
 
-ServiceWorkerVersion::RequestInfo::~RequestInfo() {
-}
+ServiceWorkerVersion::RequestTimeoutInfo::~RequestTimeoutInfo() {}
 
-bool ServiceWorkerVersion::RequestInfo::operator<(
-    const RequestInfo& other) const {
+bool ServiceWorkerVersion::RequestTimeoutInfo::operator<(
+    const RequestTimeoutInfo& other) const {
   if (expiration == other.expiration)
     return id < other.id;
   return expiration < other.expiration;
 }
 
-ServiceWorkerVersion::PendingRequest::PendingRequest(
+ServiceWorkerVersion::InflightRequest::InflightRequest(
     StatusCallback callback,
     base::Time time,
     const base::TimeTicks& time_ticks,
@@ -903,7 +902,7 @@ ServiceWorkerVersion::PendingRequest::PendingRequest(
       start_time_ticks(time_ticks),
       event_type(event_type) {}
 
-ServiceWorkerVersion::PendingRequest::~PendingRequest() {}
+ServiceWorkerVersion::InflightRequest::~InflightRequest() {}
 
 void ServiceWorkerVersion::OnThreadStarted() {
   DCHECK_EQ(EmbeddedWorkerStatus::STARTING, running_status());
@@ -1176,7 +1175,7 @@ void ServiceWorkerVersion::OnSimpleEventFinished(
     int request_id,
     blink::mojom::ServiceWorkerEventStatus status,
     base::Time dispatch_event_time) {
-  PendingRequest* request = pending_requests_.Lookup(request_id);
+  InflightRequest* request = inflight_requests_.Lookup(request_id);
   // |request| will be null when the request has been timed out.
   if (!request)
     return;
@@ -1512,7 +1511,7 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
 
 void ServiceWorkerVersion::StartWorkerInternal() {
   DCHECK_EQ(EmbeddedWorkerStatus::STOPPED, running_status());
-  DCHECK(pending_requests_.IsEmpty());
+  DCHECK(inflight_requests_.IsEmpty());
   DCHECK(request_timeouts_.empty());
   DCHECK(start_worker_first_purpose_);
 
@@ -1528,9 +1527,9 @@ void ServiceWorkerVersion::StartWorkerInternal() {
 
   StartTimeoutTimer();
 
-  std::unique_ptr<ServiceWorkerProviderHost> pending_provider_host =
+  std::unique_ptr<ServiceWorkerProviderHost> provider_host =
       ServiceWorkerProviderHost::PreCreateForController(context());
-  provider_host_ = pending_provider_host->AsWeakPtr();
+  provider_host_ = provider_host->AsWeakPtr();
 
   auto params = mojom::EmbeddedWorkerStartParams::New();
   params->service_worker_version_id = version_id_;
@@ -1563,7 +1562,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       // Unretained is used here because the callback will be owned by
       // |embedded_worker_| whose owner is |this|.
       base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
-                     std::move(pending_provider_host), context()),
+                     std::move(provider_host), context()),
       mojo::MakeRequest(&event_dispatcher_),
       mojo::MakeRequest(&controller_ptr_), std::move(installed_scripts_info),
       std::move(service_worker_host_ptr_info),
@@ -1680,7 +1679,7 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
   bool stop_for_timeout = false;
   auto timeout_iter = request_timeouts_.begin();
   while (timeout_iter != request_timeouts_.end()) {
-    const RequestInfo& info = *timeout_iter;
+    const RequestTimeoutInfo& info = *timeout_iter;
     if (!RequestExpired(info.expiration))
       break;
     if (MaybeTimeOutRequest(info)) {
@@ -1752,7 +1751,7 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
 }
 
 bool ServiceWorkerVersion::HasWork() const {
-  return !pending_requests_.IsEmpty() || pending_stream_response_count_ > 0 ||
+  return !inflight_requests_.IsEmpty() || inflight_stream_response_count_ > 0 ||
          !start_callbacks_.empty();
 }
 
@@ -1811,28 +1810,28 @@ void ServiceWorkerVersion::RecordStartWorkerResult(
                             EmbeddedWorkerInstance::STARTING_PHASE_MAX_VALUE);
 }
 
-bool ServiceWorkerVersion::MaybeTimeOutRequest(const RequestInfo& info) {
-  PendingRequest* request = pending_requests_.Lookup(info.id);
+bool ServiceWorkerVersion::MaybeTimeOutRequest(const RequestTimeoutInfo& info) {
+  InflightRequest* request = inflight_requests_.Lookup(info.id);
   if (!request)
     return false;
 
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                          request, "Error", "Timeout");
   std::move(request->error_callback).Run(SERVICE_WORKER_ERROR_TIMEOUT);
-  pending_requests_.Remove(info.id);
+  inflight_requests_.Remove(info.id);
   return true;
 }
 
 void ServiceWorkerVersion::SetAllRequestExpirations(
     const base::TimeTicks& expiration) {
-  std::set<RequestInfo> new_timeouts;
+  std::set<RequestTimeoutInfo> new_timeouts;
   for (const auto& info : request_timeouts_) {
     bool is_inserted = false;
-    std::set<RequestInfo>::iterator iter;
+    std::set<RequestTimeoutInfo>::iterator iter;
     std::tie(iter, is_inserted) = new_timeouts.emplace(
         info.id, info.event_type, expiration, info.timeout_behavior);
     DCHECK(is_inserted);
-    PendingRequest* request = pending_requests_.Lookup(info.id);
+    InflightRequest* request = inflight_requests_.Lookup(info.id);
     DCHECK(request);
     request->timeout_iter = iter;
   }
@@ -1947,8 +1946,8 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   // Let all message callbacks fail (this will also fire and clear all
   // callbacks for events).
   // TODO(kinuko): Consider if we want to add queue+resend mechanism here.
-  base::IDMap<std::unique_ptr<PendingRequest>>::iterator iter(
-      &pending_requests_);
+  base::IDMap<std::unique_ptr<InflightRequest>>::iterator iter(
+      &inflight_requests_);
   while (!iter.IsAtEnd()) {
     TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                            iter.GetCurrentValue(), "Error", "Worker Stopped");
@@ -1956,7 +1955,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
         .Run(SERVICE_WORKER_ERROR_FAILED);
     iter.Advance();
   }
-  pending_requests_.Clear();
+  inflight_requests_.Clear();
   request_timeouts_.clear();
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
