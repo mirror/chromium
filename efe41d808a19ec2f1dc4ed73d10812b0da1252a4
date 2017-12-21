@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50edd8f8_69d2f352",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T17:06:41Z",
+      "side": 1,
+      "message": "/*animate\u003d*/",
+      "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef00869_c15b5380",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T17:06:41Z",
+      "side": 1,
+      "message": "How do we handle new window in overview mode now?",
+      "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
