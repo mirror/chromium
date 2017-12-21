@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d94669ec_99a1e948",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759f55c8_fbcb1087",
+      "range": {
+        "startLine": 1975,
+        "startChar": 33,
+        "endLine": 1975,
+        "endChar": 59
+      },
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a9f7b5_1218a3e6",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -230,6 +254,24 @@
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f043516_cb2f13db",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "I added a static function for clarity here instead of a public ctor.",
+      "parentUuid": "408f70db_ae384839",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

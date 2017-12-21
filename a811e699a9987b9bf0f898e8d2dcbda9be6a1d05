@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8b331607_d7c98dbc",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e560a47_a60ee4c6",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cede1a97_d5c832fe",
         "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3569c622_088d8572",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b8afc1_9bfe25ad",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "9d343a8d_5c92517e",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "As discussed offline since this change is not yet at the point to modify such a behavior we delay writing an explainer doc. The doc will be needed when we are modifying the MainThreadEventQueue to not to queue WebTouchEvents.",
+      "parentUuid": "b0df7ca9_50da2804",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af777d8_a92272ed",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 4
@@ -214,6 +268,24 @@
     },
     {
       "key": {
+        "uuid": "f6e4672e_ae294616",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done. Moved it to PageWidgetEventHandler.",
+      "parentUuid": "ac7c81bd_a7770253",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65cdc02d_42e50da5",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 4
@@ -237,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "afff98d4_6fe0723f",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65cdc02d_42e50da5",
+      "range": {
+        "startLine": 390,
+        "startChar": 21,
+        "endLine": 390,
+        "endChar": 37
+      },
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e04369e_72d59841",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 4
@@ -251,6 +347,24 @@
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ae146_24bef521",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e04369e_72d59841",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -271,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "e6cd01c4_08239add",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9895c0b_44972c7a",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1183ed6_16723e8a",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
         "patchSetId": 4
@@ -285,6 +417,24 @@
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0991c24e_11afb528",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1183ed6_16723e8a",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "078d6bfb_045e2a9a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "You are right. But on a second thought I don\u0027t think when we are coming down this path we ever have two touch points. I\u0027ll double check with the owners when they are reviewing this.",
+      "parentUuid": "3cb69385_c15f40ba",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21ca60dc_0d7c5c3a",
         "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
         "patchSetId": 4
@@ -358,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "95976176_a88cc799",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ca60dc_0d7c5c3a",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1859be18_c853db24",
         "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
         "patchSetId": 4
@@ -372,6 +558,24 @@
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bb8212_f22f9477",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-21T16:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1859be18_c853db24",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
