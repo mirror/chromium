@@ -31,6 +31,7 @@ extern const base::Feature kAutofillCreditCardAssist;
 extern const base::Feature kAutofillScanCardholderName;
 extern const base::Feature kAutofillCreditCardAblationExperiment;
 extern const base::Feature kAutofillCreditCardBankNameDisplay;
+extern const base::Feature kAutofillCreditCardGooglePayBranding;
 extern const base::Feature kAutofillCreditCardPopupLayout;
 extern const base::Feature kAutofillCreditCardLastUsedDateDisplay;
 extern const base::Feature kAutofillDeleteDisusedAddresses;
@@ -93,6 +94,9 @@ bool ShowExpirationDateInAutofillCreditCardLastUsedDate();
 
 // Returns whether Autofill credit card bank name display experiment is enabled.
 bool IsAutofillCreditCardBankNameDisplayExperimentEnabled();
+
+// Returns whether Autofill credit card dropdown showns Google Pay branding.
+bool ShowGooglePayLogoInAutofillCreditCard();
 
 // Returns the background color for credit card autofill popup, or
 // |SK_ColorTRANSPARENT| if the new credit card autofill popup layout experiment

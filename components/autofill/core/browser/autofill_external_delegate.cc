@@ -360,6 +360,8 @@ void AutofillExternalDelegate::ApplyAutofillOptions(
   // |POPUP_ITEM_ID_CLEAR_FORM|, include a hint for keyboard accessory.
   suggestions->push_back(Suggestion(GetSettingsSuggestionValue()));
   suggestions->back().frontend_id = POPUP_ITEM_ID_AUTOFILL_OPTIONS;
+  suggestions->back().icon = base::ASCIIToUTF16("googlePay");
+
 #if defined(OS_ANDROID)
   if (IsKeyboardAccessoryEnabled()) {
     suggestions->back().icon = base::ASCIIToUTF16("settings");
