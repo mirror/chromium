@@ -16,6 +16,24 @@
       "revId": "f36b7cfcbd2538e8224f2d3106278322a785f1f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b234808f_444dc473",
+        "filename": "ui/aura/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-21T12:42:37Z",
+      "side": 1,
+      "message": "I have removed the changes to the following files, and no longer instroduce any jumbo_excluded_sources. These modules can be moved to jumbo later.\n\n\nui/accessibility/BUILD.gn\nui/aura/BUILD.gn\nui/aura/client/transient_window_client.cc\nui/aura/client/window_stacking_client.cc\nui/display/BUILD.gn\nui/events/ozone/BUILD.gn\nui/gfx/BUILD.gn\nui/message_center/BUILD.gn\nui/views/mus/BUILD.gn\nui/wm/BUILD.gn",
+      "parentUuid": "05d65e33_c6753265",
+      "revId": "f36b7cfcbd2538e8224f2d3106278322a785f1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
