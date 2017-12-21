@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6061562c_fe48d9fd",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-21T09:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3263b680_2abe93c9",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b7b30e_e91f0c28",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1d2163_55a2d7aa",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-21T09:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b7b30e_e91f0c28",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0be13dbc_3bdeeaca",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-21T09:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d24a3fd_d1ab3d12",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d457364a_36c953fb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click-404-expected.txt",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-21T08:11:26Z",
       "side": 1,
       "message": "Why does this regress?",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7092f1fb_8b013745",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click-404-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-21T09:01:04Z",
+      "side": 1,
+      "message": "well, it\u0027s because we now navigate instead of download (i.e. if it\u0027s an html file, it\u0027ll be rendered instead of downloaded).\n\nI noted in an earlier patchset that this matches firefox\u0027 behavior on this test",
+      "parentUuid": "d457364a_36c953fb",
       "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dd1400_43623d38",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-21T09:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f7c65e_019d12ef",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
