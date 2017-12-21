@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db2fb2cd_93199849",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T17:41:01Z",
+      "side": 1,
+      "message": "nit: might be nice to add /* blah \u003d */ comments for these nullptrs",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "cca7cb0c92d56bee75492dfcda923b0e5d7651ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
