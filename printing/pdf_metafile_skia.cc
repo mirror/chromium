@@ -30,6 +30,13 @@
 #include "base/file_descriptor_posix.h"
 #endif
 
+#include "base/bind.h"
+#include "base/files/file.h"
+#include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "cc/paint/paint_op_buffer.h"
+
 namespace {
 
 bool WriteAssetToBuffer(const SkStreamAsset* asset,
@@ -65,6 +72,7 @@ struct PdfMetafileSkiaData {
 
   std::vector<Page> pages_;
   std::unique_ptr<SkStreamAsset> pdf_data_;
+  std::vector<uint32_t> subframe_content_ids;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -168,7 +176,12 @@ bool PdfMetafileSkia::FinishDocument() {
       doc = MakePdfDocument(printing::GetAgent(), &stream);
       break;
     case SkiaDocumentType::MSKP:
+#if defined(EXPERIMENTAL_SKIA)
+      doc = SkMakeMultiPictureContainerDocument(&stream,
+                                                &data_->subframe_content_ids);
+#else
       doc = SkMakeMultiPictureDocument(&stream);
+#endif
       break;
   }
 
@@ -181,6 +194,35 @@ bool PdfMetafileSkia::FinishDocument() {
   doc->close();
 
   data_->pdf_data_ = stream.detachAsStream();
+  return true;
+}
+
+bool PdfMetafileSkia::FinishFrameContent() {
+  // If we've already set the data in InitFromData, leave it be.
+  if (data_->pdf_data_)
+    return false;
+
+  if (data_->recorder_.getRecordingCanvas())
+    FinishPage();
+
+  DCHECK(data_->pages_.size() == 1);
+  if (data_->pages_.size() != 1)
+    return false;
+  SkDynamicMemoryWStream stream;
+  std::vector<uint32_t> content_ids;
+#if defined(EXPERIMENTAL_SKIA)
+  SkSerializeEmbeddedPicture(
+      &stream,
+      ToSkPicture(data_->pages_[0].content_,
+                  SkRect::MakeSize(data_->pages_[0].size_)),
+      &content_ids);
+#else
+  ToSkPicture(data_->pages_[0].content_,
+              SkRect::MakeSize(data_->pages_[0].size_))
+      ->serialize(&stream);
+#endif
+  data_->pdf_data_ = stream.detachAsStream();
+  data_->subframe_content_ids = content_ids;
   return true;
 }
 
@@ -275,6 +317,10 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   } while (!asset->isAtEnd());
 
   return true;
+}
+
+std::vector<uint32_t> PdfMetafileSkia::GetSubframeContentIDs() const {
+  return data_->subframe_content_ids;
 }
 
 std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
