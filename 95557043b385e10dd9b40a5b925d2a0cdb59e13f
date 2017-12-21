@@ -16,6 +16,24 @@
       "revId": "95557043b385e10dd9b40a5b925d2a0cdb59e13f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66599de3_34cd9ab5",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-21T21:14:16Z",
+      "side": 1,
+      "message": "Currently on Android we don\u0027t allow the user snap a window to an already snapped position in overview mode. So I think it should be fine to disallow it on Chrome OS as well for now. We can always visit this logic if the requirement changes.",
+      "parentUuid": "79c5b7f0_b1b1a8d6",
+      "revId": "95557043b385e10dd9b40a5b925d2a0cdb59e13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
