@@ -2,6 +2,195 @@
   "comments": [
     {
       "key": {
+        "uuid": "a734de32_cdda0032",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "is callback_ guaranteed to be run by this point? If not, maybe add\nif (callback_)\n  std::move(callback_).Run(false);",
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3006ae_f36f4035",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "use DISALLOW_IMPLICIT_CONSTRUCTORS instead (in base/macros.h)",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 42
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acd6b91_5b5d12a1",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "can you add a sentence about why it\u0027s allowed by default",
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0170bea_35f41b40",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "can you add a comment that this deletes itself when the request finishes?\n\nAlternatively, you could stick it in a unique_ptr scoped to |this|, and reset the pointer in CryptotokenPrivateCanAppIdGetAttestationFunction::Complete",
+      "range": {
+        "startLine": 265,
+        "startChar": 41,
+        "endLine": 265,
+        "endChar": 73
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5aa34a0_1b785053",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "std::make_unique, or use\ncryptotoken_private::\u003cExtensionFunctionName\u003e::Results::Create(result)",
+      "range": {
+        "startLine": 273,
+        "startChar": 22,
+        "endLine": 273,
+        "endChar": 38
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89c1b82_7863a964",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "enum class",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 6
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac70a41_73195cda",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "kNoAction would be a better name.",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 7
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc57e971_3bdeca67",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "it doesn\u0027t look like you really need this - bubble_expectation \u003d\u003d kNoBubble is equivalent to bubble_action \u003d\u003d kNA",
+      "range": {
+        "startLine": 208,
+        "startChar": 48,
+        "endLine": 208,
+        "endChar": 66
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8677ba_39eafd21",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-21T04:18:20Z",
+      "side": 1,
+      "message": "Maybe move this to a separate method? e.g. PerformPermissionBubbleAction(bubble_action);",
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4935fcc9_5bd54671",
         "filename": "components/vector_icons/security_key.icon",
         "patchSetId": 4
