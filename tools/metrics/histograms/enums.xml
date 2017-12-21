@@ -17282,6 +17282,7 @@ Called by update_net_error_codes.py.-->
   <int value="2275" label="FileAccessedSharedWorker"/>
   <int value="2276" label="V8MediaKeys_GetStatusForPolicy_Method"/>
   <int value="2277" label="V8DeoptimizerDisableSpeculation"/>
+  <int value="2278" label="FilterAsContainingBlockMayChangeOutput"/>
 </enum>
 
 <enum name="FeedbackSource">
