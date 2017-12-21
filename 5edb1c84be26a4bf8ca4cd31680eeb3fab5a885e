@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f365aa2_37f04e1e",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem correct. The locked screen works fine now, so it is likely whatever assumptions here are not obeyed by locked screen. Please file a bug.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59d1b8de_93937378",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Are you ok with the extra copy on return here? Seems wasteful.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21eb3214_e3550690",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "This was not a constraint in Chrome OS; unsure what impact it has.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b65b9ea3_fe7a7331",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Relatively certain you want *Has* StringAttribute here",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65983970_5894cfe9",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20a73d9c_390cc839",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "This is also new; unsure what impact it has.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d31b2bb_0dd20871",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Call this OverrideRole or something to make it clear what the uathor is doing.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea24d39d_7f2c98d7",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Maybe CHECK or DCHECK the role is not unknown (or probably client and a bunch of internal roles)",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d60edb4d_b6712bcb",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Similar runtime validation here (no empty strings, for example).",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8ebb9f9_b82f8f55",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "As a reader, I find it confusing to expose both a static Create and a public constructor. Consider making the ctor private.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "456e6ea8_933091cb",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "You could just make this SetStringAttribute and have a list of allowed attrs.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c06e7e50_260b614b",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like this belongs here? Why can\u0027t the caller call NotifyAccessibilityEvent on the view?",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc201553_52479550",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "Unused (external to class)",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c1f50bc_34aa79d9",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T02:19:26Z",
+      "side": 1,
+      "message": "|this| is tied to the lifetime of |view_| right? Maybe call it owner_view_.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
