@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c1c1c1_5d525489",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-12-21T03:52:13Z",
+      "side": 1,
+      "message": "I suspect this isn\u0027t necessary, because I don\u0027t think this is run on windows. However, just to be thorough...",
+      "revId": "39e13a121e43482585fec90d2908639f7abc42b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
