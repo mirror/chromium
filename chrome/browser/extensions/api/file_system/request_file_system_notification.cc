@@ -12,12 +12,11 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/file_manager/volume_manager.h"
 #include "chrome/browser/extensions/chrome_app_icon_loader.h"
+#include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/common/extension.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
-#include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_id.h"
 
@@ -29,16 +28,19 @@ namespace {
 // Extension icon size for the notification.
 const int kIconSize = 48;
 
-std::unique_ptr<message_center::Notification> CreateAutoGrantedNotification(
+}  // namespace
+
+// static
+void RequestFileSystemNotification::ShowAutoGrantedNotification(
+    Profile* profile,
     const extensions::Extension& extension,
     const base::WeakPtr<Volume>& volume,
-    bool writable,
-    message_center::NotificationDelegate* delegate) {
-  DCHECK(delegate);
+    bool writable) {
+  DCHECK(profile);
 
   // If the volume is gone, then do not show the notification.
   if (!volume.get())
-    return std::unique_ptr<message_center::Notification>(nullptr);
+    return;
 
   const std::string notification_id =
       extension.id() + "-" + volume->volume_id();
@@ -62,63 +64,42 @@ std::unique_ptr<message_center::Notification> CreateAutoGrantedNotification(
       GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  notification_id),
-      data, delegate));
+      data, nullptr));
 
-  return notification;
-}
-
-}  // namespace
-
-// static
-void RequestFileSystemNotification::ShowAutoGrantedNotification(
-    Profile* profile,
-    const extensions::Extension& extension,
-    const base::WeakPtr<Volume>& volume,
-    bool writable) {
-  DCHECK(profile);
-  scoped_refptr<RequestFileSystemNotification>
-      request_file_system_notification = base::WrapRefCounted(
-          new RequestFileSystemNotification(profile, extension));
-  std::unique_ptr<message_center::Notification> notification(
-      CreateAutoGrantedNotification(
-          extension, volume, writable,
-          request_file_system_notification.get() /* delegate */));
-  if (notification.get())
-    request_file_system_notification->Show(std::move(notification));
+  // RequestfileSystemNotification will delete itself.
+  (new RequestFileSystemNotification())
+      ->InitAndShow(profile, extension, std::move(notification));
 }
 
 void RequestFileSystemNotification::OnAppImageUpdated(
     const std::string& id, const gfx::ImageSkia& image) {
   extension_icon_.reset(new gfx::Image(image));
 
-  // If there is a pending notification, then show it now.
-  if (pending_notification_.get()) {
-    pending_notification_->set_icon(*extension_icon_.get());
-    g_browser_process->message_center()->AddNotification(
-        std::move(pending_notification_));
-  }
+  ShowIfReady();
 }
 
-RequestFileSystemNotification::RequestFileSystemNotification(
+RequestFileSystemNotification::RequestFileSystemNotification() = default;
+RequestFileSystemNotification::~RequestFileSystemNotification() = default;
+
+void RequestFileSystemNotification::InitAndShow(
     Profile* profile,
-    const extensions::Extension& extension)
-    : icon_loader_(
-          new extensions::ChromeAppIconLoader(profile, kIconSize, this)) {
-  icon_loader_->FetchImage(extension.id());
-}
-
-RequestFileSystemNotification::~RequestFileSystemNotification() {
-}
-
-void RequestFileSystemNotification::Show(
+    const extensions::Extension& extension,
     std::unique_ptr<message_center::Notification> notification) {
+  profile_ = profile;
+  icon_loader_ = std::make_unique<extensions::ChromeAppIconLoader>(
+      profile, kIconSize, this);
+  icon_loader_->FetchImage(extension.id());
   pending_notification_ = std::move(notification);
-  // If the extension icon is not known yet, then defer showing the notification
-  // until it is (from SetAppImage).
-  if (!extension_icon_)
+
+  ShowIfReady();
+}
+
+void RequestFileSystemNotification::ShowIfReady() {
+  if (!extension_icon_ || !pending_notification_)
     return;
 
-  pending_notification_->set_icon(*extension_icon_.get());
-  g_browser_process->message_center()->AddNotification(
-      std::move(pending_notification_));
+  pending_notification_->set_icon(*extension_icon_);
+  NotificationDisplayService::GetForProfile(profile_)->Display(
+      NotificationHandler::Type::TRANSIENT, *pending_notification_);
+  delete this;
 }
