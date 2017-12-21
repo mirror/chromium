@@ -46,24 +46,6 @@ std::string SanitizeRegion(const std::string& region,
   return AutofillCountry::CountryCodeForLocale(app_locale);
 }
 
-// Returns true if |phone_number| is a possible number.
-bool IsPossiblePhoneNumber(
-    const ::i18n::phonenumbers::PhoneNumber& phone_number) {
-  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
-  return phone_util->IsPossibleNumber(phone_number);
-}
-
-bool IsPossiblePhoneNumber(const std::string& phone_number,
-                           const std::string& country_code) {
-  ::i18n::phonenumbers::PhoneNumber parsed_number;
-  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
-  auto result = phone_util->ParseAndKeepRawInput(phone_number, country_code,
-                                                 &parsed_number);
-
-  return result == ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR &&
-         phone_util->IsPossibleNumber(parsed_number);
-}
-
 // Formats the given |number| as a human-readable string, and writes the result
 // into |formatted_number|.  Also, normalizes the formatted number, and writes
 // that result into |normalized_number|.  This function should only be called
@@ -110,6 +92,24 @@ void FormatValidatedNumber(const ::i18n::phonenumbers::PhoneNumber& number,
 }  // namespace
 
 namespace i18n {
+
+// Returns true if |phone_number| is a possible number.
+bool IsPossiblePhoneNumber(
+    const ::i18n::phonenumbers::PhoneNumber& phone_number) {
+  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
+  return phone_util->IsPossibleNumber(phone_number);
+}
+
+bool IsPossiblePhoneNumber(const std::string& phone_number,
+                           const std::string& country_code) {
+  ::i18n::phonenumbers::PhoneNumber parsed_number;
+  PhoneNumberUtil* phone_util = PhoneNumberUtil::GetInstance();
+  auto result = phone_util->ParseAndKeepRawInput(phone_number, country_code,
+                                                 &parsed_number);
+
+  return result == ::i18n::phonenumbers::PhoneNumberUtil::NO_PARSING_ERROR &&
+         phone_util->IsPossibleNumber(parsed_number);
+}
 
 // Parses the number stored in |value| as it should be interpreted in the given
 // |default_region|, and stores the results into the remaining arguments.
