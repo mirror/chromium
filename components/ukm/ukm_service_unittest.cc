@@ -442,6 +442,7 @@ TEST_F(UkmServiceTest, RecordInitialUrl) {
 }
 
 TEST_F(UkmServiceTest, RestrictToWhitelistedSourceIds) {
+  const GURL kURL = GURL("https://example.com/");
   for (bool restrict_to_whitelisted_source_ids : {true, false}) {
     base::FieldTrialList field_trial_list(nullptr /* entropy_provider */);
     ScopedUkmFeatureParams params(
@@ -459,12 +460,12 @@ TEST_F(UkmServiceTest, RestrictToWhitelistedSourceIds) {
     service.EnableReporting();
 
     ukm::SourceId id1 = GetWhitelistedSourceId(0);
-    recorder.UpdateSourceURL(id1, GURL("https://other.com/"));
+    recorder.UpdateSourceURL(id1, kURL);
     recorder.GetEntryBuilder(id1, "FakeEntry");
 
     // Create a non-navigation-based sourceid, which should not be whitelisted.
-    ukm::SourceId id2 = UkmRecorder::GetNewSourceID();
-    recorder.UpdateSourceURL(id2, GURL("https://example.com/"));
+    ukm::SourceId id2 = GetNonWhitelistedSourceId(1);
+    recorder.UpdateSourceURL(id2, kURL);
     recorder.GetEntryBuilder(id2, "FakeEntry");
 
     service.Flush();
@@ -475,7 +476,7 @@ TEST_F(UkmServiceTest, RestrictToWhitelistedSourceIds) {
     // The whitelisted source should always be recorded.
     const Source& proto_source1 = proto_report.sources(0);
     EXPECT_EQ(id1, proto_source1.id());
-    EXPECT_EQ(GURL("https://other.com/").spec(), proto_source1.url());
+    EXPECT_EQ(kURL.spec(), proto_source1.url());
 
     // The non-whitelisted source should only be recorded if we aren't
     // restricted to whitelisted source ids.
@@ -485,7 +486,7 @@ TEST_F(UkmServiceTest, RestrictToWhitelistedSourceIds) {
       EXPECT_EQ(2, proto_report.sources_size());
       const Source& proto_source2 = proto_report.sources(1);
       EXPECT_EQ(id2, proto_source2.id());
-      EXPECT_EQ(GURL("https://example.com/").spec(), proto_source2.url());
+      EXPECT_EQ(kURL.spec(), proto_source2.url());
     }
   }
 }
@@ -640,6 +641,7 @@ TEST_F(UkmServiceTest, SourceURLLength) {
 }
 
 TEST_F(UkmServiceTest, UnreferencedNonWhitelistedSources) {
+  const GURL kURL("https://google.com/foobar");
   for (bool restrict_to_whitelisted_source_ids : {true, false}) {
     base::FieldTrialList field_trial_list(nullptr /* entropy_provider */);
     // Set a threshold of number of Sources via Feature Params.
@@ -659,6 +661,11 @@ TEST_F(UkmServiceTest, UnreferencedNonWhitelistedSources) {
     service.EnableRecording();
     service.EnableReporting();
 
+    // Record with whitelisted ID to whitelist the URL.
+    // Use a larger ID to make it last in the proto.
+    ukm::SourceId whitelisted_id = GetWhitelistedSourceId(100);
+    recorder.UpdateSourceURL(whitelisted_id, kURL);
+
     std::vector<SourceId> ids;
     base::TimeTicks last_time = base::TimeTicks::Now();
     for (int i = 0; i < 6; ++i) {
@@ -670,8 +677,7 @@ TEST_F(UkmServiceTest, UnreferencedNonWhitelistedSources) {
       }
 
       ids.push_back(GetNonWhitelistedSourceId(i));
-      recorder.UpdateSourceURL(ids.back(), GURL("https://google.com/foobar" +
-                                                base::NumberToString(i)));
+      recorder.UpdateSourceURL(ids.back(), kURL);
       last_time = base::TimeTicks::Now();
     }
 
@@ -686,13 +692,13 @@ TEST_F(UkmServiceTest, UnreferencedNonWhitelistedSources) {
     auto proto_report = GetPersistedReport();
 
     if (restrict_to_whitelisted_source_ids) {
-      ASSERT_EQ(0, proto_report.sources_size());
+      ASSERT_EQ(1, proto_report.sources_size());
     } else {
-      ASSERT_EQ(2, proto_report.sources_size());
+      ASSERT_EQ(3, proto_report.sources_size());
       EXPECT_EQ(ids[0], proto_report.sources(0).id());
-      EXPECT_EQ("https://google.com/foobar0", proto_report.sources(0).url());
+      EXPECT_EQ(kURL.spec(), proto_report.sources(0).url());
       EXPECT_EQ(ids[2], proto_report.sources(1).id());
-      EXPECT_EQ("https://google.com/foobar2", proto_report.sources(1).url());
+      EXPECT_EQ(kURL.spec(), proto_report.sources(1).url());
     }
 
     // Since MaxKeptSources is 3, only Sources 5, 4, 3 should be retained.
@@ -715,10 +721,65 @@ TEST_F(UkmServiceTest, UnreferencedNonWhitelistedSources) {
     } else {
       ASSERT_EQ(2, proto_report.sources_size());
       EXPECT_EQ(ids[3], proto_report.sources(0).id());
-      EXPECT_EQ("https://google.com/foobar3", proto_report.sources(0).url());
+      EXPECT_EQ(kURL.spec(), proto_report.sources(0).url());
       EXPECT_EQ(ids[4], proto_report.sources(1).id());
-      EXPECT_EQ("https://google.com/foobar4", proto_report.sources(1).url());
+      EXPECT_EQ(kURL.spec(), proto_report.sources(1).url());
     }
+  }
+}
+
+TEST_F(UkmServiceTest, NonWhitelistedUrls) {
+  const GURL kURL("https://google.com/foobar");
+  struct {
+    GURL url;
+    bool expected_kept;
+  } test_cases[] = {
+      {GURL("https://google.com/foobar"), true},
+      {GURL("https://google.com"), true},
+      {GURL("https://google.com/foobar2"), false},
+      {GURL("https://other.com"), false},
+  };
+
+  base::FieldTrialList field_trial_list(nullptr /* entropy_provider */);
+  ScopedUkmFeatureParams params(base::FeatureList::OVERRIDE_ENABLE_FEATURE, {});
+  UkmService service(&prefs_, &client_);
+  TestRecordingHelper recorder(&service);
+
+  EXPECT_EQ(GetPersistedLogCount(), 0);
+  service.Initialize();
+  task_runner_->RunUntilIdle();
+  service.EnableRecording();
+  service.EnableReporting();
+
+  // Record with whitelisted ID to whitelist the URL.
+  ukm::SourceId whitelist_id = GetWhitelistedSourceId(100);
+  recorder.UpdateSourceURL(whitelist_id, kURL);
+
+  int counter = 1;
+  std::vector<ukm::SourceId> expected_ids;
+  std::vector<std::string> expected_urls;
+  for (const auto& test : test_cases) {
+    ukm::SourceId id = GetNonWhitelistedSourceId(counter++);
+    recorder.UpdateSourceURL(id, test.url);
+    recorder.GetEntryBuilder(id, "FakeEntry");
+    if (test.expected_kept) {
+      expected_ids.push_back(id);
+      expected_urls.push_back(test.url.spec());
+    }
+  }
+
+  expected_ids.push_back(whitelist_id);
+  expected_urls.push_back(kURL.spec());
+
+  service.Flush();
+  EXPECT_EQ(1, GetPersistedLogCount());
+  auto proto_report = GetPersistedReport();
+
+  EXPECT_EQ(expected_ids.size(),
+            static_cast<size_t>(proto_report.sources_size()));
+  for (size_t i = 0; i < expected_ids.size(); ++i) {
+    EXPECT_EQ(expected_ids[i], proto_report.sources(i).id());
+    EXPECT_EQ(expected_urls[i], proto_report.sources(i).url());
   }
 }
 
