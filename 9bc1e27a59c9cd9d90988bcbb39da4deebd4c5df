@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "5eede57a_e82bf1d5",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T06:17:35Z",
+      "side": 1,
+      "message": "oh, I was not aware of WillReleaseScriptContext. Thanks!\n\nEither way this is a minor issue. Feel free to go ahead.",
+      "parentUuid": "f0c6a729_7fe98459",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a330c1_0468863f",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 7
