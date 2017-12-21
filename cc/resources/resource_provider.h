@@ -115,10 +115,6 @@ class CC_EXPORT ResourceProvider
 
   bool IsTextureFormatSupported(viz::ResourceFormat format) const;
 
-  // Returns true if the provided |format| can be used as a render buffer.
-  // Note that render buffer support implies texture support.
-  bool IsRenderBufferFormatSupported(viz::ResourceFormat format) const;
-
   bool IsGpuMemoryBufferFormatSupported(viz::ResourceFormat format,
                                         gfx::BufferUsage usage) const;
 

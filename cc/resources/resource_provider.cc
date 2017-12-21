@@ -256,40 +256,6 @@ bool ResourceProvider::IsTextureFormatSupported(
   return false;
 }
 
-bool ResourceProvider::IsRenderBufferFormatSupported(
-    viz::ResourceFormat format) const {
-  gpu::Capabilities caps;
-  if (compositor_context_provider_)
-    caps = compositor_context_provider_->ContextCapabilities();
-
-  switch (format) {
-    case viz::RGBA_4444:
-    case viz::RGBA_8888:
-    case viz::RGB_565:
-      return true;
-    case viz::BGRA_8888:
-      return caps.render_buffer_format_bgra8888;
-    case viz::RGBA_F16:
-      // TODO(ccameron): This will always return false on pixel tests, which
-      // makes it un-test-able until we upgrade Mesa.
-      // https://crbug.com/687720
-      return caps.texture_half_float_linear &&
-             caps.color_buffer_half_float_rgba;
-    case viz::LUMINANCE_8:
-    case viz::ALPHA_8:
-    case viz::RED_8:
-    case viz::ETC1:
-    case viz::LUMINANCE_F16:
-    case viz::R16_EXT:
-      // We don't currently render into these formats. If we need to render into
-      // these eventually, we should expand this logic.
-      return false;
-  }
-
-  NOTREACHED();
-  return false;
-}
-
 bool ResourceProvider::IsGpuMemoryBufferFormatSupported(
     viz::ResourceFormat format,
     gfx::BufferUsage usage) const {
