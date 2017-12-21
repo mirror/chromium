@@ -52,6 +52,24 @@
       "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce1956e_19927181",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-21T21:27:23Z",
+      "side": 1,
+      "message": "I agree this is confusing. I actually think we don\u0027t need this method at all nor replacements since we already expose the tab models. PTAL at the latest patch. and with updated tests! :)",
+      "parentUuid": "ccb2eb43_677e20eb",
+      "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
