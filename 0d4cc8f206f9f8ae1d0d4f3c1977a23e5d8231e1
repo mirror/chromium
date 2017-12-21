@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "792d0e01_a0279219",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-21T07:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c3f01c_048de40c",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2453dff_118410ad",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T07:15:54Z",
       "side": 1,
       "message": "how about the case that the display was set to optional, and is going to be set to others after loading finished?",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeb8e2c_859ce1c3",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-21T07:00:19Z",
+      "side": 1,
+      "message": "Good point. Can we handle that case in a follow-up patch? It\u0027s not super trivial because currently FontFaceSource is discarded if it get to the failure period:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSFontFace.cpp?type\u003dcs\u0026q\u003dfailureperiod\u0026sq\u003dpackage:chromium\u0026l\u003d65\n\nAdded a TODO comment.",
+      "parentUuid": "a2453dff_118410ad",
       "range": {
         "startLine": 156,
         "startChar": 4,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "26939c92_cfd6f64d",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-21T07:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fbbcedb_fe84a10b",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 60
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df11e29_db0ae315",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
         "patchSetId": 4
@@ -105,6 +177,30 @@
       "writtenOn": "2017-12-20T07:15:54Z",
       "side": 1,
       "message": "It might be good to have some comments on DisplayPeriod so that I can remember what this means quickly :) This enum is not intuitive and represent more difficult concept compared to other enums.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862ef4bd_b2521058",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-21T07:00:19Z",
+      "side": 1,
+      "message": "This is a spec concept so I\u0027ve just put a spec link.",
+      "parentUuid": "4df11e29_db0ae315",
       "range": {
         "startLine": 25,
         "startChar": 7,
