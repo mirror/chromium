@@ -23,8 +23,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "content/common/dwrite_font_proxy_messages.h"
-#include "ipc/ipc_message_macros.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/gfx/win/direct_write.h"
 #include "ui/gfx/win/text_analysis_source.h"
 
@@ -179,33 +178,17 @@ bool CheckRequiredStylesPresent(IDWriteFontCollection* collection,
 }  // namespace
 
 DWriteFontProxyMessageFilter::DWriteFontProxyMessageFilter()
-    : BrowserMessageFilter(DWriteFontProxyMsgStart),
-      windows_fonts_path_(GetWindowsFontsPath()),
-      custom_font_file_loading_mode_(ENABLE),
-      dwrite_io_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::TaskPriority::USER_BLOCKING, base::MayBlock()})) {}
+    : windows_fonts_path_(GetWindowsFontsPath()),
+      custom_font_file_loading_mode_(ENABLE) {}
 
 DWriteFontProxyMessageFilter::~DWriteFontProxyMessageFilter() = default;
 
-bool DWriteFontProxyMessageFilter::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(DWriteFontProxyMessageFilter, message)
-    IPC_MESSAGE_HANDLER(DWriteFontProxyMsg_FindFamily, OnFindFamily)
-    IPC_MESSAGE_HANDLER(DWriteFontProxyMsg_GetFamilyCount, OnGetFamilyCount)
-    IPC_MESSAGE_HANDLER(DWriteFontProxyMsg_GetFamilyNames, OnGetFamilyNames)
-    IPC_MESSAGE_HANDLER(DWriteFontProxyMsg_GetFontFiles, OnGetFontFiles)
-    IPC_MESSAGE_HANDLER(DWriteFontProxyMsg_MapCharacters, OnMapCharacters)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
-base::TaskRunner* DWriteFontProxyMessageFilter::OverrideTaskRunnerForMessage(
-    const IPC::Message& message) {
-  if (IPC_MESSAGE_CLASS(message) == DWriteFontProxyMsgStart)
-    return dwrite_io_task_runner_.get();
-  return nullptr;
+// static
+void DWriteFontProxyMessageFilter::Create(
+    mojom::DWriteFontProxyRequest request,
+    const service_manager::BindSourceInfo& source_info) {
+  mojo::MakeStrongBinding(std::make_unique<DWriteFontProxyMessageFilter>(),
+                          std::move(request));
 }
 
 void DWriteFontProxyMessageFilter::SetWindowsFontsPathForTesting(
@@ -213,13 +196,12 @@ void DWriteFontProxyMessageFilter::SetWindowsFontsPathForTesting(
   windows_fonts_path_.swap(path);
 }
 
-void DWriteFontProxyMessageFilter::OnFindFamily(
-    const base::string16& family_name,
-    UINT32* family_index) {
+void DWriteFontProxyMessageFilter::FindFamily(const base::string16& family_name,
+                                              FindFamilyCallback callback) {
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnFindFamily");
   DCHECK(collection_);
-  *family_index = UINT32_MAX;
+  UINT32 family_index = UINT32_MAX;
   if (collection_) {
     BOOL exists = FALSE;
     UINT32 index = UINT32_MAX;
@@ -227,24 +209,23 @@ void DWriteFontProxyMessageFilter::OnFindFamily(
         collection_->FindFamilyName(family_name.data(), &index, &exists);
     if (SUCCEEDED(hr) && exists &&
         CheckRequiredStylesPresent(collection_.Get(), family_name, index)) {
-      *family_index = index;
+      family_index = index;
     }
   }
+  std::move(callback).Run(family_index);
 }
 
-void DWriteFontProxyMessageFilter::OnGetFamilyCount(UINT32* count) {
+void DWriteFontProxyMessageFilter::GetFamilyCount(
+    GetFamilyCountCallback callback) {
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFamilyCount");
   DCHECK(collection_);
-  if (!collection_)
-    *count = 0;
-  else
-    *count = collection_->GetFontFamilyCount();
+  std::move(callback).Run(collection_->GetFontFamilyCount());
 }
 
-void DWriteFontProxyMessageFilter::OnGetFamilyNames(
+void DWriteFontProxyMessageFilter::GetFamilyNames(
     UINT32 family_index,
-    std::vector<DWriteStringPair>* family_names) {
+    GetFamilyNamesCallback callback) {
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFamilyNames");
   DCHECK(collection_);
@@ -256,12 +237,14 @@ void DWriteFontProxyMessageFilter::OnGetFamilyNames(
   mswr::ComPtr<IDWriteFontFamily> family;
   HRESULT hr = collection_->GetFontFamily(family_index, &family);
   if (FAILED(hr)) {
+    std::move(callback).Run({});
     return;
   }
 
   mswr::ComPtr<IDWriteLocalizedStrings> localized_names;
   hr = family->GetFamilyNames(&localized_names);
   if (FAILED(hr)) {
+    std::move(callback).Run({});
     return;
   }
 
@@ -269,16 +252,19 @@ void DWriteFontProxyMessageFilter::OnGetFamilyNames(
 
   std::vector<base::char16> locale;
   std::vector<base::char16> name;
+  std::vector<mojom::DWriteStringPairPtr> family_names;
   for (size_t index = 0; index < string_count; ++index) {
     UINT32 length = 0;
     hr = localized_names->GetLocaleNameLength(index, &length);
     if (FAILED(hr)) {
+      std::move(callback).Run({});
       return;
     }
     ++length;  // Reserve space for the null terminator.
     locale.resize(length);
     hr = localized_names->GetLocaleName(index, locale.data(), length);
     if (FAILED(hr)) {
+      std::move(callback).Run({});
       return;
     }
     CHECK_EQ(L'\0', locale[length - 1]);
@@ -286,26 +272,27 @@ void DWriteFontProxyMessageFilter::OnGetFamilyNames(
     length = 0;
     hr = localized_names->GetStringLength(index, &length);
     if (FAILED(hr)) {
+      std::move(callback).Run({});
       return;
     }
     ++length;  // Reserve space for the null terminator.
     name.resize(length);
     hr = localized_names->GetString(index, name.data(), length);
     if (FAILED(hr)) {
+      std::move(callback).Run({});
       return;
     }
     CHECK_EQ(L'\0', name[length - 1]);
 
     // Would be great to use emplace_back instead.
-    family_names->push_back(std::pair<base::string16, base::string16>(
-        base::string16(locale.data()), base::string16(name.data())));
+    family_names.emplace_back(base::in_place, base::string16(locale.data()),
+                              base::string16(name.data()));
   }
+  std::move(callback).Run(std::move(family_names));
 }
 
-void DWriteFontProxyMessageFilter::OnGetFontFiles(
-    uint32_t family_index,
-    std::vector<base::string16>* file_paths,
-    std::vector<IPC::PlatformFileForTransit>* file_handles) {
+void DWriteFontProxyMessageFilter::GetFontFiles(uint32_t family_index,
+                                                GetFontFilesCallback callback) {
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFontFiles");
   DCHECK(collection_);
@@ -317,6 +304,7 @@ void DWriteFontProxyMessageFilter::OnGetFontFiles(
   if (FAILED(hr)) {
     if (IsLastResortFallbackFont(family_index))
       LogMessageFilterError(LAST_RESORT_FONT_GET_FAMILY_FAILED);
+    std::move(callback).Run({}, {});
     return;
   }
 
@@ -333,6 +321,7 @@ void DWriteFontProxyMessageFilter::OnGetFontFiles(
     if (FAILED(hr)) {
       if (IsLastResortFallbackFont(family_index))
         LogMessageFilterError(LAST_RESORT_FONT_GET_FONT_FAILED);
+      std::move(callback).Run({}, {});
       return;
     }
 
@@ -342,6 +331,7 @@ void DWriteFontProxyMessageFilter::OnGetFontFiles(
     }
   }
 
+  std::vector<base::File> file_handles;
   // For files outside the windows fonts directory we pass them to the renderer
   // as file handles. The renderer would be unable to open the files directly
   // due to sandbox policy (it would get ERROR_ACCESS_DENIED instead). Passing
@@ -354,34 +344,42 @@ void DWriteFontProxyMessageFilter::OnGetFontFiles(
                     base::File::FLAG_OPEN | base::File::FLAG_READ |
                         base::File::FLAG_EXCLUSIVE_WRITE);
     if (file.IsValid()) {
-      file_handles->push_back(IPC::TakePlatformFileForTransit(std::move(file)));
+      file_handles.push_back(std::move(file));
     }
   }
 
-  file_paths->assign(path_set.begin(), path_set.end());
-  LogLastResortFontFileCount(file_paths->size());
+  std::vector<base::FilePath> file_paths;
+  for (const auto& path : path_set) {
+    file_paths.emplace_back(base::FilePath(path));
+  }
+  LogLastResortFontFileCount(file_paths.size());
+  std::move(callback).Run(file_paths, std::move(file_handles));
 }
 
-void DWriteFontProxyMessageFilter::OnMapCharacters(
+void DWriteFontProxyMessageFilter::MapCharacters(
     const base::string16& text,
-    const DWriteFontStyle& font_style,
+    mojom::DWriteFontStylePtr font_style,
     const base::string16& locale_name,
     uint32_t reading_direction,
     const base::string16& base_family_name,
-    MapCharactersResult* result) {
+    MapCharactersCallback callback) {
   InitializeDirectWrite();
+  auto result = mojom::MapCharactersResult::New();
   result->family_index = UINT32_MAX;
   result->mapped_length = text.length();
   result->family_name.clear();
   result->scale = 0.0;
-  result->font_style.font_slant = DWRITE_FONT_STYLE_NORMAL;
-  result->font_style.font_stretch = DWRITE_FONT_STRETCH_NORMAL;
-  result->font_style.font_weight = DWRITE_FONT_WEIGHT_NORMAL;
+  result->font_style = mojom::DWriteFontStyle::New();
+  result->font_style->font_slant = DWRITE_FONT_STYLE_NORMAL;
+  result->font_style->font_stretch = DWRITE_FONT_STRETCH_NORMAL;
+  result->font_style->font_weight = DWRITE_FONT_WEIGHT_NORMAL;
   if (factory2_ == nullptr || collection_ == nullptr)
     return;
   if (font_fallback_ == nullptr) {
-    if (FAILED(factory2_->GetSystemFontFallback(&font_fallback_)))
+    if (FAILED(factory2_->GetSystemFontFallback(&font_fallback_))) {
+      std::move(callback).Run(std::move(result));
       return;
+    }
   }
 
   UINT32 length;
@@ -405,17 +403,19 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
   if (FAILED(font_fallback_->MapCharacters(
           analysis_source.Get(), 0, text.length(), collection_.Get(),
           base_family_name.c_str(),
-          static_cast<DWRITE_FONT_WEIGHT>(font_style.font_weight),
-          static_cast<DWRITE_FONT_STYLE>(font_style.font_slant),
-          static_cast<DWRITE_FONT_STRETCH>(font_style.font_stretch), &length,
+          static_cast<DWRITE_FONT_WEIGHT>(font_style->font_weight),
+          static_cast<DWRITE_FONT_STYLE>(font_style->font_slant),
+          static_cast<DWRITE_FONT_STRETCH>(font_style->font_stretch), &length,
           &mapped_font, &result->scale))) {
     DCHECK(false);
     return;
   }
 
   result->mapped_length = length;
-  if (mapped_font == nullptr)
+  if (mapped_font == nullptr) {
+    std::move(callback).Run(std::move(result));
     return;
+  }
 
   mswr::ComPtr<IDWriteFontFamily> mapped_family;
   if (FAILED(mapped_font->GetFontFamily(&mapped_family))) {
@@ -428,9 +428,9 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
     return;
   }
 
-  result->font_style.font_slant = mapped_font->GetStyle();
-  result->font_style.font_stretch = mapped_font->GetStretch();
-  result->font_style.font_weight = mapped_font->GetWeight();
+  result->font_style->font_slant = mapped_font->GetStyle();
+  result->font_style->font_stretch = mapped_font->GetStretch();
+  result->font_style->font_weight = mapped_font->GetWeight();
 
   std::vector<base::char16> name;
   size_t name_count = family_names->GetCount();
@@ -452,8 +452,11 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
     // Found a matching family!
     result->family_index = index;
     result->family_name = name.data();
+    std::move(callback).Run(std::move(result));
     return;
   }
+
+  std::move(callback).Run(std::move(result));
   // Could not find a matching family
   LogMessageFilterError(MAP_CHARACTERS_NO_FAMILY);
   DCHECK_EQ(result->family_index, UINT32_MAX);
@@ -461,7 +464,6 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
 }
 
 void DWriteFontProxyMessageFilter::InitializeDirectWrite() {
-  DCHECK(dwrite_io_task_runner_->RunsTasksInCurrentSequence());
   if (direct_write_initialized_)
     return;
   direct_write_initialized_ = true;

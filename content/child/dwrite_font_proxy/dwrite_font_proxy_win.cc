@@ -14,12 +14,10 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/win/scoped_handle.h"
 #include "content/child/dwrite_font_proxy/dwrite_localized_strings_win.h"
-#include "content/common/dwrite_font_proxy_messages.h"
 #include "content/public/child/child_thread.h"
-#include "ipc/ipc_platform_file.h"
-#include "ipc/ipc_sender.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace mswr = Microsoft::WRL;
 
@@ -75,9 +73,9 @@ void LogFontProxyError(FontProxyError error) {
 
 HRESULT DWriteFontCollectionProxy::Create(DWriteFontCollectionProxy** proxy_out,
                                           IDWriteFactory* dwrite_factory,
-                                          IPC::Sender* sender) {
+                                          mojom::DWriteFontProxyPtr proxy) {
   return Microsoft::WRL::MakeAndInitialize<DWriteFontCollectionProxy>(
-      proxy_out, dwrite_factory, sender);
+      proxy_out, dwrite_factory, std::move(proxy));
 }
 
 DWriteFontCollectionProxy::DWriteFontCollectionProxy() = default;
@@ -102,8 +100,7 @@ HRESULT DWriteFontCollectionProxy::FindFamilyName(const WCHAR* family_name,
     return S_OK;
   }
 
-  if (!GetSender()->Send(
-          new DWriteFontProxyMsg_FindFamily(name, &family_index))) {
+  if (!GetFontProxy().FindFamily(name, &family_index)) {
     LogFontProxyError(FIND_FAMILY_SEND_FAILED);
     return E_FAIL;
   }
@@ -147,8 +144,7 @@ UINT32 DWriteFontCollectionProxy::GetFontFamilyCount() {
   TRACE_EVENT0("dwrite", "FontProxy::GetFontFamilyCount");
 
   uint32_t family_count = 0;
-  if (!GetSender()->Send(
-          new DWriteFontProxyMsg_GetFamilyCount(&family_count))) {
+  if (!GetFontProxy().GetFamilyCount(&family_count)) {
     LogFontProxyError(GET_FAMILY_COUNT_SEND_FAILED);
     return 0;
   }
@@ -198,29 +194,28 @@ HRESULT DWriteFontCollectionProxy::CreateEnumeratorFromKey(
   // If we already loaded the family we should reuse the existing collection.
   DCHECK(!families_[*family_index]->IsLoaded());
 
-  std::vector<base::string16> file_names;
-  std::vector<IPC::PlatformFileForTransit> file_handles;
-  if (!GetSender()->Send(new DWriteFontProxyMsg_GetFontFiles(
-          *family_index, &file_names, &file_handles))) {
+  std::vector<base::FilePath> file_names;
+  std::vector<base::File> file_handles;
+  if (!GetFontProxy().GetFontFiles(*family_index, &file_names, &file_handles)) {
     LogFontProxyError(GET_FONT_FILES_SEND_FAILED);
     return E_FAIL;
   }
 
   std::vector<HANDLE> handles;
   handles.reserve(file_names.size() + file_handles.size());
-  for (const base::string16& file_name : file_names) {
+  for (const base::FilePath& file_name : file_names) {
     // This leaks the handles, since they are used as the reference key to
     // CreateStreamFromKey, and DirectWrite requires the reference keys to
     // remain valid for the lifetime of the loader. The loader is the font
     // collection proxy, which remains alive for the lifetime of the renderer.
     HANDLE handle =
-        CreateFile(file_name.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
-                   OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+        CreateFile(file_name.value().c_str(), GENERIC_READ, FILE_SHARE_READ,
+                   NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (handle != INVALID_HANDLE_VALUE)
       handles.push_back(handle);
   }
-  for (const IPC::PlatformFileForTransit& file_handle : file_handles) {
-    handles.push_back(IPC::PlatformFileForTransitToPlatformFile(file_handle));
+  for (auto& file_handle : file_handles) {
+    handles.push_back(file_handle.TakePlatformFile());
   }
 
   HRESULT hr = mswr::MakeAndInitialize<FontFileEnumerator>(
@@ -264,11 +259,12 @@ HRESULT DWriteFontCollectionProxy::CreateStreamFromKey(
 
 HRESULT DWriteFontCollectionProxy::RuntimeClassInitialize(
     IDWriteFactory* factory,
-    IPC::Sender* sender_override) {
+    mojom::DWriteFontProxyPtr proxy) {
   DCHECK(factory);
 
   factory_ = factory;
-  sender_override_ = sender_override;
+  if (proxy)
+    font_proxy_ = mojom::ThreadSafeDWriteFontProxyPtr::Create(std::move(proxy));
 
   HRESULT hr = factory->RegisterFontCollectionLoader(this);
   DCHECK(SUCCEEDED(hr));
@@ -318,10 +314,13 @@ bool DWriteFontCollectionProxy::LoadFamilyNames(
     IDWriteLocalizedStrings** localized_strings) {
   TRACE_EVENT0("dwrite", "FontProxy::LoadFamilyNames");
 
-  std::vector<std::pair<base::string16, base::string16>> strings;
-  if (!GetSender()->Send(
-          new DWriteFontProxyMsg_GetFamilyNames(family_index, &strings))) {
+  std::vector<mojom::DWriteStringPairPtr> pairs;
+  if (!GetFontProxy().GetFamilyNames(family_index, &pairs)) {
     return false;
+  }
+  std::vector<std::pair<base::string16, base::string16>> strings;
+  for (auto& pair : pairs) {
+    strings.emplace_back(std::move(pair->first), std::move(pair->second));
   }
 
   HRESULT hr = mswr::MakeAndInitialize<DWriteLocalizedStrings>(
@@ -352,8 +351,18 @@ bool DWriteFontCollectionProxy::CreateFamily(UINT32 family_index) {
   return true;
 }
 
-IPC::Sender* DWriteFontCollectionProxy::GetSender() {
-  return sender_override_ ? sender_override_ : ChildThread::Get();
+void DWriteFontCollectionProxy::SetProxy(mojom::DWriteFontProxyPtr proxy) {
+  font_proxy_ = mojom::ThreadSafeDWriteFontProxyPtr::Create(std::move(proxy));
+}
+
+mojom::DWriteFontProxy& DWriteFontCollectionProxy::GetFontProxy() {
+  if (!font_proxy_) {
+    mojom::DWriteFontProxyPtr dwrite_font_proxy;
+    ChildThread::Get()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, &dwrite_font_proxy);
+    SetProxy(std::move(dwrite_font_proxy));
+  }
+  return **font_proxy_;
 }
 
 DWriteFontFamilyProxy::DWriteFontFamilyProxy() = default;
