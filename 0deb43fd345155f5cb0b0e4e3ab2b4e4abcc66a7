@@ -818,6 +818,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f2c3be_cfabdce4",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:03:58Z",
+      "side": 1,
+      "message": "So you can just use the base::Optional to present if a page number exists or not, rather than a magical constant. But I guess you just want this so it\u0027s easy to use it with all the places that expects an ID.",
+      "parentUuid": "db5c9a38_0b2361ca",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

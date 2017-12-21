@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38632ad7_6919bbfd",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:03:58Z",
+      "side": 1,
+      "message": "Is this still needed, since this is a private function? Did all the possible callers connect already?",
+      "revId": "aaf79fa476b213acdd5d5102885bcff0dd309968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91175e0_5a6e28ba",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:03:58Z",
+      "side": 1,
+      "message": "braces",
+      "revId": "aaf79fa476b213acdd5d5102885bcff0dd309968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
