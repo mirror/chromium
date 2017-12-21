@@ -46,6 +46,10 @@ const char kSlowDownRasterScaleFactor[] = "slow-down-raster-scale-factor";
 // Compress tile textures for GPUs supporting it.
 const char kEnableTileCompression[] = "enable-tile-compression";
 
+// Checks damage early and aborts if no damage, so that clients like Android
+// WebView don't invalidate unnecessarily.
+const char kCheckDamageEarly[] = "cc-check-damage-early";
+
 // Enables the GPU benchmarking extension
 const char kEnableGpuBenchmarking[] = "enable-gpu-benchmarking";
 
