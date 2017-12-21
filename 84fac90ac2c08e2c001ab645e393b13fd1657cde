@@ -16,6 +16,24 @@
       "revId": "84fac90ac2c08e2c001ab645e393b13fd1657cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f8fb44_54f3bb16",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-21T12:47:23Z",
+      "side": 1,
+      "message": "Eh, sure, though the other checks clearly don\u0027t have side effects.",
+      "parentUuid": "545a0497_2c8a9823",
+      "revId": "84fac90ac2c08e2c001ab645e393b13fd1657cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
