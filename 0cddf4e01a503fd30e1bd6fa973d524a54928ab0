@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c342c377_252bd2f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2a5aa1c_bb3f882f",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "212a0734_ecec276f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f16b3bc_bbabd072",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212a0734_ecec276f",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ac12f32_7e47bf14",
         "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e97c91_43b6ae91",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac12f32_7e47bf14",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "56ae0e38_df669610",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18c6d5c_4b58a61a",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4398f031_bb5b82e4",
         "filename": "chrome/renderer/media/chrome_key_systems.cc",
         "patchSetId": 1
@@ -96,6 +180,24 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a540b1e5_caa67356",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Separate CL once this is in.",
+      "parentUuid": "4398f031_bb5b82e4",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "fe405276_46f4a8f1",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d639739_f1a2f555",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29ca142f_cfbf14a1",
         "filename": "chrome/renderer/media/chrome_key_systems.cc",
         "patchSetId": 1
@@ -130,6 +250,24 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4d2e10_91c54983",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Both done.",
+      "parentUuid": "29ca142f_cfbf14a1",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "e2cff1d8_3db0dec1",
+        "filename": "content/browser/media/key_system_info_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Plugin registered and CdmInfo created:\n- in RegisterWidevineCdmWithChrome()  [widevine_cdm_component_installer.cc]\n- in ComputeBuiltInPlugins() and AddContentDecryptionModules()  [chrome_content_client.cc]\nNot aware of any other places where Widevine is registered.",
+      "parentUuid": "8ca3d74b_c59f8e10",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147c6f2e_61768f31",
         "filename": "content/browser/media/key_system_info_impl.h",
         "patchSetId": 1
@@ -164,6 +320,24 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a7f11e_7f16ca60",
+        "filename": "content/browser/media/key_system_info_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147c6f2e_61768f31",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "7e688830_ea6f2f16",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa5b40c_84e13b96",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a7762d_e43c76ea",
         "filename": "media/mojo/interfaces/key_system_info.mojom",
         "patchSetId": 1
@@ -210,6 +408,30 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2bd7f2_bf8820e0",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a7762d_e43c76ea",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 47
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "fb4ab172_a3b8e17e",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ec92177_c2ed31ab",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051106e4_f0062ccf",
         "filename": "media/mojo/interfaces/key_system_info.mojom",
         "patchSetId": 1
@@ -256,6 +502,30 @@
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc2d7f6_f5fd8b0d",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T23:55:41Z",
+      "side": 1,
+      "message": "Switched in a different CL to VideoCodec (and rebased this CL now that it\u0027s landed). However, added a TODO to get profile and level info.",
+      "parentUuid": "051106e4_f0062ccf",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
