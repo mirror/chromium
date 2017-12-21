@@ -39,6 +39,11 @@
 #include <array>
 #include "core/dom/ExecutionContext.h"
 
+#if 0
+#undef DVLOG
+#define DVLOG(x) LOG(INFO)
+#endif
+
 namespace blink {
 
 namespace {
@@ -459,6 +464,10 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
     Nullable<WebGLContextAttributes> attrs;
     rendering_context_->getContextAttributes(attrs);
     int sample_count = attrs.Get().antialias() ? 4 : 0;
+    LOG(INFO) << __FUNCTION__ << ";;; attrs.antialias="
+              << attrs.Get().antialias()
+              << " sample_count=" << sample_count;
+
     frame_transport_ = new XRFrameTransport(sample_count);
     // Set up RequestPresentOptions based on canvas properties.
     device::mojom::blink::VRRequestPresentOptionsPtr options =
@@ -937,6 +946,8 @@ void VRDisplay::OnPresentingVSync(
 
   frame_pose_ = std::move(pose);
   vr_frame_id_ = frame_id;
+
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", vr_frame_id_, "PresentingVSync");
 
   DVLOG(3) << __FUNCTION__ << ";;; have buffer=" << !!buffer_holder;
   if (frame_transport_ && frame_transport_->DrawingIntoFBO()) {
