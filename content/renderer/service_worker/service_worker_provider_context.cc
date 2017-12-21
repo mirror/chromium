@@ -37,10 +37,15 @@ namespace content {
 // Holds state for service worker clients.
 struct ServiceWorkerProviderContext::ProviderStateForClient {
   explicit ProviderStateForClient(
+      const GURL& url,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
-      : default_loader_factory_getter(
+      : url(url),
+        default_loader_factory_getter(
             std::move(default_loader_factory_getter)) {}
   ~ProviderStateForClient() = default;
+
+  // The client's URL.
+  GURL url;
 
   // |controller| will be set by SetController() and taken by TakeController().
   std::unique_ptr<ServiceWorkerHandleReference> controller;
@@ -78,6 +83,7 @@ struct ServiceWorkerProviderContext::ProviderStateForClient {
   // controller service worker. Kept here in order to call
   // OnContainerHostConnectionClosed when container_host_ for the
   // provider is reset.
+  // This is (re)set to nullptr if no controller is attached to this client.
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector;
 
   // For service worker clients. Map from registration id to JavaScript
@@ -102,11 +108,14 @@ struct ServiceWorkerProviderContext::ProviderStateForServiceWorker {
   std::unique_ptr<ServiceWorkerHandleReference> active;
 };
 
+// For service worker clients.
 ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
+    const GURL& client_url,
     blink::mojom::ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerContainerAssociatedRequest request,
     mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
+    mojom::ControllerServiceWorkerInfoPtr controller_info,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
     : provider_type_(provider_type),
       provider_id_(provider_id),
@@ -114,14 +123,38 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
       binding_(this, std::move(request)),
       weak_factory_(this) {
   container_host_.Bind(std::move(host_ptr_info));
-  if (provider_type ==
-      blink::mojom::ServiceWorkerProviderType::kForServiceWorker) {
-    state_for_service_worker_ =
-        std::make_unique<ProviderStateForServiceWorker>();
-  } else {
-    state_for_client_ = std::make_unique<ProviderStateForClient>(
-        std::move(default_loader_factory_getter));
+  state_for_client_ = std::make_unique<ProviderStateForClient>(
+      client_url, std::move(default_loader_factory_getter));
+
+  // S13nServiceWorker:
+  // Set up the URL loader factory for sending subresource requests to
+  // the controller.
+  if (!ServiceWorkerUtils::IsServicificationEnabled() ||
+      !state_for_client_->default_loader_factory_getter) {
+    return;
   }
+
+  if (controller_info) {
+    SetController(std::move(controller_info),
+                  std::vector<blink::mojom::WebFeature>(),
+                  false /* should_notify_controllerchange */);
+  }
+}
+
+// For service worker contexts.
+ServiceWorkerProviderContext::ServiceWorkerProviderContext(
+    int provider_id,
+    mojom::ServiceWorkerContainerAssociatedRequest request,
+    mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info)
+    : provider_type_(
+          blink::mojom::ServiceWorkerProviderType::kForServiceWorker),
+      provider_id_(provider_id),
+      main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      binding_(this, std::move(request)),
+      weak_factory_(this) {
+  state_for_service_worker_ = std::make_unique<ProviderStateForServiceWorker>();
+
+  container_host_.Bind(std::move(host_ptr_info));
 }
 
 ServiceWorkerProviderContext::~ServiceWorkerProviderContext() = default;
@@ -212,9 +245,19 @@ int64_t ServiceWorkerProviderContext::GetControllerVersionId() {
 }
 
 mojom::URLLoaderFactory*
-ServiceWorkerProviderContext::subresource_loader_factory() {
+ServiceWorkerProviderContext::GetSubresourceLoaderFactory() {
   DCHECK(state_for_client_);
-  return state_for_client_->subresource_loader_factory.get();
+  auto* state = state_for_client_.get();
+  if (!state->controller_connector)
+    return nullptr;
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  if (!state->subresource_loader_factory) {
+    mojo::MakeStrongBinding(
+        std::make_unique<ServiceWorkerSubresourceLoaderFactory>(
+            state->controller_connector, state->default_loader_factory_getter),
+        mojo::MakeRequest(&state->subresource_loader_factory));
+  }
+  return state->subresource_loader_factory.get();
 }
 
 mojom::ServiceWorkerContainerHost*
@@ -320,7 +363,7 @@ void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
 }
 
 void ServiceWorkerProviderContext::SetController(
-    blink::mojom::ServiceWorkerObjectInfoPtr controller,
+    mojom::ControllerServiceWorkerInfoPtr controller_info,
     const std::vector<blink::mojom::WebFeature>& used_features,
     bool should_notify_controllerchange) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
@@ -331,6 +374,7 @@ void ServiceWorkerProviderContext::SetController(
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
 
+  auto& controller = controller_info->object_info;
   state->controller_version_id = controller->version_id;
   state->controller = ServiceWorkerHandleReference::Adopt(
       std::move(controller), dispatcher->thread_safe_sender());
@@ -346,19 +390,21 @@ void ServiceWorkerProviderContext::SetController(
   for (blink::mojom::WebFeature feature : used_features)
     state->used_features.insert(feature);
 
-  // S13nServiceWorker
-  // Set up the URL loader factory for sending URL requests to the controller.
-  if (!ServiceWorkerUtils::IsServicificationEnabled() || !state->controller) {
-    state->controller_connector = nullptr;
-    state->subresource_loader_factory = nullptr;
-  } else {
-    state->controller_connector =
-        base::MakeRefCounted<ControllerServiceWorkerConnector>(
-            container_host_.get());
-    mojo::MakeStrongBinding(
-        std::make_unique<ServiceWorkerSubresourceLoaderFactory>(
-            state->controller_connector, state->default_loader_factory_getter),
-        mojo::MakeRequest(&state->subresource_loader_factory));
+  // S13nServiceWorker:
+  // Reset subresource loader factory if necessary.
+  if (ServiceWorkerUtils::IsServicificationEnabled() &&
+      state->default_loader_factory_getter) {
+    if (state->controller && controller_info->endpoint) {
+      mojom::ControllerServiceWorkerPtr controller_ptr(
+          std::move(controller_info->endpoint));
+      state->controller_connector =
+          base::MakeRefCounted<ControllerServiceWorkerConnector>(
+              container_host_.get(), std::move(controller_ptr));
+    } else {
+      state->controller_connector = nullptr;
+    }
+    if (should_notify_controllerchange)
+      state->subresource_loader_factory = nullptr;
   }
 
   // The WebServiceWorkerProviderImpl might not exist yet because the document

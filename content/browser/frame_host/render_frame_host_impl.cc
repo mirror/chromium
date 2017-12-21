@@ -3506,7 +3506,7 @@ void RenderFrameHostImpl::CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojom::URLLoaderClientEndpointsPtr(),
         /*subresource_loader_factories=*/base::nullopt,
-        devtools_navigation_token);
+        /*controller_service_worker=*/nullptr, devtools_navigation_token);
     return;
   }
 
@@ -3529,8 +3529,8 @@ void RenderFrameHostImpl::CommitNavigation(
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
 
-  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
     subresource_loader_factories.emplace();
@@ -3617,6 +3617,12 @@ void RenderFrameHostImpl::CommitNavigation(
       subresource_loader_factories->RegisterFactory(factory.first,
                                                     std::move(factory_proxy));
     }
+
+    // Passes the controller service worker info if we have one.
+    if (subresource_loader_params) {
+      controller_service_worker_info =
+          std::move(subresource_loader_params->controller_service_worker_info);
+    }
   }
 
   // It is imperative that cross-document navigations always provide a set of
@@ -3628,7 +3634,8 @@ void RenderFrameHostImpl::CommitNavigation(
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params,
       std::move(url_loader_client_endpoints),
-      std::move(subresource_loader_factories), devtools_navigation_token);
+      std::move(subresource_loader_factories),
+      std::move(controller_service_worker_info), devtools_navigation_token);
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
