@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91d75069_98aeebbb",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-21T20:31:28Z",
+      "side": 1,
+      "message": "Thanks for adding enum!\n\nwhat if we pass Profile* profile here  and convert it to Robot, Manager, Unmananged inside the arc_optin_uma.cpp. This would hide all implementation details. Inside the cc file we may have something like:\n\nnamespace {\nstd::string GetUmaSectionName(Profile* profile) {\n....\n}\n\nWDYT?",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "945878d370033f36deb5deb08fb45d8cf3bb8723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
