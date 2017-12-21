@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c94e5d64_26173b74",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "nit: Maybe just \nreturn web::UrlHasWebScheme(pageURL) \u0026\u0026 webState-\u003eContentIsHTML();",
+      "range": {
+        "startLine": 831,
+        "startChar": 12,
+        "endLine": 831,
+        "endChar": 27
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1627d7_5caead41",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "nit: Extra semi colon",
+      "range": {
+        "startLine": 158,
+        "startChar": 58,
+        "endLine": 158,
+        "endChar": 59
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc89f7bc_8f461948",
+        "filename": "ios/chrome/browser/autofill/js_autofill_manager_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "nit: Extra semi colon",
+      "range": {
+        "startLine": 37,
+        "startChar": 62,
+        "endLine": 37,
+        "endChar": 63
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fd38a3_34a4d0ed",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "I think changing to checked is better, but do you remember why this used to be unchecked?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 18
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69be522b_29438334",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "Since this script is injected unconditionally, can we add it to \"chrome_bundle\"?",
+      "range": {
+        "startLine": 189,
+        "startChar": 37,
+        "endLine": 189,
+        "endChar": 56
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

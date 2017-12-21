@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5b0f6207_03e8b531",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:28:41Z",
+      "side": 1,
+      "message": "WebState::GetCurrentURL and WebState::GetLastCommittedURL should be equivalent. However in very small number of cases they return different URLs. This mismatch should be fixed after Chrome for iOS is switched to WKBackForwardList based navigation.\n\nUnfortunately I don\u0027t know which URL is correct and which one is not, but I suspect that GetCurrentURL is correct.",
+      "parentUuid": "336c3656_fceaa27c",
+      "range": {
+        "startLine": 828,
+        "startChar": 25,
+        "endLine": 828,
+        "endChar": 50
+      },
+      "revId": "e6ccf1322e26dc25a08edf2d0b55d21a273584c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f96d080_fa7f8d00",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 4
