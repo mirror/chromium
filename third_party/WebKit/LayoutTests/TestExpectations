@@ -3710,3 +3710,9 @@ crbug.com/779087 external/wpt/feature-policy/autoplay-disabled-by-feature-policy
 
 # Sheriff failures 2017-12-15
 crbug.com/795250 [ Win7 ] virtual/scroll_customization/fast/events/touch/gesture/gesture-tap-hover-state-iframe.html [ Pass Failure ]
+
+# Sheriff failures 2017-12-20
+crbug.com/796760 [ Win7 Mac Linux ] fast/webgl/texImage-imageBitmap-from-canvas-resize.html [ Pass Failure ]
+crbug.com/796760 [ Win7 Mac Linux ] fast/webgl/texImage-imageBitmap-from-image-resize.html [ Pass Failure ]
+crbug.com/796760 [ Win7 Mac Linux ] fast/webgl/texImage-imageBitmap-from-imageData-resize.html [ Pass Failure ]
+crbug.com/796760 [ Win7 Mac Linux ] fast/webgl/texImage-imageBitmap-from-offscreen-canvas-resize.html [ Pass Failure ]
