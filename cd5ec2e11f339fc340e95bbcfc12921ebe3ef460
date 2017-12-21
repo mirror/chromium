@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c6d197b_9a9a2d1c",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "indentation here seems off. Did you run `git cl format`?",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 59
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4f5e04_fe815e5c",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "This is not needed. See my comment below.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c982c2ce_0d4445db",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "Please document.",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda81990_761c6a3d",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "Please document why it\u0027s action(s) plural by saying that many actions can map to the same shortcut description and so on.",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470b5068_8dadd183",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "This table is going to be very large soon. Consider moving it into a separate .h/.cc files similar to accelerator_table.h/.cc",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca83e79_1ad2981d",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "To be consistent with what you wrote above, just type |actions|.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcbdae0_c13383bb",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "remove \"that\".",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d44d7b_c370817e",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b794cf6_e8a8a0af",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "AcceleratorController loads this map, and it stays there present in memory. There\u0027s no need to load it again on every time we open the KSV.\n\nInstead, please add something to accelerator controller to get the value you need.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 3
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686c561e_dbc60f8e",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "This is also not needed. Please see my comment below.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 3
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9e3399_41771165",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "Document the \"why\".",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 12
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee619b62_46b1c882",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "Please document why this order is significant (if it is).",
+      "range": {
+        "startLine": 124,
+        "startChar": 54,
+        "endLine": 124,
+        "endChar": 78
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8912edb5_2924f8c2",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "As I said earlier, this map is not needed.\n\nAll you need is an internal function with a simple switch statement that returns the vkey for the given modifier.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 9
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea834a44_9d3080b9",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T18:24:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand. So if the shortcut info maps to multiple actions such as:\n\nCtrl + \"the keys from 1 to 9\"\n\nI thought we\u0027d have to replace the \"Ctrl\" as well. No?",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 12
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
