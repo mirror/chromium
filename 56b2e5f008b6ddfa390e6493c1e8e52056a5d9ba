@@ -16,6 +16,24 @@
       "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe828b4f_23e0b8cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-21T17:03:07Z",
+      "side": 1,
+      "message": "Hm, IIUC, getting the GSA account happens asynchronously anyway, so the existing code is already able to deal with the account not being available. What will happen is of course that the interval where we don\u0027t have the account yet (and therefore nothing is reported) will be longer -- I guess that is a tradeoff we would have to accept if we decide to do this, but that interval already exists today.",
+      "parentUuid": "0acff609_785c7369",
+      "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
