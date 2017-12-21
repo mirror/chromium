@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7673bd60_fcdb6a15",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-21T20:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29db71e_1574d6d0",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9d067a_3a7926fd",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 40
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36760262_6b47c9c2",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-21T20:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9d067a_3a7926fd",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc4635e_4d831427",
         "filename": "components/viz/service/display/scoped_render_pass_texture.h",
         "patchSetId": 40
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-21T19:20:49Z",
       "side": 1,
       "message": "I still feel like this method should go away and the client should just bind the id()? Just keep this as a container for a texture, not as an API to use it.",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1578cc_5ffb7dc1",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-21T20:36:27Z",
+      "side": 1,
+      "message": "How about add a todo for this?",
+      "parentUuid": "bdc4635e_4d831427",
       "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9ccd2131_15f1a2fa",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-21T20:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04eca9c_13f6e63c",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f87780_3c5a0acb",
         "filename": "components/viz/service/display/scoped_render_pass_texture.h",
         "patchSetId": 40
@@ -84,6 +156,24 @@
       "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19abed0a_2396394d",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-21T20:36:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f87780_3c5a0acb",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
