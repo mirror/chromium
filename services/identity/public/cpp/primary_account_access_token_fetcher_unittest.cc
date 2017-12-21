@@ -82,6 +82,7 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
 
   FakeProfileOAuth2TokenService* token_service() { return &token_service_; }
   SigninManagerForTest* signin_manager() { return signin_manager_.get(); }
+  std::string received_access_token() { return received_access_token_; }
 
   void SignIn(const std::string& account) {
 #if defined(OS_CHROMEOS)
@@ -91,32 +92,41 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
 #endif  // OS_CHROMEOS
   }
 
+  void OnAccessTokenFetchComplete(base::OnceClosure done_callback,
+                                  const GoogleServiceAuthError& error,
+                                  const std::string& access_token) {
+    LOG(INFO) << "Access token fetch complete";
+    std::move(done_callback).Run();
+    received_access_token_ = access_token;
+  }
+
  private:
+  base::MessageLoop message_loop_;
   TestingPrefServiceSyncable pref_service_;
   TestSigninClient signin_client_;
   FakeProfileOAuth2TokenService token_service_;
+  std::string received_access_token_;
 
   std::unique_ptr<AccountTrackerService> account_tracker_;
   std::unique_ptr<SigninManagerForTest> signin_manager_;
 };
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldReturnAccessToken) {
-  TestTokenCallback callback;
-
   SignIn("account");
   token_service()->GetDelegate()->UpdateCredentials("account", "refresh token");
 
+  base::RunLoop run_loop;
+
   // Signed in and refresh token already exists, so this should result in a
   // request for an access token.
-  auto fetcher = CreateFetcher(callback.Get());
+  auto fetcher = CreateFetcher(base::BindOnce(
+      &PrimaryAccountAccessTokenFetcherTest::OnAccessTokenFetchComplete,
+      base::Unretained(this), run_loop.QuitClosure()));
 
-  // Once the access token request is fulfilled, we should get called back with
-  // the access token.
-  EXPECT_CALL(callback,
-              Run(GoogleServiceAuthError::AuthErrorNone(), "access token"));
-  token_service()->IssueAllTokensForAccount(
-      "account", "access token",
-      base::Time::Now() + base::TimeDelta::FromHours(1));
+  token_service()->set_auto_post_fetch_response_on_message_loop(true);
+  run_loop.Run();
+
+  EXPECT_EQ("access_token", received_access_token());
 }
 
 TEST_F(PrimaryAccountAccessTokenFetcherTest, ShouldNotReplyIfDestroyed) {
@@ -261,11 +271,6 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
   // Getting a refresh token for some other account should have no effect.
   token_service()->GetDelegate()->UpdateCredentials("different account",
                                                     "refresh token");
-
-  // The OAuth2TokenService posts a task to the current thread when we try to
-  // get an access token for an account without a refresh token, so we need a
-  // MessageLoop in this test to not crash.
-  base::MessageLoop message_loop;
 
   // When all refresh tokens have been loaded by the token service, but the one
   // for our account wasn't among them, we should get called back with an empty
