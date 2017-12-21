@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0acff609_785c7369",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-21T15:43:30Z",
+      "side": 1,
+      "message": "Generally speaking, this should indeed help with startup, as we create less contention for system resources at that time.\n\nHowever, the previous model we had was GSA pushing account change notifications, whereas here we are polling. Moving the polling point to a later stage may or may not be an issue.\nCan you confirm that this is fine?",
+      "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
