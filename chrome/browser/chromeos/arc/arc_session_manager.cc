@@ -253,11 +253,11 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
   } else if (!sign_in_start_time_.is_null()) {
     arc_sign_in_timer_.Stop();
 
-    UpdateProvisioningTiming(base::Time::Now() - sign_in_start_time_,
-                             provisioning_successful,
-                             policy_util::IsAccountManaged(profile_));
-    UpdateProvisioningResultUMA(result,
-                                policy_util::IsAccountManaged(profile_));
+    UpdateProvisioningTiming(
+        base::Time::Now() - sign_in_start_time_, provisioning_successful,
+        policy_util::IsAccountManaged(profile_), IsRobotAccountMode());
+    UpdateProvisioningResultUMA(result, policy_util::IsAccountManaged(profile_),
+                                IsRobotAccountMode());
     if (!provisioning_successful)
       UpdateOptInCancelUMA(OptInCancelReason::CLOUD_PROVISION_FLOW_FAIL);
   }

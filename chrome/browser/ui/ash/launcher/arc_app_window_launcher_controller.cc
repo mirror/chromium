@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_util.h"
 #include "components/exo/shell_surface.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_manager.h"
@@ -610,7 +611,8 @@ void ArcAppWindowLauncherController::RegisterApp(
         intent.HasExtraParam(arc::kInitialStartParam)) {
       arc::UpdatePlayStoreShowTime(
           base::Time::Now() - opt_in_management_check_start_time_,
-          arc::policy_util::IsAccountManaged(owner()->profile()));
+          arc::policy_util::IsAccountManaged(owner()->profile()),
+          arc::IsRobotAccountMode());
     }
     opt_in_management_check_start_time_ = base::Time();
   }

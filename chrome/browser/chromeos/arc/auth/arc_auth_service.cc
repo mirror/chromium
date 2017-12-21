@@ -150,7 +150,7 @@ void ArcAuthService::OnAuthorizationComplete(mojom::ArcSignInStatus status,
     DCHECK_NE(mojom::ArcSignInStatus::SUCCESS_ALREADY_PROVISIONED, status);
     UpdateReauthorizationResultUMA(
         ConvertArcSignInStatusToProvisioningResult(status),
-        policy_util::IsAccountManaged(profile_));
+        policy_util::IsAccountManaged(profile_), IsRobotAccountMode());
     return;
   }
 
