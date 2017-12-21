@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -28,7 +29,7 @@ struct PdfMetafileSkiaData;
 // TODO(thestig): Rename to MetafileSkia.
 class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
  public:
-  explicit PdfMetafileSkia(SkiaDocumentType type);
+  explicit PdfMetafileSkia(SkiaDocumentType type, int frame_id);
   ~PdfMetafileSkia() override;
 
   // Metafile methods.
@@ -63,7 +64,7 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   bool SaveTo(base::File* file) const override;
 
   bool FinishFrameContent();
-  std::vector<uint32_t> GetSubframeContentIDs() const;
+  std::vector<uint32_t>& GetSubframeContentIDs() const;
 
   // Return a new metafile containing just the current page in draft mode.
   std::unique_ptr<PdfMetafileSkia> GetMetafileForCurrentPage(

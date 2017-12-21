@@ -1224,7 +1224,8 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const std::vector<int>& pages = print_pages_params_->pages;
 
   if (!print_preview_context_.CreatePreviewDocument(
-          std::move(prep_frame_view_), pages, print_params.printed_doc_type)) {
+          std::move(prep_frame_view_), pages, print_params.printed_doc_type,
+          routing_id())) {
     return false;
   }
 
@@ -1330,8 +1331,8 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
   std::unique_ptr<PdfMetafileSkia> draft_metafile;
   PdfMetafileSkia* initial_render_metafile = print_preview_context_.metafile();
   if (print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_) {
-    draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = base::MakeUnique<PdfMetafileSkia>(
+        print_params.printed_doc_type, routing_id());
     initial_render_metafile = draft_metafile.get();
   }
 
@@ -1443,7 +1444,7 @@ void PrintRenderFrameHelper::OnPrintFrameContent(const gfx::Rect& rect,
   // that instead.
   auto plugin = delegate_->GetPdfElement(frame);
 
-  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP, routing_id());
   PrintMsg_Print_Params print_params;
   print_params.page_size = gfx::Size(rect.width(), rect.height());
   print_params.content_size = print_params.page_size;
@@ -2200,7 +2201,8 @@ void PrintRenderFrameHelper::PrintPreviewContext::OnPrintPreview() {
 bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
     const std::vector<int>& pages,
-    SkiaDocumentType doc_type) {
+    SkiaDocumentType doc_type,
+    int frame_id) {
   DCHECK_EQ(INITIALIZED, state_);
   state_ = RENDERING;
 
@@ -2215,7 +2217,7 @@ bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     return false;
   }
 
-  metafile_ = base::MakeUnique<PdfMetafileSkia>(doc_type);
+  metafile_ = base::MakeUnique<PdfMetafileSkia>(doc_type, frame_id);
   CHECK(metafile_->Init());
 
   current_page_index_ = 0;
