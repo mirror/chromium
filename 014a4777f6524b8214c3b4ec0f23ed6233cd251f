@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de964739_3a6a5dfb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T15:29:40Z",
+      "side": 1,
+      "message": "Actually not. I will assert.",
+      "parentUuid": "a03d2ab8_21985316",
+      "revId": "014a4777f6524b8214c3b4ec0f23ed6233cd251f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea066f3b_4a148493",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "014a4777f6524b8214c3b4ec0f23ed6233cd251f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319837d5_c789f8a2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T15:29:40Z",
+      "side": 1,
+      "message": "It shouldn\u0027t really happen. However, because of lifetime differences between Document and Frame, issues may occur if we DCHECK. Though, I can probably add and we will see.",
+      "parentUuid": "ea066f3b_4a148493",
+      "revId": "014a4777f6524b8214c3b4ec0f23ed6233cd251f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
