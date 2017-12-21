@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "872040a6_664230d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "nit: Can function names be consistently written as FunctionName() so there\u0027s no ambiguity vs. ClassName?",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96a7229_6b932e0b",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "BTW, the few existing PDF browser tests are in chrome/browser/pdf. Not sure if you want to put it there.",
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556404d8_9b14805c",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "Looks like you had a merge conflict?",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 4
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652144bc_819d75d3",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "Is 0 allowed? i.e. should this be \"\u003c 0\" ?",
+      "range": {
+        "startLine": 310,
+        "startChar": 43,
+        "endLine": 310,
+        "endChar": 47
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b593506c_f8d72200",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5b706a_72702eb9",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T21:25:36Z",
+      "side": 1,
+      "message": "You can omit this and it still evaluates just fine.",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 63
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
