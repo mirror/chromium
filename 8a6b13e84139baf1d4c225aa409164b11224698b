@@ -22,6 +22,30 @@
       "revId": "8a6b13e84139baf1d4c225aa409164b11224698b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4141baf8_c5b11f5f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidViewIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-21T05:44:34Z",
+      "side": 1,
+      "message": "I don\u0027t think so. This test checks the size of Android WebView contents that is from\n\nWebViewImpl::ContentsSize() --\u003e AwRenderViewExt::CheckContentsSize() (until here it is render) --\u003e AwRenderViewHostExt::OnContentsSizeChanged() --\u003e AwContents::OnWebLayoutContentsSizeChanged() --\u003e Java layer.\n\nThe idea of --use-zoom-for-dsf is to merge the device scale factor (DSF) into the page zoom factor. For example, if DSF \u003d\u003d 2 and page zoom factor \u003d\u003d 3, page zoom factor becomes 6 (\u003d\u003d 2 * 3) when enabling --use-zoom-for-dsf.\n\nWhen we just start a Android WebView app without --use-zoom-for-dsf, the page zoom factor is 1 (currently it is not used in Android), but it become the same with DSF after enabling --use-zoom-for-dsf. As a result, sizes inside Blink (which is previously in CSS pixel scale) are scaled by DSF.\n\nWebViewImpl::ContentsSize() returns LayoutViewItem::DocumentRect().Size() and it is also scaled by DSF (i.e., not in CSS pixel scale). To make the size of Android WebView contents as CSS pixel scale, AwContents::OnWebLayoutContentsSizeChanged() scales it down if --use-zoom-for-dsf is enabled.\n\nIf we do not want the division by DSF and the small conversion error, maybe we must drop this feature. Why don\u0027t we just allow small conversion error like this CL?",
+      "parentUuid": "ba971f1a_0f787f7b",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 5
+      },
+      "revId": "8a6b13e84139baf1d4c225aa409164b11224698b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
