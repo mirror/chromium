@@ -102,6 +102,8 @@ void ArcApplicationNotifierControllerChromeOS::OnNotificationsEnabledChanged(
 }
 
 void ArcApplicationNotifierControllerChromeOS::OnIconUpdated(ArcAppIcon* icon) {
+  LOG(ERROR) << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+  LOG(ERROR) << icon->app_id();
   observer_->OnIconImageUpdated(
       message_center::NotifierId(message_center::NotifierId::ARC_APPLICATION,
                                  icon->app_id()),

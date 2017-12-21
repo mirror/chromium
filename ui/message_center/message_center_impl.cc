@@ -26,6 +26,9 @@
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
 
+#include "base/debug/stack_trace.h"
+#include "url/gurl.h"
+
 namespace message_center {
 
 namespace internal {
@@ -224,6 +227,17 @@ void MessageCenterImpl::AddNotificationImmediately(
   // |notification_list| will replace the notification instead of adding new.
   // This is essentially an update rather than addition.
   bool already_exists = (notification_list_->GetNotificationById(id) != NULL);
+  LOG(ERROR) << "Notification id type: " << notification->notifier_id().type;
+  LOG(ERROR) << "Notification ID: " << notification->id();
+  LOG(ERROR) << "Notifier ID id: " << notification->notifier_id().id;
+  LOG(ERROR) << "App URL: " << notification->origin_url().spec();
+  // LOG(ERROR) << notification
+  // LOG(ERROR) << "@@ " << base::debug::StackTrace().ToString();
+
+  std::string notification_id;
+  // If the notification is for an app.
+  if (notification->notifier_id().type <= 1)
+    notification_id = notification->id();
   notification_list_->AddNotification(std::move(notification));
   visible_notifications_ =
       notification_list_->GetVisibleNotifications(blockers_);

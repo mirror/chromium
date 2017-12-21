@@ -133,7 +133,7 @@ enum ShelfItemStatus {
   // A shelf item that has live instance.
   STATUS_RUNNING,
   // A shelf item that needs user's attention.
-  STATUS_ATTENTION,
+  STATUS_ATTENTION
 };
 
 // A unique shelf item id composed of an |app_id| and a |launch_id|.

@@ -34,6 +34,8 @@
 #include "ui/events/event_constants.h"
 #include "ui/gfx/geometry/rect.h"
 
+#include "base/debug/stack_trace.h"
+
 // Helper macro which returns the AppInstance.
 #define GET_APP_INSTANCE(method_name)                                    \
   (arc::ArcServiceManager::Get()                                         \
@@ -193,6 +195,8 @@ bool LaunchPlayStoreWithUrl(const std::string& url) {
 bool LaunchApp(content::BrowserContext* context,
                const std::string& app_id,
                int event_flags) {
+  LOG(ERROR) << "App Id: " << app_id;
+  LOG(ERROR) << base::debug::StackTrace().ToString();
   return LaunchApp(context, app_id, event_flags, display::kInvalidDisplayId);
 }
 
@@ -209,6 +213,7 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
                          const base::Optional<std::string>& launch_intent,
                          int event_flags,
                          int64_t display_id) {
+  LOG(ERROR) << "App Id: " << app_id;
   DCHECK(!launch_intent.has_value() || !launch_intent->empty());
 
   if (display_id == display::kInvalidDisplayId) {
@@ -344,6 +349,7 @@ void UninstallPackage(const std::string& package_name) {
 void UninstallArcApp(const std::string& app_id, Profile* profile) {
   ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(profile);
   DCHECK(arc_prefs);
+  LOG(ERROR) << "App Id: " << app_id;
   std::unique_ptr<ArcAppListPrefs::AppInfo> app_info =
       arc_prefs->GetApp(app_id);
   if (!app_info) {

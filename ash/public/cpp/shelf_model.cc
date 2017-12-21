@@ -8,6 +8,9 @@
 
 #include "ash/public/cpp/shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_model_observer.h"
+#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/skbitmap_operations.h"
+#include "ui/message_center/message_center.h"
 
 namespace ash {
 
@@ -255,6 +258,53 @@ void ShelfModel::AddObserver(ShelfModelObserver* observer) {
 
 void ShelfModel::RemoveObserver(ShelfModelObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+void ShelfModel::OnNotificationAdded(const std::string& notification_id) {
+  LOG(ERROR) << "$$$Notification Added!!-----------------";
+  message_center::Notification* notification =
+      message_center::MessageCenter::Get()->FindVisibleNotificationById(
+          notification_id);
+  int type = notification->notifier_id().type;
+  if (type <= 1) {
+    std::string id = notification->notifier_id().id;
+    ShelfItem* notified_item = nullptr;
+    int index = -1;
+    for (ShelfItem item : items_) {
+      index++;
+      if (item.id.app_id != id)
+        continue;
+      // Get a ref to the item so we can make a const ptr later. Not required.
+      notified_item = &item;
+      items_[index].notification_id = notification_id;
+      items_[index].has_active_notification = true;
+      // Pass the notification id to the item so we can find it later when the
+      // notification has been deleted.
+      const ShelfItem& ref = *notified_item;
+      for (auto& observer : observers_)
+        observer.ShelfItemChanged(index, ref);
+    }
+  }
+}
+
+void ShelfModel::OnNotificationRemoved(const std::string& notification_id,
+                                       bool by_user) {
+  LOG(ERROR) << "$$$Notification Removed!!-----------------";
+
+  ShelfItem* notified_item;
+  int index = -1;
+  for (ShelfItem item : items_) {
+    index++;
+    if (item.notification_id != notification_id)
+      continue;
+    notified_item = &item;
+    items_[index].notification_id = std::string();
+    items_[index].has_active_notification = false;
+
+    const ShelfItem& ref = *notified_item;
+    for (auto& observer : observers_)
+      observer.ShelfItemChanged(index, ref);
+  }
 }
 
 int ShelfModel::ValidateInsertionIndex(ShelfItemType type, int index) const {

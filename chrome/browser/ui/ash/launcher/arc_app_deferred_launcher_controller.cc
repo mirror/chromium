@@ -18,6 +18,8 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_throbber.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace {
 
 constexpr int kUpdateIconIntervalMs = 40;  // 40ms for 25 frames per second.
@@ -103,6 +105,7 @@ void ArcAppDeferredLauncherController::Remove(const std::string& app_id) {
 }
 
 void ArcAppDeferredLauncherController::Close(const std::string& app_id) {
+  // LOG(ERROR) << "@@@ " << base::debug::StackTrace().ToString();
   // Code below may invalidate passed |app_id|. Use local variable for safety.
   const std::string safe_app_id(app_id);
 

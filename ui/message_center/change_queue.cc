@@ -79,7 +79,6 @@ ChangeQueue::Change::Change(ChangeType type,
       notification_(std::move(notification)) {
   DCHECK(!id.empty());
   DCHECK(type != CHANGE_TYPE_DELETE || !notification_);
-
   id_ = notification_ ? notification_->id() : previous_id_;
 }
 

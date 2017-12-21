@@ -168,6 +168,7 @@ void ChromeAshMessageCenterClient::OnIconImageUpdated(
     const NotifierId& notifier_id,
     const gfx::ImageSkia& image) {
   // |controller_| may be null in unit tests.
+  LOG(ERROR) << notifier_id.id;
   if (!image.isNull() && controller_)
     controller_->UpdateNotifierIcon(notifier_id, image);
 }

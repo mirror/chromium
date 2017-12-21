@@ -55,6 +55,11 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "base/debug/stack_trace.h"
+#include "ui/gfx/image/image_skia_operations.h"
+
+#include "skia/ext/image_operations.h"
+
 using gfx::Animation;
 using views::View;
 
@@ -180,6 +185,7 @@ class FadeInAnimationDelegate : public gfx::AnimationDelegate {
 };
 
 void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
+  // LOG(ERROR) << "@@ " << base::debug::StackTrace().ToString();
   switch (item.status) {
     case STATUS_CLOSED:
       button->ClearState(ShelfButton::STATE_RUNNING);
@@ -193,6 +199,14 @@ void ReflectItemStatus(const ShelfItem& item, ShelfButton* button) {
       button->ClearState(ShelfButton::STATE_RUNNING);
       button->AddState(ShelfButton::STATE_ATTENTION);
       break;
+  }
+  if (item.has_active_notification) {
+    button->has_notification_ = true;
+
+    // button->AddState(ShelfButton::STATE_NOTIFICATION);
+  } else {
+    button->has_notification_ = false;
+    // button->ClearState(ShelfButton::STATE_NOTIFICATION);
   }
 }
 
@@ -1749,7 +1763,16 @@ void ShelfView::ShelfItemChanged(int model_index, const ShelfItem& old_item) {
       CHECK_EQ(ShelfButton::kViewClassName, view->GetClassName());
       ShelfButton* button = static_cast<ShelfButton*>(view);
       ReflectItemStatus(item, button);
-      button->SetImage(item.image);
+      // Reset the image if it does not have an active notification.
+
+      // Enable/Disable the notification badge here.
+
+      // gfx::ImageSkia img = gfx::ImageSkiaOperations::CreateRotatedImage(
+      //   item.image, SkBitmapOperations::ROTATION_90_CW);
+      LOG(ERROR) << item.has_active_notification;
+      button->SetNotificationIStateTemp(item.has_active_notification);
+      button->SetImage(/*item.has_active_notification ? img : */ item.image);
+
       button->SchedulePaint();
       break;
     }

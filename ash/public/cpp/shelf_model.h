@@ -13,6 +13,7 @@
 #include "ash/public/interfaces/shelf.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "ui/message_center/message_center_observer.h"
 
 namespace ash {
 
@@ -28,10 +29,11 @@ ASH_PUBLIC_EXPORT extern const char kAppListId[];
 ASH_PUBLIC_EXPORT extern const char kBackButtonId[];
 
 // Model used for shelf items. Owns ShelfItemDelegates but does not create them.
-class ASH_PUBLIC_EXPORT ShelfModel {
+class ASH_PUBLIC_EXPORT ShelfModel
+    : public message_center::MessageCenterObserver {
  public:
   ShelfModel();
-  ~ShelfModel();
+  ~ShelfModel() override;
 
   // Pins an app with |app_id| to shelf. A running instance will get pinned.
   // If there is no running instance, a new shelf item is created and pinned.
@@ -95,6 +97,10 @@ class ASH_PUBLIC_EXPORT ShelfModel {
 
   void AddObserver(ShelfModelObserver* observer);
   void RemoveObserver(ShelfModelObserver* observer);
+
+  void OnNotificationAdded(const std::string& notification_id) override;
+  void OnNotificationRemoved(const std::string& notification_id,
+                             bool by_user) override;
 
  private:
   // Makes sure |index| is in line with the type-based order of items. If that

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/app_list/arc/arc_app_item.h"
 
+#include "base/debug/stack_trace.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_context_menu.h"
@@ -23,6 +24,7 @@ ArcAppItem::ArcAppItem(
     const std::string& id,
     const std::string& name)
     : ChromeAppListItem(profile, id) {
+  LOG(ERROR) << base::debug::StackTrace().ToString();
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   arc_app_icon_.reset(new ArcAppIcon(profile,
@@ -46,6 +48,8 @@ const char* ArcAppItem::GetItemType() const {
 }
 
 void ArcAppItem::Activate(int event_flags) {
+  LOG(ERROR) << "ArcAppItem::Activate: " << id();
+
   if (!arc::LaunchApp(profile(), id(), event_flags,
                       GetController()->GetAppListDisplayId())) {
     return;
