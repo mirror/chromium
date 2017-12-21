@@ -2,6 +2,138 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7464a47_a66a53de",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "Depend-\u003eDepends",
+      "range": {
+        "startLine": 30,
+        "startChar": 36,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a40af43_40cb76d0",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "nit: can we move this to the buffer.h?",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d877e0b4_2b7369eb",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "can this be moved into buffer.cc into a anonymous namespace?",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9525e491_958d9169",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "nit: add \"// Cronet_Buffer implementation.\" and remove extra newline on line 21",
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfe1c7b_ea5f0ba3",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "Should these all be const?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483ba0a9_2cb2edf4",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "nit: remove this comment as it restates what the code says",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043f4fff_affdf554",
         "filename": "components/cronet/native/buffer_test.cc",
         "patchSetId": 25
@@ -34,6 +166,47 @@
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894fa9ba_223c4252",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b58648cb_9e2b52df",
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "679e6f63_b4665207",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "I\u0027m starting to get more and more unhappy with mojo\u0027s limitations:\n1. There\u0027s no size_t type so we have to use int64 which might be too big on 32-bit archs\n2. We can\u0027t define a function pointer type, so we have to have a class (Cronet_BufferCallback) that wraps a function pointer that must be malloc\u0027ed and free\u0027d.\n3. Limitation #2 also leads to this class having SetContext() and GetContext() member functions even though I feel like all the \"context\" of a OnDestroy() call should really be in the Cronet_Buffer being destroyed.  In other words I feel like OnDestroy should be function pointer member (virtual function in C++...) of Cronet_Buffer, instead of a member of a class wrapping the function pointer.\nMarking resolved as I\u0027m not sure there\u0027s much we can or should do in this CL.",
+      "range": {
+        "startLine": 171,
+        "startChar": 52,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -72,6 +245,30 @@
       "side": 1,
       "message": "They capture values to be used in \u0027Run\u0027 call below when it is invoked on executor.",
       "parentUuid": "1cfecf65_3e739742",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967ddc5b_1a37d1bb",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "If they\u0027re not set with meaningful values or read in the callback, I\u0027d vote for removing the member variables and constructor args and just passing nullptr directly.",
+      "parentUuid": "bf213ba3_e15642f0",
       "range": {
         "startLine": 56,
         "startChar": 0,
@@ -124,6 +321,76 @@
         "startChar": 0,
         "endLine": 136,
         "endChar": 52
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65db0a63_35eb23dc",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "I\u0027d vote for passing something like:\n  /* response_info \u003d */ nullptr,",
+      "parentUuid": "632bda0f_d9d2db06",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9af9e1c_0ad72c6f",
+        "filename": "components/cronet/native/test_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "nit: can we remove these log statements?",
+      "range": {
+        "startLine": 17,
+        "startChar": 68,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa36c01f_6d4f6fdb",
+        "filename": "components/cronet/native/test_util.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T16:19:01Z",
+      "side": 1,
+      "message": "Can we change this from \"class TestUtil\" to \"namespace test\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 0
       },
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
