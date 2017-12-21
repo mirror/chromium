@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "730508bd_eadb67cd",
+        "filename": "ios/chrome/app/main_application_delegate.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-21T16:26:20Z",
+      "side": 0,
+      "message": "I think this may still be required.\nWas crash uploader the only feature using backgroun URLSession?\nIt seems that DownloadControllerImpl::CreateSession and GTMSessionFetcher can create some",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 39
+      },
+      "revId": "2d8a8ffa1f17fdddd24047c6fee5efe38b99ce21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
