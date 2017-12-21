@@ -10,7 +10,6 @@
 #include "core/loader/ThreadableLoaderClient.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
-#include "core/loader/WorkerThreadableLoader.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadTestHelper.h"
@@ -234,6 +233,9 @@ class WebWorkerFetchContextForTest : public WebWorkerFetchContext {
  public:
   WebWorkerFetchContextForTest(KURL site_for_cookies)
       : site_for_cookies_(site_for_cookies.Copy()) {}
+
+  base::WaitableEvent* GetTerminateSyncLoadEvent() override { return nullptr; }
+
   void InitializeOnWorkerThread(
       scoped_refptr<base::SingleThreadTaskRunner>) override {}
 
