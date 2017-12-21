@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff7ea398_3c4ba208",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T19:44:41Z",
+      "side": 1,
+      "message": "Ooh, thank you for figuring that out.",
+      "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bac40c13_b4d223ab",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T19:44:41Z",
+      "side": 1,
+      "message": "nit: Just use push_back here, typeof(connector.get()) is not moveable.",
+      "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a030602d_4b56fafb",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T19:44:41Z",
+      "side": 1,
+      "message": "ScopedDrmConnectorPtr::element_type is drmModeConnector, in case you want to save a few characters.",
+      "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
