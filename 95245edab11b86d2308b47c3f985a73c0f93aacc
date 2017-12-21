@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bacea997_46f9b8d9",
+        "filename": "chrome/browser/extensions/extension_commands_global_registry_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-21T13:39:53Z",
+      "side": 1,
+      "message": "That\u0027s the only thing I could find for the problem: https://stackoverflow.com/questions/6239140\n\nWithout this line, the test below leaks Shift key. It sends Cmd+Shift+1, Cmd+Shift+A, Cmd+Shift+8. It still fails if you press Cmd+Shift+8 3 times. If you send it 2 times, it doesn\u0027t leak anything. If you remove Cmd and repeat 10 times, it still doesn\u0027t leak. If you send Cmd+Shift+8 2 times, wait a little bit, and then send it 2 times more, it doesn\u0027t leak. If you send 3 times and wait afterwards, it leaks.\n\nMy only guess is that the system for some reason cannot handle some events posted in quick succession. The proper thing to do would be to wait for the event we posted to arrive in our app, but the app doesn\u0027t see these events precisely, I\u0027m only getting SysDefined with subtype\u003d6 and subtype\u003d9 which I cannot find documentation for. My guess is that these are shortcut activations/deactivations.",
+      "revId": "95245edab11b86d2308b47c3f985a73c0f93aacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
