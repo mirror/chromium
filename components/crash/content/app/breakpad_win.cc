@@ -490,12 +490,6 @@ void InitDefaultCrashCallback(LPTOP_LEVEL_EXCEPTION_FILTER filter) {
 }
 
 void InitCrashReporter(const std::string& process_type_switch) {
-  // The maximum lengths specified by breakpad include the trailing NULL, so the
-  // actual length of the chunk is one less.
-  static_assert(google_breakpad::CustomInfoEntry::kValueMaxLength - 1 ==
-                crash_keys::kChunkMaxLength, "kChunkMaxLength mismatch");
-  static_assert(crash_keys::kSmallSize <= crash_keys::kChunkMaxLength,
-                "crash key chunk size too small");
   const base::CommandLine& command = *base::CommandLine::ForCurrentProcess();
   if (command.HasSwitch(switches::kDisableBreakpad))
     return;
@@ -518,17 +512,6 @@ void InitCrashReporter(const std::string& process_type_switch) {
       keeper->GetCustomInfo(exe_path, process_type, GetProfileType(),
                             base::CommandLine::ForCurrentProcess(),
                             GetCrashReporterClient());
-
-#if !defined(COMPONENT_BUILD)
-  // chrome/common/child_process_logging_win.cc registers crash keys for
-  // chrome.dll. In a component build, that is sufficient as chrome.dll and
-  // chrome.exe share a copy of base (in base.dll).
-  // In a static build, the EXE must separately initialize the crash keys
-  // configuration as it has its own statically linked copy of base.
-  base::debug::SetCrashKeyReportingFunctions(&SetCrashKeyValueForBaseDebug,
-                                             &ClearCrashKeyForBaseDebug);
-  GetCrashReporterClient()->RegisterCrashKeys();
-#endif
 
   google_breakpad::ExceptionHandler::MinidumpCallback callback = NULL;
   LPTOP_LEVEL_EXCEPTION_FILTER default_filter = NULL;
