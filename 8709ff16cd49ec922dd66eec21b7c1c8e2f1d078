@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64d6be9a_575c8c99",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T16:45:46Z",
+      "side": 1,
+      "message": "Nit: wrap at 72",
+      "revId": "8709ff16cd49ec922dd66eec21b7c1c8e2f1d078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab11573_fe1bf87c",
+        "filename": "chrome/browser/profiling_host/profiling_test_driver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T16:45:46Z",
+      "side": 1,
+      "message": "Probably we should be consistent about what we refer to this as.",
+      "range": {
+        "startLine": 353,
+        "startChar": 49,
+        "endLine": 353,
+        "endChar": 58
+      },
+      "revId": "8709ff16cd49ec922dd66eec21b7c1c8e2f1d078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
