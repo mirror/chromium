@@ -186,6 +186,9 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
     kReachedIdLimit,  // Reached ID limit. We can't handle any more IDs.
   };
 
+  // Begins destruction of |demuxer| on a background task.
+  static void DestroyInBackground(ChunkDemuxer* demuxer);
+
   // |open_cb| Run when Initialize() is called to signal that the demuxer
   //   is ready to receive media data via AppendData().
   // |progress_cb| Run each time data is appended.
@@ -354,6 +357,9 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
     SHUTDOWN,
   };
 
+  // Helper to destruct |demuxer|.
+  static void DoBackgroundDestruction(ChunkDemuxer* demuxer);
+
   void ChangeState_Locked(State new_state);
 
   // Reports an error and puts the demuxer in a state where it won't accept more
@@ -419,6 +425,10 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   mutable base::Lock lock_;
   State state_;
   bool cancel_next_seek_;
+
+  // Lets us detect if our destructor ever happens without
+  // DestroyInBackground() being called first.
+  bool destructing_;
 
   DemuxerHost* host_;
   base::Closure open_cb_;

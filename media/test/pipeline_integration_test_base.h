@@ -163,6 +163,7 @@ class PipelineIntegrationTestBase : public Pipeline::Client {
   bool hashing_enabled_;
   bool clockless_playback_;
   bool webaudio_attached_;
+  bool using_chunk_demuxer_;
   std::unique_ptr<Demuxer> demuxer_;
   std::unique_ptr<DataSource> data_source_;
   std::unique_ptr<PipelineImpl> pipeline_;

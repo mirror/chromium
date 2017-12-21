@@ -123,6 +123,7 @@ PipelineIntegrationTestBase::PipelineIntegrationTestBase()
     : hashing_enabled_(false),
       clockless_playback_(false),
       webaudio_attached_(false),
+      using_chunk_demuxer_(false),
       pipeline_(
           new PipelineImpl(scoped_task_environment_.GetMainThreadTaskRunner(),
                            &media_log_)),
@@ -140,7 +141,14 @@ PipelineIntegrationTestBase::~PipelineIntegrationTestBase() {
   if (pipeline_->IsRunning())
     Stop();
 
-  demuxer_.reset();
+  if (using_chunk_demuxer_) {
+    ChunkDemuxer::DestroyInBackground(
+        static_cast<ChunkDemuxer*>(demuxer_.release()));
+    using_chunk_demuxer_ = false;
+  } else {
+    demuxer_.reset();
+  }
+
   pipeline_.reset();
   base::RunLoop().RunUntilIdle();
 }
@@ -601,6 +609,7 @@ PipelineStatus PipelineIntegrationTestBase::StartPipelineWithMediaSource(
       base::Bind(&PipelineIntegrationTestBase::OnStatusCallback,
                  base::Unretained(this), run_loop.QuitWhenIdleClosure()));
   demuxer_ = source->GetDemuxer();
+  using_chunk_demuxer_ = true;
 
   // MediaSource demuxer may signal config changes.
   for (auto* stream : demuxer_->GetAllStreams()) {

@@ -336,6 +336,13 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
 
   vfc_task_runner_->DeleteSoon(FROM_HERE, std::move(compositor_));
 
+  if (chunk_demuxer_) {
+    // Neuter |demuxer_| and have ChunkDemuxer destroy the object it pointed to.
+    Demuxer* raw_demuxer = demuxer_.release();
+    CHECK_EQ(raw_demuxer, chunk_demuxer_);
+    ChunkDemuxer::DestroyInBackground(chunk_demuxer_);
+  }
+
   media_log_->AddEvent(
       media_log_->CreateEvent(MediaLogEvent::WEBMEDIAPLAYER_DESTROYED));
 }
@@ -1388,6 +1395,8 @@ void WebMediaPlayerImpl::OnMemoryPressure(
 
   // base::Unretained is safe, since chunk_demuxer_ is actually owned by
   // |this| via this->demuxer_.
+  // TODO(wolenetz): Fix potential race with ~WMPI here. See
+  // https://crbug.com/796704.
   media_task_runner_->PostTask(
       FROM_HERE, base::Bind(&ChunkDemuxer::OnMemoryPressure,
                             base::Unretained(chunk_demuxer_),
