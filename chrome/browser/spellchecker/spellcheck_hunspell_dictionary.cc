@@ -287,18 +287,19 @@ void SpellcheckHunspellDictionary::DownloadDictionary(GURL url) {
   request_context_getter_ = NULL;
 }
 
-// The default_dictionary_file can either come from the standard list of
-// hunspell dictionaries (determined in InitializeDictionaryLocation), or it
-// can be passed in via an extension. In either case, the file is checked for
-// existence so that it's not re-downloaded.
-// For systemwide installations on Windows, the default directory may not
-// have permissions for download. In that case, the alternate directory for
-// download is chrome::DIR_USER_DATA.
-//
+#if !defined(OS_ANDROID)
 // static
 SpellcheckHunspellDictionary::DictionaryFile
 SpellcheckHunspellDictionary::OpenDictionaryFile(const base::FilePath& path) {
   base::AssertBlockingAllowed();
+
+  // The default_dictionary_file can either come from the standard list of
+  // hunspell dictionaries (determined in InitializeDictionaryLocation), or it
+  // can be passed in via an extension. In either case, the file is checked for
+  // existence so that it's not re-downloaded.
+  // For systemwide installations on Windows, the default directory may not
+  // have permissions for download. In that case, the alternate directory for
+  // download is chrome::DIR_USER_DATA.
   DictionaryFile dictionary;
 
 #if defined(OS_WIN)
@@ -313,13 +314,12 @@ SpellcheckHunspellDictionary::OpenDictionaryFile(const base::FilePath& path) {
     dictionary.path = path;
 #else
   dictionary.path = path;
-#endif
+#endif  // defined(OS_WIN)
 
   // Read the dictionary file and scan its data to check for corruption. The
   // scoping closes the memory-mapped file before it is opened or deleted.
   bool bdict_is_valid = false;
 
-#if !defined(OS_ANDROID)
   {
     base::MemoryMappedFile map;
     bdict_is_valid =
@@ -328,7 +328,6 @@ SpellcheckHunspellDictionary::OpenDictionaryFile(const base::FilePath& path) {
         hunspell::BDict::Verify(reinterpret_cast<const char*>(map.data()),
                                 map.length());
   }
-#endif
 
   if (bdict_is_valid) {
     dictionary.file.Initialize(dictionary.path,
@@ -340,15 +339,15 @@ SpellcheckHunspellDictionary::OpenDictionaryFile(const base::FilePath& path) {
   return dictionary;
 }
 
-// The default place where the spellcheck dictionary resides is
-// chrome::DIR_APP_DICTIONARIES.
-//
 // static
 SpellcheckHunspellDictionary::DictionaryFile
 SpellcheckHunspellDictionary::InitializeDictionaryLocation(
     const std::string& language) {
   base::AssertBlockingAllowed();
 
+  // The default place where the spellcheck dictionary resides is
+  // chrome::DIR_APP_DICTIONARIES.
+  //
   // Initialize the BDICT path. Initialization should be on the blocking
   // sequence because it checks if there is a "Dictionaries" directory and
   // create it.
@@ -384,6 +383,7 @@ void SpellcheckHunspellDictionary::InitializeDictionaryLocationComplete(
 
   InformListenersOfInitialization();
 }
+#endif  // !defined(OS_ANDROID)
 
 void SpellcheckHunspellDictionary::SaveDictionaryDataComplete(
     bool dictionary_saved) {
