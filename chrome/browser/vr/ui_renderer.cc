@@ -22,48 +22,19 @@ UiRenderer::~UiRenderer() = default;
 // itself correctly.
 void UiRenderer::Draw(const RenderInfo& render_info) {
   Draw2dBrowsing(render_info);
-  DrawSplashScreen(render_info);
+  DrawWebVrElements(render_info);
   DrawInputModalElements(render_info);
 }
 
 void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info) {
   const auto& elements = scene_->GetVisible2dBrowsingElements();
-  const auto& elements_overlay = scene_->GetVisible2dBrowsingOverlayElements();
-  if (elements.empty() && elements_overlay.empty())
-    return;
-
-  if (!elements.empty()) {
-    // Note that we do not clear the color buffer. The scene's background
-    // elements are responsible for drawing a complete background.
-    glEnable(GL_CULL_FACE);
-    DrawUiView(render_info, elements);
-  }
-
-  if (elements_overlay.empty())
-    return;
-
-  // The overlays do not make use of depth testing or backface culling.
-  glDisable(GL_CULL_FACE);
-  DrawUiView(render_info, elements_overlay);
-}
-
-void UiRenderer::DrawSplashScreen(const RenderInfo& render_info) {
-  const auto& elements = scene_->GetVisibleSplashScreenElements();
   if (elements.empty())
     return;
 
-  // WebVR is incompatible with 3D world compositing since the
-  // depth buffer was already populated with unknown scaling - the
-  // WebVR app has full control over zNear/zFar. Just leave the
-  // existing content in place in the primary buffer without
-  // clearing. Currently, there aren't any world elements in WebVR
-  // mode, this will need further testing if those get added
-  // later.
-  glDisable(GL_CULL_FACE);
+  // Note that we do not clear the color buffer. The scene's background
+  // elements are responsible for drawing a complete background.
+  glEnable(GL_CULL_FACE);
   DrawUiView(render_info, elements);
-
-  // NB: we do not draw the viewport aware objects here. They get put into
-  // another buffer that is size optimized.
 }
 
 void UiRenderer::DrawInputModalElements(const RenderInfo& render_info) {
@@ -76,6 +47,17 @@ void UiRenderer::DrawInputModalElements(const RenderInfo& render_info) {
     glEnable(GL_CULL_FACE);
     DrawUiView(render_info, controller_elements);
   }
+}
+
+void UiRenderer::DrawWebVrElements(const RenderInfo& render_info) {
+  const auto& elements = scene_->GetVisibleWebVrElements();
+  if (elements.empty())
+    return;
+
+  // Note that we do not clear the color buffer. The scene's background
+  // elements are responsible for drawing a complete background.
+  glEnable(GL_CULL_FACE);
+  DrawUiView(render_info, elements);
 }
 
 void UiRenderer::DrawWebVrOverlayForeground(const RenderInfo& render_info) {

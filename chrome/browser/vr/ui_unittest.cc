@@ -88,11 +88,9 @@ const std::vector<std::string> kElementsInDrawOrder = {
     "kBackgroundRight",
     "kBackgroundTop",
     "kBackgroundBottom",
-    "kScreenDimmer",
-    "kSplashScreenBackground",
-    "kWebVrTimeoutSpinnerBackground",
     "kFloor",
     "kCeiling",
+    "kWebVrBackground",
     "kBackplane",
     "kContentQuad",
     "kAudioCaptureIndicator",
@@ -113,6 +111,9 @@ const std::vector<std::string> kElementsInDrawOrder = {
     "kCloseButton:kTypeButtonForeground",
     "kCloseButton:kTypeButtonHitTarget",
     "kExclusiveScreenToast",
+    "kScreenDimmer",
+    "kExitWarningBackground",
+    "kExitWarningText",
     "kExitPromptBackplane",
     "kExitPrompt",
     "kAudioPermissionPromptBackplane",
@@ -140,14 +141,6 @@ const std::vector<std::string> kElementsInDrawOrder = {
     "kSpeechRecognitionListeningCloseButton:kTypeButtonBackground",
     "kSpeechRecognitionListeningCloseButton:kTypeButtonForeground",
     "kSpeechRecognitionListeningCloseButton:kTypeButtonHitTarget",
-    "kController",
-    "kLaser",
-    "kReticle",
-    "kKeyboard",
-    "kExitWarningBackground",
-    "kExitWarningText",
-    "kWebVrUrlToast",
-    "kExclusiveScreenToastViewportAware",
     "kSplashScreenText",
     "kWebVrTimeoutSpinner",
     "kWebVrTimeoutMessage",
@@ -158,6 +151,12 @@ const std::vector<std::string> kElementsInDrawOrder = {
     "kWebVrTimeoutMessageButton:kTypeButtonForeground",
     "kWebVrTimeoutMessageButton:kTypeButtonHitTarget",
     "kWebVrTimeoutMessageButtonText",
+    "kController",
+    "kLaser",
+    "kReticle",
+    "kKeyboard",
+    "kWebVrUrlToast",
+    "kExclusiveScreenToastViewportAware",
 };
 
 static constexpr float kTolerance = 1e-5f;
@@ -344,8 +343,7 @@ TEST_F(UiTest, WebVrAutopresented) {
   CreateSceneForAutoPresentation();
 
   // Initially, we should only show the splash screen.
-  VerifyOnlyElementsVisible("Initial",
-                            {kSplashScreenText, kSplashScreenBackground});
+  VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
 
   // Enter WebVR with autopresentation.
   ui_->SetWebVrMode(true, false);
@@ -371,15 +369,13 @@ TEST_F(UiTest, WebVrSplashScreenHiddenWhenTimeoutImminent) {
   CreateSceneForAutoPresentation();
 
   // Initially, we should only show the splash screen.
-  VerifyOnlyElementsVisible("Initial",
-                            {kSplashScreenText, kSplashScreenBackground});
+  VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
 
   ui_->SetWebVrMode(true, false);
   ui_->OnWebVrTimeoutImminent();
 
-  VerifyOnlyElementsVisible(
-      "Timeout imminent",
-      {kWebVrTimeoutSpinner, kWebVrTimeoutSpinnerBackground});
+  VerifyOnlyElementsVisible("Timeout imminent",
+                            {kWebVrTimeoutSpinner, kWebVrBackground});
 }
 
 TEST_F(UiTest, AppButtonClickForAutopresentation) {
@@ -559,16 +555,25 @@ TEST_F(UiTest, UiUpdatesForWebVR) {
   model_->permissions.location_access = true;
   model_->permissions.bluetooth_connected = true;
 
-  auto* web_vr_root = scene_->GetUiElementByName(kWebVrRoot);
-  for (auto& element : *web_vr_root) {
-    SCOPED_TRACE(element.name());
-    EXPECT_TRUE(element.draw_phase() == kPhaseNone ||
-                element.draw_phase() == kPhaseOverlayBackground ||
-                element.draw_phase() == kPhaseOverlayForeground);
-  }
+  VerifyOnlyElementsVisible("Elements hidden",
+                            std::set<UiElementName>{kWebVrBackground});
+}
 
-  // All elements should be hidden.
+// This test verifies that we ignore the WebVR frame when we're not expecting
+// WebVR presentation. You can get an unexpected frame when for example, the
+// user hits the app button to exit WebVR mode, but the site continues to pump
+// frames. If the frame is not ignored, our UI will think we're in WebVR mode.
+TEST_F(UiTest, WebVrFramesIgnoredWhenUnexpected) {
+  CreateScene(kNotInCct, kInWebVr);
+
+  ui_->OnWebVrFrameAvailable();
   VerifyOnlyElementsVisible("Elements hidden", std::set<UiElementName>{});
+  // Disable WebVR mode.
+  ui_->SetWebVrMode(false, false);
+
+  // New frame available after exiting WebVR mode.
+  ui_->OnWebVrFrameAvailable();
+  VerifyOnlyElementsVisible("Browser visible", kElementsVisibleInBrowsing);
 }
 
 TEST_F(UiTest, UiUpdateTransitionToWebVR) {
@@ -726,7 +731,7 @@ TEST_F(UiTest, WebVrTimeout) {
   CreateScene(kNotInCct, kInWebVr);
 
   ui_->SetWebVrMode(true, false);
-  model_->web_vr_timeout_state = kWebVrAwaitingFirstFrame;
+  model_->web_vr_model.state = kWebVrAwaitingFirstFrame;
 
   RunFor(MsToDelta(500));
   VerifyVisibility(
@@ -739,11 +744,11 @@ TEST_F(UiTest, WebVrTimeout) {
       false);
   VerifyVisibility(
       {
-          kWebVrTimeoutSpinnerBackground,
+          kWebVrBackground,
       },
       true);
 
-  model_->web_vr_timeout_state = kWebVrTimeoutImminent;
+  model_->web_vr_model.state = kWebVrTimeoutImminent;
   RunFor(MsToDelta(500));
   VerifyVisibility(
       {
@@ -754,11 +759,11 @@ TEST_F(UiTest, WebVrTimeout) {
       false);
   VerifyVisibility(
       {
-          kWebVrTimeoutSpinner, kWebVrTimeoutSpinnerBackground,
+          kWebVrTimeoutSpinner, kWebVrBackground,
       },
       true);
 
-  model_->web_vr_timeout_state = kWebVrTimedOut;
+  model_->web_vr_model.state = kWebVrTimedOut;
   RunFor(MsToDelta(500));
   VerifyVisibility(
       {
@@ -767,10 +772,9 @@ TEST_F(UiTest, WebVrTimeout) {
       false);
   VerifyVisibility(
       {
-          kWebVrTimeoutSpinnerBackground, kWebVrTimeoutMessage,
-          kWebVrTimeoutMessageLayout, kWebVrTimeoutMessageIcon,
-          kWebVrTimeoutMessageText, kWebVrTimeoutMessageButton,
-          kWebVrTimeoutMessageButtonText,
+          kWebVrBackground, kWebVrTimeoutMessage, kWebVrTimeoutMessageLayout,
+          kWebVrTimeoutMessageIcon, kWebVrTimeoutMessageText,
+          kWebVrTimeoutMessageButton, kWebVrTimeoutMessageButtonText,
       },
       true);
 }
@@ -1022,9 +1026,7 @@ TEST_F(UiTest, TransientToastsWithDelayedFirstFrame) {
   CreateSceneForAutoPresentation();
 
   // Initially, we should only show the splash screen.
-  VerifyOnlyElementsVisible("Initial",
-                            {kSplashScreenText, kSplashScreenBackground});
-
+  VerifyOnlyElementsVisible("Initial", {kSplashScreenText, kWebVrBackground});
   // Enter WebVR with autopresentation.
   ui_->SetWebVrMode(true, false);
   EXPECT_TRUE(RunFor(MsToDelta(2000)));
