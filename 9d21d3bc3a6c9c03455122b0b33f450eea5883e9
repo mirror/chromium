@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ade490ce_2885922f",
+        "filename": "ios/web/public/test/web_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T17:53:22Z",
+      "side": 1,
+      "message": "WebTest::GetWebClient() casts web_client_ to TestWebClient*. Can this constructor take TestWebClient instead?",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "9d21d3bc3a6c9c03455122b0b33f450eea5883e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
