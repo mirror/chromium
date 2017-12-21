@@ -47,6 +47,9 @@ class ArcImeBridge {
   virtual void SendInsertText(const base::string16& text) = 0;
   virtual void SendOnKeyboardBoundsChanging(const gfx::Rect& new_bounds) = 0;
   virtual void SendExtendSelectionAndDelete(size_t before, size_t after) = 0;
+  virtual bool SendOnKeyboardAppearanceChanging(
+      bool is_available,
+      const gfx::Rect& new_bounds) = 0;
 
  protected:
   ArcImeBridge() {}
