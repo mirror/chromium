@@ -73,8 +73,6 @@ static void ExpectContainsType(const FileDescriptorProto& proto,
 
 // ===================================================================
 
-#if GTEST_HAS_PARAM_TEST
-
 // SimpleDescriptorDatabase, EncodedDescriptorDatabase, and
 // DescriptorPoolDatabase call for very similar tests.  Instead of writing
 // three nearly-identical sets of tests, we use parameterized tests to apply
@@ -481,8 +479,6 @@ INSTANTIATE_TEST_CASE_P(MemoryConserving, DescriptorDatabaseTest,
     testing::Values(&EncodedDescriptorDatabaseTestCase::New));
 INSTANTIATE_TEST_CASE_P(Pool, DescriptorDatabaseTest,
     testing::Values(&DescriptorPoolDatabaseTestCase::New));
-
-#endif  // GTEST_HAS_PARAM_TEST
 
 TEST(EncodedDescriptorDatabaseExtraTest, FindNameOfFileContainingSymbol) {
   // Create two files, one of which is in two parts.
