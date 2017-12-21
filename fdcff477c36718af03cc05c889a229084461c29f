@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4547abfb_6f18a694",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "An AppId is a FIDO-defined concept and is, mostly, an origin. The FIDO U2F spec is being replaced by the W3C webauthn spec, which uses \"RP IDs\", which are domains. The list here contains both, with AppIds being distinguished by including \u0027/\u0027 somewhere. (In the future, AppId support will be dropped, as will this whole extension API, as webauthn replaces it.)",
+      "parentUuid": "2a876645_53a0a337",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b673f2_06cb7026",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "47fb1d63_0d4a7cc6",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "It\u0027s half documentation and half saving some comparisons. But since we know that app_id is well formed, find_if will work. Done.",
+      "parentUuid": "84b673f2_06cb7026",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1803443b_0f09a9a8",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-21T06:57:31Z",
       "side": 1,
       "message": "extensions don\u0027t exist on android.  This if def, I think, is equivalent to #if false.  Are you getting a compiler error otherwise?",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7f09e7_ca4b7ca3",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "No, this is just forward-looking: this code will be used for webauthn, which is implemented natively, in 2018. So I\u0027m just getting the strings and things ready with that in mind. I can turn this into a commented block if you prefer.",
+      "parentUuid": "1803443b_0f09a9a8",
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b288d4a7_a061c117",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1071a0a6_238a9705",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec7b512_1e763970",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d739decd_476a51c5",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec7b512_1e763970",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f3967aa9_a420b967",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc51b6c_cb7eff47",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de55b6f_fa7d0ab6",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1280167b_82df1f63",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "It could do because it obviously can\u0027t change the result, but I wanted as much code as possible to be exercised before all the paperwork is complete to launch this.",
+      "parentUuid": "7de55b6f_fa7d0ab6",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4983500d_0a7a02a6",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e56f8ef_af533f80",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Deleted. (And other instances in this file.)",
+      "parentUuid": "4983500d_0a7a02a6",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "131c1ad3_b8c4535a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done. (Here and elsewhere.)",
+      "parentUuid": "acd6dd41_51c07eef",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 29
+      },
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2bf350_9c4900f4",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 8
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "c4bf67e1_49fc7a52",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2bf350_9c4900f4",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ac81da_7b3657c6",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 8
@@ -192,6 +378,24 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3123368d_7c9edd6d",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ac81da_7b3657c6",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +436,48 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975a9389_e07a8966",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "I\u0027ve added a definition at the top of the namespace since the term is used throughout this file.",
+      "parentUuid": "9f83a934_805e8a82",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab7244ea_07d2d154",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-21T21:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578992f1_2ccec711",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
