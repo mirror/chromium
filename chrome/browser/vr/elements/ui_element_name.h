@@ -44,6 +44,7 @@ enum UiElementName {
   kOmniboxOuterLayout,
   kOmniboxShadow,
   k2dBrowsingVisibiltyControlForOmnibox,
+  k2dBrowsingVisibiltyControlForVoice,
   kIndicatorLayout,
   kAudioCaptureIndicator,
   kVideoCaptureIndicator,
