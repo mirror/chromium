@@ -310,6 +310,24 @@ class NonGarbageCollectedContainer {
   int y_;
 };
 
+class NonGarbageCollectedContainerRoot {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+ public:
+  NonGarbageCollectedContainerRoot(Object* obj1, Object* obj2, int y)
+      : next_(obj1, y), obj_(obj2) {}
+  virtual ~NonGarbageCollectedContainerRoot() {}
+
+  virtual void Trace(blink::Visitor* visitor) {
+    visitor->Trace(next_);
+    visitor->Trace(obj_);
+  }
+
+ private:
+  NonGarbageCollectedContainer next_;
+  Member<Object> obj_;
+};
+
 }  // namespace
 
 TEST(IncrementalMarkingTest, HeapVectorAssumptions) {
@@ -473,6 +491,21 @@ TEST(IncrementalMarkingTest, HeapVectorSwapStdPair) {
   {
     ExpectWriteBarrierFires<Object> scope(ThreadState::Current(), {obj1, obj2});
     std::swap(vec1, vec2);
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapVectorEagerTracingStopsAtMember) {
+  Object* obj1 = Object::Create();
+  Object* obj2 = Object::Create();
+  Object* obj3 = Object::Create();
+  obj1->set_next(obj3);
+  HeapVector<NonGarbageCollectedContainerRoot> vec;
+  {
+    ExpectWriteBarrierFires<Object> scope(ThreadState::Current(), {obj1, obj2});
+    vec.emplace_back(obj1, obj2, 3);
+    // |obj3| is only reachable fro |obj1| which is not eagerly traced. Only
+    // objects without object headers are eagerly traced.
+    EXPECT_FALSE(HeapObjectHeader::FromPayload(obj3)->IsMarked());
   }
 }
 
