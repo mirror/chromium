@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63f3094e_5a14bfac",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Done, also made this code the same as the viz version.",
+      "parentUuid": "9fe7d3ae_e8fe7cfb",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45ec628_33723572",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c64331_6d7e1c5e",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Done, and cleaned up shared_worker_context_provider_ so it\u0027s not called \"shared_\" and it\u0027s directly a RasterContextProvider.",
+      "parentUuid": "c45ec628_33723572",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "846dd647_befa4993",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73438127_0b3e21ec",
+      "range": {
+        "startLine": 494,
+        "startChar": 12,
+        "endLine": 494,
+        "endChar": 18
+      },
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8751489a_cd7c1369",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f2d481_36a2df7c",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8751489a_cd7c1369",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5637a549_4c43534b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Removed variable.  This is the ui::ContextProviderCommandBuffer constructor which still needs to support share contexts.",
+      "parentUuid": "47a411ba_439ce4a3",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c41255e9_f44e87f5",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3879183_1ce652e2",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T01:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41255e9_f44e87f5",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
