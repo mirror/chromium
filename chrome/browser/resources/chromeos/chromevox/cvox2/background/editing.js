@@ -505,6 +505,11 @@ AutomationRichEditableText.prototype = {
    * @private
    */
   speakCurrentRichLine_: function(prevLine) {
+    var root = this.node_.root;
+    root = root ? AutomationUtil.getTopLevelRoot(root) : null;
+    if (root && root.url.indexOf('https://docs.google.com/document/') == 0)
+      return;
+
     var prev = prevLine ? prevLine.startContainer_ : this.node_;
     var lineNodes =
         /** @type {Array<!AutomationNode>} */ (
