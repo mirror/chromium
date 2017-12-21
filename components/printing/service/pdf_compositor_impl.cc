@@ -112,7 +112,7 @@ void PdfCompositorImpl::CompositeToPdf(
   DCHECK(!base::ContainsKey(pending_requests_, RequestId(frame_id, page_num)));
 
   // Recursively composite all subframes.
-  std::map<uint64_t, sk_sp<SkPicture>> subframes;
+  DeserializationContext subframes;
   for (auto content_id : subframe_content_ids) {
     auto frame_iter = content_to_frame_node_map_.find(content_id);
     if (frame_iter == content_to_frame_node_map_.end())
@@ -142,8 +142,9 @@ void PdfCompositorImpl::CompositeToPdf(
   std::vector<SkDocumentPage> pages(page_count);
   bool result;
 #if defined(EXPERIMENTAL_SKIA)
+  SkDeserialProcs procs = DeserializationProcs(&subframes);
   result =
-      SkMultiPictureDocumentRead(&stream, pages.data(), page_count, &subframes);
+      SkMultiPictureDocumentRead(&stream, pages.data(), page_count, &procs);
 #else
   result = SkMultiPictureDocumentRead(&stream, pages.data(), page_count);
 #endif
@@ -214,7 +215,7 @@ sk_sp<SkPicture> PdfCompositorImpl::CompositeSubframe(int frame_id) {
   frame_info->composited = true;
 
   // Composite subframes first.
-  std::map<uint64_t, sk_sp<SkPicture>> subframes;
+  DeserializationContext subframes;
   for (auto content_id : frame_info->subframe_content_ids) {
     auto subframe_iter = GetFrameEntryForContent(content_id);
     if (subframe_iter == frame_info_map_.end())
@@ -231,8 +232,8 @@ sk_sp<SkPicture> PdfCompositorImpl::CompositeSubframe(int frame_id) {
   SkMemoryStream stream(iter->second->serialized_content->memory(),
                         iter->second->serialized_content->mapped_size());
 #if defined(EXPERIMENTAL_SKIA)
-  iter->second->content =
-      SkDeserializePictureWithOopContent(&stream, &subframes);
+  SkDeserialProcs procs = DeserializationProcs(&subframes);
+  iter->second->content = SkPicture::MakeFromStream(&stream, &procs);
 #else
   iter->second->content = nullptr;
 #endif

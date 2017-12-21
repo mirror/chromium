@@ -149,7 +149,7 @@ bool PrintViewManagerBase::PrintDocument(
     const gfx::Rect& content_area,
     const gfx::Point& offsets) {
   std::unique_ptr<PdfMetafileSkia> metafile =
-      std::make_unique<PdfMetafileSkia>(SkiaDocumentType::PDF);
+      std::make_unique<PdfMetafileSkia>(SkiaDocumentType::PDF, 0);
   if (!metafile->InitFromData(print_data->front(), print_data->size())) {
     NOTREACHED() << "Invalid metafile";
     web_contents()->Stop();

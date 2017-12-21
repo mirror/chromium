@@ -1969,6 +1969,12 @@ PaintOpBuffer::CompositeIterator::CompositeIterator(CompositeIterator&& other) =
 PaintOpBuffer::PaintOpBuffer()
     : has_non_aa_paint_(false), has_discardable_images_(false) {}
 
+PaintOpBuffer::PaintOpBuffer(const gfx::Rect& rect, sk_sp<SkPicture> pic)
+    : rect_(rect),
+      picture_(pic),
+      has_non_aa_paint_(false),
+      has_discardable_images_(false) {}
+
 PaintOpBuffer::PaintOpBuffer(PaintOpBuffer&& other) {
   *this = std::move(other);
 }
@@ -2119,8 +2125,15 @@ const PaintOp* PaintOpBuffer::PlaybackFoldingIterator::NextUnfoldedOp() {
 void PaintOpBuffer::Playback(SkCanvas* canvas,
                              ImageProvider* image_provider,
                              const std::vector<size_t>* offsets) const {
+  if (picture_) {
+    // Draw out-of-process picture this buffer links to.
+    SkMatrix matrix = SkMatrix::MakeTrans(rect_.x(), rect_.y());
+    canvas->drawPicture(picture_, &matrix, nullptr);
+  }
+
   if (!op_count_)
     return;
+
   if (offsets && offsets->empty())
     return;
 
