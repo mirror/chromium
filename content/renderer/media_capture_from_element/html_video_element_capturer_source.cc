@@ -124,6 +124,8 @@ void HtmlVideoElementCapturerSource::sendNewFrame() {
   if (!web_media_player_ || new_frame_callback_.is_null())
     return;
 
+  if (start_capture_time_.is_null())
+    start_capture_time_ = base::TimeTicks::Now();
   const base::TimeTicks current_time = base::TimeTicks::Now();
   const blink::WebSize resolution = web_media_player_->NaturalSize();
 
@@ -147,7 +149,7 @@ void HtmlVideoElementCapturerSource::sendNewFrame() {
 
   scoped_refptr<media::VideoFrame> frame = frame_pool_.CreateFrame(
       media::PIXEL_FORMAT_I420, resolution, gfx::Rect(resolution), resolution,
-      base::TimeTicks::Now() - base::TimeTicks());
+      current_time - start_capture_time_);
 
   const uint32 source_pixel_format =
       (kN32_SkColorType == kRGBA_8888_SkColorType) ? libyuv::FOURCC_ABGR
