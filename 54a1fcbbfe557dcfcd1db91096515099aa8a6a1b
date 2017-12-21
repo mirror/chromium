@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e3c587_b8e017f3",
+        "filename": "third_party/WebKit/LayoutTests/media/track/vtt-cue-float-precision.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 0,
+      "message": "This still holds true of said number, so don\u0027t remove it. You could expand on it by making it say \"double precision\" and \"single precision\" if you like.",
+      "range": {
+        "startLine": 10,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "54a1fcbbfe557dcfcd1db91096515099aa8a6a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

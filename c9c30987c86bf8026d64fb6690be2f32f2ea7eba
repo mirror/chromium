@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee450941_2c6148ff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/settings-line-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "You could probably fix this (as a follow-up) by rejecting non-finite values in ScanDouble.",
+      "range": {
+        "startLine": 2,
+        "startChar": 35,
+        "endLine": 2,
+        "endChar": 104
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3c6761_4e4ffee3",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "line_position",
+      "range": {
+        "startLine": 303,
+        "startChar": 9,
+        "endLine": 303,
+        "endChar": 21
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecc65b2_27afb8c1",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "text_position",
+      "range": {
+        "startLine": 337,
+        "startChar": 9,
+        "endLine": 337,
+        "endChar": 21
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db17c87_2d620fb7",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "You can drop this temporary variable, and just use |size| directly.",
+      "range": {
+        "startLine": 364,
+        "startChar": 9,
+        "endLine": 364,
+        "endChar": 16
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2134aa_ed82bf57",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "This is still float, so we get an implicit conversion here. Explicitly narrow here, or propagate the type.",
+      "range": {
+        "startLine": 651,
+        "startChar": 2,
+        "endLine": 651,
+        "endChar": 26
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966875f9_5682e481",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 718,
+        "endChar": 43
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8e6f80_3b00b087",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScanner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "I think you should consider just replacing all uses of ScanFloat (and ScanPercentage(float\u0026)) in one go - if not, just make the float-versions call the double-versions and then \"narrow\" the result.\n\nRegardless, you should update the unit tests to use ScanDouble.",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2909cbab_a9bd6285",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScanner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T11:52:16Z",
+      "side": 1,
+      "message": "ScanDouble",
+      "range": {
+        "startLine": 147,
+        "startChar": 30,
+        "endLine": 147,
+        "endChar": 40
+      },
+      "revId": "c9c30987c86bf8026d64fb6690be2f32f2ea7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
