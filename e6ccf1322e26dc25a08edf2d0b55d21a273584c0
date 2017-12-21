@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "336c3656_fceaa27c",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-21T19:28:14Z",
+      "side": 1,
+      "message": "Done. How\u0027s this API different form WebState::GetLastCommittedURL()?",
+      "parentUuid": "3ac46661_f28e25f1",
+      "range": {
+        "startLine": 828,
+        "startChar": 25,
+        "endLine": 828,
+        "endChar": 50
+      },
+      "revId": "e6ccf1322e26dc25a08edf2d0b55d21a273584c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f96d080_fa7f8d00",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T16:59:45Z",
       "side": 1,
       "message": "Is it possible to change this pref while app is running? This method will be called once for Incognito and once for Non-Incognito browser state.",
+      "range": {
+        "startLine": 193,
+        "startChar": 10,
+        "endLine": 193,
+        "endChar": 43
+      },
+      "revId": "e6ccf1322e26dc25a08edf2d0b55d21a273584c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3a037d_ea167bb7",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-21T19:28:14Z",
+      "side": 1,
+      "message": "Yes, it is. Will remove this check so that the script is always injected. This pref is checked in AutofillAgent so that autofill can be enabled/disabled.",
+      "parentUuid": "1f96d080_fa7f8d00",
       "range": {
         "startLine": 193,
         "startChar": 10,
