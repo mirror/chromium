@@ -133,6 +133,11 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
      * Turn off everything.
      */
     public void shutDown() {
+        mRequestedByClient = null;
+        mOwnedByClient = null;
+        detachSurfaceNow(mTranslucent);
+        detachSurfaceNow(mOpaque);
+
         mTranslucent.surfaceHolder().removeCallback(this);
         mOpaque.surfaceHolder().removeCallback(this);
     }
