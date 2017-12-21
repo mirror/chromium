@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5b85833_4fa078ad",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-21T00:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd9371b_7dfb0217",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "358bc7a3_b57ee095",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382536a7_895e3174",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-21T00:01:49Z",
+      "side": 1,
+      "message": "Per offline discussion, GPUInfo still contains PCI vendor/device IDs that may trigger blacklisting. So we can\u0027t just remove this logic. Will address this in a separate CL.",
+      "parentUuid": "358bc7a3_b57ee095",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8882183_9eee53c5",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-21T00:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f4a18a_7ea44d75",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e44fb7_9813850b",
         "filename": "gpu/ipc/service/gpu_init.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e0585e_d5487979",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-21T00:01:49Z",
+      "side": 1,
+      "message": "Done. (I don\u0027t think we care, but it\u0027s easy hook-up)",
+      "parentUuid": "83e44fb7_9813850b",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
