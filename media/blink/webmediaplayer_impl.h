@@ -108,6 +108,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 
+  // Destroys |demuxer| and records a UMA for the time taken to destroy it.
+  static void DemuxerDestructionHelper(std::unique_ptr<Demuxer> demuxer);
+
   // WebSurfaceLayerBridgeObserver implementation.
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(blink::WebLayer* web_layer) override;
