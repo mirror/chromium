@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23cf14d4_709ea955",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T19:28:59Z",
+      "side": 1,
+      "message": "Do you want to put back constants for the removed types instead? Then you can keep the NOTREACHED() for types we never had.",
+      "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
