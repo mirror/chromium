@@ -1422,7 +1422,58 @@ void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
 
 void PrintRenderFrameHelper::OnPrintFrameContent(const gfx::Rect& rect,
                                                  uint32_t content_id) {
-  // TODO(weili): Implement this function.
+  if (ipc_nesting_level_ > 1)
+    return;
+
+  auto weak_this = weak_ptr_factory_.GetWeakPtr();
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  frame->DispatchBeforePrintEvent();
+  if (!weak_this) {
+    DLOG(ERROR) << "Weak ptr should not be nullptr";
+    return;
+  }
+
+  // If the last request is not finished yet, do not proceed.
+  if (prep_frame_view_) {
+    DLOG(ERROR) << "Previous request is still ongoing";
+    return;
+  }
+
+  // If we are printing a PDF extension frame, find the plugin node and print
+  // that instead.
+  auto plugin = delegate_->GetPdfElement(frame);
+
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  PrintMsg_Print_Params print_params;
+  print_params.page_size = gfx::Size(rect.width(), rect.height());
+  print_params.content_size = print_params.page_size;
+  print_params.printable_area = rect;
+  print_params.dpi = kPointsPerInch;
+  print_params.printed_doc_type = SkiaDocumentType::MSKP;
+  // Use default values for all other fields.
+
+  prep_frame_view_ = base::MakeUnique<PrepareFrameAndViewForPrint>(
+      print_params, frame, plugin, false /* ignore_css_margins_ */);
+  prep_frame_view_->StartPrinting();
+
+  PrintPageInternal(print_params, 0, 1, frame, &metafile, nullptr, nullptr);
+
+  FinishFramePrinting();
+
+  metafile.FinishFrameContent();
+
+  // Send the print result back.
+  PrintHostMsg_DidPrintContent_Params printed_frame_params;
+  if (!CopyMetafileDataToSharedMem(metafile, &printed_frame_params)) {
+    LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+    return;
+  }
+  printed_frame_params.subframe_content_ids = metafile.GetSubframeContentIDs();
+  Send(new PrintHostMsg_DidPrintFrameContent(routing_id(),
+                                             printed_frame_params));
+
+  if (weak_this)
+    frame->DispatchAfterPrintEvent();
 }
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
@@ -1970,7 +2021,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
   params->metafile_data_handle =
       base::SharedMemory::DuplicateHandle(shared_buf->handle());
   params->data_size = metafile.GetDataSize();
-  params->subframe_content_ids = std::vector<uint32_t>();
+  params->subframe_content_ids = metafile.GetSubframeContentIDs();
   return true;
 }
 
