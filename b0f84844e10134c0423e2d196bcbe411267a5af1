@@ -46,6 +46,30 @@
       "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc06f16c_1ee9ec40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-21T17:07:14Z",
+      "side": 1,
+      "message": "Could/should other browsers built on top of Chromium also remove the Java code related to the non-existent preferences?",
+      "parentUuid": "e249cca3_3c649f34",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 75
+      },
+      "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
