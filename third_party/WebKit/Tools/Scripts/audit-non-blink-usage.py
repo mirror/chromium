@@ -121,6 +121,14 @@ _CONFIG = [
     },
     {
         'paths': [
+            'third_party/WebKit/Source/core/workers/',
+            'third_party/WebKit/Source/core/loader/'],
+        'allowed': [
+            'base::WaitableEvent',
+        ],
+    },
+    {
+        'paths': [
             'third_party/WebKit/Source/modules/device_orientation/',
             'third_party/WebKit/Source/modules/gamepad/',
             'third_party/WebKit/Source/modules/sensor/',

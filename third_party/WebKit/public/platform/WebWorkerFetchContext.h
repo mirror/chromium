@@ -14,7 +14,8 @@
 
 namespace base {
 class SingleThreadTaskRunner;
-}
+class WaitableEvent;
+}  // namespace base
 
 namespace blink {
 
@@ -30,6 +31,12 @@ class WebDocumentSubresourceFilter;
 class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() = default;
+
+  // Returns a raw pointer of a WaitableEvent which will be signaled from the
+  // main thread to terminate synchronous loading requests on the worker thread.
+  // The raw pointer is valid only while the WebWorkerFetchContext is alive
+  // because the WaitableEvent is owned by the WebWorkerFetchContext.
+  virtual base::WaitableEvent* GetTerminateSyncLoadEvent() = 0;
 
   virtual void InitializeOnWorkerThread(
       scoped_refptr<base::SingleThreadTaskRunner>) = 0;
