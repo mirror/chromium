@@ -63,6 +63,8 @@ import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.contextmenu.ContextMenuPopulator;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchTabHelper;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
+import org.chromium.chrome.browser.devtools.DevToolsAgentHost;
+import org.chromium.chrome.browser.devtools.DevToolsAgentHostImpl;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.download.ChromeDownloadDelegate;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
@@ -418,6 +420,9 @@ public class Tab
     private int mTopControlsHeight;
     private int mBottomControlsHeight;
     private boolean mControlsResizeView;
+
+    /** The DevToolsAgentHost for this Tab, if it has been created. */
+    private DevToolsAgentHost mDevToolsAgentHost;
 
     private GestureStateListener createGestureStateListener() {
         return new GestureStateListener() {
@@ -3434,6 +3439,16 @@ public class Tab
         nativeMediaDownloadInProductHelpDismissed(mNativeTabAndroid);
     }
 
+    public DevToolsAgentHost getOrCreateDevToolsAgentHost() {
+        if (mDevToolsAgentHost == null) {
+            if (mNativeTabAndroid == 0) return null;
+            long nativeHost = nativeGetOrCreateDevToolsAgentHost(mNativeTabAndroid);
+            if (nativeHost == 0) return null;
+            return new DevToolsAgentHostImpl(nativeHost);
+        }
+        return mDevToolsAgentHost;
+    }
+
     private native void nativeInit();
     private native void nativeDestroy(long nativeTabAndroid);
     private native void nativeInitWebContents(long nativeTabAndroid, boolean incognito,
@@ -3469,4 +3484,5 @@ public class Tab
     private native void nativeEnableEmbeddedMediaExperience(long nativeTabAndroid, boolean enabled);
     private native void nativeAttachDetachedTab(long nativeTabAndroid);
     private native void nativeMediaDownloadInProductHelpDismissed(long nativeTabAndroid);
+    private native long nativeGetOrCreateDevToolsAgentHost(long nativeTabAndroid);
 }

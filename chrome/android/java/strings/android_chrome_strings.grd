@@ -1220,7 +1220,7 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
 
       <message name="IDS_POWERED_BY_CHROME_MESSAGE" desc="A message indicating that the current page is running in Chrome.">
-        Powered by Chrome
+        Powered by Chrome with Assistant
       </message>
 
       <!-- Sync strings in account management dialog -->

@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <string>
 
 #include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
@@ -270,6 +271,10 @@ class TabAndroid : public CoreTabHelperDelegate,
 
   void AttachDetachedTab(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj);
+
+  intptr_t GetOrCreateDevToolsAgentHost(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
   // Register the Tab's native methods through JNI.
   static bool RegisterTabAndroid(JNIEnv* env);

@@ -201,6 +201,9 @@
     <!-- Translate Infobar colors -->
     <color name="translate_overflow_menu_divider_color">@color/google_grey_300</color>
 
+    <!-- Assistant colors -->
+    <color name="assistant_bottombar_background">#FF00FF</color>
+
     <!-- Other colors -->
     <color name="media_viewer_bg">#000000</color>
     <color name="image_viewer_bg">#0E0E0E</color>

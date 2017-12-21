@@ -54,6 +54,15 @@
                 android:inflatedId="@+id/bottombar"
                 android:layout="@layout/custom_tabs_bottombar" />
 
+            <ViewStub
+                android:id="@+id/assistant_bottombar_stub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="start|bottom"
+                android:inflatedId="@+id/assistant_bottombar"
+                android:layout="@layout/assistant_bottombar" />
+
             <org.chromium.chrome.browser.widget.FadingBackgroundView
                 android:id="@+id/fading_focus_target"
                 android:layout_width="match_parent"

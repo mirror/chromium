@@ -345,6 +345,7 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
      *         buttons, returns null.
      */
     public CustomButtonParams getCustomButtonOnToolbar() {
+        if (shouldEnableWebAssistant()) return null;
         return mToolbarButton;
     }
 
@@ -541,5 +542,22 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
      */
     boolean shouldShowDownloadButton() {
         return !mDisableDownload;
+    }
+
+    /**
+     * @return Whether the Web Assistant should be enabled for this custom tab.
+     */
+    public boolean shouldEnableWebAssistant() {
+        return getWebAssistantServiceUrl() != null;
+    }
+
+    /**
+     * @return The endpoint to use for the Web Assistant service, if it is enabled for this Tab.
+     */
+    public String getWebAssistantServiceUrl() {
+        // The launch intent should opt-in into the Web Assistant to enable this, and set the
+        // endpoint URL there.
+        // Hardcoded here for development.
+        return "http://localhost:9999/webAssistant";
     }
 }
