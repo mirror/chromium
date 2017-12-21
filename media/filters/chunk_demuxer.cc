@@ -15,6 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/bind_to_current_loop.h"
@@ -450,6 +451,7 @@ ChunkDemuxer::ChunkDemuxer(
     MediaLog* media_log)
     : state_(WAITING_FOR_INIT),
       cancel_next_seek_(false),
+      destructing_(false),
       host_(NULL),
       open_cb_(open_cb),
       progress_cb_(progress_cb),
@@ -1136,7 +1138,33 @@ void ChunkDemuxer::ChangeState_Locked(State new_state) {
   state_ = new_state;
 }
 
+// static
+void ChunkDemuxer::DestroyInBackground(ChunkDemuxer* demuxer) {
+  CHECK(!demuxer->destructing_);
+  demuxer->destructing_ = true;
+
+  // ChunkDemuxer's streams may contain much buffered, compressed media which
+  // may need to be paged back in during destruction.  Such paging delay may
+  // exceed the renderer hang monitor's threshold, so we do the actual
+  // destruction in the background.  On advice of task_scheduler OWNERS,
+  // MayBlock() is not used because the data is in virtual memory; and
+  // CONTINUE_ON_SHUTDOWN is used to allow process termination to not block on
+  // completing the task.
+  PostTaskWithTraits(FROM_HERE,
+                     {base::TaskPriority::BACKGROUND,
+                      base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+                     base::BindOnce(&DoBackgroundDestruction, demuxer));
+}
+
+// static
+void ChunkDemuxer::DoBackgroundDestruction(ChunkDemuxer* demuxer) {
+  DCHECK(demuxer->destructing_);
+  SCOPED_UMA_HISTOGRAM_TIMER("Media.MSE.DemuxerDestructionTime");
+  delete demuxer;
+}
+
 ChunkDemuxer::~ChunkDemuxer() {
+  CHECK(destructing_);  // Use DestroyInBackground() to start dtor.
   DCHECK_NE(state_, INITIALIZED);
 }
 
