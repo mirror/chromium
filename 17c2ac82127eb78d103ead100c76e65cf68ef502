@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab21fa54_d53e6b02",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-21T00:21:28Z",
+      "side": 1,
+      "message": "The HasLayer path of BoundingBoxInPaginationContainer() uses visual overflow (in PaintLayer::PhysicalBoundingBox()) instead of border box, in which case BoundingBoxInPaginationContainer().Location() is not the base of paint offset. PaintLayer does need to use PhysicalBoundingBox for fragmentation to get all contained fragments.\n\nThe vertical-rl multicol test cases happen to have visual overflow on top and left and failed.",
+      "parentUuid": "a919863c_0c83f6cd",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a7b00c1_ab1d8b23",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "401c6f81_4e6f2dba",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-21T00:21:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7b00c1_ab1d8b23",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b11cb3_9efbd28a",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-20T23:36:29Z",
       "side": 1,
       "message": "Is this the equivalent logic to ComputeOffsetFromCompositedAncestor in CompositedLayerMapping.cpp for SPv1? If so, why is the logic different?",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d18c4d_348bf5cc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-21T00:21:28Z",
+      "side": 1,
+      "message": "They seem different. Here we get the pagination offset of the composited layer from the enclosing pagination layer. This is equivalent to the first iteration of the for loop in UpdateFragments() without computing FragmentClip.",
+      "parentUuid": "c5b11cb3_9efbd28a",
       "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
