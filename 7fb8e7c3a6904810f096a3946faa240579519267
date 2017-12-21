@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb566306_e925cd4b",
+        "filename": "ios/web/webui/shared_resources_data_source_ios.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-21T00:58:19Z",
+      "side": 1,
+      "message": "Could you add a comment to this function?  I know it\u0027s pretty self-explanatory (and the old version didn\u0027t have one), but we try to have a function-level comment for all our functions.",
+      "revId": "7fb8e7c3a6904810f096a3946faa240579519267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
