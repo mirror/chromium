@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1bd6346_69f2c80b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-21T09:15:51Z",
+      "side": 1,
+      "message": "i\u0027m not sure of the naming of is_visible and is_active. i think that \"active\" is usually used to describe the currently-selected tab in a window; this is_active field also seems to track whether the tab is additionally in the last-active-and-still-visible browser.\n\nwhat are the traits that you\u0027re interested in? is it something like:\n\n- tab is active/selected or not\n- tab is in last-active browser\n- tab\u0027s browser is focused\n- ?\n\ni\u0027m not sure of the overlap between these fields. if is_browser_in_focus is true and is_visible is true, will is_active always be true, for instance? if is_visible is false, is is_active also always false?",
+      "revId": "35ef5df6f0f58aa3dd59bdd97cb0f107520fd96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4bc024_f42efbcd",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-21T09:15:51Z",
+      "side": 1,
+      "message": "nit: is_browser_focused matches the terminology used elsewhere",
+      "revId": "35ef5df6f0f58aa3dd59bdd97cb0f107520fd96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
