@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/field_trial.h"
@@ -19,6 +20,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_command_line.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -33,6 +35,7 @@
 #include "components/previews/core/previews_features.h"
 #include "components/previews/core/previews_logger.h"
 #include "components/previews/core/previews_opt_out_store.h"
+#include "components/previews/core/previews_switches.h"
 #include "components/previews/core/previews_user_data.h"
 #include "components/variations/variations_associated_data.h"
 #include "net/base/load_flags.h"
@@ -388,8 +391,10 @@ class PreviewsIODataTest : public testing::Test {
     return &network_quality_estimator_;
   }
 
- private:
+ protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+
+ private:
   base::FieldTrialList field_trial_list_;
   TestPreviewsIOData io_data_;
   optimization_guide::OptimizationGuideService optimization_guide_service_;
@@ -1176,6 +1181,29 @@ TEST_F(PreviewsIODataTest,
   io_data()->SetIgnorePreviewsBlacklistDecision(false /* ignored */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(ui_service()->blacklist_ignored());
+}
+
+TEST_F(PreviewsIODataTest, UnsetIgnorePreviewsBlacklistDisabledIgnoreViaFlag) {
+  ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kIgnorePreviewsBlacklist));
+  InitializeUIService();
+
+  io_data()->UnsetIgnorePreviewsBlacklistDecision();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(ui_service()->blacklist_ignored());
+}
+
+TEST_F(PreviewsIODataTest, UnsetIgnorePreviewsBlacklistEnabledIgnoreViaFlag) {
+  base::test::ScopedCommandLine scoped_command_line;
+  base::CommandLine* command_line = scoped_command_line.GetProcessCommandLine();
+  command_line->AppendSwitch(switches::kIgnorePreviewsBlacklist);
+  ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kIgnorePreviewsBlacklist));
+
+  InitializeUIService();
+  io_data()->UnsetIgnorePreviewsBlacklistDecision();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(ui_service()->blacklist_ignored());
 }
 
 TEST_F(PreviewsIODataTest, GeneratePageIdMakesUniqueNonZero) {
