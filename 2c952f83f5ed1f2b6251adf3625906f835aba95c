@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb4d88ad_1631429a",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "DVLOG? READ_U8 does DVLOG, and that\u0027s probably preferable since this is usually an input stream issue.",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1208057e_6c67278e",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "Perhaps also print out the error?",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c238d10a_bfdd4f12",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "s/Decode(): //",
+      "range": {
+        "startLine": 254,
+        "startChar": 16,
+        "endLine": 254,
+        "endChar": 25
+      },
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156c6823_44240261",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "Perhaps \"Error in dequeued input buffer\" to make this more clear, since the dequeue actually succeeded.",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2c2ae4_df5b9d26",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "Error in dequeued output buffer.",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc353c3_ab71e14e",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-21T02:15:29Z",
+      "side": 1,
+      "message": "I think perhaps we\u0027d prefer DVLOGF, as it\u0027s an input stream issue; similarly for other errors in this method.",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
