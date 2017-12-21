@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd4b252_e48259d5",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-21T18:55:34Z",
+      "side": 1,
+      "message": "Put downstream somewhere in flag name? Since this flag only controls downstream (Still new to naming here though).",
+      "range": {
+        "startLine": 2930,
+        "startChar": 3,
+        "endLine": 2930,
+        "endChar": 4
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7fbc79_5e00dc9e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-21T18:55:34Z",
+      "side": 1,
+      "message": "Why two flags ?",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 5
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83febd2f_159fc2fe",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-21T18:55:34Z",
+      "side": 1,
+      "message": "Typo: s/showns/shows/",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 3
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bb1fd7_e067a32e",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-21T18:55:34Z",
+      "side": 1,
+      "message": "We should change for all autofills and I guess this change is making that.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 3
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
