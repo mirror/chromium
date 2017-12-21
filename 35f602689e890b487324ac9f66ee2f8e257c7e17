@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "846e8b7e_3f5e8b05",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "The name of the experiment seems out of place here. We are only interested in whether an http url is likely to be fetched by DRP, which doesn\u0027t seem to have anything to do with DNS presolution.\n\nHow about rename this experiment to something general\nkEnableDataSaverPreconnectSavings?",
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b5e70a8_0ea8e300",
         "filename": "chrome/browser/net/predictor.h",
         "patchSetId": 7
@@ -36,6 +53,24 @@
       "writtenOn": "2017-12-20T20:17:05Z",
       "side": 1,
       "message": "fetched",
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80e8b5d_dbe1553e",
+        "filename": "chrome/browser/net/predictor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "nit: Can you inline the last sentence to the \"true\" case?\n\ne.g.\n\"go through a proxy\" -\u003e \"go through a proxy or the data saver proxy\"",
+      "parentUuid": "8b5e70a8_0ea8e300",
       "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +146,23 @@
     },
     {
       "key": {
+        "uuid": "82b39097_a3916d56",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "This data_reduction_proxy::features::kDisableDnsPreResolution check should be moved to the call place.\nDNS presolution doesn\u0027t have anything to do with whether a url will be fetched by data saver.\n\nIf you agree on the renaming suggestion, we can keep it here.",
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7993054c_77414765",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 7
@@ -128,6 +180,64 @@
         "endLine": 146,
         "endChar": 47
       },
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a92207_886a39c5",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "nit: Also could you add documentation to the method?",
+      "parentUuid": "7993054c_77414765",
+      "range": {
+        "startLine": 146,
+        "startChar": 15,
+        "endLine": 146,
+        "endChar": 47
+      },
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a921eac5_9a6d96dd",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "The test involves a http url and not an https url.\nAm I missing something?",
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef82aa0_acfba99b",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-21T14:50:50Z",
+      "side": 1,
+      "message": "The test says \"subresource\". The url here says \"main_frame\".\n\nWhat\u0027s the difference between this test and the previous one?",
       "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
