@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b03bf8cb_9f9044c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11c5fb2a_dce7d10e",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29c996e_25bf96cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 4
@@ -68,6 +92,30 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab06599_e67906fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c29c996e_25bf96cc",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "57a50203_6d197b9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8952424_326d6289",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c1a6f8a_df987856",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 4
@@ -114,6 +186,30 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a06b919_ba1e85e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "I\u0027ve always disliked commenting boolean parameters in the function call for readability reasons, so I used a static final approach as you suggested.",
+      "parentUuid": "5c1a6f8a_df987856",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5b5abe46_39618234",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "681b5768_505ee877",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9c243d_d82e6191",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 4
@@ -154,6 +274,24 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5981e60b_16d48143",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b9c243d_d82e6191",
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "6eb5e9f6_197485fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a848aed_8efebcd6",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e63e80_8d516994",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 4
@@ -200,6 +362,30 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5130e3e4_2ea3c17c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e63e80_8d516994",
+      "range": {
+        "startLine": 79,
+        "startChar": 19,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "59d0529a_5564bbf4",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb54876_d71a2cf7",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89888be1_6fa399b1",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 4
@@ -246,6 +456,30 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6de84f_f5a030de",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89888be1_6fa399b1",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "a09591dc_3618ae36",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e448192f_f0096139",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76437f9_af921abc",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 4
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "f2c97bc4_376b944b",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "I presume you meant that I should also document what the function does, so I did that.",
+      "parentUuid": "c76437f9_af921abc",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8bbbad_9a1747fc",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 4
@@ -309,6 +591,24 @@
       "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cbbb43_14f395f5",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T23:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8bbbad_9a1747fc",
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
