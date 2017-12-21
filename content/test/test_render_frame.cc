@@ -144,6 +144,7 @@ void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
     CommitNavigation(ResourceResponseHead(), GURL(), common_params,
                      request_params, mojom::URLLoaderClientEndpointsPtr(),
                      URLLoaderFactoryBundle(),
+                     mojom::ControllerServiceWorkerInfoPtr(),
                      base::UnguessableToken::Create());
   } else {
     OnNavigate(common_params, start_params, request_params);

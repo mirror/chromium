@@ -206,6 +206,13 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
     return running_hosted_version_.get();
   }
 
+  // S13nServiceWorker:
+  // For service worker clients. Similar to GetControllerServiceWorker, but this
+  // returns an unbound ptr which is supposed to be sent to clients. It is
+  // invalid to call this when controller_ is null. This may also return nullptr
+  // if the controller service worker is not starting up or running.
+  mojom::ControllerServiceWorkerPtr GetControllerServiceWorkerPtr();
+
   // Sets the |document_url_|.  When this object is for a client,
   // |matching_registrations_| gets also updated to ensure that |document_url_|
   // is in scope of all |matching_registrations_|.
@@ -572,6 +579,13 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       bindings_for_worker_threads_;
 
   std::vector<base::Closure> queued_events_;
+
+  // S13nServiceWorker:
+  // A service worker handle ID for the controller service worker that is
+  // pre-created before the renderer process (and therefore the dispatcher host)
+  // is created.
+  int precreated_controller_handle_id_ =
+      blink::mojom::kInvalidServiceWorkerHandleId;
 
   // For provider hosts that are hosting a running service worker.
   mojo::Binding<service_manager::mojom::InterfaceProvider>
