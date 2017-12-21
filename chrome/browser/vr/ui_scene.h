@@ -55,8 +55,7 @@ class UiScene {
   typedef std::vector<const UiElement*> Elements;
 
   Elements GetVisible2dBrowsingElements() const;
-  Elements GetVisible2dBrowsingOverlayElements() const;
-  Elements GetVisibleSplashScreenElements() const;
+  Elements GetVisibleWebVrElements() const;
   Elements GetVisibleWebVrOverlayForegroundElements() const;
   Elements GetVisibleControllerElements() const;
   Elements GetVisibleKeyboardElements() const;

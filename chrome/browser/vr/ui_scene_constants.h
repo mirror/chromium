@@ -90,7 +90,7 @@ static constexpr float kSplashScreenTextDistance = 2.5f;
 static constexpr float kSplashScreenTextFontHeightDMM = 0.05f;
 static constexpr float kSplashScreenTextWidthDMM = 0.9f;
 static constexpr float kSplashScreenTextVerticalOffsetDMM = -0.072f;
-static constexpr float kSplashScreenMinDurationSeconds = 3;
+static constexpr float kSplashScreenMinDurationSeconds = 2;
 
 static constexpr float kButtonDiameterDMM = 0.088f;
 static constexpr float kButtonZOffsetHoverDMM = 0.048;

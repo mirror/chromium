@@ -43,7 +43,7 @@ class UiRenderer {
 
  private:
   void Draw2dBrowsing(const RenderInfo& render_info);
-  void DrawSplashScreen(const RenderInfo& render_info);
+  void DrawWebVrElements(const RenderInfo& render_info);
   void DrawInputModalElements(const RenderInfo& render_info);
 
   void DrawUiView(const RenderInfo& render_info,
