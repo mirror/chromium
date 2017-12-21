@@ -70,6 +70,30 @@
       "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1afcc97_f041d22c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMetaElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-21T06:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eaa00f7_35e12d5b",
+      "range": {
+        "startLine": 443,
+        "startChar": 44,
+        "endLine": 443,
+        "endChar": 52
+      },
+      "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
