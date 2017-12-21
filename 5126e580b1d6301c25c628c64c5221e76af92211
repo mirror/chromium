@@ -22,6 +22,30 @@
       "revId": "5126e580b1d6301c25c628c64c5221e76af92211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d921532_37d00f8e",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-21T01:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "348e27c7_8693c77f",
+      "range": {
+        "startLine": 168,
+        "startChar": 31,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "5126e580b1d6301c25c628c64c5221e76af92211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
