@@ -13,15 +13,19 @@ namespace blink {
 // GENERATED_JAVA_PREFIX_TO_STRIP: WebTextInputMode
 enum WebTextInputMode {
   kWebTextInputModeDefault,
-  kWebTextInputModeNone,
-  kWebTextInputModeText,
-  kWebTextInputModeTel,
-  kWebTextInputModeUrl,
-  kWebTextInputModeEmail,
+  kWebTextInputModeVerbatim,
+  kWebTextInputModeLatin,
+  kWebTextInputModeLatinName,
+  kWebTextInputModeLatinProse,
+  kWebTextInputModeFullWidthLatin,
+  kWebTextInputModeKana,
+  kWebTextInputModeKanaName,
+  kWebTextInputModeKataKana,
   kWebTextInputModeNumeric,
-  kWebTextInputModeDecimal,
-  kWebTextInputModeSearch,
-  kWebTextInputModeMax = kWebTextInputModeSearch,
+  kWebTextInputModeTel,
+  kWebTextInputModeEmail,
+  kWebTextInputModeUrl,
+  kWebTextInputModeMax = kWebTextInputModeUrl,
 };
 
 }  // namespace blink

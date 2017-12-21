@@ -142,6 +142,9 @@ const char kDisableGestureRequirementForPresentation[] =
 // then the GPU process won't launch.
 const char kDisableGpu[]                    = "disable-gpu";
 
+// Disable async worker context.
+const char kDisableGpuAsyncWorkerContext[] = "disable-gpu-async-worker-context";
+
 // Prevent the compositor from using its GPU implementation.
 const char kDisableGpuCompositing[]         = "disable-gpu-compositing";
 
@@ -348,6 +351,10 @@ const char kEnableBackgroundFetchPersistence[] =
 // features.
 const char kEnableBlinkFeatures[]           = "enable-blink-features";
 
+// PlzNavigate: Use or not the experimental browser-side navigation path.
+const char kDisableBrowserSideNavigation[] = "disable-browser-side-navigation";
+const char kEnableBrowserSideNavigation[]   = "enable-browser-side-navigation";
+
 // Enable animating of images in the compositor instead of blink.
 const char kEnableCompositorImageAnimations[] =
     "enable-compositor-image-animations";
@@ -363,6 +370,9 @@ const char kEnableExperimentalWebPlatformFeatures[] =
 // Disables all RuntimeEnabledFeatures that can be enabled via OriginTrials.
 const char kDisableOriginTrialControlledBlinkFeatures[] =
     "disable-origin-trial-controlled-blink-features";
+
+// Makes the GL worker context run asynchronously by using a separate stream.
+const char kEnableGpuAsyncWorkerContext[] = "enable-gpu-async-worker-context";
 
 // Specify that all compositor resources should be backed by GPU memory buffers.
 const char kEnableGpuMemoryBufferCompositorResources[] =

@@ -229,11 +229,11 @@ void CSSToStyleMap::MapFillSize(StyleResolverState& state,
   layer->SetSizeLength(b);
 }
 
-void CSSToStyleMap::MapFillPositionX(StyleResolverState& state,
+void CSSToStyleMap::MapFillXPosition(StyleResolverState& state,
                                      FillLayer* layer,
                                      const CSSValue& value) {
   if (value.IsInitialValue()) {
-    layer->SetPositionX(FillLayer::InitialFillPositionX(layer->GetType()));
+    layer->SetXPosition(FillLayer::InitialFillXPosition(layer->GetType()));
     return;
   }
 
@@ -250,18 +250,18 @@ void CSSToStyleMap::MapFillPositionX(StyleResolverState& state,
                                                           CSSValueRight>(state,
                                                                          value);
 
-  layer->SetPositionX(length);
+  layer->SetXPosition(length);
   if (value.IsValuePair())
     layer->SetBackgroundXOrigin(
         ToCSSIdentifierValue(ToCSSValuePair(value).First())
             .ConvertTo<BackgroundEdgeOrigin>());
 }
 
-void CSSToStyleMap::MapFillPositionY(StyleResolverState& state,
+void CSSToStyleMap::MapFillYPosition(StyleResolverState& state,
                                      FillLayer* layer,
                                      const CSSValue& value) {
   if (value.IsInitialValue()) {
-    layer->SetPositionY(FillLayer::InitialFillPositionY(layer->GetType()));
+    layer->SetYPosition(FillLayer::InitialFillYPosition(layer->GetType()));
     return;
   }
 
@@ -278,7 +278,7 @@ void CSSToStyleMap::MapFillPositionY(StyleResolverState& state,
                                                           CSSValueBottom>(
         state, value);
 
-  layer->SetPositionY(length);
+  layer->SetYPosition(length);
   if (value.IsValuePair())
     layer->SetBackgroundYOrigin(
         ToCSSIdentifierValue(ToCSSValuePair(value).First())

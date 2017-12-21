@@ -49,7 +49,8 @@ void KillPluginOnIOThread(int child_id) {
     const content::ChildProcessData& data = iter.GetData();
     if (data.id == child_id) {
 #if defined(OS_WIN)
-      CrashDumpAndTerminateHungChildProcess(data.handle);
+      base::StringPairs crash_keys = {{"hung-reason", "plugin"}};
+      CrashDumpAndTerminateHungChildProcess(data.handle, crash_keys);
 #else
       base::Process process =
           base::Process::DeprecatedGetProcessFromHandle(data.handle);

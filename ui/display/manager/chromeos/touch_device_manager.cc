@@ -20,7 +20,7 @@
 namespace display {
 namespace {
 
-using ManagedDisplayInfoList = std::vector<ManagedDisplayInfo*>;
+using DisplayInfoList = std::vector<ManagedDisplayInfo*>;
 using DeviceList = std::vector<ui::TouchscreenDevice>;
 
 constexpr char kFallbackTouchDeviceName[] = "fallback_touch_device_name";
@@ -95,7 +95,7 @@ bool IsInternalDevice(const ui::TouchscreenDevice& device) {
 
 // Returns a pointer to the internal display from the list of |displays|. Will
 // return null if there is no internal display in the list.
-ManagedDisplayInfo* GetInternalDisplay(ManagedDisplayInfoList* displays) {
+ManagedDisplayInfo* GetInternalDisplay(DisplayInfoList* displays) {
   auto it =
       std::find_if(displays->begin(), displays->end(), &IsInternalDisplay);
   return it == displays->end() ? nullptr : *it;
@@ -116,7 +116,7 @@ void ClearCalibrationDataInMap(TouchDeviceManager::AssociationInfoMap& info_map,
 ManagedDisplayInfo* GetBestMatchForDevice(
     const TouchDeviceManager::TouchAssociationMap& touch_associations,
     const TouchDeviceIdentifier& identifier,
-    ManagedDisplayInfoList* displays) {
+    DisplayInfoList* displays) {
   ManagedDisplayInfo* display_info = nullptr;
   base::Time most_recent_timestamp;
 
@@ -260,7 +260,7 @@ void TouchDeviceManager::AssociateTouchscreens(
   // has been associated, it is removed from the |displays| or |devices| list.
 
   // Construct our initial set of display/devices that we will process.
-  ManagedDisplayInfoList displays;
+  DisplayInfoList displays;
   for (ManagedDisplayInfo& display : *all_displays) {
     // Reset touch support from the display.
     display.set_touch_support(Display::TOUCH_SUPPORT_UNAVAILABLE);
@@ -296,9 +296,8 @@ void TouchDeviceManager::AssociateTouchscreens(
     LOG(WARNING) << "Unmatched device " << device.name;
 }
 
-void TouchDeviceManager::AssociateInternalDevices(
-    ManagedDisplayInfoList* displays,
-    DeviceList* devices) {
+void TouchDeviceManager::AssociateInternalDevices(DisplayInfoList* displays,
+                                                  DeviceList* devices) {
   VLOG(2) << "Trying to match internal devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
 
@@ -341,9 +340,8 @@ void TouchDeviceManager::AssociateInternalDevices(
   }
 }
 
-void TouchDeviceManager::AssociateFromHistoricalData(
-    ManagedDisplayInfoList* displays,
-    DeviceList* devices) {
+void TouchDeviceManager::AssociateFromHistoricalData(DisplayInfoList* displays,
+                                                     DeviceList* devices) {
   if (!devices->size() || !displays->size())
     return;
 
@@ -366,7 +364,7 @@ void TouchDeviceManager::AssociateFromHistoricalData(
   }
 }
 
-void TouchDeviceManager::AssociateUdlDevices(ManagedDisplayInfoList* displays,
+void TouchDeviceManager::AssociateUdlDevices(DisplayInfoList* displays,
                                              DeviceList* devices) {
   VLOG(2) << "Trying to match udl devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
@@ -387,9 +385,8 @@ void TouchDeviceManager::AssociateUdlDevices(ManagedDisplayInfoList* displays,
   }
 }
 
-void TouchDeviceManager::AssociateSameSizeDevices(
-    ManagedDisplayInfoList* displays,
-    DeviceList* devices) {
+void TouchDeviceManager::AssociateSameSizeDevices(DisplayInfoList* displays,
+                                                  DeviceList* devices) {
   // Associate screens/displays with the same size.
   VLOG(2) << "Trying to match same-size devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
@@ -428,9 +425,8 @@ void TouchDeviceManager::AssociateSameSizeDevices(
   }
 }
 
-void TouchDeviceManager::AssociateToSingleDisplay(
-    ManagedDisplayInfoList* displays,
-    DeviceList* devices) {
+void TouchDeviceManager::AssociateToSingleDisplay(DisplayInfoList* displays,
+                                                  DeviceList* devices) {
   // If there is only one display left, then we should associate all input
   // devices with it.
   VLOG(2) << "Trying to match to single display (" << displays->size()
@@ -458,9 +454,8 @@ void TouchDeviceManager::AssociateToSingleDisplay(
   devices->clear();
 }
 
-void TouchDeviceManager::AssociateAnyRemainingDevices(
-    ManagedDisplayInfoList* displays,
-    DeviceList* devices) {
+void TouchDeviceManager::AssociateAnyRemainingDevices(DisplayInfoList* displays,
+                                                      DeviceList* devices) {
   if (!displays->size() || !devices->size())
     return;
   VLOG(2) << "Trying to match remaining " << devices->size()

@@ -20,6 +20,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/switches.h"
 #include "components/autofill/core/common/autofill_features.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/feature_engagement/public/feature_constants.h"
@@ -109,6 +110,10 @@ const FeatureEntry::Choice kUseDdljsonApiChoices[] = {
 //
 // When adding a new choice, add it to the end of the list.
 const flags_ui::FeatureEntry kFeatureEntries[] = {
+    {"browser-task-scheduler", flag_descriptions::kBrowserTaskScheduler,
+     flag_descriptions::kBrowserTaskSchedulerDescription, flags_ui::kOsIos,
+     ENABLE_DISABLE_VALUE_TYPE(switches::kEnableBrowserTaskScheduler,
+                               switches::kDisableBrowserTaskScheduler)},
     {"mark-non-secure-as", flag_descriptions::kMarkHttpAsName,
      flag_descriptions::kMarkHttpAsDescription, flags_ui::kOsIos,
      MULTI_VALUE_TYPE(kMarkHttpAsChoices)},
@@ -296,10 +301,10 @@ class FlagsStateSingleton {
 
 void ConvertFlagsToSwitches(flags_ui::FlagsStorage* flags_storage,
                             base::CommandLine* command_line) {
-  AppendSwitchesFromExperimentalSettings(command_line);
   FlagsStateSingleton::GetFlagsState()->ConvertFlagsToSwitches(
       flags_storage, command_line, flags_ui::kAddSentinels,
       switches::kEnableFeatures, switches::kDisableFeatures);
+  AppendSwitchesFromExperimentalSettings(command_line);
 }
 
 std::vector<std::string> RegisterAllFeatureVariationParameters(

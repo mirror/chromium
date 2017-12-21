@@ -206,7 +206,7 @@ public class TabWebContentsObserver extends WebContentsObserver {
 
         boolean isTrackedPage = hasCommitted && isInMainFrame && !isErrorPage && !isSameDocument
                 && !isFragmentNavigation && UrlUtilities.isHttpOrHttps(url);
-        UmaUtils.registerFinishNavigation(isTrackedPage);
+        UmaUtils.recordFinishNavigation(isTrackedPage);
         if (!hasCommitted) return;
 
         if (isInMainFrame) {

@@ -6,21 +6,24 @@
 
 """Merges a list of jars into a single jar."""
 
-import argparse
+import optparse
 import sys
 
 from util import build_utils
 
-
 def main(args):
   args = build_utils.ExpandFileArgs(args)
-  parser = argparse.ArgumentParser()
+  parser = optparse.OptionParser()
   build_utils.AddDepfileOption(parser)
-  parser.add_argument('--output', required=True, help='Path to output jar.')
-  parser.add_argument('--jars', required=True, help='GN list of jar inputs.')
-  options = parser.parse_args(args)
+  parser.add_option('--output', help='Path to output jar.')
+  parser.add_option('--inputs', action='append', help='List of jar inputs.')
+  options, _ = parser.parse_args(args)
+  build_utils.CheckOptions(options, parser, ['output', 'inputs'])
 
-  input_jars = build_utils.ParseGnList(options.jars)
+  input_jars = []
+  for inputs_arg in options.inputs:
+    input_jars.extend(build_utils.ParseGnList(inputs_arg))
+
   build_utils.MergeZips(options.output, input_jars)
 
   if options.depfile:
@@ -28,4 +31,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-  main(sys.argv[1:])
+  sys.exit(main(sys.argv[1:]))

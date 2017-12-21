@@ -33,7 +33,7 @@ CursorRenderer::CursorRenderer(CursorDisplaySetting cursor_display_setting)
     : cursor_display_setting_(cursor_display_setting),
       cursor_(gfx::NativeCursor()),
       update_scaled_cursor_bitmap_(false),
-      mouse_move_behavior_atomic_(NOT_MOVING),
+      mouse_move_behavior_(NOT_MOVING),
       weak_factory_(this) {
   // CursorRenderer can be constructed on any thread, but thereafter must be
   // used according to class-level comments.
@@ -58,7 +58,7 @@ void CursorRenderer::SnapshotCursorState() {
   // In CURSOR_DISPLAYED_ON_MOUSE_MOVEMENT mode, if the user hasn't recently
   // moved nor clicked the mouse, do not render the mouse cursor.
   if (cursor_display_setting_ == CURSOR_DISPLAYED_ON_MOUSE_MOVEMENT &&
-      mouse_move_behavior() != RECENTLY_MOVED_OR_CLICKED) {
+      mouse_move_behavior_ != RECENTLY_MOVED_OR_CLICKED) {
     view_size_ = gfx::Size();
     return;
   }
@@ -90,8 +90,7 @@ void CursorRenderer::SnapshotCursorState() {
 }
 
 bool CursorRenderer::RenderOnVideoFrame(media::VideoFrame* frame,
-                                        const gfx::Rect& region_in_frame,
-                                        CursorRendererUndoer* undoer) {
+                                        const gfx::Rect& region_in_frame) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(render_sequence_checker_);
   DCHECK(frame);
 
@@ -153,22 +152,17 @@ bool CursorRenderer::RenderOnVideoFrame(media::VideoFrame* frame,
       gfx::Rect(cursor_position, gfx::Size(scaled_cursor_bitmap_.width(),
                                            scaled_cursor_bitmap_.height())),
       frame->visible_rect());
-  if (rect.IsEmpty())
-    return false;
-
-  if (undoer)
-    undoer->TakeSnapshot(*frame, rect);
 
   // Render the cursor in the video frame. This loop also performs a simple
   // RGB→YUV color space conversion, with alpha-blended compositing.
   for (int y = rect.y(); y < rect.bottom(); ++y) {
     int cursor_y = y - cursor_position.y();
-    uint8_t* yplane = frame->visible_data(media::VideoFrame::kYPlane) +
-                      y * frame->stride(media::VideoFrame::kYPlane);
-    uint8_t* uplane = frame->visible_data(media::VideoFrame::kUPlane) +
-                      (y / 2) * frame->stride(media::VideoFrame::kUPlane);
-    uint8_t* vplane = frame->visible_data(media::VideoFrame::kVPlane) +
-                      (y / 2) * frame->stride(media::VideoFrame::kVPlane);
+    uint8_t* yplane = frame->data(media::VideoFrame::kYPlane) +
+                      y * frame->row_bytes(media::VideoFrame::kYPlane);
+    uint8_t* uplane = frame->data(media::VideoFrame::kUPlane) +
+                      (y / 2) * frame->row_bytes(media::VideoFrame::kUPlane);
+    uint8_t* vplane = frame->data(media::VideoFrame::kVPlane) +
+                      (y / 2) * frame->row_bytes(media::VideoFrame::kVPlane);
     for (int x = rect.x(); x < rect.right(); ++x) {
       int cursor_x = x - cursor_position.x();
       SkColor color = scaled_cursor_bitmap_.getColor(cursor_x, cursor_y);
@@ -181,8 +175,6 @@ bool CursorRenderer::RenderOnVideoFrame(media::VideoFrame* frame,
       yplane[x] = alpha_blend(alpha, color_y, yplane[x]);
 
       // Only sample U and V at even coordinates.
-      // TODO(miu): This isn't right. We should be blending four cursor pixels
-      // into each U or V output pixel.
       if ((x % 2 == 0) && (y % 2 == 0)) {
         int color_u = clip_byte(
             ((color_r * -38 + color_g * -74 + color_b * 112 + 128) >> 8) + 128);
@@ -204,15 +196,17 @@ void CursorRenderer::SetNeedsRedrawCallback(base::RepeatingClosure callback) {
 }
 
 bool CursorRenderer::IsUserInteractingWithView() const {
-  return mouse_move_behavior() == RECENTLY_MOVED_OR_CLICKED;
+  DCHECK_CALLED_ON_VALID_SEQUENCE(ui_sequence_checker_);
+
+  return mouse_move_behavior_ == RECENTLY_MOVED_OR_CLICKED;
 }
 
 void CursorRenderer::OnMouseMoved(const gfx::Point& location) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(ui_sequence_checker_);
 
-  switch (mouse_move_behavior()) {
+  switch (mouse_move_behavior_) {
     case NOT_MOVING:
-      set_mouse_move_behavior(STARTING_TO_MOVE);
+      mouse_move_behavior_ = STARTING_TO_MOVE;
       mouse_move_start_location_ = location;
       mouse_activity_ended_timer_.Start(
           FROM_HERE, base::TimeDelta::FromSeconds(IDLE_TIMEOUT_SECONDS),
@@ -224,7 +218,7 @@ void CursorRenderer::OnMouseMoved(const gfx::Point& location) {
               MIN_MOVEMENT_PIXELS ||
           std::abs(location.y() - mouse_move_start_location_.y()) >
               MIN_MOVEMENT_PIXELS) {
-        set_mouse_move_behavior(RECENTLY_MOVED_OR_CLICKED);
+        mouse_move_behavior_ = RECENTLY_MOVED_OR_CLICKED;
         mouse_activity_ended_timer_.Reset();
       }
       break;
@@ -236,7 +230,7 @@ void CursorRenderer::OnMouseMoved(const gfx::Point& location) {
   // If there is sufficient mouse activity, or the cursor should always be
   // displayed, snapshot the cursor state and run the redraw callback to show it
   // at its new location in the video.
-  if (mouse_move_behavior() == RECENTLY_MOVED_OR_CLICKED ||
+  if (mouse_move_behavior_ == RECENTLY_MOVED_OR_CLICKED ||
       cursor_display_setting_ == CURSOR_DISPLAYED_ALWAYS) {
     SnapshotCursorState();
     if (!needs_redraw_callback_.is_null()) {
@@ -256,7 +250,7 @@ void CursorRenderer::OnMouseClicked(const gfx::Point& location) {
         base::BindRepeating(&CursorRenderer::OnMouseHasGoneIdle,
                             base::Unretained(this)));
   }
-  set_mouse_move_behavior(RECENTLY_MOVED_OR_CLICKED);
+  mouse_move_behavior_ = RECENTLY_MOVED_OR_CLICKED;
 
   // Regardless of the |cursor_display_setting_|, snapshot the cursor and run
   // the redraw callback to show it at its current location in the video.
@@ -269,7 +263,7 @@ void CursorRenderer::OnMouseClicked(const gfx::Point& location) {
 void CursorRenderer::OnMouseHasGoneIdle() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(ui_sequence_checker_);
 
-  set_mouse_move_behavior(NOT_MOVING);
+  mouse_move_behavior_ = NOT_MOVING;
 
   // The timer has fired to indicate no further mouse activity. It's a good idea
   // to snapshot the cursor and run the redraw callback to ensure it is being
@@ -278,71 +272,6 @@ void CursorRenderer::OnMouseHasGoneIdle() {
   SnapshotCursorState();
   if (!needs_redraw_callback_.is_null()) {
     needs_redraw_callback_.Run();
-  }
-}
-
-CursorRendererUndoer::CursorRendererUndoer() = default;
-
-CursorRendererUndoer::~CursorRendererUndoer() = default;
-
-namespace {
-
-// Returns the rect of pixels in a Chroma plane affected by the given |rect| in
-// the Luma plane.
-gfx::Rect ToEncompassingChromaRect(const gfx::Rect& rect) {
-  const int left = rect.x() / 2;
-  const int top = rect.y() / 2;
-  const int right = (rect.right() + 1) / 2;
-  const int bottom = (rect.bottom() + 1) / 2;
-  return gfx::Rect(left, top, right - left, bottom - top);
-}
-
-constexpr size_t kYuvPlanes[] = {media::VideoFrame::kYPlane,
-                                 media::VideoFrame::kUPlane,
-                                 media::VideoFrame::kVPlane};
-
-}  // namespace
-
-void CursorRendererUndoer::TakeSnapshot(const media::VideoFrame& frame,
-                                        const gfx::Rect& rect) {
-  DCHECK(frame.visible_rect().Contains(rect));
-
-  rect_ = rect;
-  const gfx::Rect chroma_rect = ToEncompassingChromaRect(rect_);
-  snapshot_.resize(rect_.size().GetArea() + 2 * chroma_rect.size().GetArea());
-
-  uint8_t* dst = snapshot_.data();
-  for (auto plane : kYuvPlanes) {
-    const gfx::Rect& plane_rect =
-        (plane == media::VideoFrame::kYPlane) ? rect_ : chroma_rect;
-    const int stride = frame.stride(plane);
-    const uint8_t* src =
-        frame.visible_data(plane) + plane_rect.y() * stride + plane_rect.x();
-    for (int row = 0; row < plane_rect.height(); ++row) {
-      memcpy(dst, src, plane_rect.width());
-      src += stride;
-      dst += plane_rect.width();
-    }
-  }
-}
-
-void CursorRendererUndoer::Undo(media::VideoFrame* frame) const {
-  DCHECK(frame->visible_rect().Contains(rect_));
-
-  const gfx::Rect chroma_rect = ToEncompassingChromaRect(rect_);
-
-  const uint8_t* src = snapshot_.data();
-  for (auto plane : kYuvPlanes) {
-    const gfx::Rect& plane_rect =
-        (plane == media::VideoFrame::kYPlane) ? rect_ : chroma_rect;
-    const int stride = frame->stride(plane);
-    uint8_t* dst =
-        frame->visible_data(plane) + plane_rect.y() * stride + plane_rect.x();
-    for (int row = 0; row < plane_rect.height(); ++row) {
-      memcpy(dst, src, plane_rect.width());
-      src += plane_rect.width();
-      dst += stride;
-    }
   }
 }
 

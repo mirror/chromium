@@ -34,6 +34,7 @@
 #include <memory>
 #include <utility>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/TypeTraits.h"
 #include "public/platform/WebCallbacks.h"
 
@@ -82,13 +83,13 @@ namespace blink {
 // };
 // std::unique_ptr<WebCallbacks<std::unique_ptr<WebMyClass>,
 //                 const WebMyErrorClass&>>
-//     callbacks =
-//         std::make_unique<CallbackPromiseAdapter<MyClass, MyErrorClass>>(
-//             resolver);
+//     callbacks = WTF::wrapUnique(
+//         new CallbackPromiseAdapter<MyClass, MyErrorClass>(resolver));
 // ...
 //
 // std::unique_ptr<WebCallbacks<bool, const WebMyErrorClass&>> callbacks2 =
-//     std::make_unique<CallbackPromiseAdapter<bool, MyErrorClass>>(resolver);
+//     WTF::wrapUnique(
+//         new CallbackPromiseAdapter<bool, MyErrorClass>(resolver));
 // ...
 //
 //

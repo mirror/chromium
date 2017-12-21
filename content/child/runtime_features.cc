@@ -80,10 +80,6 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 #if !defined(OS_MACOSX)
   WebRuntimeFeatures::EnableNotificationContentImage(true);
 #endif
-
-#if defined(OS_ANDROID)
-  WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(true);
-#endif
 }
 
 void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
@@ -416,9 +412,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableRequireCSSExtensionForFile(
       base::FeatureList::IsEnabled(features::kRequireCSSExtensionForFile));
-
-  WebRuntimeFeatures::EnablePictureInPicture(
-      base::FeatureList::IsEnabled(media::kPictureInPicture));
 };
 
 }  // namespace content

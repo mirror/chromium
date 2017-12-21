@@ -5,7 +5,6 @@
 """Utilities for dealing with the python unittest module."""
 
 import fnmatch
-import re
 import sys
 import unittest
 
@@ -137,18 +136,13 @@ def FilterTestNames(all_tests, gtest_filter):
   if len(pattern_groups) > 1:
     negative_patterns = pattern_groups[1].split(':')
 
-  neg_pats = None
-  if negative_patterns:
-    neg_pats = re.compile('|'.join(fnmatch.translate(p) for p in
-                                   negative_patterns))
-
   tests = []
   test_set = set()
   for pattern in positive_patterns:
     pattern_tests = [
         test for test in all_tests
         if (fnmatch.fnmatch(test, pattern)
-            and not (neg_pats and neg_pats.match(test))
+            and not any(fnmatch.fnmatch(test, p) for p in negative_patterns)
             and test not in test_set)]
     tests.extend(pattern_tests)
     test_set.update(pattern_tests)

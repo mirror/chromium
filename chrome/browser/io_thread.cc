@@ -63,7 +63,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/user_agent.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
-#include "content/public/network/network_service.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
 #include "net/cert/caching_cert_verifier.h"
@@ -296,6 +295,7 @@ IOThread::IOThread(
 #endif
       globals_(nullptr),
       is_quic_allowed_on_init_(true),
+      network_service_request_(mojo::MakeRequest(&ui_thread_network_service_)),
       weak_factory_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_proxy =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
@@ -689,7 +689,7 @@ void IOThread::ClearHostCache(
 
 void IOThread::DisableQuic() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  globals_->quic_disabled = true;
+  globals_->network_service->DisableQuic();
 }
 
 net::SSLConfigService* IOThread::GetSSLConfigService() {
@@ -739,11 +739,21 @@ void IOThread::SetUpProxyService(
           : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
 }
 
+content::mojom::NetworkService* IOThread::GetNetworkServiceOnUIThread() {
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    return content::GetNetworkService();
+  } else {
+    return ui_thread_network_service_.get();
+  }
+}
+
 certificate_transparency::TreeStateTracker* IOThread::ct_tree_tracker() const {
   return ct_tree_tracker_.get();
 }
 
 void IOThread::ConstructSystemRequestContext() {
+  DCHECK(network_service_request_.is_pending());
+
   std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
       base::MakeUnique<content::URLRequestContextBuilderMojo>();
 
@@ -797,22 +807,16 @@ void IOThread::ConstructSystemRequestContext() {
 
   SetUpProxyService(builder.get());
 
+  globals_->network_service = content::NetworkService::Create(
+      std::move(network_service_request_), net_log_);
   if (!is_quic_allowed_on_init_)
-    globals_->quic_disabled = true;
+    globals_->network_service->DisableQuic();
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    globals_->system_request_context_owner =
-        std::move(builder)->Create(std::move(network_context_params_).get(),
-                                   !is_quic_allowed_on_init_, net_log_);
-    globals_->system_request_context =
-        globals_->system_request_context_owner.url_request_context.get();
-  } else {
-    globals_->system_network_context =
-        content::GetNetworkServiceImpl()->CreateNetworkContextWithBuilder(
-            std::move(network_context_request_),
-            std::move(network_context_params_), std::move(builder),
-            &globals_->system_request_context);
-  }
+  globals_->system_network_context =
+      globals_->network_service->CreateNetworkContextWithBuilder(
+          std::move(network_context_request_),
+          std::move(network_context_params_), std::move(builder),
+          &globals_->system_request_context);
 
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(globals_->system_request_context);

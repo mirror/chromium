@@ -15,9 +15,6 @@
 #endif
 
 namespace {
-base::test::ScopedTaskEnvironment::MainThreadType kDefaultMainThreadType =
-    base::test::ScopedTaskEnvironment::MainThreadType::IO;
-
 NetTestSuite* g_current_net_test_suite = nullptr;
 }  // namespace
 
@@ -49,23 +46,16 @@ void NetTestSuite::Shutdown() {
   TestSuite::Shutdown();
 }
 
-// static
 base::test::ScopedTaskEnvironment* NetTestSuite::GetScopedTaskEnvironment() {
   DCHECK(g_current_net_test_suite);
   return g_current_net_test_suite->scoped_task_environment_.get();
 }
 
-// static
 void NetTestSuite::SetScopedTaskEnvironment(
     base::test::ScopedTaskEnvironment::MainThreadType type) {
   g_current_net_test_suite->scoped_task_environment_ = nullptr;
   g_current_net_test_suite->scoped_task_environment_ =
       std::make_unique<base::test::ScopedTaskEnvironment>(type);
-}
-
-// static
-void NetTestSuite::ResetScopedTaskEnvironment() {
-  SetScopedTaskEnvironment(kDefaultMainThreadType);
 }
 
 void NetTestSuite::InitializeTestThread() {
@@ -84,5 +74,5 @@ void NetTestSuite::InitializeTestThreadNoNetworkChangeNotifier() {
 
   scoped_task_environment_ =
       std::make_unique<base::test::ScopedTaskEnvironment>(
-          kDefaultMainThreadType);
+          base::test::ScopedTaskEnvironment::MainThreadType::IO);
 }

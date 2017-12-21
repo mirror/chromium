@@ -285,11 +285,24 @@ class CONTENT_EXPORT RenderFrameHostManager
   // which one so we tell both.
   void SetIsLoading(bool is_loading);
 
-  // Confirms whether we should close the page. This is called before a
-  // tab/window is closed to allow the appropriate renderer to approve or deny
-  // the request.  |proceed| indicates whether the user chose to proceed.
+  // Confirms whether we should close the page or navigate away.  This is called
+  // before a cross-site request or before a tab/window is closed (as indicated
+  // by the first parameter) to allow the appropriate renderer to approve or
+  // deny the request.  |proceed| indicates whether the user chose to proceed.
   // |proceed_time| is the time when the request was allowed to proceed.
-  void OnBeforeUnloadACK(bool proceed, const base::TimeTicks& proceed_time);
+  void OnBeforeUnloadACK(bool for_cross_site_transition,
+                         bool proceed,
+                         const base::TimeTicks& proceed_time);
+
+  // The |pending_render_frame_host| is ready to commit a page.  We should
+  // ensure that the old RenderFrameHost runs its unload handler first and
+  // determine whether a RenderFrameHost transfer is needed.
+  void OnCrossSiteResponse(RenderFrameHostImpl* pending_render_frame_host,
+                           const GlobalRequestID& global_request_id,
+                           const std::vector<GURL>& transfer_url_chain,
+                           const Referrer& referrer,
+                           ui::PageTransition page_transition,
+                           bool should_replace_current_entry);
 
   // Determines whether a navigation to |dest_url| may be completed using an
   // existing RenderFrameHost, or whether transferring to a new RenderFrameHost

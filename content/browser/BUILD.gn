@@ -158,7 +158,6 @@ jumbo_source_set("browser") {
     "//third_party/WebKit/public:resources",
     "//third_party/WebKit/public:scaled_resources",
     "//third_party/angle:angle_common",
-    "//third_party/boringssl",
     "//third_party/brotli:dec",
     "//third_party/icu",
     "//third_party/libyuv",
@@ -978,6 +977,8 @@ jumbo_source_set("browser") {
     "loader/mojo_async_resource_handler.h",
     "loader/navigation_resource_handler.cc",
     "loader/navigation_resource_handler.h",
+    "loader/navigation_resource_throttle.cc",
+    "loader/navigation_resource_throttle.h",
     "loader/navigation_url_loader.cc",
     "loader/navigation_url_loader.h",
     "loader/navigation_url_loader_delegate.h",
@@ -1154,7 +1155,6 @@ jumbo_source_set("browser") {
     "net/view_http_cache_job_factory.h",
     "network_service_client.cc",
     "network_service_client.h",
-    "network_service_instance.cc",
     "notification_service_impl.cc",
     "notification_service_impl.h",
     "notifications/blink_notification_service_impl.cc",
@@ -2311,6 +2311,10 @@ jumbo_source_set("browser") {
 
   if (is_linux && use_dbus) {
     deps += [ "//dbus" ]
+  }
+
+  if (is_linux) {
+    deps += [ "//third_party/boringssl" ]
   }
 
   if (use_ozone) {

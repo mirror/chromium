@@ -350,8 +350,7 @@ void ProfilingTestDriver::CollectResults(bool synchronous) {
   profiling::ProfilingProcessHost::GetInstance()->RequestTraceWithHeapDump(
       base::Bind(&ProfilingTestDriver::TraceFinished, base::Unretained(this),
                  std::move(finish_tracing_closure)),
-      true /* keep_small_allocations */,
-      false /* strip_path_from_mapped_files */);
+      true);
 
   if (synchronous)
     run_loop->Run();

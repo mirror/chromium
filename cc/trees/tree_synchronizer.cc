@@ -130,18 +130,14 @@ static void PushLayerPropertiesInternal(
 
 void TreeSynchronizer::PushLayerProperties(LayerTreeImpl* pending_tree,
                                            LayerTreeImpl* active_tree) {
-  const auto& layers = pending_tree->LayersThatShouldPushProperties();
-  TRACE_EVENT1("cc", "TreeSynchronizer::PushLayerPropertiesTo.Impl",
-               "layer_count", layers.size());
-  PushLayerPropertiesInternal(layers, active_tree);
+  PushLayerPropertiesInternal(pending_tree->LayersThatShouldPushProperties(),
+                              active_tree);
 }
 
 void TreeSynchronizer::PushLayerProperties(LayerTreeHost* host_tree,
                                            LayerTreeImpl* impl_tree) {
-  const auto& layers = host_tree->LayersThatShouldPushProperties();
-  TRACE_EVENT1("cc", "TreeSynchronizer::PushLayerPropertiesTo.Main",
-               "layer_count", layers.size());
-  PushLayerPropertiesInternal(layers, impl_tree);
+  PushLayerPropertiesInternal(host_tree->LayersThatShouldPushProperties(),
+                              impl_tree);
 }
 
 }  // namespace cc

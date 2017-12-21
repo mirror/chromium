@@ -497,7 +497,7 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
   Send(new GpuCommandBufferMsg_CreateImage(route_id_, params));
 
   if (image_fence_sync) {
-    gpu::SyncToken sync_token(GetNamespaceID(), GetCommandBufferID(),
+    gpu::SyncToken sync_token(GetNamespaceID(), 0, GetCommandBufferID(),
                               image_fence_sync);
 
     // Force a synchronous IPC to validate sync token.

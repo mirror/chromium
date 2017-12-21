@@ -50,7 +50,6 @@ component("bindings") {
     "binding.h",
     "binding_set.h",
     "bindings_export.h",
-    "callback_helpers.h",
     "clone_traits.h",
     "connection_error_callback.h",
     "connector.h",

@@ -16,6 +16,7 @@ namespace content {
 class BrowserPlugin;
 class BrowserPluginDelegate;
 class RenderFrame;
+struct ScreenInfo;
 
 // BrowserPluginManager manages the routing of messages to the appropriate
 // BrowserPlugin object based on its instance ID. There is one BrowserPlugin
@@ -49,10 +50,13 @@ class CONTENT_EXPORT BrowserPluginManager : public RenderThreadObserver {
 
   void UpdateFocusState();
 
+  void ScreenInfoChanged(const ScreenInfo& screen_info);
+
   // Returns a new instance ID to be used by BrowserPlugin. Instance IDs are
   // unique per process.
   int GetNextInstanceID();
 
+  void DidCommitCompositorFrame(int render_frame_routing_id);
   bool Send(IPC::Message* msg);
 
   // RenderThreadObserver override.

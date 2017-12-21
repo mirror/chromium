@@ -264,10 +264,6 @@ void WebRuntimeFeatures::EnablePermissionsAPI(bool enable) {
   RuntimeEnabledFeatures::SetPermissionsEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnablePictureInPicture(bool enable) {
-  RuntimeEnabledFeatures::SetPictureInPictureEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnablePreloadDefaultIsMetadata(bool enable) {
   RuntimeEnabledFeatures::SetPreloadDefaultIsMetadataEnabled(enable);
 }
@@ -488,10 +484,6 @@ void WebRuntimeFeatures::EnableStopLoadingInBackgroundAndroid(bool enable) {
 
 void WebRuntimeFeatures::EnablePWAFullCodeCache(bool enable) {
   RuntimeEnabledFeatures::SetPWAFullCodeCacheEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
-  RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
 }
 
 }  // namespace blink

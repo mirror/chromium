@@ -11,6 +11,11 @@
   await TestRunner.loadModule('console_test_runner');
   await TestRunner.showPanel('network');
 
+  await TestRunner.loadHTML(`
+    <p>Tests cached resource content is discarded when cached resource is destroyed if content size is too big for the resource agent&apos;s data storage.</p>
+    <a href="https://bugs.webkit.org/show_bug.cgi?id=92108">Bug 92108</a>
+  `);
+
   await TestRunner.evaluateInPagePromise(`
     var image;;
     function loadFirstImage()

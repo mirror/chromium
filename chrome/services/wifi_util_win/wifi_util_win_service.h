@@ -9,6 +9,8 @@
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 
+namespace chrome {
+
 class WifiUtilWinService : public service_manager::Service {
  public:
   WifiUtilWinService();
@@ -30,5 +32,7 @@ class WifiUtilWinService : public service_manager::Service {
 
   DISALLOW_COPY_AND_ASSIGN(WifiUtilWinService);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_SERVICES_WIFI_UTIL_WIN_WIFI_UTIL_WIN_SERVICE_H_

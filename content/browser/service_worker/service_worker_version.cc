@@ -32,8 +32,8 @@
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
-#include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
+#include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
@@ -636,15 +636,7 @@ bool ServiceWorkerVersion::FinishRequest(int request_id,
                          request, "Handled", was_handled);
   request_timeouts_.erase(request->timeout_iter);
   pending_requests_.Remove(request_id);
-  // Non-S13nServiceWorker:
-  // Trigger OnNoWork() if no inflight events exist.
-  //
-  // S13nServiceWorker:
-  // OnNoWork() will be triggered later by StopWorkerIfIdle(), which will be
-  // called when the renderer-side idle timeout calls
-  // mojom::EmbeddedWorkerInstanceHost::RequestTermination() if no inflight
-  // events exist for a while.
-  if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
+  if (!HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
   }
@@ -730,10 +722,7 @@ void ServiceWorkerVersion::OnStreamResponseStarted() {
 void ServiceWorkerVersion::OnStreamResponseFinished() {
   DCHECK_GT(pending_stream_response_count_, 0);
   pending_stream_response_count_--;
-  if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
-    // S13nServiceWorker:
-    // TODO(https://crbug.com/774374): OnNoWork should be triggered here when
-    // the worker is idle since the last termination request.
+  if (!HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
   }
@@ -1532,7 +1521,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       ServiceWorkerProviderHost::PreCreateForController(context());
   provider_host_ = pending_provider_host->AsWeakPtr();
 
-  auto params = mojom::EmbeddedWorkerStartParams::New();
+  auto params = std::make_unique<EmbeddedWorkerStartParams>();
   params->service_worker_version_id = version_id_;
   params->scope = scope_;
   params->script_url = script_url_;
@@ -1742,13 +1731,6 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
   if (!ping_controller_->IsTimedOut() && HasWork())
     return;
   embedded_worker_->StopIfNotAttachedToDevTools();
-
-  // S13nServiceWorker: OnNoWork may trigger activation of the waiting
-  // version.
-  if (ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
-    for (auto& observer : listeners_)
-      observer.OnNoWork(this);
-  }
 }
 
 bool ServiceWorkerVersion::HasWork() const {

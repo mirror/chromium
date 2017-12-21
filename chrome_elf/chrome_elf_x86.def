@@ -12,6 +12,7 @@ EXPORTS
   ClearCrashKeyValue_ExportThunk
   CrashForException_ExportThunk
   GetCrashReports_ExportThunk
+  InjectDumpForHungInputNoCrashKeys_ExportThunk
   InjectDumpForHungInput_ExportThunk
   RequestSingleCrashUpload_ExportThunk
   SetCrashKeyValueEx_ExportThunk

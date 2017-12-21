@@ -35,7 +35,7 @@ void TestWallpaperController::SetCustomWallpaper(
     wallpaper::WallpaperType type,
     const SkBitmap& image,
     bool show_wallpaper) {
-  set_custom_wallpaper_count_++;
+  NOTIMPLEMENTED();
 }
 
 void TestWallpaperController::SetOnlineWallpaper(
@@ -58,10 +58,6 @@ void TestWallpaperController::SetCustomizedDefaultWallpaper(
     const GURL& wallpaper_url,
     const base::FilePath& file_path,
     const base::FilePath& resized_directory) {
-  NOTIMPLEMENTED();
-}
-
-void TestWallpaperController::SetDeviceWallpaperPolicyEnforced(bool enforced) {
   NOTIMPLEMENTED();
 }
 

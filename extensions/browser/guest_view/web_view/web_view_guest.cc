@@ -683,7 +683,9 @@ void WebViewGuest::RendererResponsive(WebContents* source) {
       webview::kEventResponsive, std::move(args)));
 }
 
-void WebViewGuest::RendererUnresponsive(WebContents* source) {
+void WebViewGuest::RendererUnresponsive(
+    WebContents* source,
+    const content::WebContentsUnresponsiveState& unresponsive_state) {
   auto args = std::make_unique<base::DictionaryValue>();
   args->SetInteger(webview::kProcessId,
                    web_contents()->GetMainFrame()->GetProcess()->GetID());

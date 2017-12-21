@@ -6,8 +6,6 @@
 
 #include <stdint.h>
 #include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "core/dom/Document.h"
 #include "core/fileapi/Blob.h"
 #include "core/testing/DummyPageHolder.h"
@@ -18,6 +16,7 @@
 #include "modules/websockets/WebSocketHandleClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebCallbacks.h"
@@ -138,7 +137,7 @@ class DocumentWebSocketChannelTest : public ::testing::Test {
     channel_ = DocumentWebSocketChannel::CreateForTesting(
         &page_holder_->GetDocument(), channel_client_.Get(),
         SourceLocation::Capture(), Handle(),
-        base::WrapUnique(handshake_throttle_));
+        WTF::WrapUnique(handshake_throttle_));
   }
 
   MockWebSocketChannelClient* ChannelClient() { return channel_client_.Get(); }

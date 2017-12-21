@@ -1317,13 +1317,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       _pendingNavigationInfo
           ? [_pendingNavigationInfo HTTPMethod]
           : [self currentBackForwardListItemHolder]->http_method();
-  if ([HTTPMethod isEqual:@"POST"]) {
-    return YES;
-  }
-  if (!self.currentNavItem) {
-    return NO;
-  }
-  return self.currentNavItem->HasPostData();
+  return [HTTPMethod isEqual:@"POST"] || self.currentNavItem->HasPostData();
 }
 
 - (BOOL)isCurrentNavigationBackForward {

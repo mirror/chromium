@@ -54,7 +54,6 @@ void OfflineContentAggregator::UnregisterProvider(
 
   OfflineContentProvider* provider = provider_it->second;
   providers_.erase(provider_it);
-  pending_providers_.erase(provider);
 
   // Only clean up the connection to the provider if the provider isn't
   // associated with any other namespace.
@@ -120,69 +119,32 @@ void OfflineContentAggregator::ResumeDownload(const ContentId& id,
                         base::Unretained(it->second), id, has_user_gesture));
 }
 
-void OfflineContentAggregator::GetItemById(const ContentId& id,
-                                           SingleItemCallback callback) {
+const OfflineItem* OfflineContentAggregator::GetItemById(const ContentId& id) {
   auto it = providers_.find(id.name_space);
-  if (it == providers_.end() || !it->second->AreItemsAvailable()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
-    return;
-  }
 
-  it->second->GetItemById(
-      id, base::BindOnce(&OfflineContentAggregator::OnGetItemByIdDone,
-                         weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+  if (it == providers_.end() || !it->second->AreItemsAvailable())
+    return nullptr;
+
+  return it->second->GetItemById(id);
 }
 
-void OfflineContentAggregator::OnGetItemByIdDone(
-    SingleItemCallback callback,
-    const base::Optional<OfflineItem>& item) {
-  std::move(callback).Run(item);
-}
+OfflineContentProvider::OfflineItemList
+OfflineContentAggregator::GetAllItems() {
+  // Create a set of unique providers to iterate over.
+  std::set<OfflineContentProvider*> providers;
+  for (auto provider_it : providers_)
+    providers.insert(provider_it.second);
 
-void OfflineContentAggregator::GetAllItems(MultipleItemCallback callback) {
-  // If there is already a call in progress, queue up the callback and wait for
-  // the results.
-  if (!multiple_item_get_callbacks_.empty()) {
-    multiple_item_get_callbacks_.push_back(std::move(callback));
-    return;
-  }
-
-  DCHECK(aggregated_items_.empty());
-  for (auto provider_it : providers_) {
-    auto* provider = provider_it.second;
+  OfflineItemList items;
+  for (auto* provider : providers) {
     if (!provider->AreItemsAvailable())
       continue;
 
-    provider->GetAllItems(
-        base::BindOnce(&OfflineContentAggregator::OnGetAllItemsDone,
-                       weak_ptr_factory_.GetWeakPtr(), provider));
-    pending_providers_.insert(provider);
+    OfflineItemList provider_items = provider->GetAllItems();
+    items.insert(items.end(), provider_items.begin(), provider_items.end());
   }
 
-  if (pending_providers_.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), OfflineItemList()));
-    return;
-  }
-
-  multiple_item_get_callbacks_.push_back(std::move(callback));
-}
-
-void OfflineContentAggregator::OnGetAllItemsDone(
-    OfflineContentProvider* provider,
-    const OfflineItemList& items) {
-  aggregated_items_.insert(aggregated_items_.end(), items.begin(), items.end());
-  pending_providers_.erase(provider);
-  if (!pending_providers_.empty()) {
-    return;
-  }
-
-  auto item_vec = std::move(aggregated_items_);
-  auto callbacks = std::move(multiple_item_get_callbacks_);
-
-  for (auto& callback : callbacks)
-    std::move(callback).Run(item_vec);
+  return items;
 }
 
 void OfflineContentAggregator::GetVisualsForItem(
@@ -225,14 +187,6 @@ void OfflineContentAggregator::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-void OfflineContentAggregator::NotifyItemsAdded(const OfflineItemList& items) {
-  if (items.empty())
-    return;
-
-  for (auto* observer : signaled_observers_)
-    observer->OnItemsAdded(items);
-}
-
 void OfflineContentAggregator::OnItemsAvailable(
     OfflineContentProvider* provider) {
   // Flush any pending actions that should be mirrored to the provider.
@@ -242,9 +196,11 @@ void OfflineContentAggregator::OnItemsAvailable(
   // initialized.  Just treat this as an OnItemsAdded and notify those observers
   // of the new items.
   if (signaled_observers_.size() > 0) {
-    provider->GetAllItems(
-        base::BindOnce(&OfflineContentAggregator::NotifyItemsAdded,
-                       weak_ptr_factory_.GetWeakPtr()));
+    OfflineItemList items = provider->GetAllItems();
+    if (items.size() > 0) {
+      for (auto* observer : signaled_observers_)
+        observer->OnItemsAdded(items);
+    }
   }
 
   // Check if there were any observers who haven't been told that this class is

@@ -284,20 +284,7 @@ suite('SiteDetailsPermission', function() {
       origin: origin,
       embeddingOrigin: origin,
       setting: settings.ContentSetting.BLOCK,
-      source: settings.SiteSettingSource.PREFERENCE,
-    };
-    assertEquals(
-        'Block if site tends to show intrusive ads',
-        testElement.$.permissionItem.innerText.trim());
-    assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
-    assertFalse(testElement.$.permission.disabled);
-
-    // Ditto for default block settings.
-    testElement.site = {
-      origin: origin,
-      embeddingOrigin: origin,
-      setting: settings.ContentSetting.BLOCK,
-      source: settings.SiteSettingSource.DEFAULT,
+      source: settings.SiteSettingSource.ADS_BLOCKED,
     };
     assertEquals(
         'Block if site tends to show intrusive ads',
@@ -315,5 +302,26 @@ suite('SiteDetailsPermission', function() {
     assertEquals('', testElement.$.permissionItem.innerText.trim());
     assertFalse(testElement.$.permissionItem.classList.contains('two-line'));
     assertFalse(testElement.$.permission.disabled);
+  });
+
+  test('ads category only shows two options', function() {
+    var origin = 'https://www.example.com';
+    testElement.category = settings.ContentSettingsTypes.ADS;
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.BLOCK,
+      source: settings.SiteSettingSource.PREFERENCE,
+    };
+
+    var options = testElement.$.permission.options;
+    // Currently there are four options - 'Default', 'Allow', 'Block' and 'Ask'.
+    assertEquals(4, options.length);
+
+    // The ads permission should only show 'Allow' and 'Block' options.
+    assertTrue(options.default.hidden);
+    assertFalse(options.allow.hidden);
+    assertFalse(options.block.hidden);
+    assertTrue(options.ask.hidden);
   });
 });

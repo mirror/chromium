@@ -416,7 +416,7 @@ void WallpaperPrivateSetWallpaperFunction::SaveToFile() {
       return;
     // Generates and saves small resolution wallpaper. Uses CENTER_CROPPED to
     // maintain the aspect ratio after resize.
-    ash::WallpaperController::ResizeAndSaveWallpaper(
+    chromeos::WallpaperManager::Get()->ResizeAndSaveWallpaper(
         wallpaper_, file_path, wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
         ash::WallpaperController::kSmallWallpaperMaxWidth,
         ash::WallpaperController::kSmallWallpaperMaxHeight, NULL);
@@ -499,10 +499,11 @@ bool WallpaperPrivateSetCustomWallpaperFunction::RunAsync() {
 
 void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
     const gfx::ImageSkia& image) {
-  base::FilePath thumbnail_path =
-      ash::WallpaperController::GetCustomWallpaperPath(
-          ash::WallpaperController::kThumbnailWallpaperSubDir,
-          wallpaper_files_id_.id(), params->file_name);
+  chromeos::WallpaperManager* wallpaper_manager =
+      chromeos::WallpaperManager::Get();
+  base::FilePath thumbnail_path = wallpaper_manager->GetCustomWallpaperPath(
+      ash::WallpaperController::kThumbnailWallpaperSubDir, wallpaper_files_id_,
+      params->file_name);
 
   wallpaper::WallpaperLayout layout = wallpaper_api_util::GetLayoutEnum(
       wallpaper_base::ToString(params->layout));
@@ -511,7 +512,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::OnWallpaperDecoded(
   bool update_wallpaper =
       account_id_ ==
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId();
-  WallpaperControllerClient::Get()->SetCustomWallpaper(
+  wallpaper_manager->SetCustomWallpaper(
       account_id_, wallpaper_files_id_, params->file_name, layout,
       wallpaper::CUSTOMIZED, image, update_wallpaper);
   unsafe_wallpaper_decoder_ = NULL;
@@ -545,7 +546,7 @@ void WallpaperPrivateSetCustomWallpaperFunction::GenerateThumbnail(
     base::CreateDirectory(thumbnail_path.DirName());
 
   scoped_refptr<base::RefCountedBytes> data;
-  ash::WallpaperController::ResizeImage(
+  chromeos::WallpaperManager::Get()->ResizeImage(
       *image, wallpaper::WALLPAPER_LAYOUT_STRETCH,
       ash::WallpaperController::kWallpaperThumbnailWidth,
       ash::WallpaperController::kWallpaperThumbnailHeight, &data, NULL);

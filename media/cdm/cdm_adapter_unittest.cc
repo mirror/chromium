@@ -18,7 +18,6 @@
 #include "media/base/content_decryption_module.h"
 #include "media/base/media_switches.h"
 #include "media/base/mock_filters.h"
-#include "media/cdm/api/content_decryption_module.h"
 #include "media/cdm/cdm_module.h"
 #include "media/cdm/external_clear_key_test_helper.h"
 #include "media/cdm/mock_helpers.h"
@@ -27,9 +26,9 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using ::testing::_;
 using ::testing::SaveArg;
 using ::testing::StrictMock;
-using ::testing::_;
 
 MATCHER(IsNotEmpty, "") {
   return !arg.empty();
@@ -84,21 +83,14 @@ const char kKeyAsJWK[] =
     "  \"type\": \"temporary\""
     "}";
 
-// Tests CdmAdapter with the following parameter:
-// - bool: whether experimental CDM interface should be enabled.
-class CdmAdapterTest : public testing::Test,
-                       public testing::WithParamInterface<bool> {
+class CdmAdapterTest : public testing::Test {
  public:
   enum ExpectedResult { SUCCESS, FAILURE };
 
-  bool UseExperimentalCdmInterface() { return GetParam(); }
-
   CdmAdapterTest() {
     // Enable use of External Clear Key CDM.
-    if (UseExperimentalCdmInterface()) {
-      scoped_feature_list_.InitWithFeatures(
-          {media::kSupportExperimentalCdmInterface}, {});
-    }
+    scoped_feature_list_.InitWithFeatures({media::kExternalClearKeyForTesting},
+                                          {});
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
     CdmModule::GetInstance()->Initialize(helper_.LibraryPath(), {});
@@ -144,7 +136,7 @@ class CdmAdapterTest : public testing::Test,
       EXPECT_CALL(cdm_client_, OnSessionMessage(IsNotEmpty(), _, _));
     }
 
-    cdm_->CreateSessionAndGenerateRequest(
+    adapter_->CreateSessionAndGenerateRequest(
         CdmSessionType::TEMPORARY_SESSION, data_type, key_id,
         CreateSessionPromise(expected_result));
     RunUntilIdle();
@@ -157,8 +149,8 @@ class CdmAdapterTest : public testing::Test,
     DCHECK(!session_id.empty());
     ASSERT_EQ(expected_result, FAILURE) << "LoadSession not supported.";
 
-    cdm_->LoadSession(CdmSessionType::TEMPORARY_SESSION, session_id,
-                      CreateSessionPromise(expected_result));
+    adapter_->LoadSession(CdmSessionType::TEMPORARY_SESSION, session_id,
+                          CreateSessionPromise(expected_result));
     RunUntilIdle();
   }
 
@@ -181,9 +173,9 @@ class CdmAdapterTest : public testing::Test,
       EXPECT_CALL(cdm_client_, OnSessionExpirationUpdate(_, _)).Times(0);
     }
 
-    cdm_->UpdateSession(session_id,
-                        std::vector<uint8_t>(key.begin(), key.end()),
-                        CreatePromise(expected_result));
+    adapter_->UpdateSession(session_id,
+                            std::vector<uint8_t>(key.begin(), key.end()),
+                            CreatePromise(expected_result));
     RunUntilIdle();
   }
 
@@ -196,13 +188,7 @@ class CdmAdapterTest : public testing::Test,
     if (cdm) {
       ASSERT_EQ(expected_result, SUCCESS)
           << "CDM creation succeeded unexpectedly.";
-
-      CdmAdapter* cdm_adapter = static_cast<CdmAdapter*>(cdm.get());
-
-      ASSERT_EQ(UseExperimentalCdmInterface(),
-                cdm_adapter->GetInterfaceVersion() >
-                    cdm::ContentDecryptionModule::kVersion);
-      cdm_ = cdm;
+      adapter_ = cdm;
     } else {
       ASSERT_EQ(expected_result, FAILURE) << error_message;
     }
@@ -259,7 +245,7 @@ class CdmAdapterTest : public testing::Test,
   ExternalClearKeyTestHelper helper_;
 
   // Keep track of the loaded CDM.
-  scoped_refptr<ContentDecryptionModule> cdm_;
+  scoped_refptr<ContentDecryptionModule> adapter_;
 
   // |session_id_| is the latest result of calling CreateSession().
   std::string session_id_;
@@ -270,19 +256,11 @@ class CdmAdapterTest : public testing::Test,
   DISALLOW_COPY_AND_ASSIGN(CdmAdapterTest);
 };
 
-INSTANTIATE_TEST_CASE_P(StableCdmInterface,
-                        CdmAdapterTest,
-                        testing::Values(false));
-
-INSTANTIATE_TEST_CASE_P(ExperimentalCdmInterface,
-                        CdmAdapterTest,
-                        testing::Values(true));
-
-TEST_P(CdmAdapterTest, Initialize) {
+TEST_F(CdmAdapterTest, Initialize) {
   InitializeAndExpect(SUCCESS);
 }
 
-TEST_P(CdmAdapterTest, BadLibraryPath) {
+TEST_F(CdmAdapterTest, BadLibraryPath) {
   CdmModule::ResetInstanceForTesting();
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
@@ -296,14 +274,14 @@ TEST_P(CdmAdapterTest, BadLibraryPath) {
   InitializeAndExpect(FAILURE);
 }
 
-TEST_P(CdmAdapterTest, CreateWebmSession) {
+TEST_F(CdmAdapterTest, CreateWebmSession) {
   InitializeAndExpect(SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
   CreateSessionAndExpect(EmeInitDataType::WEBM, key_id, SUCCESS);
 }
 
-TEST_P(CdmAdapterTest, CreateKeyIdsSession) {
+TEST_F(CdmAdapterTest, CreateKeyIdsSession) {
   InitializeAndExpect(SUCCESS);
 
   // Don't include the trailing /0 from the string in the data passed in.
@@ -312,7 +290,7 @@ TEST_P(CdmAdapterTest, CreateKeyIdsSession) {
   CreateSessionAndExpect(EmeInitDataType::KEYIDS, key_id, SUCCESS);
 }
 
-TEST_P(CdmAdapterTest, CreateCencSession) {
+TEST_F(CdmAdapterTest, CreateCencSession) {
   InitializeAndExpect(SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyIdAsPssh,
@@ -320,7 +298,7 @@ TEST_P(CdmAdapterTest, CreateCencSession) {
   CreateSessionAndExpect(EmeInitDataType::CENC, key_id, SUCCESS);
 }
 
-TEST_P(CdmAdapterTest, CreateSessionWithBadData) {
+TEST_F(CdmAdapterTest, CreateSessionWithBadData) {
   InitializeAndExpect(SUCCESS);
 
   // Use |kKeyId| but specify KEYIDS format.
@@ -328,7 +306,7 @@ TEST_P(CdmAdapterTest, CreateSessionWithBadData) {
   CreateSessionAndExpect(EmeInitDataType::KEYIDS, key_id, FAILURE);
 }
 
-TEST_P(CdmAdapterTest, LoadSession) {
+TEST_F(CdmAdapterTest, LoadSession) {
   InitializeAndExpect(SUCCESS);
 
   // LoadSession() is not supported by AesDecryptor.
@@ -336,7 +314,7 @@ TEST_P(CdmAdapterTest, LoadSession) {
   CreateSessionAndExpect(EmeInitDataType::KEYIDS, key_id, FAILURE);
 }
 
-TEST_P(CdmAdapterTest, UpdateSession) {
+TEST_F(CdmAdapterTest, UpdateSession) {
   InitializeAndExpect(SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));
@@ -345,7 +323,7 @@ TEST_P(CdmAdapterTest, UpdateSession) {
   UpdateSessionAndExpect(SessionId(), kKeyAsJWK, SUCCESS, true);
 }
 
-TEST_P(CdmAdapterTest, UpdateSessionWithBadData) {
+TEST_F(CdmAdapterTest, UpdateSessionWithBadData) {
   InitializeAndExpect(SUCCESS);
 
   std::vector<uint8_t> key_id(kKeyId, kKeyId + arraysize(kKeyId));

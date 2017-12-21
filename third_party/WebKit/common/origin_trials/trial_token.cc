@@ -40,7 +40,7 @@ const uint8_t kVersion2 = 2;
 
 }  // namespace
 
-TrialToken::~TrialToken() = default;
+TrialToken::~TrialToken() {}
 
 // static
 std::unique_ptr<TrialToken> TrialToken::From(

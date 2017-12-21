@@ -7,19 +7,18 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "chrome/browser/chromeos/profiles/profile_helper.h"
-#include "chrome/browser/notifications/notification_display_service_tester.h"
-#include "chrome/test/base/browser_with_test_window_test.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/shill_device_client.h"
 #include "chromeos/dbus/shill_service_client.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
-#include "ui/message_center/notification.h"
+#include "ui/message_center/message_center.h"
 
 namespace chromeos {
 namespace test {
@@ -57,16 +56,18 @@ class NetworkConnectTestDelegate : public NetworkConnect::Delegate {
   DISALLOW_COPY_AND_ASSIGN(NetworkConnectTestDelegate);
 };
 
-class NetworkStateNotifierTest : public BrowserWithTestWindowTest {
+class NetworkStateNotifierTest : public testing::Test {
  public:
   NetworkStateNotifierTest() {}
   ~NetworkStateNotifierTest() override {}
 
   void SetUp() override {
-    BrowserWithTestWindowTest::SetUp();
+    testing::Test::SetUp();
+    DBusThreadManager::Initialize();
     LoginState::Initialize();
     SetupDefaultShillState();
     NetworkHandler::Initialize();
+    message_center::MessageCenter::Initialize();
     base::RunLoop().RunUntilIdle();
     network_connect_delegate_.reset(new NetworkConnectTestDelegate);
     NetworkConnect::Initialize(network_connect_delegate_.get());
@@ -75,9 +76,11 @@ class NetworkStateNotifierTest : public BrowserWithTestWindowTest {
   void TearDown() override {
     NetworkConnect::Shutdown();
     network_connect_delegate_.reset();
+    message_center::MessageCenter::Shutdown();
     LoginState::Shutdown();
     NetworkHandler::Shutdown();
-    BrowserWithTestWindowTest::TearDown();
+    DBusThreadManager::Shutdown();
+    testing::Test::TearDown();
   }
 
  protected:
@@ -110,17 +113,19 @@ class NetworkStateNotifierTest : public BrowserWithTestWindowTest {
   }
 
   std::unique_ptr<NetworkConnectTestDelegate> network_connect_delegate_;
+  base::MessageLoop message_loop_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NetworkStateNotifierTest);
 };
 
 TEST_F(NetworkStateNotifierTest, ConnectionFailure) {
-  NotificationDisplayServiceTester tester(ProfileHelper::GetSigninProfile());
   NetworkConnect::Get()->ConnectToNetworkId(kWiFi1Guid);
   base::RunLoop().RunUntilIdle();
   // Failure should spawn a notification.
-  EXPECT_TRUE(tester.GetNotification(
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+  EXPECT_TRUE(message_center->FindVisibleNotificationById(
       NetworkStateNotifier::kNetworkConnectNotificationId));
 }
 

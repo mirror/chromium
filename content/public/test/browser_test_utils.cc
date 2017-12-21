@@ -2377,13 +2377,9 @@ void SimulateNetworkServiceCrash() {
   FlushNetworkServiceInstanceForTesting();
 }
 
-int LoadBasicRequest(mojom::NetworkContext* network_context,
-                     const GURL& url,
-                     int process_id,
-                     int render_frame_id) {
+int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
   mojom::URLLoaderFactoryPtr url_loader_factory;
-  network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
-                                          process_id);
+  network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory), 0);
   // |url_loader_factory| will receive error notification asynchronously if
   // |network_context| has already encountered error. However it's still false
   // at this point.
@@ -2391,7 +2387,6 @@ int LoadBasicRequest(mojom::NetworkContext* network_context,
 
   auto request = std::make_unique<ResourceRequest>();
   request->url = url;
-  request->render_frame_id = render_frame_id;
 
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =

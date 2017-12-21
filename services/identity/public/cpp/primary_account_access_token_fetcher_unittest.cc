@@ -36,8 +36,6 @@ using SigninManagerForTest = FakeSigninManagerBase;
 using SigninManagerForTest = FakeSigninManager;
 #endif  // OS_CHROMEOS
 
-namespace identity {
-
 class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
  public:
   using TestTokenCallback =
@@ -401,5 +399,3 @@ TEST_F(PrimaryAccountAccessTokenFetcherTest,
       "account",
       GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
 }
-
-}  // namespace identity

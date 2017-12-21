@@ -40,6 +40,7 @@ class Message;
 namespace content {
 
 class EmbeddedWorkerRegistry;
+struct EmbeddedWorkerStartParams;
 class ServiceWorkerContentSettingsProxyImpl;
 class ServiceWorkerContextCore;
 class ServiceWorkerVersion;
@@ -133,7 +134,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // |provider_info_getter| is called when this instance
   // allocates a process and is ready to send a StartWorker message.
   void Start(
-      mojom::EmbeddedWorkerStartParamsPtr params,
+      std::unique_ptr<EmbeddedWorkerStartParams> params,
       ProviderInfoGetter provider_info_getter,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::ControllerServiceWorkerRequest controller_request,
@@ -254,7 +255,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   // Sends StartWorker message via Mojo.
   ServiceWorkerStatusCode SendStartWorker(
-      mojom::EmbeddedWorkerStartParamsPtr params);
+      std::unique_ptr<EmbeddedWorkerStartParams> params);
 
   // Called back from StartTask after a start worker message is sent.
   void OnStartWorkerMessageSent(bool is_script_streaming);

@@ -1051,11 +1051,6 @@ interface CompositionEvent : UIEvent
     getter data
     method constructor
     method initCompositionEvent
-interface ComputedAccessibleNode
-    attribute @@toStringTag
-    getter name
-    getter role
-    method constructor
 interface ConstantSourceNode : AudioScheduledSourceNode
     attribute @@toStringTag
     getter offset
@@ -2781,7 +2776,6 @@ interface HTMLIFrameElement : HTMLElement
     getter marginHeight
     getter marginWidth
     getter name
-    getter policy
     getter referrerPolicy
     getter sandbox
     getter scrolling
@@ -7274,9 +7268,7 @@ interface VTTCue : TextTrackCue
     attribute @@toStringTag
     getter align
     getter line
-    getter lineAlign
     getter position
-    getter positionAlign
     getter region
     getter size
     getter snapToLines
@@ -7286,9 +7278,7 @@ interface VTTCue : TextTrackCue
     method getCueAsHTML
     setter align
     setter line
-    setter lineAlign
     setter position
-    setter positionAlign
     setter region
     setter size
     setter snapToLines
@@ -8908,7 +8898,7 @@ interface XRCoordinateSystem
 interface XRDevice : EventTarget
     attribute @@toStringTag
     getter deviceName
-    getter external
+    getter isExternal
     method constructor
     method requestSession
     method supportsSession
@@ -8942,10 +8932,10 @@ interface XRSession : EventTarget
     getter onend
     getter onfocus
     getter onresetpose
-    method cancelAnimationFrame
+    method cancelFrame
     method constructor
     method end
-    method requestAnimationFrame
+    method requestFrame
     method requestFrameOfReference
     setter baseLayer
     setter depthFar
@@ -9354,7 +9344,6 @@ interface webkitURL
     method find
     method focus
     method gc
-    method getComputedAccessibleNode
     method getComputedStyle
     method getSelection
     method matchMedia

@@ -40,6 +40,7 @@ class VIZ_SERVICE_EXPORT SoftwareRenderer : public DirectRenderer {
 
  protected:
   bool CanPartialSwap() override;
+  ResourceFormat BackbufferFormat() const override;
   void UpdateRenderPassTextures(
       const RenderPassList& render_passes_in_draw_order,
       const base::flat_map<RenderPassId, RenderPassRequirements>&

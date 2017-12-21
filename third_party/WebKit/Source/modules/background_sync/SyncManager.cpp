@@ -14,6 +14,7 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Persistent.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 

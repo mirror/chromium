@@ -36,7 +36,9 @@ InputEventAckState MockInputRouterClient::FilterInputEvent(
   return filter_state_;
 }
 
-void MockInputRouterClient::IncrementInFlightEventCount() {
+void MockInputRouterClient::IncrementInFlightEventCount(
+    blink::WebInputEvent::Type event_type) {
+  last_in_flight_event_type_ = event_type;
   ++in_flight_event_count_;
 }
 

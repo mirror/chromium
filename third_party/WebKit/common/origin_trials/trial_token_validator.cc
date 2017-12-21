@@ -18,7 +18,7 @@ TrialTokenValidator::TrialTokenValidator(std::unique_ptr<TrialPolicy> policy)
     : policy_(std::move(policy)) {
   DCHECK(policy_.get());
 }
-TrialTokenValidator::~TrialTokenValidator() = default;
+TrialTokenValidator::~TrialTokenValidator() {}
 
 OriginTrialTokenStatus TrialTokenValidator::ValidateToken(
     const std::string& token,

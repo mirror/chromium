@@ -28,7 +28,7 @@ class AppListModelBuilder {
   // |service| is the owner of this instance.
   void Initialize(app_list::AppListSyncableService* service,
                   Profile* profile,
-                  AppListModelUpdater* model_updater);
+                  app_list::AppListModelUpdater* model_updater);
 
  protected:
   // Builds the model with the current profile.
@@ -40,7 +40,7 @@ class AppListModelBuilder {
 
   AppListControllerDelegate* controller() { return controller_; }
 
-  AppListModelUpdater* model_updater() { return model_updater_; }
+  app_list::AppListModelUpdater* model_updater() { return model_updater_; }
 
   // Inserts an app based on app ordinal prefs.
   void InsertApp(std::unique_ptr<ChromeAppListItem> app);
@@ -61,7 +61,7 @@ class AppListModelBuilder {
   Profile* profile_ = nullptr;
 
   // Unowned pointer to an app list model updater.
-  AppListModelUpdater* model_updater_ = nullptr;
+  app_list::AppListModelUpdater* model_updater_ = nullptr;
 
   // Unowned pointer to the app list controller.
   AppListControllerDelegate* controller_;

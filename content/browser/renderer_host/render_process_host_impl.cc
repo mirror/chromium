@@ -2460,6 +2460,9 @@ static void AppendCompositorCommandLineFlags(base::CommandLine* command_line) {
   if (IsCompositorImageAnimationEnabled())
     command_line->AppendSwitch(switches::kEnableCompositorImageAnimations);
 
+  if (IsGpuAsyncWorkerContextEnabled())
+    command_line->AppendSwitch(switches::kEnableGpuAsyncWorkerContext);
+
   command_line->AppendSwitchASCII(
       switches::kContentImageTextureTarget,
       viz::BufferUsageAndFormatListToString(
@@ -2546,6 +2549,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableAcceleratedVideoDecode,
     switches::kDisableBackgroundTimerThrottling,
     switches::kDisableBreakpad,
+    switches::kDisableBrowserSideNavigation,
     switches::kDisableCompositorUkmForTests,
     switches::kDisablePreferCompositingToLCDText,
     switches::kDisableDatabases,
@@ -2580,6 +2584,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableWebGLImageChromium,
     switches::kDomAutomationController,
     switches::kEnableAutomation,
+    switches::kEnableBrowserSideNavigation,
     switches::kEnableDistanceFieldText,
     switches::kEnableExperimentalCanvasFeatures,
     switches::kEnableExperimentalWebPlatformFeatures,

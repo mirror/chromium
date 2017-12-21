@@ -347,12 +347,6 @@ void ServiceWorkerURLLoaderJob::FollowRedirect() {
   NOTIMPLEMENTED();
 }
 
-void ServiceWorkerURLLoaderJob::ProceedWithResponse() {
-  // TODO(arthursonzogni): Implement this for navigation requests if the
-  // ServiceWorker service is enabled before the Network Service.
-  NOTREACHED();
-}
-
 void ServiceWorkerURLLoaderJob::SetPriority(net::RequestPriority priority,
                                             int32_t intra_priority_value) {
   NOTIMPLEMENTED();

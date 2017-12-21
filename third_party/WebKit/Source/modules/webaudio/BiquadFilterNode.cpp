@@ -25,11 +25,10 @@
 
 #include "modules/webaudio/BiquadFilterNode.h"
 
-#include <memory>
-
 #include "modules/webaudio/AudioBasicProcessorHandler.h"
 #include "modules/webaudio/BiquadFilterOptions.h"
 #include "platform/Histogram.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -55,9 +54,9 @@ BiquadFilterNode::BiquadFilterNode(BaseAudioContext& context)
                                  0.0)) {
   SetHandler(AudioBasicProcessorHandler::Create(
       AudioHandler::kNodeTypeBiquadFilter, *this, context.sampleRate(),
-      std::make_unique<BiquadProcessor>(context.sampleRate(), 1,
-                                        frequency_->Handler(), q_->Handler(),
-                                        gain_->Handler(), detune_->Handler())));
+      WTF::WrapUnique(new BiquadProcessor(
+          context.sampleRate(), 1, frequency_->Handler(), q_->Handler(),
+          gain_->Handler(), detune_->Handler()))));
 
   setType("lowpass");
 

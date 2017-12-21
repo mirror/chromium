@@ -17,11 +17,7 @@
       },
       "requires": {
         "*": [ "app" ],
-        "content_browser": [
-          "field_trials",
-          "font_cache",
-          "plugin"
-        ],
+        "content_browser": [ "plugin" ],
         "device": [ "device:power_monitor" ],
         "ui": [ "discardable_memory" ]
       }

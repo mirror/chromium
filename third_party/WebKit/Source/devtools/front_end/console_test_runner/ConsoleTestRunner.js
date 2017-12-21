@@ -492,14 +492,6 @@ ConsoleTestRunner.waitForConsoleMessages = function(expectedCount, callback) {
 };
 
 /**
- * @param {number} expectedCount
- * @return {!Promise}
- */
-ConsoleTestRunner.waitForConsoleMessagesPromise = function(expectedCount) {
-  return new Promise(fulfill => ConsoleTestRunner.waitForConsoleMessages(expectedCount, fulfill));
-};
-
-/**
  * @param {number} fromMessage
  * @param {number} fromTextOffset
  * @param {number} toMessage

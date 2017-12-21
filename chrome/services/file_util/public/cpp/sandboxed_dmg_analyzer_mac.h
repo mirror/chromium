@@ -20,6 +20,8 @@ namespace service_manager {
 class Connector;
 }
 
+namespace chrome {
+
 // This class is used to analyze DMG files in a sandboxed utility process
 // for file download protection. This class lives on the UI thread, which
 // is where the result callback will be invoked.
@@ -63,9 +65,11 @@ class SandboxedDMGAnalyzer
   service_manager::Connector* connector_;
 
   // Pointer to the SafeArchiveAnalyzer interface. Only used from the UI thread.
-  chrome::mojom::SafeArchiveAnalyzerPtr analyzer_ptr_;
+  mojom::SafeArchiveAnalyzerPtr analyzer_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(SandboxedDMGAnalyzer);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_SERVICES_FILE_UTIL_SANDBOXED_DMG_ANALYZER_MAC_H_

@@ -38,6 +38,7 @@
 #include "modules/webdatabase/DatabaseTracker.h"
 #include "modules/webdatabase/StorageLog.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/TaskType.h"
 
 namespace blink {
@@ -146,10 +147,11 @@ Database* DatabaseManager::OpenDatabaseInternal(
   DatabaseContext* backend_context = DatabaseContextFor(context)->Backend();
   if (DatabaseTracker::Tracker().CanEstablishDatabase(
           backend_context, name, display_name, estimated_size, error)) {
-    Database* backend = new Database(backend_context, name, expected_version,
-                                     display_name, estimated_size);
+    Database* backend =
+        new Database(backend_context, name, expected_version, display_name,
+                     estimated_size, creation_callback);
     if (backend->OpenAndVerifyVersion(set_version_in_new_database, error,
-                                      error_message, creation_callback))
+                                      error_message))
       return backend;
   }
 

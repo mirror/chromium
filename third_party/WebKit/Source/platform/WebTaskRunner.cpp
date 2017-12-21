@@ -112,15 +112,22 @@ TaskHandle::TaskHandle(scoped_refptr<Runner> runner)
   DCHECK(runner_);
 }
 
+// Use a custom function for base::Bind instead of convertToBaseCallback to
+// avoid copying the closure later in the call chain. Copying the bound state
+// can lead to data races with ref counted objects like StringImpl. See
+// crbug.com/679915 for more details.
 void WebTaskRunner::PostTask(const base::Location& location,
                              CrossThreadClosure task) {
-  PostCrossThreadTask(*this, location, std::move(task));
+  PostDelayedTask(location,
+                  base::BindOnce(&RunCrossThreadClosure, std::move(task)),
+                  base::TimeDelta());
 }
 
 void WebTaskRunner::PostDelayedTask(const base::Location& location,
                                     CrossThreadClosure task,
                                     TimeDelta delay) {
-  PostDelayedCrossThreadTask(*this, location, std::move(task), delay);
+  PostDelayedTask(
+      location, base::BindOnce(&RunCrossThreadClosure, std::move(task)), delay);
 }
 
 void WebTaskRunner::PostTask(const base::Location& location,
@@ -153,25 +160,5 @@ TaskHandle WebTaskRunner::PostDelayedCancellableTask(
 }
 
 WebTaskRunner::~WebTaskRunner() = default;
-
-// Use a custom function for base::Bind instead of WTF::Bind to
-// avoid copying the closure later in the call chain. Copying the bound state
-// can lead to data races with ref counted objects like StringImpl. See
-// crbug.com/679915 for more details.
-void PostCrossThreadTask(WebTaskRunner& task_runner,
-                         const base::Location& location,
-                         CrossThreadClosure task) {
-  task_runner.PostDelayedTask(
-      location, base::BindOnce(&RunCrossThreadClosure, std::move(task)),
-      base::TimeDelta());
-}
-
-void PostDelayedCrossThreadTask(WebTaskRunner& task_runner,
-                                const base::Location& location,
-                                CrossThreadClosure task,
-                                TimeDelta delay) {
-  task_runner.PostDelayedTask(
-      location, base::BindOnce(&RunCrossThreadClosure, std::move(task)), delay);
-}
 
 }  // namespace blink

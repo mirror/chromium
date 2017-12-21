@@ -212,11 +212,8 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void SetDocumentUrl(const GURL& url);
   const GURL& document_url() const { return document_url_; }
 
-  // For service worker clients. Sets the |topmost_frame_url|.
   void SetTopmostFrameUrl(const GURL& url);
-  // For service worker clients, used for permission checks. Use document_url()
-  // instead if |this| is hosting a running service worker.
-  const GURL& topmost_frame_url() const;
+  const GURL& topmost_frame_url() const { return topmost_frame_url_; }
 
   blink::mojom::ServiceWorkerProviderType provider_type() const {
     return info_.type;

@@ -29,6 +29,8 @@
           right: 10px;
       }
       </style>
+      <p>Test that Web Inspector can inspect element with <code>pointer-events:none</code>.
+      </p>
       <div id="outer"><div id="inner"></div></div>
     `);
   await TestRunner.evaluateInPagePromise(`

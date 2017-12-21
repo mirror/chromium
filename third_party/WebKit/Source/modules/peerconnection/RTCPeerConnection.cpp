@@ -35,7 +35,6 @@
 #include <set>
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Nullable.h"
@@ -83,13 +82,13 @@
 #include "modules/peerconnection/RTCVoidRequestImpl.h"
 #include "modules/peerconnection/RTCVoidRequestPromiseImpl.h"
 #include "modules/peerconnection/testing/InternalsRTCPeerConnection.h"
-#include "platform/InstanceCounters.h"
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/peerconnection/RTCAnswerOptionsPlatform.h"
 #include "platform/peerconnection/RTCOfferOptionsPlatform.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
@@ -117,8 +116,8 @@ namespace {
 const char kSignalingStateClosedMessage[] =
     "The RTCPeerConnection's signalingState is 'closed'.";
 
-// The maximum number of PeerConnections that can exist simultaneously.
-const long kMaxPeerConnections = 500;
+// For testing: Keep track of number of existing PeerConnections.
+int g_peer_connection_counter = 0;
 
 bool ThrowExceptionIfSignalingStateClosed(
     RTCPeerConnection::SignalingState state,
@@ -509,14 +508,7 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
   // If we fail, set |m_closed| and |m_stopped| to true, to avoid hitting the
   // assert in the destructor.
 
-  if (InstanceCounters::CounterValue(
-          InstanceCounters::kRTCPeerConnectionCounter) >= kMaxPeerConnections) {
-    exception_state.ThrowDOMException(kUnknownError,
-                                      "Cannot create so many PeerConnections");
-    return;
-  }
-  InstanceCounters::IncrementCounter(
-      InstanceCounters::kRTCPeerConnectionCounter);
+  g_peer_connection_counter++;
   if (!document->GetFrame()) {
     closed_ = true;
     stopped_ = true;
@@ -557,8 +549,7 @@ RTCPeerConnection::~RTCPeerConnection() {
   // We are assuming that a wrapper is always created when RTCPeerConnection is
   // created.
   DCHECK(closed_ || stopped_);
-  InstanceCounters::DecrementCounter(
-      InstanceCounters::kRTCPeerConnectionCounter);
+  g_peer_connection_counter--;
 }
 
 void RTCPeerConnection::Dispose() {
@@ -1615,7 +1606,7 @@ void RTCPeerConnection::DidAddRemoteDataChannel(
     return;
 
   RTCDataChannel* channel =
-      RTCDataChannel::Create(GetExecutionContext(), base::WrapUnique(handler));
+      RTCDataChannel::Create(GetExecutionContext(), WTF::WrapUnique(handler));
   ScheduleDispatchEvent(RTCDataChannelEvent::Create(EventTypeNames::datachannel,
                                                     false, false, channel));
   has_data_channels_ = true;
@@ -1795,12 +1786,7 @@ void RTCPeerConnection::Trace(blink::Visitor* visitor) {
 }
 
 int RTCPeerConnection::PeerConnectionCount() {
-  return InstanceCounters::CounterValue(
-      InstanceCounters::kRTCPeerConnectionCounter);
-}
-
-int RTCPeerConnection::PeerConnectionCountLimit() {
-  return kMaxPeerConnections;
+  return g_peer_connection_counter;
 }
 
 }  // namespace blink

@@ -23,6 +23,10 @@ struct StructTraits<gpu::mojom::SyncTokenDataView, gpu::SyncToken> {
         token.namespace_id());
   }
 
+  static int32_t extra_data_field(const gpu::SyncToken& token) {
+    return token.extra_data_field();
+  }
+
   static uint64_t command_buffer_id(const gpu::SyncToken& token) {
     return token.command_buffer_id().GetUnsafeValue();
   }
@@ -34,6 +38,7 @@ struct StructTraits<gpu::mojom::SyncTokenDataView, gpu::SyncToken> {
   static bool Read(gpu::mojom::SyncTokenDataView data, gpu::SyncToken* out) {
     *out = gpu::SyncToken(
         static_cast<gpu::CommandBufferNamespace>(data.namespace_id()),
+        data.extra_data_field(),
         gpu::CommandBufferId::FromUnsafeValue(data.command_buffer_id()),
         data.release_count());
     if (out->HasData()) {

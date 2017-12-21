@@ -90,18 +90,15 @@ class CORE_EXPORT ScriptController final
       ExecuteScriptPolicy = kDoNotExecuteScriptWhenScriptsDisabled);
   void ExecuteScriptInMainWorld(
       const ScriptSourceCode&,
-      const KURL& base_url = KURL(),
       const ScriptFetchOptions& = ScriptFetchOptions(),
       AccessControlStatus = kNotSharableCrossOrigin);
   v8::Local<v8::Value> ExecuteScriptInMainWorldAndReturnValue(
       const ScriptSourceCode&,
-      const KURL& base_url = KURL(),
       const ScriptFetchOptions& = ScriptFetchOptions(),
       ExecuteScriptPolicy = kDoNotExecuteScriptWhenScriptsDisabled);
   v8::Local<v8::Value> ExecuteScriptAndReturnValue(
       v8::Local<v8::Context>,
       const ScriptSourceCode&,
-      const KURL& base_url = KURL(),
       const ScriptFetchOptions& = ScriptFetchOptions(),
       AccessControlStatus = kNotSharableCrossOrigin);
 
@@ -159,7 +156,6 @@ class CORE_EXPORT ScriptController final
   void EnableEval();
 
   v8::Local<v8::Value> EvaluateScriptInMainWorld(const ScriptSourceCode&,
-                                                 const KURL& base_url,
                                                  const ScriptFetchOptions&,
                                                  AccessControlStatus,
                                                  ExecuteScriptPolicy);

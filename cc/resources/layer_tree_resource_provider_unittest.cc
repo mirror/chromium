@@ -41,7 +41,7 @@ class LayerTreeResourceProviderTest : public testing::TestWithParam<bool> {
   }
 
   gpu::SyncToken SyncTokenFromUInt(uint32_t value) {
-    return gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO,
+    return gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO, 0,
                           gpu::CommandBufferId::FromUnsafeValue(0x123), value);
   }
 

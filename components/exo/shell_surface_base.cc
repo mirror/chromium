@@ -630,14 +630,6 @@ void ShellSurfaceBase::OnSetFrame(SurfaceFrameType type) {
   }
 }
 
-void ShellSurfaceBase::OnSetFrameColors(SkColor active_color,
-                                        SkColor inactive_color) {
-  // TODO(reveman): Allow frame colors to change after surface has been enabled.
-  has_frame_colors_ = true;
-  active_frame_color_ = active_color;
-  inactive_frame_color_ = inactive_color;
-}
-
 void ShellSurfaceBase::OnSetParent(Surface* parent,
                                    const gfx::Point& position) {
   views::Widget* parent_widget =
@@ -757,10 +749,7 @@ views::NonClientFrameView* ShellSurfaceBase::CreateNonClientFrameView(
   if (!frame_enabled_ && !window_state->HasDelegate()) {
     window_state->SetDelegate(std::make_unique<CustomWindowStateDelegate>());
   }
-  CustomFrameView* frame_view = new CustomFrameView(widget, frame_enabled_);
-  if (has_frame_colors_)
-    frame_view->SetFrameColors(active_frame_color_, inactive_frame_color_);
-  return frame_view;
+  return new CustomFrameView(widget, frame_enabled_);
 }
 
 bool ShellSurfaceBase::WidgetHasHitTestMask() const {

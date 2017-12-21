@@ -236,8 +236,7 @@ TEST_F(GamepadServiceTest, ReloadTest) {
   EXPECT_EQ(0, GetDisconnectedCounter());
 }
 
-// Flaky, see https://crbug.com/795170
-TEST_F(GamepadServiceTest, DISABLED_SecondConsumerGestureTest) {
+TEST_F(GamepadServiceTest, SecondConsumerGestureTest) {
   WaitForData();
   EXPECT_EQ(0, GetConnectedCounter());
   EXPECT_EQ(0, GetDisconnectedCounter());

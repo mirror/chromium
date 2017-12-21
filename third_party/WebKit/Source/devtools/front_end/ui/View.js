@@ -468,13 +468,7 @@ UI.ViewManager._ContainerWidget = class extends UI.VBox {
    * @override
    */
   wasShown() {
-    this._materialize().then(() => {
-      this._wasShownForTest();
-    });
-  }
-
-  _wasShownForTest() {
-    // This method is sniffed in tests.
+    this._materialize();
   }
 };
 

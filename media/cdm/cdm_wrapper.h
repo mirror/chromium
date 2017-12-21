@@ -288,7 +288,7 @@ class CdmWrapperImpl : public CdmWrapper {
   DISALLOW_COPY_AND_ASSIGN(CdmWrapperImpl);
 };
 
-// Specialization for cdm::ContentDecryptionModule_8 methods.
+// Overrides for cdm::Host_8 methods.
 // TODO(jrummell): Remove when CDM_8 no longer supported.
 // https://crbug.com/737296.
 

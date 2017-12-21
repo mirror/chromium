@@ -59,6 +59,10 @@ svg|a {
 </style>
     `);
   await TestRunner.evaluateInPagePromise(`
+      function initialize_Formatter() {
+          InspectorTest.preloadModule('formatter');
+      }
+
       function getCSS()
       {
           return document.querySelector("#styler").textContent;

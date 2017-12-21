@@ -50,9 +50,10 @@ JNI_OfflineItemBridge_createOfflineItemAndMaybeAddToList(
 // static
 ScopedJavaLocalRef<jobject> OfflineItemBridge::CreateOfflineItem(
     JNIEnv* env,
-    const OfflineItem& item) {
-  return JNI_OfflineItemBridge_createOfflineItemAndMaybeAddToList(env, nullptr,
-                                                                  item);
+    const OfflineItem* const item) {
+  return item ? JNI_OfflineItemBridge_createOfflineItemAndMaybeAddToList(
+                    env, nullptr, *item)
+              : nullptr;
 }
 
 // static

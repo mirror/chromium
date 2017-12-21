@@ -359,7 +359,7 @@ class DeveloperPrivateGetExtensionSizeFunction
   ~DeveloperPrivateGetExtensionSizeFunction() override;
   ResponseAction Run() override;
 
-  void OnSizeCalculated(const base::string16& size);
+  void OnSizeCalculated(int64_t size_in_bytes);
 
   DISALLOW_COPY_AND_ASSIGN(DeveloperPrivateGetExtensionSizeFunction);
 };

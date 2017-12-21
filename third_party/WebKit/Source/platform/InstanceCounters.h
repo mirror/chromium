@@ -51,8 +51,7 @@ namespace blink {
   V(PausableObject)               \
   V(V8PerContextData)             \
   V(WorkerGlobalScope)            \
-  V(UACSSResource)                \
-  V(RTCPeerConnection)
+  V(UACSSResource)
 
 class InstanceCounters {
   STATIC_ONLY(InstanceCounters);

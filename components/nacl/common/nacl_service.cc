@@ -15,7 +15,6 @@
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
-#include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -57,6 +56,11 @@ service_manager::mojom::ServiceRequest ConnectToServiceManager(
   return service_manager::mojom::ServiceRequest(std::move(parent_handle));
 }
 
+void ConnectBootstrapChannel(IPC::mojom::ChannelBootstrapPtrInfo ptr,
+                             IPC::mojom::ChannelBootstrapRequest request) {
+  mojo::FuseInterface(std::move(request), std::move(ptr));
+}
+
 class NaClService : public service_manager::Service {
  public:
   NaClService(IPC::mojom::ChannelBootstrapPtrInfo bootstrap,
@@ -72,13 +76,17 @@ class NaClService : public service_manager::Service {
   IPC::mojom::ChannelBootstrapPtrInfo ipc_channel_bootstrap_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support_;
   bool connected_ = false;
+  service_manager::BinderRegistry registry_;
 };
 
 NaClService::NaClService(
     IPC::mojom::ChannelBootstrapPtrInfo bootstrap,
     std::unique_ptr<mojo::edk::ScopedIPCSupport> ipc_support)
     : ipc_channel_bootstrap_(std::move(bootstrap)),
-      ipc_support_(std::move(ipc_support)) {}
+      ipc_support_(std::move(ipc_support)) {
+  registry_.AddInterface(base::Bind(&ConnectBootstrapChannel,
+                                    base::Passed(&ipc_channel_bootstrap_)));
+}
 
 NaClService::~NaClService() = default;
 
@@ -87,13 +95,9 @@ void NaClService::OnBindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   if (source_info.identity.name() == content::mojom::kBrowserServiceName &&
-      interface_name == IPC::mojom::ChannelBootstrap::Name_ && !connected_) {
+      !connected_) {
     connected_ = true;
-    mojo::FuseInterface(
-        IPC::mojom::ChannelBootstrapRequest(std::move(interface_pipe)),
-        std::move(ipc_channel_bootstrap_));
-  } else {
-    DVLOG(1) << "Ignoring request for unknown interface " << interface_name;
+    registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 }
 

@@ -11,6 +11,7 @@
       ** { }
       @supports (display: flex) { }
       </style>
+      This test passes if it doesn't crash.
     `);
 
   TestRunner.completeTest();

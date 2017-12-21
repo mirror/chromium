@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
@@ -147,10 +146,8 @@ public class AwImeTest {
      * keydown event.
      */
     // https://crbug.com/787651
-    // Flaky! - https://crbug.com/795423
     @Test
-    // @SmallTest
-    @DisabledTest
+    @SmallTest
     public void testImeDpadMovesFocusOutOfWebView() throws Throwable {
         loadContentEditableBody();
         focusOnEditTextAndShowKeyboard();

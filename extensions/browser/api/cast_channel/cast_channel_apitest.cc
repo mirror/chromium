@@ -28,7 +28,6 @@
 #include "net/base/ip_address.h"
 #include "net/base/net_errors.h"
 #include "net/log/test_net_log.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gmock_mutant.h"
 
@@ -116,7 +115,7 @@ class CastChannelAPITest : public ExtensionApiTest {
       EXPECT_CALL(*mock_cast_socket_, ready_state())
           .WillOnce(Return(ReadyState::OPEN));
       EXPECT_CALL(*mock_cast_socket_->mock_transport(),
-                  SendMessage(A<const CastMessage&>(), _, _))
+                  SendMessage(A<const CastMessage&>(), _))
           .WillOnce(InvokeCompletionCallback<1>(net::OK));
       EXPECT_CALL(*mock_cast_socket_, ready_state())
           .WillOnce(Return(ReadyState::OPEN));

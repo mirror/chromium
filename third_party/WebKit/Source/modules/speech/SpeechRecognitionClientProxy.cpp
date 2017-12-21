@@ -26,8 +26,6 @@
 #include "modules/speech/SpeechRecognitionClientProxy.h"
 
 #include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/dom/ExecutionContext.h"
 #include "modules/speech/SpeechGrammarList.h"
@@ -36,6 +34,7 @@
 #include "modules/speech/SpeechRecognitionResult.h"
 #include "modules/speech/SpeechRecognitionResultList.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebSpeechGrammar.h"
 #include "public/web/WebSpeechRecognitionHandle.h"
@@ -49,7 +48,7 @@ SpeechRecognitionClientProxy::~SpeechRecognitionClientProxy() {}
 
 std::unique_ptr<SpeechRecognitionClientProxy>
 SpeechRecognitionClientProxy::Create(WebSpeechRecognizer* recognizer) {
-  return base::WrapUnique(new SpeechRecognitionClientProxy(recognizer));
+  return WTF::WrapUnique(new SpeechRecognitionClientProxy(recognizer));
 }
 
 void SpeechRecognitionClientProxy::Start(SpeechRecognition* recognition,

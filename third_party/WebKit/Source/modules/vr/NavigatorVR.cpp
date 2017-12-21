@@ -21,6 +21,7 @@
 #include "modules/vr/VRPose.h"
 #include "modules/xr/XR.h"
 #include "platform/feature_policy/FeaturePolicy.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
 namespace blink {

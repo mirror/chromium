@@ -65,8 +65,7 @@ PanelTest.prototype = {
   */}
 };
 
-// Flaky, see https://crbug.com/795840
-TEST_F('PanelTest', 'DISABLED_ActivateMenu', function() {
+TEST_F('PanelTest', 'ActivateMenu', function() {
   var mockFeedback = this.createMockFeedback();
   this.runWithLoadedTree(this.linksDoc, function(root) {
     var openMenus = new PanelCommand(PanelCommandType.OPEN_MENUS);

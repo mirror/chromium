@@ -9,13 +9,8 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
-        "field_trials": [
-          "content::mojom::FieldTrialRecorder"
-        ],
-        "font_cache": [
-          "content::mojom::FontCacheWin"
-        ],
         "gpu": [
+          "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
         ],
         "plugin": [
@@ -34,7 +29,6 @@
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebDatabaseHost",
           "content::mojom::AppCacheBackend",
-          "content::mojom::ClipboardHost",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
@@ -130,7 +124,6 @@
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
           "blink::mojom::BackgroundFetchService",
-          "blink::mojom::BudgetService",
           "blink::mojom::ColorChooserFactory",
           "blink::mojom::DedicatedWorkerFactory",
           "blink::mojom::LockManager",
@@ -162,8 +155,8 @@
           "device::mojom::VibrationManager",
           "device::mojom::VRService",
           "device::mojom::WakeLock",
-          "device::mojom::UsbDeviceManager",
           "device::mojom::VRService",
+          "device::usb::DeviceManager",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "media::mojom::ImageCapture",
           "media::mojom::InterfaceFactory",
@@ -188,7 +181,6 @@
     "navigation:dedicated_worker": {
       "provides": {
         "renderer": [
-          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
@@ -203,7 +195,6 @@
       "provides": {
         "renderer": [
           "blink::mojom::BackgroundFetchService",
-          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
@@ -219,7 +210,6 @@
     "navigation:shared_worker": {
       "provides": {
         "renderer": [
-          "blink::mojom::BudgetService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",

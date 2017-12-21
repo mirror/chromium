@@ -129,7 +129,12 @@ void CredentialManager::SendGetResponse(
     case CredentialManagerError::SUCCESS:
       ResolveCredentialPromiseWithCredentialInfo(web_state_, promise_id, info);
       break;
-    case CredentialManagerError::PENDING_REQUEST:
+    case CredentialManagerError::DISABLED:
+      RejectCredentialPromiseWithInvalidStateError(
+          web_state_, promise_id,
+          base::ASCIIToUTF16("Credential Manager is disabled."));
+      break;
+    case CredentialManagerError::PENDINGREQUEST:
       RejectCredentialPromiseWithInvalidStateError(
           web_state_, promise_id,
           base::ASCIIToUTF16("Pending 'get()' request."));

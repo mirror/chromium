@@ -27,10 +27,7 @@
       },
       "requires": {
         "*": [ "app" ],
-        "content_browser": [
-          "field_trials",
-          "renderer"
-        ],
+        "content_browser": [ "renderer" ],
         "metrics": [ "url_keyed_metrics" ],
         "device": [
           "device:power_monitor",

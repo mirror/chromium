@@ -263,10 +263,6 @@ class BASE_EXPORT Pickle {
   }
 
  protected:
-  // Returns size of the header, which can have default value, set by user or
-  // calculated by passed raw data.
-  size_t header_size() const { return header_size_; }
-
   char* mutable_payload() {
     return reinterpret_cast<char*>(header_) + header_size_;
   }

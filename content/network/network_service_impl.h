@@ -22,11 +22,13 @@
 namespace net {
 class NetLog;
 class LoggingNetworkChangeObserver;
+class URLRequestContext;
 }  // namespace net
 
 namespace content {
 
 class NetworkContext;
+class URLRequestContextBuilderMojo;
 
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
@@ -43,14 +45,10 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   ~NetworkServiceImpl() override;
 
   std::unique_ptr<mojom::NetworkContext> CreateNetworkContextWithBuilder(
-      mojom::NetworkContextRequest request,
-      mojom::NetworkContextParamsPtr params,
+      content::mojom::NetworkContextRequest request,
+      content::mojom::NetworkContextParamsPtr params,
       std::unique_ptr<URLRequestContextBuilderMojo> builder,
       net::URLRequestContext** url_request_context) override;
-
-  // Allows late binding if the mojo request wasn't specified in the
-  // constructor.
-  void Bind(mojom::NetworkServiceRequest request);
 
   static std::unique_ptr<NetworkServiceImpl> CreateForTesting();
 
@@ -83,6 +81,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
+
+  void Create(mojom::NetworkServiceRequest request);
 
   std::unique_ptr<MojoNetLog> owned_net_log_;
   // TODO(https://crbug.com/767450): Remove this, once Chrome no longer creates

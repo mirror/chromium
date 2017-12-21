@@ -5,8 +5,6 @@
 package org.chromium.content.browser;
 
 import android.content.pm.ActivityInfo;
-import android.provider.Settings;
-import android.support.test.filters.MediumTest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -15,11 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
-import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
@@ -93,10 +89,10 @@ public class VideoRotateToFullscreenTest {
     }
 
     @Test
-    @MediumTest
-    @Feature({"VideoRotateToFullscreen"})
-    @Restriction({UiRestriction.RESTRICTION_TYPE_PHONE})
+    // @MediumTest
+    // @Feature({"VideoRotateToFullscreen"})
     @DisabledTest(message = "crbug.com/726977")
+    @Restriction({UiRestriction.RESTRICTION_TYPE_PHONE})
     public void testPortraitToLandscapeAndBack() throws Exception {
         // Start off in portrait screen orientation.
         mRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -111,19 +107,14 @@ public class VideoRotateToFullscreenTest {
         mRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         waitForScreenOrientation("\"landscape\"");
 
-        // Should enter fullscreen if there is no portrait system lock.
-        boolean autoRotateEnabled =
-                Settings.System.getInt(ContextUtils.getApplicationContext().getContentResolver(),
-                        Settings.System.ACCELEROMETER_ROTATION, 0)
-                == 1;
-        waitForContentsFullscreenState(autoRotateEnabled);
+        // Should enter fullscreen.
+        waitForContentsFullscreenState(true);
 
         // Rotate screen from landscape to portrait(?).
         mRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         waitForScreenOrientation("\"portrait\"");
 
-        // Should no longer be fullscreen (either exitno longer be fullscreen
-        // (either exit or never went).
+        // Should exit fullscreen.
         waitForContentsFullscreenState(false);
     }
 }

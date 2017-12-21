@@ -125,7 +125,7 @@ void RegisterRemovableStorageWriterService(
     ChromeContentUtilityClient::StaticServiceMap* services) {
   service_manager::EmbeddedServiceInfo service_info;
   service_info.factory =
-      base::Bind(&RemovableStorageWriterService::CreateService);
+      base::Bind(&chrome::RemovableStorageWriterService::CreateService);
   services->emplace(chrome::mojom::kRemovableStorageWriterServiceName,
                     service_info);
 }
@@ -202,7 +202,8 @@ void ChromeContentUtilityClient::RegisterServices(
   if (utility_process_running_elevated_) {
 #if defined(OS_WIN) && BUILDFLAG(ENABLE_EXTENSIONS)
     service_manager::EmbeddedServiceInfo service_info;
-    service_info.factory = base::Bind(&WifiUtilWinService::CreateService);
+    service_info.factory =
+        base::Bind(&chrome::WifiUtilWinService::CreateService);
     services->emplace(chrome::mojom::kWifiUtilWinServiceName, service_info);
 
     RegisterRemovableStorageWriterService(services);
@@ -252,7 +253,7 @@ void ChromeContentUtilityClient::RegisterServices(
 #if defined(OS_WIN)
   {
     service_manager::EmbeddedServiceInfo service_info;
-    service_info.factory = base::Bind(&UtilWinService::CreateService);
+    service_info.factory = base::Bind(&chrome::UtilWinService::CreateService);
     services->emplace(chrome::mojom::kUtilWinServiceName, service_info);
   }
 #endif
@@ -260,7 +261,7 @@ void ChromeContentUtilityClient::RegisterServices(
 #if defined(FULL_SAFE_BROWSING) || defined(OS_CHROMEOS)
   {
     service_manager::EmbeddedServiceInfo service_info;
-    service_info.factory = base::Bind(&FileUtilService::CreateService);
+    service_info.factory = base::Bind(&chrome::FileUtilService::CreateService);
     services->emplace(chrome::mojom::kFileUtilServiceName, service_info);
   }
 #endif
@@ -274,7 +275,8 @@ void ChromeContentUtilityClient::RegisterServices(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   {
     service_manager::EmbeddedServiceInfo service_info;
-    service_info.factory = base::Bind(&MediaGalleryUtilService::CreateService);
+    service_info.factory =
+        base::Bind(&chrome::MediaGalleryUtilService::CreateService);
     services->emplace(chrome::mojom::kMediaGalleryUtilServiceName,
                       service_info);
   }

@@ -26,6 +26,7 @@
 #include "modules/webaudio/WaveShaperProcessor.h"
 #include <memory>
 #include "modules/webaudio/WaveShaperDSPKernel.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 

@@ -45,8 +45,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
         service_factory_(std::move(service_factory)),
         connector_callback_(std::move(connector_callback)) {
     registry_.AddInterface<service_manager::mojom::ServiceFactory>(
-        base::BindRepeating(&ServiceTestClient::Create,
-                            base::Unretained(this)));
+        base::Bind(&ServiceTestClient::Create, base::Unretained(this)));
   }
 
  protected:
@@ -164,7 +163,7 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
                    std::unique_ptr<PrefService>* out) {
     ConnectToPrefService(
         connector, std::move(pref_registry),
-        base::BindRepeating(&PrefServiceFactoryTest::OnCreate, callback, out));
+        base::Bind(&PrefServiceFactoryTest::OnCreate, callback, out));
   }
 
   scoped_refptr<PrefRegistrySimple> GetInitialPrefRegistry() {
@@ -203,8 +202,7 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
     PrefChangeRegistrar registrar;
     registrar.Init(pref_service);
     base::RunLoop run_loop;
-    registrar.Add(
-        key, base::BindRepeating(&OnPrefChanged, run_loop.QuitClosure(), key));
+    registrar.Add(key, base::Bind(&OnPrefChanged, run_loop.QuitClosure(), key));
     run_loop.Run();
   }
 
@@ -529,8 +527,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       // Watch for an unexpected change to kDictionaryKey.
       PrefChangeRegistrar registrar;
       registrar.Init(pref_service2.get());
-      registrar.Add(kDictionaryKey,
-                    base::BindRepeating(&Fail, pref_service2.get()));
+      registrar.Add(kDictionaryKey, base::Bind(&Fail, pref_service2.get()));
 
       // Make and wait for a change to another pref to ensure an unexpected
       // change to kDictionaryKey is detected.
@@ -600,8 +597,7 @@ TEST_F(PrefServiceFactoryTest,
   }
   PrefChangeRegistrar registrar;
   registrar.Init(pref_service2.get());
-  registrar.Add(kDictionaryKey,
-                base::BindRepeating(&Fail, pref_service2.get()));
+  registrar.Add(kDictionaryKey, base::Bind(&Fail, pref_service2.get()));
   pref_service->SetInteger(kKey, kUpdatedValue);
   WaitForPrefChange(pref_service2.get(), kKey);
 }

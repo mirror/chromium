@@ -387,10 +387,6 @@ struct PendingPaymentResponse {
   DCHECK(_pendingPaymentRequest->state() ==
          payments::PaymentRequest::State::INTERACTIVE);
 
-  [_unblockEventQueueTimer invalidate];
-  [_paymentResponseTimeoutTimer invalidate];
-  [_updateEventTimeoutTimer invalidate];
-
   [self resetIOSPaymentInstrumentLauncherDelegate];
 
   __weak PaymentRequestManager* weakSelf = self;
@@ -665,6 +661,10 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
     return YES;
   }
 
+  [_unblockEventQueueTimer invalidate];
+  [_paymentResponseTimeoutTimer invalidate];
+  [_updateEventTimeoutTimer invalidate];
+
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlockWithBool cancellationCallback = ^(BOOL) {
     [[weakSelf paymentRequestJsManager]
@@ -754,6 +754,10 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
           payments::PaymentRequest::State::INTERACTIVE) {
     return YES;
   }
+
+  [_unblockEventQueueTimer invalidate];
+  [_paymentResponseTimeoutTimer invalidate];
+  [_updateEventTimeoutTimer invalidate];
 
   __weak PaymentRequestManager* weakSelf = self;
   ProceduralBlock callback = ^{

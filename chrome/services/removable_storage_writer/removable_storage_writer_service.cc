@@ -14,6 +14,8 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
+namespace chrome {
+
 namespace {
 
 void OnRemovableStorageWriterGetterRequest(
@@ -49,3 +51,5 @@ void RemovableStorageWriterService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
+
+}  //  namespace chrome

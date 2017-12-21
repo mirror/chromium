@@ -45,7 +45,7 @@ void FontCache::GetFontForCharacter(
   NOTIMPLEMENTED();
 }
 
-scoped_refptr<SimpleFontData> FontCache::PlatformFallbackFontForCharacter(
+scoped_refptr<SimpleFontData> FontCache::FallbackFontForCharacter(
     const FontDescription&,
     UChar32,
     const SimpleFontData* font_data_to_substitute,

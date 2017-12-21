@@ -14,7 +14,7 @@ xr_session_test( (t, session) => {
   // Session must have a baseLayer or frame requests will be ignored.
   session.baseLayer = new XRWebGLLayer(session, gl);
 
-  function onFrameBad(time, vrFrame) {
+  function onFrameBad(vrFrame) {
     t.step( () => {
       assert_unreached("Unregistered callback was called");
     });
@@ -23,31 +23,31 @@ xr_session_test( (t, session) => {
 
   let counter = 0;
   let handle2 = 0;
-  function onFrameGood(time, vrFrame) {
+  function onFrameGood(vrFrame) {
     counter++;
     if (counter >= 4) {
       t.done();
-      // Intentionally don't return immediately so that session.requestAnimationFrame
+      // Intentionally don't return immediately so that session.requestFrame
       // gets called again to make sure it doesn't cause unexpected behavior
       // like in crbug.com/679401
     }
-    session.requestAnimationFrame(onFrameGood);
+    session.requestFrame(onFrameGood);
 
     if (handle2 != 0) {
       // The first time we enter this callback the callback associated with
       // handle2 will have already been queued to execute immediately after
-      // this callback returns. Ensure that cancelAnimationFrame works even in that
+      // this callback returns. Ensure that cancelFrame works even in that
       // scenario.
-      session.cancelAnimationFrame(handle2);
+      session.cancelFrame(handle2);
       handle2 = 0;
     }
   }
 
-  let handle = session.requestAnimationFrame(onFrameBad);
-  session.cancelAnimationFrame(handle);
-  session.requestAnimationFrame(onFrameGood);
-  handle2 = session.requestAnimationFrame(onFrameBad);
+  let handle = session.requestFrame(onFrameBad);
+  session.cancelFrame(handle);
+  session.requestFrame(onFrameGood);
+  handle2 = session.requestFrame(onFrameBad);
 }, fakeDisplays["Pixel"], { exclusive: true },
-"XRSession requestAnimationFrame callbacks can be unregistered with cancelAnimationFrame");
+"XRSession requestFrame callbacks can be unregistered with cancelFrame");
 
 </script>

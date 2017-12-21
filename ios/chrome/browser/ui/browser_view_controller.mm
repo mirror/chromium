@@ -2070,17 +2070,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _sadTabCoordinator.baseViewController = self;
   _sadTabCoordinator.dispatcher = self.dispatcher;
 
-  // If there are any existing SadTabHelpers in |_model|, update the helpers
-  // delegate with the new |_sadTabCoordinator|.
-  for (NSUInteger i = 0; i < _model.count; i++) {
-    SadTabTabHelper* sadTabHelper =
-        SadTabTabHelper::FromWebState([_model tabAtIndex:i].webState);
-    DCHECK(sadTabHelper);
-    if (sadTabHelper) {
-      sadTabHelper->SetDelegate(_sadTabCoordinator);
-    }
-  }
-
   _pageInfoCoordinator =
       [[PageInfoLegacyCoordinator alloc] initWithBaseViewController:self];
   _pageInfoCoordinator.browserState = _browserState;
@@ -2134,13 +2123,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     [self.view insertSubview:infoBarContainerView aboveSubview:_contentArea];
 
   // Place the toolbar controller above the infobar container and adds the
-  // layout guides.
+  // omnibox layout guide.
   if (initialLayout) {
     [[self view] insertSubview:_toolbarCoordinator.toolbarViewController.view
                   aboveSubview:infoBarContainerView];
     AddNamedGuide(kOmniboxGuide, self.view);
-    AddNamedGuide(kBackButtonGuide, self.view);
-    AddNamedGuide(kForwardButtonGuide, self.view);
   }
   minY += CGRectGetHeight(toolbarFrame);
   if (initialLayout)

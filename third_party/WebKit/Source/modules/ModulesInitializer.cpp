@@ -4,9 +4,6 @@
 
 #include "modules/ModulesInitializer.h"
 
-#include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "bindings/modules/v8/ModuleBindingsInitializer.h"
 #include "core/css/CSSPaintImageGenerator.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
@@ -38,6 +35,7 @@
 #include "modules/canvas/canvas2d/CanvasRenderingContext2D.h"
 #include "modules/canvas/imagebitmap/ImageBitmapRenderingContext.h"
 #include "modules/canvas/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
+#include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
 #include "modules/device_orientation/DeviceMotionController.h"
 #include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
@@ -86,6 +84,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebViewClient.h"
@@ -241,7 +240,7 @@ std::unique_ptr<WebMediaPlayer> ModulesInitializer::CreateWebMediaPlayer(
       HTMLMediaElementEncryptedMedia::From(html_media_element);
   WebString sink_id(
       HTMLMediaElementAudioOutputDevice::sinkId(html_media_element));
-  return base::WrapUnique(web_frame_client->CreateMediaPlayer(
+  return WTF::WrapUnique(web_frame_client->CreateMediaPlayer(
       source, media_player_client, &encrypted_media,
       encrypted_media.ContentDecryptionModule(), sink_id, view));
 }
@@ -249,6 +248,13 @@ std::unique_ptr<WebMediaPlayer> ModulesInitializer::CreateWebMediaPlayer(
 WebRemotePlaybackClient* ModulesInitializer::CreateWebRemotePlaybackClient(
     HTMLMediaElement& html_media_element) const {
   return HTMLMediaElementRemotePlayback::remote(html_media_element);
+}
+
+void ModulesInitializer::ProvideCredentialManagerClient(
+    Page& page,
+    WebCredentialManagerClient* web_credential_manager_client) const {
+  ::blink::ProvideCredentialManagerClientTo(
+      page, new CredentialManagerClient(web_credential_manager_client));
 }
 
 void ModulesInitializer::ProvideModulesToPage(Page& page,

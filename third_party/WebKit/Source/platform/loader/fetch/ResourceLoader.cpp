@@ -66,21 +66,17 @@ static scoped_refptr<WebTaskRunner> GetTaskRunnerFor(
 
 ResourceLoader* ResourceLoader::Create(ResourceFetcher* fetcher,
                                        ResourceLoadScheduler* scheduler,
-                                       Resource* resource,
-                                       uint32_t inflight_keepalive_bytes) {
-  return new ResourceLoader(fetcher, scheduler, resource,
-                            inflight_keepalive_bytes);
+                                       Resource* resource) {
+  return new ResourceLoader(fetcher, scheduler, resource);
 }
 
 ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
                                ResourceLoadScheduler* scheduler,
-                               Resource* resource,
-                               uint32_t inflight_keepalive_bytes)
+                               Resource* resource)
     : scheduler_client_id_(ResourceLoadScheduler::kInvalidClientId),
       fetcher_(fetcher),
       scheduler_(scheduler),
       resource_(resource),
-      inflight_keepalive_bytes_(inflight_keepalive_bytes),
       is_cache_aware_loading_activated_(false),
       cancel_timer_(
           GetTaskRunnerFor(resource_->GetResourceRequest(), Context()),
@@ -629,8 +625,8 @@ void ResourceLoader::DidFinishLoadingFirstPartInMultipart() {
       resource_->Identifier(),
       network_instrumentation::RequestOutcome::kSuccess);
 
-  fetcher_->HandleLoaderFinish(
-      resource_.Get(), 0, ResourceFetcher::kDidFinishFirstPartInMultipart, 0);
+  fetcher_->HandleLoaderFinish(resource_.Get(), 0,
+                               ResourceFetcher::kDidFinishFirstPartInMultipart);
 }
 
 void ResourceLoader::DidFinishLoading(double finish_time,
@@ -651,8 +647,7 @@ void ResourceLoader::DidFinishLoading(double finish_time,
       network_instrumentation::RequestOutcome::kSuccess);
 
   fetcher_->HandleLoaderFinish(resource_.Get(), finish_time,
-                               ResourceFetcher::kDidFinishLoading,
-                               inflight_keepalive_bytes_);
+                               ResourceFetcher::kDidFinishLoading);
 }
 
 void ResourceLoader::DidFail(const WebURLError& error,
@@ -681,11 +676,12 @@ void ResourceLoader::HandleError(const ResourceError& error) {
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(), network_instrumentation::RequestOutcome::kFail);
 
-  fetcher_->HandleLoaderError(resource_.Get(), error,
-                              inflight_keepalive_bytes_);
+  fetcher_->HandleLoaderError(resource_.Get(), error);
 }
 
 void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
+  // downloadToFile is not supported for synchronous requests.
+  DCHECK(!request.DownloadToFile());
   DCHECK(loader_);
   DCHECK_EQ(request.Priority(), ResourceLoadPriority::kHighest);
 
@@ -695,10 +691,8 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
   WebData data_out;
   int64_t encoded_data_length = WebURLLoaderClient::kUnknownEncodedDataLength;
   int64_t encoded_body_length = 0;
-  base::Optional<int64_t> downloaded_file_length;
   loader_->LoadSynchronously(request_in, response_out, error_out, data_out,
-                             encoded_data_length, encoded_body_length,
-                             downloaded_file_length);
+                             encoded_data_length, encoded_body_length);
 
   // A message dispatched while synchronously fetching the resource
   // can bring about the cancellation of this load.
@@ -727,11 +721,6 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
       return true;
     });
     resource_->SetResourceBuffer(data_out);
-  }
-
-  if (downloaded_file_length) {
-    DCHECK(request.DownloadToFile());
-    DidDownloadData(*downloaded_file_length, encoded_body_length);
   }
   DidFinishLoading(CurrentTimeTicksInSeconds(), encoded_data_length,
                    encoded_body_length, decoded_body_length);

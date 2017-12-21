@@ -9,7 +9,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -22,9 +21,7 @@
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/profiles/profiles_state.h"
-#include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
-#include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -47,7 +44,6 @@
 #include "chrome/browser/ui/views/profiles/badged_profile_photo.h"
 #include "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.h"
 #include "chrome/browser/ui/views/profiles/user_manager_view.h"
-#include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/pref_names.h"
@@ -57,14 +53,11 @@
 #include "chrome/grit/theme_resources.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/prefs/pref_service.h"
-#include "components/signin/core/browser/account_tracker_service.h"
-#include "components/signin/core/browser/gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "components/signin/core/browser/signin_metrics.h"
 #include "components/sync/driver/sync_error_controller.h"
 #include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -183,41 +176,6 @@ BadgedProfilePhoto::BadgeType GetProfileBadgeType(const Profile* profile) {
   }
   return profile->IsChild() ? BadgedProfilePhoto::BADGE_TYPE_CHILD
                             : BadgedProfilePhoto::BADGE_TYPE_SUPERVISOR;
-}
-
-// Returns the list of all accounts that have a token. The default account in
-// the Gaia cookies will be the first account in the list.
-// TODO(tangltom): Move this code to chrome/browser/ui/signin and add a unit
-// test.
-std::vector<AccountInfo> GetAccountsForProfile(Profile* profile) {
-  // Fetch account ids for accounts that have a token.
-  ProfileOAuth2TokenService* token_service =
-      ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
-  std::vector<std::string> account_ids = token_service->GetAccounts();
-  // Fetch accounts in the Gaia cookies.
-  GaiaCookieManagerService* cookie_manager_service =
-      GaiaCookieManagerServiceFactory::GetForProfile(profile);
-  std::vector<gaia::ListedAccount> cookie_accounts;
-  bool gaia_accounts_stale = !cookie_manager_service->ListAccounts(
-      &cookie_accounts, nullptr, "ProfileChooserView");
-  UMA_HISTOGRAM_BOOLEAN("Profile.DiceUI.GaiaAccountsStale",
-                        gaia_accounts_stale);
-  // Fetch account information for each id and make sure that the first account
-  // in the list matches the first account in the Gaia cookies (if available).
-  AccountTrackerService* account_tracker_service =
-      AccountTrackerServiceFactory::GetForProfile(profile);
-  std::string gaia_default_account_id =
-      cookie_accounts.empty() ? "" : cookie_accounts[0].id;
-  std::vector<AccountInfo> accounts;
-  for (const std::string& account_id : account_ids) {
-    AccountInfo account_info =
-        account_tracker_service->GetAccountInfo(account_id);
-    if (account_id == cookie_accounts[0].id)
-      accounts.insert(accounts.begin(), account_info);
-    else
-      accounts.push_back(account_info);
-  }
-  return accounts;
 }
 
 }  // namespace
@@ -398,7 +356,6 @@ void ProfileChooserView::ResetView() {
   manage_accounts_link_ = nullptr;
   manage_accounts_button_ = nullptr;
   signin_current_profile_button_ = nullptr;
-  signin_with_gaia_account_button_ = nullptr;
   current_profile_card_ = nullptr;
   first_profile_button_ = nullptr;
   guest_profile_button_ = nullptr;
@@ -672,13 +629,9 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
         profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   } else if (sender == current_profile_card_) {
-    if (signin::IsDiceEnabledForProfile(browser_->profile()->GetPrefs())) {
-      chrome::ShowSettingsSubPage(browser_, chrome::kSyncSetupSubPage);
-    } else {
-      avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
-      PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE);
-      PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_NAME);
-    }
+    avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
+    PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE);
+    PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_NAME);
   } else if (sender == manage_accounts_button_) {
     // This button can either mean show/hide the account management view,
     // depending on which view it is displayed.
@@ -687,13 +640,6 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
                          : profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT);
   } else if (sender == signin_current_profile_button_) {
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN);
-  } else if (sender == signin_with_gaia_account_button_) {
-    // DiceTurnSyncOnHelper deletes itself once it's done.
-    new DiceTurnSyncOnHelper(
-        browser_->profile(), browser_, access_point_,
-        signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
-        signin_with_gaia_account_id_);
-
   } else {
     // Either one of the "other profiles", or one of the profile accounts
     // buttons was pressed.
@@ -924,7 +870,13 @@ views::View* ProfileChooserView::CreateDiceSyncErrorView(
       new HoverButton(this, std::move(current_profile_photo),
                       l10n_util::GetStringUTF16(title_string_id),
                       l10n_util::GetStringUTF16(subtitle_string_id));
-  hover_button->SetStyle(HoverButton::STYLE_ERROR);
+  hover_button->SetBackground(views::CreateSolidBackground(gfx::kGoogleRed700));
+  // The sync-error hover button is supposed to look similar to a default
+  // button, therefore the title should have the same style as the title of a
+  // default button.
+  hover_button->SetTitleTextStyle(views::style::STYLE_DIALOG_BUTTON_DEFAULT,
+                                  gfx::kGoogleRed700);
+  hover_button->SetSubtitleColor(SK_ColorWHITE);
 
   view->AddChildView(hover_button);
   sync_error_button_ = hover_button;
@@ -1039,22 +991,15 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 }
 
 views::View* ProfileChooserView::CreateDiceSigninView() {
-  // Fetch signed in GAIA web accounts.
-  std::vector<AccountInfo> accounts =
-      GetAccountsForProfile(browser_->profile());
-
-  // Create a view that holds an illustration and a promo, which includes a
+  // Creates a view that holds an illustration and a promo, which includes a
   // button. The illustration should slightly overlap with the promo at the
   // bottom, therefore between_child_spacing of |view| is set to negative
   // |kIllustrationPromoOverlap|. The illustration will be changed in the
   // future, once the final asset is ready.
   constexpr int kIllustrationPromoOverlap = 48;
-  const int additional_bottom_spacing = accounts.empty() ? 0 : 8;
   views::View* view = new views::View();
   view->SetLayoutManager(std::make_unique<views::BoxLayout>(
-      views::BoxLayout::kVertical,
-      gfx::Insets(0, 0, additional_bottom_spacing, 0),
-      -kIllustrationPromoOverlap));
+      views::BoxLayout::kVertical, gfx::Insets(), -kIllustrationPromoOverlap));
 
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   views::ImageView* illustration = new views::ImageView();
@@ -1063,79 +1008,23 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
            .ToImageSkia());
   view->AddChildView(illustration);
 
-  views::View* promo_button_container = new views::View();
-  // There are no insets in |promo_button_container| because the child views
-  // have different borders. Even though |promo| and the sign-in button have
-  // borders on the left and right, |sync_to_another_account| stretches over the
-  // entire width.
-  promo_button_container->SetLayoutManager(
-      std::make_unique<views::BoxLayout>(views::BoxLayout::kVertical));
+  views::View* promo_button_view = new views::View();
+  promo_button_view->SetLayoutManager(std::make_unique<views::BoxLayout>(
+      views::BoxLayout::kVertical,
+      gfx::Insets(0, kMenuEdgeMargin, kMenuEdgeMargin, kMenuEdgeMargin),
+      kMenuEdgeMargin));
   views::Label* promo = new views::Label(
       l10n_util::GetStringUTF16(IDS_PROFILES_DICE_SIGNIN_PROMO));
   promo->SetMultiLine(true);
   promo->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   promo->SetMaximumWidth(menu_width_ - 2 * kMenuEdgeMargin);
-  promo->SetBorder(
-      views::CreateEmptyBorder(0, kMenuEdgeMargin, 0, kMenuEdgeMargin));
-  promo_button_container->AddChildView(promo);
+  promo_button_view->AddChildView(promo);
 
-  // A border around the sign-in button is created. HoverButton already has its
-  // own border and a second border can't be added, therefore a parent view with
-  // a border has to be created.
-  views::View* signin_button_view = new views::View();
-  signin_button_view->SetLayoutManager(new views::FillLayout());
-  signin_button_view->SetBorder(
-      views::CreateSolidBorder(kMenuEdgeMargin, SK_ColorTRANSPARENT));
-
-  if (accounts.empty()) {
-    // When there is no signed in web account, just display a sign-in button.
-    signin_current_profile_button_ =
-        views::MdTextButton::CreateSecondaryUiBlueButton(
-            this, l10n_util::GetStringUTF16(IDS_PROFILES_DICE_SIGNIN_BUTTON));
-
-    signin_button_view->AddChildView(signin_current_profile_button_);
-    promo_button_container->AddChildView(signin_button_view);
-    view->AddChildView(promo_button_container);
-    return view;
-  }
-
-  // Create a hover button to sign in the first account of |accounts|.
-  // TODO(http://crbug.com/794522): Use the account picture instead of the
-  // default avatar.
-  gfx::Image account_icon =
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          profiles::GetPlaceholderAvatarIconResourceID());
-  auto account_photo = std::make_unique<BadgedProfilePhoto>(
-      BadgedProfilePhoto::BADGE_TYPE_NONE, account_icon);
-  base::string16 first_account_button_title =
-      accounts[0].full_name.empty()
-          ? l10n_util::GetStringUTF16(
-                IDS_PROFILES_DICE_SIGNIN_FIRST_ACCOUNT_BUTTON_NO_NAME)
-          : l10n_util::GetStringFUTF16(
-                IDS_PROFILES_DICE_SIGNIN_FIRST_ACCOUNT_BUTTON,
-                base::UTF8ToUTF16(accounts[0].full_name));
-  HoverButton* first_account_button = new HoverButton(
-      this, std::move(account_photo), first_account_button_title,
-      base::UTF8ToUTF16(accounts[0].email));
-  first_account_button->SetStyle(HoverButton::STYLE_PROMINENT);
-
-  signin_button_view->AddChildView(first_account_button);
-  promo_button_container->AddChildView(signin_button_view);
-
-  signin_with_gaia_account_button_ = first_account_button;
-  signin_with_gaia_account_id_ = accounts[0].account_id;
-
-  constexpr int kSmallMenuIconSize = 16;
-  HoverButton* sync_to_another_account_button = new HoverButton(
-      this,
-      gfx::CreateVectorIcon(kSyncSwitchAccountIcon, kSmallMenuIconSize,
-                            gfx::kChromeIconGrey),
-      l10n_util::GetStringUTF16(
-          IDS_PROFILES_DICE_SIGNIN_WITH_ANOTHER_ACCOUNT_BUTTON));
-  signin_current_profile_button_ = sync_to_another_account_button;
-  promo_button_container->AddChildView(sync_to_another_account_button);
-
-  view->AddChildView(promo_button_container);
+  signin_current_profile_button_ =
+      views::MdTextButton::CreateSecondaryUiBlueButton(
+          this, l10n_util::GetStringUTF16(IDS_PROFILES_DICE_SIGNIN_BUTTON));
+  promo_button_view->AddChildView(signin_current_profile_button_);
+  view->AddChildView(promo_button_view);
   return view;
 }
 

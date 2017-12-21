@@ -44,6 +44,7 @@ class Arguments;
 namespace test_runner {
 
 class MockContentSettingsClient;
+class MockCredentialManagerClient;
 class MockScreenOrientationClient;
 class MockWebSpeechRecognizer;
 class SpellCheckClient;
@@ -97,6 +98,7 @@ class TestRunner : public WebTestRunner {
   bool ShouldDumpBackForwardList() const override;
   blink::WebContentSettingsClient* GetWebContentSettings() const override;
   blink::WebTextCheckClient* GetWebTextCheckClient() const override;
+  void InitializeWebViewWithMocks(blink::WebView* web_view) override;
   void SetFocus(blink::WebView* web_view, bool focus) override;
 
   // Methods used by WebViewTestClient and WebFrameTestClient.
@@ -536,6 +538,16 @@ class TestRunner : public WebTestRunner {
   void SetMockSpeechRecognitionError(const std::string& error,
                                      const std::string& message);
 
+  // Credential Manager mock functions
+  // TODO(mkwst): Support FederatedCredential.
+  void SetMockCredentialManagerResponse(const std::string& id,
+                                        const std::string& name,
+                                        const std::string& avatar,
+                                        const std::string& password);
+  void ClearMockCredentialManagerResponse();
+
+  void SetMockCredentialManagerError(const std::string& error);
+
   // Takes care of notifying the delegate after a change to layout test runtime
   // flags.
   void OnLayoutTestRuntimeFlagsChanged();
@@ -608,6 +620,7 @@ class TestRunner : public WebTestRunner {
 
   bool use_mock_theme_;
 
+  std::unique_ptr<MockCredentialManagerClient> credential_manager_client_;
   std::unique_ptr<MockScreenOrientationClient> mock_screen_orientation_client_;
   std::unique_ptr<MockWebSpeechRecognizer> speech_recognizer_;
   std::unique_ptr<SpellCheckClient> spellcheck_;

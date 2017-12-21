@@ -178,8 +178,9 @@ void RenderWidgetHostViewGuest::ProcessAckedTouchEvent(
 }
 #endif
 
-void RenderWidgetHostViewGuest::PreProcessMouseEvent(
-    const blink::WebMouseEvent& event) {
+void RenderWidgetHostViewGuest::ProcessMouseEvent(
+    const blink::WebMouseEvent& event,
+    const ui::LatencyInfo& latency) {
   if (event.GetType() == blink::WebInputEvent::kMouseDown) {
     DCHECK(guest_->GetOwnerRenderWidgetHostView());
     RenderWidgetHost* embedder =
@@ -194,10 +195,12 @@ void RenderWidgetHostViewGuest::PreProcessMouseEvent(
     MaybeSendSyntheticTapGesture(event.PositionInWidget(),
                                  event.PositionInScreen());
   }
+  host_->ForwardMouseEventWithLatencyInfo(event, latency);
 }
 
-void RenderWidgetHostViewGuest::PreProcessTouchEvent(
-    const blink::WebTouchEvent& event) {
+void RenderWidgetHostViewGuest::ProcessTouchEvent(
+    const blink::WebTouchEvent& event,
+    const ui::LatencyInfo& latency) {
   if (event.GetType() == blink::WebInputEvent::kTouchStart) {
     DCHECK(guest_->GetOwnerRenderWidgetHostView());
     RenderWidgetHost* embedder =
@@ -212,6 +215,8 @@ void RenderWidgetHostViewGuest::PreProcessTouchEvent(
     MaybeSendSyntheticTapGesture(event.touches[0].PositionInWidget(),
                                  event.touches[0].PositionInScreen());
   }
+
+  host_->ForwardTouchEventWithLatencyInfo(event, latency);
 }
 
 gfx::Rect RenderWidgetHostViewGuest::GetViewBounds() const {

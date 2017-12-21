@@ -12,6 +12,7 @@ namespace blink {
 
 class WebTextCheckingCompletion;
 
+// TODO(xiaochengh): Rename WebTextCheckClient to WebSpellCheckClient.
 class WebTextCheckClient {
  public:
   // Returns the Chromium setting of whether spell-checking is enabled.

@@ -12,8 +12,6 @@
 
 // Named guide constants.
 GuideName* const kOmniboxGuide = @"kOmniboxGuide";
-GuideName* const kBackButtonGuide = @"kBackButtonGuide";
-GuideName* const kForwardButtonGuide = @"kForwardButtonGuide";
 
 UILayoutGuide* FindNamedGuide(GuideName* name, UIView* view) {
   while (view) {

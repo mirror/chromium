@@ -23,6 +23,7 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
+#include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/child_process_host.h"
@@ -186,7 +187,7 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
                                       const GURL& url) {
     ServiceWorkerStatusCode status;
     base::RunLoop run_loop;
-    mojom::EmbeddedWorkerStartParamsPtr params =
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(id, pattern, url);
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -197,9 +198,10 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     return status;
   }
 
-  mojom::EmbeddedWorkerStartParamsPtr
+  std::unique_ptr<EmbeddedWorkerStartParams>
   CreateStartParams(int version_id, const GURL& scope, const GURL& script_url) {
-    auto params = mojom::EmbeddedWorkerStartParams::New();
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
+        std::make_unique<EmbeddedWorkerStartParams>();
     params->service_worker_version_id = version_id;
     params->scope = scope;
     params->script_url = script_url;
@@ -237,7 +239,7 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
 
   ServiceWorkerStatusCode SimulateSendStartWorker(
       EmbeddedWorkerInstance* worker,
-      mojom::EmbeddedWorkerStartParamsPtr params) {
+      std::unique_ptr<EmbeddedWorkerStartParams> params) {
     return worker->SendStartWorker(std::move(params));
   }
 
@@ -367,7 +369,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   // Start should succeed.
   ServiceWorkerStatusCode status;
   base::RunLoop run_loop;
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(service_worker_version_id, pattern, url);
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -427,7 +429,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     // Start once normally.
     ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
     base::RunLoop run_loop;
-    mojom::EmbeddedWorkerStartParamsPtr params =
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -454,7 +456,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     // Start again.
     ServiceWorkerStatusCode status;
     base::RunLoop run_loop;
-    mojom::EmbeddedWorkerStartParamsPtr params =
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -543,7 +545,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     // Start worker1.
     ServiceWorkerStatusCode status;
     base::RunLoop run_loop;
-    mojom::EmbeddedWorkerStartParamsPtr params =
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(version_id1, pattern, url);
     worker1->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -558,7 +560,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     // Start worker2.
     ServiceWorkerStatusCode status;
     base::RunLoop run_loop;
-    mojom::EmbeddedWorkerStartParamsPtr params =
+    std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(version_id2, pattern, url);
     worker2->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -599,7 +601,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
 
   // Run the start worker sequence and detach during process allocation.
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -635,7 +637,7 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
 
   // Run the start worker sequence until a start worker message is sent.
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -678,7 +680,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   // Stop the start worker sequence before a process is allocated.
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
 
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -757,7 +759,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
   // Run the start worker sequence until pause after download.
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
 
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   params->pause_after_download = true;
   worker->Start(std::move(params), CreateProviderInfoGetter(),
@@ -791,7 +793,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
 
   // Run the start worker sequence until a start worker message is sent.
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -861,7 +863,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
 
   // Start the worker.
   base::RunLoop run_loop;
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
@@ -899,7 +901,7 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
   worker->AddListener(this);
 
   // Attempt to start the worker.
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -925,7 +927,7 @@ class FailEmbeddedWorkerInstanceClientImpl
 
  private:
   void StartWorker(
-      mojom::EmbeddedWorkerStartParamsPtr,
+      const EmbeddedWorkerStartParams&,
       mojom::ServiceWorkerEventDispatcherRequest,
       mojom::ControllerServiceWorkerRequest,
       blink::mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
@@ -957,7 +959,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
   worker->AddListener(this);
 
   // Attempt to start the worker.
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -1016,7 +1018,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   // cause a crash.
   std::pair<blink::WebConsoleMessage::Level, std::string> test_message =
       std::make_pair(blink::WebConsoleMessage::kLevelVerbose, "");
-  mojom::EmbeddedWorkerStartParamsPtr params =
+  std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), CreateController(),
@@ -1056,7 +1058,7 @@ TEST_F(EmbeddedWorkerInstanceTest, NoDispatcherHost) {
   std::unique_ptr<EmbeddedWorkerInstance> worker =
       embedded_worker_registry()->CreateWorker(pair.second.get());
   SetWorkerStatus(worker.get(), EmbeddedWorkerStatus::STARTING);
-  auto params = mojom::EmbeddedWorkerStartParams::New();
+  auto params = std::make_unique<EmbeddedWorkerStartParams>();
   ServiceWorkerStatusCode result =
       SimulateSendStartWorker(worker.get(), std::move(params));
   EXPECT_EQ(SERVICE_WORKER_ERROR_IPC_FAILED, result);

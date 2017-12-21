@@ -665,8 +665,6 @@ gfx::Size DirectRenderer::RenderPassTextureSize(const RenderPass* render_pass) {
 // static
 ResourceTextureHint DirectRenderer::RenderPassTextureHint(
     const RenderPass* render_pass) {
-  // TODO(danakj): Pass these as 2 bools instead so subclasses don't have to
-  // worry about new hints being silently added to the field here.
   ResourceTextureHint hint = ResourceTextureHint::kFramebuffer;
   if (render_pass->generate_mipmap)
     hint |= ResourceTextureHint::kMipmap;

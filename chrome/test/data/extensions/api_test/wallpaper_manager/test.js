@@ -58,7 +58,9 @@ chrome.test.getConfig(function(config) {
                                                  '123',
                                                  pass(function(thumbnail) {
         chrome.wallpaperPrivate.setCustomWallpaperLayout('CENTER',
-                                                         pass(function() {}));
+                                                         pass(function() {
+          chrome.wallpaperPrivate.setCustomWallpaperLayout('STRETCH', pass());
+        }));
       }));
     },
     function setCustomPngWallpaper() {
@@ -75,6 +77,8 @@ chrome.test.getConfig(function(config) {
                                                      pass(function(thumbnail) {
             chrome.wallpaperPrivate.setCustomWallpaperLayout('CENTER',
                                                              pass(function() {
+              chrome.wallpaperPrivate.setCustomWallpaperLayout('STRETCH',
+                                                               pass());
             }));
           }));
         } else {

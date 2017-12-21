@@ -15,6 +15,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
@@ -26,7 +27,7 @@ void AppBannerController::BindMojoRequest(
     mojom::blink::AppBannerControllerRequest request) {
   DCHECK(frame);
 
-  mojo::MakeStrongBinding(std::make_unique<AppBannerController>(*frame),
+  mojo::MakeStrongBinding(WTF::WrapUnique(new AppBannerController(*frame)),
                           std::move(request));
 }
 

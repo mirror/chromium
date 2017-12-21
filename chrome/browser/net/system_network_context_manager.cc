@@ -23,7 +23,6 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
-#include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/net_features.h"
 
@@ -37,8 +36,7 @@ void DisableQuicOnIOThread(
     safe_browsing::SafeBrowsingService* safe_browsing_service) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-  if (!base::FeatureList::IsEnabled(features::kNetworkService))
-    content::GetNetworkServiceImpl()->DisableQuic();
+  // Disable QUIC for HttpNetworkSessions using IOThread's NetworkService.
   io_thread->DisableQuic();
 
   // Safebrowsing isn't yet using the IOThread's NetworkService, so must be
@@ -84,8 +82,8 @@ void SystemNetworkContextManager::SetUp(
     content::mojom::NetworkContextRequest* network_context_request,
     content::mojom::NetworkContextParamsPtr* network_context_params,
     bool* is_quic_allowed) {
+  *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-    *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
     *network_context_params = CreateNetworkContextParams();
   } else {
     // Just use defaults if the network service is enabled, since

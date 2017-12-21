@@ -12,6 +12,7 @@
         padding: 10px 50px !important;
       }
       </style>
+      <p>Tests that CSSOM-modified shorthands are reporting their &quot;important&quot; bits.</p>
       <div id="inspected">Text</div>
     `);
   await TestRunner.evaluateInPagePromise(`

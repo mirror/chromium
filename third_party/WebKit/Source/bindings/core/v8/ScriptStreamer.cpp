@@ -5,15 +5,13 @@
 #include "bindings/core/v8/ScriptStreamer.h"
 
 #include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "bindings/core/v8/ScriptStreamerThread.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
+#include "core/dom/ClassicPendingScript.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/frame/Settings.h"
 #include "core/html/parser/TextResourceDecoder.h"
-#include "core/script/ClassicPendingScript.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
@@ -22,6 +20,7 @@
 #include "platform/loader/fetch/Resource.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Deque.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
 
 namespace blink {
@@ -455,13 +454,13 @@ void ScriptStreamer::NotifyAppendData(Resource* resource) {
     DCHECK(!source_);
     stream_ = new SourceStream;
     // m_source takes ownership of m_stream.
-    source_ = std::make_unique<v8::ScriptCompiler::StreamedSource>(stream_,
-                                                                   encoding_);
+    source_ = WTF::WrapUnique(
+        new v8::ScriptCompiler::StreamedSource(stream_, encoding_));
 
     ScriptState::Scope scope(script_state_.get());
     std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask>
         script_streaming_task(
-            base::WrapUnique(v8::ScriptCompiler::StartStreamingScript(
+            WTF::WrapUnique(v8::ScriptCompiler::StartStreamingScript(
                 script_state_->GetIsolate(), source_.get(), compile_options_)));
     if (!script_streaming_task) {
       // V8 cannot stream the script.

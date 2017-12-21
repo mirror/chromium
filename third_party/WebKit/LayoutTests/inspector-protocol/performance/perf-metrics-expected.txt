@@ -16,7 +16,6 @@ Received metrics:
 	V8PerContextDatas
 	WorkerGlobalScopes
 	UACSSResources
-	RTCPeerConnections
 	LayoutCount
 	RecalcStyleCount
 	LayoutDuration
@@ -44,7 +43,6 @@ Received metrics:
 	V8PerContextDatas
 	WorkerGlobalScopes
 	UACSSResources
-	RTCPeerConnections
 	LayoutCount
 	RecalcStyleCount
 	LayoutDuration

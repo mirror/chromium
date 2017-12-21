@@ -583,8 +583,28 @@ void IMM32Manager::ConvertInputModeToImmFlags(TextInputMode input_mode,
                                               DWORD initial_conversion_mode,
                                               BOOL* open,
                                               DWORD* new_conversion_mode) {
-  *open = FALSE;
+  *open = TRUE;
   *new_conversion_mode = initial_conversion_mode;
+  switch (input_mode) {
+    case ui::TEXT_INPUT_MODE_FULL_WIDTH_LATIN:
+      *new_conversion_mode |= IME_CMODE_FULLSHAPE;
+      *new_conversion_mode &= ~(IME_CMODE_NATIVE
+                              | IME_CMODE_KATAKANA);
+      break;
+    case ui::TEXT_INPUT_MODE_KANA:
+      *new_conversion_mode |= (IME_CMODE_NATIVE
+                             | IME_CMODE_FULLSHAPE);
+      *new_conversion_mode &= ~IME_CMODE_KATAKANA;
+      break;
+    case ui::TEXT_INPUT_MODE_KATAKANA:
+      *new_conversion_mode |= (IME_CMODE_NATIVE
+                             | IME_CMODE_KATAKANA
+                             | IME_CMODE_FULLSHAPE);
+      break;
+    default:
+      *open = FALSE;
+      break;
+  }
 }
 
 }  // namespace ui

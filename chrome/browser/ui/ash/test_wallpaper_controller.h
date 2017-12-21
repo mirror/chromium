@@ -26,7 +26,6 @@ class TestWallpaperController : ash::mojom::WallpaperController {
   int set_default_wallpaper_count() const {
     return set_default_wallpaper_count_;
   }
-  int set_custom_wallpaper_count() const { return set_custom_wallpaper_count_; }
 
   // Returns a mojo interface pointer bound to this object.
   ash::mojom::WallpaperControllerPtr CreateInterfacePtr();
@@ -56,7 +55,6 @@ class TestWallpaperController : ash::mojom::WallpaperController {
       const GURL& wallpaper_url,
       const base::FilePath& file_path,
       const base::FilePath& resized_directory) override;
-  void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
   void ShowUserWallpaper(ash::mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(ash::mojom::WallpaperUserInfoPtr user_info,
@@ -73,7 +71,6 @@ class TestWallpaperController : ash::mojom::WallpaperController {
   bool was_client_set_ = false;
   int remove_user_wallpaper_count_ = 0;
   int set_default_wallpaper_count_ = 0;
-  int set_custom_wallpaper_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TestWallpaperController);
 };

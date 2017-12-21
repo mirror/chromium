@@ -13,7 +13,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/chromeos/net/shill_error.h"
-#include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/network/network_configuration_handler.h"
@@ -25,6 +24,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
 
@@ -77,9 +77,8 @@ void ShowErrorNotification(const std::string& service_path,
                            const base::Closure& callback) {
   NET_LOG(ERROR) << "ShowErrorNotification: " << service_path << ": "
                  << base::UTF16ToUTF8(title);
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
-      *message_center::Notification::CreateSystemNotification(
+  std::unique_ptr<message_center::Notification> notification =
+      message_center::Notification::CreateSystemNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, notification_id, title,
           message, gfx::Image(), base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
@@ -88,7 +87,9 @@ void ShowErrorNotification(const std::string& service_path,
           message_center::RichNotificationData(),
           new message_center::HandleNotificationClickDelegate(callback),
           GetErrorNotificationVectorIcon(network_type),
-          message_center::SystemNotificationWarningLevel::CRITICAL_WARNING));
+          message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
+  message_center::MessageCenter::Get()->AddNotification(
+      std::move(notification));
 }
 
 bool ShouldConnectFailedNotificationBeShown(const std::string& error_name,
@@ -279,14 +280,15 @@ void NetworkStateNotifier::UpdateCellularActivating(
     return;
 
   cellular_activating_.erase(cellular->path());
+  int icon_id;
+  if (cellular->network_technology() == shill::kNetworkTechnologyLte)
+    icon_id = IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_LTE;
+  else
+    icon_id = IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_3G;
   const gfx::Image& icon =
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          cellular->network_technology() == shill::kNetworkTechnologyLte
-              ? IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_LTE
-              : IDR_AURA_UBER_TRAY_NETWORK_NOTIFICATION_3G);
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
-      *message_center::Notification::CreateSystemNotification(
+      ui::ResourceBundle::GetSharedInstance().GetImageNamed(icon_id);
+  message_center::MessageCenter::Get()->AddNotification(
+      message_center::Notification::CreateSystemNotification(
           kNetworkActivateNotificationId,
           l10n_util::GetStringUTF16(IDS_NETWORK_CELLULAR_ACTIVATED_TITLE),
           l10n_util::GetStringFUTF16(IDS_NETWORK_CELLULAR_ACTIVATED,
@@ -322,9 +324,8 @@ void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
                    << guid;
     return;
   }
-  NotificationDisplayService::GetForSystemNotifications()->Display(
-      NotificationHandler::Type::TRANSIENT,
-      *message_center::Notification::CreateSystemNotification(
+  message_center::MessageCenter::Get()->AddNotification(
+      message_center::Notification::CreateSystemNotification(
           kNetworkActivateNotificationId,
           l10n_util::GetStringUTF16(IDS_NETWORK_ACTIVATION_ERROR_TITLE),
           l10n_util::GetStringFUTF16(IDS_NETWORK_ACTIVATION_NEEDS_CONNECTION,
@@ -337,8 +338,12 @@ void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
 }
 
 void NetworkStateNotifier::RemoveConnectNotification() {
-  NotificationDisplayService::GetForSystemNotifications()->Close(
-      NotificationHandler::Type::TRANSIENT, kNetworkConnectNotificationId);
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+  if (message_center) {
+    message_center->RemoveNotification(kNetworkConnectNotificationId,
+                                       false /* not by user */);
+  }
 }
 
 void NetworkStateNotifier::ConnectErrorPropertiesSucceeded(

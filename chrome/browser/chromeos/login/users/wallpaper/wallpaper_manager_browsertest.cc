@@ -114,19 +114,19 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
     wallpaper::WallpaperFilesId wallpaper_file_id = GetFilesId(account_id);
 
     base::FilePath small_wallpaper_dir =
-        ash::WallpaperController::GetCustomWallpaperDir(
+        WallpaperManager::GetCustomWallpaperDir(
             ash::WallpaperController::kSmallWallpaperSubDir)
             .Append(wallpaper_file_id.id());
     base::FilePath large_wallpaper_dir =
-        ash::WallpaperController::GetCustomWallpaperDir(
+        WallpaperManager::GetCustomWallpaperDir(
             ash::WallpaperController::kLargeWallpaperSubDir)
             .Append(wallpaper_file_id.id());
     base::FilePath original_wallpaper_dir =
-        ash::WallpaperController::GetCustomWallpaperDir(
+        WallpaperManager::GetCustomWallpaperDir(
             ash::WallpaperController::kOriginalWallpaperSubDir)
             .Append(wallpaper_file_id.id());
     base::FilePath thumbnail_wallpaper_dir =
-        ash::WallpaperController::GetCustomWallpaperDir(
+        WallpaperManager::GetCustomWallpaperDir(
             ash::WallpaperController::kThumbnailWallpaperSubDir)
             .Append(wallpaper_file_id.id());
 
@@ -145,8 +145,8 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
       const std::string& id) {
     base::ScopedAllowBlockingForTesting allow_blocking;
     base::FilePath wallpaper_path =
-        ash::WallpaperController::GetCustomWallpaperPath(
-            sub_dir, wallpaper_files_id.id(), id);
+        WallpaperManager::Get()->GetCustomWallpaperPath(sub_dir,
+                                                        wallpaper_files_id, id);
     if (!base::DirectoryExists(wallpaper_path.DirName()))
       base::CreateDirectory(wallpaper_path.DirName());
 
@@ -184,6 +184,14 @@ class WallpaperManagerBrowserTest : public InProcessBrowserTest {
            ash::Shell::Get()
                ->wallpaper_controller()
                ->num_decode_request_for_testing();
+  }
+
+  void CacheUserWallpaper(const AccountId& account_id) {
+    WallpaperManager::Get()->CacheUserWallpaper(account_id);
+  }
+
+  void ClearDisposableWallpaperCache() {
+    WallpaperManager::Get()->ClearDisposableWallpaperCache();
   }
 
   ash::WallpaperController* controller_;
@@ -301,6 +309,7 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest,
   wallpaper_manager->ShowUserWallpaper(test_account_id1_);
   wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
   EXPECT_EQ(1, LoadedWallpapers());
+  ClearDisposableWallpaperCache();
 
   // Change wallpaper to a custom wallpaper.
   std::string id = base::Int64ToString(base::Time::Now().ToInternalValue());
@@ -501,6 +510,101 @@ class WallpaperManagerBrowserTestCacheUpdate
   }
 };
 
+// Sets test_account_id1_'s wallpaper to a custom wallpaper.
+IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
+                       PRE_VerifyWallpaperCache) {
+  // Add test_account_id1_ to user list.
+  // test_account_id1_ is the default login profile.
+  LogIn(test_account_id1_, kTestUser1Hash);
+
+  std::string id = base::Int64ToString(base::Time::Now().ToInternalValue());
+  WallpaperManager* wallpaper_manager = WallpaperManager::Get();
+  base::FilePath small_wallpaper_path =
+      GetCustomWallpaperPath(ash::WallpaperController::kSmallWallpaperSubDir,
+                             test_account1_wallpaper_files_id_, id);
+  base::FilePath large_wallpaper_path =
+      GetCustomWallpaperPath(ash::WallpaperController::kLargeWallpaperSubDir,
+                             test_account1_wallpaper_files_id_, id);
+
+  // Saves the small/large resolution wallpapers to small/large custom
+  // wallpaper paths.
+  ASSERT_TRUE(ash::WallpaperController::WriteJPEGFileForTesting(
+      small_wallpaper_path, kSmallWallpaperWidth, kSmallWallpaperHeight,
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor));
+  ASSERT_TRUE(ash::WallpaperController::WriteJPEGFileForTesting(
+      large_wallpaper_path, kLargeWallpaperWidth, kLargeWallpaperHeight,
+      wallpaper_manager_test_utils::kLargeCustomWallpaperColor));
+
+  std::string relative_path =
+      base::FilePath(test_account1_wallpaper_files_id_.id()).Append(id).value();
+  // Saves wallpaper info to local state for user |test_account_id1_|.
+  WallpaperInfo info = {relative_path, WALLPAPER_LAYOUT_CENTER_CROPPED,
+                        wallpaper::CUSTOMIZED,
+                        base::Time::Now().LocalMidnight()};
+  wallpaper_manager->SetUserWallpaperInfo(test_account_id1_, info, true);
+  wallpaper_manager->ShowUserWallpaper(test_account_id1_);
+  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  std::unique_ptr<WallpaperManager::TestApi> test_api;
+  test_api.reset(new WallpaperManager::TestApi(wallpaper_manager));
+  // Verify SetUserWallpaper updates wallpaper cache.
+  gfx::ImageSkia cached_wallpaper;
+  EXPECT_TRUE(
+      test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
+  base::FilePath path;
+  EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
+  EXPECT_FALSE(path.empty());
+}
+
+// Tests for crbug.com/339576. Wallpaper cache should be updated in
+// multi-profile mode when user chooses a custom wallpaper from wallpaper picker
+// (calls SetCustomWallpaper).
+// Also, when user login at multi-profile mode, previous logged in users'
+// wallpaper cache should not be deleted.
+IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTestCacheUpdate,
+                       VerifyWallpaperCache) {
+  LogIn(test_account_id1_, kTestUser1Hash);
+
+  WallpaperManager* wallpaper_manager = WallpaperManager::Get();
+
+  // Force load initial wallpaper
+  // (simulate WallpaperController::UpdateDisplay()).
+  wallpaper_manager->UpdateWallpaper(true);
+  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  std::unique_ptr<WallpaperManager::TestApi> test_api;
+  test_api.reset(new WallpaperManager::TestApi(wallpaper_manager));
+  gfx::ImageSkia cached_wallpaper;
+  // Previous custom wallpaper should be cached after user login.
+  EXPECT_TRUE(
+      test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
+  base::FilePath original_path;
+  EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &original_path));
+  EXPECT_FALSE(original_path.empty());
+
+  LogIn(test_account_id2_, kTestUser2Hash);
+  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  // Login another user should not delete logged in user's wallpaper cache.
+  // Note active user is still test_account_id1_.
+  EXPECT_TRUE(
+      test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
+  base::FilePath path;
+  EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
+  EXPECT_EQ(original_path, path);
+
+  gfx::ImageSkia green_wallpaper = CreateTestImage(SK_ColorGREEN);
+  wallpaper_manager->SetCustomWallpaper(
+      test_account_id1_, test_account1_wallpaper_files_id_,
+      "dummy" /* dummy file name */, WALLPAPER_LAYOUT_CENTER,
+      wallpaper::CUSTOMIZED, green_wallpaper, true);
+  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  // SetCustomWallpaper should also update wallpaper cache when multi-profile
+  // is turned on.
+  EXPECT_TRUE(
+      test_api->GetWallpaperFromCache(test_account_id1_, &cached_wallpaper));
+  EXPECT_TRUE(cached_wallpaper.BackedBySameObjectAs(green_wallpaper));
+  EXPECT_TRUE(test_api->GetPathFromCache(test_account_id1_, &path));
+  EXPECT_NE(original_path, path);
+}
+
 // ----------------------------------------------------------------------
 // Test default wallpapers.
 
@@ -615,6 +719,30 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, DISABLED_DisplayChange) {
   EXPECT_EQ(0, observer.GetUpdateWallpaperCountAndReset());
 }
 
+IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, IsPendingWallpaper) {
+  SessionManager::Get()->CreateSession(user_manager::StubAccountId(),
+                                       "test_hash", false /* is_child */);
+
+  WallpaperManager* wallpaper_manager = WallpaperManager::Get();
+
+  // Start loading the default wallpaper (the 1x1 solid color wallpaper).
+  ash::Shell::Get()->wallpaper_controller()->ShowDefaultWallpaperForTesting();
+
+  gfx::ImageSkia image = wallpaper_manager_test_utils::CreateTestImage(
+      640, 480, wallpaper_manager_test_utils::kSmallCustomWallpaperColor);
+  EXPECT_FALSE(WallpaperManager::Get()->IsPendingWallpaper(
+      wallpaper::WallpaperResizer::GetImageId(image)));
+  wallpaper_manager->SetCustomWallpaper(
+      user_manager::StubAccountId(),
+      wallpaper::WallpaperFilesId::FromString("test_hash"), "test-nofile.jpeg",
+      WALLPAPER_LAYOUT_STRETCH, wallpaper::CUSTOMIZED, image, true);
+  EXPECT_TRUE(wallpaper_manager->IsPendingWallpaper(
+      wallpaper::WallpaperResizer::GetImageId(image)));
+  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
+  EXPECT_FALSE(wallpaper_manager->IsPendingWallpaper(
+      wallpaper::WallpaperResizer::GetImageId(image)));
+}
+
 // Tests that if there are multiple users on the device and if one user lost his
 // wallpaper somehow, the wallpapers should still show correctly on lock/login
 // screen.
@@ -663,6 +791,14 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerBrowserTest, CustomWallpaperLostTest) {
                         wallpaper::CUSTOMIZED,
                         base::Time::Now().LocalMidnight()};
   wallpaper_manager->SetUserWallpaperInfo(test_account_id1_, info, true);
+
+  // Now simulate lock/login screen. On lock/login screen all users' wallpapers
+  // will be cached. Test that caching |test_account_id1_| wallpaper won't
+  // change the current wallpaper (|teset_account_id2_|'s wallpaper).
+  CacheUserWallpaper(test_account_id1_);
+  EXPECT_TRUE(wallpaper_manager_test_utils::ImageIsNearColor(
+      controller_->GetWallpaper(),
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor));
 }
 
 // TODO(crbug.com/776464): Move this test to |WallpaperControllerTest| after

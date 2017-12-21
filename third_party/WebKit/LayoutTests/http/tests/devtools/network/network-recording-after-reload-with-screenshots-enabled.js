@@ -8,6 +8,10 @@
   await TestRunner.showPanel('network');
   await TestRunner.loadHTML(`
       <p id="test"></p>
+       <p>
+       Tests if page keeps recording after refresh with Screenshot enabled.
+      <a>Bug 569557</a>
+      </p>
     `);
 
   UI.panels.network._networkRecordFilmStripSetting.set(true);

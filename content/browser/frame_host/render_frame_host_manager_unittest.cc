@@ -1718,7 +1718,7 @@ TEST_F(RenderFrameHostManagerTest, NavigateWithEarlyClose) {
   notifications.ListenFor(
       NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED,
       Source<RenderWidgetHost>(host2->render_view_host()->GetWidget()));
-  manager->OnBeforeUnloadACK(true, base::TimeTicks());
+  manager->OnBeforeUnloadACK(false, true, base::TimeTicks());
 
   EXPECT_TRUE(
       notifications.Check1AndReset(NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED));
@@ -2851,11 +2851,11 @@ TEST_F(RenderFrameHostManagerTest, CanCommitOrigin) {
 }
 
 // RenderFrameHostManagerTest extension for PlzNavigate enabled tests.
-// TODO(clamy): Make those regular RenderFrameHostManagerTests.
 class RenderFrameHostManagerTestWithBrowserSideNavigation
     : public RenderFrameHostManagerTest {
  public:
   void SetUp() override {
+    EnableBrowserSideNavigation();
     RenderFrameHostManagerTest::SetUp();
   }
 };

@@ -550,8 +550,7 @@ TEST(ProcessMetricsTest, DISABLED_GetNumberOfThreads) {
 #if defined(OS_LINUX)
 namespace {
 
-// Keep these in sync so the GetChildOpenFdCount test can refer to correct test
-// main.
+// Keep these in sync so the GetOpenFdCount test can refer to correct test main.
 #define ChildMain ChildFdCount
 #define ChildMainString "ChildFdCount"
 
@@ -597,7 +596,7 @@ MULTIPROCESS_TEST_MAIN(ChildMain) {
 
 }  // namespace
 
-TEST(ProcessMetricsTest, GetChildOpenFdCount) {
+TEST(ProcessMetricsTest, GetOpenFdCount) {
   ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   const FilePath temp_path = temp_dir.GetPath();
@@ -616,20 +615,6 @@ TEST(ProcessMetricsTest, GetChildOpenFdCount) {
 #endif  // defined(OS_LINUX)
 
 #if defined(OS_ANDROID) || defined(OS_LINUX)
-
-TEST(ProcessMetricsTest, GetOpenFdCount) {
-  std::unique_ptr<base::ProcessMetrics> metrics(
-      base::ProcessMetrics::CreateProcessMetrics(
-          base::GetCurrentProcessHandle()));
-  int fd_count = metrics->GetOpenFdCount();
-  EXPECT_GT(fd_count, 0);
-  ScopedFILE file(fopen("/proc/self/statm", "r"));
-  EXPECT_TRUE(file);
-  int new_fd_count = metrics->GetOpenFdCount();
-  EXPECT_GT(new_fd_count, 0);
-  EXPECT_EQ(new_fd_count, fd_count + 1);
-}
-
 TEST(ProcessMetricsTestLinux, GetPageFaultCounts) {
   std::unique_ptr<base::ProcessMetrics> process_metrics(
       base::ProcessMetrics::CreateProcessMetrics(

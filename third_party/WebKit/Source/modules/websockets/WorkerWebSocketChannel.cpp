@@ -43,6 +43,7 @@
 #include "platform/heap/SafePoint.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/TaskType.h"
@@ -433,7 +434,7 @@ bool Bridge::Connect(std::unique_ptr<SourceLocation> location,
 void Bridge::Send(const CString& message) {
   DCHECK(main_channel_client_);
   std::unique_ptr<Vector<char>> data =
-      std::make_unique<Vector<char>>(message.length());
+      WTF::WrapUnique(new Vector<char>(message.length()));
   if (message.length())
     memcpy(data->data(), static_cast<const char*>(message.data()),
            message.length());

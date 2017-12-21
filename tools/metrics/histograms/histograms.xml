@@ -2265,17 +2265,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Apps.LockScreen.NoteTakingApp.AppStatusOnNoteLaunch"
-    enum="LockScreenNoteAppStatusOnLaunch">
-  <owner>tbarzic@chromium.org</owner>
-  <summary>
-    Reported when a user attempts to launch a note taking app on the lock
-    screen. It reports the note taking app state in the lock screen apps profile
-    at the launch attempt time - for example, whether the app was enabled, or
-    whether the app had been terminated and an app reload was attempted.
-  </summary>
-</histogram>
-
 <histogram base="true" name="Apps.LockScreen.NoteTakingApp.AppWindowLifeTime"
     units="ms">
   <owner>tbarzic@chromium.org</owner>
@@ -2339,19 +2328,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Apps.LockScreen.NoteTakingApp.LockScreenAppUnloaded"
-    enum="LockScreenAppUnloadStatus">
-  <owner>tbarzic@chromium.org</owner>
-  <summary>
-    Reported when a note taking app is unloaded from the lock screen apps
-    profile while lock screen note taking is available. Reports the unload
-    reason type, which can be used to deduce whether the app can be reloaded in
-    the profile. The app unload event is not reported if the app is unloaded due
-    to lock screen note taking becoming unavailble (e.g. when the user unlocks
-    the screen).
-  </summary>
-</histogram>
-
 <histogram name="Apps.LockScreen.NoteTakingApp.LockScreenInstallationDuration"
     units="ms">
   <owner>tbarzic@chromium.org</owner>
@@ -2369,16 +2345,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The reason the note taking on lock screen was ended (and lock screen app
     window was closed).
-  </summary>
-</histogram>
-
-<histogram name="Apps.LockScreen.NoteTakingApp.ReloadCountOnAppTermination">
-  <owner>tbarzic@chromium.org</owner>
-  <summary>
-    Reported when a note taking app is terminated in the lock screen apps
-    profile. It reports the number of times the app was reloaded in the lock
-    screen apps profile during the current lock screen session (prior to the
-    termination).
   </summary>
 </histogram>
 
@@ -15276,25 +15242,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The total time it takes to perform a payload IO operation, for the regular
     disk cache.
-  </summary>
-</histogram>
-
-<histogram name="DisplayManager.MultiDisplayMode" enum="MultiDisplayModes">
-  <owner>afakhry@chromium.org</owner>
-  <summary>
-    The mode in which the connected displays to the device is in. This is
-    emitted once when displays are added or removed, or when the user changes
-    the mode by e.g. enabling mirror or unified modes.
-  </summary>
-</histogram>
-
-<histogram name="DisplayManager.UnifiedDesktopDisplayCountRange"
-    enum="UnifiedDesktopDisplayCountRanges">
-  <owner>afakhry@chromium.org</owner>
-  <summary>
-    The the number of displays connected to the device when Unified Desktop mode
-    is on. This is emitted when Unified Desktop mode is turned on, or the
-    displays are added or removed while in Unified Mode.
   </summary>
 </histogram>
 
@@ -45502,6 +45449,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.QuicSession.CreationError" enum="QuicSessionErrorCodes">
+  <owner>jar@chromium.org</owner>
   <owner>rch@chromium.org</owner>
   <summary>
     Count of errors during attempts to create a QUIC session (before even using
@@ -46559,6 +46507,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <obsolete>
     Replaced by Net.SocketUnchangeableReceiveBuffer 3/31/2014.
   </obsolete>
+  <owner>jar@chromium.org</owner>
   <summary>
     The size of a socket's receive buffer when the attempt to change it via
     setsockopt failed.
@@ -46683,7 +46632,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.SocketUnchangeableReceiveBuffer" units="Bytes">
-  <owner>rch@chromium.org</owner>
+  <owner>jar@chromium.org</owner>
   <summary>
     The size of a socket's receive buffer when the attempt to change it via
     setsockopt failed.
@@ -46691,7 +46640,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.SocketUnchangeableSendBuffer" units="Bytes">
-  <owner>rch@chromium.org</owner>
+  <owner>jar@chromium.org</owner>
   <summary>
     The size of a socket's send buffer when the attempt to change it via
     setsockopt failed.
@@ -49910,14 +49859,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Chrome OS network metric sampling the number of Wireless Access Points that
     support the 802.11v DMS feature, sampled on successful connections to an AP.
-  </summary>
-</histogram>
-
-<histogram name="Network.Shill.WiFi.ApChannelSwitch" enum="WiFiApChannelSwitch">
-  <owner>matthewmwang@chromium.org</owner>
-  <summary>
-    Chrome OS network usage metric sampled when an AP switches channels. Shows
-    the old frequency band and the new frequency band.
   </summary>
 </histogram>
 
@@ -67803,14 +67744,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Profile.DiceUI.GaiaAccountsStale" enum="BooleanStale">
-  <owner>tangltom@chromium.org</owner>
-  <summary>
-    This histogram tracks whether the accounts cached in the GAIA cookie service
-    manager are stale when presenting the user menu when DICE is enabled.
-  </summary>
-</histogram>
-
 <histogram name="Profile.ExtensionSize" units="MB">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Size of the extension cookies database.</summary>
@@ -82280,31 +82213,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The total count of responses that were blocked by the cross-site document
     blocking logic in the browser process. Sampled with a resource type (0-17)
-    when the response is blocked; up to 1024 bytes of the response are
-    considered. This is also recorded with a suffix indicating the MIME type
-    category.
-  </summary>
-</histogram>
-
-<histogram name="SiteIsolation.XSD.Browser.BlockedForParserBreaker"
-    enum="ContentResourceType2">
-  <owner>creis@chromium.org</owner>
-  <summary>
-    The total count of responses that were blocked by the cross-site document
-    blocking logic in the browser process, due to the presence of a Javascript
-    parser-breaker pattern (like &quot;for(;;);&quot;, or &quot;)]}'&quot;, or a
-    non-empty JSON dictionary like &quot;{\&quot;a\&quot;:&quot;. Sampled with a
-    resource type (0-17) when the response is blocked; up to 1024 bytes of the
-    response are considered.
+    when the response is blocked, just after the first read from the network.
+    This is also recorded with a suffix indicating the MIME type category.
   </summary>
 </histogram>
 
 <histogram name="SiteIsolation.XSD.Browser.BytesReadForSniffing" units="bytes">
   <owner>creis@chromium.org</owner>
   <summary>
-    The number of bytes of the network response buffered for sniffing purposes,
-    when attempting to sniff the response to determine if it should be blocked
-    as a cross-site document. Recorded after sniffing is attempted.
+    The number of bytes in the first read of the network response, when
+    attempting to sniff the response to determine if it should be blocked as a
+    cross-site document. Recorded when sniffing is attempted.
   </summary>
 </histogram>
 
@@ -83873,18 +83792,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Startup.Android.Experimental.Cold.TimeToFirstContentfulPaint"
-    units="ms">
-  <owner>pasko@chromium.org</owner>
-  <owner>alexilin@chromium.org</owner>
-  <summary>
-    Android: The time from the earliest entry point in the browser process to
-    the first contentful paint of the first loaded page. It's not recorded when
-    the first loaded page is non http(s) page like a chrome error page, a new
-    tab page, a blank page.
-  </summary>
-</histogram>
-
 <histogram name="Startup.Android.Experimental.Cold.TimeToFirstNavigationCommit"
     units="ms">
   <owner>pasko@chromium.org</owner>
@@ -83892,8 +83799,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Android: The time from the earliest entry point in the browser process to
     the moment the first navigation is committed, i.e. when renderer gets the
-    first byte of the document. It's not recorded when the first loaded page is
-    non http(s) page like a chrome error page, a new tab page, a blank page.
+    first byte of the document. It excludes all navigations to non http(s) pages
+    like chrome error pages, a new tab page, a blank page.
   </summary>
 </histogram>
 
@@ -109830,7 +109737,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="XML" label="Classified as XML MIME type."/>
   <suffix name="JSON" label="Classified as JSON MIME type."/>
   <suffix name="Plain" label="Classified as plain text MIME type."/>
-  <suffix name="Others" label="Classified as other MIME types."/>
   <affected-histogram name="SiteIsolation.XSD.Browser.Blocked"/>
 </histogram_suffixes>
 

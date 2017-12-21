@@ -73,7 +73,7 @@ class PerfGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
   }
   void GenUnverifiedSyncTokenCHROMIUM(GLbyte* sync_token) override {
     // Copy the data over after setting the data to ensure alignment.
-    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
+    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
                                    gpu::CommandBufferId(), 0);
     memcpy(sync_token, &sync_token_data, sizeof(sync_token_data));
   }
@@ -354,14 +354,14 @@ class RasterBufferProviderPerfTest
             worker_context_provider_.get(), resource_provider_.get(),
             std::numeric_limits<int>::max(), false,
             std::numeric_limits<int>::max(),
-            viz::PlatformColor::BestTextureFormat());
+            viz::PlatformColor::BestTextureFormat(), false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_GPU:
         Create3dResourceProvider();
         raster_buffer_provider_ = std::make_unique<GpuRasterBufferProvider>(
             compositor_context_provider_.get(), worker_context_provider_.get(),
             resource_provider_.get(), false, 0,
-            viz::PlatformColor::BestTextureFormat(), false);
+            viz::PlatformColor::BestTextureFormat(), false, false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_BITMAP:
         CreateSoftwareResourceProvider();

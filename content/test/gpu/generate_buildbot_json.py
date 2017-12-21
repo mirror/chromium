@@ -260,6 +260,8 @@ FYI_WATERFALL = {
     'GPU Linux Builder (dbg)' : {},
     'GPU Linux Ozone Builder' : {},
     'GPU Linux dEQP Builder' : {},
+    'GPU Android arm Builder' : {},
+    'GPU Android arm64 Builder' : {},
   },
 
   'testers': {
@@ -377,6 +379,19 @@ FYI_WATERFALL = {
       'type': Types.DEQP,
     },
     'Win10 Release (Intel HD 630)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '8086:5912',
+          'os': 'Windows-10',
+        },
+      ],
+      'build_config': 'Release',
+      # This bot is a one-off and doesn't have similar slaves in the
+      # swarming pool.
+      'swarming': False,
+      'os_type': 'win',
+    },
+    'Win10 Release Swarmed (Intel HD 630)': {
       'swarming_dimensions': [
         {
           'gpu': '8086:5912',
@@ -649,6 +664,19 @@ FYI_WATERFALL = {
       'type': Types.DEQP,
     },
     'Linux Release (Intel HD 630)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '8086:5912',
+          'os': 'Ubuntu'
+        },
+      ],
+      'build_config': 'Release',
+      # This bot is a one-off and doesn't have similar slaves in the
+      # swarming pool.
+      'swarming': False,
+      'os_type': 'linux',
+    },
+    'Linux Release Swarmed (Intel HD 630)': {
       'swarming_dimensions': [
         {
           'gpu': '8086:5912',
@@ -1652,6 +1680,7 @@ COMMON_GTESTS = {
       {
         'names': [
           'Win10 Release (Intel HD 630)',
+          'Win10 Release Swarmed (Intel HD 630)',
         ],
       },
     ],

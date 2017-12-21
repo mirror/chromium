@@ -48,7 +48,6 @@ class ProfilingService : public service_manager::Service,
                           mojom::ProcessType process_type) override;
   void DumpProcessesForTracing(
       bool keep_small_allocations,
-      bool strip_path_from_mapped_files,
       DumpProcessesForTracingCallback callback) override;
   void GetProfiledPids(GetProfiledPidsCallback callback) override;
 
@@ -64,7 +63,6 @@ class ProfilingService : public service_manager::Service,
 
   void OnGetVmRegionsCompleteForDumpProcessesForTracing(
       bool keep_small_allocations,
-      bool strip_path_from_mapped_files,
       mojom::ProfilingService::DumpProcessesForTracingCallback callback,
       bool success,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);

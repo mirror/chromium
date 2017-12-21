@@ -9,6 +9,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "platform/bindings/ScopedPersistent.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -145,7 +146,7 @@ v8::Local<v8::Object> ScriptPromisePropertyBase::EnsureHolderWrapper(
   }
   v8::Local<v8::Object> wrapper = Holder(isolate_, context->Global());
   std::unique_ptr<ScopedPersistent<v8::Object>> weak_persistent =
-      std::make_unique<ScopedPersistent<v8::Object>>();
+      WTF::WrapUnique(new ScopedPersistent<v8::Object>);
   weak_persistent->Set(isolate_, wrapper);
   weak_persistent->SetPhantom();
   wrappers_.push_back(std::move(weak_persistent));

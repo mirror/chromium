@@ -109,25 +109,6 @@ TEST(CBORValuesTest, ConstructMap) {
   }
 }
 
-TEST(CBORValuesTest, ConstructSimpleValue) {
-  CBORValue false_value(CBORValue::SimpleValue::FALSE_VALUE);
-  ASSERT_EQ(CBORValue::Type::SIMPLE_VALUE, false_value.type());
-  EXPECT_EQ(CBORValue::SimpleValue::FALSE_VALUE, false_value.GetSimpleValue());
-
-  CBORValue true_value(CBORValue::SimpleValue::TRUE_VALUE);
-  ASSERT_EQ(CBORValue::Type::SIMPLE_VALUE, true_value.type());
-  EXPECT_EQ(CBORValue::SimpleValue::TRUE_VALUE, true_value.GetSimpleValue());
-
-  CBORValue null_value(CBORValue::SimpleValue::NULL_VALUE);
-  ASSERT_EQ(CBORValue::Type::SIMPLE_VALUE, null_value.type());
-  EXPECT_EQ(CBORValue::SimpleValue::NULL_VALUE, null_value.GetSimpleValue());
-
-  CBORValue undefined_value(CBORValue::SimpleValue::UNDEFINED);
-  ASSERT_EQ(CBORValue::Type::SIMPLE_VALUE, undefined_value.type());
-  EXPECT_EQ(CBORValue::SimpleValue::UNDEFINED,
-            undefined_value.GetSimpleValue());
-}
-
 // Test copy constructors
 TEST(CBORValuesTest, CopyUnsigned) {
   CBORValue value(74);
@@ -204,19 +185,6 @@ TEST(CBORValuesTest, CopyMap) {
   ASSERT_TRUE(blank.GetMap().find(key_a)->second.is_unsigned());
   EXPECT_EQ(value.GetMap().find(key_a)->second.GetUnsigned(),
             blank.GetMap().find(key_a)->second.GetUnsigned());
-}
-
-TEST(CBORValuesTest, CopySimpleValue) {
-  CBORValue value(CBORValue::SimpleValue::TRUE_VALUE);
-  CBORValue copied_value(value.Clone());
-  EXPECT_EQ(value.type(), copied_value.type());
-  EXPECT_EQ(value.GetSimpleValue(), copied_value.GetSimpleValue());
-
-  CBORValue blank;
-
-  blank = value.Clone();
-  EXPECT_EQ(value.type(), blank.type());
-  EXPECT_EQ(value.GetSimpleValue(), blank.GetSimpleValue());
 }
 
 // Test move constructors and move-assignment
@@ -303,20 +271,7 @@ TEST(CBORValuesTest, MoveArray) {
 TEST(CBORValuesTest, SelfSwap) {
   CBORValue test(1);
   std::swap(test, test);
-  EXPECT_EQ(test.GetUnsigned(), 1u);
-}
-
-TEST(CBORValuesTest, MoveSimpleValue) {
-  CBORValue value(CBORValue::SimpleValue::UNDEFINED);
-  CBORValue moved_value(std::move(value));
-  EXPECT_EQ(CBORValue::Type::SIMPLE_VALUE, moved_value.type());
-  EXPECT_EQ(CBORValue::SimpleValue::UNDEFINED, moved_value.GetSimpleValue());
-
-  CBORValue blank;
-
-  blank = CBORValue(CBORValue::SimpleValue::UNDEFINED);
-  EXPECT_EQ(CBORValue::Type::SIMPLE_VALUE, blank.type());
-  EXPECT_EQ(CBORValue::SimpleValue::UNDEFINED, blank.GetSimpleValue());
+  EXPECT_TRUE(test.GetUnsigned() == 1);
 }
 
 }  // namespace content

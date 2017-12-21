@@ -102,6 +102,8 @@ class AppLaunchController : public AppLaunchSplashScreenView::Delegate,
   void InitializeNetwork() override;
   bool IsNetworkReady() override;
   bool ShouldSkipAppInstallation() override;
+  void OnLoadingOAuthFile() override;
+  void OnInitializingTokenService() override;
   void OnInstallingApp() override;
   void OnReadyToLaunch() override;
   void OnLaunchSucceeded() override;

@@ -44,7 +44,6 @@ namespace blink {
 class AccessibleNode;
 class Attr;
 class Attribute;
-class ComputedAccessibleNode;
 class CSSStyleDeclaration;
 class CustomElementDefinition;
 class DOMRect;
@@ -295,8 +294,6 @@ class CORE_EXPORT Element : public ContainerNode {
   AccessibleNode* ExistingAccessibleNode() const;
   AccessibleNode* accessibleNode();
 
-  ComputedAccessibleNode* ComputedAccessibleNode();
-
   void DidMoveToNewDocument(Document&) override;
 
   void removeAttribute(const AtomicString& name);
@@ -381,7 +378,6 @@ class CORE_EXPORT Element : public ContainerNode {
                               bool important = false);
 
   bool RemoveInlineStyleProperty(CSSPropertyID);
-  bool RemoveInlineStyleProperty(const AtomicString&);
   void RemoveAllInlineStyleProperties();
 
   void SynchronizeStyleAttributeInternal() const;

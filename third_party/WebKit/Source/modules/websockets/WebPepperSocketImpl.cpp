@@ -38,6 +38,7 @@
 #include "modules/websockets/DocumentWebSocketChannel.h"
 #include "modules/websockets/WebPepperSocketChannelClientProxy.h"
 #include "modules/websockets/WebSocketChannel.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURL.h"

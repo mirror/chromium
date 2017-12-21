@@ -25,13 +25,13 @@ namespace gfx {
 namespace {
 
 // used to pass error info through the JPEG library
-struct IjgCoderErrorMgr {
+struct CoderErrorMgr {
   jpeg_error_mgr pub;
   jmp_buf setjmp_buffer;
 };
 
-void IjgErrorExit(jpeg_common_struct* cinfo) {
-  IjgCoderErrorMgr* err = reinterpret_cast<IjgCoderErrorMgr*>(cinfo->err);
+void ErrorExit(jpeg_common_struct* cinfo) {
+  CoderErrorMgr* err = reinterpret_cast<CoderErrorMgr*>(cinfo->err);
 
   // Return control to the setjmp point.
   longjmp(err->setjmp_buffer, false);
@@ -43,8 +43,8 @@ void IjgErrorExit(jpeg_common_struct* cinfo) {
 
 namespace {
 
-struct IjgJpegDecoderState {
-  IjgJpegDecoderState(const unsigned char* in, size_t len)
+struct JpegDecoderState {
+  JpegDecoderState(const unsigned char* in, size_t len)
       : input_buffer(in), input_buffer_length(len) {}
 
   const unsigned char* input_buffer;
@@ -57,9 +57,8 @@ struct IjgJpegDecoderState {
 //  "Initialize source. This is called by jpeg_read_header() before any data is
 //   actually read. May leave bytes_in_buffer set to 0 (in which case a
 //   fill_input_buffer() call will occur immediately)."
-void IjgInitSource(j_decompress_ptr cinfo) {
-  IjgJpegDecoderState* state =
-      static_cast<IjgJpegDecoderState*>(cinfo->client_data);
+void InitSource(j_decompress_ptr cinfo) {
+  JpegDecoderState* state = static_cast<JpegDecoderState*>(cinfo->client_data);
   cinfo->src->next_input_byte = state->input_buffer;
   cinfo->src->bytes_in_buffer = state->input_buffer_length;
 }
@@ -77,7 +76,7 @@ void IjgInitSource(j_decompress_ptr cinfo) {
 //   entirely, only to obtain at least one more byte. bytes_in_buffer MUST be
 //   set to a positive value if TRUE is returned. A FALSE return should only
 //   be used when I/O suspension is desired."
-boolean IjgFillInputBuffer(j_decompress_ptr cinfo) {
+boolean FillInputBuffer(j_decompress_ptr cinfo) {
   return false;
 }
 
@@ -94,11 +93,11 @@ boolean IjgFillInputBuffer(j_decompress_ptr cinfo) {
 //   being smart is worth much trouble; large skips are uncommon.
 //   bytes_in_buffer may be zero on return. A zero or negative skip count
 //   should be treated as a no-op."
-void IjgSkipInputData(j_decompress_ptr cinfo, long num_bytes) {
+void SkipInputData(j_decompress_ptr cinfo, long num_bytes) {
   if (num_bytes > static_cast<long>(cinfo->src->bytes_in_buffer)) {
     // Since all our data should be in the buffer, trying to skip beyond it
     // means that there is some kind of error or corrupt input data. A 0 for
-    // bytes left means it will call IjgFillInputBuffer which will then fail.
+    // bytes left means it will call FillInputBuffer which will then fail.
     cinfo->src->next_input_byte += cinfo->src->bytes_in_buffer;
     cinfo->src->bytes_in_buffer = 0;
   } else if (num_bytes > 0) {
@@ -113,7 +112,7 @@ void IjgSkipInputData(j_decompress_ptr cinfo, long num_bytes) {
 //  "Terminate source --- called by jpeg_finish_decompress() after all data has
 //   been read to clean up JPEG source manager. NOT called by jpeg_abort() or
 //   jpeg_destroy()."
-void IjgTermSource(j_decompress_ptr cinfo) {}
+void TermSource(j_decompress_ptr cinfo) {}
 
 #if !defined(JCS_EXTENSIONS)
 // Converts one row of rgb data to rgba data by adding a fully-opaque alpha
@@ -142,10 +141,10 @@ void RGBtoBGRA(const unsigned char* bgra, int pixel_width, unsigned char* rgb) {
 // This class destroys the given jpeg_decompress object when it goes out of
 // scope. It simplifies the error handling in Decode (and even applies to the
 // success case).
-class IjgDecompressDestroyer {
+class DecompressDestroyer {
  public:
-  IjgDecompressDestroyer() : cinfo_(NULL) {}
-  ~IjgDecompressDestroyer() { DestroyManagedObject(); }
+  DecompressDestroyer() : cinfo_(NULL) {}
+  ~DecompressDestroyer() { DestroyManagedObject(); }
   void SetManagedObject(jpeg_decompress_struct* ci) {
     DestroyManagedObject();
     cinfo_ = ci;
@@ -170,16 +169,16 @@ bool JPEGCodecRobustSlow::Decode(const unsigned char* input,
                                  int* w,
                                  int* h) {
   jpeg_decompress_struct cinfo;
-  IjgDecompressDestroyer destroyer;
+  DecompressDestroyer destroyer;
   destroyer.SetManagedObject(&cinfo);
   output->clear();
 
   // We set up the normal JPEG error routines, then override error_exit.
   // This must be done before the call to create_decompress.
-  IjgCoderErrorMgr errmgr;
+  CoderErrorMgr errmgr;
   cinfo.err = jpeg_std_error(&errmgr.pub);
-  errmgr.pub.error_exit = IjgErrorExit;
-  // Establish the setjmp return context for IjgErrorExit to use.
+  errmgr.pub.error_exit = ErrorExit;
+  // Establish the setjmp return context for ErrorExit to use.
   if (setjmp(errmgr.setjmp_buffer)) {
     // If we get here, the JPEG code has signaled an error.
     // See note in JPEGCodec::Encode() for why we need to destroy the cinfo
@@ -194,14 +193,14 @@ bool JPEGCodecRobustSlow::Decode(const unsigned char* input,
 
   // set up the source manager
   jpeg_source_mgr srcmgr;
-  srcmgr.init_source = IjgInitSource;
-  srcmgr.fill_input_buffer = IjgFillInputBuffer;
-  srcmgr.skip_input_data = IjgSkipInputData;
+  srcmgr.init_source = InitSource;
+  srcmgr.fill_input_buffer = FillInputBuffer;
+  srcmgr.skip_input_data = SkipInputData;
   srcmgr.resync_to_restart = jpeg_resync_to_restart;  // use default routine
-  srcmgr.term_source = IjgTermSource;
+  srcmgr.term_source = TermSource;
   cinfo.src = &srcmgr;
 
-  IjgJpegDecoderState state(input, input_size);
+  JpegDecoderState state(input, input_size);
   cinfo.client_data = &state;
 
   // fill the file metadata into our buffer
@@ -231,7 +230,7 @@ bool JPEGCodecRobustSlow::Decode(const unsigned char* input,
         cinfo.output_components = 4;
       } else {
         // We can exit this function without calling jpeg_destroy_decompress()
-        // because IjgDecompressDestroyer automaticaly calls it.
+        // because DecompressDestroyer automaticaly calls it.
         NOTREACHED() << "Invalid pixel format";
         return false;
       }

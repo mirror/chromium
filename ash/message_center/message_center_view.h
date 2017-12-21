@@ -72,8 +72,6 @@ class ASH_EXPORT MessageCenterView
 
   base::string16 GetButtonBarTitle() const;
 
-  void SetMaxHeight(int max_height) { max_height_ = max_height; }
-
   // Overridden from views::FocusChangeListener
   void OnWillChangeFocus(views::View* before, views::View* now) override {}
   void OnDidChangeFocus(views::View* before, views::View* now) override;
@@ -169,9 +167,6 @@ class ASH_EXPORT MessageCenterView
   int source_height_ = 0;
   views::View* target_view_ = nullptr;
   int target_height_ = 0;
-
-  // Maximum height set for the MessageCenterBubble by SetMaxHeight.
-  int max_height_ = 0;
 
   // True when the widget is closing so that further operations should be
   // ignored.

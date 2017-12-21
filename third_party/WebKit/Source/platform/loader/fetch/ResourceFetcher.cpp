@@ -63,8 +63,6 @@ using blink::WebURLRequest;
 
 namespace blink {
 
-constexpr uint32_t ResourceFetcher::kKeepaliveInflightBytesQuota;
-
 namespace {
 
 constexpr base::TimeDelta kKeepaliveLoadersTimeout =
@@ -1359,12 +1357,8 @@ void ResourceFetcher::HandleLoadCompletion(Resource* resource) {
 
 void ResourceFetcher::HandleLoaderFinish(Resource* resource,
                                          double finish_time,
-                                         LoaderFinishType type,
-                                         uint32_t inflight_keepalive_bytes) {
+                                         LoaderFinishType type) {
   DCHECK(resource);
-
-  DCHECK_LE(inflight_keepalive_bytes, inflight_keepalive_bytes_);
-  inflight_keepalive_bytes_ -= inflight_keepalive_bytes;
 
   ResourceLoader* loader = resource->Loader();
   if (type == kDidFinishFirstPartInMultipart) {
@@ -1424,12 +1418,8 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
 }
 
 void ResourceFetcher::HandleLoaderError(Resource* resource,
-                                        const ResourceError& error,
-                                        uint32_t inflight_keepalive_bytes) {
+                                        const ResourceError& error) {
   DCHECK(resource);
-
-  DCHECK_LE(inflight_keepalive_bytes_, inflight_keepalive_bytes);
-  inflight_keepalive_bytes_ -= inflight_keepalive_bytes;
 
   RemoveResourceLoader(resource->Loader());
 
@@ -1507,21 +1497,7 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
     // crbug.com/632580
     resource->SetResourceRequest(request);
 
-    using QuotaType = decltype(inflight_keepalive_bytes_);
-    QuotaType size = 0;
-    if (request.GetKeepalive() && request.HttpBody()) {
-      auto original_size = request.HttpBody()->SizeInBytes();
-      DCHECK_LE(inflight_keepalive_bytes_, kKeepaliveInflightBytesQuota);
-      if (original_size > std::numeric_limits<QuotaType>::max())
-        return false;
-      size = static_cast<QuotaType>(original_size);
-      if (kKeepaliveInflightBytesQuota - inflight_keepalive_bytes_ < size)
-        return false;
-
-      inflight_keepalive_bytes_ += size;
-    }
-
-    loader = ResourceLoader::Create(this, scheduler_, resource, size);
+    loader = ResourceLoader::Create(this, scheduler_, resource);
     if (resource->ShouldBlockLoadEvent())
       loaders_.insert(loader);
     else

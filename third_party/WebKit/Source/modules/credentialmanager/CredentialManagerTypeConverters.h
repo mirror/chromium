@@ -7,12 +7,11 @@
 
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/modules/credentialmanager/credential_manager.mojom-blink.h"
+#include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/modules/webauth/authenticator.mojom-blink.h"
 
 namespace blink {
 class ArrayBufferOrArrayBufferView;
-class Credential;
 class MakePublicKeyCredentialOptions;
 class PublicKeyCredentialParameters;
 class PublicKeyCredentialRpEntity;
@@ -21,27 +20,11 @@ class PublicKeyCredentialUserEntity;
 
 namespace mojo {
 
-// password_manager::mojom::blink::CredentialManager --------------------------
-
-template <>
-struct TypeConverter<password_manager::mojom::blink::CredentialInfoPtr,
-                     blink::Credential*> {
-  static password_manager::mojom::blink::CredentialInfoPtr Convert(
-      blink::Credential*);
-};
-
-template <>
-struct TypeConverter<blink::Credential*,
-                     password_manager::mojom::blink::CredentialInfoPtr> {
-  static blink::Credential* Convert(
-      const password_manager::mojom::blink::CredentialInfoPtr&);
-};
-
 // webauth::mojom::blink::Authenticator ---------------------------------------
 template <>
-struct TypeConverter<password_manager::mojom::blink::CredentialManagerError,
+struct TypeConverter<blink::WebCredentialManagerError,
                      webauth::mojom::blink::AuthenticatorStatus> {
-  static password_manager::mojom::blink::CredentialManagerError Convert(
+  static blink::WebCredentialManagerError Convert(
       const webauth::mojom::blink::AuthenticatorStatus&);
 };
 

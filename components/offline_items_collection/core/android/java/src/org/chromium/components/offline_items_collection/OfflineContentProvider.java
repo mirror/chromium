@@ -4,8 +4,6 @@
 
 package org.chromium.components.offline_items_collection;
 
-import org.chromium.base.Callback;
-
 import java.util.ArrayList;
 
 /**
@@ -50,10 +48,10 @@ public interface OfflineContentProvider {
     void resumeDownload(ContentId id, boolean hasUserGesture);
 
     /** See OfflineContentProvider::GetItemById(...). */
-    void getItemById(ContentId id, Callback<OfflineItem> callback);
+    OfflineItem getItemById(ContentId id);
 
     /** See OfflineContentProvider::GetAllItems(). */
-    void getAllItems(Callback<ArrayList<OfflineItem>> callback);
+    ArrayList<OfflineItem> getAllItems();
 
     /** See OfflineContentProvider::GetVisualsForItem(...). */
     void getVisualsForItem(ContentId id, VisualsCallback callback);

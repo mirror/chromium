@@ -60,14 +60,14 @@ class OfflineContentAggregatorBridge : public OfflineContentProvider::Observer,
                       const base::android::JavaParamRef<jstring>& j_namespace,
                       const base::android::JavaParamRef<jstring>& j_id,
                       jboolean j_has_user_gesture);
-  void GetItemById(JNIEnv* env,
-                   const base::android::JavaParamRef<jobject>& jobj,
-                   const base::android::JavaParamRef<jstring>& j_namespace,
-                   const base::android::JavaParamRef<jstring>& j_id,
-                   const base::android::JavaParamRef<jobject>& jcallback);
-  void GetAllItems(JNIEnv* env,
-                   const base::android::JavaParamRef<jobject>& jobj,
-                   const base::android::JavaParamRef<jobject>& jcallback);
+  base::android::ScopedJavaLocalRef<jobject> GetItemById(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& jobj,
+      const base::android::JavaParamRef<jstring>& j_namespace,
+      const base::android::JavaParamRef<jstring>& j_id);
+  base::android::ScopedJavaLocalRef<jobject> GetAllItems(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& jobj);
   void GetVisualsForItem(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& jobj,

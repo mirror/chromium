@@ -850,7 +850,7 @@ void NavigationRequest::OnResponseStarted(
       render_frame_host, response->head.headers.get(),
       response->head.connection_info, response->head.socket_address, ssl_info_,
       request_id, common_params_.should_replace_current_entry, is_download,
-      is_stream,
+      is_stream, base::Closure(),
       base::Bind(&NavigationRequest::OnWillProcessResponseChecksComplete,
                  base::Unretained(this)));
 }
@@ -964,17 +964,12 @@ void NavigationRequest::OnStartChecksComplete(
       result.action() == NavigationThrottle::CANCEL ||
       result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-#if DCHECK_IS_ON()
-    if (result.action() == NavigationThrottle::BLOCK_REQUEST) {
-      DCHECK(result.net_error_code() == net::ERR_BLOCKED_BY_CLIENT ||
-             result.net_error_code() == net::ERR_BLOCKED_BY_ADMINISTRATOR);
-    }
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    else if ((result.action() == NavigationThrottle::CANCEL ||
-              result.action() == NavigationThrottle::CANCEL_AND_IGNORE)) {
-      DCHECK_EQ(result.net_error_code(), net::ERR_ABORTED);
-    }
-#endif
+    DCHECK_EQ((result.action() == NavigationThrottle::CANCEL ||
+               result.action() == NavigationThrottle::CANCEL_AND_IGNORE)
+                  ? net::ERR_ABORTED
+                  : net::ERR_BLOCKED_BY_CLIENT,
+              result.net_error_code());
 
     // If the start checks completed synchronously, which could happen if there
     // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
@@ -1104,8 +1099,7 @@ void NavigationRequest::OnRedirectChecksComplete(
 
   if (result.action() == NavigationThrottle::BLOCK_REQUEST ||
       result.action() == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    DCHECK(result.net_error_code() == net::ERR_BLOCKED_BY_CLIENT ||
-           result.net_error_code() == net::ERR_BLOCKED_BY_ADMINISTRATOR);
+    DCHECK_EQ(net::ERR_BLOCKED_BY_CLIENT, result.net_error_code());
     OnRequestFailedInternal(false, result.net_error_code(), base::nullopt,
                             true);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
@@ -1166,26 +1160,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;
     }
-
-    // Call ProceedWithResponse()
-    // Note: There is no need to call ProceedWithResponse() when the Network
-    // Service is enabled. See https://crbug.com/791049.
-    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-      if (!IsNavigationMojoResponseEnabled()) {
-        loader_->ProceedWithResponse();
-      } else {
-        // |url_loader_client_endpoints_| is always valid, except in some tests
-        // where the TestNavigationLoader is used.
-        if (url_loader_client_endpoints_) {
-          mojom::URLLoaderPtr url_loader(
-              std::move(url_loader_client_endpoints_->url_loader));
-          url_loader->ProceedWithResponse();
-          url_loader_client_endpoints_->url_loader = url_loader.PassInterface();
-        } else {
-          loader_->ProceedWithResponse();
-        }
-      }
-    }
+    loader_->ProceedWithResponse();
   }
 
   // Abort the request if needed. This includes requests that were blocked by

@@ -1765,6 +1765,8 @@ static_library("base_static") {
   sources = [
     "base_switches.cc",
     "base_switches.h",
+    "task_scheduler/switches.cc",
+    "task_scheduler/switches.h",
   ]
 
   if (is_win) {
@@ -2671,6 +2673,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
       "android/java/src/org/chromium/base/library_loader/Linker.java",
       "android/java/src/org/chromium/base/library_loader/LoaderErrors.java",
+      "android/java/src/org/chromium/base/library_loader/ModernLinker.java",
       "android/java/src/org/chromium/base/library_loader/NativeLibraryPreloader.java",
       "android/java/src/org/chromium/base/library_loader/ProcessInitException.java",
       "android/java/src/org/chromium/base/metrics/CachedMetrics.java",

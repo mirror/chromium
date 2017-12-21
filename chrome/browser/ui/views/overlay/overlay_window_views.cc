@@ -6,8 +6,6 @@
 
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/display/manager/display_manager.h"
-#include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -26,7 +24,7 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
   ~OverlayWindowWidgetDelegate() override = default;
 
   // WidgetDelegate:
-  bool CanResize() const override { return false; }
+  bool CanResize() const override { return true; }
   ui::ModalType GetModalType() const override { return ui::MODAL_TYPE_SYSTEM; }
   base::string16 GetWindowTitle() const override {
     return l10n_util::GetStringUTF16(IDS_PICTURE_IN_PICTURE_TITLE_TEXT);
@@ -48,28 +46,13 @@ OverlayWindowViews::OverlayWindowViews() {
 OverlayWindowViews::~OverlayWindowViews() = default;
 
 void OverlayWindowViews::Init() {
-  views::Widget::InitParams params(
-      views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
+  // TODO(apacible): Finalize the type of widget. http://crbug/726621
+  views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW);
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
 
-  // These bounds are arbitrary. See OverlayWindowWidget for specified
-  // constraints. The initial positioning is on the bottom right quadrant
-  // of the primary display work area.
-  // The size is a temporary placeholder while video size is currently unused.
-  // This should also use the display of the initiating WebContents.
+  // TODO(apacible): Update preferred sizing and positioning.
   // http://crbug/726621
-  gfx::Size size(500, 300);
-  gfx::Rect work_area =
-      display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
-  int window_diff_width = work_area.width() - size.width();
-  int window_diff_height = work_area.height() - size.height();
-  // Keep a margin distance of 2% the average of the two window size
-  // differences, keeping the margins consistent.
-  int buffer = (window_diff_width + window_diff_height) / 2 * 0.02;
-  params.bounds = gfx::Rect(
-      gfx::Point(window_diff_width - buffer, window_diff_height - buffer),
-      size);
-
+  params.bounds = gfx::Rect(200, 200, 700, 500);
   params.keep_on_top = true;
   params.visible_on_all_workspaces = true;
 

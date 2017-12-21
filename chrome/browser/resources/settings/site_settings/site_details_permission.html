@@ -49,7 +49,8 @@
               on-change="onPermissionSelectionChange_"
               disabled$="[[!isPermissionUserControlled_(site.source, category,
                                                         site.setting)]]">
-            <option id="default" value$="[[ContentSetting.DEFAULT]]">
+            <option id="default" value$="[[ContentSetting.DEFAULT]]"
+                hidden$="[[isAdsCategory_(category)]]">
               [[defaultSettingString_(
                   defaultSetting_,
                   '$i18nPolymer{siteSettingsActionAskDefault}',

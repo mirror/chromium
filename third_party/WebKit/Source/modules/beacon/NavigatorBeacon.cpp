@@ -20,8 +20,6 @@
 
 namespace blink {
 
-constexpr size_t NavigatorBeacon::kMaxAllowance;
-
 NavigatorBeacon::NavigatorBeacon(Navigator& navigator)
     : Supplement<Navigator>(navigator), transmitted_bytes_(0) {}
 
@@ -66,6 +64,28 @@ bool NavigatorBeacon::CanSendBeacon(ExecutionContext* context,
   return true;
 }
 
+// Determine the remaining size allowance for Beacon transmissions.
+// If (-1) is returned, a no limit policy is in place, otherwise
+// it is the max size (in bytes) of a beacon request.
+//
+// The loader takes the allowance into account once the Beacon
+// payload size has been determined, deciding if the transmission
+// will be allowed to go ahead or not.
+int NavigatorBeacon::MaxAllowance() const {
+  DCHECK(GetSupplementable()->GetFrame());
+  const Settings* settings = GetSupplementable()->GetFrame()->GetSettings();
+  if (settings) {
+    int max_allowed = settings->GetMaxBeaconTransmission();
+    // Any negative value represent no max limit.
+    if (max_allowed < 0)
+      return -1;
+    if (static_cast<size_t>(max_allowed) <= transmitted_bytes_)
+      return 0;
+    return max_allowed - static_cast<int>(transmitted_bytes_);
+  }
+  return -1;
+}
+
 void NavigatorBeacon::AddTransmittedBytes(size_t sent_bytes) {
   transmitted_bytes_ += sent_bytes;
 }
@@ -90,8 +110,7 @@ bool NavigatorBeacon::SendBeaconImpl(
   if (!CanSendBeacon(context, url, exception_state))
     return false;
 
-  size_t allowance =
-      kMaxAllowance - std::min(kMaxAllowance, transmitted_bytes_);
+  int allowance = MaxAllowance();
   size_t beacon_size = 0;
   bool allowed;
 
@@ -131,7 +150,9 @@ bool NavigatorBeacon::SendBeaconImpl(
     return false;
   }
 
-  AddTransmittedBytes(beacon_size);
+  // Only accumulate transmission size if a limit is imposed.
+  if (allowance >= 0)
+    AddTransmittedBytes(beacon_size);
   return true;
 }
 

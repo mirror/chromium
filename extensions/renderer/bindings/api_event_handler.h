@@ -78,8 +78,7 @@ class APIEventHandler {
   void FireEventInContext(const std::string& event_name,
                           v8::Local<v8::Context> context,
                           std::vector<v8::Local<v8::Value>>* arguments,
-                          const EventFilteringInfo* filter,
-                          JSRunner::ResultCallback callback);
+                          const EventFilteringInfo* filter);
 
   // Registers a |function| to serve as an "argument massager" for the given
   // |event_name|, mutating the original arguments.

@@ -400,10 +400,8 @@ void CastChannelSendFunction::AsyncWorkStart() {
     AsyncWorkCompleted();
     return;
   }
-  // TODO(https://crbug.com/656607): Add proper annotation.
   socket->transport()->SendMessage(
-      message_to_send, base::Bind(&CastChannelSendFunction::OnSend, this),
-      NO_TRAFFIC_ANNOTATION_BUG_656607);
+      message_to_send, base::Bind(&CastChannelSendFunction::OnSend, this));
 }
 
 void CastChannelSendFunction::OnSend(int result) {

@@ -16,7 +16,6 @@
 #include "components/cast_channel/logger.h"
 #include "net/base/completion_callback.h"
 #include "net/base/ip_endpoint.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class DrainableIOBuffer;
@@ -54,10 +53,8 @@ class CastTransport {
   // |message|: The message to send.
   // |callback|: Callback to be invoked when the write operation has finished.
   // Virtual for testing.
-  virtual void SendMessage(
-      const CastMessage& message,
-      const net::CompletionCallback& callback,
-      const net::NetworkTrafficAnnotationTag& traffic_annotation) = 0;
+  virtual void SendMessage(const CastMessage& message,
+                           const net::CompletionCallback& callback) = 0;
 
   // Initializes the reading state machine and starts reading from the
   // underlying socket.
@@ -90,10 +87,8 @@ class CastTransportImpl : public CastTransport {
   ~CastTransportImpl() override;
 
   // CastTransport interface.
-  void SendMessage(
-      const CastMessage& message,
-      const net::CompletionCallback& callback,
-      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
+  void SendMessage(const CastMessage& message,
+                   const net::CompletionCallback& callback) override;
   void Start() override;
   void SetReadDelegate(std::unique_ptr<Delegate> delegate) override;
 
@@ -101,11 +96,9 @@ class CastTransportImpl : public CastTransport {
   // Holds a message to be written to the socket. |callback| is invoked when the
   // message is fully written or an error occurrs.
   struct WriteRequest {
-    explicit WriteRequest(
-        const std::string& namespace_,
-        const std::string& payload,
-        const net::CompletionCallback& callback,
-        const net::NetworkTrafficAnnotationTag& traffic_annotation);
+    explicit WriteRequest(const std::string& namespace_,
+                          const std::string& payload,
+                          const net::CompletionCallback& callback);
     WriteRequest(const WriteRequest& other);
     ~WriteRequest();
 
@@ -116,8 +109,6 @@ class CastTransportImpl : public CastTransport {
     net::CompletionCallback callback;
     // Buffer with outgoing data.
     scoped_refptr<net::DrainableIOBuffer> io_buffer;
-    // Traffic Annotation.
-    net::NetworkTrafficAnnotationTag traffic_annotation_;
   };
 
   static bool IsTerminalReadState(ReadState read_state);

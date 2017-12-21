@@ -8,7 +8,10 @@
   await TestRunner.loadModule('elements_test_runner');
   await TestRunner.showPanel('elements');
   await TestRunner.loadHTML(`
-      <div id="inspected" style="color: red'foo"></div>
+      <p>
+      Tests that CSSParser correctly parses declarations with unterminated strings. <a href="https://code.google.com/p/chromium/issues/detail?id=231127">Blink bug 231127</a>
+
+      </p><div id="inspected" style="color: red'foo"></div>
     `);
 
   ElementsTestRunner.selectNodeAndWaitForStyles('inspected', dumpStyles);

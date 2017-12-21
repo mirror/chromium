@@ -74,6 +74,7 @@ class CORE_EXPORT OffscreenCanvas final
       ExecutionContext*,
       const String&,
       const CanvasContextCreationAttributes&);
+  CanvasRenderingContext* RenderingContext() { return context_; }
 
   static void RegisterRenderingContextFactory(
       std::unique_ptr<CanvasRenderingContextFactory>);
@@ -103,7 +104,6 @@ class CORE_EXPORT OffscreenCanvas final
                        ExceptionState&) override;
   void FinalizeFrame() override;
   void DetachContext() override { context_ = nullptr; }
-  CanvasRenderingContext* RenderingContext() const override { return context_; }
 
   // OffscreenCanvasFrameDispatcherClient implementation
   void BeginFrame() final;
@@ -177,6 +177,8 @@ class CORE_EXPORT OffscreenCanvas final
 
   bool origin_clean_ = true;
   bool disable_reading_from_canvas_ = false;
+
+  bool IsPaintable() const;
 
   std::unique_ptr<OffscreenCanvasFrameDispatcher> frame_dispatcher_;
 

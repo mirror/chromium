@@ -52,8 +52,7 @@ class SystemWebDialogDelegate : public ui::WebDialogDelegate {
  private:
   GURL gurl_;
   base::string16 title_;
-  content::WebUI* webui_ = nullptr;
-  ui::ModalType modal_type_;
+  content::WebUI* webui_;
 
   DISALLOW_COPY_AND_ASSIGN(SystemWebDialogDelegate);
 };

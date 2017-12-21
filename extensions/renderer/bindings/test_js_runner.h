@@ -78,8 +78,7 @@ class TestJSRunner : public JSRunner {
   void RunJSFunction(v8::Local<v8::Function> function,
                      v8::Local<v8::Context> context,
                      int argc,
-                     v8::Local<v8::Value> argv[],
-                     ResultCallback callback) override;
+                     v8::Local<v8::Value> argv[]) override;
   v8::MaybeLocal<v8::Value> RunJSFunctionSync(
       v8::Local<v8::Function> function,
       v8::Local<v8::Context> context,
@@ -98,7 +97,6 @@ class TestJSRunner : public JSRunner {
     v8::Global<v8::Function> function;
     v8::Global<v8::Context> context;
     std::vector<v8::Global<v8::Value>> arguments;
-    ResultCallback callback;
   };
 
   // Runs all pending calls.

@@ -18,7 +18,6 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
-#include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_texture.h"
@@ -123,7 +122,7 @@ class TextureStateTrackingContext : public TestWebGraphicsContext3D {
   void RetireTextureId(GLuint) override {}
 
   void genSyncToken(GLbyte* sync_token) override {
-    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
+    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
                                    gpu::CommandBufferId::FromUnsafeValue(0x123),
                                    next_fence_sync_++);
     sync_token_data.SetVerifyFlush();
@@ -199,7 +198,7 @@ class ResourceProviderContext : public TestWebGraphicsContext3D {
 
   void genSyncToken(GLbyte* sync_token) override {
     uint64_t fence_sync = shared_data_->InsertFenceSync();
-    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
+    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
                                    gpu::CommandBufferId::FromUnsafeValue(0x123),
                                    fence_sync);
     sync_token_data.SetVerifyFlush();
@@ -549,9 +548,9 @@ class ResourceProviderTest : public testing::TestWithParam<viz::ResourceType> {
 };
 
 void CheckCreateResource(viz::ResourceType expected_default_type,
-                         LayerTreeResourceProvider* child_resource_provider,
+                         DisplayResourceProvider* resource_provider,
                          ResourceProviderContext* context) {
-  DCHECK_EQ(child_resource_provider->IsSoftware(),
+  DCHECK_EQ(resource_provider->IsSoftware(),
             expected_default_type == viz::ResourceType::kBitmap);
 
   gfx::Size size(1, 1);
@@ -559,26 +558,29 @@ void CheckCreateResource(viz::ResourceType expected_default_type,
   size_t pixel_size = TextureSizeBytes(size, format);
   ASSERT_EQ(4U, pixel_size);
 
-  viz::ResourceId id = child_resource_provider->CreateResource(
+  viz::ResourceId id = resource_provider->CreateResource(
       size, viz::ResourceTextureHint::kDefault, format, gfx::ColorSpace());
-  EXPECT_EQ(1, static_cast<int>(child_resource_provider->num_resources()));
+  EXPECT_EQ(1, static_cast<int>(resource_provider->num_resources()));
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 
   uint8_t data[4] = {1, 2, 3, 4};
-  child_resource_provider->CopyToResource(id, data, size);
-
+  resource_provider->CopyToResource(id, data, size);
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(1u, context->NumTextures());
 
-  child_resource_provider->DeleteResource(id);
-  EXPECT_EQ(0, static_cast<int>(child_resource_provider->num_resources()));
+  uint8_t result[4] = {0};
+  GetResourcePixels(resource_provider, context, id, size, format, result);
+  EXPECT_EQ(0, memcmp(data, result, pixel_size));
+
+  resource_provider->DeleteResource(id);
+  EXPECT_EQ(0, static_cast<int>(resource_provider->num_resources()));
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 }
 
 TEST_P(ResourceProviderTest, Basic) {
-  CheckCreateResource(GetParam(), child_resource_provider_.get(), context());
+  CheckCreateResource(GetParam(), resource_provider_.get(), context());
 }
 
 TEST_P(ResourceProviderTest, SimpleUpload) {
@@ -1810,8 +1812,8 @@ TEST_P(ResourceProviderTest, DeleteTransferredResources) {
     if (GetParam() == viz::ResourceType::kTexture)
       EXPECT_TRUE(returned_to_child[0].sync_token.HasData());
     child_resource_provider_->ReceiveReturnsFromParent(returned_to_child);
-    EXPECT_EQ(0u, child_resource_provider_->num_resources());
   }
+  EXPECT_EQ(0u, child_resource_provider_->num_resources());
 }
 
 class ResourceProviderTestTextureFilters : public ResourceProviderTest {
@@ -2573,7 +2575,7 @@ class ResourceProviderTestImportedResourceGLFilters
         CreateResourceSettings()));
 
     unsigned texture_id = 1;
-    gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
+    gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                               gpu::CommandBufferId::FromUnsafeValue(0x12),
                               0x34);
     const GLuint64 current_fence_sync = child_context->GetNextFenceSync();
@@ -2737,7 +2739,7 @@ TEST_P(ResourceProviderTest, ImportedResource_GLTextureExternalOES) {
       gpu_memory_buffer_manager_.get(), kDelegatedSyncPointsRequired,
       CreateResourceSettings()));
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                             gpu::CommandBufferId::FromUnsafeValue(0x12), 0x34);
   const GLuint64 current_fence_sync = child_context->GetNextFenceSync();
 
@@ -2834,7 +2836,7 @@ TEST_P(ResourceProviderTest, WaitSyncTokenIfNeeded_ResourceFromChild) {
       context_provider.get(), shared_bitmap_manager_.get(),
       gpu_memory_buffer_manager_.get(), CreateResourceSettings());
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                             gpu::CommandBufferId::FromUnsafeValue(0x12), 0x34);
   const GLuint64 current_fence_sync = context->GetNextFenceSync();
 
@@ -2891,7 +2893,7 @@ TEST_P(ResourceProviderTest, WaitSyncTokenIfNeeded_WithSyncToken) {
       context_provider.get(), shared_bitmap_manager_.get(),
       gpu_memory_buffer_manager_.get(), CreateResourceSettings());
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                             gpu::CommandBufferId::FromUnsafeValue(0x12), 0x34);
   const GLuint64 current_fence_sync = context->GetNextFenceSync();
 
@@ -3360,7 +3362,7 @@ TEST_P(ResourceProviderTest, GetSyncTokenForResources) {
     ResourceProvider::ScopedWriteLockGL lock(child_resource_provider_.get(),
                                              id);
     gpu::SyncToken token;
-    token.Set(gpu::CommandBufferNamespace::INVALID, gpu::CommandBufferId(),
+    token.Set(gpu::CommandBufferNamespace::INVALID, 0, gpu::CommandBufferId(),
               release_counts[i]);
     lock.set_sync_token(token);
   }

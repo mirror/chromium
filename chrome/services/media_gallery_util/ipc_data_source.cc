@@ -7,6 +7,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/public/utility/utility_thread.h"
 
+namespace chrome {
+
 IPCDataSource::IPCDataSource(
     chrome::mojom::MediaDataSourcePtr media_data_source,
     int64_t total_size)
@@ -83,3 +85,5 @@ void IPCDataSource::ReadDone(uint8_t* destination,
   std::copy(data.begin(), data.end(), destination);
   callback.Run(data.size());
 }
+
+}  // namespace chrome

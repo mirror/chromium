@@ -648,7 +648,7 @@ void TestWebGraphicsContext3D::genSyncToken(GLbyte* sync_token) {
   // of CommandBufferProxyImpl.
   if (context_lost_)
     return;
-  gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
+  gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
                                  gpu::CommandBufferId(),
                                  next_insert_fence_sync_++);
   sync_token_data.SetVerifyFlush();

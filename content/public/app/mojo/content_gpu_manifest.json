@@ -20,10 +20,7 @@
       },
       "requires": {
         "*": [ "app" ],
-        "content_browser": [
-          "field_trials",
-          "gpu"
-        ],
+        "content_browser": [ "gpu" ],
         "device": [ "device:power_monitor" ],
         "metrics": [ "url_keyed_metrics" ]
       }

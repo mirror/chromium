@@ -11,6 +11,7 @@
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "modules/audio_output_devices/SetSinkIdCallbacks.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebSecurityOrigin.h"
 
@@ -69,7 +70,7 @@ void SetSinkIdResolver::TimerFired(TimerBase* timer) {
   DCHECK(context);
   DCHECK(context->IsDocument());
   std::unique_ptr<SetSinkIdCallbacks> callbacks =
-      std::make_unique<SetSinkIdCallbacks>(this, *element_, sink_id_);
+      WTF::WrapUnique(new SetSinkIdCallbacks(this, *element_, sink_id_));
   WebMediaPlayer* web_media_player = element_->GetWebMediaPlayer();
   if (web_media_player) {
     // Using release() to transfer ownership because |webMediaPlayer| is a

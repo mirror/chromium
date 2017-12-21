@@ -83,10 +83,8 @@ void CastTransportImpl::FlushWriteQueue() {
   }
 }
 
-void CastTransportImpl::SendMessage(
-    const CastMessage& message,
-    const net::CompletionCallback& callback,
-    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+void CastTransportImpl::SendMessage(const CastMessage& message,
+                                    const net::CompletionCallback& callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::string serialized_message;
   if (!MessageFramer::Serialize(message, &serialized_message)) {
@@ -94,8 +92,8 @@ void CastTransportImpl::SendMessage(
         FROM_HERE, base::Bind(callback, net::ERR_FAILED));
     return;
   }
-  WriteRequest write_request(message.namespace_(), serialized_message, callback,
-                             traffic_annotation);
+  WriteRequest write_request(message.namespace_(), serialized_message,
+                             callback);
 
   write_queue_.push(write_request);
   if (write_state_ == WriteState::IDLE) {
@@ -107,11 +105,8 @@ void CastTransportImpl::SendMessage(
 CastTransportImpl::WriteRequest::WriteRequest(
     const std::string& namespace_,
     const std::string& payload,
-    const net::CompletionCallback& callback,
-    const net::NetworkTrafficAnnotationTag& traffic_annotation)
-    : message_namespace(namespace_),
-      callback(callback),
-      traffic_annotation_(traffic_annotation) {
+    const net::CompletionCallback& callback)
+    : message_namespace(namespace_), callback(callback) {
   VLOG(2) << "WriteRequest size: " << payload.size();
   io_buffer = new net::DrainableIOBuffer(new net::StringIOBuffer(payload),
                                          payload.size());
@@ -203,8 +198,7 @@ int CastTransportImpl::DoWrite() {
 
   int rv = socket_->Write(
       request.io_buffer.get(), request.io_buffer->BytesRemaining(),
-      base::Bind(&CastTransportImpl::OnWriteResult, base::Unretained(this)),
-      request.traffic_annotation_);
+      base::Bind(&CastTransportImpl::OnWriteResult, base::Unretained(this)));
   return rv;
 }
 

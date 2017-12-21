@@ -47,7 +47,6 @@ FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
   request->SetCacheMode(original->CacheMode());
   request->SetRedirect(original->Redirect());
   request->SetIntegrity(original->Integrity());
-  request->SetKeepalive(original->Keepalive());
   return request;
 }
 

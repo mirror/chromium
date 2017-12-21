@@ -32,7 +32,6 @@
 
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
-#include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
@@ -42,9 +41,9 @@
 #include "core/css/MediaQueryMatcher.h"
 #include "core/css/StyleMedia.h"
 #include "core/css/resolver/StyleResolver.h"
-#include "core/dom/ComputedAccessibleNode.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/FrameRequestCallbackCollection.h"
+#include "core/dom/Modulator.h"
 #include "core/dom/SandboxFlags.h"
 #include "core/dom/ScriptedIdleTaskController.h"
 #include "core/dom/SinkDocument.h"
@@ -86,7 +85,6 @@
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/probe/CoreProbes.h"
-#include "core/script/Modulator.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -1103,15 +1101,6 @@ CSSStyleDeclaration* LocalDOMWindow::getComputedStyle(
     const String& pseudo_elt) const {
   DCHECK(elt);
   return CSSComputedStyleDeclaration::Create(elt, false, pseudo_elt);
-}
-
-ScriptPromise LocalDOMWindow::getComputedAccessibleNode(
-    ScriptState* script_state,
-    Element* element) {
-  DCHECK(element);
-  ComputedAccessibleNode* computed_accessible_node =
-      element->ComputedAccessibleNode();
-  return computed_accessible_node->ComputePromiseProperty(script_state);
 }
 
 CSSRuleList* LocalDOMWindow::getMatchedCSSRules(

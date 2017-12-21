@@ -6,6 +6,8 @@
 
 #include <utility>
 
+namespace app_list {
+
 FakeAppListModelUpdater::FakeAppListModelUpdater() {}
 
 FakeAppListModelUpdater::~FakeAppListModelUpdater() {}
@@ -76,7 +78,7 @@ bool FakeAppListModelUpdater::FindItemIndexForTest(const std::string& id,
   return false;
 }
 
-app_list::AppListFolderItem* FakeAppListModelUpdater::FindFolderItem(
+AppListFolderItem* FakeAppListModelUpdater::FindFolderItem(
     const std::string& folder_id) {
   return nullptr;
 }
@@ -100,3 +102,5 @@ FakeAppListModelUpdater::GetIdToAppListIndexMap() {
 bool FakeAppListModelUpdater::SearchEngineIsGoogle() {
   return search_engine_is_google_;
 }
+
+}  // namespace app_list

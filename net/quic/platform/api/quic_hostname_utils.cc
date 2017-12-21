@@ -18,4 +18,10 @@ char* QuicHostnameUtils::NormalizeHostname(char* hostname) {
   return QuicHostnameUtilsImpl::NormalizeHostname(hostname);
 }
 
+// static
+void QuicHostnameUtils::StringToQuicServerId(const string& str,
+                                             QuicServerId* out) {
+  QuicHostnameUtilsImpl::StringToQuicServerId(str, out);
+}
+
 }  // namespace net

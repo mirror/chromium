@@ -12,7 +12,7 @@
 #include "core/loader/EmptyClients.h"
 #include "core/page/ScopedPagePauser.h"
 #include "core/page/ValidationMessageClient.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -59,22 +59,36 @@ class MockFormValidationMessageClient
 };
 }  // namespace
 
-class HTMLFormControlElementTest : public PageTestBase {
+class HTMLFormControlElementTest : public ::testing::Test {
  protected:
   void SetUp() override;
+
+  Page& GetPage() const { return dummy_page_holder_->GetPage(); }
+  Document& GetDocument() const { return *document_; }
+
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
 };
 
 void HTMLFormControlElementTest::SetUp() {
   Page::PageClients page_clients;
   FillWithEmptyClients(page_clients);
-  SetupPageWithClients(&page_clients);
-  GetDocument().SetMimeType("text/html");
+  dummy_page_holder_ =
+      DummyPageHolder::Create(IntSize(800, 600), &page_clients);
+
+  document_ = &dummy_page_holder_->GetDocument();
+  document_->SetMimeType("text/html");
 }
 
 TEST_F(HTMLFormControlElementTest, customValidationMessageTextDirection) {
-  SetHtmlInnerHTML("<body><input pattern='abc' value='def' id=input></body>");
+  GetDocument().documentElement()->SetInnerHTMLFromString(
+      "<body><input pattern='abc' value='def' id=input></body>",
+      ASSERT_NO_EXCEPTION);
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
-  HTMLInputElement* input = ToHTMLInputElement(GetElementById("input"));
+  HTMLInputElement* input =
+      ToHTMLInputElement(GetDocument().getElementById("input"));
   input->setCustomValidity(
       String::FromUTF8("\xD8\xB9\xD8\xB1\xD8\xA8\xD9\x89"));
   input->setAttribute(
@@ -115,13 +129,16 @@ TEST_F(HTMLFormControlElementTest, customValidationMessageTextDirection) {
 }
 
 TEST_F(HTMLFormControlElementTest, UpdateValidationMessageSkippedIfPrinting) {
-  SetHtmlInnerHTML("<body><input required id=input></body>");
+  GetDocument().documentElement()->SetInnerHTMLFromString(
+      "<body><input required id=input></body>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
   ValidationMessageClient* validation_message_client =
       new MockFormValidationMessageClient();
   GetPage().SetValidationMessageClient(validation_message_client);
   Page::OrdinaryPages().insert(&GetPage());
 
-  HTMLInputElement* input = ToHTMLInputElement(GetElementById("input"));
+  HTMLInputElement* input =
+      ToHTMLInputElement(GetDocument().getElementById("input"));
   ScopedPagePauser pauser;  // print() pauses the page.
   input->reportValidity();
   EXPECT_FALSE(validation_message_client->IsValidationMessageVisible(*input));

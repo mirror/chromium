@@ -51,7 +51,9 @@ const size_t kMaxStagingBuffers = 32U;
 enum RasterBufferProviderType {
   RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY,
   RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY,
+  RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY,
   RASTER_BUFFER_PROVIDER_TYPE_GPU,
+  RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU,
   RASTER_BUFFER_PROVIDER_TYPE_BITMAP
 };
 
@@ -166,14 +168,29 @@ class RasterBufferProviderTest
             base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
             worker_context_provider_.get(), resource_provider_.get(),
             kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
-            viz::PlatformColor::BestTextureFormat());
+            viz::PlatformColor::BestTextureFormat(), false);
+        break;
+      case RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY:
+        Create3dResourceProvider();
+        raster_buffer_provider_ = std::make_unique<OneCopyRasterBufferProvider>(
+            base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
+            worker_context_provider_.get(), resource_provider_.get(),
+            kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
+            viz::PlatformColor::BestTextureFormat(), true);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_GPU:
         Create3dResourceProvider();
         raster_buffer_provider_ = std::make_unique<GpuRasterBufferProvider>(
             context_provider_.get(), worker_context_provider_.get(),
             resource_provider_.get(), false, 0,
-            viz::PlatformColor::BestTextureFormat(), false);
+            viz::PlatformColor::BestTextureFormat(), false, false);
+        break;
+      case RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU:
+        Create3dResourceProvider();
+        raster_buffer_provider_ = std::make_unique<GpuRasterBufferProvider>(
+            context_provider_.get(), worker_context_provider_.get(),
+            resource_provider_.get(), false, 0,
+            viz::PlatformColor::BestTextureFormat(), true, false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_BITMAP:
         CreateSoftwareResourceProvider();
@@ -409,8 +426,8 @@ TEST_P(RasterBufferProviderTest, ReadyToDrawCallback) {
       base::Bind([](base::RunLoop* run_loop) { run_loop->Quit(); }, &run_loop),
       0);
 
-  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_GPU ||
-      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY)
+  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU ||
+      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY)
     EXPECT_TRUE(callback_id);
 
   if (!callback_id)
@@ -439,8 +456,8 @@ TEST_P(RasterBufferProviderTest, ReadyToDrawCallbackNoDuplicate) {
 
   EXPECT_EQ(callback_id, callback_id_2);
 
-  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_GPU ||
-      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY)
+  if (GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU ||
+      GetParam() == RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY)
     EXPECT_TRUE(callback_id);
 }
 
@@ -449,7 +466,9 @@ INSTANTIATE_TEST_CASE_P(
     RasterBufferProviderTest,
     ::testing::Values(RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY,
                       RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY,
+                      RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY,
                       RASTER_BUFFER_PROVIDER_TYPE_GPU,
+                      RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU,
                       RASTER_BUFFER_PROVIDER_TYPE_BITMAP));
 
 }  // namespace

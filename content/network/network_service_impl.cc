@@ -101,9 +101,9 @@ NetworkServiceImpl::NetworkServiceImpl(
   if (registry_) {
     DCHECK(!request.is_pending());
     registry_->AddInterface<mojom::NetworkService>(
-        base::BindRepeating(&NetworkServiceImpl::Bind, base::Unretained(this)));
-  } else if (request.is_pending()) {
-    Bind(std::move(request));
+        base::Bind(&NetworkServiceImpl::Create, base::Unretained(this)));
+  } else {
+    Create(std::move(request));
   }
 
   network_change_manager_ = std::make_unique<NetworkChangeManager>(
@@ -137,8 +137,8 @@ NetworkServiceImpl::~NetworkServiceImpl() {
 
 std::unique_ptr<mojom::NetworkContext>
 NetworkServiceImpl::CreateNetworkContextWithBuilder(
-    mojom::NetworkContextRequest request,
-    mojom::NetworkContextParamsPtr params,
+    content::mojom::NetworkContextRequest request,
+    content::mojom::NetworkContextParamsPtr params,
     std::unique_ptr<URLRequestContextBuilderMojo> builder,
     net::URLRequestContext** url_request_context) {
   std::unique_ptr<NetworkContext> network_context =
@@ -157,8 +157,6 @@ void NetworkServiceImpl::RegisterNetworkContext(
     NetworkContext* network_context) {
   DCHECK_EQ(0u, network_contexts_.count(network_context));
   network_contexts_.insert(network_context);
-  if (quic_disabled_)
-    network_context->DisableQuic();
 }
 
 void NetworkServiceImpl::DeregisterNetworkContext(
@@ -219,7 +217,7 @@ void NetworkServiceImpl::OnBindInterface(
   registry_->BindInterface(interface_name, std::move(interface_pipe));
 }
 
-void NetworkServiceImpl::Bind(mojom::NetworkServiceRequest request) {
+void NetworkServiceImpl::Create(mojom::NetworkServiceRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 }

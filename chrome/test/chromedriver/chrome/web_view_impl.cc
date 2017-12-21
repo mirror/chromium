@@ -929,8 +929,8 @@ Status ParseCallFunctionResult(const base::Value& temp_result,
   }
   const base::Value* unscoped_value;
   if (!dict->Get("value", &unscoped_value)) {
-    // Missing 'value' indicates the JavaScript code didn't return a value.
-    return Status(kOk);
+    return Status(kUnknownError,
+                  "call function result missing 'value'");
   }
   result->reset(unscoped_value->DeepCopy());
   return Status(kOk);

@@ -42,7 +42,8 @@ using extensions::ExtensionSystem;
 namespace {
 
 // Get a set of all apps in |model|.
-std::set<std::string> GetModelContent(AppListModelUpdater* model_updater) {
+std::set<std::string> GetModelContent(
+    app_list::AppListModelUpdater* model_updater) {
   std::set<std::string> content;
   for (size_t i = 0; i < model_updater->ItemCount(); ++i)
     content.insert(model_updater->ItemAtForTest(i)->name());
@@ -93,7 +94,7 @@ class ExtensionAppModelBuilderTest : public AppListTestBase {
   void CreateBuilder() {
     ResetBuilder();  // Destroy any existing builder in the correct order.
 
-    model_updater_ = std::make_unique<FakeAppListModelUpdater>();
+    model_updater_ = std::make_unique<app_list::FakeAppListModelUpdater>();
     controller_ = std::make_unique<test::TestAppListControllerDelegate>();
     builder_ = std::make_unique<ExtensionAppModelBuilder>(controller_.get());
     builder_->Initialize(nullptr, profile_.get(), model_updater_.get());
@@ -105,7 +106,7 @@ class ExtensionAppModelBuilderTest : public AppListTestBase {
     model_updater_.reset();
   }
 
-  std::unique_ptr<FakeAppListModelUpdater> model_updater_;
+  std::unique_ptr<app_list::FakeAppListModelUpdater> model_updater_;
   std::unique_ptr<test::TestAppListControllerDelegate> controller_;
   std::unique_ptr<ExtensionAppModelBuilder> builder_;
   std::set<std::string> default_apps_;
@@ -140,7 +141,7 @@ TEST_F(ExtensionAppModelBuilderTest, HideWebStore) {
   service_->AddExtension(enterprise_store.get());
 
   // Web stores should be present in the model.
-  FakeAppListModelUpdater model_updater1;
+  app_list::FakeAppListModelUpdater model_updater1;
   ExtensionAppModelBuilder builder1(controller_.get());
   builder1.Initialize(nullptr, profile_.get(), &model_updater1);
   EXPECT_TRUE(model_updater1.FindItem(store->id()));
@@ -154,7 +155,7 @@ TEST_F(ExtensionAppModelBuilderTest, HideWebStore) {
   EXPECT_FALSE(model_updater1.FindItem(enterprise_store->id()));
 
   // Build a new model; web stores should NOT be present.
-  FakeAppListModelUpdater model_updater2;
+  app_list::FakeAppListModelUpdater model_updater2;
   ExtensionAppModelBuilder builder2(controller_.get());
   builder2.Initialize(nullptr, profile_.get(), &model_updater2);
   EXPECT_FALSE(model_updater2.FindItem(store->id()));

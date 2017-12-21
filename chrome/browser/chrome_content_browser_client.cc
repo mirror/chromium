@@ -158,7 +158,6 @@
 #include "components/net_log/chrome_net_log.h"
 #include "components/password_manager/content/browser/content_password_manager_driver_factory.h"
 #include "components/patch_service/public/interfaces/constants.mojom.h"
-#include "components/policy/content/policy_blacklist_navigation_throttle.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -3126,6 +3125,22 @@ void ChromeContentBrowserClient::BindInterfaceRequestFromFrame(
   }
 }
 
+bool ChromeContentBrowserClient::BindAssociatedInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const std::string& interface_name,
+    mojo::ScopedInterfaceEndpointHandle* handle) {
+  // TODO(https://crbug.com/736357): Factor AssociatedInterfaceRegistryImpl out
+  // into content/public/ so it can be used here instead of this abomination.
+  if (interface_name == password_manager::mojom::CredentialManager::Name_) {
+    ChromePasswordManagerClient::BindCredentialManager(
+        password_manager::mojom::CredentialManagerAssociatedRequest(
+            std::move(*handle)),
+        render_frame_host);
+    return true;
+  }
+  return false;
+}
+
 void ChromeContentBrowserClient::BindInterfaceRequestFromWorker(
     content::RenderProcessHost* render_process_host,
     const url::Origin& origin,
@@ -3495,9 +3510,6 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
   if (tab_under_throttle)
     throttles.push_back(std::move(tab_under_throttle));
 
-  throttles.push_back(base::MakeUnique<PolicyBlacklistNavigationThrottle>(
-      handle, handle->GetWebContents()->GetBrowserContext()));
-
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kCommittedInterstitials)) {
     throttles.push_back(std::make_unique<SSLErrorNavigationThrottle>(
@@ -3600,8 +3612,7 @@ void ChromeContentBrowserClient::InitWebContextInterfaces() {
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
                      BindPasswordManagerDriver));
-  frame_interfaces_parameterized_->AddInterface(
-      base::BindRepeating(&ChromePasswordManagerClient::BindCredentialManager));
+
   frame_interfaces_parameterized_->AddInterface(
       base::Bind(&InsecureSensitiveInputDriverFactory::BindDriver));
 

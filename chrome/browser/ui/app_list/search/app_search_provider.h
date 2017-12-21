@@ -14,7 +14,6 @@
 #include "ui/app_list/search_provider.h"
 
 class AppListControllerDelegate;
-class AppListModelUpdater;
 class Profile;
 
 namespace base {
@@ -22,6 +21,8 @@ class Clock;
 }
 
 namespace app_list {
+
+class AppListModelUpdater;
 
 class AppSearchProvider : public SearchProvider {
  public:

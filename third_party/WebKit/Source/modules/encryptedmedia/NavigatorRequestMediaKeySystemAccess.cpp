@@ -6,7 +6,6 @@
 
 #include <algorithm>
 
-#include "base/memory/ptr_util.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
@@ -25,6 +24,7 @@
 #include "platform/network/ParsedContentType.h"
 #include "platform/network/mime/ContentType.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebEncryptedMediaClient.h"
@@ -205,7 +205,7 @@ void MediaKeySystemAccessInitializer::RequestSucceeded(
     return;
 
   resolver_->Resolve(
-      new MediaKeySystemAccess(key_system_, base::WrapUnique(access)));
+      new MediaKeySystemAccess(key_system_, WTF::WrapUnique(access)));
   resolver_.Clear();
 }
 

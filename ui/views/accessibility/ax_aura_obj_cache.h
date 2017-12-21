@@ -9,7 +9,6 @@
 
 #include <map>
 #include <memory>
-#include <set>
 #include <vector>
 
 #include "base/macros.h"
@@ -128,14 +127,14 @@ class VIEWS_EXPORT AXAuraObjCache : public aura::client::FocusChangeObserver {
   std::map<aura::Window*, int32_t> window_to_id_map_;
 
   std::map<int32_t, std::unique_ptr<AXAuraObjWrapper>> cache_;
-  int32_t current_id_ = 1;
+  int32_t current_id_;
 
   // True immediately when entering this object's destructor.
-  bool is_destroying_ = false;
+  bool is_destroying_;
 
-  Delegate* delegate_ = nullptr;
+  Delegate* delegate_;
 
-  std::set<aura::Window*> root_windows_;
+  aura::Window* root_window_;
 
   DISALLOW_COPY_AND_ASSIGN(AXAuraObjCache);
 };

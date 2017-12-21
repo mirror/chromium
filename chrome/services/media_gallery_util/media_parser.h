@@ -13,6 +13,8 @@
 #include "chrome/services/media_gallery_util/public/interfaces/media_parser.mojom.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 
+namespace chrome {
+
 class MediaParser : public chrome::mojom::MediaParser {
  public:
   explicit MediaParser(
@@ -24,7 +26,7 @@ class MediaParser : public chrome::mojom::MediaParser {
   void ParseMediaMetadata(const std::string& mime_type,
                           int64_t total_size,
                           bool get_attached_images,
-                          chrome::mojom::MediaDataSourcePtr media_data_source,
+                          mojom::MediaDataSourcePtr media_data_source,
                           ParseMediaMetadataCallback callback) override;
   void CheckMediaFile(base::TimeDelta decode_time,
                       base::File file,
@@ -34,5 +36,7 @@ class MediaParser : public chrome::mojom::MediaParser {
 
   DISALLOW_COPY_AND_ASSIGN(MediaParser);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_SERVICES_MEDIA_GALLERY_UTIL_MEDIA_PARSER_H_

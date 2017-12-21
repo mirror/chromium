@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ntp.cards.SignInPromo;
 import org.chromium.chrome.browser.signin.AccountSigninView;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
@@ -45,7 +44,6 @@ public class AccountFirstRunFragment extends FirstRunPage implements AccountSign
         AccountSigninView.Listener listener = new AccountSigninView.Listener() {
             @Override
             public void onAccountSelectionCanceled() {
-                SignInPromo.temporarilySuppressPromos();
                 getPageDelegate().refuseSignIn();
                 advanceToNextPage();
             }

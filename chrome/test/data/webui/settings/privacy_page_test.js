@@ -182,7 +182,7 @@ cr.define('settings_privacy_page', function() {
         assertTrue(!!cancelButton);
         var actionButton = element.$$('.action-button');
         assertTrue(!!actionButton);
-        var spinner = element.$$('paper-spinner-lite');
+        var spinner = element.$$('paper-spinner');
         assertTrue(!!spinner);
 
         assertFalse(cancelButton.disabled);

@@ -78,7 +78,7 @@ void WMHelper::AddCursorObserver(aura::client::CursorClientObserver* observer) {
 
 void WMHelper::RemoveCursorObserver(
     aura::client::CursorClientObserver* observer) {
-  if (ash::Shell::GetAshConfig() != ash::Config::MASH)
+  if (ash::Shell::GetAshConfig() == ash::Config::CLASSIC)
     ash::Shell::Get()->cursor_manager()->RemoveObserver(observer);
 }
 

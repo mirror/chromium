@@ -55,7 +55,6 @@ class DelegatingURLLoader final : public mojom::URLLoader {
   ~DelegatingURLLoader() override {}
 
   void FollowRedirect() override { loader_->FollowRedirect(); }
-  void ProceedWithResponse() override { NOTREACHED(); }
 
   void SetPriority(net::RequestPriority priority,
                    int intra_priority_value) override {

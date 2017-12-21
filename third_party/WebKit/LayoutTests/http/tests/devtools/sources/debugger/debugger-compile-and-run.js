@@ -6,6 +6,9 @@
   TestRunner.addResult(`Tests separate compilation and run.\n`);
   await TestRunner.loadModule('sources_test_runner');
   await TestRunner.showPanel('sources');
+  await TestRunner.loadHTML(`
+      <a href="https://bugs.webkit.org/show_bug.cgi?id=89646">Bug 89646.</a>
+    `);
 
   function printExceptionDetails(exceptionDetails) {
     TestRunner.addResult('exceptionDetails:');

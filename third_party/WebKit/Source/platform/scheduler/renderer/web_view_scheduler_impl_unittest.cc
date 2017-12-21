@@ -65,13 +65,11 @@ class WebViewSchedulerImplTest : public ::testing::Test {
   }
 
   scoped_refptr<WebTaskRunner> ThrottleableTaskRunner() {
-    return WebTaskRunnerImpl::Create(ThrottleableTaskQueue(),
-                                     TaskType::kInternalTest);
+    return WebTaskRunnerImpl::Create(ThrottleableTaskQueue(), base::nullopt);
   }
 
   scoped_refptr<WebTaskRunner> LoadingTaskRunner() {
-    return WebTaskRunnerImpl::Create(LoadingTaskQueue(),
-                                     TaskType::kInternalTest);
+    return WebTaskRunnerImpl::Create(LoadingTaskQueue(), base::nullopt);
   }
 
   scoped_refptr<TaskQueue> ThrottleableTaskQueue() {

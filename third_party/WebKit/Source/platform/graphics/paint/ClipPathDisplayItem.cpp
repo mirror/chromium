@@ -7,6 +7,7 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/Path.h"
 #include "public/platform/WebDisplayItemList.h"
+#include "third_party/skia/include/core/SkPictureAnalyzer.h"
 #include "third_party/skia/include/core/SkScalar.h"
 
 namespace blink {

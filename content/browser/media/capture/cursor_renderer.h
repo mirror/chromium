@@ -5,8 +5,6 @@
 #ifndef CONTENT_BROWSER_MEDIA_CAPTURE_CURSOR_RENDERER_H_
 #define CONTENT_BROWSER_MEDIA_CAPTURE_CURSOR_RENDERER_H_
 
-#include <atomic>
-
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -23,17 +21,15 @@
 
 namespace content {
 
-class CursorRendererUndoer;
-
 // CursorRenderer is an abstract base class that handles all the
 // non-platform-specific common cursor rendering functionality. In order to
 // track the cursor, the platform-specific implementation will listen to
 // mouse events and this base class will process them.
 //
 // All parts of this class are meant to run on the UI BrowserThread, except for
-// RenderOnVideoFrame() and IsUserInteractingWithView(), which may be called
-// from any thread. It is up to the client code to ensure the CursorRenderer's
-// lifetime while in use across multiple threads.
+// RenderOnVideoFrame(), which may be called from any thread. It is up to the
+// client code to ensure the CursorRenderer's lifetime while in use across
+// multiple threads.
 class CONTENT_EXPORT CursorRenderer {
  public:
   // Setting to control cursor display based on either mouse movement or always
@@ -51,12 +47,9 @@ class CONTENT_EXPORT CursorRenderer {
   virtual void SetTargetView(gfx::NativeView view) = 0;
 
   // Renders cursor on the given video frame within the content region,
-  // returning true if |frame| was modified. |undoer| is optional: If provided,
-  // it will be updated with state necessary for later undoing the cursor
-  // rendering.
+  // returning true if |frame| was modified.
   bool RenderOnVideoFrame(media::VideoFrame* frame,
-                          const gfx::Rect& region_in_frame,
-                          CursorRendererUndoer* undoer);
+                          const gfx::Rect& region_in_frame);
 
   // Sets a callback that will be run whenever RenderOnVideoFrame() should be
   // called soon, to update the mouse cursor location or image in the video.
@@ -116,14 +109,6 @@ class CONTENT_EXPORT CursorRenderer {
     RECENTLY_MOVED_OR_CLICKED,  // Sufficient mouse activity present.
   };
 
-  // Accessors for |mouse_move_behavior_atomic_|. See comments below.
-  MouseMoveBehavior mouse_move_behavior() const {
-    return mouse_move_behavior_atomic_.load(std::memory_order_relaxed);
-  }
-  void set_mouse_move_behavior(MouseMoveBehavior behavior) {
-    mouse_move_behavior_atomic_.store(behavior, std::memory_order_relaxed);
-  }
-
   // Takes a snapshot of the current mouse cursor state, for use by
   // RenderOnVideoFrame().
   void SnapshotCursorState();
@@ -152,15 +137,9 @@ class CONTENT_EXPORT CursorRenderer {
   // interacting with the view and whether to run the |needs_redraw_callback_|.
   // These do not need to be protected by |lock_| since they are only accessed
   // on the UI BrowserThread.
+  MouseMoveBehavior mouse_move_behavior_;
   gfx::Point mouse_move_start_location_;
   base::OneShotTimer mouse_activity_ended_timer_;
-
-  // Updated in the mouse event handlers (on the UI BrowserThread) and read from
-  // by IsUserInteractingWithView() (on any thread). This is not protected by
-  // |lock_| since strict memory ordering semantics are not necessary, just
-  // atomicity between threads. All code should use the accessors to read or set
-  // this value.
-  std::atomic<MouseMoveBehavior> mouse_move_behavior_atomic_;
 
   // Run whenever the mouse cursor would be rendered differently than when it
   // was rendered in the last video frame.
@@ -176,24 +155,6 @@ class CONTENT_EXPORT CursorRenderer {
   base::WeakPtrFactory<CursorRenderer> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CursorRenderer);
-};
-
-// Restores the original content of a VideoFrame, to the point before cursor
-// rendering modified it. See CursorRenderer::RenderOnVideoFrame().
-class CONTENT_EXPORT CursorRendererUndoer {
- public:
-  CursorRendererUndoer();
-  ~CursorRendererUndoer();
-
-  void TakeSnapshot(const media::VideoFrame& frame, const gfx::Rect& rect);
-
-  // Restores the frame content to the point where TakeSnapshot() was last
-  // called.
-  void Undo(media::VideoFrame* frame) const;
-
- private:
-  gfx::Rect rect_;
-  std::vector<uint8_t> snapshot_;
 };
 
 }  // namespace content

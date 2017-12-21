@@ -44,7 +44,6 @@
 #include "components/search_provider_logos/logo_service.h"
 #include "components/search_provider_logos/logo_tracker.h"
 #include "components/strings/grit/components_strings.h"
-#include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/url_util.h"
 #include "net/url_request/url_request.h"
@@ -166,9 +165,6 @@ std::string GetConfigData(bool is_google, const GURL& google_base_url) {
   config_data.Set("translatedStrings", GetTranslatedStrings(is_google));
   config_data.SetBoolean("isGooglePage", is_google);
   config_data.SetString("googleBaseUrl", google_base_url.spec());
-  config_data.SetBoolean(
-      "isAccessibleBrowser",
-      content::BrowserAccessibilityState::GetInstance()->IsAccessibleBrowser());
 
   bool is_voice_search_enabled =
       base::FeatureList::IsEnabled(features::kVoiceSearchOnLocalNtp);
@@ -239,22 +235,10 @@ std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
   auto result = base::MakeUnique<base::DictionaryValue>();
   result->SetString("type", LogoTypeToString(meta.type));
   result->SetString("onClickUrl", meta.on_click_url.spec());
+  result->SetString("fullPageUrl", meta.full_page_url.spec());
   result->SetString("altText", meta.alt_text);
   result->SetString("mimeType", meta.mime_type);
   result->SetString("animatedUrl", meta.animated_url.spec());
-
-  GURL full_page_url = meta.full_page_url;
-  if (base::GetFieldTrialParamByFeatureAsBool(
-          features::kDoodlesOnLocalNtp,
-          "local_ntp_interactive_doodles_prevent_redirects",
-          /*default_value=*/true) &&
-      meta.type == search_provider_logos::LogoType::INTERACTIVE &&
-      full_page_url.is_valid()) {
-    // Prevent the server from redirecting to ccTLDs. This is a temporary
-    // workaround, until the server doesn't redirect these requests by default.
-    full_page_url = net::AppendQueryParameter(full_page_url, "gws_rd", "cr");
-  }
-  result->SetString("fullPageUrl", full_page_url.spec());
 
   // If support for interactive Doodles is disabled, treat them as simple
   // Doodles instead and use the full page URL as the target URL.

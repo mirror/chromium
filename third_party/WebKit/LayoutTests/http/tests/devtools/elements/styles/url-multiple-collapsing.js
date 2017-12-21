@@ -13,6 +13,9 @@
           color: red;
       }
       </style>
+      <p>
+      Tests that multiple URLs which are long are not squashed into a single URL. Bug <a href="http://crbug.com/590172">590172</a>.
+      </p>
       <div id="inspected"></div>
     `);
 

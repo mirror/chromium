@@ -552,10 +552,6 @@ void CdmAdapter::Initialize(std::unique_ptr<media::SimpleCdmPromise> promise) {
   promise->resolve();
 }
 
-int CdmAdapter::GetInterfaceVersion() {
-  return cdm_->GetInterfaceVersion();
-}
-
 void CdmAdapter::SetServerCertificate(
     const std::vector<uint8_t>& certificate,
     std::unique_ptr<SimpleCdmPromise> promise) {

@@ -4,8 +4,6 @@
 
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
 
-#include <memory>
-
 #include "build/build_config.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalDOMWindow.h"
@@ -155,7 +153,7 @@ void MediaControlsOrientationLockDelegate::MaybeLockOrientation() {
   locked_orientation_ = ComputeOrientationLock();
   DCHECK_NE(locked_orientation_, kWebScreenOrientationLockDefault);
   controller->lock(locked_orientation_,
-                   std::make_unique<DummyScreenOrientationCallback>());
+                   WTF::WrapUnique(new DummyScreenOrientationCallback));
 
   if (locked_orientation_ == kWebScreenOrientationLockLandscape)
     RecordLockResult(LockResultMetrics::kLandscape);
@@ -173,7 +171,7 @@ void MediaControlsOrientationLockDelegate::ChangeLockToAnyOrientation() {
   locked_orientation_ = kWebScreenOrientationLockAny;
   ScreenOrientationController::From(*GetDocument().GetFrame())
       ->lock(locked_orientation_,
-             std::make_unique<DummyScreenOrientationCallback>());
+             WTF::WrapUnique(new DummyScreenOrientationCallback));
 }
 
 void MediaControlsOrientationLockDelegate::MaybeUnlockOrientation() {

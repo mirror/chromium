@@ -92,16 +92,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   //    spans multiple physical displays via software mirroring. The primary
   //    physical display has a shelf and status tray, and user windows may
   //    render spanning across multiple displays.
-  //
-  // WARNING: These values are persisted to logs. Entries should not be
-  //          renumbered and numeric values should never be reused.
   enum MultiDisplayMode {
     EXTENDED = 0,
-    MIRRORING = 1,
-    UNIFIED = 2,
-
-    // Always keep this the last item.
-    MULTI_DISPLAY_MODE_LAST = UNIFIED,
+    MIRRORING,
+    UNIFIED,
   };
 
   explicit DisplayManager(std::unique_ptr<Screen> screen);

@@ -285,8 +285,7 @@ std::unique_ptr<Notification> Notification::CreateSystemNotification(
       break;
   }
   base::string16 display_source_or_default = display_source;
-  // TODO(tetsui): move this function to Ash. Ash should know its own name.
-  if (display_source_or_default.empty() && MessageCenter::Get()) {
+  if (display_source_or_default.empty()) {
     display_source_or_default = l10n_util::GetStringFUTF16(
         IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
         MessageCenter::Get()->GetProductOSName());

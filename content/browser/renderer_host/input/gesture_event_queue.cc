@@ -47,12 +47,12 @@ GestureEventQueue::GestureEventQueue(
 
 GestureEventQueue::~GestureEventQueue() { }
 
-bool GestureEventQueue::QueueEvent(
+void GestureEventQueue::QueueEvent(
     const GestureEventWithLatencyInfo& gesture_event) {
   TRACE_EVENT0("input", "GestureEventQueue::QueueEvent");
   if (!ShouldForwardForBounceReduction(gesture_event) ||
       fling_controller_.FilterGestureEvent(gesture_event)) {
-    return false;
+    return;
   }
 
   // fling_controller_ is in charge of handling GFS events from touchpad source
@@ -64,7 +64,7 @@ bool GestureEventQueue::QueueEvent(
       gesture_event.event.source_device == blink::kWebGestureDeviceTouchpad) {
     fling_controller_.ProcessGestureFlingStart(gesture_event);
     fling_in_progress_ = true;
-    return false;
+    return;
   }
 
   // If the GestureFlingStart event is processed by the fling_controller_, the
@@ -73,11 +73,10 @@ bool GestureEventQueue::QueueEvent(
       fling_controller_.fling_in_progress()) {
     fling_controller_.ProcessGestureFlingCancel(gesture_event);
     fling_in_progress_ = false;
-    return false;
+    return;
   }
 
   QueueAndForwardIfNecessary(gesture_event);
-  return true;
 }
 
 void GestureEventQueue::ProgressFling(base::TimeTicks current_time) {

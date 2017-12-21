@@ -116,8 +116,10 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override;
 #endif
-  void PreProcessMouseEvent(const blink::WebMouseEvent& event) override;
-  void PreProcessTouchEvent(const blink::WebTouchEvent& event) override;
+  void ProcessMouseEvent(const blink::WebMouseEvent& event,
+                         const ui::LatencyInfo& latency) override;
+  void ProcessTouchEvent(const blink::WebTouchEvent& event,
+                         const ui::LatencyInfo& latency) override;
 
   void DidStopFlinging() override;
   bool LockMouse() override;

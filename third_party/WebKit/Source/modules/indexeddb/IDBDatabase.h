@@ -47,7 +47,6 @@
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
-#include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 
 namespace blink {
 
@@ -119,9 +118,10 @@ class MODULES_EXPORT IDBDatabase final
   void OnVersionChange(int64_t old_version, int64_t new_version);
   void OnAbort(int64_t, DOMException*);
   void OnComplete(int64_t);
-  void OnChanges(const WebIDBDatabaseCallbacks::ObservationIndexMap&,
+  void OnChanges(const std::unordered_map<int32_t, std::vector<int32_t>>&
+                     observation_index_map,
                  const WebVector<WebIDBObservation>& observations,
-                 const WebIDBDatabaseCallbacks::TransactionMap& transactions);
+                 const IDBDatabaseCallbacks::TransactionMap& transactions);
 
   // ScriptWrappable
   bool HasPendingActivity() const final;

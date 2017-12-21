@@ -46,10 +46,7 @@ struct FormData {
   url::Origin main_frame_origin;
   // True if this form is a form tag.
   bool is_form_tag;
-  // True if the form is made of unowned fields (i.e., not within a <form> tag)
-  // in what appears to be a checkout flow. This attribute is only calculated
-  // and used if features::kAutofillRestrictUnownedFieldsToFormlessCheckout is
-  // enabled, to prevent heuristics from running on formless non-checkout.
+  // True if the form is made of unowned fields in a non checkout flow.
   bool is_formless_checkout;
   // A vector of all the input fields in the form.
   std::vector<FormFieldData> fields;

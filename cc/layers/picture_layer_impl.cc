@@ -902,16 +902,14 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     default_tile_height =
         MathUtil::UncheckedRoundUp(viewport_height, divisor) / divisor;
 
-    // Use half-width GPU tiles when the content width is
-    // larger than the viewport width.
-    if (content_bounds.width() > viewport_width) {
-      // Divide by 2 and round up.
-      default_tile_width = (default_tile_width + 1) / 2;
-    }
-
     // Grow default sizes to account for overlapping border texels.
     default_tile_width += 2 * PictureLayerTiling::kBorderTexels;
     default_tile_height += 2 * PictureLayerTiling::kBorderTexels;
+
+    // Use half-width GPU tiles when the content width is
+    // larger than the viewport width.
+    if (content_bounds.width() > viewport_width)
+      default_tile_width /= 2;
 
     // Round GPU default tile sizes to a multiple of kGpuDefaultTileAlignment.
     // This helps prevent rounding errors in our CA path. crbug.com/632274
@@ -1601,12 +1599,14 @@ bool PictureLayerImpl::HasValidTilePriorities() const {
          (contributes_to_drawn_render_surface() || raster_even_if_not_drawn());
 }
 
-PictureLayerImpl::ImageInvalidationResult
-PictureLayerImpl::InvalidateRegionForImages(
+void PictureLayerImpl::InvalidateRegionForImages(
     const PaintImageIdFlatSet& images_to_invalidate) {
+  TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages");
+
   if (!raster_source_ || !raster_source_->GetDisplayItemList() ||
       raster_source_->GetDisplayItemList()->discardable_image_map().empty()) {
-    return ImageInvalidationResult::kNoImages;
+    TRACE_EVENT0("cc", "PictureLayerImpl::InvalidateRegionForImages NoImages");
+    return;
   }
 
   InvalidationRegion image_invalidation;
@@ -1620,8 +1620,11 @@ PictureLayerImpl::InvalidateRegionForImages(
   Region invalidation;
   image_invalidation.Swap(&invalidation);
 
-  if (invalidation.IsEmpty())
-    return ImageInvalidationResult::kNoInvalidation;
+  if (invalidation.IsEmpty()) {
+    TRACE_EVENT0("cc",
+                 "PictureLayerImpl::InvalidateRegionForImages NoInvalidation");
+    return;
+  }
 
   // Make sure to union the rect from this invalidation with the update_rect
   // instead of over-writing it. We don't want to reset the update that came
@@ -1635,7 +1638,8 @@ PictureLayerImpl::InvalidateRegionForImages(
   invalidation_.Union(invalidation);
   tilings_->Invalidate(invalidation);
   SetNeedsPushProperties();
-  return ImageInvalidationResult::kInvalidated;
+  TRACE_EVENT1("cc", "PictureLayerImpl::InvalidateRegionForImages Invalidation",
+               "Invalidation", invalidation.ToString());
 }
 
 void PictureLayerImpl::RegisterAnimatedImages() {

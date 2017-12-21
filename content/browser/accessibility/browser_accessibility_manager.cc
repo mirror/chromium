@@ -371,12 +371,6 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
     }
   }
 
-  // If this page is hidden by an interstitial, suppress all events.
-  if (GetRootManager()->hidden_by_interstitial_page()) {
-    ClearEvents();
-    return;
-  }
-
   // If the root's parent is in another accessibility tree but it wasn't
   // previously connected, post the proper notifications on the parent.
   BrowserAccessibility* parent = GetParentNodeFromParentTree();

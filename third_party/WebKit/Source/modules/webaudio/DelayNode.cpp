@@ -24,9 +24,6 @@
  */
 
 #include "modules/webaudio/DelayNode.h"
-
-#include <memory>
-
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
@@ -34,6 +31,7 @@
 #include "modules/webaudio/DelayOptions.h"
 #include "modules/webaudio/DelayProcessor.h"
 #include "platform/wtf/MathExtras.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -49,8 +47,8 @@ DelayNode::DelayNode(BaseAudioContext& context, double max_delay_time)
                                      max_delay_time)) {
   SetHandler(AudioBasicProcessorHandler::Create(
       AudioHandler::kNodeTypeDelay, *this, context.sampleRate(),
-      std::make_unique<DelayProcessor>(
-          context.sampleRate(), 1, delay_time_->Handler(), max_delay_time)));
+      WTF::WrapUnique(new DelayProcessor(
+          context.sampleRate(), 1, delay_time_->Handler(), max_delay_time))));
 
   // Initialize the handler so that AudioParams can be processed.
   Handler().Initialize();

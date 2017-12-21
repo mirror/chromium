@@ -16948,7 +16948,7 @@ Called by update_net_error_codes.py.-->
   <int value="1958" label="MediaStreamConstraintsGoogDAEchoCancellation"/>
   <int value="1959" label="MediaStreamConstraintsGoogNoiseReduction"/>
   <int value="1960" label="MediaStreamConstraintsGoogPowerLineFrequency"/>
-  <int value="1961" label="ViewportFixedPositionUnderFilter (obsolete)"/>
+  <int value="1961" label="ViewportFixedPositionUnderFilter"/>
   <int value="1962"
       label="RequestMIDIAccessWithSysExOption_ObscuredByFootprinting"/>
   <int value="1963"
@@ -17282,48 +17282,6 @@ Called by update_net_error_codes.py.-->
   <int value="2275" label="FileAccessedSharedWorker"/>
   <int value="2276" label="V8MediaKeys_GetStatusForPolicy_Method"/>
   <int value="2277" label="V8DeoptimizerDisableSpeculation"/>
-  <int value="2278" label="CSSSelectorCue"/>
-  <int value="2279" label="CSSSelectorWebkitCalendarPickerIndicator"/>
-  <int value="2280" label="CSSSelectorWebkitClearButton"/>
-  <int value="2281" label="CSSSelectorWebkitColorSwatch"/>
-  <int value="2282" label="CSSSelectorWebkitColorSwatchWrapper"/>
-  <int value="2283" label="CSSSelectorWebkitDateAndTimeValue"/>
-  <int value="2284" label="CSSSelectorWebkitDatetimeEdit"/>
-  <int value="2285" label="CSSSelectorWebkitDatetimeEditAmpmField"/>
-  <int value="2286" label="CSSSelectorWebkitDatetimeEditDayField"/>
-  <int value="2287" label="CSSSelectorWebkitDatetimeEditFieldsWrapper"/>
-  <int value="2288" label="CSSSelectorWebkitDatetimeEditHourField"/>
-  <int value="2289" label="CSSSelectorWebkitDatetimeEditMillisecondField"/>
-  <int value="2290" label="CSSSelectorWebkitDatetimeEditMinuteField"/>
-  <int value="2291" label="CSSSelectorWebkitDatetimeEditMonthField"/>
-  <int value="2292" label="CSSSelectorWebkitDatetimeEditSecondField"/>
-  <int value="2293" label="CSSSelectorWebkitDatetimeEditText"/>
-  <int value="2294" label="CSSSelectorWebkitDatetimeEditWeekField"/>
-  <int value="2295" label="CSSSelectorWebkitDatetimeEditYearField"/>
-  <int value="2296" label="CSSSelectorWebkitDetailsMarker"/>
-  <int value="2297" label="CSSSelectorWebkitFileUploadButton"/>
-  <int value="2298" label="CSSSelectorWebkitInnerSpinButton"/>
-  <int value="2299" label="CSSSelectorWebkitInputPlaceholder"/>
-  <int value="2300" label="CSSSelectorWebkitMediaSliderContainer"/>
-  <int value="2301" label="CSSSelectorWebkitMediaSliderThumb"/>
-  <int value="2302" label="CSSSelectorWebkitMediaTextTrackContainer"/>
-  <int value="2303" label="CSSSelectorWebkitMediaTextTrackDisplay"/>
-  <int value="2304" label="CSSSelectorWebkitMediaTextTrackRegion"/>
-  <int value="2305" label="CSSSelectorWebkitMediaTextTrackRegionContainer"/>
-  <int value="2306" label="CSSSelectorWebkitMeterBar"/>
-  <int value="2307" label="CSSSelectorWebkitMeterEvenLessGoodValue"/>
-  <int value="2308" label="CSSSelectorWebkitMeterInnerElement"/>
-  <int value="2309" label="CSSSelectorWebkitMeterOptimumValue"/>
-  <int value="2310" label="CSSSelectorWebkitMeterSuboptimumValue"/>
-  <int value="2311" label="CSSSelectorWebkitProgressBar"/>
-  <int value="2312" label="CSSSelectorWebkitProgressInnerElement"/>
-  <int value="2313" label="CSSSelectorWebkitProgressValue"/>
-  <int value="2314" label="CSSSelectorWebkitSearchCancelButton"/>
-  <int value="2315" label="CSSSelectorWebkitSliderContainer"/>
-  <int value="2316" label="CSSSelectorWebkitSliderRunnableTrack"/>
-  <int value="2317" label="CSSSelectorWebkitSliderThumb"/>
-  <int value="2318" label="CSSSelectorWebkitTextfieldDecorationContainer"/>
-  <int value="2319" label="CSSSelectorWebkitUnknownPseudo"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -18280,7 +18238,6 @@ Called by update_net_error_codes.py.-->
   <int value="8" label="MergeHistogramDeltasFromSource"/>
   <int value="9" label="RecordHistogramSnapshotsFromSource"/>
   <int value="10" label="ProvideIndependentMetrics"/>
-  <int value="11" label="ScheduleSourcesCheck Failed"/>
 </enum>
 
 <enum name="FileReaderSyncWorkerType">
@@ -24587,12 +24544,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="5" label="App window in background"/>
 </enum>
 
-<enum name="LockScreenAppUnloadStatus">
-  <int value="0" label="Unload reason other than termination"/>
-  <int value="1" label="Terminated, app reload can be attempted"/>
-  <int value="2" label="Terminated, number of reload attempts exceeded"/>
-</enum>
-
 <enum name="LockScreenDataItemOperationResult">
   <int value="0" label="Success"/>
   <int value="1" label="Operation failed"/>
@@ -24601,14 +24552,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
   <int value="4" label="Item already registered"/>
   <int value="5" label="Invalid encryption key"/>
   <int value="6" label="Wrong encryption key"/>
-</enum>
-
-<enum name="LockScreenNoteAppStatusOnLaunch">
-  <int value="0" label="Enabled"/>
-  <int value="1" label="Terminated - reloaded"/>
-  <int value="2" label="Terminated - reload attempt failed"/>
-  <int value="3" label="Terminated - number of reload attempts exceeded"/>
-  <int value="4" label="Not loaded, not terminated"/>
 </enum>
 
 <enum name="LockScreenNoteTakingExitReason">
@@ -24868,7 +24811,6 @@ from previous Chrome versions.
   <int value="-1691668194" label="enable-new-bookmark-apps"/>
   <int value="-1691281364" label="enable-notification-action-icons"/>
   <int value="-1686782572" label="ChromeHomeInactivitySheetExpansion:disabled"/>
-  <int value="-1682843294" label="DataReductionProxyDecidesTransform:enabled"/>
   <int value="-1670137340"
       label="OptimizeLoadingIPCForSmallResources:disabled"/>
   <int value="-1669486359" label="ImportantSitesInCBD:enabled"/>
@@ -25052,7 +24994,6 @@ from previous Chrome versions.
       label="OmniboxUIExperimentHideSuggestionUrlScheme:disabled"/>
   <int value="-1203955801" label="enable-password-change-support:disabled"/>
   <int value="-1203742042" label="enable-gesture-selection"/>
-  <int value="-1201741587" label="DataReductionProxyDecidesTransform:disabled"/>
   <int value="-1201183153" label="enable-centered-app-list"/>
   <int value="-1197035323" label="ZeroSuggestRedirectToChrome:disabled"/>
   <int value="-1195194959" label="XGEOVisibleNetworks:disabled"/>
@@ -25329,7 +25270,6 @@ from previous Chrome versions.
   <int value="-474322576" label="disable-quick-unlock-pin"/>
   <int value="-472013317" label="WebRTC-H264WithOpenH264FFmpeg:disabled"/>
   <int value="-471405972" label="ViewsProfileChooser:disabled"/>
-  <int value="-470948890" label="OfflinePagesDescriptivePendingStatus:enabled"/>
   <int value="-462205750" label="enable-service-worker-sync"/>
   <int value="-461292699" label="ContentSuggestionsCategoryOrder:enabled"/>
   <int value="-460313418" label="ProgressBarThrottle:enabled"/>
@@ -25457,7 +25397,6 @@ from previous Chrome versions.
   <int value="-122492389" label="enable-browser-task-scheduler"/>
   <int value="-120521482" label="DirectManipulationStylus:enabled"/>
   <int value="-119055644" label="GenericSensor:enabled"/>
-  <int value="-110465424" label="PictureInPicture:enabled"/>
   <int value="-108881882" label="NTPCondensedTileLayout:enabled"/>
   <int value="-102537270" label="extension-content-verification"/>
   <int value="-99781021" label="disable-roboto-font-ui"/>
@@ -25474,7 +25413,6 @@ from previous Chrome versions.
   <int value="-69427025" label="OfflinePagesPrefetchingUI:enabled"/>
   <int value="-68877684" label="BackgroundVideoTrackOptimization:enabled"/>
   <int value="-68225452" label="enable-translate-new-ux"/>
-  <int value="-67297229" label="OfflinePagesDescriptivePendingStatus:disabled"/>
   <int value="-59401847" label="ContentSuggestionsLargeThumbnail:disabled"/>
   <int value="-58242474" label="ash-disable-swipe-to-close-in-overview-mode"/>
   <int value="-57986995" label="DisablePostScriptPrinting:enabled"/>
@@ -25851,7 +25789,6 @@ from previous Chrome versions.
   <int value="1003002105" label="MaterialDesignBookmarks:disabled"/>
   <int value="1004909189"
       label="ContentSuggestionsThumbnailDominantColor:disabled"/>
-  <int value="1005684777" label="PictureInPicture:disabled"/>
   <int value="1007444341" label="enable-prefixed-encrypted-media"/>
   <int value="1015895665" label="drop-sync-credential:enabled"/>
   <int value="1018998019" label="memlog"/>
@@ -28298,15 +28235,6 @@ Called by update_use_counter_css.py.-->
     Some, but not all, operations succeeded.
   </int>
   <int value="2" label="SUCCESS">All operations succeeded.</int>
-</enum>
-
-<enum name="MultiDisplayModes">
-  <summary>
-    Defines the modes in which displays connected to the device are in.
-  </summary>
-  <int value="0" label="Extended mode"/>
-  <int value="1" label="Mirroring mode"/>
-  <int value="2" label="Unified mode"/>
 </enum>
 
 <enum name="MultiProfileSessionMode">
@@ -42304,18 +42232,6 @@ Full version information for the fingerprint enum values:
   <int value="7" label="kNoStore"/>
 </enum>
 
-<enum name="UnifiedDesktopDisplayCountRanges">
-  <summary>
-    Defines the ranges in which the number of displays connected in Unified Mode
-    may reside
-  </summary>
-  <int value="0" label="2 displays"/>
-  <int value="1" label="(2 to 4] displays"/>
-  <int value="2" label="(4 to 6] displays"/>
-  <int value="3" label="(6 to 8] displays"/>
-  <int value="4" label="More than 8 displays"/>
-</enum>
-
 <enum name="UniformityTrialGroupNotActive">
   <int value="0" label="Invalid"/>
   <int value="1" label="Group not reported"/>
@@ -43402,7 +43318,7 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="22" label="YUV420P12"/>
   <int value="23" label="YUV422P12"/>
   <int value="24" label="YUV444P12"/>
-  <int value="25" label="Y8 (Deprecated in M65)"/>
+  <int value="25" label="Y8"/>
   <int value="26" label="Y16"/>
 </enum>
 
@@ -44571,14 +44487,6 @@ Called by update_traffic_annotation_histograms.py.-->
 <enum name="WiFiAp80211vDMSSupport">
   <int value="0" label="Does not support 802.11v DMS"/>
   <int value="1" label="Supports DMS"/>
-</enum>
-
-<enum name="WiFiApChannelSwitch">
-  <int value="0" label="Unknown frequency range"/>
-  <int value="1" label="2.4GHz -&gt; 2.4GHz"/>
-  <int value="2" label="2.4GHz -&gt; 5GHz"/>
-  <int value="3" label="5GHz -&gt; 2.4GHz"/>
-  <int value="4" label="5GHz -&gt; 5GHz"/>
 </enum>
 
 <enum name="WiFiApMode">

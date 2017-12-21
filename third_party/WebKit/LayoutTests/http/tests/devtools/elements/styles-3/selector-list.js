@@ -28,6 +28,9 @@
       }
 
       </style>
+      <p>
+      Tests representation of selector lists in the protocol. <a href="https://bugs.webkit.org/show_bug.cgi?id=103118">Bug 103118</a>.
+      </p>
 
       <div id="inspected">Text</div>
     `);

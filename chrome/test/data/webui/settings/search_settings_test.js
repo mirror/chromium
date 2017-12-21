@@ -109,7 +109,7 @@ cr.define('settings_test', function() {
              <paper-icon-button>${text}</paper-icon-button>
              <paper-ripple>${text}</paper-ripple>
              <paper-slider>${text}</paper-slider>
-             <paper-spinner-lite>${text}</paper-spinner-lite>
+             <paper-spinner>${text}</paper-spinner>
              <style>${text}</style>
              <template>${text}</template>
            </settings-section>`;

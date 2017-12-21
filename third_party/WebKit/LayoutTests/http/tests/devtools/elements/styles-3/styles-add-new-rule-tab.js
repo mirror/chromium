@@ -10,6 +10,11 @@
       <div id="inspected" style="font-size: 12px">Text</div>
       <div id="other" style="color:red"></div>
     `);
+  await TestRunner.evaluateInPagePromise(`
+      var initialize_AdditionalPreload = function() {
+          InspectorTest.preloadModule("source_frame");
+      }
+  `);
 
   ElementsTestRunner.selectNodeAndWaitForStyles('inspected', step1);
   TestRunner.addSniffer(Workspace.UISourceCode.prototype, 'addRevision', onRevisionAdded);

@@ -577,7 +577,8 @@ BrowserProcessImpl::network_connection_tracker() {
   if (!network_connection_tracker_) {
     network_connection_tracker_ =
         std::make_unique<content::NetworkConnectionTracker>();
-    network_connection_tracker_->Initialize(content::GetNetworkService());
+    network_connection_tracker_->Initialize(
+        io_thread_->GetNetworkServiceOnUIThread());
   }
   return network_connection_tracker_.get();
 }

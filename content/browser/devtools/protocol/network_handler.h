@@ -139,7 +139,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   std::unique_ptr<NavigationThrottle> CreateThrottleForNavigation(
       NavigationHandle* navigation_handle);
   bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
-  void WillSendNavigationRequest(net::HttpRequestHeaders* headers,
+  void WillSendNavigationRequest(net::HttpRequestHeaders*,
                                  bool* skip_service_worker);
 
  private:

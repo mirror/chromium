@@ -17,6 +17,8 @@
 
 namespace MediaGalleries = extensions::api::media_galleries;
 
+namespace chrome {
+
 namespace {
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
@@ -151,3 +153,5 @@ void MediaMetadataParser::Start(const MetadataCallback& callback) {
       base::BindOnce(&FinishParseAudioVideoMetadata, callback,
                      base::Owned(metadata), base::Owned(images)));
 }
+
+}  // namespace chrome

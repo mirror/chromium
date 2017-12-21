@@ -5,7 +5,6 @@
 #include "ui/ozone/platform/wayland/wayland_xkb_keyboard_layout_engine.h"
 
 #include "ui/events/event_constants.h"
-#include "ui/events/event_modifiers.h"
 
 namespace ui {
 
@@ -22,28 +21,27 @@ void WaylandXkbKeyboardLayoutEngine::SetKeymap(xkb_keymap* keymap) {
   xkb_mod_indexes_.shift = xkb_keymap_mod_get_index(keymap, XKB_MOD_NAME_SHIFT);
 }
 
-void WaylandXkbKeyboardLayoutEngine::UpdateModifiers(uint32_t depressed_mods,
-                                                     uint32_t latched_mods,
-                                                     uint32_t locked_mods,
-                                                     uint32_t group) {
+int WaylandXkbKeyboardLayoutEngine::UpdateModifiers(uint32_t depressed_mods,
+                                                    uint32_t latched_mods,
+                                                    uint32_t locked_mods,
+                                                    uint32_t group) {
   xkb_state_update_mask(xkb_state_.get(), depressed_mods, latched_mods,
                         locked_mods, 0, 0, group);
 
-  event_modifiers_->ResetKeyboardModifiers();
-
+  int modifiers = 0;
   auto component = static_cast<xkb_state_component>(XKB_STATE_MODS_DEPRESSED |
                                                     XKB_STATE_MODS_LATCHED);
   if (xkb_state_mod_index_is_active(xkb_state_.get(), xkb_mod_indexes_.control,
                                     component))
-    event_modifiers_->UpdateModifier(MODIFIER_CONTROL, true);
-
+    modifiers |= EF_CONTROL_DOWN;
   if (xkb_state_mod_index_is_active(xkb_state_.get(), xkb_mod_indexes_.alt,
                                     component))
-    event_modifiers_->UpdateModifier(MODIFIER_ALT, true);
-
+    modifiers |= EF_ALT_DOWN;
   if (xkb_state_mod_index_is_active(xkb_state_.get(), xkb_mod_indexes_.shift,
                                     component))
-    event_modifiers_->UpdateModifier(MODIFIER_SHIFT, true);
+    modifiers |= EF_SHIFT_DOWN;
+
+  return modifiers;
 }
 
 }  // namespace ui

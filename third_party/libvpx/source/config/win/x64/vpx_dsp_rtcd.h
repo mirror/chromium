@@ -1,4 +1,3 @@
-// This file is generated. Do not edit.
 #ifndef VPX_DSP_RTCD_H_
 #define VPX_DSP_RTCD_H_
 

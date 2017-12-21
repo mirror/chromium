@@ -17,7 +17,6 @@
 
 namespace blink {
 
-class CanvasRenderingContext;
 class FontSelector;
 class StaticBitmapImage;
 class KURL;
@@ -36,7 +35,6 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   virtual bool OriginClean() const = 0;
   virtual void SetOriginTainted() = 0;
   virtual const IntSize& Size() const = 0;
-  virtual CanvasRenderingContext* RenderingContext() const = 0;
 
   virtual ExecutionContext* GetTopExecutionContext() const = 0;
   virtual DispatchEventResult HostDispatchEvent(Event*) = 0;
@@ -62,12 +60,8 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   // TODO(fserb): remove this.
   virtual bool IsOffscreenCanvas() const { return false; }
 
-  bool IsPaintable() const;
-
  protected:
   virtual ~CanvasRenderingContextHost() {}
-
-  scoped_refptr<StaticBitmapImage> CreateTransparentImage(const IntSize&) const;
 };
 
 }  // namespace blink

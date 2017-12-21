@@ -70,8 +70,7 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
 
   // Helpers for posting bound functions as tasks.
 
-  // Deprecated. Use namespace-level Post(Delayed)CrossThreadTask() defined
-  // below.
+  // For cross-thread posting. Can be called from any thread.
   void PostTask(const base::Location&, CrossThreadClosure);
   void PostDelayedTask(const base::Location&,
                        CrossThreadClosure,
@@ -97,15 +96,6 @@ class BLINK_PLATFORM_EXPORT WebTaskRunner
  private:
   DISALLOW_COPY_AND_ASSIGN(WebTaskRunner);
 };
-
-// For cross-thread posting. Can be called from any thread.
-BLINK_PLATFORM_EXPORT void PostCrossThreadTask(WebTaskRunner&,
-                                               const base::Location&,
-                                               CrossThreadClosure);
-BLINK_PLATFORM_EXPORT void PostDelayedCrossThreadTask(WebTaskRunner&,
-                                                      const base::Location&,
-                                                      CrossThreadClosure,
-                                                      TimeDelta delay);
 
 }  // namespace blink
 

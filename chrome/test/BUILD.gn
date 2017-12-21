@@ -429,7 +429,6 @@ test("browser_tests") {
       "../../apps/load_and_launch_browsertest.cc",
       "../app/chrome_version.rc.version",
       "../browser/accessibility/browser_accessibility_state_browsertest.cc",
-      "../browser/accessibility/interstitial_accessibility_browsertest.cc",
       "../browser/app_controller_mac_browsertest.mm",
       "../browser/apps/app_browsertest.cc",
       "../browser/apps/app_shim/app_shim_host_manager_browsertest_mac.mm",
@@ -558,7 +557,6 @@ test("browser_tests") {
       "../browser/media/webrtc/webrtc_browsertest_common.h",
       "../browser/media/webrtc/webrtc_browsertest_perf.cc",
       "../browser/media/webrtc/webrtc_browsertest_perf.h",
-      "../browser/media/webrtc/webrtc_desktop_capture_browsertest.cc",
       "../browser/media/webrtc/webrtc_disable_encryption_flag_browsertest.cc",
       "../browser/media/webrtc/webrtc_getmediadevices_browsertest.cc",
       "../browser/media/webrtc/webrtc_internals_perf_browsertest.cc",
@@ -1628,7 +1626,6 @@ test("browser_tests") {
         "../browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "../browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
         "../browser/ui/webui/chromeos/keyboard_overlay_ui_browsertest.cc",
-        "../browser/ui/webui/chromeos/system_web_dialog_browsertest.cc",
       ]
       sources -= [
         "../../apps/load_and_launch_browsertest.cc",

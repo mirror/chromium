@@ -52,6 +52,7 @@ constexpr char kSource[] = "source";
 constexpr char kGroupTypeUsb[] = "usb-devices";
 
 enum class SiteSettingSource {
+  kAdsBlocked,
   kAdsFilterBlacklist,
   kDefault,
   kDrmDisabled,

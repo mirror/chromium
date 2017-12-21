@@ -140,7 +140,14 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
-  void PreProcessTouchEvent(const blink::WebTouchEvent& event) override;
+  void ProcessKeyboardEvent(const NativeWebKeyboardEvent& event,
+                            const ui::LatencyInfo& latency) override;
+  void ProcessMouseEvent(const blink::WebMouseEvent& event,
+                         const ui::LatencyInfo& latency) override;
+  void ProcessMouseWheelEvent(const blink::WebMouseWheelEvent& event,
+                              const ui::LatencyInfo& latency) override;
+  void ProcessTouchEvent(const blink::WebTouchEvent& event,
+                         const ui::LatencyInfo& latency) override;
   void ProcessGestureEvent(const blink::WebGestureEvent& event,
                            const ui::LatencyInfo& latency) override;
   gfx::PointF TransformPointToRootCoordSpaceF(
@@ -196,6 +203,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
   // Exposed for tests.
+  bool IsChildFrameForTesting() const override;
   viz::SurfaceId SurfaceIdForTesting() const override;
   FrameConnectorDelegate* FrameConnectorForTesting() const {
     return frame_connector_;

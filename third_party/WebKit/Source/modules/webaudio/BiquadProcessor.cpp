@@ -27,6 +27,7 @@
 #include <memory>
 #include "modules/webaudio/BiquadDSPKernel.h"
 #include "platform/audio/AudioUtilities.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 

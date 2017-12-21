@@ -698,12 +698,38 @@ viz::LocalSurfaceId RenderWidgetHostViewChildFrame::GetLocalSurfaceId() const {
   return viz::LocalSurfaceId();
 }
 
-void RenderWidgetHostViewChildFrame::PreProcessTouchEvent(
-    const blink::WebTouchEvent& event) {
+void RenderWidgetHostViewChildFrame::ProcessKeyboardEvent(
+    const NativeWebKeyboardEvent& event,
+    const ui::LatencyInfo& latency) {
+  host_->ForwardKeyboardEventWithLatencyInfo(event, latency);
+}
+
+void RenderWidgetHostViewChildFrame::ProcessMouseEvent(
+    const blink::WebMouseEvent& event,
+    const ui::LatencyInfo& latency) {
+  host_->ForwardMouseEventWithLatencyInfo(event, latency);
+}
+
+void RenderWidgetHostViewChildFrame::ProcessMouseWheelEvent(
+    const blink::WebMouseWheelEvent& event,
+    const ui::LatencyInfo& latency) {
+  if (event.delta_x != 0 || event.delta_y != 0 ||
+      event.phase == blink::WebMouseWheelEvent::kPhaseEnded ||
+      event.phase == blink::WebMouseWheelEvent::kPhaseCancelled ||
+      event.momentum_phase == blink::WebMouseWheelEvent::kPhaseEnded ||
+      event.momentum_phase == blink::WebMouseWheelEvent::kPhaseCancelled)
+    host_->ForwardWheelEventWithLatencyInfo(event, latency);
+}
+
+void RenderWidgetHostViewChildFrame::ProcessTouchEvent(
+    const blink::WebTouchEvent& event,
+    const ui::LatencyInfo& latency) {
   if (event.GetType() == blink::WebInputEvent::kTouchStart &&
       frame_connector_ && !frame_connector_->HasFocus()) {
     frame_connector_->FocusRootView();
   }
+
+  host_->ForwardTouchEventWithLatencyInfo(event, latency);
 }
 
 void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
@@ -731,7 +757,7 @@ void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
     return;
   }
 
-  RenderWidgetHostViewBase::ProcessGestureEvent(event, latency);
+  host_->ForwardGestureEventWithLatencyInfo(event, latency);
 }
 
 gfx::PointF RenderWidgetHostViewChildFrame::TransformPointToRootCoordSpaceF(
@@ -988,6 +1014,10 @@ void RenderWidgetHostViewChildFrame::ClearCompositorSurfaceIfNecessary() {
     return;
   support_->EvictCurrentSurface();
   has_frame_ = false;
+}
+
+bool RenderWidgetHostViewChildFrame::IsChildFrameForTesting() const {
+  return true;
 }
 
 viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {

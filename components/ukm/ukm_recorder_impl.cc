@@ -239,7 +239,10 @@ void UkmRecorderImpl::UpdateSourceURL(SourceId source_id,
     RecordDroppedSource(DroppedDataReason::MAX_HIT);
     return;
   }
-  sources_.emplace(source_id, base::MakeUnique<UkmSource>(source_id, url));
+  std::unique_ptr<UkmSource> source = base::MakeUnique<UkmSource>();
+  source->set_id(source_id);
+  source->set_url(url);
+  sources_.insert(std::make_pair(source_id, std::move(source)));
 }
 
 void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {

@@ -83,13 +83,11 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebFloatRect.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebString.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSettings.h"
-#include "public/web/WebViewClient.h"
 
 namespace blink {
 
@@ -499,15 +497,6 @@ void WebDevToolsAgentImpl::InspectElementAt(
     const WebPoint& point_in_root_frame) {
   if (!session_id)
     return;
-
-  WebPoint point = point_in_root_frame;
-  if (web_local_frame_impl_->ViewImpl() &&
-      web_local_frame_impl_->ViewImpl()->Client()) {
-    WebFloatRect rect(point.x, point.y, 0, 0);
-    web_local_frame_impl_->ViewImpl()->Client()->ConvertWindowToViewport(&rect);
-    point = WebPoint(rect.x, rect.y);
-  }
-
   auto agent_it = overlay_agents_.find(session_id);
   if (agent_it == overlay_agents_.end())
     return;
@@ -518,7 +507,7 @@ void WebDevToolsAgentImpl::InspectElementAt(
   WebMouseEvent dummy_event(WebInputEvent::kMouseDown,
                             WebInputEvent::kNoModifiers,
                             WTF::CurrentTimeTicksInMilliseconds());
-  dummy_event.SetPositionInWidget(point.x, point.y);
+  dummy_event.SetPositionInWidget(point_in_root_frame.x, point_in_root_frame.y);
   IntPoint transformed_point = FlooredIntPoint(
       TransformWebMouseEvent(web_local_frame_impl_->GetFrameView(), dummy_event)
           .PositionInRootFrame());

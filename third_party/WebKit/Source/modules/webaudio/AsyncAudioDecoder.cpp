@@ -35,6 +35,7 @@
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioFileReader.h"
 #include "platform/threading/BackgroundTaskRunner.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
 namespace blink {

@@ -30,10 +30,7 @@
 
 #include "modules/websockets/DocumentWebSocketChannel.h"
 
-#include <memory>
-
 #include "base/location.h"
-#include "base/memory/ptr_util.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
@@ -62,6 +59,7 @@
 #include "platform/network/WebSocketHandshakeRequest.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebSocketHandshakeThrottle.h"
@@ -159,7 +157,7 @@ DocumentWebSocketChannel* DocumentWebSocketChannel::CreateForTesting(
     std::unique_ptr<WebSocketHandshakeThrottle> handshake_throttle) {
   return new DocumentWebSocketChannel(
       ThreadableLoadingContext::Create(*document), client, std::move(location),
-      base::WrapUnique(handle), std::move(handshake_throttle));
+      WTF::WrapUnique(handle), std::move(handshake_throttle));
 }
 
 // static
@@ -692,7 +690,7 @@ void DocumentWebSocketChannel::DidReceiveData(WebSocketHandle* handle,
     }
   } else {
     std::unique_ptr<Vector<char>> binary_data =
-        std::make_unique<Vector<char>>();
+        WTF::WrapUnique(new Vector<char>);
     binary_data->swap(receiving_message_data_);
     client_->DidReceiveBinaryMessage(std::move(binary_data));
   }

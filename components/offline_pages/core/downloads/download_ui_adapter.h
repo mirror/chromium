@@ -84,11 +84,8 @@ class DownloadUIAdapter : public OfflineContentProvider,
   void CancelDownload(const ContentId& id) override;
   void PauseDownload(const ContentId& id) override;
   void ResumeDownload(const ContentId& id, bool has_user_gesture) override;
-  void GetItemById(
-      const ContentId& id,
-      OfflineContentProvider::SingleItemCallback callback) override;
-  void GetAllItems(
-      OfflineContentProvider::MultipleItemCallback callback) override;
+  const OfflineItem* GetItemById(const ContentId& id) override;
+  std::vector<OfflineItem> GetAllItems() override;
   void GetVisualsForItem(const ContentId& id,
                          const VisualsCallback& callback) override{};
   void AddObserver(OfflineContentProvider::Observer* observer) override;

@@ -13,8 +13,10 @@ FramePolicy::FramePolicy(WebSandboxFlags sandbox_flags,
                          const ParsedFeaturePolicy& container_policy)
     : sandbox_flags(sandbox_flags), container_policy(container_policy) {}
 
-FramePolicy::FramePolicy(const FramePolicy& lhs) = default;
+FramePolicy::FramePolicy(const FramePolicy& lhs)
+    : sandbox_flags(lhs.sandbox_flags),
+      container_policy(lhs.container_policy) {}
 
-FramePolicy::~FramePolicy() = default;
+FramePolicy::~FramePolicy() {}
 
 }  // namespace blink

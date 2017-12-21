@@ -6,25 +6,34 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/files/file_path.h"
+#include "base/json/json_file_value_serializer.h"
+#include "base/path_service.h"
 #include "base/syslog_logging.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_diagnosis_runner.h"
+#include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/net/delay_network_call.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/install_tracker.h"
 #include "chrome/browser/extensions/install_tracker_factory.h"
 #include "chrome/browser/extensions/updater/extension_updater.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/crx_file/id_util.h"
 #include "components/session_manager/core/session_manager.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/signin_manager.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
@@ -33,13 +42,28 @@
 #include "extensions/common/manifest_handlers/kiosk_mode_info.h"
 #include "extensions/common/manifest_handlers/offline_enabled_info.h"
 #include "extensions/common/manifest_url_handlers.h"
+#include "google_apis/gaia/gaia_auth_consumer.h"
+#include "google_apis/gaia/gaia_constants.h"
 #include "net/base/load_flags.h"
+#include "net/url_request/url_fetcher.h"
+#include "net/url_request/url_fetcher_delegate.h"
+#include "net/url_request/url_request_context_getter.h"
+#include "net/url_request/url_request_status.h"
+#include "url/gurl.h"
 
+using content::BrowserThread;
 using extensions::Extension;
 
 namespace chromeos {
 
 namespace {
+
+const char kOAuthRefreshToken[] = "refresh_token";
+const char kOAuthClientId[] = "client_id";
+const char kOAuthClientSecret[] = "client_secret";
+
+const base::FilePath::CharType kOAuthFileName[] =
+    FILE_PATH_LITERAL("kiosk_auth");
 
 const int kMaxLaunchAttempt = 5;
 
@@ -52,19 +76,25 @@ StartupAppLauncher::StartupAppLauncher(Profile* profile,
     : profile_(profile),
       app_id_(app_id),
       diagnostic_mode_(diagnostic_mode),
-      delegate_(delegate),
-      kiosk_app_manager_observer_(this),
-      install_observer_(this),
-      weak_ptr_factory_(this) {
+      delegate_(delegate) {
   DCHECK(profile_);
   DCHECK(crx_file::id_util::IdIsValid(app_id_));
-  kiosk_app_manager_observer_.Add(KioskAppManager::Get());
+  KioskAppManager::Get()->AddObserver(this);
 }
 
-StartupAppLauncher::~StartupAppLauncher() = default;
+StartupAppLauncher::~StartupAppLauncher() {
+  KioskAppManager::Get()->RemoveObserver(this);
+
+  // StartupAppLauncher can be deleted at anytime during the launch process
+  // through a user bailout shortcut.
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
+      ->RemoveObserver(this);
+  extensions::InstallTrackerFactory::GetForBrowserContext(profile_)
+      ->RemoveObserver(this);
+}
 
 void StartupAppLauncher::Initialize() {
-  MaybeInitializeNetwork();
+  StartLoadingOAuthFile();
 }
 
 void StartupAppLauncher::ContinueWithNetworkReady() {
@@ -85,6 +115,54 @@ void StartupAppLauncher::ContinueWithNetworkReady() {
   // is ready for sure.
   wait_for_crx_update_ = true;
   KioskAppManager::Get()->UpdateExternalCache();
+}
+
+void StartupAppLauncher::StartLoadingOAuthFile() {
+  delegate_->OnLoadingOAuthFile();
+
+  KioskOAuthParams* auth_params = new KioskOAuthParams();
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::BindOnce(&StartupAppLauncher::LoadOAuthFileAsync, auth_params),
+      base::BindOnce(&StartupAppLauncher::OnOAuthFileLoaded, AsWeakPtr(),
+                     base::Owned(auth_params)));
+}
+
+// static.
+void StartupAppLauncher::LoadOAuthFileAsync(KioskOAuthParams* auth_params) {
+  int error_code = JSONFileValueDeserializer::JSON_NO_ERROR;
+  std::string error_msg;
+  base::FilePath user_data_dir;
+  CHECK(PathService::Get(chrome::DIR_USER_DATA, &user_data_dir));
+  base::FilePath auth_file = user_data_dir.Append(kOAuthFileName);
+  std::unique_ptr<JSONFileValueDeserializer> deserializer(
+      new JSONFileValueDeserializer(user_data_dir.Append(kOAuthFileName)));
+  std::unique_ptr<base::Value> value =
+      deserializer->Deserialize(&error_code, &error_msg);
+  base::DictionaryValue* dict = NULL;
+  if (error_code != JSONFileValueDeserializer::JSON_NO_ERROR ||
+      !value.get() || !value->GetAsDictionary(&dict)) {
+    return;
+  }
+
+  dict->GetString(kOAuthRefreshToken, &auth_params->refresh_token);
+  dict->GetString(kOAuthClientId, &auth_params->client_id);
+  dict->GetString(kOAuthClientSecret, &auth_params->client_secret);
+}
+
+void StartupAppLauncher::OnOAuthFileLoaded(KioskOAuthParams* auth_params) {
+  auth_params_ = *auth_params;
+  // Override chrome client_id and secret that will be used for identity
+  // API token minting.
+  if (!auth_params_.client_id.empty() && !auth_params_.client_secret.empty()) {
+    UserSessionManager::GetInstance()->SetAppModeChromeClientOAuthInfo(
+            auth_params_.client_id,
+            auth_params_.client_secret);
+  }
+
+  // If we are restarting chrome (i.e. on crash), we need to initialize
+  // OAuth2TokenService as well.
+  InitializeTokenService();
 }
 
 void StartupAppLauncher::RestartLauncher() {
@@ -134,6 +212,52 @@ void StartupAppLauncher::MaybeInitializeNetwork() {
     BeginInstall();
 }
 
+void StartupAppLauncher::InitializeTokenService() {
+  delegate_->OnInitializingTokenService();
+
+  ProfileOAuth2TokenService* profile_token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile_);
+  SigninManagerBase* signin_manager =
+      SigninManagerFactory::GetForProfile(profile_);
+  const std::string primary_account_id =
+      signin_manager->GetAuthenticatedAccountId();
+  if (profile_token_service->RefreshTokenIsAvailable(primary_account_id) ||
+      auth_params_.refresh_token.empty()) {
+    MaybeInitializeNetwork();
+  } else {
+    // Pass oauth2 refresh token from the auth file.
+    // TODO(zelidrag): We should probably remove this option after M27.
+    // TODO(fgorski): This can go when we have persistence implemented on PO2TS.
+    // Unless the code is no longer needed.
+    // TODO(rogerta): Now that this CL implements token persistence in PO2TS, is
+    // this code still needed?  See above two TODOs.
+    //
+    // ProfileOAuth2TokenService triggers either OnRefreshTokenAvailable or
+    // OnRefreshTokensLoaded. Given that we want to handle exactly one event,
+    // whichever comes first, both handlers call RemoveObserver on PO2TS.
+    // Handling any of the two events is the only way to resume the execution
+    // and enable Cleanup method to be called, self-invoking a destructor.
+    profile_token_service->AddObserver(this);
+
+    profile_token_service->UpdateCredentials(
+        primary_account_id,
+        auth_params_.refresh_token);
+  }
+}
+
+void StartupAppLauncher::OnRefreshTokenAvailable(
+    const std::string& account_id) {
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
+      ->RemoveObserver(this);
+  MaybeInitializeNetwork();
+}
+
+void StartupAppLauncher::OnRefreshTokensLoaded() {
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
+      ->RemoveObserver(this);
+  MaybeInitializeNetwork();
+}
+
 void StartupAppLauncher::MaybeLaunchApp() {
   SYSLOG(INFO) << "MaybeLaunchApp";
   const Extension* extension = GetPrimaryAppExtension();
@@ -151,15 +275,16 @@ void StartupAppLauncher::MaybeLaunchApp() {
   // If the app is not offline enabled, make sure the network is ready before
   // launching.
   if (offline_enabled || delegate_->IsNetworkReady()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(&StartupAppLauncher::OnReadyToLaunch,
-                                  weak_ptr_factory_.GetWeakPtr()));
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&StartupAppLauncher::OnReadyToLaunch, AsWeakPtr()));
   } else {
     ++launch_attempt_;
     if (launch_attempt_ < kMaxLaunchAttempt) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(&StartupAppLauncher::MaybeInitializeNetwork,
-                                    weak_ptr_factory_.GetWeakPtr()));
+      BrowserThread::PostTask(
+          BrowserThread::UI, FROM_HERE,
+          base::BindOnce(&StartupAppLauncher::MaybeInitializeNetwork,
+                         AsWeakPtr()));
       return;
     }
     OnLaunchFailure(KioskAppLaunchError::UNABLE_TO_LAUNCH);
@@ -188,9 +313,8 @@ void StartupAppLauncher::MaybeCheckExtensionUpdate() {
   // compatible with the new chromeos. See crbug.com/555083.
   extensions::ExtensionUpdater::CheckParams params;
   params.install_immediately = true;
-  params.callback =
-      base::Bind(&StartupAppLauncher::OnExtensionUpdateCheckFinished,
-                 weak_ptr_factory_.GetWeakPtr());
+  params.callback = base::Bind(
+      &StartupAppLauncher::OnExtensionUpdateCheckFinished, AsWeakPtr());
   updater->CheckNow(params);
 }
 
@@ -236,7 +360,9 @@ void StartupAppLauncher::OnFinishCrxInstall(const std::string& extension_id,
     return;
   }
 
-  install_observer_.RemoveAll();
+  extensions::InstallTracker* tracker =
+      extensions::InstallTrackerFactory::GetForBrowserContext(profile_);
+  tracker->RemoveObserver(this);
   if (delegate_->IsShowingNetworkConfigScreen()) {
     SYSLOG(WARNING) << "Showing network config screen";
     return;
@@ -414,8 +540,9 @@ void StartupAppLauncher::BeginInstall() {
           ->IsIdPending(app_id_)) {
     delegate_->OnInstallingApp();
     // Observe the crx installation events.
-    install_observer_.Add(
-        extensions::InstallTrackerFactory::GetForBrowserContext(profile_));
+    extensions::InstallTracker* tracker =
+        extensions::InstallTrackerFactory::GetForBrowserContext(profile_);
+    tracker->AddObserver(this);
     return;
   }
 
@@ -441,7 +568,7 @@ void StartupAppLauncher::MaybeInstallSecondaryApps() {
     DelayNetworkCall(
         base::TimeDelta::FromMilliseconds(kDefaultNetworkRetryDelayMS),
         base::Bind(&StartupAppLauncher::MaybeInstallSecondaryApps,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   AsWeakPtr()));
     return;
   }
 
@@ -452,8 +579,9 @@ void StartupAppLauncher::MaybeInstallSecondaryApps() {
   if (IsAnySecondaryAppPending()) {
     delegate_->OnInstallingApp();
     // Observe the crx installation events.
-    install_observer_.Add(
-        extensions::InstallTrackerFactory::GetForBrowserContext(profile_));
+    extensions::InstallTracker* tracker =
+        extensions::InstallTrackerFactory::GetForBrowserContext(profile_);
+    tracker->AddObserver(this);
     return;
   }
 

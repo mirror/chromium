@@ -17,7 +17,6 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
-#include "chrome/browser/ui/webui/chromeos/internet_detail_dialog.h"
 #include "chromeos/network/network_state_handler.h"
 #include "content/public/browser/web_ui.h"
 #include "ui/base/models/menu_model.h"
@@ -152,8 +151,7 @@ gfx::NativeWindow NetworkDropdown::GetNativeWindow() const {
 }
 
 void NetworkDropdown::OpenButtonOptions() {
-  // Empty string opens the internet detail dialog for the default network.
-  InternetDetailDialog::ShowDialog("");
+  LoginDisplayHost::default_host()->OpenInternetDetailDialog("");
 }
 
 bool NetworkDropdown::ShouldOpenButtonOptions() const {

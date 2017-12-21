@@ -3,10 +3,6 @@
 # found in the LICENSE file.
 
 config("config") {
-  include_dirs = [ "forwarding_headers" ]
-}
-
-config("private_config") {
   include_dirs = [ "src/src" ]
   visibility = [ ":motion_transitioning_objc" ]
 }
@@ -15,7 +11,6 @@ source_set("motion_transitioning_objc") {
   sources = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
-    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionNavigationControllerDelegate.m",
     "src/src/MDMTransitionPresentationController.h",
@@ -33,7 +28,6 @@ source_set("motion_transitioning_objc") {
   public = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
-    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionPresentationController.h",
     "src/src/MDMTransitionViewSnapshotter.h",
@@ -47,7 +41,7 @@ source_set("motion_transitioning_objc") {
   ]
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [
-    ":private_config",
+    ":config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
   ]

@@ -57,6 +57,7 @@ settings.ContentSetting = {
  * @enum {string}
  */
 settings.SiteSettingSource = {
+  ADS_BLOCKED: 'ads-blocked',
   ADS_FILTER_BLACKLIST: 'ads-filter-blacklist',
   DEFAULT: 'default',
   // This source is for the Protected Media Identifier / Protected Content

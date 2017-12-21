@@ -42,8 +42,7 @@ class EventEmitter final : public gin::Wrappable<EventEmitter> {
   // invalidated after this!
   void Fire(v8::Local<v8::Context> context,
             std::vector<v8::Local<v8::Value>>* args,
-            const EventFilteringInfo* filter,
-            JSRunner::ResultCallback callback);
+            const EventFilteringInfo* filter);
 
   // Removes all listeners and marks this object as invalid so that no more
   // are added.
@@ -69,8 +68,7 @@ class EventEmitter final : public gin::Wrappable<EventEmitter> {
   // Dispatches an event asynchronously to listeners.
   void DispatchAsync(v8::Local<v8::Context> context,
                      std::vector<v8::Local<v8::Value>>* args,
-                     const EventFilteringInfo* filter,
-                     JSRunner::ResultCallback callback);
+                     const EventFilteringInfo* filter);
   static void DispatchAsyncHelper(
       const v8::FunctionCallbackInfo<v8::Value>& info);
 

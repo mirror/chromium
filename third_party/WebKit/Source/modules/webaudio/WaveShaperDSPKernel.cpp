@@ -26,9 +26,8 @@
 #include "modules/webaudio/WaveShaperDSPKernel.h"
 
 #include <algorithm>
-#include <memory>
-
 #include "platform/audio/AudioUtilities.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 
 namespace blink {
@@ -41,18 +40,18 @@ WaveShaperDSPKernel::WaveShaperDSPKernel(WaveShaperProcessor* processor)
 
 void WaveShaperDSPKernel::LazyInitializeOversampling() {
   if (!temp_buffer_) {
-    temp_buffer_ = std::make_unique<AudioFloatArray>(
-        AudioUtilities::kRenderQuantumFrames * 2);
-    temp_buffer2_ = std::make_unique<AudioFloatArray>(
-        AudioUtilities::kRenderQuantumFrames * 4);
+    temp_buffer_ = WTF::WrapUnique(
+        new AudioFloatArray(AudioUtilities::kRenderQuantumFrames * 2));
+    temp_buffer2_ = WTF::WrapUnique(
+        new AudioFloatArray(AudioUtilities::kRenderQuantumFrames * 4));
     up_sampler_ =
-        std::make_unique<UpSampler>(AudioUtilities::kRenderQuantumFrames);
-    down_sampler_ =
-        std::make_unique<DownSampler>(AudioUtilities::kRenderQuantumFrames * 2);
-    up_sampler2_ =
-        std::make_unique<UpSampler>(AudioUtilities::kRenderQuantumFrames * 2);
-    down_sampler2_ =
-        std::make_unique<DownSampler>(AudioUtilities::kRenderQuantumFrames * 4);
+        WTF::WrapUnique(new UpSampler(AudioUtilities::kRenderQuantumFrames));
+    down_sampler_ = WTF::WrapUnique(
+        new DownSampler(AudioUtilities::kRenderQuantumFrames * 2));
+    up_sampler2_ = WTF::WrapUnique(
+        new UpSampler(AudioUtilities::kRenderQuantumFrames * 2));
+    down_sampler2_ = WTF::WrapUnique(
+        new DownSampler(AudioUtilities::kRenderQuantumFrames * 4));
   }
 }
 

@@ -5,7 +5,8 @@
 #ifndef NET_QUIC_CORE_QUIC_SERVER_ID_H_
 #define NET_QUIC_CORE_QUIC_SERVER_ID_H_
 
-#include <cstdint>
+#include <stdint.h>
+
 #include <string>
 
 #include "net/base/host_port_pair.h"

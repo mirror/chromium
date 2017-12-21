@@ -4,9 +4,6 @@
 
 #include "components/offline_items_collection/core/test_support/mock_offline_content_provider.h"
 
-#include "base/bind.h"
-#include "base/threading/thread_task_runner_handle.h"
-
 namespace offline_items_collection {
 
 MockOfflineContentProvider::MockObserver::MockObserver() = default;
@@ -18,10 +15,6 @@ MockOfflineContentProvider::~MockOfflineContentProvider() = default;
 
 bool MockOfflineContentProvider::HasObserver(Observer* observer) {
   return observers_.HasObserver(observer);
-}
-
-void MockOfflineContentProvider::SetItems(const OfflineItemList& items) {
-  items_ = items;
 }
 
 void MockOfflineContentProvider::NotifyOnItemsAvailable() {
@@ -48,25 +41,6 @@ void MockOfflineContentProvider::NotifyOnItemUpdated(const OfflineItem& item) {
 
 bool MockOfflineContentProvider::AreItemsAvailable() {
   return items_available_;
-}
-
-void MockOfflineContentProvider::GetAllItems(MultipleItemCallback callback) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), items_));
-}
-
-void MockOfflineContentProvider::GetItemById(const ContentId& id,
-                                             SingleItemCallback callback) {
-  base::Optional<OfflineItem> result;
-  for (auto item : items_) {
-    if (item.id == id) {
-      result = item;
-      break;
-    }
-  }
-
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
 void MockOfflineContentProvider::AddObserver(Observer* observer) {

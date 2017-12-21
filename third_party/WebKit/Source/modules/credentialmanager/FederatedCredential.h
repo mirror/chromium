@@ -5,16 +5,17 @@
 #ifndef FederatedCredential_h
 #define FederatedCredential_h
 
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "modules/credentialmanager/Credential.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
-#include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {
 
 class FederatedCredentialInit;
+class WebFederatedCredential;
 
 class MODULES_EXPORT FederatedCredential final : public Credential {
   DEFINE_WRAPPERTYPEINFO();
@@ -22,41 +23,23 @@ class MODULES_EXPORT FederatedCredential final : public Credential {
  public:
   static FederatedCredential* Create(const FederatedCredentialInit&,
                                      ExceptionState&);
-  static FederatedCredential* Create(
-      const String& id,
-      scoped_refptr<const SecurityOrigin> provider,
-      const String& name,
-      const KURL& icon_url);
-
-  scoped_refptr<const SecurityOrigin> GetProviderAsOrigin() const {
-    return provider_;
-  }
-
-  // Credential:
-  bool IsFederatedCredential() const override;
+  static FederatedCredential* Create(WebFederatedCredential*);
 
   // FederatedCredential.idl
-  String provider() const {
-    CHECK(provider_);
-    return provider_->ToString();
-  }
-  const String& name() const { return name_; }
-  const KURL& iconURL() const { return icon_url_; }
-  const String& protocol() const {
-    // TODO(mkwst): This is a stub, as we don't yet have any support on the
-    // Chromium-side.
-    return g_empty_string;
-  }
+  const String provider() const;
+  const String& name() const;
+  const KURL& iconURL() const;
+
+  // TODO(mkwst): This is a stub, as we don't yet have any support on the
+  // Chromium-side.
+  const String& protocol() const { return g_empty_string; }
 
  private:
+  FederatedCredential(WebFederatedCredential*);
   FederatedCredential(const String& id,
-                      scoped_refptr<const SecurityOrigin> provider,
+                      const KURL& provider,
                       const String& name,
-                      const KURL& icon_url);
-
-  const scoped_refptr<const SecurityOrigin> provider_;
-  const String name_;
-  const KURL icon_url_;
+                      const KURL& icon);
 };
 
 }  // namespace blink

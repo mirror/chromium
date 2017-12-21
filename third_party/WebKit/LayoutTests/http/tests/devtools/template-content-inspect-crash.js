@@ -8,7 +8,7 @@
   await TestRunner.loadModule('console_test_runner');
   await TestRunner.showPanel('elements');
   await TestRunner.loadHTML(`
-      <p id="description"></p>
+      <p id="description">This test verifies that template's content DocumentFragment is  accessible from DevTools.</p>
 
       <template id="tpl">
           <div>Hello!</div>

@@ -13,6 +13,7 @@
 #include "modules/presentation/PresentationAvailabilityObserver.h"
 #include "modules/presentation/PresentationAvailabilityState.h"
 #include "modules/presentation/PresentationConnection.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"

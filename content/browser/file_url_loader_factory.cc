@@ -101,7 +101,6 @@ class FileURLDirectoryLoader
 
   // mojom::URLLoader:
   void FollowRedirect() override {}
-  void ProceedWithResponse() override { NOTREACHED(); }
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override {}
   void PauseReadingBodyFromNet() override {}
@@ -301,7 +300,6 @@ class FileURLLoader : public mojom::URLLoader {
 
   // mojom::URLLoader:
   void FollowRedirect() override {}
-  void ProceedWithResponse() override {}
   void SetPriority(net::RequestPriority priority,
                    int32_t intra_priority_value) override {}
   void PauseReadingBodyFromNet() override {}

@@ -121,7 +121,6 @@ MEDIA_EXPORT extern const base::Feature kNewAudioRenderingMixingStrategy;
 MEDIA_EXPORT extern const base::Feature kNewRemotePlaybackPipeline;
 MEDIA_EXPORT extern const base::Feature kOverflowIconsForMediaControls;
 MEDIA_EXPORT extern const base::Feature kOverlayFullscreenVideo;
-MEDIA_EXPORT extern const base::Feature kPictureInPicture;
 MEDIA_EXPORT extern const base::Feature kPreloadMediaEngagementData;
 MEDIA_EXPORT extern const base::Feature kResumeBackgroundVideo;
 MEDIA_EXPORT extern const base::Feature kSpecCompliantCanPlayThrough;

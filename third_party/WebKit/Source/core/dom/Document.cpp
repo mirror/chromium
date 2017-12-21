@@ -88,7 +88,9 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/NodeWithIndex.h"
 #include "core/dom/NthIndexCache.h"
+#include "core/dom/Policy.h"
 #include "core/dom/ProcessingInstruction.h"
+#include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptedAnimationController.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/StaticNodeList.h"
@@ -204,10 +206,8 @@
 #include "core/page/scrolling/SnapCoordinator.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
-#include "core/policy/DocumentPolicy.h"
 #include "core/probe/CoreProbes.h"
 #include "core/resize_observer/ResizeObserverController.h"
-#include "core/script/ScriptRunner.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGScriptElement.h"
 #include "core/svg/SVGTitleElement.h"
@@ -608,7 +608,6 @@ Document::Document(const DocumentInit& initializer,
       visually_ordered_(false),
       ready_state_(kComplete),
       parsing_state_(kFinishedParsing),
-      goto_anchor_needed_after_stylesheets_load_(false),
       contains_validity_style_rules_(false),
       contains_plugins_(false),
       ignore_destructive_write_count_(0),
@@ -2387,9 +2386,6 @@ void Document::UpdateStyleAndLayout() {
   if (frame_view->NeedsLayout())
     frame_view->UpdateLayout();
 
-  if (goto_anchor_needed_after_stylesheets_load_)
-    frame_view->ProcessUrlFragment(url_);
-
   if (Lifecycle().GetState() < DocumentLifecycle::kLayoutClean)
     Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
@@ -3269,12 +3265,6 @@ void Document::ImplicitClose() {
         (!GetLayoutViewItem().FirstChild() ||
          GetLayoutViewItem().NeedsLayout()))
       View()->UpdateLayout();
-
-    // TODO(bokan): This is a temporary fix to https://crbug.com/788486.
-    // There's some better cleanups that should be done to follow-up:
-    // https://crbug.com/795381.
-    if (View() && goto_anchor_needed_after_stylesheets_load_)
-      View()->ProcessUrlFragment(url_);
   }
 
   load_event_progress_ = kLoadEventCompleted;
@@ -7219,9 +7209,7 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
 }
 
 Policy* Document::policy() {
-  if (!policy_)
-    policy_ = new DocumentPolicy(this);
-  return policy_.Get();
+  return Policy::Create(this);
 }
 
 void Document::Trace(blink::Visitor* visitor) {
@@ -7280,7 +7268,6 @@ void Document::Trace(blink::Visitor* visitor) {
   visitor->Trace(resize_observer_controller_);
   visitor->Trace(property_registry_);
   visitor->Trace(network_state_observer_);
-  visitor->Trace(policy_);
   Supplementable<Document>::Trace(visitor);
   TreeScope::Trace(visitor);
   ContainerNode::Trace(visitor);

@@ -10,6 +10,8 @@
 #include "chrome/services/wifi_util_win/wifi_credentials_getter.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
+namespace chrome {
+
 namespace {
 
 void OnWifiCredentialsGetterRequest(
@@ -44,3 +46,5 @@ void WifiUtilWinService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
+
+}  //  namespace chrome

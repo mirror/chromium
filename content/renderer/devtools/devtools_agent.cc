@@ -260,7 +260,10 @@ void DevToolsAgent::DispatchOnInspectorBackend(int session_id,
 }
 
 void DevToolsAgent::InspectElement(int session_id, const gfx::Point& point) {
-  GetWebAgent()->InspectElementAt(session_id, WebPoint(point.x(), point.y()));
+  blink::WebFloatRect point_rect(point.x(), point.y(), 0, 0);
+  frame_->GetRenderWidget()->ConvertWindowToViewport(&point_rect);
+  GetWebAgent()->InspectElementAt(session_id,
+                                  WebPoint(point_rect.x, point_rect.y));
 }
 
 void DevToolsAgent::OnRequestNewWindowCompleted(int session_id, bool success) {

@@ -77,6 +77,7 @@
 #include "components/error_page/common/error.h"
 #include "components/error_page/common/localized_error.h"
 #include "components/network_hints/renderer/prescient_networking_dispatcher.h"
+#include "components/password_manager/content/renderer/credential_manager_client.h"
 #include "components/pdf/renderer/pepper_pdf_host.h"
 #include "components/safe_browsing/renderer/renderer_url_loader_throttle.h"
 #include "components/safe_browsing/renderer/threat_dom_details.h"
@@ -626,7 +627,15 @@ void ChromeContentRendererClient::RenderFrameCreated(
 #endif  // !defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  new SpellCheckProvider(render_frame, spellcheck_.get(), this);
+  SpellCheckProvider* spell_check_provider =
+      new SpellCheckProvider(render_frame, spellcheck_.get(), this);
+  // TODO(xiaochengh): Design better way to sync between Chrome-side and
+  // Blink-side spellcheck enabled states.  See crbug.com/710097.
+  //
+  // TODO(alexmos): Do this for all frames so that this works properly for
+  // OOPIFs.  See https://crbug.com/789273.
+  if (render_frame->IsMainFrame())
+    spell_check_provider->EnableSpellcheck(spellcheck_->IsSpellcheckEnabled());
 
 #if BUILDFLAG(HAS_SPELLCHECK_PANEL)
   new SpellCheckPanel(render_frame, registry, this);
@@ -642,6 +651,8 @@ void ChromeContentRendererClient::RenderViewCreated(
   new prerender::PrerendererClient(render_view);
 
   new ChromeRenderViewObserver(render_view, web_cache_impl_.get());
+
+  new password_manager::CredentialManagerClient(render_view);
 }
 
 SkBitmap* ChromeContentRendererClient::GetSadPluginBitmap() {

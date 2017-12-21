@@ -428,12 +428,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void DeleteItemViewAtIndex(int index);
 
   // Returns true if |point| lies within the bounds of this grid view plus a
-  // buffer area surrounding it that can trigger drop target change.
+  // buffer area surrounding it.
   bool IsPointWithinDragBuffer(const gfx::Point& point) const;
-
-  // Returns true if |point| lies within the bounds of this grid view plus a
-  // buffer area surrounding it that can trigger page flip.
-  bool IsPointWithinPageFlipBuffer(const gfx::Point& point) const;
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;

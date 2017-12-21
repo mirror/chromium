@@ -1981,8 +1981,7 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests the tapping on the primary button of sign-in promo view in a warm
 // state makes the confirmaiton sheet appear, and the promo still appears after
 // dismissing the sheet.
-// TODO(crbug.com/796618): Reenable this test.
-- (void)DISABLED_testSignInPromoWithWarmStateUsingPrimaryButton {
+- (void)testSignInPromoWithWarmStateUsingPrimaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
 
@@ -2026,8 +2025,7 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
 // Tests the tapping on the secondary button of sign-in promo view in a warm
 // state makes the sign-in sheet appear, and the promo still appears after
 // dismissing the sheet.
-// TODO(crbug.com/796618): Reenable this test.
-- (void)DISABLED_testSignInPromoWithWarmStateUsingSecondaryButton {
+- (void)testSignInPromoWithWarmStateUsingSecondaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndEnableFeature(kBookmarkNewGeneration);
 

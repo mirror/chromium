@@ -25,7 +25,8 @@
 namespace grpc_support {
 
 const char kTestServerDomain[] = "example.com";
-// This must match the certificate used (quic-chain.pem and quic-leaf-cert.key).
+// This must match the certificate used (quic_test.example.com.crt and
+// quic_test.example.com.key.pkcs8).
 const char kTestServerHost[] = "test.example.com";
 const char kTestServerUrl[] = "https://test.example.com/hello.txt";
 
@@ -83,7 +84,7 @@ void StartQuicServerOnServerThread(const base::FilePath& test_files_root,
   std::unique_ptr<net::ProofSourceChromium> proof_source(
       new net::ProofSourceChromium());
   CHECK(proof_source->Initialize(directory.AppendASCII("quic-chain.pem"),
-                                 directory.AppendASCII("quic-leaf-cert.key"),
+                                 directory.AppendASCII("quic-cert.key"),
                                  base::FilePath()));
   SetupQuicHttpResponseCache();
 

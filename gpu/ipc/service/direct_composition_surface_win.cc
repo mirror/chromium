@@ -9,7 +9,6 @@
 #include <dxgi1_6.h>
 
 #include "base/containers/circular_deque.h"
-#include "base/debug/alias.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
@@ -110,13 +109,6 @@ bool HardwareSupportsOverlays() {
   if (!d3d11_device) {
     DLOG(ERROR) << "Failing to create overlay swapchain because couldn't "
                    "retrieve D3D11 device from ANGLE.";
-    return false;
-  }
-
-  Microsoft::WRL::ComPtr<ID3D11VideoDevice> video_device;
-  if (FAILED(d3d11_device.CopyTo(video_device.GetAddressOf()))) {
-    DLOG(ERROR) << "Failing to create overlay swapchain because couldn't "
-                   "retrieve video device from D3D11 device.";
     return false;
   }
 
@@ -312,21 +304,16 @@ class DCLayerTree::SwapChainPresenter {
 };
 
 bool DCLayerTree::Initialize(HWND window) {
-  HRESULT hr = d3d11_device_.CopyTo(video_device_.GetAddressOf());
-  if (FAILED(hr))
-    return false;
-
+  d3d11_device_.CopyTo(video_device_.GetAddressOf());
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
   d3d11_device_->GetImmediateContext(context.GetAddressOf());
-  hr = context.CopyTo(video_context_.GetAddressOf());
-  if (FAILED(hr))
-    return false;
+  context.CopyTo(video_context_.GetAddressOf());
 
   Microsoft::WRL::ComPtr<IDCompositionDesktopDevice> desktop_device;
   dcomp_device_.CopyTo(desktop_device.GetAddressOf());
 
-  hr = desktop_device->CreateTargetForHwnd(window, TRUE,
-                                           dcomp_target_.GetAddressOf());
+  HRESULT hr = desktop_device->CreateTargetForHwnd(
+      window, TRUE, dcomp_target_.GetAddressOf());
   if (FAILED(hr))
     return false;
 
@@ -383,12 +370,10 @@ DCLayerTree::SwapChainPresenter::SwapChainPresenter(
     DCLayerTree* surface,
     Microsoft::WRL::ComPtr<ID3D11Device> d3d11_device)
     : surface_(surface), d3d11_device_(d3d11_device) {
-  HRESULT hr = d3d11_device_.CopyTo(video_device_.GetAddressOf());
-  CHECK(SUCCEEDED(hr));
+  d3d11_device_.CopyTo(video_device_.GetAddressOf());
   Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
   d3d11_device_->GetImmediateContext(context.GetAddressOf());
-  hr = context.CopyTo(video_context_.GetAddressOf());
-  CHECK(SUCCEEDED(hr));
+  context.CopyTo(video_context_.GetAddressOf());
   HMODULE dcomp = ::GetModuleHandleA("dcomp.dll");
   CHECK(dcomp);
   create_surface_handle_function_ =
@@ -818,11 +803,8 @@ void DCLayerTree::SwapChainPresenter::ReallocateSwapChain(bool yuy2) {
       DXGI_SWAP_CHAIN_FLAG_YUV_VIDEO | DXGI_SWAP_CHAIN_FLAG_FULLSCREEN_VIDEO;
 
   HANDLE handle;
-  HRESULT hr = create_surface_handle_function_(COMPOSITIONOBJECT_ALL_ACCESS,
-                                               nullptr, &handle);
-  // TODO(crbug/792806): Remove Alias and CHECK after issue is fixed.
-  base::debug::Alias(&hr);
-  CHECK(SUCCEEDED(hr));
+  create_surface_handle_function_(COMPOSITIONOBJECT_ALL_ACCESS, nullptr,
+                                  &handle);
   swap_chain_handle_.Set(handle);
 
   if (is_yuy2_swapchain_ != yuy2) {
@@ -836,6 +818,7 @@ void DCLayerTree::SwapChainPresenter::ReallocateSwapChain(bool yuy2) {
   is_yuy2_swapchain_ = false;
   // The composition surface handle isn't actually used, but
   // CreateSwapChainForComposition can't create YUY2 swapchains.
+  HRESULT hr = E_FAIL;
   if (yuy2) {
     hr = media_factory->CreateSwapChainForCompositionSurfaceHandle(
         d3d11_device_.Get(), swap_chain_handle_.Get(), &desc, nullptr,

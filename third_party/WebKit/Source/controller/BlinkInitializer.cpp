@@ -30,8 +30,6 @@
 
 #include "controller/BlinkInitializer.h"
 
-#include <memory>
-
 #include "bindings/core/v8/V8Initializer.h"
 #include "bindings/modules/v8/V8ContextSnapshotExternalReferences.h"
 #include "build/build_config.h"
@@ -45,6 +43,7 @@
 #include "platform/heap/Heap.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/WTF.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/Platform.h"
@@ -71,7 +70,7 @@ static WebThread::TaskObserver* g_end_of_task_runner = nullptr;
 
 static BlinkInitializer& GetBlinkInitializer() {
   DEFINE_STATIC_LOCAL(std::unique_ptr<BlinkInitializer>, initializer,
-                      (std::make_unique<BlinkInitializer>()));
+                      (WTF::WrapUnique(new BlinkInitializer)));
   return *initializer;
 }
 

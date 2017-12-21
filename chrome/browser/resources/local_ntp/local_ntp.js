@@ -169,7 +169,9 @@ var WHITE_BACKGROUND_COLORS = ['rgba(255,255,255,1)', 'rgba(0,0,0,0)'];
  * @enum {number}
  * @const
  */
-var KEYCODE = {ENTER: 13, SPACE: 32};
+var KEYCODE = {
+  ENTER: 13
+};
 
 
 /**
@@ -580,12 +582,6 @@ function handlePostMessage(event) {
  * section, and Google-specific elements for a Google-provided page.
  */
 function init() {
-  // If an accessibility tool is in use, increase the time for which the
-  // "tile was blacklisted" notification is shown.
-  if (configData.isAccessibleBrowser) {
-    document.body.style.setProperty('--mv-notice-time', '30s');
-  }
-
   // Hide notifications after fade out, so we can't focus on links via keyboard.
   $(IDS.NOTIFICATION).addEventListener('transitionend', hideNotification);
 
@@ -595,13 +591,11 @@ function init() {
   var undoLink = $(IDS.UNDO_LINK);
   undoLink.addEventListener('click', onUndo);
   registerKeyHandler(undoLink, KEYCODE.ENTER, onUndo);
-  registerKeyHandler(undoLink, KEYCODE.SPACE, onUndo);
   undoLink.textContent = configData.translatedStrings.undoThumbnailRemove;
 
   var restoreAllLink = $(IDS.RESTORE_ALL_LINK);
   restoreAllLink.addEventListener('click', onRestoreAll);
   registerKeyHandler(restoreAllLink, KEYCODE.ENTER, onRestoreAll);
-  registerKeyHandler(restoreAllLink, KEYCODE.SPACE, onRestoreAll);
   restoreAllLink.textContent =
       configData.translatedStrings.restoreThumbnailsShort;
 

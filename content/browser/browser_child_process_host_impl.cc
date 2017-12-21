@@ -363,12 +363,8 @@ void BrowserChildProcessHostImpl::OnChannelError() {
 
 void BrowserChildProcessHostImpl::OnBadMessageReceived(
     const IPC::Message& message) {
-  std::string log_message = "Bad message received of type: ";
-  if (message.IsValid()) {
-    log_message += std::to_string(message.type());
-  } else {
-    log_message += "unknown";
-  }
+  std::string log_message =
+      base::StringPrintf("Bad message received of type: %u", message.type());
   TerminateOnBadMessageReceived(log_message);
 }
 

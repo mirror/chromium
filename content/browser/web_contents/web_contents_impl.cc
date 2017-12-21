@@ -109,6 +109,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents_binding_set.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "content/public/browser/web_contents_unresponsive_state.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
@@ -2832,17 +2833,13 @@ bool WebContentsImpl::IsWidgetForMainFrame(
 
 BrowserAccessibilityManager*
     WebContentsImpl::GetRootBrowserAccessibilityManager() {
-  RenderFrameHostImpl* rfh = static_cast<RenderFrameHostImpl*>(
-      ShowingInterstitialPage() ? GetInterstitialPage()->GetMainFrame()
-                                : GetMainFrame());
+  RenderFrameHostImpl* rfh = GetMainFrame();
   return rfh ? rfh->browser_accessibility_manager() : nullptr;
 }
 
 BrowserAccessibilityManager*
     WebContentsImpl::GetOrCreateRootBrowserAccessibilityManager() {
-  RenderFrameHostImpl* rfh = static_cast<RenderFrameHostImpl*>(
-      ShowingInterstitialPage() ? GetInterstitialPage()->GetMainFrame()
-                                : GetMainFrame());
+  RenderFrameHostImpl* rfh = GetMainFrame();
   return rfh ? rfh->GetOrCreateBrowserAccessibilityManager() : nullptr;
 }
 
@@ -3007,27 +3004,6 @@ void WebContentsImpl::AttachInterstitialPage(
       ->GetRenderWidgetHost()
       ->SetImportance(GetMainFrame()->GetRenderWidgetHost()->importance());
 #endif
-
-  if (accessibility_mode_.has_mode(ui::AXMode::kNativeAPIs)) {
-    // Make sure that the main page's accessibility tree is hidden and the
-    // interstitial gets focus.
-    RenderFrameHostImpl* rfh =
-        static_cast<RenderFrameHostImpl*>(GetMainFrame());
-    if (rfh) {
-      BrowserAccessibilityManager* accessibility_manager =
-          rfh->browser_accessibility_manager();
-      if (accessibility_manager)
-        accessibility_manager->set_hidden_by_interstitial_page(true);
-    }
-    rfh = static_cast<RenderFrameHostImpl*>(
-        GetInterstitialPage()->GetMainFrame());
-    if (rfh) {
-      BrowserAccessibilityManager* accessibility_manager =
-          rfh->GetOrCreateBrowserAccessibilityManager();
-      if (accessibility_manager)
-        accessibility_manager->OnWindowFocused();
-    }
-  }
 }
 
 void WebContentsImpl::DidProceedOnInterstitial() {
@@ -3044,16 +3020,6 @@ void WebContentsImpl::DetachInterstitialPage(bool has_focus) {
       ShowingInterstitialPage() && interstitial_page_->pause_throbber();
   if (ShowingInterstitialPage())
     interstitial_page_ = nullptr;
-
-  // Make sure that the main page's accessibility tree is no longer
-  // suppressed.
-  RenderFrameHostImpl* rfh = GetMainFrame();
-  if (rfh) {
-    BrowserAccessibilityManager* accessibility_manager =
-        rfh->browser_accessibility_manager();
-    if (accessibility_manager)
-      accessibility_manager->set_hidden_by_interstitial_page(false);
-  }
 
   // If the focus was on the interstitial, let's keep it to the page.
   // (Note that in unit-tests the RVH may not have a view).
@@ -5470,8 +5436,15 @@ void WebContentsImpl::RendererUnresponsive(
   if (!GetRenderViewHost() || !GetRenderViewHost()->IsRenderViewLive())
     return;
 
-  if (delegate_)
-    delegate_->RendererUnresponsive(this);
+  if (delegate_) {
+    WebContentsUnresponsiveState unresponsive_state;
+    unresponsive_state.outstanding_ack_count =
+        render_widget_host->in_flight_event_count();
+    unresponsive_state.outstanding_event_type =
+        render_widget_host->hang_monitor_event_type();
+    unresponsive_state.last_event_type = render_widget_host->last_event_type();
+    delegate_->RendererUnresponsive(this, unresponsive_state);
+  }
 }
 
 void WebContentsImpl::RendererResponsive(

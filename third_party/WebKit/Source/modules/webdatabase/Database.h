@@ -55,12 +55,12 @@ class Database final : public ScriptWrappable {
 
  public:
   virtual ~Database();
-  void Trace(blink::Visitor*) override;
+  void Trace(blink::Visitor*);
+  void TraceWrappers(const ScriptWrappableVisitor*) const;
 
   bool OpenAndVerifyVersion(bool set_version_in_new_database,
                             DatabaseError&,
-                            String& error_message,
-                            V8DatabaseCallback* creation_callback);
+                            String& error_message);
   void Close();
 
   SQLTransactionBackend* RunTransaction(SQLTransaction*,
@@ -129,11 +129,12 @@ class Database final : public ScriptWrappable {
            const String& name,
            const String& expected_version,
            const String& display_name,
-           unsigned estimated_size);
+           unsigned estimated_size,
+           V8DatabaseCallback* creation_callback);
   bool PerformOpenAndVerify(bool set_version_in_new_database,
                             DatabaseError&,
                             String& error_message);
-  void RunCreationCallback(V8DatabaseCallback* creation_callback);
+  void RunCreationCallback();
 
   void ScheduleTransaction();
 
@@ -199,6 +200,7 @@ class Database final : public ScriptWrappable {
   SQLiteDatabase sqlite_database_;
 
   Member<DatabaseAuthorizer> database_authorizer_;
+  TraceWrapperMember<V8DatabaseCallback> creation_callback_;
   Deque<CrossThreadPersistent<SQLTransactionBackend>> transaction_queue_;
   Mutex transaction_in_progress_mutex_;
   bool transaction_in_progress_;

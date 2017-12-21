@@ -7,6 +7,10 @@
   await TestRunner.loadModule('elements_test_runner');
   await TestRunner.showPanel('elements');
   await TestRunner.loadHTML(`
+      <p>
+      This test checks that style sheets hosted inside shadow roots
+      could be inspected.
+      </p>
       <div id="host"></div>
       <template id="tmpl">
           <style> .red { color: red; } </style>

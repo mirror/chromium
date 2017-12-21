@@ -22,7 +22,7 @@
 #include "net/base/net_errors.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/socket.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -185,8 +185,7 @@ TEST_F(CastTransportTest, TestFullWriteAsync) {
   EXPECT_CALL(write_handler, Complete(net::OK));
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   socket_cbs.Pop(serialized_message.size());
   RunPendingTasks();
@@ -220,8 +219,7 @@ TEST_F(CastTransportTest, TestPartialWritesAsync) {
 
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   EXPECT_EQ(serialized_message, output);
   socket_cbs.Pop(1);
@@ -245,8 +243,7 @@ TEST_F(CastTransportTest, TestWriteFailureAsync) {
   EXPECT_CALL(*delegate_, OnError(ChannelError::CAST_SOCKET_ERROR));
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   socket_cbs.Pop(net::ERR_CONNECTION_RESET);
   RunPendingTasks();
@@ -270,8 +267,7 @@ TEST_F(CastTransportTest, TestFullWriteSync) {
   EXPECT_CALL(write_handler, Complete(net::OK));
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   EXPECT_EQ(serialized_message, output);
 }
@@ -297,8 +293,7 @@ TEST_F(CastTransportTest, TestPartialWritesSync) {
   EXPECT_CALL(write_handler, Complete(net::OK));
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   EXPECT_EQ(serialized_message.substr(1, serialized_message.size() - 1),
             output);
@@ -312,8 +307,7 @@ TEST_F(CastTransportTest, TestWriteFailureSync) {
   EXPECT_CALL(write_handler, Complete(net::ERR_FAILED));
   transport_->SendMessage(
       message,
-      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)),
-      TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&CompleteHandler::Complete, base::Unretained(&write_handler)));
   RunPendingTasks();
   EXPECT_EQ(ChannelEvent::SOCKET_WRITE,
             logger_->GetLastError(kChannelId).channel_event);

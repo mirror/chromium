@@ -20,6 +20,7 @@ enum CommandBufferNamespace {
 struct SyncToken {
   bool verified_flush;
   CommandBufferNamespace namespace_id;
+  int32 extra_data_field;
   uint64 command_buffer_id;
   uint64 release_count;
 };

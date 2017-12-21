@@ -88,6 +88,10 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // currently attached to, if any.
   void Detach();
 
+  // Notify the plugin about a compositor commit so that frame ACKs could be
+  // sent, if needed.
+  void DidCommitCompositorFrame();
+
   void WasResized();
 
   // Returns whether a message should be forwarded to BrowserPlugin.
@@ -273,9 +277,6 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 #endif
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-
-  // Pointer to the RenderWidget that embeds this plugin.
-  RenderWidget* embedding_render_widget_ = nullptr;
 
   // Weak factory used in v8 |MakeWeak| callback, since the v8 callback might
   // get called after BrowserPlugin has been destroyed.

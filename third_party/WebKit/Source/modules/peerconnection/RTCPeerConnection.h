@@ -216,7 +216,6 @@ class MODULES_EXPORT RTCPeerConnection final
 
   // For testing; exported to testing/InternalWebRTCPeerConnection
   static int PeerConnectionCount();
-  static int PeerConnectionCountLimit();
 
   virtual void Trace(blink::Visitor*);
 

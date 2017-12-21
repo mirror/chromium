@@ -71,9 +71,6 @@ enum {
   kMinAudioBufferSize = 256,
   kMaxAudioBufferSize = 8192,
 #endif
-
-  // Maximum buffer size supported by Web Audio.
-  kMaxWebAudioBufferSize = 8192,
 };
 
 }  // namespace limits

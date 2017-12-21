@@ -15,7 +15,8 @@ class IdentityManager;
 class Profile;
 
 // Singleton that owns all IdentityManager instances and associates them with
-// Profiles.
+// Profiles. Listens for the Profile's destruction notification and cleans up
+// the associated IdentityManager.
 class IdentityManagerFactory : public BrowserContextKeyedServiceFactory {
  public:
   static identity::IdentityManager* GetForProfile(Profile* profile);

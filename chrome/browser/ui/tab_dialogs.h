@@ -16,6 +16,7 @@ class Profile;
 
 namespace content {
 class WebContents;
+struct WebContentsUnresponsiveState;
 }
 
 namespace ui {
@@ -42,7 +43,8 @@ class TabDialogs : public base::SupportsUserData::Data {
   virtual void ShowCollectedCookies() = 0;
 
   // Shows or hides the hung renderer dialog.
-  virtual void ShowHungRendererDialog() = 0;
+  virtual void ShowHungRendererDialog(
+      const content::WebContentsUnresponsiveState& unresponsive_state) = 0;
   virtual void HideHungRendererDialog() = 0;
   virtual bool IsShowingHungRendererDialog() = 0;
 

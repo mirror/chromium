@@ -259,10 +259,6 @@ void ChannelMojo::OnMessageReceived(const Message& message) {
     listener_->OnBadMessageReceived(message);
 }
 
-void ChannelMojo::OnBrokenDataReceived() {
-  listener_->OnBadMessageReceived(Message());
-}
-
 // static
 MojoResult ChannelMojo::ReadFromMessageAttachmentSet(
     Message* message,

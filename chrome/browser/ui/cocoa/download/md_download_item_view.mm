@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #import "chrome/browser/ui/cocoa/download/md_download_item_view.h"
-#import "chrome/browser/ui/cocoa/download/md_download_item_view_testing.h"
 
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/app/vector_icons/vector_icons.h"
@@ -631,18 +630,6 @@ NSTextField* MakeLabel(
   RecordDownloadShelfDragEvent(operation == NSDragOperationNone
                                    ? DownloadShelfDragEvent::CANCELED
                                    : DownloadShelfDragEvent::DROPPED);
-}
-
-@end
-
-@implementation MDDownloadItemView (Testing)
-
-- (NSButton*)primaryButton {
-  return button_;
-}
-
-- (NSButton*)menuButton {
-  return menuButton_;
 }
 
 @end

@@ -41,7 +41,6 @@ std::unique_ptr<TetherComponent> TetherComponentImpl::Factory::NewInstance(
     cryptauth::CryptAuthService* cryptauth_service,
     TetherHostFetcher* tether_host_fetcher,
     NotificationPresenter* notification_presenter,
-    GmsCoreNotificationsStateTrackerImpl* gms_core_notifications_state_tracker,
     PrefService* pref_service,
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
@@ -53,7 +52,7 @@ std::unique_ptr<TetherComponent> TetherComponentImpl::Factory::NewInstance(
 
   return factory_instance_->BuildInstance(
       cryptauth_service, tether_host_fetcher, notification_presenter,
-      gms_core_notifications_state_tracker, pref_service, network_state_handler,
+      pref_service, network_state_handler,
       managed_network_configuration_handler, network_connect,
       network_connection_handler, adapter);
 }
@@ -76,7 +75,6 @@ std::unique_ptr<TetherComponent> TetherComponentImpl::Factory::BuildInstance(
     cryptauth::CryptAuthService* cryptauth_service,
     TetherHostFetcher* tether_host_fetcher,
     NotificationPresenter* notification_presenter,
-    GmsCoreNotificationsStateTrackerImpl* gms_core_notifications_state_tracker,
     PrefService* pref_service,
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
@@ -85,7 +83,7 @@ std::unique_ptr<TetherComponent> TetherComponentImpl::Factory::BuildInstance(
     scoped_refptr<device::BluetoothAdapter> adapter) {
   return std::make_unique<TetherComponentImpl>(
       cryptauth_service, tether_host_fetcher, notification_presenter,
-      gms_core_notifications_state_tracker, pref_service, network_state_handler,
+      pref_service, network_state_handler,
       managed_network_configuration_handler, network_connect,
       network_connection_handler, adapter);
 }
@@ -94,7 +92,6 @@ TetherComponentImpl::TetherComponentImpl(
     cryptauth::CryptAuthService* cryptauth_service,
     TetherHostFetcher* tether_host_fetcher,
     NotificationPresenter* notification_presenter,
-    GmsCoreNotificationsStateTrackerImpl* gms_core_notifications_state_tracker,
     PrefService* pref_service,
     NetworkStateHandler* network_state_handler,
     ManagedNetworkConfigurationHandler* managed_network_configuration_handler,
@@ -114,7 +111,6 @@ TetherComponentImpl::TetherComponentImpl(
           SynchronousShutdownObjectContainerImpl::Factory::NewInstance(
               asynchronous_shutdown_object_container_.get(),
               notification_presenter,
-              gms_core_notifications_state_tracker,
               pref_service,
               network_state_handler,
               network_connect,

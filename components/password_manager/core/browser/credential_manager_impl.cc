@@ -100,7 +100,7 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
   if (pending_request_ || !store) {
     // Callback error.
     std::move(callback).Run(
-        pending_request_ ? CredentialManagerError::PENDING_REQUEST
+        pending_request_ ? CredentialManagerError::PENDINGREQUEST
                          : CredentialManagerError::PASSWORDSTOREUNAVAILABLE,
         base::nullopt);
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_REJECTED,

@@ -116,7 +116,6 @@
 #include "content/public/common/menu_item.h"
 #include "content/public/common/url_utils.h"
 #include "extensions/features/features.h"
-#include "media/base/media_switches.h"
 #include "net/base/escape.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "ppapi/features/features.h"
@@ -1537,7 +1536,8 @@ void RenderViewContextMenu::AppendPasswordItems() {
 }
 
 void RenderViewContextMenu::AppendPictureInPictureItem() {
-  if (base::FeatureList::IsEnabled(media::kPictureInPicture))
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnablePictureInPicture))
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTENT_PICTUREINPICTURE,
                                     IDS_CONTENT_CONTENT_PICTUREINPICTURE);
 }
@@ -1577,7 +1577,7 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
   // Allow Spell Check language items on sub menu for text area context menu.
   if ((id >= IDC_SPELLCHECK_LANGUAGES_FIRST) &&
       (id < IDC_SPELLCHECK_LANGUAGES_LAST)) {
-    return prefs->GetBoolean(spellcheck::prefs::kSpellCheckEnable);
+    return prefs->GetBoolean(spellcheck::prefs::kEnableSpellcheck);
   }
 
   // Extension items.
@@ -1722,7 +1722,7 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
     case IDC_CONTENT_CONTEXT_LANGUAGE_SETTINGS:
       return true;
     case IDC_CHECK_SPELLING_WHILE_TYPING:
-      return prefs->GetBoolean(spellcheck::prefs::kSpellCheckEnable);
+      return prefs->GetBoolean(spellcheck::prefs::kEnableSpellcheck);
 
 #if !defined(OS_MACOSX) && defined(OS_POSIX)
     // TODO(suzhe): this should not be enabled for password fields.
@@ -2612,7 +2612,8 @@ void RenderViewContextMenu::ExecProtocolHandlerSettings(int event_flags) {
 }
 
 void RenderViewContextMenu::ExecPictureInPicture() {
-  if (!base::FeatureList::IsEnabled(media::kPictureInPicture))
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnablePictureInPicture))
     return;
 
   PictureInPictureWindowController* window_controller =

@@ -132,7 +132,12 @@ class QuicEndToEndTest : public ::testing::TestWithParam<TestParams> {
 
     CertVerifyResult verify_result;
     verify_result.verified_cert = ImportCertFromFile(
-        GetTestCertsDirectory(), "quic-chain.pem");
+        GetTestCertsDirectory(), "quic_test.example.com.crt");
+    cert_verifier_.AddResultForCertAndHost(verify_result.verified_cert.get(),
+                                           "test.example.com", verify_result,
+                                           OK);
+    verify_result.verified_cert = ImportCertFromFile(
+        GetTestCertsDirectory(), "quic_test_ecc.example.com.crt");
     cert_verifier_.AddResultForCertAndHost(verify_result.verified_cert.get(),
                                            "test.example.com", verify_result,
                                            OK);

@@ -48,7 +48,7 @@ const base::UnguessableToken kArbitrarySourceId2 =
 
 gpu::SyncToken GenTestSyncToken(int id) {
   gpu::SyncToken token;
-  token.Set(gpu::CommandBufferNamespace::GPU_IO,
+  token.Set(gpu::CommandBufferNamespace::GPU_IO, 0,
             gpu::CommandBufferId::FromUnsafeValue(id), 1);
   return token;
 }

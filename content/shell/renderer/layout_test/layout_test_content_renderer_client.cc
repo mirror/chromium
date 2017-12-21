@@ -24,6 +24,7 @@
 #include "content/shell/renderer/layout_test/layout_test_render_thread_observer.h"
 #include "content/shell/renderer/layout_test/test_media_stream_renderer_factory.h"
 #include "content/shell/renderer/shell_render_view_observer.h"
+#include "content/shell/test_runner/mock_credential_manager_client.h"
 #include "content/shell/test_runner/web_frame_test_proxy.h"
 #include "content/shell/test_runner/web_test_interfaces.h"
 #include "content/shell/test_runner/web_test_runner.h"
@@ -131,13 +132,6 @@ LayoutTestContentRendererClient::~LayoutTestContentRendererClient() {
 }
 
 void LayoutTestContentRendererClient::RenderThreadStarted() {
-// Unless/until WebM files are added to the media layout tests, we need to
-// avoid removing MP4/H264/AAC so that layout tests can run on Android.
-// TODO(chcunningham): We should fix the tests to always use non-proprietary
-// codecs and just delete this code. http://crbug.com/787575
-#if !defined(OS_ANDROID)
-  media::RemoveProprietaryMediaTypesAndCodecsForTests();
-#endif
   ShellContentRendererClient::RenderThreadStarted();
   shell_observer_.reset(new LayoutTestRenderThreadObserver());
 }
@@ -165,6 +159,11 @@ void LayoutTestContentRendererClient::RenderViewCreated(
 
   BlinkTestRunner* test_runner = BlinkTestRunner::Get(render_view);
   test_runner->Reset(false /* for_new_test */);
+
+  LayoutTestRenderThreadObserver::GetInstance()
+      ->test_interfaces()
+      ->TestRunner()
+      ->InitializeWebViewWithMocks(render_view->GetWebView());
 }
 
 std::unique_ptr<WebMIDIAccessor>

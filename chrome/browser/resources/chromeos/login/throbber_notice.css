@@ -9,7 +9,14 @@
   justify-content: center;
 }
 
-paper-spinner-lite {
+paper-spinner {
+  --paper-spinner-layer-1-color: var(--google-blue-500);
+  --paper-spinner-layer-2-color: var(--google-blue-500);
+  --paper-spinner-layer-3-color: var(--google-blue-500);
+  --paper-spinner-layer-4-color: var(--google-blue-500);
+}
+
+paper-spinner {
   height: 38px;
   margin-bottom: 28px;
   width: 38px;

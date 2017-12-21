@@ -8,6 +8,7 @@
   await TestRunner.loadModule('sources_test_runner');
   await TestRunner.showPanel('sources');
   await TestRunner.addScriptTag('resources/example-fileset-for-test.js');
+  await TestRunner.addScriptTag('resources/editor-test.js');
   await TestRunner.addScriptTag('resources/jump-text.js');
 
   var panel = UI.panels.sources;

@@ -19,7 +19,7 @@ ContentCredentialManager::ContentCredentialManager(
 ContentCredentialManager::~ContentCredentialManager() {}
 
 void ContentCredentialManager::BindRequest(
-    mojom::CredentialManagerRequest request) {
+    mojom::CredentialManagerAssociatedRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 

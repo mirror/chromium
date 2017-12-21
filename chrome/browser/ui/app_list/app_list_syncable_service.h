@@ -24,9 +24,7 @@
 #include "components/sync/model/syncable_service.h"
 #include "components/sync/protocol/app_list_specifics.pb.h"
 
-class AppListModelUpdater;
 class ArcAppModelBuilder;
-class ChromeAppListModelUpdater;
 class ChromeAppListItem;
 class ExtensionAppModelBuilder;
 class Profile;
@@ -49,6 +47,9 @@ class AppListItem;
 // TODO(hejq): Remove these when we get rid of |GetModel| and |GetSearchModel|.
 class AppListModel;
 class SearchModel;
+
+class AppListModelUpdater;
+class ChromeAppListModelUpdater;
 
 // Keyed Service that owns, stores, and syncs an AppListModel for a profile.
 class AppListSyncableService : public syncer::SyncableService,

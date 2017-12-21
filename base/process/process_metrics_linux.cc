@@ -352,6 +352,7 @@ bool ProcessMetrics::GetPageFaultCounts(PageFaultCounts* counts) const {
 }
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
+#if defined(OS_LINUX) || defined(OS_AIX)
 int ProcessMetrics::GetOpenFdCount() const {
   // Use /proc/<pid>/fd to count the number of entries there.
   FilePath fd_path = internal::GetProcPidDir(process_).Append("fd");
@@ -394,6 +395,7 @@ int ProcessMetrics::GetOpenFdSoftLimit() const {
   }
   return -1;
 }
+#endif  // defined(OS_LINUX) || defined(OS_AIX)
 
 ProcessMetrics::ProcessMetrics(ProcessHandle process)
     : process_(process),

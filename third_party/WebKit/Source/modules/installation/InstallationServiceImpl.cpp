@@ -11,6 +11,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 

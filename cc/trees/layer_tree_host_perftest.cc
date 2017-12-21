@@ -322,7 +322,7 @@ class BrowserCompositorInvalidateLayerTreePerfTest
             &BrowserCompositorInvalidateLayerTreePerfTest::ReleaseMailbox,
             base::Unretained(this)));
 
-    gpu::SyncToken next_sync_token(gpu::CommandBufferNamespace::GPU_IO,
+    gpu::SyncToken next_sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
                                    gpu::CommandBufferId::FromUnsafeValue(1),
                                    next_fence_sync_);
     next_sync_token.SetVerifyFlush();

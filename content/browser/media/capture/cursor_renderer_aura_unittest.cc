@@ -76,17 +76,13 @@ class CursorRendererAuraTest : public AuraTestBase {
           media::PIXEL_FORMAT_YV12, dummy_frame_size,
           gfx::Rect(dummy_frame_size), dummy_frame_size, base::TimeDelta());
     }
-    return RenderCursorOnVideoFrame(dummy_frame_.get(), nullptr);
+    return cursor_renderer_ &&
+           cursor_renderer_->RenderOnVideoFrame(dummy_frame_.get(),
+                                                dummy_frame_->visible_rect());
   }
 
-  bool RenderCursorOnVideoFrame(media::VideoFrame* frame,
-                                CursorRendererUndoer* undoer) {
-    return cursor_renderer_->RenderOnVideoFrame(frame, frame->visible_rect(),
-                                                undoer);
-  }
-
-  bool IsUserInteractingWithView() {
-    return cursor_renderer_->IsUserInteractingWithView();
+  bool RenderCursorOnVideoFrame(media::VideoFrame* frame) {
+    return cursor_renderer_->RenderOnVideoFrame(frame, frame->visible_rect());
   }
 
   void MoveMouseCursorWithinWindow() {
@@ -119,12 +115,12 @@ class CursorRendererAuraTest : public AuraTestBase {
                              gfx::Rect rect) {
     bool y_found = false, u_found = false, v_found = false;
     for (int y = rect.y(); y < rect.bottom(); ++y) {
-      uint8_t* yplane = frame->visible_data(media::VideoFrame::kYPlane) +
-                        y * frame->stride(media::VideoFrame::kYPlane);
-      uint8_t* uplane = frame->visible_data(media::VideoFrame::kUPlane) +
-                        (y / 2) * frame->stride(media::VideoFrame::kUPlane);
-      uint8_t* vplane = frame->visible_data(media::VideoFrame::kVPlane) +
-                        (y / 2) * frame->stride(media::VideoFrame::kVPlane);
+      uint8_t* yplane = frame->data(media::VideoFrame::kYPlane) +
+                        y * frame->row_bytes(media::VideoFrame::kYPlane);
+      uint8_t* uplane = frame->data(media::VideoFrame::kUPlane) +
+                        (y / 2) * frame->row_bytes(media::VideoFrame::kUPlane);
+      uint8_t* vplane = frame->data(media::VideoFrame::kVPlane) +
+                        (y / 2) * frame->row_bytes(media::VideoFrame::kVPlane);
       for (int x = rect.x(); x < rect.right(); ++x) {
         if (yplane[x] != 0)
           y_found = true;
@@ -153,17 +149,14 @@ TEST_F(CursorRendererAuraTest, CursorAlwaysDisplayed) {
 
   // Cursor displayed at start.
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_FALSE(IsUserInteractingWithView());
 
   // Cursor displayed after mouse movement.
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor displayed after idle period.
   SimulateMouseWentIdle();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_FALSE(IsUserInteractingWithView());
 
   // Cursor not displayed with mouse outside the window.
   MoveMouseCursorOutsideWindow();
@@ -173,22 +166,18 @@ TEST_F(CursorRendererAuraTest, CursorAlwaysDisplayed) {
 TEST_F(CursorRendererAuraTest, CursorDuringMouseMovement) {
   // Cursor not displayed at start.
   EXPECT_FALSE(CursorDisplayed());
-  EXPECT_FALSE(IsUserInteractingWithView());
 
   // Cursor displayed after mouse movement.
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor not displayed after idle period.
   SimulateMouseWentIdle();
   EXPECT_FALSE(CursorDisplayed());
-  EXPECT_FALSE(IsUserInteractingWithView());
 
   // Cursor displayed with mouse movement following idle period.
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor not displayed if mouse outside the window
   MoveMouseCursorOutsideWindow();
@@ -198,12 +187,10 @@ TEST_F(CursorRendererAuraTest, CursorDuringMouseMovement) {
 TEST_F(CursorRendererAuraTest, CursorOnActiveWindow) {
   // Cursor not displayed at start.
   EXPECT_FALSE(CursorDisplayed());
-  EXPECT_FALSE(IsUserInteractingWithView());
 
   // Cursor displayed after mouse movement.
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor not be displayed if a second window is activated.
   std::unique_ptr<aura::Window> window2(aura::test::CreateTestWindowWithBounds(
@@ -211,13 +198,11 @@ TEST_F(CursorRendererAuraTest, CursorOnActiveWindow) {
   wm::ActivateWindow(window2.get());
   MoveMouseCursorWithinWindow();
   EXPECT_FALSE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 
   // Cursor displayed if window activated again.
   wm::ActivateWindow(window_.get());
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
-  EXPECT_TRUE(IsUserInteractingWithView());
 }
 
 TEST_F(CursorRendererAuraTest, CursorRenderedOnFrame) {
@@ -233,12 +218,9 @@ TEST_F(CursorRendererAuraTest, CursorRenderedOnFrame) {
   MoveMouseCursorWithinWindow();
   EXPECT_TRUE(CursorDisplayed());
 
-  EXPECT_FALSE(NonZeroPixelsInRegion(frame, frame->visible_rect()));
-  CursorRendererUndoer undoer;
-  EXPECT_TRUE(RenderCursorOnVideoFrame(frame.get(), &undoer));
+  EXPECT_FALSE(NonZeroPixelsInRegion(frame, gfx::Rect(50, 50, 70, 70)));
+  EXPECT_TRUE(RenderCursorOnVideoFrame(frame.get()));
   EXPECT_TRUE(NonZeroPixelsInRegion(frame, gfx::Rect(50, 50, 70, 70)));
-  undoer.Undo(frame.get());
-  EXPECT_FALSE(NonZeroPixelsInRegion(frame, frame->visible_rect()));
 }
 
 TEST_F(CursorRendererAuraTest, CursorRenderedOnRootWindow) {

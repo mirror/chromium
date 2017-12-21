@@ -65,7 +65,6 @@ class MemlogConnectionManager {
   // fired.
   void DumpProcessesForTracing(
       bool keep_small_allocations,
-      bool strip_path_from_mapped_files,
       mojom::ProfilingService::DumpProcessesForTracingCallback callback,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
 
@@ -86,7 +85,6 @@ class MemlogConnectionManager {
       base::ProcessId pid,
       mojom::ProcessType process_type,
       bool keep_small_allocations,
-      bool strip_path_from_mapped_files,
       bool success,
       AllocationCountMap counts,
       AllocationTracker::ContextMap context);

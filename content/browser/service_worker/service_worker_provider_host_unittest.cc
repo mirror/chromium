@@ -48,28 +48,14 @@ class ServiceWorkerTestContentClient : public TestContentClient {
 
 class ServiceWorkerTestContentBrowserClient : public TestContentBrowserClient {
  public:
-  struct AllowServiceWorkerCallLog {
-    AllowServiceWorkerCallLog(const GURL& scope, const GURL& first_party)
-        : scope(scope), first_party(first_party) {}
-    const GURL scope;
-    const GURL first_party;
-  };
-
   ServiceWorkerTestContentBrowserClient() {}
-
   bool AllowServiceWorker(
       const GURL& scope,
       const GURL& first_party,
       content::ResourceContext* context,
       const base::Callback<WebContents*(void)>& wc_getter) override {
-    logs_.emplace_back(scope, first_party);
     return false;
   }
-
-  const std::vector<AllowServiceWorkerCallLog>& logs() const { return logs_; }
-
- private:
-  std::vector<AllowServiceWorkerCallLog> logs_;
 };
 
 }  // namespace
@@ -129,27 +115,13 @@ class ServiceWorkerProviderHostTest : public testing::Test {
   ServiceWorkerRemoteProviderEndpoint PrepareServiceWorkerProviderHost(
       const GURL& document_url) {
     ServiceWorkerRemoteProviderEndpoint remote_endpoint;
-    GURL topmost_frame_url = document_url;
-    CreateProviderHostInternal(document_url, topmost_frame_url,
-                               &remote_endpoint);
-    return remote_endpoint;
-  }
-
-  ServiceWorkerRemoteProviderEndpoint
-  PrepareServiceWorkerProviderHostWithTopmostFrameUrl(
-      const GURL& document_url,
-      const GURL& topmost_frame_url) {
-    ServiceWorkerRemoteProviderEndpoint remote_endpoint;
-    CreateProviderHostInternal(document_url, topmost_frame_url,
-                               &remote_endpoint);
+    CreateProviderHostInternal(document_url, &remote_endpoint);
     return remote_endpoint;
   }
 
   ServiceWorkerProviderHost* CreateProviderHost(const GURL& document_url) {
-    GURL topmost_frame_url = document_url;
     remote_endpoints_.emplace_back();
-    return CreateProviderHostInternal(document_url, document_url,
-                                      &remote_endpoints_.back());
+    return CreateProviderHostInternal(document_url, &remote_endpoints_.back());
   }
 
   ServiceWorkerProviderHost* CreateProviderHostWithInsecureParentFrame(
@@ -247,7 +219,6 @@ class ServiceWorkerProviderHostTest : public testing::Test {
  private:
   ServiceWorkerProviderHost* CreateProviderHostInternal(
       const GURL& document_url,
-      const GURL& topmost_frame_url,
       ServiceWorkerRemoteProviderEndpoint* remote_endpoint) {
     std::unique_ptr<ServiceWorkerProviderHost> host;
     if (IsBrowserSideNavigationEnabled()) {
@@ -275,7 +246,6 @@ class ServiceWorkerProviderHostTest : public testing::Test {
 
     ServiceWorkerProviderHost* host_raw = host.get();
     host->SetDocumentUrl(document_url);
-    host->SetTopmostFrameUrl(topmost_frame_url);
     context_->AddProviderHost(std::move(host));
     return host_raw;
   }
@@ -526,6 +496,8 @@ class MockServiceWorkerContainer : public mojom::ServiceWorkerContainer {
 };
 
 TEST_F(ServiceWorkerProviderHostTest, Controller) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableBrowserSideNavigation);
   // Create a host.
   std::unique_ptr<ServiceWorkerProviderHost> host =
       ServiceWorkerProviderHost::PreCreateNavigationHost(
@@ -565,6 +537,8 @@ TEST_F(ServiceWorkerProviderHostTest, Controller) {
 }
 
 TEST_F(ServiceWorkerProviderHostTest, ActiveIsNotController) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableBrowserSideNavigation);
   // Create a host.
   std::unique_ptr<ServiceWorkerProviderHost> host =
       ServiceWorkerProviderHost::PreCreateNavigationHost(
@@ -614,65 +588,17 @@ TEST_F(ServiceWorkerProviderHostTest,
       SetBrowserClientForTesting(&test_browser_client);
 
   ServiceWorkerRemoteProviderEndpoint remote_endpoint =
-      PrepareServiceWorkerProviderHostWithTopmostFrameUrl(
-          GURL("https://www.example.com/foo"),
-          GURL("https://www.example.com/top"));
+      PrepareServiceWorkerProviderHost(GURL("https://www.example.com/foo"));
 
   EXPECT_EQ(blink::mojom::ServiceWorkerErrorType::kDisabled,
             Register(remote_endpoint.host_ptr()->get(),
-                     GURL("https://www.example.com/scope"),
+                     GURL("https://www.example.com/"),
                      GURL("https://www.example.com/bar")));
-  ASSERT_EQ(1ul, test_browser_client.logs().size());
-  EXPECT_EQ(GURL("https://www.example.com/scope"),
-            test_browser_client.logs()[0].scope);
-  EXPECT_EQ(GURL("https://www.example.com/top"),
-            test_browser_client.logs()[0].first_party);
-
   EXPECT_EQ(blink::mojom::ServiceWorkerErrorType::kDisabled,
             GetRegistration(remote_endpoint.host_ptr()->get(),
                             GURL("https://www.example.com/")));
-  ASSERT_EQ(2ul, test_browser_client.logs().size());
-  EXPECT_EQ(GURL("https://www.example.com/foo"),
-            test_browser_client.logs()[1].scope);
-  EXPECT_EQ(GURL("https://www.example.com/top"),
-            test_browser_client.logs()[1].first_party);
-
   EXPECT_EQ(blink::mojom::ServiceWorkerErrorType::kDisabled,
             GetRegistrations(remote_endpoint.host_ptr()->get()));
-  ASSERT_EQ(3ul, test_browser_client.logs().size());
-  EXPECT_EQ(GURL("https://www.example.com/foo"),
-            test_browser_client.logs()[2].scope);
-  EXPECT_EQ(GURL("https://www.example.com/top"),
-            test_browser_client.logs()[2].first_party);
-
-  SetBrowserClientForTesting(old_browser_client);
-}
-
-TEST_F(ServiceWorkerProviderHostTest, AllowsServiceWorker) {
-  // Create an active version.
-  scoped_refptr<ServiceWorkerVersion> version =
-      base::MakeRefCounted<ServiceWorkerVersion>(
-          registration1_.get(), GURL("https://www.example.com/sw.js"),
-          1 /* version_id */, helper_->context()->AsWeakPtr());
-  registration1_->SetActiveVersion(version);
-
-  ServiceWorkerRemoteProviderEndpoint remote_endpoint;
-  std::unique_ptr<ServiceWorkerProviderHost> host =
-      CreateProviderHostForServiceWorkerContext(
-          helper_->mock_render_process_id(), true /* is_parent_frame_secure */,
-          version.get(), helper_->context()->AsWeakPtr(), &remote_endpoint);
-
-  ServiceWorkerTestContentBrowserClient test_browser_client;
-  ContentBrowserClient* old_browser_client =
-      SetBrowserClientForTesting(&test_browser_client);
-
-  EXPECT_FALSE(host->AllowServiceWorker(GURL("https://www.example.com/scope")));
-
-  ASSERT_EQ(1ul, test_browser_client.logs().size());
-  EXPECT_EQ(GURL("https://www.example.com/scope"),
-            test_browser_client.logs()[0].scope);
-  EXPECT_EQ(GURL("https://www.example.com/sw.js"),
-            test_browser_client.logs()[0].first_party);
 
   SetBrowserClientForTesting(old_browser_client);
 }

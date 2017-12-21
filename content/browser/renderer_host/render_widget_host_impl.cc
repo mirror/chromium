@@ -353,6 +353,8 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       is_focused_(false),
       hung_renderer_delay_(
           base::TimeDelta::FromMilliseconds(kHungRendererDelayMs)),
+      hang_monitor_event_type_(blink::WebInputEvent::kUndefined),
+      last_event_type_(blink::WebInputEvent::kUndefined),
       new_content_rendering_delay_(
           base::TimeDelta::FromMilliseconds(kNewContentRenderingDelayMs)),
       current_content_source_id_(0),
@@ -1043,9 +1045,14 @@ void RenderWidgetHostImpl::ProcessIgnoreInputEventsChanged(
     RestartHangMonitorTimeoutIfNecessary();
 }
 
-void RenderWidgetHostImpl::StartHangMonitorTimeout(base::TimeDelta delay) {
+void RenderWidgetHostImpl::StartHangMonitorTimeout(
+    base::TimeDelta delay,
+    blink::WebInputEvent::Type event_type) {
   if (!hang_monitor_timeout_)
     return;
+  if (!hang_monitor_timeout_->IsRunning())
+    hang_monitor_event_type_ = event_type;
+  last_event_type_ = event_type;
   hang_monitor_timeout_->Start(delay);
 }
 
@@ -2279,10 +2286,11 @@ InputEventAckState RenderWidgetHostImpl::FilterInputEvent(
                : INPUT_EVENT_ACK_STATE_NOT_CONSUMED;
 }
 
-void RenderWidgetHostImpl::IncrementInFlightEventCount() {
+void RenderWidgetHostImpl::IncrementInFlightEventCount(
+    blink::WebInputEvent::Type event_type) {
   ++in_flight_event_count_;
   if (!is_hidden_)
-    StartHangMonitorTimeout(hung_renderer_delay_);
+    StartHangMonitorTimeout(hung_renderer_delay_, event_type);
 }
 
 void RenderWidgetHostImpl::DecrementInFlightEventCount(

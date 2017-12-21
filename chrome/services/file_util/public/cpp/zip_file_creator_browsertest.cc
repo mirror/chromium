@@ -19,6 +19,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/zlib/google/zip_reader.h"
 
+namespace chrome {
+
 namespace {
 
 void TestCallback(bool* out_success, const base::Closure& quit, bool success) {
@@ -217,3 +219,5 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, ZipDirectoryWithManyFiles) {
   }
   EXPECT_TRUE(file_tree_content.empty());
 }
+
+}  // namespace chrome

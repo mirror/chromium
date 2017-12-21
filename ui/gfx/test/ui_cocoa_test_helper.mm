@@ -31,12 +31,6 @@ void NOINLINE ForceSystemLeaks() {
 
 @implementation CocoaTestHelperWindow
 
-@synthesize pretendIsKeyWindow = pretendIsKeyWindow_;
-@synthesize pretendIsOccluded = pretendIsOccluded_;
-@synthesize pretendFullKeyboardAccessIsEnabled =
-    pretendFullKeyboardAccessIsEnabled_;
-@synthesize useDefaultConstraints = useDefaultConstraints_;
-
 - (id)initWithContentRect:(NSRect)contentRect {
   self = [super initWithContentRect:contentRect
                           styleMask:NSBorderlessWindowMask
@@ -60,12 +54,16 @@ void NOINLINE ForceSystemLeaks() {
 
 - (void)makePretendKeyWindowAndSetFirstResponder:(NSResponder*)responder {
   EXPECT_TRUE([self makeFirstResponder:responder]);
-  self.pretendIsKeyWindow = YES;
+  [self setPretendIsKeyWindow:YES];
 }
 
 - (void)clearPretendKeyWindowAndFirstResponder {
-  self.pretendIsKeyWindow = NO;
+  [self setPretendIsKeyWindow:NO];
   EXPECT_TRUE([self makeFirstResponder:NSApp]);
+}
+
+- (void)setPretendIsKeyWindow:(BOOL)flag {
+  pretendIsKeyWindow_ = flag;
 }
 
 - (void)setPretendIsOccluded:(BOOL)flag {
@@ -75,38 +73,16 @@ void NOINLINE ForceSystemLeaks() {
                     object:self];
 }
 
-- (void)setPretendFullKeyboardAccessIsEnabled:(BOOL)enabled {
-  EXPECT_TRUE([NSWindow
-      instancesRespondToSelector:@selector(_allowsAnyValidResponder)]);
-  pretendFullKeyboardAccessIsEnabled_ = enabled;
-  [self recalculateKeyViewLoop];
+- (void)setUseDefaultConstraints:(BOOL)useDefaultConstraints {
+  useDefaultConstraints_ = useDefaultConstraints;
 }
 
 - (BOOL)isKeyWindow {
   return pretendIsKeyWindow_;
 }
 
-// Override of an undocumented AppKit method which controls call to check if
-// full keyboard access is enabled. Its presence is verified in
-// -setPretendFullKeyboardAccessIsEnabled:.
-- (BOOL)_allowsAnyValidResponder {
-  return pretendFullKeyboardAccessIsEnabled_;
-}
-
 - (NSWindowOcclusionState)occlusionState {
   return pretendIsOccluded_ ? 0 : NSWindowOcclusionStateVisible;
-}
-
-- (NSArray<NSView*>*)validKeyViews {
-  NSMutableArray<NSView*>* validKeyViews = [NSMutableArray array];
-  NSView* contentView = self.contentView;
-  if (contentView.canBecomeKeyView)
-    [validKeyViews addObject:contentView];
-  for (NSView* keyView = contentView.nextValidKeyView;
-       keyView != nil && ![validKeyViews containsObject:keyView];
-       keyView = keyView.nextValidKeyView)
-    [validKeyViews addObject:keyView];
-  return validKeyViews;
 }
 
 - (NSRect)constrainFrameRect:(NSRect)frameRect toScreen:(NSScreen*)screen {

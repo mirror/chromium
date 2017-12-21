@@ -20,13 +20,12 @@ class CORE_EXPORT CSSTransformValue final : public CSSStyleValue {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static CSSTransformValue* Create(
-      const HeapVector<Member<CSSTransformComponent>>& transform_components,
-      ExceptionState&);
+  static CSSTransformValue* Create() { return new CSSTransformValue(); }
 
-  // Blink-internal constructor
   static CSSTransformValue* Create(
-      const HeapVector<Member<CSSTransformComponent>>& transform_components);
+      const HeapVector<Member<CSSTransformComponent>>& transform_components) {
+    return new CSSTransformValue(transform_components);
+  }
 
   static CSSTransformValue* FromCSSValue(const CSSValue&);
 
@@ -50,6 +49,7 @@ class CORE_EXPORT CSSTransformValue final : public CSSStyleValue {
   }
 
  private:
+  CSSTransformValue() = default;
   CSSTransformValue(
       const HeapVector<Member<CSSTransformComponent>>& transform_components)
       : CSSStyleValue(), transform_components_(transform_components) {}

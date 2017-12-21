@@ -255,9 +255,6 @@ used when committed.
     strings using Chrome for iOS.
 *   [Running iOS test suites locally](ios/testing.md)
 
-### Misc Chrome-OS-Specific Docs
-*   [Chrome Logging on Chrome OS](chrome_os_logging.md)
-
 ### Media
 *   [Audio Focus Handling](media/audio_focus.md) - How multiple MediaSession
     audio streams interact
@@ -313,7 +310,7 @@ used when committed.
     directories are determined on all platforms.
 
 ### Probably Obsolete
-*   [Old Chrome OS build instructions](old_chromeos_build_instructions.md)
+*   [Old ChromeOS build instructions](old_chromeos_build_instructions.md)
 *   [TPM Quick Reference](tpm_quick_ref.md) - Trusted Platform Module notes.
 *   [System Hardening Features](system_hardening_features.md) - A list of
     current and planned Chrome OS security features.

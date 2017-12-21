@@ -32,8 +32,6 @@
 
 #include <memory>
 #include <utility>
-
-#include "base/memory/ptr_util.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/ExecutionContext.h"
@@ -83,6 +81,7 @@
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/notifications/WebNotificationData.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "public/web/WebSerializedScriptValue.h"
@@ -274,7 +273,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     origin = source_origin.ToString();
   ServiceWorker* source =
       ServiceWorker::From(worker_global_scope_->GetExecutionContext(),
-                          base::WrapUnique(handle.release()));
+                          WTF::WrapUnique(handle.release()));
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
 

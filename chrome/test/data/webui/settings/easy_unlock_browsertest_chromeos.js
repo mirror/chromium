@@ -168,8 +168,7 @@ TEST_F('SettingsEasyUnlockBrowserTest', 'DISABLED_EasyUnlock', function() {
             // according to the easy unlock turn off status.
             var turnOffDialogButtonContainer =
                 turnOffDialog.$$('[slot=button-container]');
-            var turnOffDialogButtonSpinner =
-                turnOffDialog.$$('paper-spinner-lite');
+            var turnOffDialogButtonSpinner = turnOffDialog.$$('paper-spinner');
             var turnOffDialogConfirmButton = turnOffDialog.$$('#turnOff');
             var turnOffDialogCancelButton = turnOffDialog.$$('.cancel-button');
             assertTrue(!!turnOffDialogButtonContainer);

@@ -4,7 +4,9 @@
 
 (async function() {
   TestRunner.addResult(`Tests that preflight OPTIONS requests appear in Network resources\n`);
-
+  await TestRunner.loadHTML(`
+      <a href="https://bugs.webkit.org/show_bug.cgi?id=63712">Bug 63712</a>
+    `);
   await TestRunner.evaluateInPagePromise(`
       function sendXHR(url, forcePreflight, async, callback)
       {

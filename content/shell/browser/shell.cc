@@ -489,7 +489,9 @@ bool Shell::DidAddMessageToConsole(WebContents* source,
   return switches::IsRunLayoutTestSwitchPresent();
 }
 
-void Shell::RendererUnresponsive(WebContents* source) {
+void Shell::RendererUnresponsive(
+    WebContents* source,
+    const WebContentsUnresponsiveState& unresponsive_state) {
   if (switches::IsRunLayoutTestSwitchPresent())
     BlinkTestController::Get()->RendererUnresponsive();
 }

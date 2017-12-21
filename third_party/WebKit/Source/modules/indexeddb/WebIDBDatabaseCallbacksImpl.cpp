@@ -25,19 +25,17 @@
 
 #include "modules/indexeddb/WebIDBDatabaseCallbacksImpl.h"
 
-#include <memory>
-#include <unordered_map>
-#include <vector>
-
-#include "base/memory/ptr_util.h"
 #include "core/dom/DOMException.h"
+#include "platform/wtf/PtrUtil.h"
+
+#include <memory>
 
 namespace blink {
 
 // static
 std::unique_ptr<WebIDBDatabaseCallbacksImpl>
 WebIDBDatabaseCallbacksImpl::Create(IDBDatabaseCallbacks* callbacks) {
-  return base::WrapUnique(new WebIDBDatabaseCallbacksImpl(callbacks));
+  return WTF::WrapUnique(new WebIDBDatabaseCallbacksImpl(callbacks));
 }
 
 WebIDBDatabaseCallbacksImpl::WebIDBDatabaseCallbacksImpl(
@@ -74,9 +72,10 @@ void WebIDBDatabaseCallbacksImpl::OnComplete(long long transaction_id) {
 }
 
 void WebIDBDatabaseCallbacksImpl::OnChanges(
-    const ObservationIndexMap& observation_index_map,
+    const std::unordered_map<int32_t, std::vector<int32_t>>&
+        observation_index_map,
     const WebVector<WebIDBObservation>& observations,
-    const TransactionMap& transactions) {
+    const IDBDatabaseCallbacks::TransactionMap& transactions) {
   if (callbacks_)
     callbacks_->OnChanges(observation_index_map, observations, transactions);
 }

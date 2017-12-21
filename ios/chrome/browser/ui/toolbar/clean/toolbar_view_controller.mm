@@ -827,11 +827,6 @@
 - (void)didMoveToParentViewController:(UIViewController*)parent {
   UILayoutGuide* omniboxPopupGuide = FindNamedGuide(kOmniboxGuide, self.view);
   AddSameConstraints(self.locationBarContainer, omniboxPopupGuide);
-  UILayoutGuide* backButtonGuide = FindNamedGuide(kBackButtonGuide, self.view);
-  AddSameConstraints(self.backButton.imageView, backButtonGuide);
-  UILayoutGuide* forwardButtonGuide =
-      FindNamedGuide(kForwardButtonGuide, self.view);
-  AddSameConstraints(self.forwardButton.imageView, forwardButtonGuide);
 }
 
 #pragma mark - Trait Collection Changes
@@ -955,11 +950,11 @@
 #pragma mark - BubbleViewAnchorPointProvider
 
 - (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
-  CGPoint anchorPoint = bubble_util::AnchorPoint(
-      self.tabSwitchStripButton.imageView.frame, direction);
-  return [self.tabSwitchStripButton.imageView.superview
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(self.tabSwitchStripButton.frame, direction);
+  return [self.tabSwitchStripButton.superview
       convertPoint:anchorPoint
-            toView:self.tabSwitchStripButton.imageView.window];
+            toView:self.tabSwitchStripButton.window];
 }
 
 - (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {

@@ -31,8 +31,6 @@
 #include "modules/filesystem/LocalFileSystemClient.h"
 
 #include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
@@ -40,12 +38,13 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/ContentSettingCallbacks.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 std::unique_ptr<FileSystemClient> LocalFileSystemClient::Create() {
-  return base::WrapUnique(
+  return WTF::WrapUnique(
       static_cast<FileSystemClient*>(new LocalFileSystemClient()));
 }
 

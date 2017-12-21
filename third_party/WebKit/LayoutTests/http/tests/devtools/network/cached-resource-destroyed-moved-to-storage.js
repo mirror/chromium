@@ -11,6 +11,11 @@
   await TestRunner.loadModule('console_test_runner');
   await TestRunner.showPanel('network');
 
+  await TestRunner.loadHTML(`
+    <p>Tests content is moved from cached resource to resource agent&apos;s data storage when cached resource is destroyed.</p>
+    <a href="https://bugs.webkit.org/show_bug.cgi?id=92108">Bug 92108</a>
+  `);
+
   await TestRunner.evaluateInPagePromise(`
     var image;;
     function loadFirstImage() {

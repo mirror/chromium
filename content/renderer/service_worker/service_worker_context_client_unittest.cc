@@ -226,7 +226,8 @@ class ServiceWorkerContextClientTest : public testing::Test {
   }
 
   void EnableServicification() {
-    feature_list_.InitWithFeatures({features::kNetworkService}, {});
+    feature_list_.InitWithFeatures(
+        {features::kBrowserSideNavigation, features::kNetworkService}, {});
     ASSERT_TRUE(ServiceWorkerUtils::IsServicificationEnabled());
   }
 

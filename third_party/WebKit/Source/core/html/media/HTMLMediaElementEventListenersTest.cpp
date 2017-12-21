@@ -10,7 +10,7 @@
 #include "core/html/media/MediaControls.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/loader/EmptyClients.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -46,13 +46,15 @@ using ::testing::Invoke;
 
 }  // anonymous namespace
 
-class HTMLMediaElementEventListenersTest : public PageTestBase {
+class HTMLMediaElementEventListenersTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    SetupPageWithClients(nullptr, MediaStubLocalFrameClient::Create());
+    page_holder_ = DummyPageHolder::Create(IntSize(800, 600), nullptr,
+                                           MediaStubLocalFrameClient::Create());
   }
 
-  void DestroyDocument() { PageTestBase::TearDown(); }
+  Document& GetDocument() { return page_holder_->GetDocument(); }
+  void DestroyDocument() { page_holder_.reset(); }
   HTMLVideoElement* Video() {
     return ToHTMLVideoElement(GetDocument().QuerySelector("video"));
   }
@@ -70,6 +72,9 @@ class HTMLMediaElementEventListenersTest : public PageTestBase {
       MediaCustomControlsFullscreenDetector* detector) {
     return detector->check_viewport_intersection_timer_.IsActive();
   }
+
+ private:
+  std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
 TEST_F(HTMLMediaElementEventListenersTest, RemovingFromDocumentCollectsAll) {

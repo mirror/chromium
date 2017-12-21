@@ -45,7 +45,6 @@
 #include "platform/Histogram.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Atomics.h"
-#include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyPath.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
@@ -191,9 +190,10 @@ void IDBDatabase::OnComplete(int64_t transaction_id) {
 }
 
 void IDBDatabase::OnChanges(
-    const WebIDBDatabaseCallbacks::ObservationIndexMap& observation_index_map,
+    const std::unordered_map<int32_t, std::vector<int32_t>>&
+        observation_index_map,
     const WebVector<WebIDBObservation>& observations,
-    const WebIDBDatabaseCallbacks::TransactionMap& transactions) {
+    const IDBDatabaseCallbacks::TransactionMap& transactions) {
   for (const auto& map_entry : observation_index_map) {
     auto it = observers_.find(map_entry.first);
     if (it != observers_.end()) {

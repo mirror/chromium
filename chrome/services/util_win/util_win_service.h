@@ -9,6 +9,8 @@
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 
+namespace chrome {
+
 class UtilWinService : public service_manager::Service {
  public:
   ~UtilWinService() override;
@@ -31,5 +33,7 @@ class UtilWinService : public service_manager::Service {
 
   DISALLOW_COPY_AND_ASSIGN(UtilWinService);
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_SERVICES_UTIL_WIN_UTIL_WIN_SERVICE_H_

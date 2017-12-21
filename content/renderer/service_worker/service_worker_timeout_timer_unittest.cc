@@ -58,7 +58,8 @@ class ServiceWorkerTimeoutTimerTest : public testing::Test {
   }
 
   void EnableServicification() {
-    feature_list_.InitWithFeatures({features::kNetworkService}, {});
+    feature_list_.InitWithFeatures(
+        {features::kBrowserSideNavigation, features::kNetworkService}, {});
     ASSERT_TRUE(ServiceWorkerUtils::IsServicificationEnabled());
   }
 
@@ -197,54 +198,6 @@ TEST_F(ServiceWorkerTimeoutTimerTest, PushPendingTask) {
   event.set_event_id(event_id);
   EXPECT_FALSE(timer.did_idle_timeout());
   EXPECT_TRUE(did_task_run);
-}
-
-TEST_F(ServiceWorkerTimeoutTimerTest, SetIdleTimerDelayToZero) {
-  EnableServicification();
-  {
-    bool is_idle = false;
-    ServiceWorkerTimeoutTimer timer(CreateReceiverWithCalledFlag(&is_idle),
-                                    task_runner()->GetMockTickClock());
-    EXPECT_FALSE(is_idle);
-
-    timer.SetIdleTimerDelayToZero();
-    // |idle_callback| should be fired since there is no event.
-    EXPECT_TRUE(is_idle);
-  }
-
-  {
-    bool is_idle = false;
-    ServiceWorkerTimeoutTimer timer(CreateReceiverWithCalledFlag(&is_idle),
-                                    task_runner()->GetMockTickClock());
-    int event_id = timer.StartEvent(base::BindRepeating([](int) {}));
-    timer.SetIdleTimerDelayToZero();
-    // Nothing happens since there is an inflight event.
-    EXPECT_FALSE(is_idle);
-
-    timer.EndEvent(event_id);
-    // EndEvent() immediately triggers the idle callback.
-    EXPECT_TRUE(is_idle);
-  }
-
-  {
-    bool is_idle = false;
-    ServiceWorkerTimeoutTimer timer(CreateReceiverWithCalledFlag(&is_idle),
-                                    task_runner()->GetMockTickClock());
-    int event_id_1 = timer.StartEvent(base::BindRepeating([](int) {}));
-    int event_id_2 = timer.StartEvent(base::BindRepeating([](int) {}));
-    timer.SetIdleTimerDelayToZero();
-    // Nothing happens since there are two inflight events.
-    EXPECT_FALSE(is_idle);
-
-    timer.EndEvent(event_id_1);
-    // Nothing happens since there is an inflight event.
-    EXPECT_FALSE(is_idle);
-
-    timer.EndEvent(event_id_2);
-    // EndEvent() immediately triggers the idle callback when no inflight events
-    // exist.
-    EXPECT_TRUE(is_idle);
-  }
 }
 
 TEST_F(ServiceWorkerTimeoutTimerTest, NonS13nServiceWorker) {

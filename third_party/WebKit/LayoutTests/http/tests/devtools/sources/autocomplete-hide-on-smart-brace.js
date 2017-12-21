@@ -7,6 +7,7 @@
   await TestRunner.loadModule('sources_test_runner');
   await TestRunner.showPanel('sources');
   await TestRunner.addScriptTag('debugger/resources/edit-me.js');
+  await TestRunner.addScriptTag('../resources/editor-test.js');
 
   SourcesTestRunner.showScriptSource('edit-me.js', onSourceFrame);
 

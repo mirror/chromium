@@ -88,7 +88,7 @@ class EmbeddedWorkerInstanceClientImpl
 
   // mojom::EmbeddedWorkerInstanceClient implementation
   void StartWorker(
-      mojom::EmbeddedWorkerStartParamsPtr params,
+      const EmbeddedWorkerStartParams& params,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::ControllerServiceWorkerRequest controller_request,
       blink::mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
@@ -106,7 +106,7 @@ class EmbeddedWorkerInstanceClientImpl
   void OnError();
 
   std::unique_ptr<WorkerWrapper> StartWorkerContext(
-      mojom::EmbeddedWorkerStartParamsPtr params,
+      const EmbeddedWorkerStartParams& params,
       blink::mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
       std::unique_ptr<ServiceWorkerContextClient> context_client,
       blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy,

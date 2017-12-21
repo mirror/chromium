@@ -8,11 +8,13 @@
 #include "chrome/services/media_gallery_util/media_parser.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
+namespace chrome {
+
 namespace {
 
 void OnMediaParserRequest(
     service_manager::ServiceContextRefFactory* ref_factory,
-    chrome::mojom::MediaParserRequest request) {
+    mojom::MediaParserRequest request) {
   mojo::MakeStrongBinding(
       std::make_unique<MediaParser>(ref_factory->CreateRef()),
       std::move(request));
@@ -42,3 +44,5 @@ void MediaGalleryUtilService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
+
+}  //  namespace chrome

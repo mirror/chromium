@@ -231,6 +231,9 @@ void BrowserPlugin::Detach() {
       new BrowserPluginHostMsg_Detach(browser_plugin_instance_id_));
 }
 
+void BrowserPlugin::DidCommitCompositorFrame() {
+}
+
 #if defined(USE_AURA)
 void BrowserPlugin::CreateMusWindowAndEmbed(
     const base::UnguessableToken& embed_token) {
@@ -391,7 +394,9 @@ gfx::Rect BrowserPlugin::FrameRectInPixels() const {
 }
 
 float BrowserPlugin::GetDeviceScaleFactor() const {
-  return embedding_render_widget_->GetOriginalDeviceScaleFactor();
+  return RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
+      ->GetRenderWidget()
+      ->GetOriginalDeviceScaleFactor();
 }
 
 void BrowserPlugin::UpdateInternalInstanceId() {
@@ -455,21 +460,15 @@ bool BrowserPlugin::Initialize(WebPluginContainer* container) {
   compositing_helper_.reset(ChildFrameCompositingHelper::CreateForBrowserPlugin(
       weak_ptr_factory_.GetWeakPtr()));
 
-  embedding_render_widget_ =
+  RenderWidget* render_widget =
       RenderFrameImpl::FromWebFrame(container_->GetDocument().GetFrame())
           ->GetRenderWidget();
-  pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
-  embedding_render_widget_->RegisterBrowserPlugin(this);
+  pending_resize_params_.screen_info = render_widget->screen_info();
 
   return true;
 }
 
 void BrowserPlugin::Destroy() {
-  if (embedding_render_widget_) {
-    embedding_render_widget_->UnregisterBrowserPlugin(this);
-    embedding_render_widget_ = nullptr;
-  }
-
   if (container_) {
     // The BrowserPlugin's WebPluginContainer is deleted immediately after this
     // call returns, so let's not keep a reference to it around.
@@ -527,7 +526,10 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
   // We will use the local root's RenderWidget to convert coordinates to Window.
   // If this local root belongs to an OOPIF, on the browser side we will have to
   // consider the displacement of the child frame in root window.
-  embedding_render_widget_->ConvertViewportToWindow(&rect_in_css);
+  RenderWidget* render_widget =
+      RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
+          ->GetRenderWidget();
+  render_widget->ConvertViewportToWindow(&rect_in_css);
   gfx::Rect frame_rect = rect_in_css;
 
   if (!ready_) {
@@ -537,7 +539,7 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
   }
 
   pending_resize_params_.frame_rect = frame_rect;
-  pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
+  pending_resize_params_.screen_info = render_widget->screen_info();
   WasResized();
 }
 

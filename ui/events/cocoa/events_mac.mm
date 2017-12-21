@@ -78,8 +78,13 @@ int EventFlagsFromNative(const base::NativeEvent& event) {
 }
 
 base::TimeTicks EventTimeFromNative(const base::NativeEvent& native_event) {
-  base::TimeTicks timestamp =
-      ui::EventTimeStampFromSeconds([native_event timestamp]);
+  NSTimeInterval since_system_startup = [native_event timestamp];
+  // Truncate to extract seconds before doing floating point arithmetic.
+  int64_t seconds = since_system_startup;
+  since_system_startup -= seconds;
+  int64_t microseconds = since_system_startup * 1000000;
+  base::TimeTicks timestamp = ui::EventTimeStampFromSeconds(seconds) +
+         base::TimeDelta::FromMicroseconds(microseconds);
   ValidateEventTimeClock(&timestamp);
   return timestamp;
 }

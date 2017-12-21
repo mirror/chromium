@@ -139,6 +139,17 @@ public class TabUma {
     }
 
     /**
+     * Records a sample in a histogram of times. This is the Java equivalent of the
+     * UMA_HISTOGRAM_LONG_TIMES_100.
+     */
+    private void recordLongTimesHistogram100(String name, long duration) {
+        RecordHistogram.recordCustomTimesHistogram(
+                name, TimeUnit.MILLISECONDS.toMillis(duration),
+                TimeUnit.MILLISECONDS.toMillis(1), TimeUnit.HOURS.toMillis(1),
+                TimeUnit.MILLISECONDS, 100);
+    }
+
+    /**
      * Record the tab state transition into histograms.
      * @param prevState Previous state of the tab.
      * @param newState New state of the tab.
@@ -146,11 +157,9 @@ public class TabUma {
      */
     private void recordTabStateTransition(int prevState, int newState, long delta) {
         if (prevState == TAB_STATE_ACTIVE && newState == TAB_STATE_INACTIVE) {
-            RecordHistogram.recordLongTimesHistogram100(
-                    "Tabs.StateTransfer.Time_Active_Inactive", delta, TimeUnit.MILLISECONDS);
+            recordLongTimesHistogram100("Tabs.StateTransfer.Time_Active_Inactive", delta);
         } else if (prevState == TAB_STATE_ACTIVE && newState == TAB_STATE_CLOSED) {
-            RecordHistogram.recordLongTimesHistogram100(
-                    "Tabs.StateTransfer.Time_Active_Closed", delta, TimeUnit.MILLISECONDS);
+            recordLongTimesHistogram100("Tabs.StateTransfer.Time_Active_Closed", delta);
         }
 
         if (prevState == TAB_STATE_INITIAL) {

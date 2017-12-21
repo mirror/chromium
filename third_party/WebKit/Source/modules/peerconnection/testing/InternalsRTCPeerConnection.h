@@ -17,7 +17,6 @@ class InternalsRTCPeerConnection {
 
  public:
   static int peerConnectionCount(Internals&);
-  static int peerConnectionCountLimit(Internals&);
 };
 
 }  // namespace blink

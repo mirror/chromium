@@ -40,7 +40,7 @@ ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration(
 ParsedFeaturePolicyDeclaration::ParsedFeaturePolicyDeclaration(
     const ParsedFeaturePolicyDeclaration& rhs) = default;
 
-ParsedFeaturePolicyDeclaration::~ParsedFeaturePolicyDeclaration() = default;
+ParsedFeaturePolicyDeclaration::~ParsedFeaturePolicyDeclaration() {}
 
 bool operator==(const ParsedFeaturePolicyDeclaration& lhs,
                 const ParsedFeaturePolicyDeclaration& rhs) {
@@ -183,7 +183,7 @@ FeaturePolicy::FeaturePolicy(url::Origin origin,
 FeaturePolicy::FeaturePolicy(url::Origin origin)
     : origin_(origin), feature_list_(GetDefaultFeatureList()) {}
 
-FeaturePolicy::~FeaturePolicy() = default;
+FeaturePolicy::~FeaturePolicy() {}
 
 // static
 std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(

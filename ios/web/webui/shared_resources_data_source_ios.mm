@@ -27,14 +27,16 @@ namespace {
 // TODO(stuartmorgan): Revisit how to share this in a more maintainable way.
 const char kWebUIResourcesHost[] = "resources";
 
-// Maps a path name (i.e. "/js/path.js") to a resource map entry. Returns
-// nullptr if not found.
-const GzippedGritResourceMap* PathToResource(const std::string& path) {
+int PathToIDR(const std::string& path) {
+  int idr = -1;
   for (size_t i = 0; i < kWebuiResourcesSize; ++i) {
-    if (path == kWebuiResources[i].name)
-      return &kWebuiResources[i];
+    if (path == kWebuiResources[i].name) {
+      idr = kWebuiResources[i].value;
+      break;
+    }
   }
-  return nullptr;
+
+  return idr;
 }
 
 }  // namespace
@@ -50,13 +52,12 @@ std::string SharedResourcesDataSourceIOS::GetSource() const {
 void SharedResourcesDataSourceIOS::StartDataRequest(
     const std::string& path,
     const URLDataSourceIOS::GotDataCallback& callback) {
-  const GzippedGritResourceMap* resource = PathToResource(path);
-  DCHECK(resource) << " path: " << path;
+  int idr = PathToIDR(path);
+  DCHECK_NE(-1, idr) << " path: " << path;
   scoped_refptr<base::RefCountedMemory> bytes;
 
   WebClient* web_client = GetWebClient();
 
-  int idr = resource ? resource->value : -1;
   if (idr == IDR_WEBUI_CSS_TEXT_DEFAULTS) {
     std::string css = webui::GetWebUiCssTextDefaults();
     bytes = base::RefCountedString::TakeString(&css);
@@ -75,8 +76,7 @@ std::string SharedResourcesDataSourceIOS::GetMimeType(
 }
 
 bool SharedResourcesDataSourceIOS::IsGzipped(const std::string& path) const {
-  const GzippedGritResourceMap* resource = PathToResource(path);
-  return resource && resource->gzipped;
+  return webui::IsSharedResourceGzipped(path);
 }
 
 }  // namespace web

@@ -320,9 +320,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowInteractiveLogo) {
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-iframe"),
               Eq<std::string>("block"));
 
-  EXPECT_THAT(
-      GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
-      Eq<std::string>("https://www.chromium.org/interactive?gws_rd=cr"));
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
+              Eq<std::string>("https://www.chromium.org/interactive"));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-iframe", "title"),
               Eq<std::string>("alt text"));
 }
@@ -436,9 +435,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
               Eq<std::string>("none"));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-iframe"),
               Eq<std::string>("block"));
-  EXPECT_THAT(
-      GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
-      Eq<std::string>("https://www.chromium.org/interactive?gws_rd=cr"));
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
+              Eq<std::string>("https://www.chromium.org/interactive"));
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldNotFadeFromInteractiveDoodle) {
@@ -469,9 +467,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldNotFadeFromInteractiveDoodle) {
               Eq<std::string>("none"));
   EXPECT_THAT(GetComputedDisplay(active_tab, "logo-doodle-iframe"),
               Eq<std::string>("block"));
-  EXPECT_THAT(
-      GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
-      Eq<std::string>("https://www.chromium.org/interactive?gws_rd=cr"));
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-iframe", "src"),
+              Eq<std::string>("https://www.chromium.org/interactive"));
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,

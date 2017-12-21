@@ -17,7 +17,6 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
-#include "chromeos/components/tether/gms_core_notifications_state_tracker_impl.h"
 #include "chromeos/components/tether/tether_component_impl.h"
 #include "chromeos/components/tether/tether_host_fetcher_impl.h"
 #include "chromeos/network/device_state.h"
@@ -117,12 +116,9 @@ TetherService::TetherService(
       cryptauth_service_(cryptauth_service),
       network_state_handler_(network_state_handler),
       notification_presenter_(
-          std::make_unique<chromeos::tether::TetherNotificationPresenter>(
+          base::MakeUnique<chromeos::tether::TetherNotificationPresenter>(
               profile_,
               chromeos::NetworkConnect::Get())),
-      gms_core_notifications_state_tracker_(
-          std::make_unique<
-              chromeos::tether::GmsCoreNotificationsStateTrackerImpl>()),
       remote_device_provider_(
           cryptauth::RemoteDeviceProviderImpl::Factory::NewInstance(
               cryptauth_service->GetCryptAuthDeviceManager(),
@@ -133,7 +129,7 @@ TetherService::TetherService(
       tether_host_fetcher_(
           chromeos::tether::TetherHostFetcherImpl::Factory::NewInstance(
               remote_device_provider_.get())),
-      timer_(std::make_unique<base::OneShotTimer>()),
+      timer_(base::MakeUnique<base::OneShotTimer>()),
       weak_ptr_factory_(this) {
   tether_host_fetcher_->AddObserver(this);
   power_manager_client_->AddObserver(this);
@@ -178,19 +174,13 @@ void TetherService::StartTetherIfPossible() {
   tether_component_ =
       chromeos::tether::TetherComponentImpl::Factory::NewInstance(
           cryptauth_service_, tether_host_fetcher_.get(),
-          notification_presenter_.get(),
-          gms_core_notifications_state_tracker_.get(), profile_->GetPrefs(),
+          notification_presenter_.get(), profile_->GetPrefs(),
           network_state_handler_,
           chromeos::NetworkHandler::Get()
               ->managed_network_configuration_handler(),
           chromeos::NetworkConnect::Get(),
           chromeos::NetworkHandler::Get()->network_connection_handler(),
           adapter_);
-}
-
-chromeos::tether::GmsCoreNotificationsStateTracker*
-TetherService::GetGmsCoreNotificationsStateTracker() {
-  return gms_core_notifications_state_tracker_.get();
 }
 
 void TetherService::StopTetherIfNecessary() {

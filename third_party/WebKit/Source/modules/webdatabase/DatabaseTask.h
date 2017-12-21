@@ -30,14 +30,13 @@
 #define DatabaseTask_h
 
 #include <memory>
-
-#include "base/memory/ptr_util.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseBasicTypes.h"
 #include "modules/webdatabase/DatabaseError.h"
 #include "modules/webdatabase/SQLTransactionBackend.h"
 #include "platform/WaitableEvent.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
@@ -80,9 +79,9 @@ class Database::DatabaseOpenTask final : public DatabaseTask {
       DatabaseError& error,
       String& error_message,
       bool& success) {
-    return base::WrapUnique(
-        new DatabaseOpenTask(db, set_version_in_new_database, complete_event,
-                             error, error_message, success));
+    return WTF::WrapUnique(new DatabaseOpenTask(db, set_version_in_new_database,
+                                                complete_event, error,
+                                                error_message, success));
   }
 
  private:
@@ -109,7 +108,7 @@ class Database::DatabaseCloseTask final : public DatabaseTask {
   static std::unique_ptr<DatabaseCloseTask> Create(
       Database* db,
       WaitableEvent* synchronizer) {
-    return base::WrapUnique(new DatabaseCloseTask(db, synchronizer));
+    return WTF::WrapUnique(new DatabaseCloseTask(db, synchronizer));
   }
 
  private:
@@ -128,7 +127,7 @@ class Database::DatabaseTransactionTask final : public DatabaseTask {
   // Transaction task is never synchronous, so no 'synchronizer' parameter.
   static std::unique_ptr<DatabaseTransactionTask> Create(
       SQLTransactionBackend* transaction) {
-    return base::WrapUnique(new DatabaseTransactionTask(transaction));
+    return WTF::WrapUnique(new DatabaseTransactionTask(transaction));
   }
 
   SQLTransactionBackend* Transaction() const { return transaction_.Get(); }
@@ -149,8 +148,7 @@ class Database::DatabaseTableNamesTask final : public DatabaseTask {
  public:
   static std::unique_ptr<DatabaseTableNamesTask>
   Create(Database* db, WaitableEvent* synchronizer, Vector<String>& names) {
-    return base::WrapUnique(
-        new DatabaseTableNamesTask(db, synchronizer, names));
+    return WTF::WrapUnique(new DatabaseTableNamesTask(db, synchronizer, names));
   }
 
  private:

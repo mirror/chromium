@@ -163,8 +163,7 @@ class HostedAppTest : public ExtensionBrowserTest,
 };
 
 // Tests that "Open link in new tab" opens a link in a foreground tab.
-// Flaky, see https://crbug.com/795055
-IN_PROC_BROWSER_TEST_P(HostedAppTest, DISABLED_OpenLinkInNewTab) {
+IN_PROC_BROWSER_TEST_P(HostedAppTest, OpenLinkInNewTab) {
   SetupApp("app", true);
 
   const GURL url("http://www.foo.com/");

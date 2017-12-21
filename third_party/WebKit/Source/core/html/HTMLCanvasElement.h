@@ -111,6 +111,8 @@ class CORE_EXPORT HTMLCanvasElement final
       const String&,
       const CanvasContextCreationAttributes&);
 
+  bool IsPaintable() const;
+
   String toDataURL(const String& mime_type,
                    const ScriptValue& quality_argument,
                    ExceptionState&) const;
@@ -143,9 +145,7 @@ class CORE_EXPORT HTMLCanvasElement final
   void DisableDeferral(DisableDeferralReason);
   PaintCanvas* ExistingDrawingCanvas() const;
 
-  CanvasRenderingContext* RenderingContext() const override {
-    return context_.Get();
-  }
+  CanvasRenderingContext* RenderingContext() const { return context_.Get(); }
 
   scoped_refptr<Image> CopiedImage(SourceDrawingBuffer,
                                    AccelerationHint,

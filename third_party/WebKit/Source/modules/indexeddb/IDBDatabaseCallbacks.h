@@ -29,7 +29,6 @@
 #include "modules/ModulesExport.h"
 #include "platform/heap/Handle.h"
 #include "public/platform/WebVector.h"
-#include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
 
 #include <unordered_map>
 
@@ -43,6 +42,10 @@ struct WebIDBObservation;
 class MODULES_EXPORT IDBDatabaseCallbacks
     : public GarbageCollectedFinalized<IDBDatabaseCallbacks> {
  public:
+  // Maps observer to transaction, which needs an id and a scope.
+  using TransactionMap =
+      std::unordered_map<int32_t, std::pair<int64_t, std::vector<int64_t>>>;
+
   static IDBDatabaseCallbacks* Create();
   virtual ~IDBDatabaseCallbacks();
   void Trace(blink::Visitor*);
@@ -54,9 +57,10 @@ class MODULES_EXPORT IDBDatabaseCallbacks
   virtual void OnAbort(int64_t transaction_id, DOMException*);
   virtual void OnComplete(int64_t transaction_id);
   virtual void OnChanges(
-      const WebIDBDatabaseCallbacks::ObservationIndexMap&,
+      const std::unordered_map<int32_t, std::vector<int32_t>>&
+          observation_index_map,
       const WebVector<WebIDBObservation>& observations,
-      const WebIDBDatabaseCallbacks::TransactionMap& transactions);
+      const TransactionMap& transactions);
 
   void Connect(IDBDatabase*);
 

@@ -12,11 +12,11 @@
 #include "base/bind.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "base/sys_byteorder.h"
-#include "base/test/scoped_task_environment.h"
-#include "base/time/time.h"
+#include "base/test/test_timeouts.h"
 #include "net/base/ip_address.h"
 #include "net/dns/dns_protocol.h"
 #include "net/dns/dns_query.h"
@@ -27,7 +27,6 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/gtest_util.h"
-#include "net/test/net_test_suite.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -38,8 +37,6 @@ namespace net {
 class NetLog;
 
 namespace {
-
-base::TimeDelta kTimeout = base::TimeDelta::FromSeconds(1);
 
 std::string DomainFromDot(const base::StringPiece& dotted) {
   std::string out;
@@ -242,11 +239,17 @@ class TransactionHelper {
         qtype_(qtype),
         expected_answer_count_(expected_answer_count),
         cancel_in_callback_(false),
+        quit_in_callback_(false),
         completed_(false) {}
 
   // Mark that the transaction shall be destroyed immediately upon callback.
   void set_cancel_in_callback() {
     cancel_in_callback_ = true;
+  }
+
+  // Mark to call MessageLoop::QuitWhenIdle() upon callback.
+  void set_quit_in_callback() {
+    quit_in_callback_ = true;
   }
 
   void StartTransaction(DnsTransactionFactory* factory) {
@@ -278,6 +281,10 @@ class TransactionHelper {
       return;
     }
 
+    // Tell MessageLoop to quit now, in case any ASSERT_* fails.
+    if (quit_in_callback_)
+      base::RunLoop::QuitCurrentWhenIdleDeprecated();
+
     if (expected_answer_count_ >= 0) {
       ASSERT_THAT(rv, IsOk());
       ASSERT_TRUE(response != NULL);
@@ -307,16 +314,11 @@ class TransactionHelper {
     return has_completed();
   }
 
-  bool FastForwardByTimeout(DnsSession* session,
-                            unsigned server_index,
-                            int attempt) {
-    NetTestSuite::GetScopedTaskEnvironment()->FastForwardBy(
-        session->NextTimeout(server_index, attempt));
-    return has_completed();
-  }
-
-  bool FastForwardAll() {
-    NetTestSuite::GetScopedTaskEnvironment()->FastForwardUntilNoTasksRemain();
+  // Use when some of the responses are timeouts.
+  bool RunUntilDone(DnsTransactionFactory* factory) {
+    set_quit_in_callback();
+    StartTransaction(factory);
+    base::RunLoop().Run();
     return has_completed();
   }
 
@@ -326,6 +328,7 @@ class TransactionHelper {
   std::unique_ptr<DnsTransaction> transaction_;
   int expected_answer_count_;
   bool cancel_in_callback_;
+  bool quit_in_callback_;
 
   bool completed_;
 };
@@ -446,14 +449,12 @@ class DnsTransactionTest : public testing::Test {
   }
 
   void SetUp() override {
-    NetTestSuite::SetScopedTaskEnvironment(
-        base::test::ScopedTaskEnvironment::MainThreadType::MOCK_TIME);
     // By default set one server,
     ConfigureNumServers(1);
     // and no retransmissions,
     config_.attempts = 1;
-    // and an arbitrary timeout.
-    config_.timeout = kTimeout;
+    // but long enough timeout for memory tests.
+    config_.timeout = TestTimeouts::action_timeout();
     ConfigureFactory();
   }
 
@@ -462,7 +463,6 @@ class DnsTransactionTest : public testing::Test {
     for (size_t i = 0; i < socket_data_.size(); ++i) {
       EXPECT_TRUE(socket_data_[i]->GetProvider()->AllWriteDataConsumed()) << i;
     }
-    NetTestSuite::ResetScopedTaskEnvironment();
   }
 
  protected:
@@ -594,6 +594,7 @@ TEST_F(DnsTransactionTest, CancelFromCallback) {
 
 TEST_F(DnsTransactionTest, MismatchedResponseSync) {
   config_.attempts = 2;
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   // Attempt receives mismatched response followed by valid response.
@@ -606,11 +607,12 @@ TEST_F(DnsTransactionTest, MismatchedResponseSync) {
   AddSocketData(std::move(data));
 
   TransactionHelper helper0(kT0HostName, kT0Qtype, kT0RecordCount);
-  EXPECT_TRUE(helper0.Run(transaction_factory_.get()));
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
 }
 
 TEST_F(DnsTransactionTest, MismatchedResponseAsync) {
   config_.attempts = 2;
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   // First attempt receives mismatched response followed by valid response.
@@ -625,10 +627,11 @@ TEST_F(DnsTransactionTest, MismatchedResponseAsync) {
   AddQueryAndTimeout(kT0HostName, kT0Qtype);
 
   TransactionHelper helper0(kT0HostName, kT0Qtype, kT0RecordCount);
-  EXPECT_TRUE(helper0.Run(transaction_factory_.get()));
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
 }
 
 TEST_F(DnsTransactionTest, MismatchedResponseFail) {
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   // Attempt receives mismatched response but times out because only one attempt
@@ -637,12 +640,12 @@ TEST_F(DnsTransactionTest, MismatchedResponseFail) {
                            kT0ResponseDatagram, arraysize(kT0ResponseDatagram));
 
   TransactionHelper helper0(kT0HostName, kT0Qtype, ERR_DNS_TIMED_OUT);
-  EXPECT_FALSE(helper0.Run(transaction_factory_.get()));
-  EXPECT_TRUE(helper0.FastForwardByTimeout(session_.get(), 0, 0));
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
 }
 
 TEST_F(DnsTransactionTest, MismatchedResponseNxdomain) {
   config_.attempts = 2;
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   // First attempt receives mismatched response followed by valid NXDOMAIN
@@ -676,6 +679,8 @@ TEST_F(DnsTransactionTest, NoDomain) {
 
 TEST_F(DnsTransactionTest, Timeout) {
   config_.attempts = 3;
+  // Use short timeout to speed up the test.
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   AddQueryAndTimeout(kT0HostName, kT0Qtype);
@@ -683,12 +688,8 @@ TEST_F(DnsTransactionTest, Timeout) {
   AddQueryAndTimeout(kT0HostName, kT0Qtype);
 
   TransactionHelper helper0(kT0HostName, kT0Qtype, ERR_DNS_TIMED_OUT);
-
-  // Finish when the third attempt times out.
-  EXPECT_FALSE(helper0.Run(transaction_factory_.get()));
-  EXPECT_FALSE(helper0.FastForwardByTimeout(session_.get(), 0, 0));
-  EXPECT_FALSE(helper0.FastForwardByTimeout(session_.get(), 0, 1));
-  EXPECT_TRUE(helper0.FastForwardByTimeout(session_.get(), 0, 2));
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
+  EXPECT_TRUE(base::MessageLoop::current()->IsIdleForTesting());
 }
 
 TEST_F(DnsTransactionTest, ServerFallbackAndRotate) {
@@ -697,6 +698,8 @@ TEST_F(DnsTransactionTest, ServerFallbackAndRotate) {
   // The next request should start from the next server.
   config_.rotate = true;
   ConfigureNumServers(3);
+  // Use short timeout to speed up the test.
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   // Responses for first request.
@@ -713,8 +716,7 @@ TEST_F(DnsTransactionTest, ServerFallbackAndRotate) {
   TransactionHelper helper0(kT0HostName, kT0Qtype, ERR_NAME_NOT_RESOLVED);
   TransactionHelper helper1(kT1HostName, kT1Qtype, ERR_NAME_NOT_RESOLVED);
 
-  EXPECT_FALSE(helper0.Run(transaction_factory_.get()));
-  EXPECT_TRUE(helper0.FastForwardAll());
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
   EXPECT_TRUE(helper1.Run(transaction_factory_.get()));
 
   unsigned kOrder[] = {
@@ -980,6 +982,7 @@ TEST_F(DnsTransactionTest, TCPMalformed) {
 }
 
 TEST_F(DnsTransactionTest, TCPTimeout) {
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
   AddAsyncQueryAndRcode(kT0HostName, kT0Qtype,
                         dns_protocol::kRcodeNOERROR | dns_protocol::kFlagTC);
@@ -987,8 +990,7 @@ TEST_F(DnsTransactionTest, TCPTimeout) {
                                                 kT0Qtype, ASYNC, true));
 
   TransactionHelper helper0(kT0HostName, kT0Qtype, ERR_DNS_TIMED_OUT);
-  EXPECT_FALSE(helper0.Run(transaction_factory_.get()));
-  EXPECT_TRUE(helper0.FastForwardAll());
+  EXPECT_TRUE(helper0.RunUntilDone(transaction_factory_.get()));
 }
 
 TEST_F(DnsTransactionTest, TCPReadReturnsZeroAsync) {
@@ -1055,6 +1057,7 @@ TEST_F(DnsTransactionTest, TCPConnectionClosedSynchronous) {
 
 TEST_F(DnsTransactionTest, MismatchedThenNxdomainThenTCP) {
   config_.attempts = 2;
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
   std::unique_ptr<DnsSocketData> data(
       new DnsSocketData(0 /* id */, kT0HostName, kT0Qtype, SYNCHRONOUS, false));
@@ -1077,6 +1080,7 @@ TEST_F(DnsTransactionTest, MismatchedThenNxdomainThenTCP) {
 
 TEST_F(DnsTransactionTest, MismatchedThenOkThenTCP) {
   config_.attempts = 2;
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
   std::unique_ptr<DnsSocketData> data(
       new DnsSocketData(0 /* id */, kT0HostName, kT0Qtype, SYNCHRONOUS, false));
@@ -1100,6 +1104,7 @@ TEST_F(DnsTransactionTest, MismatchedThenOkThenTCP) {
 }
 
 TEST_F(DnsTransactionTest, InvalidQuery) {
+  config_.timeout = TestTimeouts::tiny_timeout();
   ConfigureFactory();
 
   TransactionHelper helper0(".", dns_protocol::kTypeA, ERR_INVALID_ARGUMENT);

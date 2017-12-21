@@ -26,7 +26,8 @@ class MockInputRouterClient : public InputRouterClient {
   InputEventAckState FilterInputEvent(
       const blink::WebInputEvent& input_event,
       const ui::LatencyInfo& latency_info) override;
-  void IncrementInFlightEventCount() override;
+  void IncrementInFlightEventCount(
+      blink::WebInputEvent::Type event_type) override;
   void DecrementInFlightEventCount(InputEventAckSource ack_source) override;
   void OnHasTouchEventHandlers(bool has_handlers) override;
   void DidOverscroll(const ui::DidOverscrollParams& params) override;
@@ -56,7 +57,7 @@ class MockInputRouterClient : public InputRouterClient {
     return in_flight_event_count_;
   }
   blink::WebInputEvent::Type last_in_flight_event_type() const {
-    return last_filter_event()->GetType();
+    return last_in_flight_event_type_;
   }
   void set_allow_send_event(bool allow) {
     filter_state_ = INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
@@ -68,6 +69,8 @@ class MockInputRouterClient : public InputRouterClient {
  private:
   InputRouter* input_router_;
   int in_flight_event_count_;
+  blink::WebInputEvent::Type last_in_flight_event_type_ =
+      blink::WebInputEvent::kUndefined;
   bool has_touch_handler_;
 
   InputEventAckState filter_state_;

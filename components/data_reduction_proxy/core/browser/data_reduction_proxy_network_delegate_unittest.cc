@@ -923,12 +923,45 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       features::kDataReductionProxyDecidesTransform);
 
   // Enable Lo-Fi.
-  bool is_data_reduction_proxy_enabled[] = {false, true};
+  const struct {
+    bool lofi_switch_enabled;
+    bool auto_lofi_enabled;
+    bool is_data_reduction_proxy;
+  } tests[] = {
+      {
+          // Lo-Fi enabled through switch and not using a Data Reduction Proxy.
+          true, false, false,
+      },
+      {
+          // Lo-Fi enabled through switch and using a Data Reduction Proxy.
+          true, false, true,
+      },
+      {
+          // Lo-Fi enabled through field trial and not using a Data Reduction
+          // Proxy.
+          false, true, false,
+      },
+      {
+          // Lo-Fi enabled through field trial and using a Data Reduction Proxy.
+          false, true, true,
+      },
+  };
 
-  for (size_t i = 0; i < arraysize(is_data_reduction_proxy_enabled); ++i) {
+  for (size_t i = 0; i < arraysize(tests); ++i) {
+    if (tests[i].lofi_switch_enabled) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kDataReductionProxyLoFi,
+          switches::kDataReductionProxyLoFiValueAlwaysOn);
+    }
+    base::FieldTrialList field_trial_list(nullptr);
+    if (tests[i].auto_lofi_enabled) {
+      base::FieldTrialList::CreateFieldTrial(params::GetLoFiFieldTrialName(),
+                                             "Enabled");
+    }
+
     net::ProxyInfo data_reduction_proxy_info;
     std::string proxy;
-    if (is_data_reduction_proxy_enabled[i]) {
+    if (tests[i].is_data_reduction_proxy) {
       data_reduction_proxy_info.UseProxyServer(
           params()->proxies_for_http().front().proxy_server());
     } else {
@@ -953,9 +986,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
 
-      VerifyHeaders(is_data_reduction_proxy_enabled[i], true, headers);
+      VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
       VerifyDataReductionProxyData(
-          *fake_request, is_data_reduction_proxy_enabled[i],
+          *fake_request, tests[i].is_data_reduction_proxy,
           config()->ShouldAcceptServerPreview(*fake_request.get(),
                                               test_previews_decider));
     }
@@ -970,9 +1003,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
-      VerifyHeaders(is_data_reduction_proxy_enabled[i], false, headers);
+      VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
       VerifyDataReductionProxyData(*fake_request,
-                                   is_data_reduction_proxy_enabled[i], false);
+                                   tests[i].is_data_reduction_proxy, false);
     }
 
     {
@@ -986,9 +1019,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       lofi_decider()->SetIsUsingLoFi(true);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
-      VerifyHeaders(is_data_reduction_proxy_enabled[i], true, headers);
+      VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
       VerifyDataReductionProxyData(*fake_request,
-                                   is_data_reduction_proxy_enabled[i], true);
+                                   tests[i].is_data_reduction_proxy, true);
     }
 
     {
@@ -1003,9 +1036,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
-      VerifyHeaders(is_data_reduction_proxy_enabled[i], false, headers);
+      VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
       VerifyDataReductionProxyData(*fake_request,
-                                   is_data_reduction_proxy_enabled[i], false);
+                                   tests[i].is_data_reduction_proxy, false);
     }
 
     {
@@ -1018,9 +1051,9 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
-      VerifyHeaders(is_data_reduction_proxy_enabled[i], false, headers);
+      VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
       VerifyDataReductionProxyData(*fake_request,
-                                   is_data_reduction_proxy_enabled[i], false);
+                                   tests[i].is_data_reduction_proxy, false);
     }
 
     {
@@ -1036,7 +1069,7 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyDataReductionProxyData(
-          *fake_request, is_data_reduction_proxy_enabled[i],
+          *fake_request, tests[i].is_data_reduction_proxy,
           config()->ShouldAcceptServerPreview(*fake_request.get(),
                                               test_previews_decider));
     }
