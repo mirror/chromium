@@ -36,10 +36,26 @@
 
 namespace blink {
 
-PLATFORM_EXPORT void QuotedPrintableEncode(const Vector<char>&, Vector<char>&);
-PLATFORM_EXPORT void QuotedPrintableEncode(const char*, size_t, Vector<char>&);
+// The original characters may be encoded a bit differently depending on where
+// they live, header or body.
+// 1) Soft line break: "=CRLF" should be used to break long line in body while
+//    "CRLF+SPACE" should be used to break long line in header.
+// 2) SPACE and TAB: they only need to be encoded if they appear at the end of
+//    the body line. But they should always be encoded if they appear anywhere
+//    in the header line.
+enum class QuotedPrintableEncodeType {
+  //  For characters in body, per RFC 2045.
+  kForBody,
+  //  For characters in header, per RFC 2047.
+  kForHeader,
+};
 
-PLATFORM_EXPORT void QuotedPrintableDecode(const Vector<char>&, Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableEncode(const char*,
+                                           size_t,
+                                           QuotedPrintableEncodeType,
+                                           size_t max_line_length,
+                                           Vector<char>&);
+
 PLATFORM_EXPORT void QuotedPrintableDecode(const char*, size_t, Vector<char>&);
 
 }  // namespace blink
