@@ -1,0 +1,380 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da42ebe2_f7feebdd",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "If this gets an unexpected message, what happens?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7903e1ba_4d618cf9",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "auto filter \u003d base::MakeRefCounted\u003c...\u003e(...);",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c6d08d_0b0483be",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "The new recommended comment format is: \"/*content_id\u003d*/0\" like on line 127.",
+      "range": {
+        "startLine": 142,
+        "startChar": 48,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b317449_6f7f4d3b",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Just insert() and check if it got inserted.",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfce17e6_5e85cdc5",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "If there is no |connector_|, doesn\u0027t that mean the renderer sent us a spurious message? The IPC handler probably should not tolerate that.",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67f41bf_e4a9b4e9",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Should this method check if |frame_id| is in |pending_subframe_ids_| and remove it from there?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d4f3e1_7e533228",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "You may want to double check with the Blink folks to see if beforeprint/afterprint fires once per frame, or once per entire web page.",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5c05dc_9894af1e",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Is this needed? Can\u0027t this happen legitimately?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f516ea_d9f8e98d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 1455,
+        "startChar": 21,
+        "endLine": 1455,
+        "endChar": 37
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d7a244_7bdf4ed3",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. The Send() cannot invalidate |weak_this|.",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71919a89_f7c4467f",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Should we do anything if |rect| is empty?",
+      "range": {
+        "startLine": 385,
+        "startChar": 63,
+        "endLine": 385,
+        "endChar": 67
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1513e44d_f26693c4",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Who is going to check |content_id| ?",
+      "range": {
+        "startLine": 386,
+        "startChar": 55,
+        "endLine": 386,
+        "endChar": 65
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b8d598_7b28f16e",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Should this be root_rfh, and thus making the \"src_frame_id\" variables/params in this cl \"root_frame_id\" ?",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 30
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d650987_194f8867",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Is this CL, in its final form going to add this, or the other CL?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8d996c_11446e82",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Are the params the exact same params as RenderFrameHostDelegate::PrintOopSubframe() ? Can you document what they are in one place, and reference the documentation in the other place?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b01a76_ae249ded",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "nit: blaink line after.",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f4793d_4095958a",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Are these #includes suppose to be here?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7573dd_7bfa7662",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "This is redundant with the next line. Combine:\n\nif (data_-\u003epages_.size() !\u003d 1) {\n  NOTREACHED();\n  return false;\n}",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed28a418_5f7b7e87",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Can this return const ref?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812d0b9d_763f987f",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:10:29Z",
+      "side": 1,
+      "message": "Can you add a comment to explain how this related to FinishPage() / FinishDocument() ?",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
