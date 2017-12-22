@@ -19,7 +19,10 @@ const GLuint kBufferServiceId = 987;
 class IndexedBufferBindingHostTest : public GpuServiceTest {
  public:
   IndexedBufferBindingHostTest()
-      : host_(new IndexedBufferBindingHost(kMaxBindings, true)),
+      : host_(new IndexedBufferBindingHost(kMaxBindings,
+                                           GL_UNIFORM_BUFFER,
+                                           true,
+                                           false)),
         buffer_manager_(new BufferManager(nullptr, nullptr)) {
     buffer_manager_->CreateBuffer(kBufferClientId, kBufferServiceId);
     buffer_ = buffer_manager_->GetBuffer(kBufferClientId);
@@ -130,8 +133,8 @@ TEST_F(IndexedBufferBindingHostTest, RestoreBindings) {
       .RetiresOnSaturation();
   host_->DoBindBufferBase(kTarget, kIndex, buffer_.get());
   // Set up the second host
-  scoped_refptr<IndexedBufferBindingHost> other =
-      new IndexedBufferBindingHost(kMaxBindings, true);
+  scoped_refptr<IndexedBufferBindingHost> other = new IndexedBufferBindingHost(
+      kMaxBindings, GL_UNIFORM_BUFFER, true, false);
   EXPECT_CALL(*gl_, BindBufferRange(kTarget, kOtherIndex, kBufferServiceId,
                                     kOffset, clamped_size))
       .Times(1)

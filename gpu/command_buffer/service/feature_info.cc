@@ -1756,6 +1756,10 @@ bool FeatureInfo::IsWebGLContext() const {
   return IsWebGLContextType(context_type_);
 }
 
+bool FeatureInfo::IsWebGL2Context() const {
+  return IsWebGLContextType(context_type_);
+}
+
 bool FeatureInfo::IsWebGL1OrES2Context() const {
   return IsWebGL1OrES2ContextType(context_type_);
 }
