@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11ca6bac_f08137b7",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "testLitePageBTFOldFlags",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 21
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c5653e_2190ede8",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "testLitePageBTFNoFallback",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 53
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dda1e18_0a13df7d",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "Suggest we name this one now testLoFiOnSlowConnection\n(note slightly different (using \"On\") from the other\u0027s original name which could be useful distinction for bug reports, etc.).",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef0562c_d728377e",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "I think we need some other flag (alt-server) to test server to not do lite page to make this test legitimate",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dba668_6d2caac0",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "maybe testLoFiSlowConnectionOldFlags",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f24428_824911b1",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "...OldFlags",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7447516c_178b718d",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "testLoFiOnFastConnection",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 61
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c56fbd_24ae9332",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "Again, I think we need to tell server to not do lite page in order for this to be legitimate test.",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0016e586_f1cbc9f2",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "...OldFlags",
+      "range": {
+        "startLine": 247,
+        "startChar": 6,
+        "endLine": 247,
+        "endChar": 25
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef453e2b_c462176d",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "testLoFiWithCacheBypass",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 328,
+        "endChar": 58
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bbad58_4d41e670",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T19:17:32Z",
+      "side": 1,
+      "message": "ditto on instructing server to not do lite",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
