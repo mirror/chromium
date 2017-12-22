@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4109149d_ff5cab32",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-22T16:13:56Z",
+      "side": 1,
+      "message": "nit: I prefer the comment from the other test file :).",
+      "revId": "1bdc0301edaee9414d67614fc07f8ffb6291fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2641d30_553a9b47",
         "filename": "mojo/edk/embedder/platform_shared_buffer.cc",
         "patchSetId": 23
