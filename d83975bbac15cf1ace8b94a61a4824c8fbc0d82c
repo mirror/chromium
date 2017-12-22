@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50da6b4c_d2e06a09",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T16:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71c1c57_b8091c4e",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "d83975bbac15cf1ace8b94a61a4824c8fbc0d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a58bb14_983e3e5d",
         "filename": "device/u2f/u2f_ble_transaction.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6531b841_8b718afa",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T16:34:21Z",
+      "side": 1,
+      "message": "That\u0027s true, but then every call to WriteRequestFragment would result in a memory allocation + deallocation. Given that the control point length tends to be small for most BLE tokens (e.g. 20 bytes), this potentially could result in a lot of allocations. This is why I would like to keep it as a member variable. However, I did move the call to reserve to the constructor, doing it once is enough.",
+      "parentUuid": "1a58bb14_983e3e5d",
+      "revId": "d83975bbac15cf1ace8b94a61a4824c8fbc0d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "180886a0_561a3233",
         "filename": "device/u2f/u2f_ble_transaction.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "d83975bbac15cf1ace8b94a61a4824c8fbc0d82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4704df1a_831f18c0",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T16:34:21Z",
+      "side": 1,
+      "message": "Done. TIL std::queue does not have a clear() method...",
+      "parentUuid": "180886a0_561a3233",
+      "revId": "d83975bbac15cf1ace8b94a61a4824c8fbc0d82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
