@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9485dc9c_66a3aa41",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-22T18:13:13Z",
+      "side": 1,
+      "message": "nit: /*show_wallpaper\u003d*/ true,",
+      "revId": "d6abbf8a56ac514bf3ae945888365a45e669b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
