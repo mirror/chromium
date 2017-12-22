@@ -83,8 +83,24 @@ public final class DownloadNotificationFactory {
                 boolean indeterminate = downloadUpdate.getProgress().isIndeterminate()
                         || downloadUpdate.getIsDownloadPending();
                 if (downloadUpdate.getIsDownloadPending()) {
-                    contentText = context.getResources().getString(
-                            R.string.download_notification_pending);
+                    switch (downloadUpdate.getPendingState()) {
+                        case PENDING_NETWORK:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending_network);
+                            break;
+                        case PENDING_ANOTHER_DOWNLOAD:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending_another_download);
+                            break;
+                        case PENDING_CHROME_RESTART:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending_chrome_restart);
+                            break;
+                        default:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending);
+                            break;
+                    }
                 } else if (indeterminate || downloadUpdate.getTimeRemainingInMillis() < 0) {
                     // TODO(dimich): Enable the byte count back in M59. See bug 704049 for more info
                     // and details of what was temporarily reverted (for M58).
