@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ef983d_8e0f7e37",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-22T14:47:53Z",
+      "side": 1,
+      "message": "Set to 1 for checkin?",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "98713874f021b9533c7a54e5391ad32ccf78f8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2927c5c8_42f2fbf2",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-22T14:47:53Z",
+      "side": 1,
+      "message": "Any reason not to clear all phases?",
+      "revId": "98713874f021b9533c7a54e5391ad32ccf78f8e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
