@@ -45,6 +45,30 @@
       "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3493904b_6a2a9858",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-22T08:49:53Z",
+      "side": 1,
+      "message": "I blindly copied both the timeout and above addEventListener from https://github.com/w3c/web-platform-tests/blob/master/html/semantics/text-level-semantics/the-a-element/a-download-click-404.html",
+      "parentUuid": "2a549d77_cfa2e190",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
