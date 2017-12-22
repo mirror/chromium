@@ -2785,6 +2785,12 @@ class MockCALayerGLES2Interface : public cc::TestGLES2Interface {
                     GLuint edge_aa_mask,
                     const GLfloat* bounds_rect,
                     GLuint filter));
+
+  void InitializeTestContext(cc::TestWebGraphicsContext3D* context) override {
+    // Support image storage for GpuMemoryBuffers, needed for
+    // CALayers/IOSurfaces backed by textures.
+    context->set_support_texture_storage_image(true);
+  }
 };
 
 TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
