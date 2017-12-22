@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f87226_b801dc4b",
+        "filename": "build/android/gyp/dist_aar.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-22T18:47:01Z",
+      "side": 1,
+      "message": "A little confused by this, if there are 10 resource zips then the first one will be \" 1-values.xml\", why is the space necessary to ensure uniqueness?",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "dfabe84251f455e46c43ea35d2219e446a5d34cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42549bd9_37de3d58",
+        "filename": "build/android/gyp/dist_aar.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-22T18:47:01Z",
+      "side": 1,
+      "message": "Missing why we can\u0027t just use tempfile normally here?",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 15
+      },
+      "revId": "dfabe84251f455e46c43ea35d2219e446a5d34cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9703c5_6be40aa2",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-22T18:47:01Z",
+      "side": 1,
+      "message": "Should this be all_configs?",
+      "range": {
+        "startLine": 1551,
+        "startChar": 69,
+        "endLine": 1551,
+        "endChar": 80
+      },
+      "revId": "dfabe84251f455e46c43ea35d2219e446a5d34cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
