@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a04766bb_66ba4912",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T17:21:04Z",
+      "side": 1,
+      "message": "Put this in shouldIgnoreNode?",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed07f37_a9502b8d",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T17:21:04Z",
+      "side": 1,
+      "message": "I typically see this defined as a function, like a constructor:\n\nfunction SelectedNode() {\n}\n\nAlso, in other browser code we typically call this a \"Position\"\n(a node plus an offset), and a start and end position together\nare called a \"Range\". I think using those terms would make sense.",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc15cec6_acbda598",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T17:21:04Z",
+      "side": 1,
+      "message": "Can you clarify when this is needed? Is this just because\nyou have a staticText and you want an inlineTextBox?\n\nAre there any cases other than this one that you see in\npractice?",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20d8469_02fdfe53",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T17:21:04Z",
+      "side": 1,
+      "message": "No. Affinity has to do with whether the cursor is at the\nend of the previous line or the beginning of the next line,\nwhen they represent the same logical position in the text.\nAffinity does affect what happens if you press arrow keys\nto change the selection or move the cursor, but it doesn\u0027t\naffect what characters are actually within the selection.",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
