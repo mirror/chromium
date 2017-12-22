@@ -5052,7 +5052,7 @@ bool Document::IsInInvisibleSubframe() const {
 
   // TODO(bokan): This looks like it doesn't work in OOPIF.
   DCHECK(GetFrame());
-  return GetFrame()->OwnerLayoutItem().IsNull();
+  return !GetFrame()->OwnerLayoutObject();
 }
 
 String Document::cookie(ExceptionState& exception_state) const {

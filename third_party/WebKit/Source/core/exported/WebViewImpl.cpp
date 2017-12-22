@@ -2971,11 +2971,11 @@ void WebViewImpl::UpdateMainFrameLayoutSize() {
 IntSize WebViewImpl::ContentsSize() const {
   if (!GetPage()->MainFrame()->IsLocalFrame())
     return IntSize();
-  LayoutViewItem root =
-      GetPage()->DeprecatedLocalMainFrame()->ContentLayoutItem();
-  if (root.IsNull())
+  auto* layout_view =
+      GetPage()->DeprecatedLocalMainFrame()->ContentLayoutObject();
+  if (!layout_view)
     return IntSize();
-  return root.DocumentRect().Size();
+  return layout_view->DocumentRect().Size();
 }
 
 WebSize WebViewImpl::ContentsPreferredMinimumSize() {
@@ -3645,7 +3645,7 @@ PaintLayerCompositor* WebViewImpl::Compositor() const {
   if (!document || document->GetLayoutViewItem().IsNull())
     return nullptr;
 
-  return document->GetLayoutViewItem().Compositor();
+  return document->GetLayoutView()->Compositor();
 }
 
 GraphicsLayer* WebViewImpl::RootGraphicsLayer() {

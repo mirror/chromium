@@ -1025,10 +1025,10 @@ PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
     composited_layer = layer->EnclosingLayerForPaintInvalidation();
     if (!composited_layer) {
       CHECK(layer->GetLayoutObject().GetFrame());
-      LayoutItem owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutItem();
-      if (owner.IsNull())
+      auto* owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutObject();
+      if (!owner)
         break;
-      layer = owner.EnclosingLayer();
+      layer = owner->EnclosingLayer();
     }
   }
   return composited_layer;
@@ -3410,10 +3410,10 @@ void PaintLayer::MarkCompositingContainerChainForNeedsRepaint() {
 
     PaintLayer* container = layer->CompositingContainer();
     if (!container) {
-      LayoutItem owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutItem();
-      if (owner.IsNull())
+      auto* owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutObject();
+      if (!owner)
         break;
-      container = owner.EnclosingLayer();
+      container = owner->EnclosingLayer();
     }
 
     if (container->needs_repaint_)
