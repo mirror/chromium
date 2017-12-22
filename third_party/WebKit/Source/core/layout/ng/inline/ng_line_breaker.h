@@ -114,7 +114,10 @@ class CORE_EXPORT NGLineBreaker {
                  NGLineInfo*);
   static void AppendHyphen(const ComputedStyle&, NGLineInfo*);
 
-  LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
+  LineBreakState HandleControlItem(const NGInlineItem&,
+                                   NGInlineItemResult*,
+                                   NGInlineItemResults*,
+                                   LineBreakState);
   LineBreakState HandleAtomicInline(const NGInlineItem&,
                                     NGInlineItemResult*,
                                     const NGLineInfo&);

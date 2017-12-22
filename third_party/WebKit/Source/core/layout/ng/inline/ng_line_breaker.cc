@@ -168,7 +168,7 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
       state = HandleAtomicInline(item, item_result, *line_info);
     } else if (item.Type() == NGInlineItem::kControl) {
-      state = HandleControlItem(item, item_result);
+      state = HandleControlItem(item, item_result, item_results, state);
       if (state == LineBreakState::kForcedBreak) {
         line_.is_after_forced_break = true;
         line_info->SetIsLastLine(true);
@@ -403,7 +403,9 @@ void NGLineBreaker::AppendHyphen(const ComputedStyle& style,
 // layout, but do not need shaping/painting.
 NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
     const NGInlineItem& item,
-    NGInlineItemResult* item_result) {
+    NGInlineItemResult* item_result,
+    NGInlineItemResults* item_results,
+    LineBreakState state) {
   DCHECK_EQ(item.Length(), 1u);
   line_.should_create_line_box = true;
 
@@ -428,8 +430,13 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
       MoveToNextOf(item);
       return LineBreakState::kIsBreakable;
   }
-  NOTREACHED();
-  return LineBreakState::kIsBreakable;
+
+  // Other control items are dropped.
+  DCHECK(character == kCarriageReturnCharacter ||
+         character == kFormFeedCharacter);
+  item_results->pop_back();
+  MoveToNextOf(item);
+  return state;
 }
 
 NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
