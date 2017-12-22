@@ -33,6 +33,24 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a06935_3d919472",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-22T20:25:33Z",
+      "side": 1,
+      "message": "We didn\u0027t, but it doesn\u0027t.\n\n[80916:775:1222/152453.049062:1500365257257180:ERROR:gl_image_io_surface.mm(293)] Error in CGLTexImageIOSurface2D: invalid numerical value",
+      "parentUuid": "c876eb95_57fe502a",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
