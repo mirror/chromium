@@ -311,6 +311,7 @@ void URLLoaderClientImpl::OnStartLoadingResponseBody(
 
 void URLLoaderClientImpl::OnComplete(
     const network::URLLoaderCompletionStatus& status) {
+  DCHECK(!status.ssl_info);
   has_received_complete_ = true;
   if (!body_consumer_) {
     if (NeedsStoringMessage()) {
