@@ -23,7 +23,7 @@ function FileTableList() {
  */
 FileTableList.decorate = function(self) {
   self.__proto__ = FileTableList.prototype;
-}
+};
 
 FileTableList.prototype.__proto__ = cr.ui.table.TableList.prototype;
 
@@ -267,6 +267,14 @@ filelist.handleTap = function(e, index, eventType) {
     return false;
   }
   if (index == -1) {
+    if (eventType == FileTapHandler.TapEvent.LONG_TAP) {
+      // contextmenu event is suppressed in the ListContainer class.
+      // This is the only exception to open context menu.
+      // This is processed here because index is not known in that class.
+      e.target.dispatchEvent(
+          new CustomEvent('currentfoldercontextmenu', {bubbles: true}));
+      console.log('dispatch custom event');
+    }
     return false;
   }
   var isTap = eventType == FileTapHandler.TapEvent.TAP ||

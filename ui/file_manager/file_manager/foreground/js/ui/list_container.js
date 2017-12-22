@@ -257,17 +257,25 @@ ListContainer.prototype.disableContextMenuByLongTap_ = function() {
   }.bind(this));
   this.element.addEventListener('touchend', function(e) {
     if (e.touches.length == 0) {
+      console.log('touchend');
       // contextmenu event will be sent right after touchend.
       setTimeout(function() {
+        console.log('revive');
         this.allowContextMenuByTouch_ = false;
       }.bind(this));
     }
   }.bind(this));
+  this.element.addEventListener('currentfoldercontextmenu', function(e) {
+    console.log('custom event received');
+    this.allowContextMenuByTouch_ = true;
+  }.bind(this));
   this.element.addEventListener('contextmenu', function(e) {
+    console.log('contextmenu?');
     // Block context menu triggered by touch event unless it is right after
     // multi-touch.
     if (!this.allowContextMenuByTouch_ && e.sourceCapabilities &&
         e.sourceCapabilities.firesTouchEvents) {
+      console.log('blocked');
       e.stopPropagation();
     }
   }.bind(this), true);
