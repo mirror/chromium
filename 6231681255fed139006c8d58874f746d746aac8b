@@ -34,6 +34,24 @@
       "revId": "6231681255fed139006c8d58874f746d746aac8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2622be_a4155bdf",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-22T20:53:54Z",
+      "side": 0,
+      "message": "This means we will trigger the CHECK on line 476 with PaintUnderInvalidationChecking enabled.\n\nThe change around line 307 is just a sanitation to check duplicate ids for cacheable display items only. It doesn\u0027t change logic in normal cases because uncacheable display items are not inserted in the map for duplicate id checking, except a special case for repeated table header/footers: we paint them multiple times, one for normal flow (now cacheable) and others for repeating (not cacheable). That change allows mixed cacheable and uncacheable display items with the same id. Actually the current painting method for repeated headers/footers is incorrect or at least not performant: we paint multiple times for repeated header/footers in each fragment and then clip off the unnecessary ones. We should paint only once for each fragment, which need to create multiple FragmentData for repeated header/footers. Added TODOs in TableSectionPainter.",
+      "parentUuid": "8e2770b5_2b896da1",
+      "revId": "6231681255fed139006c8d58874f746d746aac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

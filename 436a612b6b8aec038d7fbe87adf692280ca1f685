@@ -16,6 +16,24 @@
       "revId": "436a612b6b8aec038d7fbe87adf692280ca1f685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae57739_11417cf2",
+        "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-22T20:53:54Z",
+      "side": 1,
+      "message": "No, because we paint it with fragments have have different ScopedDisplayItemFragments. We still have bugs of paged fixed-position which will be fixed later.",
+      "parentUuid": "fa2eecaa_a489ead6",
+      "revId": "436a612b6b8aec038d7fbe87adf692280ca1f685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
