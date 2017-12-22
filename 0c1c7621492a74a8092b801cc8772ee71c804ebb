@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "5b971f41_75b11955",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-22T16:12:40Z",
+      "side": 1,
+      "message": "Actually, I\u0027m wrong here.  This isn\u0027t actually \"OnNavigated\", it\u0027s really \"OnUiRequestedNavigation\".  Naming it the original way makes it sounds like VrShell should be calling to the UI when a navigation takes place (via any means).  Thoughts?",
+      "parentUuid": "078aa99d_cb2f8766",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df2246bb_ca19c602",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
