@@ -16,6 +16,24 @@
       "revId": "9debc43e63286398c7a8fb14b1db09f40afb37c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f3fd3d_cbeaf7d4",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T18:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951e0f14_a6c51fa3",
+      "revId": "9debc43e63286398c7a8fb14b1db09f40afb37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
