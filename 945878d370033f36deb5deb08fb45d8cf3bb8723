@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b083b9cd_8438e294",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-22T13:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d75069_98aeebbb",
+      "range": {
+        "startLine": 192,
+        "startChar": 33,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "945878d370033f36deb5deb08fb45d8cf3bb8723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eefd88da_ac6a8a06",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 2

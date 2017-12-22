@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3dad7791_e60f9b1d",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-22T13:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3f9f81_dfdcb2d5",
+      "revId": "b7f164f8d000473f2c8d45d6a953e74f0cffb7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b06cfd7_b50fed5d",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b7f164f8d000473f2c8d45d6a953e74f0cffb7ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4b83c0_5d2b23fe",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-22T13:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b06cfd7_b50fed5d",
+      "revId": "b7f164f8d000473f2c8d45d6a953e74f0cffb7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
