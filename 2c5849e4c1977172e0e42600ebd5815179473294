@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657ecb16_9eec6d82",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-22T15:17:59Z",
+      "side": 1,
+      "message": "This method does not take a WebState as the returned value must be independent of the WebState.",
+      "revId": "2c5849e4c1977172e0e42600ebd5815179473294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
