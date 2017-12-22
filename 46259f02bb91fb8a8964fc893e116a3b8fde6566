@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35b98575_ea84b32f",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: make it live longer -\u003e make the worker live longer (or maybe the part can be just dropped)",
+      "revId": "46259f02bb91fb8a8964fc893e116a3b8fde6566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c75b481_ace58e21",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: when streaming finished -\u003e when streaming finishes",
+      "revId": "46259f02bb91fb8a8964fc893e116a3b8fde6566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207fe632_14fd22a7",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T09:02:12Z",
+      "side": 1,
+      "message": "nit: can just write in a single if?\n\nif (!idle_timer_fired_in_renderer_ \u0026\u0026 running_status() !\u003d STOPPED)\n  return;",
+      "revId": "46259f02bb91fb8a8964fc893e116a3b8fde6566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
