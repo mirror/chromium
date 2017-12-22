@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8740b3f_7eb2d1c0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "Does partial_app_url.has_path() also work? Or, maybe consider using GURL::ReplaceComponents: https://cs.chromium.org/chromium/src/url/url_canon.h",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecd5038_98bdc12f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fada3312_c445e2e2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "It seems unlikely for the URL to have changed. Maybe we should just always return early if there is a pending fetcher for simplicity?",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b010c4f1_4ec64db6",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "Can std::make_unique be used here?",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aecdee0_9cb5e240",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "We need to erase pending_fetcher_map_ here too?",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16489055_800949d1",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "NOT_FOUND should be treated as having a status of kUnavailable. Besides this case, how will error_cb_ and success_cb_ with kUnknown be treated differently upstream? (i.e., is it ok to just always run the latter callback to return kUnknown?)",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2355a7_01ba146b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "Do you need access to the MediaSinkInternal object, or is it sufficient to pass around MediaSink::Id internally / to the callbacks? Just so we have less expensive copying going on.",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8ec5e4_73de1453",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "Is there a way to assert on the URL passed to the fetcher? (e.g., to test the URL generation logic)",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37044cf_20146148",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "You can just nest the anonymous namespace inside the media_router namespace.",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b8edfc_7fa4b2a7",
+        "filename": "chrome/browser/media/router/test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:03:52Z",
+      "side": 1,
+      "message": "Could you add some documentation?",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
