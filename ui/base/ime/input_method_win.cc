@@ -23,16 +23,6 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/win/hwnd_util.h"
 
-namespace {
-
-ui::IMEEngineHandlerInterface* GetEngine() {
-  if (ui::IMEBridge::Get())
-    return ui::IMEBridge::Get()->GetCurrentEngineHandler();
-  return nullptr;
-}
-
-}  // namespace
-
 namespace ui {
 namespace {
 
