@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c31ef2_95178813",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T21:26:03Z",
+      "side": 1,
+      "message": "nit: Instead of having a |can_delete_now_| class member, can this just be a 2nd arg to FullScreenFirstVideoElement()?",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "0e39e4e7c97c8abad195774301285031640f2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
