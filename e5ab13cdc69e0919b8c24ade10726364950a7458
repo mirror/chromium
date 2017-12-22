@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a077d8d_485113bd",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:38:23Z",
+      "side": 1,
+      "message": "Should this be an OR instead?",
+      "range": {
+        "startLine": 546,
+        "startChar": 66,
+        "endLine": 546,
+        "endChar": 68
+      },
+      "revId": "e5ab13cdc69e0919b8c24ade10726364950a7458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8666202e_1a6dca15",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:38:23Z",
+      "side": 1,
+      "message": "Could we do the following?\nthis.destination_ \u003d selectedDestination;\n\nWhy is the new instance necessary?",
+      "range": {
+        "startLine": 558,
+        "startChar": 26,
+        "endLine": 558,
+        "endChar": 55
+      },
+      "revId": "e5ab13cdc69e0919b8c24ade10726364950a7458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c25585_6936f3cb",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:38:23Z",
+      "side": 1,
+      "message": "Let\u0027s document this for readability as follows:\n\ntrue /* isRecent */,\n\n(see https://google.github.io/styleguide/jsguide.html#formatting-block-comment-style).",
+      "range": {
+        "startLine": 560,
+        "startChar": 42,
+        "endLine": 560,
+        "endChar": 46
+      },
+      "revId": "e5ab13cdc69e0919b8c24ade10726364950a7458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
