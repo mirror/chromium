@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "862a3266_92e8723d",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T22:07:54Z",
+      "side": 1,
+      "message": "nit spelling LOCAL_PLAYBACK\n\nI\u0027m still not sure I follow the meaning of it though.  The first sentence says that we have a \u0027detailed StopTrigger\u0027, but we map that to UNKNOWN_STOP_TRIGGER which sounds like we are losing information.  (I may be reading this wrong, though).\n\n\nIt sounds like you are saying that if we see LOCAL_PLAYBACK as the RemotingStopReason here it means that we have already transitioned to mirroring and there should have been a previous call to this method with the actual reason, is that right?",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
