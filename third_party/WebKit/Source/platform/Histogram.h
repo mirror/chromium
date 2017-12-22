@@ -68,8 +68,10 @@ class PLATFORM_EXPORT ScopedUsHistogramTimer {
   explicit ScopedUsHistogramTimer(CustomCountHistogram& counter)
       : start_time_(CurrentTimeTicks()), counter_(counter) {}
 
-  ~ScopedUsHistogramTimer() {
-    counter_.Count((CurrentTimeTicks() - start_time_).InMicroseconds());
+  ~ScopedUsHistogramTimer() { counter_.Count(ElapsedTime()); }
+
+  int64_t ElapsedTime() const {
+    return (CurrentTimeTicks() - start_time_).InMicroseconds();
   }
 
  private:

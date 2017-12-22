@@ -32,6 +32,7 @@ class BasePredictor;
 
 namespace blink {
 class AutoplayUmaHelper;
+class LocalFrameView;
 }
 
 namespace cc {
@@ -106,6 +107,7 @@ class METRICS_EXPORT UkmRecorder {
   friend ui::LatencyTracker;
   friend password_manager::PasswordManagerMetricsRecorder;
   friend previews::PreviewsUKMObserver;
+  friend blink::LocalFrameView;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
