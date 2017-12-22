@@ -344,7 +344,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_GuestAccount) {
       {"", "--arc-availability=officially-supported"});
   ScopedLogIn login(GetFakeUserManager(),
                     GetFakeUserManager()->GetGuestAccountId());
-  EXPECT_TRUE(IsArcAllowedForProfileOnFirstCall(profile()));
+  EXPECT_FALSE(IsArcAllowedForProfileOnFirstCall(profile()));
 }
 
 // Demo account is interpreted as EphemeralDataUser.
@@ -352,7 +352,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_DemoAccount) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(
       {"", "--arc-availability=officially-supported"});
   ScopedLogIn login(GetFakeUserManager(), user_manager::DemoAccountId());
-  EXPECT_TRUE(IsArcAllowedForProfileOnFirstCall(profile()));
+  EXPECT_FALSE(IsArcAllowedForProfileOnFirstCall(profile()));
 }
 
 TEST_F(ChromeArcUtilTest, IsArcCompatibleFileSystemUsedForProfile) {
