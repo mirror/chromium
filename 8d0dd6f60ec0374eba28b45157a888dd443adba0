@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e79f05b_596a45bd",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T01:57:46Z",
+      "side": 1,
+      "message": "Whenever we have a new \"experimental\" CDM interface we should have this code. So it\u0027s not really a build time flag. Also, when the \"experimental\" CDM interface becomes stable, this test should be merged into the ECKEncryptedMediaTest. I am still thinking about how to formalize this process. Comments welcome!",
+      "parentUuid": "91756ba6_55ecc6d7",
+      "range": {
+        "startLine": 874,
+        "startChar": 15,
+        "endLine": 874,
+        "endChar": 41
+      },
+      "revId": "8d0dd6f60ec0374eba28b45157a888dd443adba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "583f42e7_cb715472",
         "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-22T01:25:40Z",
       "side": 1,
       "message": "Should this (and below) also call OnTestComplete(false) just in case it gets called?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "8d0dd6f60ec0374eba28b45157a888dd443adba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd091dce_ec06309d",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T01:57:46Z",
+      "side": 1,
+      "message": "This will be updated really soon (in the next CL). So I\u0027ll leave it as is for now.",
+      "parentUuid": "583f42e7_cb715472",
       "range": {
         "startLine": 45,
         "startChar": 2,
