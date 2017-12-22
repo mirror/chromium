@@ -9,8 +9,9 @@
 
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
-#include "components/security_state/core/switches.h"
+#include "components/security_state/core/features.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 
@@ -22,26 +23,49 @@ namespace {
 // enums must never be renumbered or deleted and reused.
 enum MarkHttpStatus {
   NEUTRAL = 0,  // Deprecated
-  NON_SECURE = 1,
+  DANGEROUS = 1,
   HTTP_SHOW_WARNING_ON_SENSITIVE_FIELDS = 2,  // Deprecated as of Chrome 64
   NON_SECURE_AFTER_EDITING = 3,               // Deprecated as of Chrome 64
   NON_SECURE_WHILE_INCOGNITO = 4,             // Deprecated as of Chrome 64
   NON_SECURE_WHILE_INCOGNITO_OR_EDITING = 5,
+  NON_SECURE = 6,
+  NON_SECURE_AND_DANGEROUS_WHILE_EDITING = 7,
+  NON_SECURE_AND_DANGEROUS_ON_SENSITIVE_FIELDS = 8,
   LAST_STATUS
 };
 
-// If |switch_or_field_trial_group| corresponds to a valid
-// MarkHttpAs setting, sets |*level| and |*histogram_status| to the
-// appropriate values and returns true. Otherwise, returns false.
+// If |parameter| corresponds to a valid kMarkHttpAs feature parameter, sets
+// |*level| and |*histogram_status| to the appropriate values and returns
+// true. Otherwise, returns false.
 bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-    std::string switch_or_field_trial_group,
+    const std::string& parameter,
     bool is_incognito,
     const InsecureInputEventData& input_events,
     SecurityLevel* level,
     MarkHttpStatus* mark_http_as) {
-  if (switch_or_field_trial_group == switches::kMarkHttpAsDangerous) {
+  if (parameter == features::kMarkHttpAsParameterDangerous) {
+    *mark_http_as = DANGEROUS;
+    *level = security_state::DANGEROUS;
+    return true;
+  } else if (parameter == features::kMarkHttpAsParameterWarning) {
     *mark_http_as = NON_SECURE;
-    *level = DANGEROUS;
+    *level = HTTP_SHOW_WARNING;
+    return true;
+  } else if (parameter ==
+             features::kMarkHttpAsParameterWarningAndDangerousOnFormEdits) {
+    *mark_http_as = NON_SECURE_AND_DANGEROUS_WHILE_EDITING;
+    *level = input_events.insecure_field_edited ? security_state::DANGEROUS
+                                                : HTTP_SHOW_WARNING;
+    return true;
+  } else if (
+      parameter ==
+      features::
+          kMarkHttpAsParameterWarningAndDangerousOnPasswordsAndCreditCards) {
+    *mark_http_as = NON_SECURE_AND_DANGEROUS_ON_SENSITIVE_FIELDS;
+    *level = (input_events.password_field_shown ||
+              input_events.credit_card_field_edited)
+                 ? security_state::DANGEROUS
+                 : HTTP_SHOW_WARNING;
     return true;
   }
 
@@ -52,30 +76,24 @@ SecurityLevel GetSecurityLevelForNonSecureFieldTrial(
     bool is_incognito,
     const InsecureInputEventData& input_events,
     MarkHttpStatus* mark_http_as) {
-  std::string choice =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kMarkHttpAs);
-  std::string group = base::FieldTrialList::FindFullName("MarkNonSecureAs");
-
   const char kEnumeration[] = "SSL.MarkHttpAsStatus";
 
   SecurityLevel level = NONE;
 
-  // If the command-line switch is set, then it takes precedence over
-  // the field trial group.
-  if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-          choice, is_incognito, input_events, &level, mark_http_as)) {
-    if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-            group, is_incognito, input_events, &level, mark_http_as)) {
-      // No command-line switch or field trial is in effect.
-      // Default to warning on incognito or editing or sensitive form fields.
-      *mark_http_as = NON_SECURE_WHILE_INCOGNITO_OR_EDITING;
-      level = (is_incognito || input_events.insecure_field_edited ||
-               input_events.password_field_shown ||
-               input_events.credit_card_field_edited)
-                  ? security_state::HTTP_SHOW_WARNING
-                  : NONE;
-    }
+  if (!base::FeatureList::IsEnabled(features::kMarkHttpAsFeature) ||
+      (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
+          base::GetFieldTrialParamValueByFeature(
+              features::kMarkHttpAsFeature,
+              features::kMarkHttpAsFeatureParameterName),
+          is_incognito, input_events, &level, mark_http_as))) {
+    // No warning treatment is configured via field trial. Default to warning on
+    // incognito or editing or sensitive form fields.
+    *mark_http_as = NON_SECURE_WHILE_INCOGNITO_OR_EDITING;
+    level = (is_incognito || input_events.insecure_field_edited ||
+             input_events.password_field_shown ||
+             input_events.credit_card_field_edited)
+                ? security_state::HTTP_SHOW_WARNING
+                : NONE;
   }
 
   UMA_HISTOGRAM_ENUMERATION(kEnumeration, *mark_http_as, LAST_STATUS);
@@ -108,7 +126,7 @@ SecurityLevel GetSecurityLevelForRequest(
   // browser's malware checks.
   if (visible_security_state.malicious_content_status !=
       MALICIOUS_CONTENT_STATUS_NONE) {
-    return DANGEROUS;
+    return security_state::DANGEROUS;
   }
 
   const GURL url = visible_security_state.url;
@@ -120,7 +138,7 @@ SecurityLevel GetSecurityLevelForRequest(
   if (is_cryptographic_with_certificate &&
       net::IsCertStatusError(visible_security_state.cert_status) &&
       !net::IsCertStatusMinorError(visible_security_state.cert_status)) {
-    return DANGEROUS;
+    return security_state::DANGEROUS;
   }
 
   // data: URLs don't define a secure context, and are a vector for spoofing.

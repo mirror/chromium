@@ -24598,17 +24598,6 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="LoginCustomFlags">
-  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
-<!--
-Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
-
-See "Flag Histograms" in README.md for information about how to update this
-section.
-
-Don't remove entries when removing a flag; they are still used to decode data
-from previous Chrome versions.
--->
-
   <int value="-2146613579" label="V8Future:disabled"/>
   <int value="-2145472146" label="OfflinePagesResourceBasedSnapshot:disabled"/>
   <int value="-2143961262" label="D3DVsync:disabled"/>
@@ -25452,6 +25441,7 @@ from previous Chrome versions.
   <int value="7533886" label="disable-offer-store-unmasked-wallet-cards"/>
   <int value="10458238" label="disable-print-preview-simplify"/>
   <int value="11698808" label="enable-dom-distiller-button-animation"/>
+  <int value="23556595" label="MarkHttpAs:enabled"/>
   <int value="27507364" label="apps-keep-chrome-alive"/>
   <int value="28272521" label="ash-enable-display-move-window-accels"/>
   <int value="31848187" label="ViewsTaskManager:disabled"/>
@@ -25507,6 +25497,18 @@ from previous Chrome versions.
   <int value="180074362" label="memory-pressure-thresholds"/>
   <int value="185991204" label="enable-webrtc-srtp-encrypted-headers"/>
   <int value="189728101" label="FasterLocationReload:disabled"/>
+  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
+<!--
+Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
+
+See "Flag Histograms" in README.md for information about how to update this
+section.
+
+Don't remove entries when removing a flag; they are still used to decode data
+from previous Chrome versions.
+-->
+
+  <int value="191737931" label="enable-mark-http-as"/>
   <int value="194573877" label="MacViewsNativeDialogs:disabled"/>
   <int value="194895489" label="passive-listeners-default"/>
   <int value="200347243" label="WebVRExperimentalRendering:disabled"/>
@@ -25662,6 +25664,7 @@ from previous Chrome versions.
   <int value="630244477" label="ServiceWorkerPaymentApps:enabled"/>
   <int value="630947363" label="touch-events"/>
   <int value="632340413" label="network-settings-config"/>
+  <int value="635076832" label="MarkHttpAs:disabled"/>
   <int value="635971109" label="PrintPdfAsImage:disabled"/>
   <int value="636425179" label="mhtml-generator-option"/>
   <int value="637396292" label="AllBookmarks:enabled"/>
@@ -27299,6 +27302,11 @@ Called by update_use_counter_css.py.-->
   <int value="5"
       label="Neutral with a verbose warning after editing a form or in
              Incognito mode"/>
+  <int value="6" label="Neutral with a verbose warning always"/>
+  <int value="7"
+      label="Neutral with a verbose warning, dangerous after editing a form"/>
+  <int value="8"
+      label="Neutral with a verbose warning, dangerous on sensitive fields"/>
 </enum>
 
 <enum name="MarkNonSecureAsStatus">
