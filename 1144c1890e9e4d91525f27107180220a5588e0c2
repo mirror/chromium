@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a6db966_8c23b184",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T07:20:57Z",
+      "side": 1,
+      "message": "Is IsNull() better?",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52198d44_1ba598d8",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T07:20:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0bcfdd_b8ad9e86",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolverTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T07:20:57Z",
+      "side": 1,
+      "message": "const",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
