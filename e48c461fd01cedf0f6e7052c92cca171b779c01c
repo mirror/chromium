@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26d07065_74071919",
+        "filename": "media/base/android/java/src/org/chromium/media/HdrMetadata.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-22T21:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "447d403d_36b116c8",
+      "revId": "e48c461fd01cedf0f6e7052c92cca171b779c01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dcfa4f0_d45851cb",
         "filename": "media/base/android/jni_hdr_metadata.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e48c461fd01cedf0f6e7052c92cca171b779c01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd3d3a2_02ce1352",
+        "filename": "media/base/android/jni_hdr_metadata.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-22T21:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dcfa4f0_d45851cb",
+      "revId": "e48c461fd01cedf0f6e7052c92cca171b779c01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
