@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26a27a8d_d2a99fc4",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-22T05:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4e5a15e_556bec13",
+      "revId": "af8f09e194d0ec98d9eb9ba52576062f1ee51c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95746eae_53288472",
         "filename": "ash/login/ui/login_password_view.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "af8f09e194d0ec98d9eb9ba52576062f1ee51c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550099d4_7f89feb3",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-22T05:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95746eae_53288472",
+      "revId": "af8f09e194d0ec98d9eb9ba52576062f1ee51c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
