@@ -70,6 +70,30 @@
       "revId": "51b20044a140d806ead6274d689911fe59876cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d76a63_c09ba8a3",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T18:16:18Z",
+      "side": 1,
+      "message": "Thanks for the feedback, I\u0027ve changed it to BindRepeating and added a TODO, I\u0027ll create a followup CL to address it.",
+      "parentUuid": "81af0d5d_df7dd4ac",
+      "range": {
+        "startLine": 590,
+        "startChar": 14,
+        "endLine": 590,
+        "endChar": 18
+      },
+      "revId": "51b20044a140d806ead6274d689911fe59876cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
