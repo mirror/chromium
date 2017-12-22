@@ -81,6 +81,9 @@ class BLINK_EXPORT WebElement : public WebNode {
   // if there isn't any.
   WebImage ImageContents();
 
+  // Same as above, but oriented if it has tag in exif.
+  WebImage ImageContentsWithOrientation();
+
 #if INSIDE_BLINK
   WebElement(Element*);
   WebElement& operator=(Element*);

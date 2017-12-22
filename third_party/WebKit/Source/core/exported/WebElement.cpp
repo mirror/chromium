@@ -140,6 +140,13 @@ WebImage WebElement::ImageContents() {
   return WebImage(Unwrap<Element>()->ImageContents());
 }
 
+WebImage WebElement::ImageContentsWithOrientation() {
+  if (IsNull())
+    return WebImage();
+
+  return WebImage(Unwrap<Element>()->ImageContents(), kRespectImageOrientation);
+}
+
 WebElement::WebElement(Element* elem) : WebNode(elem) {}
 
 DEFINE_WEB_NODE_TYPE_CASTS(WebElement, IsElementNode());
