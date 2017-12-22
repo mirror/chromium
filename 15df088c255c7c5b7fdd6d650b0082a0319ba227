@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d849a39_3e9997d7",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:58:13Z",
+      "side": 1,
+      "message": "It\u0027s possible that this step is not working?\n\nI think this rule\u0027s job is to map input file paths to\noutput file paths.\n\nThis says that anything in the current directory (\".\") gets\nmapped to the root of the output directory.\n\nThe next line maps anything from closure to \"closure\" in the\noutput directory.\n\nYou need a rule mapping ../chromevox/cvox2/background\nto the root of the output directory.",
+      "revId": "15df088c255c7c5b7fdd6d650b0082a0319ba227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
