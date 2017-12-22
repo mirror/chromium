@@ -69,7 +69,8 @@ def main():
                        ['', '-base-https-other-https'])
     generate_directory(
         'thorough',
-        ['window', 'workers', 'serviceworker', 'serviceworker-proxied'],
+        ['window', 'workers', 'serviceworker', 'serviceworker-proxied',
+         'serviceworker-nofetch'],
         ['', '-other-https', '-base-https-other-https'])
     return 0
 

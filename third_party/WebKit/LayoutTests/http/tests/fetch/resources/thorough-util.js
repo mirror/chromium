@@ -22,6 +22,7 @@ var IFRAME_URL = SCOPE;
 var WORKER_URL = BASE_ORIGIN +
   '/fetch/resources/thorough-worker.js?' +
   TEST_OPTIONS;
+var EMPTY_WORKER_URL = BASE_ORIGIN + '/fetch/resources/empty-worker.js';
 
 function onlyOnServiceWorkerProxiedTest(checkFuncs) {
   return [];
@@ -194,6 +195,72 @@ if (location.href.indexOf('base-https') >= 0)
 
 if (location.href.indexOf('other-https') >= 0)
   authCheck2 = checkJsonpAuth.bind(this, 'username2s', 'password2s', 'cookie2');
+
+function executeTestsFromControlledPage(test_targets) {
+  var test = async_test(
+    'Verify access control of fetch() from a controlled page');
+  test.step(function() {
+      var worker = undefined;
+      var frameWindow = {};
+      var counter = 0;
+      window.addEventListener('message', test.step_func(onMessage), false);
+
+      Promise.resolve()
+        .then(function() {
+            return service_worker_unregister_and_register(test,
+                                                          EMPTY_WORKER_URL,
+                                                          SCOPE);
+          })
+        .then(function(registration) {
+            worker = registration.installing;
+            return wait_for_state(test, worker, 'activated');
+          })
+        .then(function() {
+            return with_iframe(SCOPE);
+          })
+        .then(function(frame) {
+            frameWindow = frame.contentWindow;
+            // Start tests.
+            loadNext();
+          })
+        .catch(unreached_rejection(test));
+
+      var resultFromIframeReceived = undefined;
+
+      function onMessage(e) {
+        // The message is sent from thorough-iframe.html in report()
+        // which is called after fetch() is called on the iframe.
+        // e.data has the result of doFetch() but e.data.response is undefined
+        // because it cannot be cloned.
+        doCheck(test_targets[counter], e.data);
+        resultFromIframeReceived();
+      }
+
+      function loadNext() {
+        (new Promise(function(resolve, reject) {
+            resultFromIframeReceived = resolve;
+          }))
+          .then(test.step_func(function() {
+                ++counter;
+                if (counter === test_targets.length) {
+                  service_worker_unregister_and_done(test, SCOPE);
+                } else {
+                  loadNext();
+                }
+            }));
+        Promise.resolve()
+            .then(test.step_func(function() {
+              if (test_targets[counter].length === 0)  {
+                resultFromIframeReceived();
+                return;
+              }
+              frameWindow.postMessage({fetch: true,
+                                       url: test_targets[counter][0]},
+                                      IFRAME_ORIGIN);
+            }));
+      }
+  });
+}
 
 function executeServiceWorkerProxiedTests(test_targets) {
   var test = async_test('Verify access control of fetch() in a Service Worker');
@@ -401,6 +468,30 @@ function doFetch(request) {
   }
 }
 
+// Check a message returned by doFetch
+function doCheck(test_target, message) {
+  var checks = test_target[1].concat(showComment);
+  checks.forEach(function(checkFunc) {
+      checkFunc.call(this, test_target[0], message);
+    });
+
+  if (test_target[2]) {
+    report_data = {};
+    if (message.fetchResult !== 'resolved' ||
+        message.body === '' ||
+        400 <= message.status) {
+      report({jsonpResult: 'error'});
+    } else {
+      eval(message.body);
+    }
+    assert_not_equals(report_data, {}, 'data should be set');
+
+    test_target[2].forEach(function(checkFunc) {
+      checkFunc.call(this, test_target[0], report_data);
+    });
+  }
+}
+
 var report_data = {};
 function report(data) {
   report_data = data;
@@ -418,28 +509,7 @@ function executeTest(test_target) {
   }
   return doFetch(new Request(test_target[0],
                              {credentials: 'same-origin', mode: 'no-cors'}))
-    .then(function(message) {
-        var checks = test_target[1].concat(showComment);
-        checks.forEach(function(checkFunc) {
-            checkFunc.call(this, test_target[0], message);
-          });
-
-        if (test_target[2]) {
-          report_data = {};
-          if (message.fetchResult !== 'resolved' ||
-              message.body === '' ||
-              400 <= message.status) {
-            report({jsonpResult:'error'});
-          } else {
-            eval(message.body);
-          }
-          assert_not_equals(report_data, {}, 'data should be set');
-
-          test_target[2].forEach(function(checkFunc) {
-              checkFunc.call(this, test_target[0], report_data);
-            });
-        }
-      });
+           .then(doCheck.bind(this, test_target));
 }
 
 function executeTests(test_targets) {

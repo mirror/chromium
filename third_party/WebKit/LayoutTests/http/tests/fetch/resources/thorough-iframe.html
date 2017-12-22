@@ -1,21 +1,31 @@
 <script src = "fetch-test-options.js"></script>
 <script src = "thorough-util.js"></script>
 <script>
-function onMessage(event) {
-  var script = document.createElement('script');
-  script.src = event.data.url;
-  script.addEventListener(
-    'error',
-    function() { report({jsonpResult:'error'}); });
-  document.body.appendChild(script);
-}
-function report(data) {
-  window.parent.postMessage(
-    data,
-    BASE_ORIGIN);
-}
-function onload() {
-  window.addEventListener('message', onMessage, false);
-}
-window.addEventListener('load', onload);
+ function onMessage(event) {
+     if (event.data.fetch) {
+         var request = new Request(event.data.url,
+                                   {credentials: 'same-origin', mode: 'no-cors'});
+         doFetch(request)
+             .then(function(message) {
+                 message.response = undefined;
+                 report(message);
+             });
+     } else {
+         var script = document.createElement('script');
+         script.src = event.data.url;
+         script.addEventListener(
+             'error',
+             function() { report({jsonpResult:'error'}); });
+         document.body.appendChild(script);
+     }
+ }
+ function report(data) {
+     window.parent.postMessage(
+         data,
+         BASE_ORIGIN);
+ }
+ function onload() {
+     window.addEventListener('message', onMessage, false);
+ }
+ window.addEventListener('load', onload);
 </script>
