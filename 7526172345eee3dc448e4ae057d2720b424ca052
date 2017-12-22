@@ -34,6 +34,24 @@
       "revId": "7526172345eee3dc448e4ae057d2720b424ca052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9442023_166f79e4",
+        "filename": "components/autofill/ios/browser/js_autofill_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 0,
+      "message": "Sorry, I forgot to reply in the previous round. There is a simpler way to execute scripts without subclassing. JsAutofillManager could take CRWJSInjectionReceiver* in the initializer. CRWJSInjectionManager was designed for UIWebView and most of CRWJSInjectionManager functionality is not needed in WKWebView world, where scripts injections can be done with WKUserScript. WDYT?",
+      "parentUuid": "1eb1c86d_ba89ad53",
+      "revId": "7526172345eee3dc448e4ae057d2720b424ca052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

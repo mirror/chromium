@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841e0692_9685cdf5",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "Every private method in this file has a predeclaration and comments",
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e29fc7_6ef2e4e2",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "nit: isAutofillEnabledForWebState:",
+      "range": {
+        "startLine": 822,
+        "startChar": 8,
+        "endLine": 822,
+        "endChar": 34
+      },
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c063faec_9c499060",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003cChromeWebClient\u003e()",
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef68629_c7d298da",
+        "filename": "ios/chrome/browser/autofill/form_structure_browsertest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 126,
+        "startChar": 26,
+        "endLine": 126,
+        "endChar": 36
+      },
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09be5b49_e1f6c567",
+        "filename": "ios/chrome/browser/autofill/js_autofill_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "nit: No need to use base::WrapUnique",
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5921dd1_904c41e2",
+        "filename": "ios/chrome/browser/autofill/js_autofill_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T15:52:39Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 38
+      },
+      "revId": "f67a89b9e254e10ddd8510cb74e1838e21b79a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
