@@ -16,6 +16,24 @@
       "revId": "7344084a36146f82c7bf3fb1a29c0feccd9b27ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e5c521_be65f192",
+        "filename": "content/public/test/test_renderer_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T16:26:22Z",
+      "side": 1,
+      "message": "I hesitated to do this because:\n1. The BrowserContext created by CreateBrowserContext is owned by |this|\n2. Incognito contexts are not standalone, they must be owned by the original context.\n\nSo there is a clash of ownership if we return an Incognito context in this method. An alternative to the design I chose would be to have an API which creates the browser context but does not hold ownership.",
+      "parentUuid": "6fdb8eaa_78f1ecb7",
+      "revId": "7344084a36146f82c7bf3fb1a29c0feccd9b27ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
