@@ -46,6 +46,30 @@
       "revId": "51b20044a140d806ead6274d689911fe59876cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81af0d5d_df7dd4ac",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-22T15:02:28Z",
+      "side": 1,
+      "message": "Bind() is aliased to BindRepeating(), so passing a OnceCallback won\u0027t work.  Instead, I would say use BindRepeating() and add a TODO to update ExtensionUpdater::CheckParams::callback to be a OnceCallback, which can be addressed in a followup.",
+      "parentUuid": "57529d6b_a75e2491",
+      "range": {
+        "startLine": 590,
+        "startChar": 14,
+        "endLine": 590,
+        "endChar": 18
+      },
+      "revId": "51b20044a140d806ead6274d689911fe59876cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
