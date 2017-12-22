@@ -277,7 +277,7 @@ template <typename T,
           WebPrivatePtrStrength strongOrWeak = WebPrivatePtrStrength::kNormal>
 class WebPrivatePtr {
  public:
-  WebPrivatePtr() : storage_(0) {}
+  WebPrivatePtr() noexcept : storage_(nullptr) {}
   ~WebPrivatePtr() {
     // We don't destruct the object pointed by storage_ here because we don't
     // want to expose destructors of core classes to embedders. We should
@@ -286,12 +286,16 @@ class WebPrivatePtr {
     DCHECK(!storage_);
   }
 
+  WebPrivatePtr(WebPrivatePtr&& other) noexcept : storage_(other.storage_) {
+    other.storage_ = nullptr;
+  }
+
   bool IsNull() const { return !storage_; }
   explicit operator bool() const { return !IsNull(); }
 
 #if INSIDE_BLINK
   template <typename U>
-  WebPrivatePtr(U&& ptr) : storage_(0) {
+  WebPrivatePtr(U&& ptr) : storage_(nullptr) {
     Storage().Assign(std::forward<U>(ptr));
   }
 
