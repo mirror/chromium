@@ -18,7 +18,6 @@ namespace content {
 class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
  public:
   static BrowserAccessibilityAndroid* GetFromUniqueId(int32_t unique_id);
-  int32_t unique_id() const { return unique_id_; }
 
   // Overrides from BrowserAccessibility.
   void OnDataChanged() override;
@@ -167,7 +166,6 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
   base::string16 cached_text_;
   base::string16 old_value_;
   base::string16 new_value_;
-  int32_t unique_id_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserAccessibilityAndroid);
 };

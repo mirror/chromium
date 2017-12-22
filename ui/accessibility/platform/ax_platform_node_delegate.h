@@ -81,6 +81,8 @@ class AX_EXPORT AXPlatformNodeDelegate {
 
   virtual AXPlatformNode* GetFromNodeID(int32_t id) = 0;
 
+  virtual int32_t GetID() const = 0;
+
   //
   // Events.
   //
