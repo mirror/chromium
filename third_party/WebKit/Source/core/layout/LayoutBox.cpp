@@ -481,6 +481,8 @@ void LayoutBox::AddScrollSnapMapping() {
 
 void LayoutBox::ClearScrollSnapMapping() {
   UpdateScrollSnapMappingAfterStyleChange(nullptr, Style());
+  if (SnapCoordinator* snap_coordinator = GetDocument().GetSnapCoordinator())
+    snap_coordinator->RemoveSnapContainer(*this);
 }
 
 void LayoutBox::UpdateFromStyle() {
