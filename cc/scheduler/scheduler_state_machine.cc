@@ -1352,4 +1352,9 @@ bool SchedulerStateMachine::HasInitializedLayerTreeFrameSink() const {
   return false;
 }
 
+void SchedulerStateMachine::ClearHistoryOnNavigation() {
+  commit_count_ = 0;
+  last_frame_events_ = FrameEvents();
+}
+
 }  // namespace cc
