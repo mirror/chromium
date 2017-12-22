@@ -39,7 +39,7 @@ class ExtensionSettingsUIBrowserTest : public WebUIBrowserTest {
 
   void InstallPlatformApp();
 
-  void InstallExtensionWithInPageOptions();
+  const extensions::Extension* InstallExtensionWithInPageOptions();
 
   void AddManagedPolicyProvider();
 
@@ -50,6 +50,8 @@ class ExtensionSettingsUIBrowserTest : public WebUIBrowserTest {
 
   // Shrinks the web contents view in order to ensure vertical overflow.
   void ShrinkWebContentsView();
+
+  const base::FilePath& test_data_dir() { return test_data_dir_; }
 
  private:
   const extensions::Extension* InstallExtension(const base::FilePath& path);
