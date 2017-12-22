@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b6ff82d_cb5878f3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T15:12:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3607f72_c59f863f",
+      "range": {
+        "startLine": 66,
+        "startChar": 54,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4479d905_d7105418",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 19
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3a6d83d7_3830a463",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T15:12:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4479d905_d7105418",
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc707c7_9adbbd97",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 19
@@ -56,6 +98,24 @@
       "revId": "7284655c756c514c36591407443606cc770619ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e991d5d8_079551c3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T15:12:10Z",
+      "side": 1,
+      "message": "\u003e Does it make sense first to strip characters and then copy the whole thing?\n\u003e \n\u003e Here is my proposal for lines 92-102:\n\u003e \n\u003e if (!tokens.empty())\n\u003e   field_data_value-\u003epush_back(\u0027$\u0027);\n\u003e \n\u003e field_data_value-\u003ereserve(field_data_value.size() + lowercase_value.size());\n\u003e for (const auto\u0026 token : tokens)\n\u003e   field_data_value-\u003eappend(token);\n\u003e \n\u003e If you like you could combine these two loops (this and the one from line 88) into one.\n\nAccepted your proposal.",
+      "parentUuid": "0dc707c7_9adbbd97",
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "7284655c756c514c36591407443606cc770619ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8797a964_f6e48146",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T15:12:10Z",
+      "side": 1,
+      "message": "\u003e should this be base::char16?\n\nThis code is removed.",
+      "parentUuid": "bf611150_216a01a9",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
