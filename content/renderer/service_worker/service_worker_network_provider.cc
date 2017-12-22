@@ -187,10 +187,7 @@ ServiceWorkerNetworkProvider::CreateForNavigation(
     const bool is_parent_frame_secure = IsFrameSecure(frame->Parent());
 
     if (service_worker_provider_id == kInvalidServiceWorkerProviderId) {
-      network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider(
-          route_id, blink::mojom::ServiceWorkerProviderType::kForWindow,
-          GetNextProviderId(), is_parent_frame_secure,
-          std::move(default_loader_factory_getter)));
+      network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider());
     } else {
       CHECK(browser_side_navigation);
       DCHECK(ServiceWorkerUtils::IsBrowserAssignedProviderId(
