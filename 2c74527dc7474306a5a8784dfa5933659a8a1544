@@ -1180,6 +1180,30 @@
     },
     {
       "key": {
+        "uuid": "977f5223_eb203f67",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Create an types.h file in components/ksv and move the using to there.",
+      "parentUuid": "990a9b3b_3890ed86",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 80
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9b33af_0eb4a649",
         "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
         "patchSetId": 3
@@ -1885,6 +1909,30 @@
       "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac71bc35_2a5e3cd6",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Talked offline. Moved ash shortcut related string to ash_strings.",
+      "parentUuid": "75803a98_a7f5473b",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

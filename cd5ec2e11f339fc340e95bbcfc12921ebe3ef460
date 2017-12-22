@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c314f14_45bef2b1",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6d197b_9a9a2d1c",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 59
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c4f5e04_fe815e5c",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e795de6_b9cdcbcd",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "5c4f5e04_fe815e5c",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1e14f8f4_df498499",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c982c2ce_0d4445db",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda81990_761c6a3d",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1434fdb_8bb36803",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda81990_761c6a3d",
+      "range": {
+        "startLine": 33,
+        "startChar": 38,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1167ffe6_b2ec9c1b",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "This is the \"separate\" .h/.cc. Moved out the util function MakeAshShortcutsMetadata to KSVController so that we can cache the action_to_accelerator_data map as well.",
+      "parentUuid": "470b5068_8dadd183",
+      "range": {
+        "startLine": 36,
+        "startChar": 40,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca83e79_1ad2981d",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7de567_163a9c5f",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca83e79_1ad2981d",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f173fbec_29c3f288",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abcbdae0_c13383bb",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79d44d7b_c370817e",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af1bc81_446fb6ac",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79d44d7b_c370817e",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 30
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c25802de_00acc7b5",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Talked offline. AcceleratorController dose not save the map. Moved out the util function MakeAshShortcutsMetadata to KSVController so that we can cache the action_to_accelerator_data map in the KSVController and do not need to depend on AcceleratorController.",
+      "parentUuid": "9b794cf6_e8a8a0af",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 3
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "686c561e_dbc60f8e",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -229,6 +445,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ec923d_27691007",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "686c561e_dbc60f8e",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 3
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "8ff45332_04bc6feb",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9e3399_41771165",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 12
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee619b62_46b1c882",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -275,6 +539,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff049b7_c586d395",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Added comment. It is. Need to be consistent with how we describe in the shortcut string.",
+      "parentUuid": "ee619b62_46b1c882",
+      "range": {
+        "startLine": 124,
+        "startChar": 54,
+        "endLine": 124,
+        "endChar": 78
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "dd024bb2_cbd721dd",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8912edb5_2924f8c2",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 9
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea834a44_9d3080b9",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 5
@@ -321,6 +633,30 @@
       "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd25fd7_026ac4b3",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-22T02:20:02Z",
+      "side": 1,
+      "message": "Discussed offline. Yes, we can assume in this case the modifiers are the same between multiple actions and insert \"Ctrl\" automatically. Added a test for this.",
+      "parentUuid": "ea834a44_9d3080b9",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 12
+      },
+      "revId": "cd5ec2e11f339fc340e95bbcfc12921ebe3ef460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
