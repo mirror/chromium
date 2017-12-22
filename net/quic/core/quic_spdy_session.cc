@@ -298,7 +298,8 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
       prev_max_timestamp_(QuicTime::Zero()),
       use_hq_deframer_(GetQuicReloadableFlag(quic_enable_hq_deframer)),
       spdy_framer_(SpdyFramer::ENABLE_COMPRESSION),
-      spdy_framer_visitor_(new SpdyFramerVisitor(this)) {
+      spdy_framer_visitor_(new SpdyFramerVisitor(this)),
+      headers_include_h2_stream_dependency_(false) {
   if (use_hq_deframer_) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_hq_deframer);
     hq_deframer_.set_visitor(spdy_framer_visitor_.get());
@@ -413,11 +414,20 @@ size_t QuicSpdySession::WriteHeadersImpl(
     SpdyPriority priority,
     QuicReferenceCountedPointer<QuicAckListenerInterface>
         ack_notifier_delegate) {
+  SpdyStreamId dependent_stream_id = 0;
+  bool exclusive = false;
+  priority_dependency_state_.OnStreamCreation(id, priority,
+                                              &dependent_stream_id, &exclusive);
+
   SpdyHeadersIR headers_frame(id, std::move(headers));
   headers_frame.set_fin(fin);
   if (perspective() == Perspective::IS_CLIENT) {
     headers_frame.set_has_priority(true);
     headers_frame.set_weight(Spdy3PriorityToHttp2Weight(priority));
+    if (headers_include_h2_stream_dependency_) {
+      headers_frame.set_parent_stream_id(dependent_stream_id);
+      headers_frame.set_exclusive(exclusive);
+    }
   }
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(headers_frame));
   headers_stream_->WriteOrBufferData(
@@ -467,11 +477,13 @@ void QuicSpdySession::RegisterStreamPriority(QuicStreamId id,
 
 void QuicSpdySession::UnregisterStreamPriority(QuicStreamId id) {
   write_blocked_streams()->UnregisterStream(id);
+  priority_dependency_state_.OnStreamDestruction(id);
 }
 
 void QuicSpdySession::UpdateStreamPriority(QuicStreamId id,
                                            SpdyPriority new_priority) {
   write_blocked_streams()->UpdateStreamPriority(id, new_priority);
+  priority_dependency_state_.OnStreamUpdate(id, new_priority);
 }
 
 QuicSpdyStream* QuicSpdySession::GetSpdyDataStream(
