@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00d05170_33037d19",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T01:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76bb9c60_51825d53",
+      "range": {
+        "startLine": 1003,
+        "startChar": 2,
+        "endLine": 1003,
+        "endChar": 18
+      },
+      "revId": "f708094bd71bc2d87a80c06133923653e6d18659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7861d86e_2860fdfc",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7fe02844_bbf993fb",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T01:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7861d86e_2860fdfc",
+      "range": {
+        "startLine": 1004,
+        "startChar": 7,
+        "endLine": 1004,
+        "endChar": 15
+      },
+      "revId": "f708094bd71bc2d87a80c06133923653e6d18659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40752720_eb62013b",
         "filename": "ui/app_list/views/contents_view.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-21T16:36:50Z",
       "side": 1,
       "message": "do we need this check?",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 38
+      },
+      "revId": "f708094bd71bc2d87a80c06133923653e6d18659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf6a730_c135c529",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T01:25:46Z",
+      "side": 1,
+      "message": "That will be a part of the full-screen flag cleanup.\nThis one is about focus.",
+      "parentUuid": "40752720_eb62013b",
       "range": {
         "startLine": 220,
         "startChar": 7,
@@ -91,6 +163,30 @@
       "revId": "f708094bd71bc2d87a80c06133923653e6d18659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ed3886_802d2848",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T01:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3872106_ed97cfb8",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 19
+      },
+      "revId": "f708094bd71bc2d87a80c06133923653e6d18659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
