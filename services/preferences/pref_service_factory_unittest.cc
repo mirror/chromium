@@ -25,6 +25,7 @@
 #include "services/preferences/public/cpp/pref_service_main.h"
 #include "services/preferences/public/cpp/scoped_pref_update.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
+#include "services/preferences/unittest_common.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
@@ -84,13 +85,7 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   base::OnceCallback<void(service_manager::Connector*)> connector_callback_;
 };
 
-constexpr int kInitialValue = 1;
 constexpr int kUpdatedValue = 2;
-constexpr char kKey[] = "some_key";
-constexpr char kOtherKey[] = "some_other_key";
-constexpr char kDictionaryKey[] = "a.dictionary.pref";
-constexpr char kInitialKey[] = "initial_key";
-constexpr char kOtherInitialKey[] = "other_initial_key";
 
 class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
  public:

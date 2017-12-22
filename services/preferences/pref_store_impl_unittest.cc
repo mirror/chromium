@@ -15,20 +15,12 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/preferences/public/cpp/pref_store_client.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
+#include "services/preferences/unittest_common.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::Invoke;
-using testing::WithoutArgs;
-
 namespace prefs {
 namespace {
-
-class PrefStoreObserverMock : public PrefStore::Observer {
- public:
-  MOCK_METHOD1(OnPrefValueChanged, void(const std::string&));
-  MOCK_METHOD1(OnInitializationCompleted, void(bool));
-};
 
 class MockPrefStore : public ValueMapPrefStore {
  public:
@@ -72,26 +64,14 @@ class MockPrefStore : public ValueMapPrefStore {
   base::ObserverList<PrefStore::Observer, true> observers_;
 };
 
-constexpr char kKey[] = "path.to.key";
-constexpr char kOtherKey[] = "path.to.other_key";
-
 void ExpectInitializationComplete(PrefStore* pref_store, bool success) {
   PrefStoreObserverMock observer;
   pref_store->AddObserver(&observer);
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged("")).Times(0);
   EXPECT_CALL(observer, OnInitializationCompleted(success))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
-  run_loop.Run();
-  pref_store->RemoveObserver(&observer);
-}
-
-void ExpectPrefChange(PrefStore* pref_store, base::StringPiece key) {
-  PrefStoreObserverMock observer;
-  pref_store->AddObserver(&observer);
-  base::RunLoop run_loop;
-  EXPECT_CALL(observer, OnPrefValueChanged(key.as_string()))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
