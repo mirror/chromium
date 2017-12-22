@@ -16,6 +16,8 @@
 
 namespace resource_coordinator {
 
+class TabLifecycleUnitExternal;
+
 // A LifecycleUnit represents a unit that can switch between the "loaded" and
 // "discarded" states. When it is loaded, the unit uses system resources and
 // provides functionality to the user. When it is discarded, the unit doesn't
@@ -47,7 +49,7 @@ class LifecycleUnit {
   virtual ~LifecycleUnit();
 
   // Returns a unique id representing this LifecycleUnit.
-  uint32_t GetID() const;
+  int32_t GetID() const;
 
   // Returns a title describing this LifecycleUnit, or an empty string if no
   // title is available.
@@ -56,6 +58,10 @@ class LifecycleUnit {
   // Returns the URL of an icon for this LifecycleUnit, or an empty string if no
   // icon is available.
   virtual std::string GetIconURL() const = 0;
+
+  // Returns the TabLifecycleUnitExternal associated with this LifecycleUnit, if
+  // any.
+  virtual TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() = 0;
 
   // Returns a key that can be used to evaluate the relative importance of this
   // LifecycleUnit.
@@ -92,10 +98,10 @@ class LifecycleUnit {
   virtual bool Discard(DiscardReason discard_reason) = 0;
 
  private:
-  static uint32_t next_id_;
+  static int32_t next_id_;
 
   // A unique id representing this LifecycleUnit.
-  const uint32_t id_ = ++next_id_;
+  const int32_t id_ = ++next_id_;
 
   DISALLOW_COPY_AND_ASSIGN(LifecycleUnit);
 };

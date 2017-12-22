@@ -172,7 +172,8 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest, TabManagerBasics) {
   tsm->ActivateTabAt(1, true);
   EXPECT_EQ(1, tsm->active_index());
   EXPECT_FALSE(tab_manager->IsTabDiscarded(tsm->GetWebContentsAt(1)));
-  tab_manager->DiscardWebContentsAt(2, tsm, DiscardReason::kProactive);
+  FastForwardAfterDiscardProtectionTime();
+  tab_manager->DiscardTabImpl(DiscardReason::kProactive);
   EXPECT_TRUE(tab_manager->IsTabDiscarded(tsm->GetWebContentsAt(2)));
 
   // Force creation of the FindBarController.

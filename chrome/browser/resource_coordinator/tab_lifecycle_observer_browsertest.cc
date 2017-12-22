@@ -38,9 +38,11 @@ class TabLifecycleObserverTest : public InProcessBrowserTest {
     return tab_strip_model_->GetWebContentsAt(index);
   }
 
+  /*
   int64_t ContentsId(WebContents* contents) {
     return TabManager::IdFromWebContents(contents);
   }
+  */
 
  private:
   TabStripModel* tab_strip_model_;
@@ -83,6 +85,7 @@ class MockTabLifecycleObserver : public TabLifecycleObserver {
   DISALLOW_COPY_AND_ASSIGN(MockTabLifecycleObserver);
 };
 
+/*
 IN_PROC_BROWSER_TEST_F(TabLifecycleObserverTest, OnDiscardStateChange) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   auto* tsm = browser()->tab_strip_model();
@@ -189,6 +192,7 @@ IN_PROC_BROWSER_TEST_F(TabLifecycleObserverTest, OnAutoDiscardableStateChange) {
   EXPECT_TRUE(observer.is_auto_discardable());
   EXPECT_EQ(ContentsId(contents), ContentsId(observer.content()));
 }
+*/
 
 }  // namespace resource_coordinator
 
