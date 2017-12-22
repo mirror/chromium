@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b862dde5_751601ba",
+        "filename": "media/midi/midi_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T09:16:16Z",
+      "side": 1,
+      "message": "// Shuts down this manager. This function is split from the destructor because it calls a virtual function.",
+      "revId": "3b438e555a508eb49f6b3959e1ef763d137fc11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d5c6fb_a336fc7b",
+        "filename": "media/midi/midi_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T09:16:16Z",
+      "side": 1,
+      "message": "I think \"is\" is good.",
+      "revId": "3b438e555a508eb49f6b3959e1ef763d137fc11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d0df0f_22dbc9a0",
+        "filename": "media/midi/midi_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T09:16:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand the last part. Can you explain?",
+      "revId": "3b438e555a508eb49f6b3959e1ef763d137fc11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a8e7cd_543cc652",
+        "filename": "media/midi/midi_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T09:16:16Z",
+      "side": 1,
+      "message": "Is \"for inheritances\" needed?\n\nMaybe \"The following\" is better.",
+      "revId": "3b438e555a508eb49f6b3959e1ef763d137fc11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
