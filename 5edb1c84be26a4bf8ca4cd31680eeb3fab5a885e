@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "575b63a3_f53055dc",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done, filed http://crbug.com/796945 and clarified the comment\nto indicate that this code was added for MacViews and we need\nto replace it with a cross-platform solution.",
+      "parentUuid": "8f365aa2_37f04e1e",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d1b8de_93937378",
         "filename": "ui/views/accessibility/view_accessibility.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "Are you ok with the extra copy on return here? Seems wasteful.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1186ae0f_a5cfe727",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "I\u0027m sure the compiler optimizes away the copy in this case, but\nhow about this - I changed the function signature to the same as in View:\nvoid GetAccessibleNodeData(ui::AXNodeData* node_data);",
+      "parentUuid": "59d1b8de_93937378",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cfce6270_1395463f",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "I don\u0027t think the issue with GetWidget()-\u003eIsClosed() is possible\nto occur on Chrome OS. On Windows it was an issue because the\noperating system can destroy an HWND and we get an IAccessible\nquery before all of the Widgets within that HWND have been\ndestroyed.\n\nOn Chrome OS we already check if the widget is valid before\neven firing an event, and we only call GetAccessibleNodeData\nwhen firing an event, whereas on Windows, calls to\nGetAccessibleNodeData can come at any time.",
+      "parentUuid": "21eb3214_e3550690",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65b9ea3_fe7a7331",
         "filename": "ui/views/accessibility/view_accessibility.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "Relatively certain you want *Has* StringAttribute here",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fd8552c_71520ca0",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b65b9ea3_fe7a7331",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "63400529_a7427d81",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65983970_5894cfe9",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20a73d9c_390cc839",
         "filename": "ui/views/accessibility/view_accessibility.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "This is also new; unsure what impact it has.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad241120_5cfc3309",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Visibility strictly inherits in Views. If a View is invisible, its\nwhole subtree is. View::IsDrawn() returns true if a View or any ancestor\nis invisible, whereas View::visible() returns true only if that specific\nView is explicitly visible.\n\nTo be safe, let me split this out for now and add a TODO.",
+      "parentUuid": "20a73d9c_390cc839",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3942483b_1aaa6822",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d31b2bb_0dd20871",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea24d39d_7f2c98d7",
         "filename": "ui/views/accessibility/view_accessibility.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "Maybe CHECK or DCHECK the role is not unknown (or probably client and a bunch of internal roles)",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a58b0ee_8e110599",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Good idea. That could actually help catch a lot of Views errors earlier,\nlike when someone used ROLE_DESKTOP.",
+      "parentUuid": "ea24d39d_7f2c98d7",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "36fff092_fb1cfbd5",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure I agree about no empty strings. It should be fine to call OverrideName(\"\") for something like a decorative image. Just doesn\u0027t seem like a strict rule to me.",
+      "parentUuid": "d60edb4d_b6712bcb",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ebb9f9_b82f8f55",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "As a reader, I find it confusing to expose both a static Create and a public constructor. Consider making the ctor private.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "653265a4_f44f3139",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ebb9f9_b82f8f55",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "67ae7b68_d3598c87",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "I\u0027m trying to make this simpler for Views authors, so I thought\nthis would be more foolproof. Let\u0027s consider refactoring after\nadding some more methods as needed?",
+      "parentUuid": "456e6ea8_933091cb",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06e7e50_260b614b",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "Doesn\u0027t seem like this belongs here? Why can\u0027t the caller call NotifyAccessibilityEvent on the view?",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e81511d_10fa2c59",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "This isn\u0027t a change. NativeViewAccessibility had this method before,\nit was called by View::NotifyAccessibilityEvent in order to fire the\nnative accessibility event.\n\nI\u0027d like to consider actually getting rid of NotifyAccessibilityEvent\nfrom Views and just leaving it here, but that\u0027s a separate discussion,\nit shouldn\u0027t affect this change.",
+      "parentUuid": "c06e7e50_260b614b",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "82f87a0c_68757e3a",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Changed to protected.",
+      "parentUuid": "fc201553_52479550",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1f50bc_34aa79d9",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2017-12-21T02:19:26Z",
       "side": 1,
       "message": "|this| is tied to the lifetime of |view_| right? Maybe call it owner_view_.",
+      "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a38b9aa1_2505fe86",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T05:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c1f50bc_34aa79d9",
       "revId": "5edb1c84be26a4bf8ca4cd31680eeb3fab5a885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
