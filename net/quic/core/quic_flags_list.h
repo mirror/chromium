@@ -159,3 +159,8 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_stream_too_long, false)
 // When true, enables the 1TLP connection option to configure QUIC to send one
 // TLP instead of 2.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_one_tlp, false)
+
+// If true, stream sequencer buffer allows receiving overlapping stream data.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_allow_receiving_overlapping_data,
+          false)
