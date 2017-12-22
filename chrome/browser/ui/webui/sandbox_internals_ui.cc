@@ -15,6 +15,11 @@
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
+#if defined(OS_ANDROID)
+#include "chrome/common/sandbox_status_android.mojom.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
+#endif
+
 #if defined(OS_LINUX)
 #include "content/public/browser/zygote_host_linux.h"
 #include "services/service_manager/sandbox/sandbox.h"
@@ -75,8 +80,10 @@ SandboxInternalsUI::SandboxInternalsUI(content::WebUI* web_ui)
 void SandboxInternalsUI::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {
 #if defined(OS_ANDROID)
-  render_frame_host->Send(new ChromeViewMsg_AddSandboxStatusExtension(
-      render_frame_host->GetRoutingID()));
+  chrome::mojom::SandboxStatusExtensionInfoAssociatedPtr sandbox_status;
+  render_frame_host->GetRemoteAssociatedInterfaces()->GetInterface(
+      &sandbox_status);
+  sandbox_status->AddSandboxStatusExtension();
 #endif
 }
 

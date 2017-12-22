@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/values.h"
+#include "chrome/common/sandbox_status_android.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "v8/include/v8.h"
 
@@ -22,7 +23,8 @@ class Arguments;
 // SandboxInternalsUI sends an IPC mesage blessing this RenderFrame.
 class SandboxStatusExtension
     : public base::RefCountedThreadSafe<SandboxStatusExtension>,
-      public content::RenderFrameObserver {
+      public content::RenderFrameObserver,
+      public chrome::mojom::SandboxStatusExtensionInfo {
  public:
   // Creates a new SandboxStatusExtension for the |frame|.
   static void Create(content::RenderFrame* frame);
@@ -39,8 +41,11 @@ class SandboxStatusExtension
  private:
   explicit SandboxStatusExtension(content::RenderFrame* frame);
 
-  // IPC message handler.
+  // chrome::mojom::SandboxStatusExtensionInfo
   void OnAddSandboxStatusExtension();
+
+  void OnSandboxStatusExtensionInfoRequest(
+      chrome::mojom::SandboxStatusExtensionInfoAssociatedRequest request);
 
   // Installs the JavaScript function into the scripting context, if
   // should_install_ is true.
