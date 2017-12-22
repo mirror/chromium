@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52e2bdff_eb80b9e1",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T17:29:47Z",
+      "side": 1,
+      "message": "Do we test this? I did not see the test which waits for animation to complete.",
+      "revId": "2ba1b35161be6b2a2e3a66f237edfe0ab052d3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
