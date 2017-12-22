@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28604379_e4583a93",
+        "filename": "ui/gfx/mac/io_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-22T20:23:24Z",
+      "side": 1,
+      "message": "Chris, is this used by Core Animation?\nIt didn\u0027t seem to make any difference from a GL POV even if we used any other 4bpc format, as long as the allocation succeeded.",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c876eb95_57fe502a",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-22T20:23:24Z",
+      "side": 1,
+      "message": "Did we try if it works with GL_RGB?",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
