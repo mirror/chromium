@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/scoped_observer.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -45,7 +44,6 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/toolbar/test_toolbar_model.h"
-#include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
 #include "net/dns/mock_host_resolver.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -148,8 +146,7 @@ const int kCtrlOrCmdMask = ui::EF_CONTROL_DOWN;
 
 }  // namespace
 
-class OmniboxViewTest : public InProcessBrowserTest,
-                        public content::NotificationObserver {
+class OmniboxViewTest : public InProcessBrowserTest {
  public:
   OmniboxViewTest() {}
 
@@ -217,18 +214,7 @@ class OmniboxViewTest : public InProcessBrowserTest,
     if (tab_count == expected_tab_count)
       return;
 
-    content::NotificationRegistrar registrar;
-    registrar.Add(this,
-        (tab_count < expected_tab_count) ?
-            static_cast<int>(chrome::NOTIFICATION_TAB_PARENTED) :
-            static_cast<int>(content::NOTIFICATION_WEB_CONTENTS_DESTROYED),
-        content::NotificationService::AllSources());
-
-    while (!HasFailure() &&
-           browser->tab_strip_model()->count() != expected_tab_count) {
-      content::RunMessageLoop();
-    }
-
+    content::RunAllTasksUntilIdle();
     ASSERT_EQ(expected_tab_count, browser->tab_strip_model()->count());
   }
 
@@ -247,14 +233,7 @@ class OmniboxViewTest : public InProcessBrowserTest,
     if (controller->done())
       return;
 
-    content::NotificationRegistrar registrar;
-    registrar.Add(this,
-                  chrome::NOTIFICATION_AUTOCOMPLETE_CONTROLLER_RESULT_READY,
-                  content::Source<AutocompleteController>(controller));
-
-    while (!HasFailure() && !controller->done())
-      content::RunMessageLoop();
-
+    content::RunAllTasksUntilIdle();
     ASSERT_TRUE(controller->done());
   }
 
@@ -341,20 +320,6 @@ class OmniboxViewTest : public InProcessBrowserTest,
     ASSERT_NO_FATAL_FAILURE(SetupHostResolver());
     ASSERT_NO_FATAL_FAILURE(SetupSearchEngine());
     ASSERT_NO_FATAL_FAILURE(SetupHistory());
-  }
-
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override {
-    switch (type) {
-      case content::NOTIFICATION_WEB_CONTENTS_DESTROYED:
-      case chrome::NOTIFICATION_TAB_PARENTED:
-      case chrome::NOTIFICATION_AUTOCOMPLETE_CONTROLLER_RESULT_READY:
-        break;
-      default:
-        FAIL() << "Unexpected notification type";
-    }
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
  private:
