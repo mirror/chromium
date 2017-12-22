@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc83691_e87032c6",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T04:39:57Z",
+      "side": 1,
+      "message": "nit: computePeriod -\u003e ComputePeriod",
+      "revId": "ac70fcde0186a2eb2ff98f07bdfdcb39d648be26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
