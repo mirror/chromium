@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb78b37d_eddac89c",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:17:12Z",
+      "side": 1,
+      "message": "Update.",
+      "range": {
+        "startLine": 5,
+        "startChar": 18,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "4e8d3ff8eaa6303ebd55fc0d6a99147b02e857c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377fc538_80553546",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:17:12Z",
+      "side": 1,
+      "message": "Nit: Do you remember why we declared the class with an assignment originally? Could this be simply\n\nclass SigninSyncConfirmationTest extends PolymerTest {\n  ...\n}\n\nWas it about use_strict prohibiting? Can we try to use the syntax above, and if not allowed here, maybe add a comment explaining why we use the assignment?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "4e8d3ff8eaa6303ebd55fc0d6a99147b02e857c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d37bec_1091bde4",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:17:12Z",
+      "side": 1,
+      "message": "2017?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4e8d3ff8eaa6303ebd55fc0d6a99147b02e857c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912b559e_4f510bee",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T01:17:12Z",
+      "side": 1,
+      "message": "Add a comment explaining this test does not need any assertions, because it simply ensures that no DCHECKs are thrown during initialization of this UI.",
+      "revId": "4e8d3ff8eaa6303ebd55fc0d6a99147b02e857c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
