@@ -245,6 +245,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // code paths directly to avoid inconsistent logic.
   bool webvr_use_gpu_fence_ = false;
   bool webvr_use_shared_buffer_draw_ = false;
+  bool webvr_use_zero_copy_path_ = false;
 
   std::vector<std::unique_ptr<gl::GLFence>> webvr_frame_presubmit_fence_;
   void WebVrWaitForServerFence(int16_t frame_index);
@@ -253,6 +254,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   std::vector<std::unique_ptr<gpu::MailboxHolder>>
       webvr_sharedbuffer_mailbox_holders_;
   std::vector<std::unique_ptr<gpu::GpuMemoryBufferImplAndroidHardwareBuffer>> webvr_sharedbuffers_;
+  uint32_t webvr_image_;
+  uint32_t webvr_texture_;
 
   int webvr_submitted_incomplete_frames_ = 0;
   std::vector<scoped_refptr<gl::GLImageEGL>> webvr_bufferimages_;

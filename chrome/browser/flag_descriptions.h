@@ -983,6 +983,7 @@ extern const char kWebVrRenderPathDescription[];
 extern const char kWebVrRenderPathClientWait[];
 extern const char kWebVrRenderPathGpuFence[];
 extern const char kWebVrRenderPathSharedBuffer[];
+extern const char kWebVrRenderPathZeroCopy[];
 
 extern const char kWebXrName[];
 extern const char kWebXrDescription[];

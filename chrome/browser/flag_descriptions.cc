@@ -1603,6 +1603,7 @@ const char kWebVrRenderPathDescription[] =
 const char kWebVrRenderPathClientWait[] = "ClientWait";
 const char kWebVrRenderPathGpuFence[] = "GpuFence";
 const char kWebVrRenderPathSharedBuffer[] = "SharedBuffer";
+const char kWebVrRenderPathZeroCopy[] = "ZeroCopy";
 
 const char kWebXrName[] = "WebXR Device API";
 const char kWebXrDescription[] =
