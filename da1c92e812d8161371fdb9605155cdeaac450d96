@@ -401,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "aae53429_70ec0ca8",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "It\u0027s my personal preference, given how shutdown sequencing is generally pretty hard (for me) to reason about and we have lots of long tail crashers from it.",
+      "parentUuid": "f26272ab_41987b16",
+      "range": {
+        "startLine": 248,
+        "startChar": 27,
+        "endLine": 248,
+        "endChar": 37
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a94105a_d51055c3",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 3
@@ -492,6 +516,30 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a232d9b5_b5ef9895",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "Yeah I think it should be OK although it\u0027s a gut feeling and I don\u0027t have actual metrics. I wonder if it makes sense to add them here so we have a sense of the wait time?",
+      "parentUuid": "6bda872f_b97c2ad7",
+      "range": {
+        "startLine": 249,
+        "startChar": 23,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

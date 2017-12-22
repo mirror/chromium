@@ -25,6 +25,63 @@
     },
     {
       "key": {
+        "uuid": "d2204daa_f2f24691",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "nit: align with cc file and put it below GetInstance() or vice versa.",
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c1f95b_d740c78b",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "optional: prefer kConstantName for new enums, unless it clashes with existing style. Since it is an enum class you also don\u0027t need to prepend \"CRASH\" to each entry as pseudo-namespacing:\n\nenum class CrashAction {\n  kDetected,\n  kAnalyzed,\n  ...\n};",
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa420729_80040b9b",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "std::move to avoid a ref churn.",
+      "range": {
+        "startLine": 183,
+        "startChar": 22,
+        "endLine": 183,
+        "endChar": 36
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b672c599_58238d93",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 4
@@ -64,6 +121,29 @@
         "startChar": 6,
         "endLine": 323,
         "endChar": 34
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2514574d_35c3a279",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-22T13:48:14Z",
+      "side": 1,
+      "message": "std::move to avoid a ref churn",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 63
       },
       "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
