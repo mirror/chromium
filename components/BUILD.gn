@@ -433,6 +433,7 @@ if (!is_ios) {
       "//components/offline_pages/content/renovations",
       "//components/offline_pages/core/renovations",
       "//components/password_manager/content/browser",
+      "//components/pdf/renderer",
       "//components/security_state/content",
       "//components/security_state/core",
       "//components/strings",
@@ -466,6 +467,12 @@ if (!is_ios) {
     if (is_mac) {
       data_deps += [ "//content/shell:content_shell" ]
       data += [ "$root_out_dir/Content Shell.app/" ]
+    }
+
+    if (!is_android) {
+      sources += [
+        "pdf/renderer/pdf_accessibility_tree_browsertest.cc",
+      ]
     }
 
     if (is_android) {
