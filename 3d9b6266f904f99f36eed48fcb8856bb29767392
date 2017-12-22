@@ -22,6 +22,30 @@
       "revId": "3d9b6266f904f99f36eed48fcb8856bb29767392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5558ff43_f869ee5d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-22T17:30:30Z",
+      "side": 0,
+      "message": "No ambiguous constraints in the visual debugger.\nStackView\u0027s UISV-canvas-connection constraints are anchored against its content, so the contents have always been defining its height.",
+      "parentUuid": "149e1392_0589879f",
+      "range": {
+        "startLine": 575,
+        "startChar": 22,
+        "endLine": 575,
+        "endChar": 64
+      },
+      "revId": "3d9b6266f904f99f36eed48fcb8856bb29767392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
