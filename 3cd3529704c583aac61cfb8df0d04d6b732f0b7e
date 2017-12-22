@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123e3b16_bf334960",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "nit: let\u0027s early return if !IsEnabled(features::kNetworkService) case",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17610d9f_bdffdb5e",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "Let\u0027s check !path.empty() first",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5165779c_c7635aca",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "We\u0027re in a test, EXPECT or ASSERT would be better\n\nconst bool result \u003d base::ReadFileToString(...);\nEXPECT_TRUE(result);",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7462a3_b535be4c",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "We don\u0027t have |interceptor_|, I think this comment is stale now?",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0438ba44_2be6d4e4",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "nit: You can also use GetFactoryForURL(navigation_correction_url, nullptr) of URLLoaderFactoryGetter",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf88a09_d425449e",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc6f978_51ab036d",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:05:08Z",
+      "side": 1,
+      "message": "Thanks, while I think this makes sense now I\u0027m really starting to worry that having two pretty similar classes (ChildURLLoaderFactoryGetter and URLLoaderFactoryBundle) would be very confusing. I\u0027m fine with landing this one but could you add a TODO like:\n\nTODO(kinuko): See if we can converge ChildURLLoaderFactoryGetter into this one (or the other way around).\n\n(I think I can possibly make a CL for that...)",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
