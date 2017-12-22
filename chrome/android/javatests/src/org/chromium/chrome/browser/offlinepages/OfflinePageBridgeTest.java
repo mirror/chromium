@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.Callback;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -28,6 +29,7 @@ import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.components.offlinepages.DeletePageResult;
 import org.chromium.components.offlinepages.SavePageResult;
+import org.chromium.components.offlinepages.UpdateRequestResult;
 import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.net.test.EmbeddedTestServer;
 
@@ -228,9 +230,14 @@ public class OfflinePageBridgeTest {
         String url2 = "https://mail.google.com/";
         String namespace2 = "last_n";
         savePageLater(url2, namespace2);
+        String tag = "XXXXXXXXXXXXXXXXXXXXXX";
+
+        Log.e(tag, "requests added");
 
         SavePageRequest[] requests = getRequestsInQueue();
         Assert.assertEquals(2, requests.length);
+
+        Log.e(tag, "requests retrieved");
 
         List<Long> requestsToRemove = new ArrayList<>();
         requestsToRemove.add(Long.valueOf(requests[1].getRequestId()));
@@ -238,12 +245,13 @@ public class OfflinePageBridgeTest {
         List<OfflinePageBridge.RequestRemovedResult> removed =
                 removeRequestsFromQueue(requestsToRemove);
         Assert.assertEquals(requests[1].getRequestId(), removed.get(0).getRequestId());
-        Assert.assertEquals(
-                org.chromium.components.offlinepages.background.UpdateRequestResult.SUCCESS,
-                removed.get(0).getUpdateRequestResult());
+        Assert.assertEquals(UpdateRequestResult.SUCCESS, removed.get(0).getUpdateRequestResult());
+        Log.e(tag, "requests removed");
 
         SavePageRequest[] remaining = getRequestsInQueue();
         Assert.assertEquals(1, remaining.length);
+
+        Log.e(tag, "requests retrieved again");
 
         Assert.assertEquals(requests[0].getRequestId(), remaining[0].getRequestId());
         Assert.assertEquals(requests[0].getUrl(), remaining[0].getUrl());
