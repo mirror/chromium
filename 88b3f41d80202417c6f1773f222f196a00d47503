@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c766b8c0_b31a5348",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-22T21:47:18Z",
+      "side": 1,
+      "message": "should we clear these in either start or end of the drag gesture?",
+      "range": {
+        "startLine": 449,
+        "startChar": 2,
+        "endLine": 449,
+        "endChar": 16
+      },
+      "revId": "88b3f41d80202417c6f1773f222f196a00d47503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
