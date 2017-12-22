@@ -22,6 +22,30 @@
       "revId": "597f6b3e865b11a7c86c00825a8ccfe66cf3cd17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ae4ee5_a07504fe",
+        "filename": "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-22T21:42:02Z",
+      "side": 1,
+      "message": "In a followup CL.",
+      "parentUuid": "0f67ca2c_031a4c44",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "597f6b3e865b11a7c86c00825a8ccfe66cf3cd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
