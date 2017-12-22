@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe02917_47a5fc4f",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-22T18:06:30Z",
+      "side": 1,
+      "message": "I see that GuestViewBase uses this same approach for forwarding some WebContentsDelegate calls into the embedder - ContentsMouseEvent, ContentsZoomChange, etc.\n\nHmmm... I see that these methods of GuestViewBase check:\n  if (!attached() || !embedder_web_contents()-\u003eGetDelegate())\n    return;\nI probably should do the same thing here.  Let me fix this up in the next patchset coming up in a few minutes.\n\nAlso - I see that OpenURLFromTab and HandleContextMenu below are handled through |extension_options_guest_delegate_|.  I think that going through embedder_web_contents()-\u003eGetDelegate() is okay here.  Maybe going through embedder_web_contents()-\u003eGetDelegate() would also be okay for OpenURLFromTab, but it is probably best not to touch it.",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 40
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7954254d_f7abe51b",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-22T18:06:30Z",
+      "side": 1,
+      "message": "|git cl lint| made me do it (one of the fields below has type std::unique_ptr\u003c...\u003e).",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38051fa0_5d75d626",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-22T18:06:30Z",
+      "side": 1,
+      "message": "Alternatively, this method (with same implementation) could be implemented by GuestViewBase.  In this CL I\u0027ve chosen to implement this method in ExtensionOptionsGuest because:\n\n- This minimizes risk IMO (since this CL might have to be merged into M64).\n\n- There was no \"View page source\" in Chrome App GuestView (when I was testing via WebViewInteractiveTest).\n\nOTOH, implementing at GuestViewBase seems fine:\n\n- It doesn\u0027t interfere with blocking of new windows opened by the guest via window.open and/or an anchor element with target\u003d_blank.\n\n- It might address other, unforeseen cases where view-source is needed to work.\n\n\nWDYT?  Does overriding in ExtensionOptionsGuest look okay?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
