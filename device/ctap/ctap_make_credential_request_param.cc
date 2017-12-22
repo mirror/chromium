@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "components/cbor/cbor_writer.h"
-#include "device/ctap/ctap_request_command.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
@@ -56,7 +56,7 @@ CTAPMakeCredentialRequestParam::SerializeToCBOR() const {
       cbor::CBORWriter::Write(cbor::CBORValue(std::move(cbor_map)));
   if (serialized_param) {
     std::vector<uint8_t> cbor_request({static_cast<uint8_t>(
-        CTAPRequestCommand::kAuthenticatorMakeCredential)});
+        constants::CTAPRequestCommand::kAuthenticatorMakeCredential)});
     cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                         serialized_param->end());
     return cbor_request;

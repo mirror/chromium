@@ -8,7 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "device/ctap/ctap_request_command.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
@@ -51,7 +51,7 @@ CTAPGetAssertionRequestParam::SerializeToCBOR() const {
   auto serialized_param = cbor::CBORWriter::Write(cbor::CBORValue(cbor_map));
   if (serialized_param) {
     std::vector<uint8_t> cbor_request({base::strict_cast<uint8_t>(
-        CTAPRequestCommand::kAuthenticatorGetAssertion)});
+        constants::CTAPRequestCommand::kAuthenticatorGetAssertion)});
     cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                         serialized_param->end());
     return cbor_request;
