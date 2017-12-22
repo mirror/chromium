@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa42257_45672445",
+        "filename": "chrome/browser/vr/elements/ui_element_name.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-22T16:08:01Z",
+      "side": 0,
+      "message": "Heh, sorry this was so short-lived. :)",
+      "revId": "88ba4459d82e586770f448ef303fda34a84a28ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f39d0d_8d0e9512",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-22T16:08:01Z",
+      "side": 0,
+      "message": "I don\u0027t think this was accurate.  Can discuss though!",
+      "revId": "88ba4459d82e586770f448ef303fda34a84a28ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
