@@ -165,8 +165,17 @@ Polymer({
         this.displayChangedListener_ || this.getDisplayInfo_.bind(this);
     settings.display.systemDisplayApi.onDisplayChanged.addListener(
         this.displayChangedListener_);
-
     this.getDisplayInfo_();
+  },
+  
+  onMirrorTap: function() {
+    settings.display.systemDisplayApi.setMixedMode(
+      true, this.$$('#source-text').value, [this.$$('#destination-text').value]);
+  },
+  
+  onEndTap: function() {
+    settings.display.systemDisplayApi.setMixedMode(
+      false, this.$$('#source-text').value, []);
   },
 
   /** @override */

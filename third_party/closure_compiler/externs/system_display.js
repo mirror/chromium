@@ -299,6 +299,9 @@ chrome.system.display.completeCustomTouchCalibration = function(pairs, bounds) {
  */
 chrome.system.display.clearTouchCalibration = function(id) {};
 
+
+chrome.system.display.setCustomMirrorMode = function(enabled, source_id, destination_id) {};
+
 /**
  * Fired when anything changes to the display configuration.
  * @type {!ChromeEvent}

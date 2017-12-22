@@ -90,11 +90,24 @@
     </template>
 
     </div>
+    <div>
+      <template is="dom-repeat" items="[[displays]]">
+        <div>[[item.id]];</div>
+      </template>
+      <input id="source-text" type="text">
+      <input id="destination-text" type="text">
+      <paper-button id="mirror-button" on-tap="onMirrorTap">
+        Mirror
+      </paper-button>
+      <paper-button id="end-button" on-tap="onEndTap">
+        End
+      </paper-button>
+    </div>
     <div hidden="[[!hasMultipleDisplays_(displays)]]" class="settings-box">
       <paper-tabs noink selected="[[selectedDisplay.id]]" class="display-tabs"
           on-iron-select="onSelectDisplayTab_" attr-for-selected="display-id">
         <template is="dom-repeat" items="[[displays]]">
-          <paper-tab display-id="[[item.id]]">[[item.name]]</paper-tab>
+          <paper-tab display-id="[[item.id]]">[[item.id]]</paper-tab>
         </template>
       </paper-tabs>
     </div>
