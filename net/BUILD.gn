@@ -1157,8 +1157,6 @@ component("net") {
       "quic/core/congestion_control/rtt_stats.h",
       "quic/core/congestion_control/send_algorithm_interface.cc",
       "quic/core/congestion_control/send_algorithm_interface.h",
-      "quic/core/congestion_control/tcp_cubic_sender_base.cc",
-      "quic/core/congestion_control/tcp_cubic_sender_base.h",
       "quic/core/congestion_control/tcp_cubic_sender_bytes.cc",
       "quic/core/congestion_control/tcp_cubic_sender_bytes.h",
       "quic/core/congestion_control/windowed_filter.h",
