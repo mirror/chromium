@@ -170,6 +170,19 @@ void AutoConnectHandler::ResolveRequestCompleted(
   }
 }
 
+void AutoConnectHandler::AddObserver(Observer* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void AutoConnectHandler::RemoveObserver(Observer* observer) {
+  observer_list_.RemoveObserver(observer);
+}
+
+void AutoConnectHandler::NotifyAutoConnectedToNetwork() {
+  for (auto& observer : observer_list_)
+    observer.OnAutoConnectedToNetwork();
+}
+
 void AutoConnectHandler::RequestBestConnection() {
   request_best_connection_pending_ = true;
   CheckBestConnection();
@@ -273,13 +286,14 @@ void AutoConnectHandler::DisconnectFromUnmanagedSharedWiFiNetworks() {
   }
 }
 
-void AutoConnectHandler::CallShillConnectToBestServices() const {
+void AutoConnectHandler::CallShillConnectToBestServices() {
   NET_LOG_EVENT("ConnectToBestServices", "");
   DBusThreadManager::Get()->GetShillManagerClient()->ConnectToBestServices(
-      base::Bind(&base::DoNothing),
+      base::Bind(&AutoConnectHandler::NotifyAutoConnectedToNetwork,
+                 weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&network_handler::ShillErrorCallbackFunction,
-                 "ConnectToBestServices Failed",
-                 "", network_handler::ErrorCallback()));
+                 "ConnectToBestServices Failed", "",
+                 network_handler::ErrorCallback()));
 }
 
 }  // namespace chromeos
