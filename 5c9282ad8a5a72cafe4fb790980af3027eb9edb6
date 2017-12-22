@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1016f107_287d10ff",
+        "filename": "ash/public/cpp/ash_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-22T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a736f6_a85d6003",
+      "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f7b660f_e437e8fc",
         "filename": "ui/login/display_manager.js",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858e12a3_96ec4a74",
+        "filename": "ui/login/display_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-22T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7b660f_e437e8fc",
+      "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
