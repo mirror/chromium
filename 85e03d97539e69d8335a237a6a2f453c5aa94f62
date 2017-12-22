@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e5e12da_d38353fe",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T23:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc966abf_4c81ef33",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd263e6_f4ca4430",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 13
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4e9efe7f_7e324e69",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T23:40:54Z",
+      "side": 1,
+      "message": "I actually like your refactored version a lot more. It also allowed me to solve some off-by-one cases more cleanly.\n\nPerformance-wise it\u0027s pretty negligible. I think we also get some gains from not having to call lineCount (which does splits) so many times.",
+      "parentUuid": "7d8fcee0_07a2f5ed",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af2b7c5b_220fd84f",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 13
@@ -68,6 +104,24 @@
       "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f690cda0_d00c792a",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T23:40:54Z",
+      "side": 1,
+      "message": "Oops, I was missing \u003d\u003d \u0027\\n\u0027.",
+      "parentUuid": "af2b7c5b_220fd84f",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
