@@ -10,10 +10,18 @@
 
 namespace vr {
 
+// The reason why a transient element hid itself.
+enum class TransientElementHideReason : int {
+  kTimeout,
+  kSignal,  // Hiding because the transient element was signalled to hide.
+};
+
 // Base class for a transient element that automatically hides itself after some
 // point in time. The exacly transience behavior depends on the subclass.
 class TransientElement : public UiElement {
  public:
+  typedef base::RepeatingCallback<void(TransientElementHideReason)>
+      OnHideCallback;
   ~TransientElement() override;
 
   // Sets the elements visibility to the given value. If the visibility is
@@ -25,11 +33,18 @@ class TransientElement : public UiElement {
   // visible.
   void RefreshVisible();
 
+  // Called when the element is hidden. This signal can be used to perform UI
+  // state changes that depend on the element's visibility.
+  void set_on_hide_callback(const OnHideCallback& callback) {
+    on_hide_callback_ = callback;
+  }
+
  protected:
   explicit TransientElement(const base::TimeDelta& timeout);
 
   base::TimeDelta timeout_;
   base::TimeTicks set_visible_time_;
+  OnHideCallback on_hide_callback_;
 
  private:
   typedef UiElement super;
@@ -52,23 +67,15 @@ class SimpleTransientElement : public TransientElement {
   DISALLOW_COPY_AND_ASSIGN(SimpleTransientElement);
 };
 
-// The reason why a transient element hid itself. Note that this is only used by
-// ShowUntilSignalTransientElement below.
-enum class TransientElementHideReason : int {
-  kTimeout,
-  kSignal,
-};
-
 // An element that waits for a signal or timeout to hide itself once its been
 // made visible. The element will stay visible for at least the set
 // minimum duration regardless of when ::Signal is called. The set callback
 // is triggered when the element hides itself.
 class ShowUntilSignalTransientElement : public TransientElement {
  public:
-  ShowUntilSignalTransientElement(
-      const base::TimeDelta& min_duration,
-      const base::TimeDelta& timeout,
-      const base::Callback<void(TransientElementHideReason)>& callback);
+  ShowUntilSignalTransientElement(const base::TimeDelta& min_duration,
+                                  const base::TimeDelta& timeout,
+                                  const OnHideCallback& on_hide_callback);
   ~ShowUntilSignalTransientElement() override;
 
   // This must be called before the set timeout to hide the element.
@@ -81,7 +88,6 @@ class ShowUntilSignalTransientElement : public TransientElement {
   typedef TransientElement super;
 
   base::TimeDelta min_duration_;
-  base::Callback<void(TransientElementHideReason)> callback_;
   bool signaled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ShowUntilSignalTransientElement);

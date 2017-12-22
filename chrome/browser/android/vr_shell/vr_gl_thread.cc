@@ -308,6 +308,13 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
                             browser_ui_, enabled, reason));
 }
 
+void VrGLThread::SetVoiceSearchEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&vr::BrowserUiInterface::SetVoiceSearchEnabled,
+                                browser_ui_, enabled));
+}
+
 void VrGLThread::SetSpeechRecognitionEnabled(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
