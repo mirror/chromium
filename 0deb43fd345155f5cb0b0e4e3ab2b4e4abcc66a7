@@ -836,6 +836,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e3c47d_44972ff2",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-22T01:44:43Z",
+      "side": 1,
+      "message": "Good point. If page_num can be transferred thru optional field, that would be great. But for now mojo doesn\u0027t support non-reference types to be nullable.",
+      "parentUuid": "e3f2c3be_cfabdce4",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

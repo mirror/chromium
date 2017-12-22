@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6e97b6c_92933f2c",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-22T01:44:43Z",
+      "side": 1,
+      "message": "Yes, removed.",
+      "parentUuid": "38632ad7_6919bbfd",
+      "revId": "aaf79fa476b213acdd5d5102885bcff0dd309968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f91175e0_5a6e28ba",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "aaf79fa476b213acdd5d5102885bcff0dd309968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0761a088_eb4a040e",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-22T01:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f91175e0_5a6e28ba",
+      "revId": "aaf79fa476b213acdd5d5102885bcff0dd309968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
