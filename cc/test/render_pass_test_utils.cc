@@ -455,4 +455,22 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
       mapped_plane_resources[3], gfx::ColorSpace::CreateREC601(), 0.0, 1.0, 8);
 }
 
+const ResourceProvider::ResourceIdMap& SendResourceAndGetChildToParentMap(
+    const ResourceProvider::ResourceIdArray& resource_ids,
+    DisplayResourceProvider* resource_provider,
+    LayerTreeResourceProvider* child_resource_provider) {
+  DCHECK(resource_provider);
+  DCHECK(child_resource_provider);
+  // Transfer resources to the parent.
+  std::vector<viz::TransferableResource> send_to_parent;
+  std::vector<viz::ReturnedResource> returned_to_child;
+  int child_id = resource_provider->CreateChild(
+      base::BindRepeating(&CollectResources, &returned_to_child));
+  child_resource_provider->PrepareSendToParent(resource_ids, &send_to_parent);
+  resource_provider->ReceiveFromChild(child_id, send_to_parent);
+
+  // Return the child to parent map.
+  return resource_provider->GetChildToParentMap(child_id);
+}
+
 }  // namespace cc
