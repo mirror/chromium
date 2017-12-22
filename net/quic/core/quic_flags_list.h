@@ -114,11 +114,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy,
           true)
 
-// Deprecate QuicAckFrame.largest_observed since it is redundant.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
-          true)
-
 // Explicitly send a connection close if the TLP count is greater than 0 when
 // idle timeout occurs.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, true)
