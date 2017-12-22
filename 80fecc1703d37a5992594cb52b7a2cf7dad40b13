@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61059691_5853a32f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-12-22T15:31:00Z",
+      "side": 1,
+      "message": "is it always on managed devices?",
+      "range": {
+        "startLine": 2714,
+        "startChar": 71,
+        "endLine": 2714,
+        "endChar": 78
+      },
+      "revId": "80fecc1703d37a5992594cb52b7a2cf7dad40b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
