@@ -17,8 +17,6 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/media/router/event_page_request_manager.h"
-#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/issue_manager.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_router.h"
@@ -27,7 +25,6 @@
 #include "chrome/browser/media/router/media_router_metrics.h"
 #include "chrome/browser/media/router/media_routes_observer.h"
 #include "chrome/browser/media/router/media_sinks_observer.h"
-#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 #include "chrome/browser/media/router/presentation_service_delegate_impl.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
@@ -234,10 +231,7 @@ MediaRouterUI::MediaRouterUI(content::WebUI* web_ui)
   content::WebContents* wc = web_ui->GetWebContents();
   DCHECK(wc);
   content::BrowserContext* context = wc->GetBrowserContext();
-
   router_ = MediaRouterFactory::GetApiForBrowserContext(context);
-  event_page_request_manager_ =
-      EventPageRequestManagerFactory::GetApiForBrowserContext(context);
 
   // Allows UI to load extensionview.
   // TODO(haibinlu): limit object-src to current extension once crbug/514866
@@ -895,10 +889,6 @@ std::string MediaRouterUI::GetTruncatedPresentationRequestSourceName() const {
 
 const std::set<MediaCastMode>& MediaRouterUI::cast_modes() const {
   return cast_modes_;
-}
-
-const std::string& MediaRouterUI::GetRouteProviderExtensionId() const {
-  return event_page_request_manager_->media_route_provider_extension_id();
 }
 
 void MediaRouterUI::SetUIInitializationTimer(const base::Time& start_time) {

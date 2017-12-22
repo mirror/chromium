@@ -10,7 +10,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
-#include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
@@ -106,8 +105,6 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
-    EventPageRequestManagerFactory::GetInstance()->SetTestingFactory(
-        profile(), &MockEventPageRequestManager::Create);
     EXPECT_CALL(mock_router_, OnUserGesture()).Times(AnyNumber());
     EXPECT_CALL(mock_router_, GetCurrentRoutes())
         .Times(AnyNumber())
