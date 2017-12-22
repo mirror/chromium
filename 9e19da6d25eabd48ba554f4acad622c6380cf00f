@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e10a8bc_f4a2d3d4",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T20:14:36Z",
+      "side": 1,
+      "message": "I think there is a possible race condition if I remove this so I\u0027ll leave it as is.\n\nIf loading finished but then we navigated away before 268 is checked we wouldn\u0027t clean up.  If we also unobserve here and then don\u0027t get the notification callback to DidStartNavigation after the url changed we wouldn\u0027t delete the observer.",
+      "parentUuid": "00d5bfba_c486eb68",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 48
+      },
+      "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f0e21cd_682cbad4",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f974b513_15c871a8",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T20:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f0e21cd_682cbad4",
+      "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1efb6236_346d2a07",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T20:14:36Z",
+      "side": 1,
+      "message": "You\u0027re the (at least) 3rd one to call this out. :)\n\nRealized I needed a comment that the reason we are doing this is because we could still be in the constructor (from line 215).\n\nAnyway there is really only one case where that happens (when everything is full loaded and capture is already ongoing), so I switched up the logic to always prefer just \u0027delete this\u0027 except for here where I now check if we are still in the constructor and only then will be \u0027DeleteSoon\u0027 instead.",
+      "parentUuid": "27e4634d_4b650723",
+      "range": {
+        "startLine": 285,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 47
+      },
+      "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "417dfffa_8328306b",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 11
@@ -85,6 +151,30 @@
       "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b588092_13440a7b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T20:14:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "417dfffa_8328306b",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 295,
+        "endChar": 47
+      },
+      "revId": "9e19da6d25eabd48ba554f4acad622c6380cf00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
