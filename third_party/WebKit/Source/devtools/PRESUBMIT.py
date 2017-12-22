@@ -59,12 +59,20 @@ def _CheckFormat(input_api, output_api):
     finally:
         sys.path = original_sys_path
 
-    check_formatting_process = popen(['git', 'cl', 'format', '--js', '--dry-run', input_api.PresubmitLocalPath()])
+    ignore_files = set()
+    eslint_ignore_path = input_api.os_path.join(input_api.PresubmitLocalPath(), '.eslintignore')
+    with open(eslint_ignore_path, 'r') as ignore_manifest:
+        for line in ignore_manifest:
+            ignore_files.add(line.strip())
+    formattable_files = [affected_file for affected_file in affected_files
+                         if all(ignore_file not in affected_file for ignore_file in ignore_files)]
+
+    check_formatting_process = popen(['git', 'cl', 'format', '--js', '--dry-run'] + formattable_files)
     check_formatting_process.communicate()
     if check_formatting_process.returncode == 0:
         return []
 
-    format_args = ['git', 'cl', 'format', '--js', input_api.PresubmitLocalPath()]
+    format_args = ['git', 'cl', 'format', '--js'] + formattable_files
     format_process = popen(format_args)
     format_out, _ = format_process.communicate()
     if format_process.returncode != 0:
@@ -187,7 +195,7 @@ def CheckChangeOnUpload(input_api, output_api):
     results.extend(_CheckApplicationDescriptors(input_api, output_api))
     results.extend(_CheckFormat(input_api, output_api))
     results.extend(_CheckDevtoolsStyle(input_api, output_api))
-    results.extend(_CompileDevtoolsFrontend(input_api, output_api))
+    # results.extend(_CompileDevtoolsFrontend(input_api, output_api))
     results.extend(_CheckConvertSVGToPNGHashes(input_api, output_api))
     results.extend(_CheckOptimizePNGHashes(input_api, output_api))
     results.extend(_CheckCSSViolations(input_api, output_api))
