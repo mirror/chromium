@@ -23,7 +23,9 @@
  * DAMAGE.
  */
 
-#include "public/web/WebSurroundingText.h"
+#include "core/editing/SurroundingText.h"
+
+// TODO(xiaochengh): Merge this file into core/editing/SurroundingText.cpp
 
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
@@ -41,12 +43,10 @@
 
 namespace blink {
 
-WebSurroundingText::WebSurroundingText() {}
-
-WebSurroundingText::~WebSurroundingText() {}
-
-void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
-                                                        size_t max_length) {
+// static
+WebSurroundingText* WebSurroundingText::CreateFromCurrentSelection(
+    WebLocalFrame* frame,
+    size_t max_length) {
   LocalFrame* web_frame = ToWebLocalFrameImpl(frame)->GetFrame();
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -56,32 +56,23 @@ void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
   const EphemeralRange range = web_frame->Selection()
                                    .ComputeVisibleSelectionInDOMTree()
                                    .ToNormalizedEphemeralRange();
-  if (range.IsNull())
-    return;
-  // TODO(xiaochengh): The followinng SurroundingText can hold a null Range,
-  // in which case we should prevent it from being stored in |m_private|.
-  private_.reset(new SurroundingText(range, max_length));
+  return new SurroundingText(range, max_length);
 }
 
-WebString WebSurroundingText::TextContent() const {
-  return private_->Content();
+WebString SurroundingText::TextContent() const {
+  return Content();
 }
 
-size_t WebSurroundingText::HitOffsetInTextContent() const {
-  DCHECK_EQ(private_->StartOffsetInContent(), private_->EndOffsetInContent());
-  return private_->StartOffsetInContent();
+size_t SurroundingText::StartOffsetInTextContent() const {
+  return StartOffsetInContent();
 }
 
-size_t WebSurroundingText::StartOffsetInTextContent() const {
-  return private_->StartOffsetInContent();
+size_t SurroundingText::EndOffsetInTextContent() const {
+  return EndOffsetInContent();
 }
 
-size_t WebSurroundingText::EndOffsetInTextContent() const {
-  return private_->EndOffsetInContent();
-}
-
-bool WebSurroundingText::IsNull() const {
-  return !private_.get();
+bool SurroundingText::IsNull() const {
+  return !content_range_.Get();
 }
 
 }  // namespace blink

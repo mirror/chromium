@@ -2542,10 +2542,11 @@ void RenderFrameImpl::OnReloadLoFiImages() {
 }
 
 void RenderFrameImpl::OnTextSurroundingSelectionRequest(uint32_t max_length) {
-  blink::WebSurroundingText surroundingText;
-  surroundingText.InitializeFromCurrentSelection(frame_, max_length);
+  std::unique_ptr<blink::WebSurroundingText> surrounding_text =
+      base::WrapUnique(blink::WebSurroundingText::CreateFromCurrentSelection(
+          frame_, max_length));
 
-  if (surroundingText.IsNull()) {
+  if (surrounding_text->IsNull()) {
     // |surroundingText| might not be correctly initialized, for example if
     // |frame_->selectionRange().isNull()|, in other words, if there was no
     // selection.
@@ -2555,9 +2556,9 @@ void RenderFrameImpl::OnTextSurroundingSelectionRequest(uint32_t max_length) {
   }
 
   Send(new FrameHostMsg_TextSurroundingSelectionResponse(
-      routing_id_, surroundingText.TextContent().Utf16(),
-      surroundingText.StartOffsetInTextContent(),
-      surroundingText.EndOffsetInTextContent()));
+      routing_id_, surrounding_text->TextContent().Utf16(),
+      surrounding_text->StartOffsetInTextContent(),
+      surrounding_text->EndOffsetInTextContent()));
 }
 
 bool RenderFrameImpl::RunJavaScriptDialog(JavaScriptDialogType type,
