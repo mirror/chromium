@@ -19,9 +19,6 @@ SettingsHelpPageBrowserTest.prototype = {
   browsePreload: 'chrome://help/',
 
   /** @override */
-  extraLibraries: PolymerTest.getLibraries(ROOT_PATH),
-
-  /** @override */
   setUp: function() {
     // Intentionally bypassing SettingsPageBrowserTest#setUp.
     PolymerTest.prototype.setUp.call(this);
@@ -31,7 +28,7 @@ SettingsHelpPageBrowserTest.prototype = {
 TEST_F('SettingsHelpPageBrowserTest', 'Load', function() {
   // Assign |self| to |this| instead of binding since 'this' in suite()
   // and test() will be a Mocha 'Suite' or 'Test' instance.
-  var self = this;
+  const self = this;
 
   // Register mocha tests.
   suite('Help page', function() {
