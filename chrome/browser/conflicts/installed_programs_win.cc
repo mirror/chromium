@@ -93,15 +93,15 @@ bool GetInstalledFilesUsingMsiGuid(
 void CheckRegistryKeyForInstalledProgram(
     HKEY hkey,
     const base::string16& key_path,
+    REGSAM wow64access,
     const base::string16& key_name,
     const MsiUtil& msi_util,
     InstalledPrograms::ProgramsData* programs_data,
     int* size_in_bytes) {
-  base::win::RegKey candidate(
-      hkey,
-      base::StringPrintf(L"%ls\\%ls", key_path.c_str(), key_name.c_str())
-          .c_str(),
-      KEY_READ);
+  base::string16 candidate_key_path =
+      base::StringPrintf(L"%ls\\%ls", key_path.c_str(), key_name.c_str());
+  base::win::RegKey candidate(hkey, candidate_key_path.c_str(),
+                              KEY_READ | wow64access);
 
   if (!candidate.Valid())
     return;
@@ -177,20 +177,25 @@ std::unique_ptr<InstalledPrograms::ProgramsData> GetProgramsData(
   auto programs_data = base::MakeUnique<InstalledPrograms::ProgramsData>();
 
   // Iterate over all the variants of the uninstall registry key.
-  const wchar_t* kUninstallKeyPaths[] = {
-      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
-      L"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
-  };
+  const wchar_t kUninstallKeyPath[] =
+      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
 
+  // The "HKCU\SOFTWARE\" registry subtree is shared between both 32-bits and
+  // 64-bits views. Accessing both would create duplicate entries.
+  // https://msdn.microsoft.com/en-us/library/windows/desktop/aa384253(v=vs.85).aspx
+  std::pair<HKEY, REGSAM> kCombinations[] = {
+      {HKEY_CURRENT_USER, KEY_WOW64_32KEY},
+      {HKEY_LOCAL_MACHINE, KEY_WOW64_32KEY},
+      {HKEY_LOCAL_MACHINE, KEY_WOW64_64KEY},
+  };
   int size_in_bytes = 0;
-  for (const wchar_t* uninstall_key_path : kUninstallKeyPaths) {
-    for (HKEY hkey : {HKEY_LOCAL_MACHINE, HKEY_CURRENT_USER}) {
-      for (base::win::RegistryKeyIterator i(hkey, uninstall_key_path);
-           i.Valid(); ++i) {
-        CheckRegistryKeyForInstalledProgram(hkey, uninstall_key_path, i.Name(),
-                                            *msi_util, programs_data.get(),
-                                            &size_in_bytes);
-      }
+  for (const auto& combination : kCombinations) {
+    for (base::win::RegistryKeyIterator i(combination.first, kUninstallKeyPath,
+                                          combination.second);
+         i.Valid(); ++i) {
+      CheckRegistryKeyForInstalledProgram(
+          combination.first, kUninstallKeyPath, combination.second, i.Name(),
+          *msi_util, programs_data.get(), &size_in_bytes);
     }
   }
 
