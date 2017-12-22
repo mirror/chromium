@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a327321b_3c9c8d30",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T00:05:59Z",
+      "side": 1,
+      "message": "Add NoAllocationScope and StackFrameDepth(0) on the stack before calling Trace.\n\nStackFrameDepth(0) will make it clear that Trace doesn\u0027t trigger eager tracing.",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6465b17_62247653",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T00:05:59Z",
+      "side": 1,
+      "message": "Add a comment about how this works.",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c407459_29c9e281",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T00:05:59Z",
+      "side": 1,
+      "message": "Add:\n\n  All in-place constructions that may assign Oilpan objects must be dispatched through ConstructAndNotifyElement.\n\nDo you have any idea to force the rule? e.g., compile-time verification.",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
