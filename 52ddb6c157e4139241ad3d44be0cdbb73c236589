@@ -16,6 +16,24 @@
       "revId": "52ddb6c157e4139241ad3d44be0cdbb73c236589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809f9558_b6958628",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-22T16:35:55Z",
+      "side": 1,
+      "message": "Done. Also updated Unmount from smb_error -\u003e error.",
+      "parentUuid": "b485475d_d6a62830",
+      "revId": "52ddb6c157e4139241ad3d44be0cdbb73c236589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
