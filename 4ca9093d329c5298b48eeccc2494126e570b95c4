@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "583d42b6_087ac951",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. My understanding is that task type enum are used for both per-frame task runners and global task runners.\n\naltimin@, wdyt?",
+      "parentUuid": "aa1bd3cb_06a7f59e",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "200b665a_d724bb82",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-22T09:09:44Z",
       "side": 1,
       "message": "What\u0027s the relationship between this and the IPC task runner?",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ae798e_5b9620f7",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "ditto: I thought The task types would be used even for global task runners.",
+      "parentUuid": "200b665a_d724bb82",
       "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d387c1d0_9b35bf7e",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cd287d4_27391469",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6624b939_0b581770",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e779c7c6_ff385abd",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6624b939_0b581770",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85b1cf8_4c053678",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-22T09:09:44Z",
       "side": 1,
       "message": "Is it limited to asynchronous closing?",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c7ea93_74f11d90",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "No but the current usages are only for closing: https://docs.google.com/spreadsheets/d/1Qxo_ccKPrLKC1LEBqK1YLpLsQVsJcZB6kovpyOClMmo/edit#gid\u003d452159954\n\nIt might be better to unify it to another task type or rename it, but I didn\u0027t have a good idea.",
+      "parentUuid": "c85b1cf8_4c053678",
       "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0fbf3589_0b472df1",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "198806ef_aac08119",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64b7622a_26bb0091",
         "filename": "third_party/WebKit/public/platform/TaskType.h",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70bc95d_e66a5270",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-22T10:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b7622a_26bb0091",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
