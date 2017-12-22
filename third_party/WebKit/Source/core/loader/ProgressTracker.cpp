@@ -57,8 +57,7 @@ struct ProgressItem {
   USING_FAST_MALLOC(ProgressItem);
 
  public:
-  explicit ProgressItem(long long length)
-      : bytes_received(0), estimated_length(length) {}
+  ProgressItem() : bytes_received(0), estimated_length(0) {}
 
   long long bytes_received;
   long long estimated_length;
@@ -76,7 +75,9 @@ ProgressTracker::ProgressTracker(LocalFrame* frame)
       last_notified_progress_time_(0),
       finished_parsing_(false),
       did_first_contentful_paint_(false),
-      progress_value_(0) {}
+      progress_value_(0),
+      total_bytes_received_(0),
+      total_estimated_bytes_(0) {}
 
 ProgressTracker::~ProgressTracker() {}
 
@@ -96,6 +97,8 @@ double ProgressTracker::EstimatedProgress() const {
 
 void ProgressTracker::Reset() {
   progress_items_.clear();
+  total_bytes_received_ = 0;
+  total_estimated_bytes_ = 0;
   progress_value_ = 0;
   last_notified_progress_value_ = 0;
   last_notified_progress_time_ = 0;
@@ -155,8 +158,10 @@ void ProgressTracker::WillStartLoading(unsigned long identifier,
           ProgressBarCompletion::kLoadEvent &&
       (HaveParsedAndPainted() || priority < ResourceLoadPriority::kHigh))
     return;
-  progress_items_.Set(identifier, std::make_unique<ProgressItem>(
-                                      kProgressItemDefaultEstimatedLength));
+  std::unique_ptr<ProgressItem> item = std::make_unique<ProgressItem>();
+  SetEstimatedLength(item.get(), kProgressItemDefaultEstimatedLength);
+  auto added = progress_items_.Set(identifier, std::move(item));
+  DCHECK(added.is_new_entry);
 }
 
 void ProgressTracker::IncrementProgress(unsigned long identifier,
@@ -168,8 +173,8 @@ void ProgressTracker::IncrementProgress(unsigned long identifier,
   long long estimated_length = response.ExpectedContentLength();
   if (estimated_length < 0)
     estimated_length = kProgressItemDefaultEstimatedLength;
-  item->bytes_received = 0;
-  item->estimated_length = estimated_length;
+  IncrementBytesReceived(item, -item->bytes_received);  // Reset to 0.
+  SetEstimatedLength(item, estimated_length);
 }
 
 void ProgressTracker::IncrementProgress(unsigned long identifier, int length) {
@@ -177,10 +182,23 @@ void ProgressTracker::IncrementProgress(unsigned long identifier, int length) {
   if (!item)
     return;
 
-  item->bytes_received += length;
+  IncrementBytesReceived(item, length);
   if (item->bytes_received > item->estimated_length)
-    item->estimated_length = item->bytes_received * 2;
+    SetEstimatedLength(item, item->bytes_received * 2);
+
   MaybeSendProgress();
+}
+
+void ProgressTracker::IncrementBytesReceived(ProgressItem* item,
+                                             long long length) {
+  item->bytes_received += length;
+  total_bytes_received_ += length;
+}
+
+void ProgressTracker::SetEstimatedLength(ProgressItem* item, long long length) {
+  total_estimated_bytes_ -= item->estimated_length;
+  total_estimated_bytes_ += length;
+  item->estimated_length = length;
 }
 
 bool ProgressTracker::HaveParsedAndPainted() {
@@ -197,15 +215,8 @@ void ProgressTracker::MaybeSendProgress() {
   if (did_first_contentful_paint_)
     progress_value_ += 0.1;
 
-  long long bytes_received = 0;
-  long long estimated_bytes_for_pending_requests = 0;
-  for (const auto& progress_item : progress_items_) {
-    bytes_received += progress_item.value->bytes_received;
-    estimated_bytes_for_pending_requests +=
-        progress_item.value->estimated_length;
-  }
-  DCHECK_GE(estimated_bytes_for_pending_requests, 0);
-  DCHECK_GE(estimated_bytes_for_pending_requests, bytes_received);
+  DCHECK_GE(total_estimated_bytes_, 0);
+  DCHECK_GE(total_estimated_bytes_, total_bytes_received_);
 
   if (HaveParsedAndPainted()) {
     if (frame_->GetSettings()->GetProgressBarCompletion() ==
@@ -215,17 +226,16 @@ void ProgressTracker::MaybeSendProgress() {
     }
     if (frame_->GetSettings()->GetProgressBarCompletion() !=
             ProgressBarCompletion::kLoadEvent &&
-        estimated_bytes_for_pending_requests == bytes_received) {
+        total_estimated_bytes_ == total_bytes_received_) {
       SendFinalProgress();
       return;
     }
   }
 
   double percent_of_bytes_received =
-      !estimated_bytes_for_pending_requests
+      !total_estimated_bytes_
           ? 1.0
-          : (double)bytes_received /
-                (double)estimated_bytes_for_pending_requests;
+          : (double)total_bytes_received_ / (double)total_estimated_bytes_;
   progress_value_ += percent_of_bytes_received / 2;
 
   DCHECK_GE(progress_value_, kInitialProgressValue);
@@ -253,7 +263,7 @@ void ProgressTracker::CompleteProgress(unsigned long identifier) {
   if (!item)
     return;
 
-  item->estimated_length = item->bytes_received;
+  SetEstimatedLength(item, item->bytes_received);
   MaybeSendProgress();
 }
 
