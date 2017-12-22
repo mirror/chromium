@@ -22,6 +22,30 @@
       "revId": "9eaa06278314842d826a62171a60a9addb0e3aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904310c_a997fdc1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-22T00:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a2cc0a9_17ac6543",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 59
+      },
+      "revId": "9eaa06278314842d826a62171a60a9addb0e3aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
