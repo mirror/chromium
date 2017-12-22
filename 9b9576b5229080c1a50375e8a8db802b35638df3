@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be17a98_81d0a0ba",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T02:02:57Z",
+      "side": 1,
+      "message": "Instance variables should start with a lower case letter, per styleguide.\n\nhttps://google.github.io/styleguide/jsguide.html#naming-local-variable-names",
+      "range": {
+        "startLine": 440,
+        "startChar": 11,
+        "endLine": 440,
+        "endChar": 29
+      },
+      "revId": "9b9576b5229080c1a50375e8a8db802b35638df3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
