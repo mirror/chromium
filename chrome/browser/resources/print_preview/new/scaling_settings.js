@@ -24,26 +24,37 @@ Polymer({
   /** @private {number} */
   fitToPageFlag_: 0,
 
-  /** @private {boolean} */
-  isInitialized_: false,
-
   observers: [
-    'onInputChanged_(inputString_, inputValid_, documentInfo.isModifiable)',
-    'onInitialized_(settings.scaling.value)'
+    'onFitToPageSettingChange_(settings.fitToPage.value, ' +
+        'documentInfo.fitToPageScaling)',
+    'onInputChanged_(inputString_, inputValid_, settings.fitToPage.available)',
+    'onScalingSettingChanged_(settings.scaling.value)',
   ],
+
+  onFitToPageSettingChange_: function() {
+    if (!this.getSetting('fitToPage').value &&
+        this.getSetting('scaling').valid) {
+      // Fit to page is no longer checked. Update the display and scaling.
+      this.setSetting('scaling', this.lastValidScaling_);
+      this.inputString_ = this.lastValidScaling_;
+    } else if (this.getSetting('fitToPage').value) {
+      this.setSettingValid('scaling', true);
+      // If scaling is currently invalid, this will trigger 2 changes, one to
+      // inputValid_ and one to inputString_.
+      this.fitToPageFlag_ = this.inputValid_ ? 1 : 2;
+      this.inputString_ = this.documentInfo.fitToPageScaling;
+    }
+  },
 
   /**
    * Updates the input string when the setting has been initialized.
    * @private
    */
-  onInitialized_: function() {
-    // Avoid loops from setting inputString_ -> onInputChanged_ sets scaling
-    // value -> onInitialized_ sets inputString_
-    if (this.isInitialized_)
-      return;
-    this.isInitialized_ = true;
-    const scaling = this.getSetting('scaling');
-    this.inputString_ = /** @type {string} */ (scaling.value);
+  onScalingSettingChanged_: function() {
+    // Update last valid scaling and ensure input string matches.
+    this.lastValidScaling_ =
+        /** @type {string} */ (this.getSetting('scaling').value);
+    this.inputString_ = this.lastValidScaling_;
   },
 
   /**
@@ -52,29 +63,32 @@ Polymer({
    * @private
    */
   onInputChanged_: function() {
-    if (this.fitToPageFlag_ > 0) {
+    const fitToPage = this.getSetting('fitToPage').value;
+    if (fitToPage && !this.fitToPageFlag_) {
+      // User modified scaling while fit to page was checked. Uncheck fit to
+      // page.
+      if (this.inputValid_)
+        this.lastValidScaling_ = this.inputString_;
+      else
+        this.setSettingValid('scaling', false);
+      this.$$('#fit-to-page-checkbox').checked = false;
+      this.setSetting('fitToPage', false);
+    } else if (fitToPage) {
+      // Fit to page was unchecked and scaling changed as a result.
       this.fitToPageFlag_--;
     } else {
-      const checkbox = this.$$('.checkbox input[type="checkbox"]');
-      if (checkbox.checked && !this.documentInfo.isModifiable) {
-        checkbox.checked = false;
-      } else if (this.inputValid_) {
-        this.lastValidScaling_ = this.inputString_;
-      }
-      this.setSetting('scaling', this.inputString_);
+      // User modified scaling while fit to page was not checked or
+      // scaling setting was set.
+      this.setSettingValid('scaling', this.inputValid_);
+      if (this.inputValid_)
+        this.setSetting('scaling', this.inputString_);
     }
-    this.setSettingValid('scaling', this.inputValid_);
   },
 
   /**
    * Updates scaling as needed based on the value of the fit to page checkbox.
    */
   onFitToPageChange_: function() {
-    if (this.$$('.checkbox input[type="checkbox"]').checked) {
-      this.fitToPageFlag_ = 2;
-      this.set('inputString_', this.documentInfo.fitToPageScaling);
-    } else {
-      this.set('inputString_', this.lastValidScaling_);
-    }
+    this.setSetting('fitToPage', this.$$('#fit-to-page-checkbox').checked);
   },
 });
