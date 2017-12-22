@@ -669,6 +669,7 @@ mojom("mojo_bindings") {
     "prerender.mojom",
     "renderer_configuration.mojom",
     "resource_usage_reporter.mojom",
+    "sandbox_status_android.mojom",
   ]
 
   if (is_win) {
