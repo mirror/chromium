@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b485475d_d6a62830",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-22T14:50:01Z",
+      "side": 1,
+      "message": "Just call it error to be consistent and it\u0027s obvious from context it is smb. (and below)",
+      "revId": "52ddb6c157e4139241ad3d44be0cdbb73c236589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
