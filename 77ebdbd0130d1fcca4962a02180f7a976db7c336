@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "065cd323_dae889b6",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-22T15:36:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ebd5327_63a62530",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aef89135_1ab0231d",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
         "patchSetId": 2
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "This function is not used to determine non-OffHours availability during OffHours. The same are functions above - they are actually only called with the currently effective cros settings.\nHowever, I moved them here as they should be accessible from both chrome_user_manager_util.cc and \u0027bool IsUserAllowed(const user_manager::User\u0026 user, const CrosSettings* cros_settings);|\u0027 here.",
       "parentUuid": "5b3c4cca_0603c948",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76ca417_c870d887",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-22T15:36:53Z",
+      "side": 1,
+      "message": "But there\u0027s an inconsistency that IsUserAllowed() is receiving a pointer to |CrosSettings| instance and is using this instance for most of the checks, except for the IsGaiaUserAllowed() that trusts to the singleton instance of |CrosSettings|.",
+      "parentUuid": "d344652e_6ca9797d",
       "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

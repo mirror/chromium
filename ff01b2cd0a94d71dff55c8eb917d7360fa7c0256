@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a25a46b_7c58eac5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-22T15:36:53Z",
+      "side": 1,
+      "message": "Could you please add a unit test for the new IsCurrentSessionAllowedOnlyForOffHours() method into device_off_hours_controller_unittest.cc?\n\nI\u0027m also thinking that we lack the end-to-end test coverage for the OffHours policy. But not asking to do this in this CL as it\u0027ll probably require quite some effort to write one, and isn\u0027t directly related to your change here... But we definitely need to invest some time in tests - serious breakages in the OffHours policy could be hurting for users.",
+      "revId": "ff01b2cd0a94d71dff55c8eb917d7360fa7c0256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
