@@ -9,7 +9,6 @@
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "content/public/renderer/chrome_object_extensions_utils.h"
 #include "content/public/renderer/render_frame.h"
@@ -17,6 +16,7 @@
 #include "content/public/renderer/v8_value_converter.h"
 #include "gin/arguments.h"
 #include "gin/function_template.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -32,6 +32,10 @@ SandboxStatusExtension::~SandboxStatusExtension() {}
 void SandboxStatusExtension::Create(content::RenderFrame* frame) {
   auto* extension = new SandboxStatusExtension(frame);
   extension->AddRef();  // Balanced in OnDestruct().
+
+  frame->GetAssociatedInterfaceRegistry()->AddInterface(
+      base::Bind(&SandboxStatusExtension::OnSandboxStatusExtensionInfoRequest,
+                 base::Unretained(this)));
 }
 
 void SandboxStatusExtension::OnDestruct() {
@@ -39,23 +43,16 @@ void SandboxStatusExtension::OnDestruct() {
   Release();
 }
 
-bool SandboxStatusExtension::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-
-  IPC_BEGIN_MESSAGE_MAP(SandboxStatusExtension, message)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_AddSandboxStatusExtension,
-                        OnAddSandboxStatusExtension)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
-}
-
 void SandboxStatusExtension::DidClearWindowObject() {
   Install();
 }
 
-void SandboxStatusExtension::OnAddSandboxStatusExtension() {
+void SandboxStatusExtension::OnSandboxStatusExtensionInfoRequest(
+    chrome::mojom::SandboxStatusExtensionInfoAssociatedRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void SandboxStatusExtension::AddSandboxStatusExtension() {
   should_install_ = true;
 }
 
