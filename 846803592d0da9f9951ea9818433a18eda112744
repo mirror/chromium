@@ -84,6 +84,74 @@
       "revId": "846803592d0da9f9951ea9818433a18eda112744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12eb9308_e4ba3414",
+        "filename": "ui/views/accessibility/native_view_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:38:52Z",
+      "side": 1,
+      "message": "Is this needed? Ideally it shouldn\u0027t be, but if so then you can\nget rid of the forward declaration.",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24370247_6ca6258e",
+        "filename": "ui/views/accessibility/native_view_accessibility_auralinux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:38:52Z",
+      "side": 1,
+      "message": "Why?\n\nWhy can\u0027t the base class handle this anyway?",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f38c298_3ec1451a",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:38:52Z",
+      "side": 1,
+      "message": "Is this needed? It already inherits",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b57e77a_153fd9e3",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:38:52Z",
+      "side": 1,
+      "message": "dup",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
