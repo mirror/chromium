@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13887105_a2d068c2",
+        "filename": "chromeos/components/tether/tether_connector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-22T21:47:54Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caa6134_90860d12",
+        "filename": "chromeos/components/tether/tether_connector_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-22T21:47:54Z",
+      "side": 1,
+      "message": "Move to .cc and forward-declare in this file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b17b77_d03fcdfb",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-22T21:47:54Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 673,
+        "startChar": 0,
+        "endLine": 673,
+        "endChar": 7
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336f87bb_e810c660",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-22T21:47:54Z",
+      "side": 1,
+      "message": "nit: const base::TimeDelta kSecondConnectToHostAttemptAdditionalTime",
+      "range": {
+        "startLine": 743,
+        "startChar": 2,
+        "endLine": 743,
+        "endChar": 58
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df539f43_b3529381",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-22T21:47:54Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 821,
+        "startChar": 0,
+        "endLine": 821,
+        "endChar": 9
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
