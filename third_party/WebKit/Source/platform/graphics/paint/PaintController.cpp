@@ -68,11 +68,10 @@ bool PaintController::UseCachedDrawingIfPossible(
     return false;
   }
 
-  size_t cached_item = FindCachedItem(DisplayItem::Id(client, type));
-  if (cached_item == kNotFound) {
-    NOTREACHED();
+  size_t cached_item =
+      FindCachedItem(DisplayItem::Id(client, type, current_fragment_));
+  if (cached_item == kNotFound)
     return false;
-  }
 
   ++num_cached_new_items_;
   EnsureNewDisplayItemListInitialCapacity();
@@ -299,19 +298,21 @@ void PaintController::ProcessNewItem(DisplayItem& display_item) {
       DCHECK(!display_item.IsEndAndPairedWith(begin_display_item.GetType()));
   }
 
-  size_t index = FindMatchingItemFromIndex(display_item.GetId(),
-                                           new_display_item_indices_by_client_,
-                                           new_display_item_list_);
-  if (index != kNotFound) {
-    ShowDebugData();
-    DLOG(INFO) << "DisplayItem " << display_item.AsDebugString()
-               << " has duplicated id with previous "
-               << new_display_item_list_[index].AsDebugString()
-               << " (index=" << index << ")";
-    NOTREACHED();
+  if (display_item.IsCacheable()) {
+    size_t index = FindMatchingItemFromIndex(
+        display_item.GetId(), new_display_item_indices_by_client_,
+        new_display_item_list_);
+    if (index != kNotFound) {
+      ShowDebugData();
+      DLOG(INFO) << "DisplayItem " << display_item.AsDebugString()
+                 << " has duplicated id with previous "
+                 << new_display_item_list_[index].AsDebugString()
+                 << " (index=" << index << ")";
+      NOTREACHED();
+    }
+    AddItemToIndexIfNeeded(display_item, new_display_item_list_.size() - 1,
+                           new_display_item_indices_by_client_);
   }
-  AddItemToIndexIfNeeded(display_item, new_display_item_list_.size() - 1,
-                         new_display_item_indices_by_client_);
 #endif  // DCHECK_IS_ON()
 
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
@@ -468,8 +469,7 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
 
 #if DCHECK_IS_ON()
   ShowDebugData();
-  LOG(ERROR) << id.client.DebugName() << ":"
-             << DisplayItem::TypeAsDebugString(id.type);
+  LOG(ERROR) << id.client.DebugName() << " " << id.ToString();
 #endif
 
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
