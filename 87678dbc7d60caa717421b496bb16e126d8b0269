@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8255317f_da6eb731",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T17:22:34Z",
+      "side": 1,
+      "message": "nit: How about GetDefaultSnapshotImage?",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "87678dbc7d60caa717421b496bb16e126d8b0269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
