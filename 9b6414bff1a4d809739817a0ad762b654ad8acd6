@@ -515,6 +515,30 @@
     },
     {
       "key": {
+        "uuid": "bc831adb_504e66dd",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-22T22:56:33Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Yup, I\u0027ll try to think more about that and follow up there.  I\u0027ll also note that I\u0027m not thrilled about having to call SetSite in so many places.  Maybe we can try calling SetSite() from OnResponseStarted unconditionally (not just for sites requiring dedicated processes), and just remove the SetSite() call from DidNavigate.\n\u003e \u003e \n\u003e \u003e Ack.  This makes sense to me I think.  I can try that in a follow-up CL.\n\u003e \u003e \n\u003e \u003e What about the call to SetSite from RenderFrameHostManager::DetermineSiteInstanceForURL.  This is probably still needed (based on the comment there), right?\n\u003e \n\u003e Thanks for raising this -- thinking about that call, I don\u0027t actually understand it. :) Why would none of the pages share renderers in process-per-site after restore?  If this is only about process-per-site, then it seems we would\u0027ve already done the right thing and returned after processing the process-per-site case earlier in that same block, regardless of session restore (https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?l\u003d1140\u0026rcl\u003da5f2b542466dc51ec76f68cd383697bd26a3f28f).\n\u003e \n\u003e I tried tracing it back, and it\u0027s been there forever, in the initial commit (https://chromium.googlesource.com/chromium/src/+blame/2526315929de99fa5762583621fb52b626a62ef9/chrome/browser/web_contents.cc#897) [Comment added later in https://codereview.chromium.org/1519025].  So much has changed since then that I\u0027d try taking it out and see if anything breaks. :)   Charlie might also have more context for it -- let\u0027s follow up on this with him.\n\u003e \n\nOk.  I\u0027ve touched this line in my follow-up (not-yet-uploaded) CL, so hopefully I\u0027ll remember to talk about this.\n\n\u003e \u003e \u003e Also, why wouldn\u0027t this matter for the cases with a new browsing instance?\n\u003e \u003e \n\u003e \u003e Because BrowsingInstance::GetSiteInstanceForURL is only called when reusing an old browsing instance.  If LoadDataWithBaseURL always used a new browsing instance (which we\u0027ve established above is not true) then we wouldn\u0027t have to worry about using base URL in the call to SetSite made by BrowsingInstance::GetSiteInstanceForURL.\n\u003e \n\u003e Doesn\u0027t matter now - but doesn\u0027t SiteInstance::CreateForURL() create a new BI and then call BI::GetSiteInstanceForURL on that new BI, and hence call SetSite will still happen in that case?\n\nYou\u0027re right - I didn\u0027t think of this scenario.",
+      "parentUuid": "19e99c67_f6afab09",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 39
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8472e3_c5ee71be",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 15
