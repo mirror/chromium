@@ -17,13 +17,14 @@ function FileTableList() {
   throw new Error('Designed to decorate elements');
 }
 
+FileTableList.CONTEXT_MENU_EVENT_TYPE = 'currentfoldercontextmenu';
 /**
  * Decorates TableList as FileTableList.
  * @param {!cr.ui.table.TableList} self A tabel list element.
  */
 FileTableList.decorate = function(self) {
   self.__proto__ = FileTableList.prototype;
-}
+};
 
 FileTableList.prototype.__proto__ = cr.ui.table.TableList.prototype;
 
@@ -267,6 +268,13 @@ filelist.handleTap = function(e, index, eventType) {
     return false;
   }
   if (index == -1) {
+    if (eventType == FileTapHandler.TapEvent.LONG_TAP) {
+      // contextmenu event is suppressed in the ListContainer class.
+      // This is the only exception to open context menu. So we notify it.
+      // This is processed here because index is not known in that class.
+      e.target.dispatchEvent(new CustomEvent(
+          FileTableList.CONTEXT_MENU_EVENT_TYPE, {bubbles: true}));
+    }
     return false;
   }
   var isTap = eventType == FileTapHandler.TapEvent.TAP ||

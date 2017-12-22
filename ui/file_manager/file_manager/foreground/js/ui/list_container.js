@@ -260,9 +260,13 @@ ListContainer.prototype.disableContextMenuByLongTap_ = function() {
       // contextmenu event will be sent right after touchend.
       setTimeout(function() {
         this.allowContextMenuByTouch_ = false;
-      }.bind(this));
+      }.bind(this), 10);
     }
   }.bind(this));
+  this.element.addEventListener(
+      FileTableList.CONTEXT_MENU_EVENT_TYPE, function(e) {
+        this.allowContextMenuByTouch_ = true;
+      }.bind(this));
   this.element.addEventListener('contextmenu', function(e) {
     // Block context menu triggered by touch event unless it is right after
     // multi-touch.
