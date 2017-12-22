@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b0a538_d58d3c00",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-22T17:05:04Z",
+      "side": 1,
+      "message": "Finally found out what was stopping window.location from working.",
+      "range": {
+        "startLine": 694,
+        "startChar": 17,
+        "endLine": 694,
+        "endChar": 0
+      },
+      "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
