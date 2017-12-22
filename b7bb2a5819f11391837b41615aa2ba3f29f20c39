@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "949a62c3_f44435ff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T02:43:55Z",
+      "side": 1,
+      "message": "This function should probably be moved to NGPhysicalFragment. But we currently don\u0027t have a way to obtain line info there... do we?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "b7bb2a5819f11391837b41615aa2ba3f29f20c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b09cb0_edf70bbc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T02:43:55Z",
+      "side": 1,
+      "message": "This function should probably be moved to NGPhysicalFragment. But we currently don\u0027t have a way to obtain line info there... do we?",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "b7bb2a5819f11391837b41615aa2ba3f29f20c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124f8aa3_9d86a2ab",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T02:43:55Z",
+      "side": 1,
+      "message": "How about adding NGPhysicalTextFragment::AssociatedNonPseudoNode() for it?\n\nI have thought about NGPhysicalTextFragment::AssociatedTextNode(), which however doesn\u0027t seem correct for \u003cbr\u003e.\n\nOr should we generalize it into NGPhysicalFragment::AssociatedNonPseudoNode()?",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "b7bb2a5819f11391837b41615aa2ba3f29f20c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
