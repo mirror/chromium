@@ -551,8 +551,6 @@ TEST_F(AppStateWithThreadTest, willTerminate) {
   [appState setWindow:window];
 
   id application = [OCMockObject mockForClass:[UIApplication class]];
-  [[application expect] setMinimumBackgroundFetchInterval:
-                            UIApplicationBackgroundFetchIntervalNever];
 
   // Action.
   [appState applicationWillTerminate:application
