@@ -1033,6 +1033,10 @@ void GLES2InterfaceStub::ScheduleDCLayerCHROMIUM(
     GLuint /* edge_aa_mask */,
     const GLfloat* /* bounds_rect */,
     GLuint /* filter */) {}
+GLintptr GLES2InterfaceStub::CreateVkImage(GLint /* width */,
+                                           GLint /* height */) {
+  return 0;
+}
 void GLES2InterfaceStub::MatrixLoadfCHROMIUM(GLenum /* matrixMode */,
                                              const GLfloat* /* m */) {}
 void GLES2InterfaceStub::MatrixLoadIdentityCHROMIUM(GLenum /* matrixMode */) {}
