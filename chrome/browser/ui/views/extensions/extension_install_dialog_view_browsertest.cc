@@ -7,6 +7,7 @@
 #include <string>
 #include <utility>
 
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -247,6 +248,8 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
                           : ExtensionInstallPrompt::INLINE_INSTALL_PROMPT);
     prompt->AddPermissions(permissions_,
                            ExtensionInstallPrompt::REGULAR_PERMISSIONS);
+    prompt->set_retained_files(retained_files_);
+    prompt->set_retained_device_messages(retained_devices_);
 
     if (from_webstore_)
       prompt->SetWebstoreData("69,420", true, 2.5, 37);
@@ -267,6 +270,14 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
         PermissionMessage(base::ASCIIToUTF16(permission), PermissionIDSet()));
   }
 
+  void AddRetainedFile(const std::string& path) {
+    retained_files_.push_back(base::FilePath(base::ASCIIToUTF16(path)));
+  }
+
+  void AddRetainedDevice(const std::string& device) {
+    retained_devices_.push_back(base::ASCIIToUTF16(device));
+  }
+
   void AddPermissionWithDetails(
       std::string main_permission,
       std::vector<base::string16> detailed_permissions) {
@@ -279,6 +290,8 @@ class ExtensionInstallDialogViewInteractiveBrowserTest
   bool external_install_ = false;
   bool from_webstore_ = false;
   PermissionMessages permissions_;
+  std::vector<base::FilePath> retained_files_;
+  std::vector<base::string16> retained_devices_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionInstallDialogViewInteractiveBrowserTest);
 };
@@ -336,6 +349,25 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
                            {base::ASCIIToUTF16("Detailed permission 1"),
                             base::ASCIIToUTF16("Detailed permission 2"),
                             base::ASCIIToUTF16("Detailed permission 3")});
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeDialog_WithRetainedFiles) {
+  AddRetainedFile("/dev/null");
+  AddRetainedFile("/dev/zero");
+  AddRetainedFile("/dev/random");
+  AddRetainedFile("/dev/urandom");
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
+                       InvokeDialog_WithRetainedDevices) {
+  AddRetainedDevice("Device 1");
+  AddRetainedDevice("Device 2");
+  AddRetainedDevice("Device 3");
+  AddRetainedDevice("Device 4");
+  AddRetainedDevice("Device 5");
   RunDialog();
 }
 
