@@ -33,6 +33,15 @@
 #include "base/logging.h"
 #include "platform/wtf/WTFExport.h"
 
+// <hax>
+#include "base/debug/stack_trace.h"
+#include "platform/wtf/ScopedLogger.h"
+#define stacktrace base::debug::StackTrace().Print
+#define scopedlogger WTF_CREATE_SCOPED_LOGGER
+#define appendscopedlogger WTF_APPEND_SCOPED_LOGGER
+#define scopedloggerif WTF_CREATE_SCOPED_LOGGER_IF
+// </hax>
+
 // New code shouldn't use this function. This function will be deprecated.
 void vprintf_stderr_common(const char* format, va_list args);
 
