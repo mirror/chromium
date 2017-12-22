@@ -15,12 +15,19 @@
 
 namespace blink {
 
-XRFrameTransport::XRFrameTransport() : submit_frame_client_binding_(this) {}
+XRFrameTransport::XRFrameTransport(int sample_count) :
+    submit_frame_client_binding_(this),
+    ahb_sample_count_(sample_count) {}
 
 XRFrameTransport::~XRFrameTransport() {}
 
-void XRFrameTransport::PresentChange() {
+void XRFrameTransport::PresentChange(gpu::gles2::GLES2Interface* gl,
+                                     bool is_presenting) {
+  DVLOG(1) << __FUNCTION__ << ": is_presenting=" << is_presenting;
   frame_copier_ = nullptr;
+  if (!is_presenting) {
+    ReleaseAHBResources(gl);
+  }
 }
 
 void XRFrameTransport::SetTransportOptions(
@@ -34,6 +41,22 @@ XRFrameTransport::GetSubmitFrameClient() {
   submit_frame_client_binding_.Close();
   submit_frame_client_binding_.Bind(mojo::MakeRequest(&submit_frame_client));
   return submit_frame_client;
+}
+
+bool XRFrameTransport::DrawingIntoFBO() {
+  switch (transport_options_->transportMethod) {
+    case device::mojom::blink::VRDisplayFrameTransportMethod::
+        SUBMIT_AS_TEXTURE_HANDLE:
+    case device::mojom::blink::VRDisplayFrameTransportMethod::
+        SUBMIT_AS_MAILBOX_HOLDER:
+      return false;
+    case device::mojom::blink::VRDisplayFrameTransportMethod::
+        DRAW_INTO_TEXTURE_MAILBOX:
+      return true;
+    default:
+      NOTREACHED();
+      return false;
+  }
 }
 
 void XRFrameTransport::FramePreImage(gpu::gles2::GLES2Interface* gl) {
@@ -54,6 +77,25 @@ void XRFrameTransport::FramePreImage(gpu::gles2::GLES2Interface* gl) {
     gl->WaitGpuFenceCHROMIUM(id);
     gl->DestroyGpuFenceCHROMIUM(id);
     previous_frame_fence_.reset();
+  }
+
+  if (transport_options_->transportMethod ==
+             device::mojom::blink::VRDisplayFrameTransportMethod::
+                 DRAW_INTO_TEXTURE_MAILBOX) {
+
+    TRACE_EVENT0("gpu", "XRFrameTransport::FinishDraw");
+    DVLOG(2) << __FUNCTION__;
+    // We're done with the framebuffer, the caller will unbind it after this
+    // call. Give a hint to the driver that we're done with the attachments.
+    gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+    // Discard attachments to tell GL we're done with them.
+    // Not sure if we can discard COLOR_ATTACHMENT0, the content is still
+    // needed.
+    const GLenum kAttachments[] = {// GL_COLOR_ATTACHMENT0,
+                                   GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT};
+    gl->DiscardFramebufferEXT(
+        GL_FRAMEBUFFER, sizeof(kAttachments) / sizeof(kAttachments[0]),
+        kAttachments);
   }
 }
 
@@ -144,6 +186,17 @@ void XRFrameTransport::FrameSubmit(
         vr_frame_id, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D),
         frame_wait_time_);
     TRACE_EVENT_END0("gpu", "XRFrameTransport::SubmitFrame");
+  } else if (transport_options_->transportMethod ==
+             device::mojom::blink::VRDisplayFrameTransportMethod::
+                 DRAW_INTO_TEXTURE_MAILBOX) {
+    gpu::SyncToken sync_token;
+
+    {
+      TRACE_EVENT0("gpu", "GenSyncTokenCHROMIUM");
+      gl->GenSyncTokenCHROMIUM(sync_token.GetData());
+    }
+    vr_presentation_provider->SubmitFrameZeroCopy3(vr_frame_id, sync_token,
+                                                    frame_wait_time_);
   } else {
     NOTREACHED() << "Unimplemented frame transport method";
   }
@@ -204,6 +257,106 @@ WTF::TimeDelta XRFrameTransport::WaitForGpuFenceReceived() {
   }
   return WTF::CurrentTimeTicks() - start;
 }
+
+void XRFrameTransport::AllocateAHBResources(gpu::gles2::GLES2Interface* gl) {
+  ahb_fbo_ = 0;
+  ahb_depthbuffer_ = 0;
+  ahb_texture_ = 0;
+  gl->GenFramebuffers(1, &ahb_fbo_);
+  gl->GenRenderbuffers(1, &ahb_depthbuffer_);
+  // ahb_texture_ is created per frame and lazily deleted.
+}
+
+void XRFrameTransport::ReleaseAHBResources(gpu::gles2::GLES2Interface* gl) {
+  if (ahb_texture_ > 0) {
+    gl->DeleteTextures(1, &ahb_texture_);
+    ahb_texture_ = 0;
+  }
+  if (ahb_depthbuffer_ > 0) {
+    gl->DeleteRenderbuffers(1, &ahb_depthbuffer_);
+    ahb_depthbuffer_ = 0;
+  }
+  if (ahb_fbo_ > 0) {
+    gl->DeleteFramebuffers(1, &ahb_fbo_);
+    ahb_fbo_ = 0;
+  }
+}
+
+void XRFrameTransport::CreateAndBindAHBImage(
+    gpu::gles2::GLES2Interface* gl,
+    DrawingBuffer::Client* drawing_buffer_client,
+    const base::Optional<gpu::MailboxHolder>& buffer_holder) {
+  TRACE_EVENT_BEGIN0("gpu", "XRFrameTransport::BindTexImage");
+
+  // Delete the previously-used texture as late as possible. Rebinding an
+  // existing texture blocks for rendering to complete on
+  // Texture::SetLevelInfo's "info.image = 0" in texture_manager.cc?
+  if (ahb_texture_ > 0) {
+    gl->DeleteTextures(1, &ahb_texture_);
+  }
+  ahb_texture_ = gl->CreateAndConsumeTextureCHROMIUM(buffer_holder->mailbox.name);
+  gl->BindTexture(GL_TEXTURE_2D, ahb_texture_);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                             GL_NEAREST);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                             GL_NEAREST);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                             GL_CLAMP_TO_EDGE);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                             GL_CLAMP_TO_EDGE);
+  TRACE_EVENT_END0("gpu", "XRFrameTransport::BindTexImage");
+
+  gl->FramebufferTexture2DMultisampleEXT(
+      GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ahb_texture_, 0,
+      ahb_sample_count_);
+
+  drawing_buffer_client->DrawingBufferClientRestoreTexture2DBinding();
+}
+
+GLuint XRFrameTransport::BindAHBToBufferHolder(
+    gpu::gles2::GLES2Interface* gl,
+    DrawingBuffer::Client* drawing_buffer_client,
+    const base::Optional<gpu::MailboxHolder>& buffer_holder,
+    const blink::WebSize& buffer_size) {
+
+  TRACE_EVENT_BEGIN0("gpu", "XRFrameTransport::WaitSyncToken");
+  gl->WaitSyncTokenCHROMIUM(buffer_holder->sync_token.GetConstData());
+  TRACE_EVENT_END0("gpu", "XRFrameTransport::WaitSyncToken");
+
+  if (ahb_fbo_ == 0 || ahb_depthbuffer_ == 0) {
+    AllocateAHBResources(gl);
+    // Set invalid size to force rebinding.
+    ahb_width_ = -1;
+    ahb_height_ = -1;
+  }
+
+  gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+
+  if (buffer_size.width != ahb_width_ || buffer_size.height != ahb_height_) {
+    gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+    gl->BindRenderbuffer(GL_RENDERBUFFER, ahb_depthbuffer_);
+
+    gl->RenderbufferStorageMultisampleEXT(
+        GL_RENDERBUFFER, ahb_sample_count_, GL_DEPTH24_STENCIL8_OES,
+        buffer_size.width, buffer_size.height);
+
+    gl->FramebufferRenderbuffer(GL_FRAMEBUFFER,
+                                         GL_DEPTH_STENCIL_ATTACHMENT,
+                                         GL_RENDERBUFFER, ahb_depthbuffer_);
+
+    ahb_width_ = buffer_size.width;
+    ahb_height_ = buffer_size.height;
+
+    drawing_buffer_client->DrawingBufferClientRestoreRenderbufferBinding();
+  }
+
+  CreateAndBindAHBImage(gl, drawing_buffer_client, buffer_holder);
+
+  // TODO(klausw): handle preserveBuffer=true
+
+  return ahb_fbo_;
+}
+
 
 void XRFrameTransport::Trace(blink::Visitor* visitor) {}
 

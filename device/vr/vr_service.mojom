@@ -78,9 +78,9 @@ enum VRDisplayFrameTransportMethod {
   SUBMIT_AS_TEXTURE_HANDLE = 1,
   SUBMIT_AS_MAILBOX_HOLDER = 2,
 
-  // Not yet implemented: Renderer should draw directly into
-  // a texture mailbox provided for each frame in OnVSync.
-  // DRAW_INTO_TEXTURE_MAILBOX = 3,
+  // Renderer should draw directly into a texture mailbox
+  // provided for each frame in OnVSync.
+  DRAW_INTO_TEXTURE_MAILBOX = 3,
 };
 
 struct VRDisplayFrameTransportOptions {
@@ -182,7 +182,8 @@ interface VRPresentationProvider {
   // be reused after the frame arrives from the compositor. Negative IDs imply
   // no mapping.
   GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frame_id,
-                 VSyncStatus status);
+                 VSyncStatus status, gpu.mojom.MailboxHolder? buffer_holder,
+                 gfx.mojom.Size buffer_size);
 
   UpdateLayerBounds(int16 frame_id, gfx.mojom.RectF left_bounds,
                     gfx.mojom.RectF right_bounds, gfx.mojom.Size source_size);
@@ -195,6 +196,10 @@ interface VRPresentationProvider {
   // TODO(https://crbug.com/676224): Support preprocessing of mojom files, since
   // this is Windows only.
   SubmitFrameWithTextureHandle(int16 frameId, handle texture);
+
+  // VRDisplayFrameTransportMethod DRAW_INTO_TEXTURE_MAILBOX
+  SubmitFrameZeroCopy3(int16 frameId, gpu.mojom.SyncToken sync_token,
+                       mojo.common.mojom.TimeDelta time_waited);
 };
 
 interface VRDisplayClient {
