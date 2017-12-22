@@ -195,6 +195,10 @@ bool NativeViewAccessibilityBase::IsOffscreen() const {
   return false;
 }
 
+int32_t NativeViewAccessibilityBase::GetID() const {
+  return ViewAccessibility::GetID();
+}
+
 gfx::RectF NativeViewAccessibilityBase::GetBoundsInScreen() const {
   return gfx::RectF(view()->GetBoundsInScreen());
 }

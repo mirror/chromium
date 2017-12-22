@@ -24,7 +24,7 @@ using views::AXAuraObjCache;
 using views::AXAuraObjWrapper;
 
 AXTreeSourceAura::AXTreeSourceAura() {
-  root_.reset(new AXRootObjWrapper(AXAuraObjCache::GetInstance()->GetNextID()));
+  root_.reset(new AXRootObjWrapper());
 }
 
 AXTreeSourceAura::~AXTreeSourceAura() {
