@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dd82c038_6f2c5e40",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T06:39:09Z",
+      "side": 1,
+      "message": "OK, will do.",
+      "parentUuid": "5ff1c823_1e9a5d01",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc4df90_bdbaefaa",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -154,6 +178,24 @@
       "side": 1,
       "message": "Ah...for what does this return true? Is this for when a Text node produced multiple fragments in first-letter? I still don\u0027t understand the intention, so comments/naming to clarify the intention of the function is helpful.",
       "parentUuid": "84d99597_21126227",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a57127_c72ea3a2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T06:39:09Z",
+      "side": 1,
+      "message": "It\u0027s checking if the text comes from a text node (or BR) or not.\n\nIn most cases it\u0027s just checking NGPhysicalFragment::GetNode(), with the only exception that it should be checking GetLayoutObject()-\u003eAssociatedTextNode() for first-letter.\n\nThings can be so much simpler if we don\u0027t need to consider first-letter...",
+      "parentUuid": "edc31457_747d4ef7",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -283,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "d1b38569_6e369c38",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T06:39:09Z",
+      "side": 1,
+      "message": "\u003e Maybe you wrote only easy example, but from what I understood from your example, we can:\n\u003e * Determine the answer if it\u0027s in the mid of a fragment.\n\u003e * Cannot determine only when it\u0027s at the edge, but if we got two edges, we know the answer.\n\u003e * The two fragments maybe apart in the visual order, but if we know their bidi level, we can optimize it further.\n\nI don\u0027t know what\u0027s the correct behavior with mixed BiDi, where a DOM position can appear at multiple places in the same line due to reordering. We need to understand this part in 2018.\n\n\u003e so that doesn\u0027t explain we need to collect all line boxes?\n\nThe line box collection is only for one purpose: knowing the containing line box of each inline fragment, so that we can know if it\u0027s at line boundary, and if so, the break type between this line and the adjacent line.",
+      "parentUuid": "37238dc5_d55f9537",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f72b9a26_75f32445",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -389,6 +449,24 @@
     },
     {
       "key": {
+        "uuid": "0b5f07cb_f86e4856",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T06:39:09Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "parentUuid": "861211c3_19d6fff7",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f2ec0e_5635e30a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 21
@@ -436,6 +514,24 @@
       "side": 1,
       "message": "up to you, as long as it\u0027s transient and you\u0027re sure you hold a ref somewhere else while the object is alive. I think iterator is quite clear that the ref is kept in the original tree, so I\u0027m not too concerned about it, but I\u0027m also fine if you prefer.",
       "parentUuid": "99a82f0f_773826e2",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c328b56_49de8cb0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-22T06:39:09Z",
+      "side": 1,
+      "message": "I\u0027ll change it to scoped_refptr",
+      "parentUuid": "20559442_4bc1e683",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
