@@ -51,6 +51,24 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf5414b0_0434420a",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-22T20:57:25Z",
+      "side": 1,
+      "message": "Then what happens if we set gl_image_test_support.cc:120 to 0x0? Does the test fail?\nIf that is the case, we need to define a new BRGA_1010102 format.",
+      "parentUuid": "a5a06935_3d919472",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
