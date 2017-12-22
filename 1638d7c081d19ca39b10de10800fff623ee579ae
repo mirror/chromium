@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36727fbe_e2a697c9",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-12-22T18:59:29Z",
+      "side": 1,
+      "message": "The check in attached() is important in many cases because 1) there were races where the guest can be detached while the task is posted, and when we get to execute the function there\u0027s no embedder anymore and 2) some APIs could be called before the guest was attached or while the guest is being attached. I\u0027m not 100% sure if this is necessary here, but it won\u0027t hurt.\n\nThe WebContentsDelegate check is necessary because it\u0027s not controlled by the content layer (i.e. WebContentsImpl always has to null check that).",
+      "parentUuid": "dfe02917_47a5fc4f",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 40
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7954254d_f7abe51b",
         "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fbb34996_7c81a12d",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-12-22T18:59:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7954254d_f7abe51b",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38051fa0_5d75d626",
         "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-22T18:06:30Z",
       "side": 1,
       "message": "Alternatively, this method (with same implementation) could be implemented by GuestViewBase.  In this CL I\u0027ve chosen to implement this method in ExtensionOptionsGuest because:\n\n- This minimizes risk IMO (since this CL might have to be merged into M64).\n\n- There was no \"View page source\" in Chrome App GuestView (when I was testing via WebViewInteractiveTest).\n\nOTOH, implementing at GuestViewBase seems fine:\n\n- It doesn\u0027t interfere with blocking of new windows opened by the guest via window.open and/or an anchor element with target\u003d_blank.\n\n- It might address other, unforeseen cases where view-source is needed to work.\n\n\nWDYT?  Does overriding in ExtensionOptionsGuest look okay?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "1638d7c081d19ca39b10de10800fff623ee579ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c02922_6aea8ac1",
+        "filename": "extensions/browser/guest_view/extension_options/extension_options_guest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-12-22T18:59:29Z",
+      "side": 1,
+      "message": "I looked around and haven\u0027t found other use cases for view source in \u003cwebview\u003e or other guest views. Let\u0027s just fix this in ExtensionOptions for now, as it\u0027s the less risky change and it\u0027ll be safer if we have to merge.\n\nCan you file another bug for fixing the opener_suppresed new window in GuestViews? It\u0027s possible that to fix that we\u0027ll need to address the AddNewContents() in GuestViewBase, but we can defer that investigation for later.",
+      "parentUuid": "38051fa0_5d75d626",
       "range": {
         "startLine": 41,
         "startChar": 0,
