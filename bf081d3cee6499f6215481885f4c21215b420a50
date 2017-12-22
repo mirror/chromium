@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81da6685_fa346fcc",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-22T08:25:28Z",
+      "side": 1,
+      "message": "Done. (I added a DCHECK that the StackFrameDepth is not enabled.)",
+      "parentUuid": "a327321b_3c9c8d30",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6465b17_62247653",
         "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "03388914_576386a7",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-22T08:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6465b17_62247653",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c407459_29c9e281",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7084a88_f6fe8b45",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-22T08:25:28Z",
+      "side": 1,
+      "message": "Done. \n\nTo force using the trait I planned to adjust DISALLOW_NEW_EXCEPT_PLACEMENT_NEW to\n- move constructors into the private section\n- friend class ConstructTraits\n\nWe can only this after we went through all data structures though.",
+      "parentUuid": "2c407459_29c9e281",
+      "revId": "bf081d3cee6499f6215481885f4c21215b420a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
