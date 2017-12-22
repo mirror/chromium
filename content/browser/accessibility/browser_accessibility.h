@@ -347,6 +347,7 @@ class CONTENT_EXPORT BrowserAccessibility : public ui::AXPlatformNodeDelegate {
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
   bool IsOffscreen() const override;
+  int32_t GetID() const override;
 
  protected:
   using BrowserAccessibilityPositionInstance =
@@ -363,7 +364,7 @@ class CONTENT_EXPORT BrowserAccessibility : public ui::AXPlatformNodeDelegate {
   ui::AXNode* node_;
 
   // A unique ID, since node IDs are frame-local.
-  int32_t unique_id_;
+  int32_t id_;
 
  private:
   // |GetInnerText| recursively includes all the text from descendants such as
