@@ -20,8 +20,8 @@ class NGPhysicalFragment;
 // Given an inline formatting context and a position in the context, returns the
 // caret rect if a caret should be placed at the position, with the given
 // affinity. The caret rect location is local to the given formatting context.
-LocalCaretRect ComputeNGLocalCaretRect(const LayoutBlockFlow&,
-                                       const PositionWithAffinity&);
+CORE_EXPORT LocalCaretRect ComputeNGLocalCaretRect(const LayoutBlockFlow&,
+                                                   const PositionWithAffinity&);
 
 // Converts the PositionInFlatTree into Position (in DOM) and then calls the
 // above function. This is a shorthand helping template functions in editing
