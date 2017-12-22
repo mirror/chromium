@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "335499a8_3bd36e03",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-22T08:26:09Z",
+      "side": 1,
+      "message": "Is this 0 when loading is false? If not, we might end up setting the progress to 100% when stopping the progress bar (and the next navigation would have the progress bar going backward).",
+      "range": {
+        "startLine": 630,
+        "startChar": 35,
+        "endLine": 630,
+        "endChar": 58
+      },
+      "revId": "18aace944c35e342142992012c0e9c4a69d8ba10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67fbac6_6b6e8c59",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-22T08:26:09Z",
+      "side": 1,
+      "message": "s/whent he/when the/",
+      "range": {
+        "startLine": 1323,
+        "startChar": 32,
+        "endLine": 1323,
+        "endChar": 40
+      },
+      "revId": "18aace944c35e342142992012c0e9c4a69d8ba10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
