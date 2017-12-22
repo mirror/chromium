@@ -22,6 +22,30 @@
       "revId": "c4c3ffe9e4c08f31d98bd6236cd85ca18057dcd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a9dc9b_4511fa67",
+        "filename": "WATCHLISTS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T00:27:32Z",
+      "side": 1,
+      "message": "Done.\n\nNice catch. I ran it through a few of the files from your recent changes and it appears to work as expected.  :)",
+      "parentUuid": "2d0edc86_d009a312",
+      "range": {
+        "startLine": 1409,
+        "startChar": 19,
+        "endLine": 1409,
+        "endChar": 20
+      },
+      "revId": "c4c3ffe9e4c08f31d98bd6236cd85ca18057dcd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
