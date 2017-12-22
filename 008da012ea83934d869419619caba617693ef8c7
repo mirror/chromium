@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802ec358_a2821394",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-22T00:07:05Z",
+      "side": 1,
+      "message": "I think you should keep using SetIgnore from here, but in this case, set it to the switch value. No need to plumb 2 methods to change one bool.",
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
