@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae92f0cb_817c0b8b",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a25f804_7b956363",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7eb3ab_62aa5fa5",
         "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-21T23:56:32Z",
       "side": 1,
       "message": "Since this is the only case, why not call this from the constructor in the C++ test class instead?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8b10c2_50679088",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "I think that makes it a bit unclear that we\u0027re intentionally only testing the DICE case.",
+      "parentUuid": "bc7eb3ab_62aa5fa5",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -62,6 +110,24 @@
       "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccd23d8_d901ee1f",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b73ea1d1_8974631d",
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "c0dd286a_46cc6548",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23035f43_81fb5bb7",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e984d7b_d774c18c",
         "filename": "chrome/test/data/webui/signin_browsertest.cc",
         "patchSetId": 7
@@ -135,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "952b6685_193da03a",
+        "filename": "chrome/test/data/webui/signin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e984d7b_d774c18c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb1a9506_e0879870",
         "filename": "chrome/test/data/webui/signin_browsertest.h",
         "patchSetId": 7
@@ -155,6 +269,30 @@
       "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c51bc9b_a5a34d92",
+        "filename": "chrome/test/data/webui/signin_browsertest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T01:03:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb1a9506_e0879870",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
