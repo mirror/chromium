@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea499588_a22a2470",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-22T21:33:06Z",
+      "side": 1,
+      "message": "Fixed the comment, it\u0027s on/after.",
+      "parentUuid": "07ac1b38_9b6afcac",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 14
+      },
+      "revId": "0edc9163db080c148569640bbb5f0a21b80e2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcbe3345_ebad3c89",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-22T03:09:46Z",
       "side": 1,
       "message": "What are your thoughts on adding a new error code, or otherwise clarifying this in the error page?",
+      "range": {
+        "startLine": 608,
+        "startChar": 36,
+        "endLine": 608,
+        "endChar": 65
+      },
+      "revId": "0edc9163db080c148569640bbb5f0a21b80e2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca33a24f_58dceeaa",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-22T21:33:06Z",
+      "side": 1,
+      "message": "More than can fit in the margin. A lot of time was spent as to whether or not to add a new error for the general deprecation plan.\n\nAs it applies to Phase 1, it\u0027s not necessary, although we can revisit it for the fourth time for Phase 2 if we want :)",
+      "parentUuid": "fcbe3345_ebad3c89",
       "range": {
         "startLine": 608,
         "startChar": 36,

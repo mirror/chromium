@@ -62,6 +62,24 @@
       "revId": "543b2ec4e2dcc27cae6b164c569f9acb1e7ee1f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebfabb9_58d0c694",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-22T21:33:06Z",
+      "side": 1,
+      "message": "Yeah, sadly, that design doc needs to remain internal only. This implementation is described by the post on Page 10 (through the \"Managed Partner Infrastructure\")",
+      "parentUuid": "7dc8718c_2ad7fc5e",
+      "revId": "543b2ec4e2dcc27cae6b164c569f9acb1e7ee1f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
