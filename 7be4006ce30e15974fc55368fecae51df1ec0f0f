@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f3a778f_1cfe59b3",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca38663d_0edc2fa8",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaf8be0b_613a336c",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8908a754_300d5470",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf8be0b_613a336c",
+      "range": {
+        "startLine": 501,
+        "startChar": 26,
+        "endLine": 501,
+        "endChar": 42
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7fba86e6_47d6997d",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "024396b8_75489aea",
+      "range": {
+        "startLine": 507,
+        "startChar": 26,
+        "endLine": 507,
+        "endChar": 45
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755e9f0e_d51b1025",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c911936_bd214125",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "755e9f0e_d51b1025",
+      "range": {
+        "startLine": 513,
+        "startChar": 26,
+        "endLine": 513,
+        "endChar": 45
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cd2630bf_b4fa8274",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "This is exposed as a button that have widgets etc. and can be used to trigger the menu. The code crashed before when I tried to inject a fake button so parts of this might be trying to find the button\u0027s position within the dialog or something (hand wavy). I renamed it _for_testing_ to make the test-only storage more clear.",
+      "parentUuid": "3f341f5e_a9b5cc1f",
+      "range": {
+        "startLine": 257,
+        "startChar": 17,
+        "endLine": 257,
+        "endChar": 44
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f94a3348_bb4706fb",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2bf7ae_0edd252c",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-22T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94a3348_bb4706fb",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 26
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
