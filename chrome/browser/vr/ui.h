@@ -83,6 +83,7 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetBluetoothConnected(bool enabled) override;
   void SetLocationAccess(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
+  void SetVoiceSearchEnabled(bool enabled) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
@@ -107,6 +108,8 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void OnSwapContents(int new_content_id);
   void OnContentBoundsChanged(int width, int height);
   void OnPlatformControllerInitialized(PlatformController* controller);
+  void SetOmniboxEditingEnabled(bool enabled);
+  void OnUiRequestedNavigation();
 
   Model* model_for_test() { return model_.get(); }
 

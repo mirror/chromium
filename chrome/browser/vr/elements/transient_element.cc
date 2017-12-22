@@ -62,6 +62,8 @@ bool SimpleTransientElement::OnBeginFrame(
 
   if (!set_visible_time_.is_null() && duration >= timeout_) {
     super::SetVisible(false);
+    if (on_hide_callback_)
+      on_hide_callback_.Run(TransientElementHideReason::kTimeout);
     return true;
   }
   return false;
@@ -70,8 +72,9 @@ bool SimpleTransientElement::OnBeginFrame(
 ShowUntilSignalTransientElement::ShowUntilSignalTransientElement(
     const base::TimeDelta& min_duration,
     const base::TimeDelta& timeout,
-    const base::Callback<void(TransientElementHideReason)>& callback)
-    : super(timeout), min_duration_(min_duration), callback_(callback) {
+    const TransientElement::OnHideCallback& on_hide_callback)
+    : super(timeout), min_duration_(min_duration) {
+  super::set_on_hide_callback(on_hide_callback);
   SetVisibleImmediately(false);
 }
 
@@ -94,11 +97,11 @@ bool ShowUntilSignalTransientElement::OnBeginFrame(
   base::TimeDelta duration = time - set_visible_time_;
 
   if (!set_visible_time_.is_null() && duration > timeout_) {
-    callback_.Run(TransientElementHideReason::kTimeout);
+    on_hide_callback_.Run(TransientElementHideReason::kTimeout);
     set_invisible = true;
   } else if (!set_visible_time_.is_null() && duration >= min_duration_ &&
              signaled_) {
-    callback_.Run(TransientElementHideReason::kSignal);
+    on_hide_callback_.Run(TransientElementHideReason::kSignal);
     set_invisible = true;
   }
   if (set_invisible) {

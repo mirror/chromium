@@ -188,6 +188,13 @@ void VrGLThread::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
                             weak_vr_shell_, bounds));
 }
 
+void VrGLThread::SetOmniboxEditingActive(bool active) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VrShell::SetOmniboxEditingActive,
+                                weak_vr_shell_, active));
+}
+
 void VrGLThread::SetVoiceSearchActive(bool active) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -306,6 +313,13 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetExitVrPromptEnabled,
                             browser_ui_, enabled, reason));
+}
+
+void VrGLThread::SetVoiceSearchEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&vr::BrowserUiInterface::SetVoiceSearchEnabled,
+                                browser_ui_, enabled));
 }
 
 void VrGLThread::SetSpeechRecognitionEnabled(bool enabled) {

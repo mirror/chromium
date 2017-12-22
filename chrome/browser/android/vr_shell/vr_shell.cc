@@ -781,6 +781,7 @@ void VrShell::SetVoiceSearchActive(bool active) {
     speech_recognizer_.reset(new vr::SpeechRecognizer(
         this, ui_, profile->GetRequestContext(), profile_locale));
   }
+  ui_->SetVoiceSearchEnabled(active);
   if (active) {
     speech_recognizer_->Start();
     if (metrics_helper_)

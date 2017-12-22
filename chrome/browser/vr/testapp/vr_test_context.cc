@@ -363,7 +363,7 @@ void VrTestContext::CreateFakeVoiceSearchResult() {
     return;
   ui_->SetRecognitionResult(
       base::UTF8ToUTF16("I would like to see cat videos, please."));
-  SetVoiceSearchActive(false);
+  ui_->SetSpeechRecognitionEnabled(false);
 }
 
 void VrTestContext::CycleWebVrModes() {
@@ -388,6 +388,7 @@ void VrTestContext::CycleWebVrModes() {
 void VrTestContext::ToggleSplashScreen() {
   if (!show_web_vr_splash_screen_) {
     UiInitialState state;
+    state.in_web_vr = true;
     state.web_vr_autopresentation_expected = true;
     ui_->ReinitializeForTest(state);
   } else {
@@ -416,6 +417,7 @@ void VrTestContext::SetVoiceSearchActive(bool active) {
         UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission);
     return;
   }
+  ui_->SetVoiceSearchEnabled(active);
   ui_->SetSpeechRecognitionEnabled(active);
   if (active)
     ui_->OnSpeechRecognitionStateChanged(SPEECH_RECOGNITION_RECOGNIZING);
