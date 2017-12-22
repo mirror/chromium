@@ -65,6 +65,8 @@ void RootScrollerController::Trace(blink::Visitor* visitor) {
   visitor->Trace(document_);
   visitor->Trace(root_scroller_);
   visitor->Trace(effective_root_scroller_);
+  visitor->Trace(implicit_candidates_);
+  visitor->Trace(implicit_root_scroller_);
 }
 
 void RootScrollerController::Set(Element* new_root_scroller) {
@@ -105,12 +107,16 @@ void RootScrollerController::DidResizeFrameView() {
 }
 
 void RootScrollerController::RecomputeEffectiveRootScroller() {
+  ProcessImplicitCandidates();
+
   bool root_scroller_valid =
       root_scroller_ && IsValidRootScroller(*root_scroller_);
 
   Node* new_effective_root_scroller = document_;
   if (root_scroller_valid)
     new_effective_root_scroller = root_scroller_;
+  else if (implicit_root_scroller_)
+    new_effective_root_scroller = implicit_root_scroller_;
 
   // TODO(bokan): This is a terrible hack but required because the viewport
   // apply scroll works on Elements rather than Nodes. If we're going from
@@ -207,6 +213,39 @@ void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
     child_view->SetLayoutSize(document_->GetFrame()->View()->GetLayoutSize());
 }
 
+void RootScrollerController::ProcessImplicitCandidates() {
+  if (!RuntimeEnabledFeatures::ImplicitRootScrollerEnabled())
+    return;
+
+  Element* highest_z_element = nullptr;
+  bool highest_is_ambiguous = false;
+
+  HeapHashSet<WeakMember<Element>> copy(implicit_candidates_);
+  for (auto& element : copy) {
+    if (!element || !IsValidRootScroller(*element)) {
+      implicit_candidates_.erase(element);
+      continue;
+    }
+
+    int element_z = element->GetLayoutObject()->Style()->ZIndex();
+    int highest_z =
+        highest_z_element
+            ? highest_z_element->GetLayoutObject()->Style()->ZIndex()
+            : 0;
+    if (!highest_z_element || element_z > highest_z) {
+      highest_z_element = element;
+      highest_is_ambiguous = false;
+    } else if (element_z == highest_z) {
+      highest_is_ambiguous = true;
+    }
+  }
+
+  if (highest_is_ambiguous)
+    implicit_root_scroller_ = nullptr;
+  else
+    implicit_root_scroller_ = highest_z_element;
+}
+
 PaintLayer* RootScrollerController::RootScrollerPaintLayer() const {
   return RootScrollerUtil::PaintLayerForRootScroller(effective_root_scroller_);
 }
@@ -225,6 +264,18 @@ void RootScrollerController::ElementRemoved(const Element& element) {
   effective_root_scroller_ = document_;
   if (Page* page = document_->GetPage())
     page->GlobalRootScrollerController().DidChangeRootScroller();
+}
+
+void RootScrollerController::ConsiderForImplicit(Node& node) {
+  DCHECK(RuntimeEnabledFeatures::ImplicitRootScrollerEnabled());
+
+  if (!node.IsElementNode())
+    return;
+
+  if (!IsValidRootScroller(ToElement(node)))
+    return;
+
+  implicit_candidates_.insert(&ToElement(node));
 }
 
 }  // namespace blink
