@@ -74,6 +74,8 @@ class CORE_EXPORT ProgressTracker final
 
   LocalFrameClient* GetLocalFrameClient() const;
 
+  void IncrementBytesReceived(ProgressItem*, long long length);
+  void SetEstimatedLength(ProgressItem*, long long length);
   void MaybeSendProgress();
   void SendFinalProgress();
   void Reset();
@@ -88,6 +90,8 @@ class CORE_EXPORT ProgressTracker final
   double progress_value_;
 
   HashMap<unsigned long, std::unique_ptr<ProgressItem>> progress_items_;
+  long long total_bytes_received_;
+  long long total_estimated_bytes_;
 
   DISALLOW_COPY_AND_ASSIGN(ProgressTracker);
 };
