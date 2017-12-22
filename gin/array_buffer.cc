@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "gin/array_buffer.h"
+#include "gin/gin_features.h"
 #include "gin/per_isolate_data.h"
 
 #if defined(OS_POSIX)
@@ -41,8 +42,11 @@ void* ArrayBufferAllocator::AllocateUninitialized(size_t length) {
 }
 
 void* ArrayBufferAllocator::Reserve(size_t length) {
-  void* const hint = nullptr;
-#if defined(OS_POSIX)
+#if BUILDFLAG(USE_PARTITION_ALLOC)
+  const bool commit = false;
+  return base::AllocPages(nullptr, length, base::kPageAllocationGranularity,
+                          base::PageInaccessible, commit);
+#elif defined(OS_POSIX)
   int const access_flag = PROT_NONE;
   void* const ret =
       mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
@@ -67,16 +71,15 @@ void ArrayBufferAllocator::Free(void* data,
     case AllocationMode::kNormal:
       Free(data, length);
       return;
-    case AllocationMode::kReservation: {
-#if defined(OS_POSIX)
-      int const ret = munmap(data, length);
-      CHECK(!ret);
+    case AllocationMode::kReservation:
+#if BUILDFLAG(USE_PARTITION_ALLOC)
+      base::FreePages(data, length);
+#elif defined(OS_POSIX)
+      CHECK(!munmap(data, length));
 #else
-      BOOL const ret = VirtualFree(data, 0, MEM_RELEASE);
-      CHECK(ret);
+      CHECK(VirtualFree(data, 0, MEM_RELEASE));
 #endif
       return;
-    }
     default:
       NOTREACHED();
   }
@@ -85,27 +88,41 @@ void ArrayBufferAllocator::Free(void* data,
 void ArrayBufferAllocator::SetProtection(void* data,
                                          size_t length,
                                          Protection protection) {
+  CHECK(SetProtection(protection, data, length));
+}
+
+bool ArrayBufferAllocator::SetProtection(Protection protection,
+                                         void* data,
+                                         size_t length) {
+#if BUILDFLAG(USE_PARTITION_ALLOC)
   switch (protection) {
-    case Protection::kNoAccess: {
-#if defined(OS_POSIX)
-      int ret = mprotect(data, length, PROT_NONE);
-      CHECK(!ret);
-#else
-      BOOL ret = VirtualFree(data, length, MEM_DECOMMIT);
-      CHECK(ret);
-#endif
-      break;
-    }
+    case Protection::kNoAccess:
+      return base::SetSystemPagesAccess(data, length, base::PageInaccessible);
     case Protection::kReadWrite:
-#if defined(OS_POSIX)
-      mprotect(data, length, PROT_READ | PROT_WRITE);
-#else
-      VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
-#endif
-      break;
+      return base::SetSystemPagesAccess(data, length, base::PageReadWrite);
     default:
       NOTREACHED();
   }
+#elif defined(OS_POSIX)
+  switch (protection) {
+    case Protection::kNoAccess:
+      return mprotect(data, length, PROT_NONE) == 0;
+    case Protection::kReadWrite:
+      return mprotect(data, length, PROT_READ | PROT_WRITE) == 0;
+    default:
+      NOTREACHED();
+  }
+#else   // !defined(OS_POSIX)
+  switch (protection) {
+    case Protection::kNoAccess:
+      return VirtualFree(data, length, MEM_DECOMMIT);
+    case Protection::kReadWrite:
+      return VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
+    default:
+      NOTREACHED();
+  }
+#endif  // !defined(OS_POSIX)
+  return false;
 }
 
 ArrayBufferAllocator* ArrayBufferAllocator::SharedInstance() {
