@@ -45,12 +45,6 @@ class AXPlatformNodeWinTest : public ui::AXPlatformNodeTest {
   }
 
  protected:
-  void BuildRelationships(ComPtr<IAccessible2> accessible) {
-    CHECK(accessible);
-    AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(accessible.Get());
-    node->CalculateRelationships();
-  }
-
   ComPtr<IAccessible> IAccessibleFromNode(AXNode* node) {
     TestAXNodeWrapper* wrapper =
         TestAXNodeWrapper::GetOrCreate(tree_.get(), node);
@@ -1454,10 +1448,6 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2GetNRelations) {
   EXPECT_EQ(S_OK, result.CopyTo(ax_child2.GetAddressOf()));
   result.Reset();
 
-  BuildRelationships(root_iaccessible2);
-  BuildRelationships(ax_child1);
-  BuildRelationships(ax_child2);
-
   LONG n_relations = 0;
   LONG n_targets = 0;
   ScopedBstr relation_type;
@@ -1470,9 +1460,11 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2GetNRelations) {
 
   EXPECT_HRESULT_SUCCEEDED(
       root_iaccessible2->get_relation(0, describedby_relation.GetAddressOf()));
+
   EXPECT_HRESULT_SUCCEEDED(
       describedby_relation->get_relationType(relation_type.Receive()));
   EXPECT_EQ(L"describedBy", base::string16(relation_type));
+
   relation_type.Reset();
 
   EXPECT_HRESULT_SUCCEEDED(describedby_relation->get_nTargets(&n_targets));
@@ -1485,6 +1477,7 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2GetNRelations) {
   EXPECT_HRESULT_SUCCEEDED(
       describedby_relation->get_target(1, target.GetAddressOf()));
   target.Reset();
+
   describedby_relation.Reset();
 
   // Test the reverse relations.
