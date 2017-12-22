@@ -39,21 +39,16 @@ void BuildErrorAndAbort(WebIDBDatabaseCallbacks* callbacks,
 void BuildObservationsAndNotify(WebIDBDatabaseCallbacks* callbacks,
                                 indexed_db::mojom::ObserverChangesPtr changes) {
   std::vector<blink::WebIDBObservation> web_observations;
+  web_observations.reserve(changes->observations.size());
   for (const auto& observation : changes->observations) {
-    blink::WebIDBObservation web_observation;
-    web_observation.object_store_id = observation->object_store_id;
-    web_observation.type = observation->type;
-    web_observation.key_range =
-        WebIDBKeyRangeBuilder::Build(observation->key_range);
-    if (observation->value) {
-      IndexedDBCallbacksImpl::ConvertValue(observation->value,
-                                           &web_observation.value);
-    }
-    web_observations.push_back(std::move(web_observation));
+    web_observations.emplace_back(
+        observation->object_store_id, observation->type,
+        WebIDBKeyRangeBuilder::Build(observation->key_range),
+        IndexedDBCallbacksImpl::ConvertValue(observation->value));
   }
+
   std::unordered_map<int32_t, std::pair<int64_t, std::vector<int64_t>>>
       observer_transactions;
-
   for (const auto& transaction_pair : changes->transaction_map) {
     std::pair<int64_t, std::vector<int64_t>>& obs_txn =
         observer_transactions[transaction_pair.first];
@@ -63,8 +58,10 @@ void BuildObservationsAndNotify(WebIDBDatabaseCallbacks* callbacks,
     }
   }
 
-  callbacks->OnChanges(changes->observation_index_map, web_observations,
-                       observer_transactions);
+  callbacks->OnChanges(
+      changes->observation_index_map,
+      blink::WebVector<blink::WebIDBObservation>(std::move(web_observations)),
+      observer_transactions);
 }
 
 }  // namespace
