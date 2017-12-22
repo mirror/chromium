@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2842a85f_5fc7cb95",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:36:48Z",
+      "side": 1,
+      "message": "This comment is great, I\u0027d prefer it this was just called GetUniqueID",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf9c66b_5f0ece2c",
+        "filename": "content/browser/accessibility/browser_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:36:48Z",
+      "side": 1,
+      "message": "How about making this private? That will ensure that it\u0027s not called\ndirectly on a BrowserAccessibility, but it can still be called on a\nAXPlatformNodeDelegate.",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c25d52e_9febaab0",
+        "filename": "content/browser/accessibility/browser_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:36:48Z",
+      "side": 1,
+      "message": "Please don\u0027t rename this one, it will be too easily confused\nwith a node id which is set by Blink.",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d79d5c0_cb587195",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:36:48Z",
+      "side": 1,
+      "message": "I\u0027d rather have this call a protected unique_id() accessor here - just\nto avoid any confusion between node IDs and unique IDs.\n\nThat way GetID is only there in the code once in order to implement\nAXPlatformNodeDelegate.",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba4b23b_c4d3e0a3",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T21:36:48Z",
+      "side": 1,
+      "message": "Honestly you could call this one and the one in AXPlatformNodeDelegate\nGetUniqueID, and then there\u0027d be less confusion everywhere.",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
