@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "499b961e_22278e54",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-22T16:37:01Z",
+      "side": 1,
+      "message": "Why did you add this enum type as a parameter when you didn\u0027t use it in the function?",
+      "revId": "7547b32fa1731906f1aa55d376c34abf2cfabf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
