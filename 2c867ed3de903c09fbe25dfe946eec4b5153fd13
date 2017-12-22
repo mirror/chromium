@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee3a786_8986a537",
+        "filename": "components/autofill/core/browser/test_credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-22T14:50:43Z",
+      "side": 1,
+      "message": "I think you can forward declare this instead :)",
+      "range": {
+        "startLine": 11,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "2c867ed3de903c09fbe25dfe946eec4b5153fd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
