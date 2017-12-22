@@ -161,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "83bc8711_aaa9d79b",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:58:18Z",
+      "side": 1,
+      "message": "Done. I prototyped extensions UDP usage on top of Matt\u0027s suggestion. It seems to work fine. I agree with Matt that an embedder probably doesn\u0027t need the sockets to be re-connectable or re-openable.\n\nFor the reference, https://developer.chrome.com/apps/sockets_udp is the UDP API doc.\nIt doesn\u0027t mention whether the API is privileged.",
+      "parentUuid": "500f26d4_7f4853de",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59484fc0_aa7293ca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
@@ -181,6 +205,30 @@
       "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3e2c83_bcb12477",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:58:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59484fc0_aa7293ca",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 32
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +313,24 @@
       "writtenOn": "2017-12-18T20:21:35Z",
       "side": 1,
       "message": "Curious: Is it possible to view the diff before/after renaming? It is pretty painful to review the entire class again. :)",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce2e549_db2fc445",
+        "filename": "services/network/udp_socket.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:58:18Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t find a way. Gerrit doesn\u0027t seem to retain git-mv histories and I didn\u0027t find a way to give hints to Gerrit that these two files are related.",
+      "parentUuid": "2934c00f_424fcbcf",
       "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
