@@ -19,6 +19,7 @@ cr.define('settings_sections_tests', function() {
     SetMediaSize: 'set media size',
     SetDpi: 'set dpi',
     SetMargins: 'set margins',
+    SetScaling: 'set scaling',
   };
 
   const suiteName = 'SettingsSectionsTests';
@@ -47,6 +48,7 @@ cr.define('settings_sections_tests', function() {
     function setPdfDocument(isPdf) {
       const info = new print_preview.DocumentInfo();
       info.init(!isPdf, 'title', false);
+      info.fitToPageScaling_ = '98';
       page.set('documentInfo_', info);
     }
 
@@ -429,6 +431,76 @@ cr.define('settings_sections_tests', function() {
       expectEquals(
           print_preview_new.MarginsTypeValue.MINIMUM,
           page.settings.margins.value);
+    });
+
+    test(assert(TestNames.SetScaling), function() {
+      // Set PDF so both scaling and fit to page are active.
+      setPdfDocument();
+      const scalingElement = page.$$('print-preview-scaling-settings');
+      expectEquals(false, scalingElement.hidden);
+
+      // Default is 100
+      const scalingInput =
+          scalingElement.$$('print-preview-number-settings-section')
+              .$$('input');
+      expectEquals('100', scalingInput.value);
+      expectEquals('100', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      const fitToPageCheckbox =
+          scalingElement.$$('#fit-to-page-checkbox');
+      expectEquals(false, fitToPageCheckbox.checked);
+      expectEquals(false, page.settings.fitToPage.value);
+
+      // Change to 105
+      scalingInput.value = '105';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      expectEquals('105', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      expectEquals(false, page.settings.fitToPage.value);
+      expectEquals(false, fitToPageCheckbox.checked);
+
+      // Change to fit to page. Should display fit to page scaling but not
+      // alter the scaling setting.
+      fitToPageCheckbox.checked = true;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      expectEquals('105', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      expectEquals(true, page.settings.fitToPage.value);
+      expectEquals(page.documentInfo_.fitToPageScaling, scalingInput.value);
+
+      // Set scaling. Should uncheck fit to page and set the settings for
+      // scaling and fit to page.
+      scalingInput.value = '95';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      expectEquals('95', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      expectEquals(false, page.settings.fitToPage.value);
+      expectEquals(false, fitToPageCheckbox.checked);
+
+      // Set scaling to something invalid. Should change setting validity but
+      // not value.
+      scalingInput.value = '5';
+      scalingInput.dispatchEvent(new CustomEvent('input'));
+      expectEquals('95', page.settings.scaling.value);
+      expectEquals(false, page.settings.scaling.valid);
+      expectEquals(false, page.settings.fitToPage.value);
+      expectEquals(false, fitToPageCheckbox.checked);
+
+      // Check fit to page. Should set scaling valid.
+      fitToPageCheckbox.checked = true;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      expectEquals('95', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      expectEquals(true, page.settings.fitToPage.value);
+      expectEquals(page.documentInfo_.fitToPageScaling, scalingInput.value);
+
+      // Uncheck fit to page. Should reset scaling to last valid.
+      fitToPageCheckbox.checked = false;
+      fitToPageCheckbox.dispatchEvent(new CustomEvent('change'));
+      expectEquals('95', page.settings.scaling.value);
+      expectEquals(true, page.settings.scaling.valid);
+      expectEquals(false, page.settings.fitToPage.value);
+      expectEquals('95', scalingInput.value);
     });
   });
 
