@@ -149,6 +149,18 @@ ListContainer.ListType = {
   THUMBNAIL: 'thumb'
 };
 
+/**
+ * Length of duration to allow showing context menu after ceratin events.
+ * We usually cancel contextmenu event in order to suppress it for long-taps,
+ * which we define different interaction. Such contextmenu events are sent
+ * right after mouseup event, which follows the touch events. By this reason,
+ * we need to unblock it momentarlly after some specific events.
+ *
+ * @const {number}
+ * @private
+ */
+ListContainer.CONTEXT_MENU_ALLOWED_DURATION_MSEC_ = 10;
+
 ListContainer.prototype = /** @struct */ {
   /**
    * @return {!FileTable|!FileGrid}
@@ -260,9 +272,13 @@ ListContainer.prototype.disableContextMenuByLongTap_ = function() {
       // contextmenu event will be sent right after touchend.
       setTimeout(function() {
         this.allowContextMenuByTouch_ = false;
-      }.bind(this));
+      }.bind(this), ListContainer.CONTEXT_MENU_ALLOWED_DURATION_MSEC_);
     }
   }.bind(this));
+  this.element.addEventListener(
+      FileTableList.CONTEXT_MENU_EVENT_TYPE, function(e) {
+        this.allowContextMenuByTouch_ = true;
+      }.bind(this));
   this.element.addEventListener('contextmenu', function(e) {
     // Block context menu triggered by touch event unless it is right after
     // multi-touch.
