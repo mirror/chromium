@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52dc255c_400f30a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-22T17:53:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ba79d6_b3d83915",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336edeaf_2808c33d",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-22T00:19:16Z",
       "side": 1,
       "message": "nit: \"Switch\" and \"Flag\" seem redundant. May be use just one of them?",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b0870_960640be",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-22T17:53:52Z",
+      "side": 1,
+      "message": "Yes, it seems a bit redundant, but features has 3 values (Enabled, Disabled, and Default) while this switch is a SINGLE_VALUE_TYPE switch, which only has Enabled and Disabled.",
+      "parentUuid": "336edeaf_2808c33d",
       "range": {
         "startLine": 88,
         "startChar": 12,
@@ -62,6 +110,24 @@
       "revId": "008da012ea83934d869419619caba617693ef8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6a73cf_75f043ca",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-22T17:53:52Z",
+      "side": 1,
+      "message": "Oh, I\u0027m dumb. Thanks :))",
+      "parentUuid": "802ec358_a2821394",
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
