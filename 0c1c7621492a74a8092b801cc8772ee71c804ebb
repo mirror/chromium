@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2e9a2a68_cf004232",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "088ef7e7_a50e09e5",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e5ad3dc_a39bab28",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69660a44_19bfde76",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e5ad3dc_a39bab28",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9ed4cd5a_48049545",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af933217_78052aa2",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2d4c10_ef56d597",
         "filename": "chrome/browser/vr/elements/transient_element.h",
         "patchSetId": 2
@@ -85,6 +139,24 @@
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e735bfb_00a24e05",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f2d4c10_ef56d597",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "56e4c57a_bdce3b6a",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eacfbd3_7e32c271",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56bbf544_84cbbd8d",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 2
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "51992b0b_f3273653",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Agreed push/pop is better than set/clear. Done.",
+      "parentUuid": "56bbf544_84cbbd8d",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecbcccc6_5a314a10",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 2
@@ -133,6 +241,24 @@
       "writtenOn": "2017-12-22T16:08:01Z",
       "side": 1,
       "message": "This one helper method could use a better name (it appears that this one is the one that should be \"browsing_enabled()\"",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf8707a_52a14aed",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "I agree that it could use a better name. I don\u0027t think it should be browsing_enabled. \"Browsing\" is a general term that can also refer to other states such as fullscreen. That is, you\u0027re still in \"browsing\" mode. \"default_browsing_enabled\" refers to the mode with the content quad and omnibox, etc.",
+      "parentUuid": "ecbcccc6_5a314a10",
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "fac922e3_74a00b0b",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "I opted for not DCHECK-ing in the setter for redundant state because SetWebVrMode can be called multiple times (which we could probably fix). Instead, the set_mode (now push_mode) just does nothing if we\u0027re trying to push an existing state, or pop a non-existent state.  \nAs mentioned in the comment, this is only there here for auto-present, so that we don\u0027t over-write kModeWebVrAutopresented with kModeWebVr when SetWebVrMode is called in the auto-present case.",
+      "parentUuid": "c7f968db_5a6af1dc",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "078aa99d_cb2f8766",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
@@ -209,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "7cdc5880_b325c67c",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b971f41_75b11955",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df2246bb_ca19c602",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 2
@@ -223,6 +385,24 @@
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01e257f_af9541bf",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Renamed to push_mode and pop_mode.",
+      "parentUuid": "df2246bb_ca19c602",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "d6ee7bde_3f7b70d0",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51df36e1_386ca364",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e5ed98_68ac98dc",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -257,6 +455,24 @@
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2ef7b5_195216c9",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T19:01:50Z",
+      "side": 1,
+      "message": "Unfortunately this doesn\u0027t work with bindings.",
+      "parentUuid": "24e5ed98_68ac98dc",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
