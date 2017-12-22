@@ -140,6 +140,22 @@ class NoDecodeToScaleSupport : public virtual BaseTest {
   }
 };
 
+class DecodeToScaleSupport : public virtual BaseTest {
+ protected:
+  PaintImage CreatePaintImage(const gfx::Size& requested_size) override {
+    SkISize size =
+        SkISize::Make(requested_size.width(), requested_size.height());
+    std::vector<SkISize> supported_sizes;
+    while (size.width() > 10 && size.height() > 10) {
+      supported_sizes.push_back(size);
+      size = SkISize::Make(size.width() / 2, size.height() / 2);
+    }
+    return CreateDiscardablePaintImage(requested_size,
+                                       GetColorSpace().ToSkColorSpace(), true,
+                                       supported_sizes);
+  }
+};
+
 class DefaultColorSpace : public virtual BaseTest {
  protected:
   gfx::ColorSpace GetColorSpace() override {
@@ -445,6 +461,107 @@ TEST_F(SoftwareImageDecodeCacheTest_ExoticColorSpace,
 
   cache().UnrefImage(draw_image_50);
   cache().UnrefImage(draw_image_125);
+}
+
+class SoftwareImageDecodeCacheTest_DecodeToScale : public N32Cache,
+                                                   public Predecode,
+                                                   public DecodeToScaleSupport,
+                                                   public DefaultColorSpace {};
+
+TEST_F(SoftwareImageDecodeCacheTest_DecodeToScale, UseDecodeToScale) {
+  auto draw_image_25 = CreateDrawImageForScale(0.25f);
+  auto result = GenerateCacheEntry(draw_image_25);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_25, gfx::Size(128, 128));
+  // There should be only one scale, which was decoded directly.
+  EXPECT_EQ(1u, cache().GetNumCacheEntriesForTesting());
+
+  auto draw_image_50 = CreateDrawImageForScale(0.5f);
+  result = GenerateCacheEntry(draw_image_50);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_50, gfx::Size(256, 256));
+  // There should only be 2 entries, one created before and this one.
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  cache().UnrefImage(draw_image_50);
+  cache().UnrefImage(draw_image_25);
+}
+
+TEST_F(SoftwareImageDecodeCacheTest_DecodeToScale,
+       UseOriginalIfCantDecodeToScale) {
+  auto draw_image_tiny = CreateDrawImageForScale(0.004f);
+  auto result = GenerateCacheEntry(draw_image_tiny);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_tiny, gfx::Size(2, 2));
+  // Note that there should be two entries (tiny and 1.f)
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  auto draw_image_1 = CreateDrawImageForScale(1.f);
+  result = GenerateCacheEntry(draw_image_1);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_1, gfx::Size(512, 512));
+  // To verify that 1.f existed, we check that the number of entries didn't go
+  // up.
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  cache().UnrefImage(draw_image_tiny);
+  cache().UnrefImage(draw_image_1);
+}
+
+TEST_F(SoftwareImageDecodeCacheTest_DecodeToScale,
+       PreferToScaleIfCandidateExists) {
+  auto draw_image_50 = CreateDrawImageForScale(0.5f);
+  auto result = GenerateCacheEntry(draw_image_50);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_50, gfx::Size(256, 256));
+  EXPECT_EQ(1u, cache().GetNumCacheEntriesForTesting());
+
+  auto draw_image_tiny = CreateDrawImageForScale(0.004f);
+  result = GenerateCacheEntry(draw_image_tiny);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_tiny, gfx::Size(2, 2));
+  // Note that there should only be 2 entries (0.5 and 0.004).
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  cache().UnrefImage(draw_image_tiny);
+  cache().UnrefImage(draw_image_50);
+}
+
+TEST_F(SoftwareImageDecodeCacheTest_DecodeToScale,
+       SubrectedDoesntDecodeToScale) {
+  auto draw_image_50 = CreateDrawImageForScale(0.5f, SkIRect::MakeWH(256, 256));
+  auto result = GenerateCacheEntry(draw_image_50);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_50, gfx::Size(128, 128));
+  // Note that there should be two entries (subrected 0.5 and 1.f original)
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  auto draw_image_1 = CreateDrawImageForScale(1.f);
+  result = GenerateCacheEntry(draw_image_1);
+  EXPECT_TRUE(result.has_task);
+  EXPECT_TRUE(result.needs_unref);
+
+  VerifyEntryExists(__LINE__, draw_image_1, gfx::Size(512, 512));
+  // To verify that 1.f existed, we check that the number of entries didn't go
+  // up.
+  EXPECT_EQ(2u, cache().GetNumCacheEntriesForTesting());
+
+  cache().UnrefImage(draw_image_50);
+  cache().UnrefImage(draw_image_1);
 }
 
 }  // namespace

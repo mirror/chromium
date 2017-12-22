@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <tuple>
 
 #include "base/format_macros.h"
 #include "base/macros.h"
@@ -399,83 +400,50 @@ void SoftwareImageDecodeCache::DecodeImageIfNecessary(
       return;
   }
 
+  // After the next blocks of if statements, the local_cache_entry should
+  // contain the decoded image at the right size to match the requested key. If
+  // it does not, then the decode failed.
   std::unique_ptr<CacheEntry> local_cache_entry;
+
+  // The following are the possible cases handled by the conditions below:
+  // 1. If we need the original decode, then simply decode it.
+  // 2. If we can find and lock a decode of a higher scale (by recursively
+  //    getting it from GetDecodedImageForDrawInternal(), then use it to
+  //    generate the required entry.
+  // 2a. In above, if the candidate was an original image then we will need to
+  //     subrect it which is indicated by the bool parameter to
+  //     GenerateCacheEntryFromCandidate().
+  // 2b. In above, if the candidate was _not_ the original image then it has
+  //     already been subrected (the other two cases always subrect), so we pass
+  //     "false" as the bool parameter to GenerateCacheEntryFromCandidate().
+  // 3. In the "else" case, we need to decode and subrect and/or scale.
+  // 3a. In above, if the src rect is the full image (ie subrect is not needed)
+  //     and the target decode size is supported (we can decode to scale), then
+  //     do that.
+  // 3b. In above, if 3a doesn't apply then we could be in kSubrectOriginal
+  //     case, meaning we need the original full size decode first, or in
+  //     kSubrectAndScale, meaning that we again need the original full size
+  //     decode. In either of these cases, we need the original decode. So, we
+  //     get the original recursively and use GenerateCacheEntryFromCandidate()
+  //     with "true" as the bool parameter indicating that we should subrect.
+  //     Note that if we're in kSubrectAndScale but subrect isn't required, then
+  //     this causes a subrect from full image to full image, which is a safe
+  //     no-op.
+
   // If we can use the original decode, we'll definitely need a decode.
   if (key.type() == ImageDecodeCacheKey::kOriginal) {
     base::AutoUnlock release(lock_);
-    local_cache_entry = DoDecodeImage(key, paint_image);
-  } else {
-    // Use the full image decode to generate a scaled/subrected decode.
-    // TODO(vmpstr): This part needs to handle decode to scale.
-    base::Optional<ImageKey> candidate_key;
-    auto image_keys_it = frame_key_to_image_keys_.find(key.frame_key());
-    // We know that we must have at least our own |entry| in this list, so it
-    // won't be empty.
-    DCHECK(image_keys_it != frame_key_to_image_keys_.end());
-
-    auto& available_keys = image_keys_it->second;
-    std::sort(available_keys.begin(), available_keys.end(),
-              [](const ImageKey& one, const ImageKey& two) {
-                // Return true if |one| scale is less than |two| scale.
-                return one.target_size().width() < two.target_size().width() &&
-                       one.target_size().height() < two.target_size().height();
-              });
-
-    for (auto& available_key : available_keys) {
-      // Only consider keys coming from the same src rect, since otherwise the
-      // resulting image was extracted using a different src.
-      if (available_key.src_rect() != key.src_rect())
-        continue;
-
-      // that are at least as big as the required |key|.
-      if (available_key.target_size().width() < key.target_size().width() ||
-          available_key.target_size().height() < key.target_size().height()) {
-        continue;
-      }
-      auto image_it = decoded_images_.Peek(available_key);
-      DCHECK(image_it != decoded_images_.end());
-      auto* available_entry = image_it->second.get();
-      if (available_entry->is_locked || available_entry->Lock()) {
-        candidate_key.emplace(available_key);
-        break;
-      }
-    }
-
-    if (!candidate_key) {
-      // IMPORTANT: There is a bit of a subtlety here. We would normally want to
-      // generate a new candidate with the key.src_rect() as the src_rect. This
-      // would ensure that when scaling we won't need to peek pixels, since it's
-      // unclear how to adjust the src rect to account for the candidate scale
-      // if the candidate came from above.
-      //
-      // However, if the key type is kSubrectOriginal, then this would generate
-      // an exactly same key as we want in the first place, causing infinite
-      // recursion. (There is a CHECK guard for this below, since this is a
-      // pretty bad case.)
-      //
-      // Since kSubrectOriginal means we have no scale, to remedy the situation
-      // we use the full image rect as the src for this temporary candidate.
-      // This way the GenerateCacheEntryFromCandidate() function will simply
-      // extract the subset and be done with it.
-      auto src_rect =
-          key.type() == ImageDecodeCacheKey::kSubrectOriginal
-              ? SkIRect::MakeWH(paint_image.width(), paint_image.height())
-              : gfx::RectToSkIRect(key.src_rect());
-      DrawImage candidate_draw_image(
-          paint_image, src_rect, kNone_SkFilterQuality, SkMatrix::I(),
-          key.frame_key().frame_index(), key.target_color_space());
-      candidate_key.emplace(
-          ImageKey::FromDrawImage(candidate_draw_image, color_type_));
-    }
+    local_cache_entry = DecodeOriginal(key, paint_image);
+  } else if (auto candidate_key = FindCandidateKey(key)) {
+    // If we found a candidate, then use it to scale to the required size.
     CHECK(*candidate_key != key) << key.ToString();
-
+    // Recurse to get the candidate image.
     auto decoded_draw_image =
         GetDecodedImageForDrawInternal(*candidate_key, paint_image);
     if (!decoded_draw_image.image()) {
       local_cache_entry = nullptr;
     } else {
       base::AutoUnlock release(lock_);
-      // IMPORTANT: More subtleties:
       // If the candidate could have used the original decode, that means we
       // need to extractSubset from it. In all other cases, this would have
       // already been done to generate the candidate.
@@ -483,9 +451,42 @@ void SoftwareImageDecodeCache::DecodeImageIfNecessary(
           key, decoded_draw_image,
           candidate_key->type() == ImageDecodeCacheKey::kOriginal);
     }
-
     // Unref to balance the GetDecodedImageForDrawInternal() call.
     UnrefImage(*candidate_key);
+  } else {
+    // Otherwise we'll need a decode and a scale.
+    // If we have unsubrected key, then we can try to do a decode to scale.
+    SkISize target_size =
+        SkISize::Make(key.target_size().width(), key.target_size().height());
+    gfx::Rect full_rect = gfx::Rect(paint_image.width(), paint_image.height());
+    if (key.src_rect() == full_rect &&
+        paint_image.GetSupportedDecodeSize(target_size) == target_size) {
+      DCHECK_EQ(key.type(), ImageDecodeCacheKey::kSubrectAndScale);
+      local_cache_entry = DecodeToScale(key, paint_image);
+    } else {
+      // Otherwise we need the original decode.
+      auto src_rect = gfx::RectToSkIRect(full_rect);
+      DrawImage candidate_draw_image(
+          paint_image, src_rect, kNone_SkFilterQuality, SkMatrix::I(),
+          key.frame_key().frame_index(), key.target_color_space());
+      auto candidate_key =
+          ImageKey::FromDrawImage(candidate_draw_image, color_type_);
+      DCHECK_EQ(candidate_key.type(), ImageDecodeCacheKey::kOriginal);
+
+      // In order to cache the resulting image original decode, recurse.
+      auto decoded_draw_image =
+          GetDecodedImageForDrawInternal(candidate_key, paint_image);
+      if (!decoded_draw_image.image()) {
+        local_cache_entry = nullptr;
+      } else {
+        base::AutoUnlock release(lock_);
+        // We know we have an original full size decode, so we always subrect.
+        local_cache_entry = GenerateCacheEntryFromCandidate(
+            key, decoded_draw_image, true /* should subrect */);
+      }
+      // Unref to balance the GetDecodedImageForDrawInternal() call.
+      UnrefImage(candidate_key);
+    }
   }
 
   if (!local_cache_entry) {
@@ -511,8 +512,13 @@ void SoftwareImageDecodeCache::DecodeImageIfNecessary(
 }
 
 std::unique_ptr<SoftwareImageDecodeCache::CacheEntry>
-SoftwareImageDecodeCache::DoDecodeImage(const ImageKey& key,
-                                        const PaintImage& paint_image) {
+SoftwareImageDecodeCache::DecodeOriginal(const ImageKey& key,
+                                         const PaintImage& paint_image) {
+  // TODO(vmpstr): This function is almost identical to DecodeToScale, we might
+  // want to extract the common code into a helper and just keep the differences
+  // (DCHECKs/Traces) in these functions.
+  TRACE_EVENT0("cc", "SoftwareImageDecodeCache::DecodeOriginal");
+  DCHECK_EQ(key.type(), ImageDecodeCacheKey::kOriginal);
   SkISize target_size =
       SkISize::Make(key.target_size().width(), key.target_size().height());
   DCHECK(target_size == paint_image.GetSupportedDecodeSize(target_size));
@@ -522,10 +528,36 @@ SoftwareImageDecodeCache::DoDecodeImage(const ImageKey& key,
       AllocateDiscardable(target_info);
   DCHECK(target_pixels);
 
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-               "SoftwareImageDecodeCache::DoDecodeImage - "
-               "decode");
-  DCHECK_EQ(key.type(), ImageDecodeCacheKey::kOriginal);
+  bool result = paint_image.Decode(target_pixels->data(), &target_info,
+                                   key.target_color_space().ToSkColorSpace(),
+                                   key.frame_key().frame_index());
+  if (!result) {
+    target_pixels->Unlock();
+    return nullptr;
+  }
+  return std::make_unique<CacheEntry>(target_info, std::move(target_pixels),
+                                      SkSize::Make(0, 0));
+}
+
+std::unique_ptr<SoftwareImageDecodeCache::CacheEntry>
+SoftwareImageDecodeCache::DecodeToScale(const ImageKey& key,
+                                        const PaintImage& paint_image) {
+  // TODO(vmpstr): This function is almost identical to DecodeOriginal, we might
+  // want to extract the common code into a helper and just keep the differences
+  // (DCHECKs/Traces) in these functions.
+  TRACE_EVENT0("cc", "SoftwareImageDecodeCache::DecodeToScale");
+  DCHECK_EQ(key.type(), ImageDecodeCacheKey::kSubrectAndScale);
+  DCHECK_EQ(key.src_rect(),
+            gfx::Rect(paint_image.width(), paint_image.height()));
+  SkISize target_size =
+      SkISize::Make(key.target_size().width(), key.target_size().height());
+  DCHECK(target_size == paint_image.GetSupportedDecodeSize(target_size));
+
+  SkImageInfo target_info = CreateImageInfo(target_size, color_type_);
+  std::unique_ptr<base::DiscardableMemory> target_pixels =
+      AllocateDiscardable(target_info);
+  DCHECK(target_pixels);
+
   bool result = paint_image.Decode(target_pixels->data(), &target_info,
                                    key.target_color_space().ToSkColorSpace(),
                                    key.frame_key().frame_index());
@@ -542,6 +574,8 @@ SoftwareImageDecodeCache::GenerateCacheEntryFromCandidate(
     const ImageKey& key,
     const DecodedDrawImage& candidate_image,
     bool needs_extract_subset) {
+  TRACE_EVENT0("cc",
+               "SoftwareImageDecodeCache::GenerateCacheEntryFromCandidate");
   SkISize target_size =
       SkISize::Make(key.target_size().width(), key.target_size().height());
   SkImageInfo target_info = CreateImageInfo(target_size, color_type_);
@@ -592,6 +626,44 @@ SoftwareImageDecodeCache::GenerateCacheEntryFromCandidate(
       target_info.makeColorSpace(candidate_image.image()->refColorSpace()),
       std::move(target_pixels),
       SkSize::Make(-key.src_rect().x(), -key.src_rect().y()));
+}
+
+base::Optional<ImageDecodeCacheKey> SoftwareImageDecodeCache::FindCandidateKey(
+    const ImageKey& key) {
+  auto image_keys_it = frame_key_to_image_keys_.find(key.frame_key());
+  // We know that we must have at least the entry that wanted to find the
+  // candidate in this list, so it won't be empty.
+  DCHECK(image_keys_it != frame_key_to_image_keys_.end());
+
+  auto& available_keys = image_keys_it->second;
+  std::sort(available_keys.begin(), available_keys.end(),
+            [](const ImageKey& one, const ImageKey& two) {
+              // Return true if |one| scale is less than |two| scale.
+              return std::make_tuple(one.target_size().width(),
+                                     one.target_size().height()) <
+                     std::make_tuple(two.target_size().width(),
+                                     two.target_size().height());
+            });
+
+  for (auto& available_key : available_keys) {
+    // Only consider keys coming from the same src rect, since otherwise the
+    // resulting image was extracted using a different src.
+    if (available_key.src_rect() != key.src_rect())
+      continue;
+
+    // that are at least as big as the required |key|.
+    if (available_key.target_size().width() < key.target_size().width() ||
+        available_key.target_size().height() < key.target_size().height()) {
+      continue;
+    }
+    auto image_it = decoded_images_.Peek(available_key);
+    DCHECK(image_it != decoded_images_.end());
+    auto* available_entry = image_it->second.get();
+    if (available_entry->is_locked || available_entry->Lock()) {
+      return available_key;
+    }
+  }
+  return {};
 }
 
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
