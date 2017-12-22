@@ -80,6 +80,10 @@ class TrafficAnnotationExporter {
     return base::ContainsValue(annotation.os_list, current_platform_);
   }
 
+  // Produces the list of annotations that are not defined in this platform.
+  // Returns false if annotations.xml is not loaded.
+  bool GetOtherPlatformsAnnotationIDs(std::vector<std::string>* ids) const;
+
  private:
   // Generates a text serialized XML for current report items.
   std::string GenerateSerializedXML() const;
