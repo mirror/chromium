@@ -14,10 +14,12 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "content/network/network_context.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/network_service.mojom.h"
 #include "extensions/browser/api/dns/host_resolver_wrapper.h"
 #include "extensions/browser/api/socket/socket.h"
 #include "extensions/browser/api/socket/tcp_socket.h"
@@ -250,7 +252,12 @@ void SocketCreateFunction::Work() {
   if (socket_type_ == kSocketTypeTCP) {
     socket = new TCPSocket(extension_->id());
   } else if (socket_type_ == kSocketTypeUDP) {
-    socket = new UDPSocket(extension_->id());
+    content::mojom::NetworkContext* network_context =
+        content::BrowserContext::GetDefaultStoragePartition(browser_context())
+            ->GetNetworkContext();
+    network::mojom::UDPSocketFactoryPtr factory_ptr;
+    network_context->GetUDPSocketFactory(mojo::MakeRequest(&factory_ptr));
+    socket = new UDPSocket(std::move(factory_ptr), extension_->id());
   }
   DCHECK(socket);
 
@@ -403,13 +410,17 @@ void SocketBindFunction::AsyncWorkStart() {
     return;
   }
 
-  int result = socket->Bind(address_, port_);
-  SetResult(std::make_unique<base::Value>(result));
-  if (result != net::OK) {
+  // FIXME: figure out whether Unretained is safe.
+  socket->Bind(address_, port_,
+               base::Bind(&SocketBindFunction::OnCompleted,
+                          base::Unretained(this), base::Unretained(socket)));
+}
+void SocketBindFunction::OnCompleted(Socket* socket, int net_result) {
+  SetResult(std::make_unique<base::Value>(net_result));
+  if (net_result != net::OK) {
     AsyncWorkCompleted();
     return;
   }
-
   OpenFirewallHole(address_, socket_id_, socket);
 }
 
@@ -852,18 +863,20 @@ bool SocketJoinGroupFunction::Prepare() {
   return true;
 }
 
-void SocketJoinGroupFunction::Work() {
+void SocketJoinGroupFunction::AsyncWorkStart() {
   int result = -1;
   Socket* socket = GetSocket(params_->socket_id);
   if (!socket) {
     error_ = kSocketNotFoundError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
   if (socket->GetSocketType() != Socket::TYPE_UDP) {
     error_ = kMulticastSocketTypeError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
@@ -876,14 +889,22 @@ void SocketJoinGroupFunction::Work() {
           APIPermission::kSocket, &param)) {
     error_ = kPermissionError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
-  result = static_cast<UDPSocket*>(socket)->JoinGroup(params_->address);
-  if (result != 0) {
+  static_cast<UDPSocket*>(socket)->JoinGroup(
+      params_->address,
+      base::Bind(&SocketJoinGroupFunction::OnJoinGroupComplete,
+                 base::Unretained(this)));
+}
+
+void SocketJoinGroupFunction::OnJoinGroupComplete(int result) {
+  if (result != net::OK) {
     error_ = net::ErrorToString(result);
   }
   SetResult(std::make_unique<base::Value>(result));
+  AsyncWorkCompleted();
 }
 
 SocketLeaveGroupFunction::SocketLeaveGroupFunction() {}
@@ -896,19 +917,21 @@ bool SocketLeaveGroupFunction::Prepare() {
   return true;
 }
 
-void SocketLeaveGroupFunction::Work() {
+void SocketLeaveGroupFunction::AsyncWorkStart() {
   int result = -1;
   Socket* socket = GetSocket(params_->socket_id);
 
   if (!socket) {
     error_ = kSocketNotFoundError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
   if (socket->GetSocketType() != Socket::TYPE_UDP) {
     error_ = kMulticastSocketTypeError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
@@ -920,13 +943,21 @@ void SocketLeaveGroupFunction::Work() {
           APIPermission::kSocket, &param)) {
     error_ = kPermissionError;
     SetResult(std::make_unique<base::Value>(result));
+    AsyncWorkCompleted();
     return;
   }
 
-  result = static_cast<UDPSocket*>(socket)->LeaveGroup(params_->address);
-  if (result != 0)
+  static_cast<UDPSocket*>(socket)->LeaveGroup(
+      params_->address,
+      base::Bind(&SocketLeaveGroupFunction::OnLeaveGroupComplete,
+                 base::Unretained(this)));
+}
+
+void SocketLeaveGroupFunction::OnLeaveGroupComplete(int result) {
+  if (result != net::OK)
     error_ = net::ErrorToString(result);
   SetResult(std::make_unique<base::Value>(result));
+  AsyncWorkCompleted();
 }
 
 SocketSetMulticastTimeToLiveFunction::SocketSetMulticastTimeToLiveFunction() {}

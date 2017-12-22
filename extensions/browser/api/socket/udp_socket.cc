@@ -30,63 +30,61 @@ ApiResourceManager<ResumableUDPSocket>::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 
-UDPSocket::UDPSocket(const std::string& owner_extension_id)
+UDPSocket::UDPSocket(network::mojom::UDPSocketFactoryPtr factory,
+                     const std::string& owner_extension_id)
     : Socket(owner_extension_id),
-      socket_(net::DatagramSocket::DEFAULT_BIND,
-              net::RandIntCallback(),
-              NULL,
-              net::NetLogSource()) {}
+      socket_factory_(std::move(factory)),
+      socket_options_(network::mojom::UDPSocketOptions::New()),
+      receiver_binding_(this) {}
 
 UDPSocket::~UDPSocket() {
   Disconnect(true /* socket_destroying */);
 }
 
 void UDPSocket::Connect(const net::AddressList& address,
-                        const CompletionCallback& callback) {
+                        const net::CompletionCallback& callback) {
   int result = net::ERR_CONNECTION_FAILED;
-  do {
-    if (is_connected_)
-      break;
-
-    // UDP API only connects to the first address received from DNS so
-    // connection may not work even if other addresses are reachable.
-    const net::IPEndPoint& ip_end_point = address.front();
-    result = socket_.Open(ip_end_point.GetFamily());
-    if (result != net::OK)
-      break;
-
-    result = socket_.Connect(ip_end_point);
-    if (result != net::OK) {
-      socket_.Close();
-      break;
-    }
-    is_connected_ = true;
-  } while (false);
-
-  callback.Run(result);
+  if (is_connected_) {
+    callback.Run(result);
+    return;
+  }
+  // UDP API only connects to the first address received from DNS so
+  // connection may not work even if other addresses are reachable.
+  const net::IPEndPoint& ip_end_point = address.front();
+  network::mojom::UDPSocketReceiverPtr receiver_ptr;
+  receiver_binding_.Bind(mojo::MakeRequest(&receiver_ptr));
+  socket_factory_->OpenAndConnect(
+      mojo::MakeRequest(&socket_), std::move(socket_options_),
+      std::move(receiver_ptr), ip_end_point,
+      base::BindOnce(&UDPSocket::OnConnectOrBindComplete,
+                     base::Unretained(this), callback));
 }
 
-int UDPSocket::Bind(const std::string& address, uint16_t port) {
-  if (IsBound())
-    return net::ERR_CONNECTION_FAILED;
+void UDPSocket::Bind(const std::string& address,
+                     uint16_t port,
+                     const net::CompletionCallback& callback) {
+  if (is_connected_) {
+    callback.Run(net::ERR_CONNECTION_FAILED);
+    return;
+  }
 
   net::IPEndPoint ip_end_point;
-  if (!StringAndPortToIPEndPoint(address, port, &ip_end_point))
-    return net::ERR_INVALID_ARGUMENT;
-
-  int result = socket_.Open(ip_end_point.GetFamily());
-  if (result != net::OK)
-    return result;
-
-  result = socket_.Bind(ip_end_point);
-  if (result != net::OK)
-    socket_.Close();
-  return result;
+  if (!StringAndPortToIPEndPoint(address, port, &ip_end_point)) {
+    callback.Run(net::ERR_INVALID_ARGUMENT);
+    return;
+  }
+  network::mojom::UDPSocketReceiverPtr receiver_ptr;
+  receiver_binding_.Bind(mojo::MakeRequest(&receiver_ptr));
+  socket_factory_->OpenAndBind(
+      mojo::MakeRequest(&socket_), std::move(socket_options_),
+      std::move(receiver_ptr), ip_end_point,
+      base::BindOnce(&UDPSocket::OnConnectOrBindComplete,
+                     base::Unretained(this), callback));
 }
 
 void UDPSocket::Disconnect(bool socket_destroying) {
   is_connected_ = false;
-  socket_.Close();
+  socket_.reset();
   read_callback_.Reset();
   // TODO(devlin): Should we do this for all callbacks?
   if (!recv_from_callback_.is_null()) {
@@ -104,43 +102,40 @@ void UDPSocket::Read(int count, const ReadCompletionCallback& callback) {
   if (!read_callback_.is_null()) {
     callback.Run(net::ERR_IO_PENDING, nullptr, false /* socket_destroying */);
     return;
-  } else {
-    read_callback_ = callback;
   }
 
-  int result = net::ERR_FAILED;
-  scoped_refptr<net::IOBuffer> io_buffer;
-  do {
-    if (count < 0) {
-      result = net::ERR_INVALID_ARGUMENT;
-      break;
-    }
+  if (count < 0) {
+    callback.Run(net::ERR_INVALID_ARGUMENT, nullptr,
+                 false /* socket_destroying */);
+    return;
+  }
 
-    if (!socket_.is_connected()) {
-      result = net::ERR_SOCKET_NOT_CONNECTED;
-      break;
-    }
+  if (!IsConnected()) {
+    callback.Run(net::ERR_SOCKET_NOT_CONNECTED, nullptr,
+                 false /* socket_destroying */);
+    return;
+  }
 
-    io_buffer = new net::IOBuffer(count);
-    result = socket_.Read(
-        io_buffer.get(),
-        count,
-        base::Bind(
-            &UDPSocket::OnReadComplete, base::Unretained(this), io_buffer));
-  } while (false);
-
-  if (result != net::ERR_IO_PENDING)
-    OnReadComplete(io_buffer, result);
+  read_callback_ = callback;
+  // FIXME: make use of |count|.
+  socket_->ReceiveMore(1);
+  return;
 }
 
 int UDPSocket::WriteImpl(net::IOBuffer* io_buffer,
                          int io_buffer_size,
                          const net::CompletionCallback& callback) {
-  if (!socket_.is_connected())
+  if (!IsConnected()) {
     return net::ERR_SOCKET_NOT_CONNECTED;
-  else
-    return socket_.Write(io_buffer, io_buffer_size, callback,
-                         Socket::GetNetworkTrafficAnnotationTag());
+  } else {
+    base::span<const uint8_t> data(
+        reinterpret_cast<const uint8_t*>(io_buffer->data()),
+        static_cast<size_t>(io_buffer_size));
+    // FIXME: plumb socket traffic tag.
+    socket_->Send(data, base::BindOnce(&UDPSocket::OnWriteComplete,
+                                       base::Unretained(this), callback));
+    return net::ERR_IO_PENDING;
+  }
 }
 
 void UDPSocket::RecvFrom(int count,
@@ -151,43 +146,29 @@ void UDPSocket::RecvFrom(int count,
     callback.Run(net::ERR_IO_PENDING, nullptr, false /* socket_destroying */,
                  std::string(), 0);
     return;
-  } else {
-    recv_from_callback_ = callback;
   }
 
-  int result = net::ERR_FAILED;
-  scoped_refptr<net::IOBuffer> io_buffer;
-  scoped_refptr<IPEndPoint> address;
-  do {
-    if (count < 0) {
-      result = net::ERR_INVALID_ARGUMENT;
-      break;
-    }
+  if (count < 0) {
+    callback.Run(net::ERR_INVALID_ARGUMENT, nullptr,
+                 false /* socket_destroying */, std::string(), 0);
+    return;
+  }
 
-    if (!socket_.is_connected()) {
-      result = net::ERR_SOCKET_NOT_CONNECTED;
-      break;
-    }
+  if (!IsConnected()) {
+    callback.Run(net::ERR_SOCKET_NOT_CONNECTED, nullptr,
+                 false /* socket_destroying */, std::string(), 0);
+    return;
+  }
 
-    io_buffer = new net::IOBuffer(count);
-    address = new IPEndPoint();
-    result = socket_.RecvFrom(io_buffer.get(),
-                              count,
-                              &address->data,
-                              base::Bind(&UDPSocket::OnRecvFromComplete,
-                                         base::Unretained(this),
-                                         io_buffer,
-                                         address));
-  } while (false);
-
-  if (result != net::ERR_IO_PENDING)
-    OnRecvFromComplete(io_buffer, address, result);
+  // FIXME: make use of |count|.
+  recv_from_callback_ = callback;
+  socket_->ReceiveMore(1);
 }
 
 void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
                        int byte_count,
                        const net::IPEndPoint& address,
-                       const CompletionCallback& callback) {
+                       const net::CompletionCallback& callback) {
   DCHECK(!callback.is_null());
 
   if (!send_to_callback_.is_null()) {
@@ -200,16 +181,18 @@ void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
   }
 
   int result = net::ERR_FAILED;
-  do {
-    if (!socket_.is_connected()) {
-      result = net::ERR_SOCKET_NOT_CONNECTED;
-      break;
-    }
+  /**
+do {
+  if (!socket_.is_connected()) {
+    result = net::ERR_SOCKET_NOT_CONNECTED;
+    break;
+  }
 
-    result = socket_.SendTo(
-        io_buffer.get(), byte_count, address,
-        base::Bind(&UDPSocket::OnSendToComplete, base::Unretained(this)));
-  } while (false);
+  result = socket_.SendTo(
+      io_buffer.get(), byte_count, address,
+      base::Bind(&UDPSocket::OnSendToComplete, base::Unretained(this)));
+} while (false);
+      */
 
   if (result != net::ERR_IO_PENDING)
     OnSendToComplete(result);
@@ -218,34 +201,43 @@ void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
 bool UDPSocket::IsConnected() { return is_connected_; }
 
 bool UDPSocket::GetPeerAddress(net::IPEndPoint* address) {
-  return !socket_.GetPeerAddress(address);
+  return 0;  //! socket_.GetPeerAddress(address);
 }
 
 bool UDPSocket::GetLocalAddress(net::IPEndPoint* address) {
-  return !socket_.GetLocalAddress(address);
+  return 0;  //! socket_.GetLocalAddress(address);
 }
 
 Socket::SocketType UDPSocket::GetSocketType() const { return Socket::TYPE_UDP; }
 
-void UDPSocket::OnReadComplete(scoped_refptr<net::IOBuffer> io_buffer,
-                               int result) {
-  DCHECK(!read_callback_.is_null());
-  read_callback_.Run(result, io_buffer, false /* socket_destroying */);
-  read_callback_.Reset();
-}
+void UDPSocket::OnReceived(int32_t result,
+                           const base::Optional<net::IPEndPoint>& src_addr,
+                           base::Optional<base::span<const uint8_t>> data) {
+  DCHECK(!recv_from_callback_.is_null() || !read_callback_.is_null());
 
-void UDPSocket::OnRecvFromComplete(scoped_refptr<net::IOBuffer> io_buffer,
-                                   scoped_refptr<IPEndPoint> address,
-                                   int result) {
-  DCHECK(!recv_from_callback_.is_null());
+  net::IOBuffer* io_buffer = nullptr;
+  if (result >= 0) {
+    io_buffer = new net::IOBuffer(result);
+    memcpy(io_buffer->data(), data.value().data(), result);
+  }
+  if (!read_callback_.is_null()) {
+    read_callback_.Run(result, io_buffer, false /* socket_destroying */);
+    read_callback_.Reset();
+    return;
+  }
   std::string ip;
   uint16_t port = 0;
-  if (result > 0 && address.get()) {
-    IPEndPointToStringAndPort(address->data, &ip, &port);
+  if (result > 0 && src_addr) {
+    IPEndPointToStringAndPort(src_addr.value(), &ip, &port);
   }
   recv_from_callback_.Run(result, io_buffer, false /* socket_destroying */, ip,
                           port);
   recv_from_callback_.Reset();
+}
+
+void UDPSocket::OnWriteComplete(const net::CompletionCallback& user_callback,
+                                int result) {
+  user_callback.Run(result);
 }
 
 void UDPSocket::OnSendToComplete(int result) {
@@ -254,61 +246,115 @@ void UDPSocket::OnSendToComplete(int result) {
   send_to_callback_.Reset();
 }
 
-bool UDPSocket::IsBound() { return socket_.is_connected(); }
-
-int UDPSocket::JoinGroup(const std::string& address) {
-  net::IPAddress ip;
-  if (!ip.AssignFromIPLiteral(address))
-    return net::ERR_ADDRESS_INVALID;
-
-  std::string normalized_address = ip.ToString();
-  if (base::ContainsValue(multicast_groups_, normalized_address))
-    return net::ERR_ADDRESS_INVALID;
-
-  int rv = socket_.JoinGroup(ip);
-  if (rv == 0)
+// FIXME: reorder to match header file.
+void UDPSocket::OnJoinGroupComplete(
+    const net::CompletionCallback& user_callback,
+    const std::string& normalized_address,
+    int result) {
+  if (result == net::OK)
     multicast_groups_.push_back(normalized_address);
-  return rv;
+  user_callback.Run(result);
 }
 
-int UDPSocket::LeaveGroup(const std::string& address) {
+void UDPSocket::OnLeaveGroupComplete(
+    const net::CompletionCallback& user_callback,
+    const std::string& normalized_address,
+    int result) {
+  if (result == net::OK) {
+    std::vector<std::string>::iterator find_result = std::find(
+        multicast_groups_.begin(), multicast_groups_.end(), normalized_address);
+    multicast_groups_.erase(find_result);
+  }
+
+  user_callback.Run(result);
+}
+
+void UDPSocket::OnConnectOrBindComplete(
+    const net::CompletionCallback& user_callback,
+    int result,
+    const base::Optional<net::IPEndPoint>& local_addr) {
+  if (result == net::OK) {
+    local_addr_ = local_addr.value();
+    is_connected_ = true;
+  }
+  user_callback.Run(result);
+}
+
+void UDPSocket::JoinGroup(const std::string& address,
+                          const net::CompletionCallback& callback) {
   net::IPAddress ip;
-  if (!ip.AssignFromIPLiteral(address))
-    return net::ERR_ADDRESS_INVALID;
+  if (!ip.AssignFromIPLiteral(address)) {
+    callback.Run(net::ERR_ADDRESS_INVALID);
+    return;
+  }
+
+  std::string normalized_address = ip.ToString();
+  if (base::ContainsValue(multicast_groups_, normalized_address)) {
+    callback.Run(net::ERR_ADDRESS_INVALID);
+    return;
+  }
+
+  socket_->JoinGroup(
+      ip, base::BindOnce(&UDPSocket::OnJoinGroupComplete,
+                         base::Unretained(this), callback, normalized_address));
+}
+
+void UDPSocket::LeaveGroup(const std::string& address,
+                           const net::CompletionCallback& callback) {
+  net::IPAddress ip;
+  if (!ip.AssignFromIPLiteral(address)) {
+    callback.Run(net::ERR_ADDRESS_INVALID);
+    return;
+  }
 
   std::string normalized_address = ip.ToString();
   std::vector<std::string>::iterator find_result = std::find(
       multicast_groups_.begin(), multicast_groups_.end(), normalized_address);
-  if (find_result == multicast_groups_.end())
-    return net::ERR_ADDRESS_INVALID;
+  if (find_result == multicast_groups_.end()) {
+    callback.Run(net::ERR_ADDRESS_INVALID);
+    return;
+  }
 
-  int rv = socket_.LeaveGroup(ip);
-  if (rv == 0)
-    multicast_groups_.erase(find_result);
-  return rv;
+  socket_->LeaveGroup(
+      ip, base::Bind(&UDPSocket::OnLeaveGroupComplete, base::Unretained(this),
+                     callback, normalized_address));
 }
 
 int UDPSocket::SetMulticastTimeToLive(int ttl) {
-  return socket_.SetMulticastTimeToLive(ttl);
+  // FIXME: more graceful error handling.
+  if (!socket_options_) {
+    return net::ERR_INVALID_ARGUMENT;
+  }
+  socket_options_->multicast_time_to_live = ttl;
+  return net::OK;
 }
 
 int UDPSocket::SetMulticastLoopbackMode(bool loopback) {
-  return socket_.SetMulticastLoopbackMode(loopback);
+  // FIXME: more graceful error handling.
+  if (!socket_options_) {
+    return net::ERR_INVALID_ARGUMENT;
+  }
+  socket_options_->multicast_loopback_mode = loopback;
+  return net::OK;
 }
 
-int UDPSocket::SetBroadcast(bool enabled) {
-  if (!socket_.is_connected()) {
-    return net::ERR_SOCKET_NOT_CONNECTED;
+void UDPSocket::SetBroadcast(bool enabled,
+                             const net::CompletionCallback& callback) {
+  if (!IsConnected()) {
+    callback.Run(net::ERR_SOCKET_NOT_CONNECTED);
+    return;
   }
-  return socket_.SetBroadcast(enabled);
+  socket_->SetBroadcast(enabled, callback);
 }
 
 const std::vector<std::string>& UDPSocket::GetJoinedGroups() const {
   return multicast_groups_;
 }
 
-ResumableUDPSocket::ResumableUDPSocket(const std::string& owner_extension_id)
-    : UDPSocket(owner_extension_id),
+ResumableUDPSocket::ResumableUDPSocket(
+    network::mojom::UDPSocketFactoryPtr factory,
+    const std::string& owner_extension_id)
+    : UDPSocket(std::move(factory), owner_extension_id),
       persistent_(false),
       buffer_size_(0),
       paused_(false) {}
