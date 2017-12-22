@@ -52,12 +52,12 @@ std::unique_ptr<IDBValue> CreateIDBValueForTesting(v8::Isolate* isolate,
       wrapper.TakeBlobDataHandles();
   Vector<WebBlobInfo> blob_infos = wrapper.TakeBlobInfo();
   scoped_refptr<SharedBuffer> wrapped_marker_buffer = wrapper.TakeWireBytes();
-  IDBKey* key = IDBKey::CreateNumber(42.0);
+  std::unique_ptr<IDBKey> key = IDBKey::CreateNumber(42.0);
   IDBKeyPath key_path(String("primaryKey"));
 
   std::unique_ptr<IDBValue> idb_value = IDBValue::Create(
       std::move(wrapped_marker_buffer), std::move(blob_data_handles),
-      std::move(blob_infos), key, key_path);
+      std::move(blob_infos), std::move(key), key_path);
 
   DCHECK_EQ(create_wrapped_value,
             IDBValueUnwrapper::IsWrapped(idb_value.get()));

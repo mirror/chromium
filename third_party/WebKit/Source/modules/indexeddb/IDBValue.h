@@ -24,19 +24,19 @@ struct WebIDBValue;
 
 class MODULES_EXPORT IDBValue final {
  public:
-  static std::unique_ptr<IDBValue> Create(const WebIDBValue&, v8::Isolate*);
+  static std::unique_ptr<IDBValue> Create(WebIDBValue, v8::Isolate*);
 
   // Injects a primary key into a value coming from the backend.
   static std::unique_ptr<IDBValue> Create(std::unique_ptr<IDBValue>,
-                                          IDBKey*,
-                                          const IDBKeyPath&);
+                                          std::unique_ptr<IDBKey> primary_key,
+                                          const IDBKeyPath& primary_key_path);
 
   // Used by IDBValueUnwrapper and its tests.
   static std::unique_ptr<IDBValue> Create(
       scoped_refptr<SharedBuffer> unwrapped_data,
       Vector<scoped_refptr<BlobDataHandle>>,
       Vector<WebBlobInfo>,
-      const IDBKey*,
+      std::unique_ptr<IDBKey>,
       const IDBKeyPath&);
 
   ~IDBValue();
@@ -47,29 +47,32 @@ class MODULES_EXPORT IDBValue final {
   Vector<String> GetUUIDs() const;
   scoped_refptr<SerializedScriptValue> CreateSerializedValue() const;
   const Vector<WebBlobInfo>& BlobInfo() const { return blob_info_; }
-  const IDBKey* PrimaryKey() const { return primary_key_; }
+  const IDBKey* PrimaryKey() const { return primary_key_.get(); }
   const IDBKeyPath& KeyPath() const { return key_path_; }
 
   Vector<scoped_refptr<BlobDataHandle>> TakeBlobData() {
     return std::move(blob_data_);
   }
   Vector<WebBlobInfo> TakeBlobInfo() { return std::move(blob_info_); }
+  std::unique_ptr<IDBKey> TakePrimaryKey() { return std::move(primary_key_); }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(IDBValue);
 
   friend class IDBValueUnwrapper;
 
-  IDBValue(const WebIDBValue&, v8::Isolate*);
+  IDBValue(WebIDBValue, v8::Isolate*);
   IDBValue(scoped_refptr<SharedBuffer>,
            const WebVector<WebBlobInfo>&,
-           IDBKey*,
+           std::unique_ptr<IDBKey>,
            const IDBKeyPath&);
-  IDBValue(std::unique_ptr<IDBValue>, IDBKey*, const IDBKeyPath&);
+  IDBValue(std::unique_ptr<IDBValue>,
+           std::unique_ptr<IDBKey>,
+           const IDBKeyPath&);
   IDBValue(scoped_refptr<SharedBuffer> unwrapped_data,
            Vector<scoped_refptr<BlobDataHandle>>,
            Vector<WebBlobInfo>,
-           const IDBKey*,
+           std::unique_ptr<IDBKey>,
            const IDBKeyPath&);
 
   // Keep this private to prevent new refs because we manually bookkeep the
@@ -79,7 +82,7 @@ class MODULES_EXPORT IDBValue final {
   Vector<scoped_refptr<BlobDataHandle>> blob_data_;
   Vector<WebBlobInfo> blob_info_;
 
-  const Persistent<const IDBKey> primary_key_;
+  std::unique_ptr<IDBKey> primary_key_;
   const IDBKeyPath key_path_;
 
   // Used to register memory externally allocated by the WebIDBValue, and to
