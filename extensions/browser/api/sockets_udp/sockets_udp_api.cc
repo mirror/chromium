@@ -4,11 +4,16 @@
 
 #include "extensions/browser/api/sockets_udp/sockets_udp_api.h"
 
+#include "content/network/network_context.h"
+#include "content/public/browser/browser_context.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/socket_permission_request.h"
 #include "extensions/browser/api/socket/udp_socket.h"
 #include "extensions/browser/api/sockets_udp/udp_socket_event_dispatcher.h"
 #include "extensions/common/api/sockets/sockets_manifest_data.h"
 #include "net/base/net_errors.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace extensions {
 namespace api {
@@ -96,7 +101,13 @@ bool SocketsUdpCreateFunction::Prepare() {
 }
 
 void SocketsUdpCreateFunction::Work() {
-  ResumableUDPSocket* socket = new ResumableUDPSocket(extension_->id());
+  content::mojom::NetworkContext* network_context =
+      content::BrowserContext::GetDefaultStoragePartition(browser_context())
+          ->GetNetworkContext();
+  network::mojom::UDPSocketFactoryPtr factory_ptr;
+  network_context->GetUDPSocketFactory(mojo::MakeRequest(&factory_ptr));
+  ResumableUDPSocket* socket =
+      new ResumableUDPSocket(std::move(factory_ptr), extension_->id());
 
   sockets_udp::SocketProperties* properties = params_->properties.get();
   if (properties) {
@@ -156,7 +167,7 @@ void SocketsUdpSetPausedFunction::Work() {
 
   if (socket->paused() != params_->paused) {
     socket->set_paused(params_->paused);
-    if (socket->IsBound() && !params_->paused) {
+    if (socket->IsConnected() && !params_->paused) {
       socket_event_dispatcher_->OnSocketResume(extension_->id(),
                                                params_->socket_id);
     }
@@ -198,8 +209,13 @@ void SocketsUdpBindFunction::AsyncWorkStart() {
     AsyncWorkCompleted();
     return;
   }
+  // FIXME: need to make sure whether base::Unretained is safe.
+  socket->Bind(params_->address, params_->port,
+               base::Bind(&SocketsUdpBindFunction::OnCompleted,
+                          base::Unretained(this), base::Unretained(socket)));
+}
 
-  int net_result = socket->Bind(params_->address, params_->port);
+void SocketsUdpBindFunction::OnCompleted(Socket* socket, int net_result) {
   results_ = sockets_udp::Bind::Results::Create(net_result);
   if (net_result == net::OK) {
     socket_event_dispatcher_->OnSocketBind(extension_->id(),
@@ -209,7 +225,6 @@ void SocketsUdpBindFunction::AsyncWorkStart() {
     AsyncWorkCompleted();
     return;
   }
-
   OpenFirewallHole(params_->address, params_->socket_id, socket);
 }
 
@@ -362,10 +377,11 @@ bool SocketsUdpJoinGroupFunction::Prepare() {
   return true;
 }
 
-void SocketsUdpJoinGroupFunction::Work() {
+void SocketsUdpJoinGroupFunction::AsyncWorkStart() {
   ResumableUDPSocket* socket = GetUdpSocket(params_->socket_id);
   if (!socket) {
     error_ = kSocketNotFoundError;
+    AsyncWorkCompleted();
     return;
   }
 
@@ -375,13 +391,21 @@ void SocketsUdpJoinGroupFunction::Work() {
       kWildcardPort);
   if (!SocketsManifestData::CheckRequest(extension(), param)) {
     error_ = kPermissionError;
+    AsyncWorkCompleted();
     return;
   }
 
-  int net_result = socket->JoinGroup(params_->address);
+  socket->JoinGroup(
+      params_->address,
+      base::Bind(&SocketsUdpJoinGroupFunction::OnJoinGroupComplete,
+                 base::Unretained(this)));
+}
+
+void SocketsUdpJoinGroupFunction::OnJoinGroupComplete(int net_result) {
   if (net_result != net::OK)
     error_ = net::ErrorToString(net_result);
   results_ = sockets_udp::JoinGroup::Results::Create(net_result);
+  AsyncWorkCompleted();
 }
 
 SocketsUdpLeaveGroupFunction::SocketsUdpLeaveGroupFunction() {}
@@ -394,10 +418,11 @@ bool SocketsUdpLeaveGroupFunction::Prepare() {
   return true;
 }
 
-void SocketsUdpLeaveGroupFunction::Work() {
+void SocketsUdpLeaveGroupFunction::AsyncWorkStart() {
   ResumableUDPSocket* socket = GetUdpSocket(params_->socket_id);
   if (!socket) {
     error_ = kSocketNotFoundError;
+    AsyncWorkCompleted();
     return;
   }
 
@@ -407,13 +432,20 @@ void SocketsUdpLeaveGroupFunction::Work() {
       kWildcardPort);
   if (!SocketsManifestData::CheckRequest(extension(), param)) {
     error_ = kPermissionError;
+    AsyncWorkCompleted();
     return;
   }
+  socket->LeaveGroup(
+      params_->address,
+      base::Bind(&SocketsUdpLeaveGroupFunction::OnLeaveGroupComplete,
+                 base::Unretained(this)));
+}
 
-  int net_result = socket->LeaveGroup(params_->address);
-  if (net_result != net::OK)
-    error_ = net::ErrorToString(net_result);
-  results_ = sockets_udp::LeaveGroup::Results::Create(net_result);
+void SocketsUdpLeaveGroupFunction::OnLeaveGroupComplete(int result) {
+  if (result != net::OK)
+    error_ = net::ErrorToString(result);
+  results_ = sockets_udp::LeaveGroup::Results::Create(result);
+  AsyncWorkCompleted();
 }
 
 SocketsUdpSetMulticastTimeToLiveFunction::
@@ -515,7 +547,14 @@ void SocketsUdpSetBroadcastFunction::Work() {
     return;
   }
 
-  int net_result = socket->SetBroadcast(params_->enabled);
+  socket->SetBroadcast(
+      params_->enabled,
+      base::Bind(&SocketsUdpSetBroadcastFunction::OnSetBroadcastComplete,
+                 base::Unretained(this), base::Unretained(socket)));
+}
+
+void SocketsUdpSetBroadcastFunction::OnSetBroadcastComplete(Socket* socket,
+                                                            int net_result) {
   if (net_result != net::OK) {
     error_ = net::ErrorToString(net_result);
   }
@@ -523,4 +562,5 @@ void SocketsUdpSetBroadcastFunction::Work() {
 }
 
 }  // namespace api
+
 }  // namespace extensions
