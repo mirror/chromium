@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6249ea22_8386fa21",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-22T21:31:49Z",
+      "side": 1,
+      "message": "Nit: const char kRFC2047EncodingPrefix[] \u003d \"\u003d?utf-8?Q?\";\n\nsame for the other string constants.",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0266d0f_a598243b",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-22T21:31:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t QuotedPrintableEncode do line splitting as well? It seems a bit surprising that we\u0027d need a separate bit of logic here for line splitting.",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
