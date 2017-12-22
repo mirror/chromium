@@ -16,7 +16,12 @@ class GamepadEvent {
                GamepadEventType type,
                uint16_t code,
                double value,
-               base::TimeTicks timestamp);
+               base::TimeTicks timestamp)
+      : device_id_(device_id),
+        type_(type),
+        code_(code),
+        value_(value),
+        timestamp_(timestamp) {}
 
   int device_id() const { return device_id_; }
 
