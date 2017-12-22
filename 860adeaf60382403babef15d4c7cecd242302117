@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e093e8bb_8a176a8c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T19:22:54Z",
+      "side": 1,
+      "message": "You don\u0027t need this. The test can catch the\nTYPE_VIEW_TEXT_SELECTION_CHANGED event.",
+      "revId": "860adeaf60382403babef15d4c7cecd242302117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9672653a_56a07536",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T19:22:54Z",
+      "side": 1,
+      "message": "These events are fired in response to a granularity move.\nThe test can catch these.",
+      "revId": "860adeaf60382403babef15d4c7cecd242302117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088175c2_2833c84c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T19:22:54Z",
+      "side": 1,
+      "message": "In your test you can also call setAccessibilityDelegate, and when\nonRequestSendAccessibilityEvent is called, check if the event is\nthe selection changed event, and if so keep track of the new selection\nindex there.\n\nThis all happens synchronously so it will be easy.",
+      "revId": "860adeaf60382403babef15d4c7cecd242302117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6807b887_4b76759c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T19:22:54Z",
+      "side": 1,
+      "message": "Can we get rid of this?",
+      "revId": "860adeaf60382403babef15d4c7cecd242302117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fdd93d_f3d02d67",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T19:22:54Z",
+      "side": 1,
+      "message": "So what should happen is that before performAction returns, your\nonRequestSendAccessibilityEvent will get called and update the\nselection index, so then you can assert here.\n\nAlmost the same idea as what you have here except that no\ntesting-only methods are needed, and it lets us test that the\nevents fired are correct too.",
+      "revId": "860adeaf60382403babef15d4c7cecd242302117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
