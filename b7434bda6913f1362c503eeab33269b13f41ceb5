@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af53471f_0b3ec63a",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-22T23:57:54Z",
+      "side": 1,
+      "message": "Not sure I understand your concern here. The fact that the port is being forwarded from the host is important because the caller needs to know address/hostname to connect to. Would it be better to call the flag \"--local-ssh-port\"?",
+      "parentUuid": "4a656886_17f9db76",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c7dffd5_0b5bdaf1",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950d8e79_93f82311",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-22T23:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7dffd5_0b5bdaf1",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d35308e_d72a9034",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-22T23:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19497f39_3e15bef7",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "251afecc_aae448c9",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "60bcd2f8_cfca5fe9",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-22T23:57:54Z",
+      "side": 1,
+      "message": "Added a check forward_ssh_port for use_device case. Same for test_launcher_summary_output.\nAlso made test_launcher_summary_output optional.",
+      "parentUuid": "251afecc_aae448c9",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1678544_3fd1245a",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-22T23:08:43Z",
       "side": 1,
       "message": "I think it\u0027d be cleaner to consolidate the architecture-specific code inside the conditionals below. You can save the virtual device driver in a variable and then populate the \"-device\" args afterward.",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c139c2_56871f00",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-22T23:57:54Z",
+      "side": 1,
+      "message": "Moved this block below the platfrom-specific section below.",
+      "parentUuid": "d1678544_3fd1245a",
       "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
