@@ -262,7 +262,7 @@ void CloudPrintURLFetcher::StartRequestHelper(
   // Persist the additional headers in case we need to retry the request.
   additional_headers_ = additional_headers;
   net::NetworkTrafficAnnotationTag traffic_annotation =
-      net::CompleteNetworkTrafficAnnotation("cloud_print",
+      net::CompleteNetworkTrafficAnnotation("cloud_print2",
                                             partial_traffic_annotation_,
                                             R"(
           semantics {

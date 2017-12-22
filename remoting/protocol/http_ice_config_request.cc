@@ -18,48 +18,6 @@ HttpIceConfigRequest::HttpIceConfigRequest(
     const std::string& url,
     OAuthTokenGetter* oauth_token_getter)
     : url_(url), weak_factory_(this) {
-  net::NetworkTrafficAnnotationTag traffic_annotation =
-      net::DefineNetworkTrafficAnnotation("CRD_ice_config_request", R"(
-        semantics {
-          sender: "Chrome Remote Desktop"
-          description:
-            "Request is used by Chrome Remote Desktop to fetch ICE "
-            "configuration which contains list of STUN & TURN servers and TURN "
-            "credentials."
-          trigger:
-            "When a Chrome Remote Desktop session is being connected and "
-            "periodically while a session is active, as necessary. Currently "
-            "the API issues credentials that expire every 24 hours, so this "
-            "request will only be sent again while session is active more than "
-            "24 hours and it needs to renegotiate the ICE connection. The 24 "
-            "hour period is controlled by the server and may change. In some "
-            "cases, e.g. if direct connection is used, it will not trigger "
-            "periodically."
-          data: "None."
-          destination: GOOGLE_OWNED_SERVICE
-        }
-        policy {
-          cookies_allowed: NO
-          setting:
-            "This feature cannot be disabled by settings. You can block Chrome "
-            "Remote Desktop as specified here: "
-            "https://support.google.com/chrome/?p=remote_desktop"
-          chrome_policy {
-            RemoteAccessHostFirewallTraversal {
-              policy_options {mode: MANDATORY}
-              RemoteAccessHostFirewallTraversal: false
-            }
-          }
-        }
-        comments:
-          "Above specified policy is only applicable on the host side and "
-          "doesn't have effect in Android and iOS client apps. The product "
-          "is shipped separately from Chromium, except on Chrome OS."
-        )");
-  url_request_ = url_request_factory->CreateUrlRequest(
-      UrlRequest::Type::GET, url_, traffic_annotation);
-  oauth_token_getter_ = oauth_token_getter;
-  url_request_->SetPostData("application/json", "");
 }
 
 HttpIceConfigRequest::~HttpIceConfigRequest() = default;
