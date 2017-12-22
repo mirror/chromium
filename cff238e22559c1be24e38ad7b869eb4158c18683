@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23671aa9_f1a55638",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-22T19:18:28Z",
+      "side": 1,
+      "message": "Technically, we should wait until the first activation after navigation before making this decision to make sure all the estimates have samples.\n\nAlternatively, we could set kMinNumberOfCommitsBeforeLatencyRecovery to 2 and add a comment explaining how it\u0027s almost equivalent to waiting for the first activation.",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8869e342_db37b639",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-22T19:18:28Z",
+      "side": 1,
+      "message": "Rename to DidNavigate here and higher up in the stack?",
+      "range": {
+        "startLine": 940,
+        "startChar": 16,
+        "endLine": 940,
+        "endChar": 40
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c6d48a_c96bfa61",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-22T19:18:28Z",
+      "side": 1,
+      "message": "Rename this to commit_count_since_navigation?",
+      "range": {
+        "startLine": 351,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 19
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
