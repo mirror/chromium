@@ -16,6 +16,24 @@
       "revId": "5fc6a5a66a0fea6ca63850ccebabd9e421e0e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73210ad_a2d2e975",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-22T19:25:09Z",
+      "side": 1,
+      "message": "yeah, we do need it for the next/ layer though. 1) and 2) done.\nas a side question: is there any benefit to having package access rather than protected?",
+      "parentUuid": "5ed4f14b_47afada8",
+      "revId": "5fc6a5a66a0fea6ca63850ccebabd9e421e0e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
