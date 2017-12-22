@@ -856,3 +856,7 @@
 
 # Fails on debug waterfall bot but not locally or on release or trybots.
 -PopupsOnlyUiDelegateTest.ManyPopupNotifications
+
+# Fails because of missing support to navigate to filesystem: URLs.
+# https://crbug.com/797292
+-SBNavigationObserverBrowserTest.DownloadViaHTML5FileApi
