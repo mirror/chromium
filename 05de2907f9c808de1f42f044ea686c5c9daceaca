@@ -522,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "1be325c7_e7cdc1a4",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-22T05:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbce57d7_415fb1c2",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d345a87e_5622b8f2",
         "filename": "chrome/renderer/chrome_render_view_observer.cc",
         "patchSetId": 3
