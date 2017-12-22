@@ -75875,12 +75875,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ScreenLocker.AuthenticationFailureTime" units="ms">
+  <owner>sammiequon@chromium.org</owner>
+  <summary>The time spent for authentication in case of a failure.</summary>
+</histogram>
+
 <histogram name="ScreenLocker.AuthenticationSuccess" enum="UnlockType">
   <owner>sammiequon@chromium.org</owner>
   <summary>
     What type of authentication was attempted when the user successfully
     unlocked the lock screen.
   </summary>
+</histogram>
+
+<histogram name="ScreenLocker.AuthenticationSuccessTime" units="ms">
+  <owner>sammiequon@chromium.org</owner>
+  <summary>The time spent for authentication in case of a success.</summary>
+</histogram>
+
+<histogram name="ScreenLocker.ScreenLockTime" units="ms">
+  <owner>sammiequon@chromium.org</owner>
+  <summary>The time spent before the screen locker is ready.</summary>
 </histogram>
 
 <histogram name="Sdch3.AdvertisedWithSecureScheme" enum="BooleanHttps">
