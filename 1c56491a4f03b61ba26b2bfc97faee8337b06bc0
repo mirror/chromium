@@ -16,6 +16,24 @@
       "revId": "1c56491a4f03b61ba26b2bfc97faee8337b06bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4582c64b_131686cd",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-22T23:42:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb021448_7e836913",
+      "revId": "1c56491a4f03b61ba26b2bfc97faee8337b06bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
