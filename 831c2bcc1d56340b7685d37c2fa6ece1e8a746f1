@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e56702f_882ddc99",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-22T01:02:06Z",
+      "side": 1,
+      "message": "Is it possible to avoid this CL by using alternate data sources?\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d793373#c7",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b672c599_58238d93",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-22T01:02:06Z",
+      "side": 1,
+      "message": "Is this not always same as:\nmetrics_request_.pageloads_size()?",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfd613e_f2d25fac",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-22T01:02:06Z",
+      "side": 1,
+      "message": "Is it possible to get rid of this too?\nI am okay with an extra for loop inside of CreateFetcherForDataAndStart() since most likely the # of reports would be very small.",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 323,
+        "endChar": 34
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
