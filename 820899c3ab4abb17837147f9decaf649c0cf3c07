@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab190ae9_1639a30f",
+        "filename": "chrome/browser/chromeos/file_system_provider/icon_set.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-22T17:28:37Z",
+      "side": 1,
+      "message": "return it-\u003esecond?",
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0d7f01_c1757b45",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-22T17:28:37Z",
+      "side": 1,
+      "message": "Remove the trailing comma.",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332e0c4d_27999193",
+        "filename": "ui/file_manager/externs/volume_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-22T17:28:37Z",
+      "side": 1,
+      "message": "volume_manager_common.js refers this volume_info.js, but it does not know file_manager_private.js as a dependency.\nhttps://codesearch.chromium.org/chromium/src/ui/file_manager/file_manager/common/js/compiled_resources2.gyp?sq\u003dpackage:chromium\u0026dr\u0026l\u003d85\n\nI guess it will be resolved by adding \u0027\u003c(EXTERNS_GYP):file_manager_private\u0027 as a dependency for every compile target which has \u0027externs/compiled_resources2.gyp:volume_info\u0027 as a dependency.",
+      "range": {
+        "startLine": 83,
+        "startChar": 60,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
