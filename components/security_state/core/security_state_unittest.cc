@@ -11,9 +11,9 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/histogram_tester.h"
-#include "base/test/scoped_command_line.h"
+#include "base/test/scoped_feature_list.h"
+#include "components/security_state/core/features.h"
 #include "components/security_state/core/insecure_input_event_data.h"
-#include "components/security_state/core/switches.h"
 #include "net/cert/x509_certificate.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
@@ -453,10 +453,11 @@ TEST(SecurityStateTest, IncognitoFlagPropagates) {
 
   {
     // Disable the "non-secure-while-incognito" configuration.
-    base::test::ScopedCommandLine scoped_command_line;
-    scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-        security_state::switches::kMarkHttpAs,
-        security_state::switches::kMarkHttpAsDangerous);
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitAndEnableFeatureWithParameters(
+        security_state::features::kMarkHttpAsFeature,
+        {{security_state::features::kMarkHttpAsFeatureParameterName,
+          security_state::features::kMarkHttpAsParameterDangerous}});
     helper.set_is_incognito(false);
     helper.GetSecurityInfo(&security_info);
     EXPECT_FALSE(security_info.incognito_downgraded_security_level);
@@ -516,10 +517,11 @@ TEST(SecurityStateTest, MarkHttpAsStatusHistogram) {
 
   {
     // Test the "dangerous" configuration.
-    base::test::ScopedCommandLine scoped_command_line;
-    scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-        security_state::switches::kMarkHttpAs,
-        security_state::switches::kMarkHttpAsDangerous);
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitAndEnableFeatureWithParameters(
+        security_state::features::kMarkHttpAsFeature,
+        {{security_state::features::kMarkHttpAsFeatureParameterName,
+          security_state::features::kMarkHttpAsParameterDangerous}});
 
     base::HistogramTester histograms;
     TestSecurityStateHelper helper;
@@ -658,10 +660,11 @@ TEST(SecurityStateTest, FieldEdit) {
 
   {
     // Test the "dangerous" configuration.
-    base::test::ScopedCommandLine scoped_command_line;
-    scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-        security_state::switches::kMarkHttpAs,
-        security_state::switches::kMarkHttpAsDangerous);
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitAndEnableFeatureWithParameters(
+        security_state::features::kMarkHttpAsFeature,
+        {{security_state::features::kMarkHttpAsFeatureParameterName,
+          security_state::features::kMarkHttpAsParameterDangerous}});
 
     helper.GetSecurityInfo(&security_info);
     EXPECT_TRUE(security_info.insecure_input_events.insecure_field_edited);
@@ -720,6 +723,112 @@ TEST(SecurityStateTest, IncognitoErrorPage) {
   helper.GetSecurityInfo(&security_info);
   EXPECT_EQ(SecurityLevel::HTTP_SHOW_WARNING, security_info.security_level);
   EXPECT_TRUE(security_info.incognito_downgraded_security_level);
+}
+
+// Tests that HTTP_SHOW_WARNING is set when the 'warning' command line flag is
+// enabled.
+TEST(SecurityStateTest, AlwaysShowWarning) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::kMarkHttpAsParameterWarning}});
+
+  TestSecurityStateHelper helper;
+  helper.SetUrl(GURL(kHttpUrl));
+
+  {
+    SecurityInfo security_info;
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_insecure_field_edit(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+}
+
+// Tests that HTTP_SHOW_WARNING is set on normal http pages but DANGEROUS on
+// form edits when the 'warning-and-dangerous-on-form-edits' command line is
+// enabled.
+TEST(SecurityStateTest, WarningAndDangerousOnFormEdits) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::
+            kMarkHttpAsParameterWarningAndDangerousOnFormEdits}});
+
+  TestSecurityStateHelper helper;
+  helper.SetUrl(GURL(kHttpUrl));
+
+  {
+    SecurityInfo security_info;
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_insecure_field_edit(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::DANGEROUS, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_insecure_field_edit(false);
+    helper.set_password_field_shown(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+}
+
+// Tests that HTTP_SHOW_WARNING is set on normal http pages but DANGEROUS on
+// sensitive fields when the
+// 'warning-and-dangerous-on-passwords-and-credit-cards' command line is
+// enabled.
+TEST(SecurityStateTest, WarningAndDangerousOnSensitiveFields) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::
+            kMarkHttpAsParameterWarningAndDangerousOnPasswordsAndCreditCards}});
+
+  TestSecurityStateHelper helper;
+  helper.SetUrl(GURL(kHttpUrl));
+
+  {
+    SecurityInfo security_info;
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_insecure_field_edit(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_password_field_shown(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::DANGEROUS, security_info.security_level);
+  }
+
+  {
+    SecurityInfo security_info;
+    helper.set_password_field_shown(false);
+    helper.set_credit_card_field_edited(true);
+    helper.GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::DANGEROUS, security_info.security_level);
+  }
 }
 
 }  // namespace security_state
