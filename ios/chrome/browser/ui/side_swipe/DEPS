@@ -5,9 +5,6 @@ specific_include_rules = {
   ],
 
   # TODO(crbug.com/620939): Remove these exceptions.
-  "^card_side_swipe_view\.mm$": [
-    "+ios/web/web_state/ui/crw_web_controller.h",
-  ],
   "^side_swipe_controller\.mm$": [
     "+ios/web/web_state/ui/crw_web_controller.h",
   ],
