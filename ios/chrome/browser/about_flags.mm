@@ -34,7 +34,7 @@
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/payments/core/features.h"
 #include "components/search_provider_logos/switches.h"
-#include "components/security_state/core/switches.h"
+#include "components/security_state/core/features.h"
 #include "components/signin/core/browser/signin_switches.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
@@ -66,11 +66,36 @@
 using flags_ui::FeatureEntry;
 
 namespace {
-const FeatureEntry::Choice kMarkHttpAsChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kMarkHttpAsDangerous,
-     security_state::switches::kMarkHttpAs,
-     security_state::switches::kMarkHttpAsDangerous}};
+
+const FeatureEntry::FeatureParam kMarkHttpAsDangerous[] = {
+    {security_state::features::kMarkHttpAsFeatureParameterName,
+     security_state::features::kMarkHttpAsParameterDangerous}};
+const FeatureEntry::FeatureParam kMarkHttpAsWarning[] = {
+    {security_state::features::kMarkHttpAsFeatureParameterName,
+     security_state::features::kMarkHttpAsParameterWarning}};
+const FeatureEntry::FeatureParam kMarkHttpAsWarningAndDangerousOnFormEdits[] = {
+    {security_state::features::kMarkHttpAsFeatureParameterName,
+     security_state::features::
+         kMarkHttpAsParameterWarningAndDangerousOnFormEdits}};
+const FeatureEntry::FeatureParam
+    kMarkHttpAsWarningAndDangerousOnPasswordsAndCreditCards[] = {
+        {security_state::features::kMarkHttpAsFeatureParameterName,
+         security_state::features::
+             kMarkHttpAsParameterWarningAndDangerousOnPasswordsAndCreditCards}};
+
+const FeatureEntry::FeatureVariation kMarkHttpAsFeatureVariations[] = {
+    {"(mark as actively dangerous)", kMarkHttpAsDangerous,
+     arraysize(kMarkHttpAsDangerous), nullptr},
+    {"(mark with a Not Secure warning)", kMarkHttpAsWarning,
+     arraysize(kMarkHttpAsWarning), nullptr},
+    {"(mark with a Not Secure warning and dangerous on form edits)",
+     kMarkHttpAsWarningAndDangerousOnFormEdits,
+     arraysize(kMarkHttpAsWarningAndDangerousOnFormEdits), nullptr},
+    {"(mark with a Not Secure warning and dangerous on passwords and credit "
+     "card fields)x",
+     kMarkHttpAsWarningAndDangerousOnPasswordsAndCreditCards,
+     arraysize(kMarkHttpAsWarningAndDangerousOnPasswordsAndCreditCards),
+     nullptr}};
 
 const FeatureEntry::Choice kUseDdljsonApiChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -114,9 +139,12 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kBrowserTaskSchedulerDescription, flags_ui::kOsIos,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableBrowserTaskScheduler,
                                switches::kDisableBrowserTaskScheduler)},
-    {"mark-non-secure-as", flag_descriptions::kMarkHttpAsName,
-     flag_descriptions::kMarkHttpAsDescription, flags_ui::kOsIos,
-     MULTI_VALUE_TYPE(kMarkHttpAsChoices)},
+    {"enable-mark-http-as", flag_descriptions::kMarkHttpAsName,
+     flag_descriptions::kMarkHttpAsDescription, kOsAll,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         security_state::features::kMarkHttpAsFeature,
+         kMarkHttpAsFeatureVariations,
+         "MarkHttpAs")},
     {"web-payments", flag_descriptions::kWebPaymentsName,
      flag_descriptions::kWebPaymentsDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(payments::features::kWebPayments)},
