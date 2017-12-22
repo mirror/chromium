@@ -237,14 +237,7 @@ class PLATFORM_EXPORT HeapAllocator {
     // It is not safe to retrieve the page from the object here.
     ThreadState* const thread_state = ThreadState::Current();
     if (thread_state->IsIncrementalMarking()) {
-      // Eagerly trace the object ensuring that the object and all its children
-      // are discovered by the marker.
-      NoAllocationScope no_allocation_scope(this);
       DCHECK(thread_state->CurrentVisitor());
-      // This check ensures that the visitor will not eagerly recurse into
-      // children but rather push all blink::GarbageCollected objects and only
-      // eagerly trace non-managed objects.
-      DCHECK(!thread_state->Heap().GetStackFrameDepth().IsEnabled());
       HeapAllocator::template Trace<Visitor*, T, Traits>(
           thread_state->CurrentVisitor(), *object);
     }
@@ -258,10 +251,7 @@ class PLATFORM_EXPORT HeapAllocator {
     // It is not safe to retrieve the page from the object here.
     ThreadState* const thread_state = ThreadState::Current();
     if (thread_state->IsIncrementalMarking()) {
-      // See |NotifyNewObject| for details.
-      NoAllocationScope no_allocation_scope(this);
       DCHECK(thread_state->CurrentVisitor());
-      DCHECK(!thread_state->Heap().GetStackFrameDepth().IsEnabled());
       while (len-- > 0) {
         HeapAllocator::template Trace<Visitor*, T, Traits>(
             thread_state->CurrentVisitor(), *array);
