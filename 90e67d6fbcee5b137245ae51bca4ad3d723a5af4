@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e35f481_280d2307",
+        "filename": "ui/webui/resources/html/load_time_data.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-22T23:47:29Z",
+      "side": 0,
+      "message": "what\u0027s the reason behind this change?\n\ndpapad@ ran into issues of js being included multiple times using \u003cscript\u003e, and had to convert it to html-import to de-duplicate.\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/843144",
+      "revId": "90e67d6fbcee5b137245ae51bca4ad3d723a5af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
