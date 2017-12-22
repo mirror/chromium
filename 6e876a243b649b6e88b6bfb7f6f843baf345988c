@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e447655b_310f25d9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebb950a_b2ac8142",
+      "range": {
+        "startLine": 175,
+        "startChar": 58,
+        "endLine": 175,
+        "endChar": 62
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad34f84_bfe30bb9",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "10025498_479083f3",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad34f84_bfe30bb9",
+      "range": {
+        "startLine": 211,
+        "startChar": 35,
+        "endLine": 211,
+        "endChar": 78
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df3525d_a0fb8830",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "5601a9e1_da5d8595",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Jason had this logging in there so I wrote it this way to keep it. I don\u0027t think its very meaningful though so i\u0027ll take it out",
+      "parentUuid": "0df3525d_a0fb8830",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a577bdad_605e5a60",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abffaff7_bf278afd",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a577bdad_605e5a60",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "423729a3_619253ac",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b82bff9_22f2098b",
+      "range": {
+        "startLine": 371,
+        "startChar": 44,
+        "endLine": 371,
+        "endChar": 50
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b93e5ab_a39c1691",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -116,6 +224,24 @@
       "writtenOn": "2017-12-18T23:55:37Z",
       "side": 1,
       "message": "This is a little suboptimal.  If you have potential keys \"A\", \"B\", and \"C\" to locate a ppd, and each is on a different index shard, then I would think the right behavior would be\n\nResolve index shard for \"A\"\nTry to resolve using key \"A\"\nResolve index shard for \"B\"\nTry to resolve using key \"B\"\nResolve index shard for \"C\"\nTry to resolve using key \"C\"\n\nRight now, this seems to do\nResolve index shard for \"A\"\nResolve index shard for \"B\"\nResolve index shard for \"C\"\nTry to resolve using key \"A\"\nTry to resolve using key \"B\"\nTry to resolve using key \"C\"\n\nSince the index shard resolution network roundtrips are *much* more expensive than the attempts to resolve a ppd given an index shard, and you may not need to resolve all the index shards if you get lucky with one of the early ones.\n\nHOwever, this does add a bit of complexity for probably not a lot of real-world gain.  So if you don\u0027t want to tackle that, or find it too complicated, I\u0027m ok with this.",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61c7fc22_455c4039",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Sean and I discussed this earlier and decided it would add too much complexity but if I\u0027m not mistaken it should just be a simple move of that check into the inner loop...\n\nGiven this change the index checks from n to n^2, I doubt that would matter in comparison to the potential network roundtrip savings.",
+      "parentUuid": "2b93e5ab_a39c1691",
       "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "de1a18f4_21904035",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3a441b_cac3f124",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad152a5_a9589028",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -153,6 +297,24 @@
       "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381c7b6d_d77cb230",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "oops nice catch :)\n\nResolved the memory issues(i think) but straying away from using ListValue since it looks like its on the chopping block in favor of ListStorage\n\nhttps://docs.google.com/document/d/1uDLu5uTRlCWePxQUEHc8yNQdEoE1BDISYdpggWEABnw/edit#heading\u003dh.icznl3bfmf6v",
+      "parentUuid": "5ad152a5_a9589028",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "853a79e8_118d3486",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6f1e8d_860bda59",
+      "range": {
+        "startLine": 1155,
+        "startChar": 28,
+        "endLine": 1155,
+        "endChar": 51
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f565432_65cca6df",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 1
@@ -190,6 +376,24 @@
       "writtenOn": "2017-12-18T23:55:37Z",
       "side": 1,
       "message": "unordered_map is a little bit of an odd choice when the keys only range from 0-20, but I can see how it saves you some other things, so ok.",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01231b89_09943799",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Makes the code cleaner with checking for existence and more readable since thats how the inner maps are checking as well. Also allows for more shards in the future (v3 hype!!)",
+      "parentUuid": "8f565432_65cca6df",
       "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -210,6 +414,24 @@
       "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2e8ac9_36ab6cb3",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-12-22T19:45:46Z",
+      "side": 1,
+      "message": "Thought the change to remove it would be more in-depth than we would want to go but turned out to be just fine :)",
+      "parentUuid": "00a49c0e_ba793bd0",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
