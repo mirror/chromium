@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99684502_9fefb55c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T21:18:43Z",
+      "side": 1,
+      "message": "Removed in latest PS",
+      "parentUuid": "28daa8f0_d22ca293",
+      "revId": "7a1f2c3829b15bd8b83d9b6437e356bba3e1acf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "808054b2_3519b05b",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "27b3b3e5_75f550e0",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T21:18:43Z",
+      "side": 1,
+      "message": "Yeah, lets discuss that and address in a follow-up.",
+      "parentUuid": "808054b2_3519b05b",
+      "revId": "7a1f2c3829b15bd8b83d9b6437e356bba3e1acf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bc19248_21d6e9a7",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-22T19:48:08Z",
       "side": 1,
       "message": "Say we navigate. The browser will do some work and then eventually come back to the UI with a new URL, etc. Couldn\u0027t we have the clearing of this state tied to that rather than poking the UI directly? I\u0027m not against this approach but I\u0027d like to understand why the alternative wouldn\u0027t work. +cjgrant",
+      "revId": "7a1f2c3829b15bd8b83d9b6437e356bba3e1acf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096d6b90_e0ef3d8a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T21:18:43Z",
+      "side": 1,
+      "message": "Spoke to you offline. I\u0027ll leave this as is for now and we can address this in a follow-up as needed.",
+      "parentUuid": "8bc19248_21d6e9a7",
       "revId": "7a1f2c3829b15bd8b83d9b6437e356bba3e1acf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
