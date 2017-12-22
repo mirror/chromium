@@ -16,6 +16,24 @@
       "revId": "6231681255fed139006c8d58874f746d746aac8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2770b5_2b896da1",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-22T20:21:14Z",
+      "side": 0,
+      "message": "\u003e \n\u003e fast/forms/select/listbox-in-multi-column.html hit this situation without corrupted rendering. I think it\u0027s because some client painted a display item in one fragment then paints the display item in another fragment. It seems safe to tolerate the situation.\n\nWon\u0027t this mean that  fast/forms/select/listbox-in-multi-column.html triggers the new\nerror-caching code on line 307 with DCHECK_IS_ON?",
+      "parentUuid": "d4049632_3b7a1090",
+      "revId": "6231681255fed139006c8d58874f746d746aac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
