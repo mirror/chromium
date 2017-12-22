@@ -673,7 +673,13 @@ function getHealthThermometerDeviceWithServicesDiscovered(options) {
       code: HCI_SUCCESS,
     }))
     .then(() => new Promise(resolve => {
-      iframe.src = '../../../resources/bluetooth/health-thermometer-iframe.html';
+      let src = '/bluetooth/resources/health-thermometer-iframe.html';
+      // TODO(509038): This is a temporary work around for tests that use
+      // health-thermometer-iframe.html that have not been migrated yet.
+      if (window.location.pathname.includes('/LayoutTests/')) {
+        src = '../../../external/wpt/bluetooth/resources/health-thermometer-iframe.html';
+      }
+      iframe.src = src;
       document.body.appendChild(iframe);
       iframe.addEventListener('load', resolve);
     }))
