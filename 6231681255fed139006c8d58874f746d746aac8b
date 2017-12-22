@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4049632_3b7a1090",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-22T19:06:41Z",
+      "side": 0,
+      "message": "Removed this NOTREACHED() because we have checked it in FindCachedItem() when PaintUnderInvalidationChecking is enabled. We can allow the situation (that a client produces new display items without invalidation) because it won\u0027t cause any corrupted rendering. The situation affects performance because we index all remaining display items as out-of-order display items when searching for this display item in the cache, but the impact would be trivial because the situation is rare (no paint invalidation tests with PaintUnderInvalidationChecking enabled hit it) and the extra cost for indexing is not very big.\n\nfast/forms/select/listbox-in-multi-column.html hit this situation without corrupted rendering. I think it\u0027s because some client painted a display item in one fragment then paints the display item in another fragment. It seems safe to tolerate the situation.",
+      "revId": "6231681255fed139006c8d58874f746d746aac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
