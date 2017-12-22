@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d7dea27_1f980443",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T22:02:38Z",
+      "side": 1,
+      "message": "Model::push_mode already does that. We would have to teach something like\nif ((mode \u003d\u003d kModeWebVr || mode \u003d\u003d kModeWebVrAutopresent) \u0026\u0026 web_vr_enabled)\n  ignore\nSeems kind of specific. I feel like this special case here with the comment is clear enough.",
+      "parentUuid": "7c028e5e_2346964b",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b98ec2e_d1e254bd",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "88cb0fac_c0e521f9",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T22:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b98ec2e_d1e254bd",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "847b372c_d74a875d",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ce031d_d4496af2",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-22T22:02:38Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "847b372c_d74a875d",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
