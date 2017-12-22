@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ba7ab1_62b14589",
+        "filename": "extensions/common/extension_icon_set.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-22T13:55:28Z",
+      "side": 1,
+      "message": "Nit: This for loop is multi-line, so braces are required.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "f7a02ef3252b1dfe09deb7de840b7eecb6e7b43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327617e6_2ae7e566",
+        "filename": "extensions/common/extension_icon_set.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-22T13:55:28Z",
+      "side": 1,
+      "message": "Nit: Should this be const auto\u0026 ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 12
+      },
+      "revId": "f7a02ef3252b1dfe09deb7de840b7eecb6e7b43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
