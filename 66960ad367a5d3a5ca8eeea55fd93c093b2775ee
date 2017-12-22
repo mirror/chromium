@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbee0c9b_7769917d",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-22T11:39:12Z",
+      "side": 1,
+      "message": "I think we should move this to FindTargetInRegionForLocation (https://chromium-review.googlesource.com/c/chromium/src/+/811836/3/components/viz/host/hit_test/hit_test_query.cc)? On TOT, FindTargetInRegionForLocation is dropping the event if the ask flag is set so this would never be true. And it would be cleaner if all the targeting can happen there.",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 40
+      },
+      "revId": "66960ad367a5d3a5ca8eeea55fd93c093b2775ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156c2281_c0809d20",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-22T11:39:12Z",
+      "side": 1,
+      "message": "Good point! I think we do",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "66960ad367a5d3a5ca8eeea55fd93c093b2775ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f66a42_850ab0a4",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-22T11:39:12Z",
+      "side": 1,
+      "message": "Is this function supposed to be an alternative that gives us the InputTargetClient to use? Should this param be FrameSinkId?",
+      "range": {
+        "startLine": 87,
+        "startChar": 44,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "66960ad367a5d3a5ca8eeea55fd93c093b2775ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f76fb0_53c288d2",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-22T11:39:12Z",
+      "side": 1,
+      "message": "This can be const * since this cannot change after init?\nnit: move to be above the first member variable?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 48
+      },
+      "revId": "66960ad367a5d3a5ca8eeea55fd93c093b2775ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
