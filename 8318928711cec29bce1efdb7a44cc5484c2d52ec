@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcc4f029_cc5c678e",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a90f42_14d41320",
+      "range": {
+        "startLine": 415,
+        "startChar": 26,
+        "endLine": 415,
+        "endChar": 31
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5260176f_8610e5f7",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-22T10:17:57Z",
       "side": 1,
       "message": "If the supported decode size is larger than the target size but less than original, should we be using that as the candidate? I guess it would be complicated because then the key for that size would target the closest mip level.",
+      "range": {
+        "startLine": 438,
+        "startChar": 8,
+        "endLine": 438,
+        "endChar": 70
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e843e40_656fcea0",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 1,
+      "message": "Yeah there\u0027s an improvement opportunity here in the sense that we don\u0027t really need this check and can just decode to paint_image.GetSupportedDecodeSize(target_size). However, it complicates this already complicated logic a bit. The better approach would be to ensure that the mip levels that we generate here patch the supported decode size.",
+      "parentUuid": "5260176f_8610e5f7",
       "range": {
         "startLine": 438,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c557c52e_e7be5485",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a097605_74efe554",
+      "range": {
+        "startLine": 458,
+        "startChar": 11,
+        "endLine": 458,
+        "endChar": 63
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59c2da89_63dd43cc",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1ce6e96e_bde3120f",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59c2da89_63dd43cc",
+      "range": {
+        "startLine": 526,
+        "startChar": 2,
+        "endLine": 526,
+        "endChar": 63
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8519371_6b0f37f6",
         "filename": "cc/tiles/software_image_decode_cache_unittest_combinations.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-22T10:17:57Z",
       "side": 1,
       "message": "nit: Should this also include the full image size? Wouldn\u0027t this hit a DCHECK in FakePaintImageGenerator if we query the supported size for the full image?",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fefe781_1022f2f4",
+        "filename": "cc/tiles/software_image_decode_cache_unittest_combinations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 1,
+      "message": "It does include it, the while loop first pushes the size then divides.",
+      "parentUuid": "e8519371_6b0f37f6",
       "range": {
         "startLine": 148,
         "startChar": 4,

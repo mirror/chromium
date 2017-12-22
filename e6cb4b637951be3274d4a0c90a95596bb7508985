@@ -16,6 +16,24 @@
       "revId": "e6cb4b637951be3274d4a0c90a95596bb7508985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684ba2e6_b3efa0a0",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-22T18:23:53Z",
+      "side": 0,
+      "message": "The \"candidate came from above\" path is now split into a separate if branch so there\u0027s no confusion here. In the else, not decode to scale, path we always want the original which means the subtlety is more explicit, so I felt like there\u0027s no need for this warning.\n\nI added another comment above to explain all of the logic.",
+      "parentUuid": "9255bc49_947360ca",
+      "revId": "e6cb4b637951be3274d4a0c90a95596bb7508985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
