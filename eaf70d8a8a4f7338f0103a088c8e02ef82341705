@@ -22,6 +22,30 @@
       "revId": "eaf70d8a8a4f7338f0103a088c8e02ef82341705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7a5a00_12521edd",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-22T02:21:30Z",
+      "side": 1,
+      "message": "Yes, we can. Just verified that works. The destination store will change the selectedDestination reference when it changes to a new destination (vs just updating capabilities for the existing one).",
+      "parentUuid": "01728f62_a7ff4f70",
+      "range": {
+        "startLine": 545,
+        "startChar": 9,
+        "endLine": 547,
+        "endChar": 62
+      },
+      "revId": "eaf70d8a8a4f7338f0103a088c8e02ef82341705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
