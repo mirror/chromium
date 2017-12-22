@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01728f62_a7ff4f70",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T02:06:27Z",
+      "side": 1,
+      "message": "Now that we assign directly to |this.destination_|, could we compare by reference instead? Or would it break in some cases?\n\nif (!isFirstUpdate \u0026\u0026 this.destination !\u003d selectedDestination) {\n...\n}",
+      "range": {
+        "startLine": 545,
+        "startChar": 9,
+        "endLine": 547,
+        "endChar": 62
+      },
+      "revId": "eaf70d8a8a4f7338f0103a088c8e02ef82341705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
