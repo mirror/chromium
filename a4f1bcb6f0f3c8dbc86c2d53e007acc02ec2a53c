@@ -16,6 +16,24 @@
       "revId": "a4f1bcb6f0f3c8dbc86c2d53e007acc02ec2a53c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00658910_04485a5d",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-22T18:31:56Z",
+      "side": 1,
+      "message": "I think this is pretty similar to Chromevox. Chromevox has a total pitch range of 0.2 to 2.0 (https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/chromevox/host/chrome/tts_base.js) and each time you increment the pitch it changes by about .2.\n\nI made it slightly tighter and added 1 more option.",
+      "parentUuid": "ed902b43_9af602c0",
+      "revId": "a4f1bcb6f0f3c8dbc86c2d53e007acc02ec2a53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
