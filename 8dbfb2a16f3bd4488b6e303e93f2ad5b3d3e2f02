@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c09637fd_96d97537",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "I think you need to check that virtualViewId equals mSelectionNodeId, and\nthat\u0027s it.",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b4782e_09f4919c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed anymore...you should just pass\nvirtualViewId instead of nodeId below and there\u0027s no need to\ncheck if it\u0027s a text field or not.",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5f1059_fcedd24c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right, why did this need to change?\nWas it broken before, for granularity moves other than\neditable text?",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903461a4_f326c48a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed.",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140d4558_f9e3a2fe",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "Comment what this is?",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c399108_119bf761",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T23:09:59Z",
+      "side": 1,
+      "message": "Unfortunately this isn\u0027t allowed in tests. We need to figure out why\nit doesn\u0027t work if you don\u0027t do this.",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
