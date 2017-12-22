@@ -87,7 +87,6 @@
     banner,
     blockquote,
     button,
-    button_drop_down,  // Not used on Web.
     canvas,
     caption,
     caret,
