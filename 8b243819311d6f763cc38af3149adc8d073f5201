@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c255f74_8246d8d7",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "nit: This is a member function. Can we just use |pushed_stream_id_| instead of passing it as an arg?",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c54b12_56e8daa1",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "Should we conditionally invoke GetPushStream() here?\n\nIt\u0027s a bit non-intuitive that GetPushStream() is always called even though |pushed_stream_id_| is kNoPushedStreamFound in most cases.\n\nint error \u003d OK;\nif (pushed_stream_id_ !\u003d kNoPushedStreamFound) {\n   error  \u003d  spdy_session_-\u003eGetPushedStream(..);\n}",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac99738_37effbc5",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "If you agree with my other comment, this method should be only called when pushed_stream_id !\u003d kNoPushedStreamFound.",
+      "range": {
+        "startLine": 833,
+        "startChar": 26,
+        "endLine": 833,
+        "endChar": 46
+      },
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd192a2_3ac805e1",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "Do we have a unit test covering this case?",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4f9bd7_96aeb208",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "nit:pushed_stream_id -\u003e |pushed_stream_id| to match the style of the rest of the comments.",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9eb9d68_9d675300",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "optional nit: maybe consider renaming this method to GetPushedStream()\n\nOther places (e.g. ClaimPushedStream) refer to \"pushed stream\" instead of \"push stream\"",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8be9cc_3059247b",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5664,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-22T21:45:29Z",
+      "side": 1,
+      "message": "nit: not to bikeshed, my reviewers have been telling me that\n\n4 /*pushed_stream_id */ \nis more commonly used than\n/*pushed_stream_id \u003d*/ 4",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
