@@ -864,6 +864,13 @@ bool Scheduler::ShouldRecoverMainLatency(
   if (state_machine_.ImplLatencyTakesPriority())
     return false;
 
+  // Ensure that we have data from at least one frame before attempting latency
+  // recovery. This prevents skipping of frames during loading where the main
+  // thread is likely slow but we assume it to be fast since we have no history.
+  static const int kMinNumberOfCommitsBeforeLatencyRecovery = 1;
+  if (state_machine_.commit_count() < kMinNumberOfCommitsBeforeLatencyRecovery)
+    return false;
+
   return can_activate_before_deadline;
 }
 
@@ -928,6 +935,11 @@ bool Scheduler::IsBeginMainFrameSentOrStarted() const {
 viz::BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
   return viz::BeginFrameAck(begin_main_frame_args_.source_id,
                             begin_main_frame_args_.sequence_number, true);
+}
+
+void Scheduler::ClearHistoryOnNavigation() {
+  state_machine_.ClearHistoryOnNavigation();
+  compositor_timing_history_->ClearHistoryOnNavigation();
 }
 
 }  // namespace cc
