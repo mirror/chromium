@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2035a1a3_22246494",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "naming nit: ProcessNextInputTask() (since there are multiple tasks to process one frame)",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c0aa83_a242d4be",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "naming nit: OnInputTaskComplete()",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371de99c_365034be",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "s/frame data was read/frame\u0027s data should have been read/",
+      "range": {
+        "startLine": 375,
+        "startChar": 15,
+        "endLine": 375,
+        "endChar": 34
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28201bc4_26f4dbc2",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "It looks like this CleanNextFrameData() isn\u0027t needed, and could mask a logic problem within CastRemotingSender (if there was one). If it\u0027s necessary, let\u0027s add a comment here to explain why.",
+      "range": {
+        "startLine": 378,
+        "startChar": 2,
+        "endLine": 378,
+        "endChar": 23
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a4d5eb_ffa0907f",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "s/a the/the/  (a typo I made in an earlier CL, it seems)",
+      "range": {
+        "startLine": 514,
+        "startChar": 14,
+        "endLine": 514,
+        "endChar": 19
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3484d0_3935ae9d",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "s/binded/bound/",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b45c441_288aa933",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "s/binded/bound/",
+      "range": {
+        "startLine": 89,
+        "startChar": 29,
+        "endLine": 89,
+        "endChar": 35
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385a88aa_5346a54b",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:34:44Z",
+      "side": 1,
+      "message": "s/finished/has finished/",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
