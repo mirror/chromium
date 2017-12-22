@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c325ca_785f3949",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-22T04:39:42Z",
+      "side": 1,
+      "message": "Can we call UpdatePageInfo instead of making ResetMultipliers public?",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "caba1f13a124b2e21351ff5f2ba40275809fc9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
