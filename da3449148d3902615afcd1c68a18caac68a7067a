@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "fbba14b1_3e50f08e",
+        "filename": "components/viz/service/surfaces/surface_hittest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-22T00:18:26Z",
+      "side": 1,
+      "message": "I will update the comment. The answer is: yes, the caller should ignore SurfaceId and the returned transform when |out_query_renderer| is true. Later on we can optimize to return the ID of the Surface that we need to query, to optimize for nested iframes, but doing that before we have the slow path hooked up would break hit testing.",
+      "parentUuid": "4708b865_61cf4c22",
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9caf57_be0c717a",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 3
