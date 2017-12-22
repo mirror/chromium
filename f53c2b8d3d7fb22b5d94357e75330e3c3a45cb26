@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96b74ab4_2510baa6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2017-12-22T08:25:57Z",
+      "side": 1,
+      "message": "This should be\n\n```\nframe.addEventListener(\"load\", t.step_func(function () {\n    // ...\n```",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a549d77_cfa2e190",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2017-12-22T08:25:57Z",
+      "side": 1,
+      "message": "A second is pretty long. What\u0027s the reason for the timeout? I can see that you\u0027d want to give the test some time to fail, but I don\u0027t see how any unexpected behaviour here would cause the test to fail.",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
