@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0edc86_d009a312",
+        "filename": "WATCHLISTS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T00:14:12Z",
+      "side": 1,
+      "message": "This first pipe char should be removed.\n\nAlso, make sure you run a few sanity-check tests (see link at top of this file). It\u0027d be good to double-check that some of the files in the more-complicated expressions are matched, like:\n\n  components/viz/common/frame_sinks/copy_output_request.h\n  services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+      "range": {
+        "startLine": 1409,
+        "startChar": 19,
+        "endLine": 1409,
+        "endChar": 20
+      },
+      "revId": "c4c3ffe9e4c08f31d98bd6236cd85ca18057dcd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
