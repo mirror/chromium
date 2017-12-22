@@ -136,4 +136,8 @@ TouchEventParams::TouchEventParams(const TouchEventParams& other) = default;
 TouchEventParams::~TouchEventParams() {
 }
 
+float ScaleTilt(int value, int min_value, int num_values) {
+  return 180.f * (value - min_value) / num_values - 90.f;
+}
+
 }  // namspace ui

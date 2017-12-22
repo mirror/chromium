@@ -32,13 +32,6 @@ const int kMaxTapDeltaMs = 30;
 // Maximum squared movement of a touch to still be considered a tap.
 const int kMaxTapMovement2 = 20 * 20;
 
-// Returns the squared distance between (|x1|, |y1|) and (|x2|, |y2|).
-int Distance2(int x1, int y1, int x2, int y2) {
-  int offset_x = x2 - x1;
-  int offset_y = y2 - y1;
-  return offset_x * offset_x + offset_y * offset_y;
-}
-
 }  // namespace
 
 void FarApartTapsTouchNoiseFilter::Filter(

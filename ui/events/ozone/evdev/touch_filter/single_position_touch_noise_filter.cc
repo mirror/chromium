@@ -29,13 +29,6 @@ const int kMinDurationMs = 2000;
 // touches.
 const int kMaxDurationMs = 4000;
 
-// Returns the squared distance between (|x1|, |y1|) and (|x2|, |y2|)
-int Distance2(int x1, int y1, int x2, int y2) {
-  int offset_x = x2 - x1;
-  int offset_y = y2 - y1;
-  return offset_x * offset_x + offset_y * offset_y;
-}
-
 }  // namespace
 
 SinglePositionTouchNoiseFilter::SinglePositionTouchNoiseFilter()

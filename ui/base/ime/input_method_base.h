@@ -115,6 +115,8 @@ class UI_BASE_IME_EXPORT InputMethodBase
   bool sending_key_event() const { return sending_key_event_; };
   internal::InputMethodDelegate* delegate() const { return delegate_; };
 
+  static IMEEngineHandlerInterface* GetEngine();
+
  private:
   // Indicates whether the IME extension is currently sending a fake key event.
   // This is used in SendKeyEvent.

@@ -185,6 +185,9 @@ class EVENTS_OZONE_EVDEV_EXPORT DeviceEventDispatcherEvdev {
       const std::vector<InputDevice>& devices) = 0;
 };
 
+// Convert tilt from [min, min + num_values) to [-90deg, +90deg)
+float ScaleTilt(int value, int min_value, int num_values);
+
 }  // namespace ui
 
 #endif  // UI_EVENTS_OZONE_EVDEV_DEVICE_EVENT_DISPATCHER_H_
