@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e1f77fec_5658c006",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T15:12:14Z",
+      "side": 1,
+      "message": "Yes, this fails without the fix as well. Added `prefrerred \u003d true` for more robustness.",
+      "parentUuid": "c64924c6_4a1b2776",
+      "range": {
+        "startLine": 341,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 32
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5c198e3_0615f0a0",
         "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
         "patchSetId": 1
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dad34784_3c2b9b48",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T15:12:14Z",
+      "side": 1,
+      "message": "Yeah, that was a typo. I split it into two different navigations + calls to store now, as this is likely closer to real API usage.",
+      "parentUuid": "b5c198e3_0615f0a0",
+      "range": {
+        "startLine": 434,
+        "startChar": 2,
+        "endLine": 434,
+        "endChar": 71
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f5f2b6f_78b9982c",
         "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
         "patchSetId": 1
@@ -103,6 +151,30 @@
       "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76875d3_6163286b",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T15:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f5f2b6f_78b9982c",
+      "range": {
+        "startLine": 438,
+        "startChar": 58,
+        "endLine": 438,
+        "endChar": 65
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
