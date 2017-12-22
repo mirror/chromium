@@ -149,6 +149,20 @@ ListContainer.ListType = {
   THUMBNAIL: 'thumb'
 };
 
+/**
+ * Length of duration to momentarily allow showing context menu after
+ * requested by certain types of events.
+ * We usually cancel contextmenu event in order to suppress it for long-taps
+ * in order to use those for different interactions.
+ * Such contextmenu event is sent following touch and mouse events. Therefore,
+ * we unblock it momentarlly after some specific events when we want to
+ * show context menu reacting to a certain touch interactions.
+ *
+ * @const {number}
+ * @private
+ */
+ListContainer.CONTEXT_MENU_ALLOWED_DURATION_MSEC_ = 10;
+
 ListContainer.prototype = /** @struct */ {
   /**
    * @return {!FileTable|!FileGrid}
@@ -260,9 +274,13 @@ ListContainer.prototype.disableContextMenuByLongTap_ = function() {
       // contextmenu event will be sent right after touchend.
       setTimeout(function() {
         this.allowContextMenuByTouch_ = false;
-      }.bind(this));
+      }.bind(this), ListContainer.CONTEXT_MENU_ALLOWED_DURATION_MSEC_);
     }
   }.bind(this));
+  this.element.addEventListener(
+      FileTableList.LONG_TAP_CONTEXT_MENU_EVENT_TYPE, function(e) {
+        this.allowContextMenuByTouch_ = true;
+      }.bind(this));
   this.element.addEventListener('contextmenu', function(e) {
     // Block context menu triggered by touch event unless it is right after
     // multi-touch.

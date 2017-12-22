@@ -18,12 +18,18 @@ function FileTableList() {
 }
 
 /**
+ * Custom event type for showing context menu by long tap.
+ * @const {string}
+ */
+FileTableList.LONG_TAP_CONTEXT_MENU_EVENT_TYPE = 'long_tap_context_menu';
+
+/**
  * Decorates TableList as FileTableList.
  * @param {!cr.ui.table.TableList} self A tabel list element.
  */
 FileTableList.decorate = function(self) {
   self.__proto__ = FileTableList.prototype;
-}
+};
 
 FileTableList.prototype.__proto__ = cr.ui.table.TableList.prototype;
 
@@ -267,6 +273,13 @@ filelist.handleTap = function(e, index, eventType) {
     return false;
   }
   if (index == -1) {
+    if (eventType == FileTapHandler.TapEvent.LONG_TAP) {
+      // contextmenu events after touch events are suppressed.
+      // (See ListContainer.disableContextMenuByLongTap_)
+      // This is the only exception we want to open context menu by long tap.
+      e.target.dispatchEvent(new CustomEvent(
+          FileTableList.LONG_TAP_CONTEXT_MENU_EVENT_TYPE, {bubbles: true}));
+    }
     return false;
   }
   var isTap = eventType == FileTapHandler.TapEvent.TAP ||
