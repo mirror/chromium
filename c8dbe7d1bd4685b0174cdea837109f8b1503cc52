@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e43d839_2a01d980",
+        "filename": "ios/chrome/app/application_delegate/app_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-22T22:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e01b3a04_878ac1dd",
+      "range": {
+        "startLine": 414,
+        "startChar": 14,
+        "endLine": 414,
+        "endChar": 25
+      },
+      "revId": "c8dbe7d1bd4685b0174cdea837109f8b1503cc52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "309daa9a_35590a1d",
         "filename": "ios/chrome/app/application_delegate/app_state_unittest.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "c8dbe7d1bd4685b0174cdea837109f8b1503cc52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca38145_a8858909",
+        "filename": "ios/chrome/app/application_delegate/app_state_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-22T22:51:57Z",
+      "side": 1,
+      "message": "I updated the test to use explicit mock instances, PTAL. (I had forgotten to verify the new mocks so I added those lines as well.)",
+      "parentUuid": "309daa9a_35590a1d",
+      "range": {
+        "startLine": 544,
+        "startChar": 34,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "c8dbe7d1bd4685b0174cdea837109f8b1503cc52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
