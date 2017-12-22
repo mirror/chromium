@@ -34,11 +34,14 @@ class BrowserUiInterface {
   virtual void SetLocationAccess(bool enabled) = 0;
   virtual void SetExitVrPromptEnabled(bool enabled,
                                       UiUnsupportedMode reason) = 0;
+  virtual void SetOmniboxEditingEnabled(bool enabled) = 0;
+  virtual void SetVoiceSearchEnabled(bool enabled) = 0;
   virtual void SetSpeechRecognitionEnabled(bool enabled) = 0;
   virtual void SetRecognitionResult(const base::string16& result) = 0;
   virtual void OnSpeechRecognitionStateChanged(int new_state) = 0;
   virtual void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) = 0;
+  virtual void OnNavigated() = 0;
 
   // Tab handling.
   virtual void AppendToTabList(bool incognito,

@@ -69,6 +69,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
                             vr::UiUnsupportedMode reason) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
+  void SetOmniboxEditingActive(bool active) override;
   void SetVoiceSearchActive(bool active) override;
   void StartAutocomplete(const base::string16& string) override;
   void StopAutocomplete() override;
@@ -89,11 +90,14 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetLocationAccess(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
+  void SetOmniboxEditingEnabled(bool enabled) override;
+  void SetVoiceSearchEnabled(bool enabled) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
   void SetOmniboxSuggestions(
       std::unique_ptr<vr::OmniboxSuggestions> result) override;
+  void OnNavigated() override;
 
  protected:
   void Init() override;

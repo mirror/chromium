@@ -188,6 +188,7 @@ class VrShell : device::GvrGamepadDataProvider,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice);
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds);
+  void SetOmniboxEditingActive(bool active);
   void SetVoiceSearchActive(bool active);
   void StartAutocomplete(const base::string16& string);
   void StopAutocomplete();

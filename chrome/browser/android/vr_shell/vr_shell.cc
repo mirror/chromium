@@ -301,6 +301,7 @@ void VrShell::Navigate(GURL url) {
   Java_VrShellImpl_loadUrl(
       env, j_vr_shell_,
       base::android::ConvertUTF8ToJavaString(env, url.spec()));
+  ui_->OnNavigated();
 }
 
 void VrShell::NavigateBack() {
@@ -765,6 +766,10 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   compositor_->SetDeferCommits(false);
 }
 
+void VrShell::SetOmniboxEditingActive(bool active) {
+  ui_->SetOmniboxEditingEnabled(active);
+}
+
 void VrShell::SetVoiceSearchActive(bool active) {
   if (!active && !speech_recognizer_)
     return;
@@ -781,6 +786,7 @@ void VrShell::SetVoiceSearchActive(bool active) {
     speech_recognizer_.reset(new vr::SpeechRecognizer(
         this, ui_, profile->GetRequestContext(), profile_locale));
   }
+  ui_->SetVoiceSearchEnabled(active);
   if (active) {
     speech_recognizer_->Start();
     if (metrics_helper_)

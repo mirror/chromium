@@ -188,6 +188,13 @@ void VrGLThread::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
                             weak_vr_shell_, bounds));
 }
 
+void VrGLThread::SetOmniboxEditingActive(bool active) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VrShell::SetOmniboxEditingActive,
+                                weak_vr_shell_, active));
+}
+
 void VrGLThread::SetVoiceSearchActive(bool active) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -308,6 +315,21 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
                             browser_ui_, enabled, reason));
 }
 
+void VrGLThread::SetOmniboxEditingEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&vr::BrowserUiInterface::SetOmniboxEditingEnabled,
+                     browser_ui_, enabled));
+}
+
+void VrGLThread::SetVoiceSearchEnabled(bool enabled) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&vr::BrowserUiInterface::SetVoiceSearchEnabled,
+                                browser_ui_, enabled));
+}
+
 void VrGLThread::SetSpeechRecognitionEnabled(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
@@ -337,6 +359,13 @@ void VrGLThread::SetOmniboxSuggestions(
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetOmniboxSuggestions,
                             browser_ui_, base::Passed(std::move(suggestions))));
+}
+
+void VrGLThread::OnNavigated() {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&vr::BrowserUiInterface::OnNavigated, browser_ui_));
 }
 
 bool VrGLThread::OnMainThread() const {

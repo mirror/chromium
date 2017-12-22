@@ -83,11 +83,14 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetBluetoothConnected(bool enabled) override;
   void SetLocationAccess(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
+  void SetOmniboxEditingEnabled(bool enabled) override;
+  void SetVoiceSearchEnabled(bool enabled) override;
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void SetRecognitionResult(const base::string16& result) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
   void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) override;
+  void OnNavigated() override;
 
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,

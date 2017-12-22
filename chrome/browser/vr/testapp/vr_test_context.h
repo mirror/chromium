@@ -47,6 +47,7 @@ class VrTestContext : public vr::UiBrowserInterface {
   void OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
                             vr::UiUnsupportedMode reason) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
+  void SetOmniboxEditingActive(bool active) override;
   void SetVoiceSearchActive(bool active) override;
   void StartAutocomplete(const base::string16& string) override;
   void StopAutocomplete() override;

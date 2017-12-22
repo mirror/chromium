@@ -27,6 +27,7 @@ class UiBrowserInterface {
   virtual void OnExitVrPromptResult(ExitVrPromptChoice choice,
                                     UiUnsupportedMode reason) = 0;
   virtual void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) = 0;
+  virtual void SetOmniboxEditingActive(bool active) = 0;
   virtual void SetVoiceSearchActive(bool active) = 0;
   virtual void StartAutocomplete(const base::string16& string) = 0;
   virtual void StopAutocomplete() = 0;
