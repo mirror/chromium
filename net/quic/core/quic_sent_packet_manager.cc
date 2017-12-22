@@ -131,6 +131,11 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
   if (config.HasClientSentConnectionOption(kNTLP, perspective_)) {
     max_tail_loss_probes_ = 0;
   }
+  if (GetQuicReloadableFlag(quic_one_tlp) &&
+      config.HasClientSentConnectionOption(k1TLP, perspective_)) {
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_one_tlp, 1, 2);
+    max_tail_loss_probes_ = 1;
+  }
   if (config.HasClientSentConnectionOption(kTLPR, perspective_)) {
     enable_half_rtt_tail_loss_probe_ = true;
   }

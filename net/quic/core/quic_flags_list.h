@@ -155,3 +155,7 @@ QUIC_FLAG(bool,
 
 // If true, limit quic stream length to be below 2^62.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_stream_too_long, false)
+
+// When true, enables the 1TLP connection option to configure QUIC to send one
+// TLP instead of 2.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_one_tlp, false)

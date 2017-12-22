@@ -21,7 +21,7 @@ namespace {
 const QuicByteCount kMaxSegmentSize = kDefaultTCPMSS;
 // The minimum CWND to ensure delayed acks don't reduce bandwidth measurements.
 // Does not inflate the pacing rate.
-const QuicByteCount kMinimumCongestionWindow = 4 * kMaxSegmentSize;
+const QuicByteCount kDefaultMinimumCongestionWindow = 4 * kMaxSegmentSize;
 
 // The gain used for the slow start, equal to 2/ln(2).
 const float kHighGain = 2.885f;
@@ -99,6 +99,7 @@ BbrSender::BbrSender(const RttStats* rtt_stats,
       initial_congestion_window_(initial_tcp_congestion_window *
                                  kDefaultTCPMSS),
       max_congestion_window_(max_tcp_congestion_window * kDefaultTCPMSS),
+      min_congestion_window_(kDefaultMinimumCongestionWindow),
       pacing_rate_(QuicBandwidth::Zero()),
       pacing_gain_(1),
       congestion_window_gain_(1),
@@ -256,6 +257,11 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
     QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_less_probe_rtt, 3, 3);
     probe_rtt_disabled_if_app_limited_ = true;
   }
+  if (GetQuicReloadableFlag(quic_one_tlp) &&
+      config.HasClientRequestedIndependentOption(kMIN1, perspective)) {
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_one_tlp, 2, 2);
+    min_congestion_window_ = kMaxSegmentSize;
+  }
 }
 
 void BbrSender::AdjustNetworkParameters(QuicBandwidth bandwidth,
@@ -353,14 +359,14 @@ QuicByteCount BbrSender::GetTargetCongestionWindow(float gain) const {
     congestion_window = gain * initial_congestion_window_;
   }
 
-  return std::max(congestion_window, kMinimumCongestionWindow);
+  return std::max(congestion_window, min_congestion_window_);
 }
 
 QuicByteCount BbrSender::ProbeRttCongestionWindow() const {
   if (probe_rtt_based_on_bdp_) {
     return GetTargetCongestionWindow(kModerateProbeRttMultiplier);
   }
-  return kMinimumCongestionWindow;
+  return min_congestion_window_;
 }
 
 void BbrSender::EnterStartupMode() {
@@ -729,7 +735,7 @@ void BbrSender::CalculateCongestionWindow(QuicByteCount bytes_acked) {
   }
 
   // Enforce the limits on the congestion window.
-  congestion_window_ = std::max(congestion_window_, kMinimumCongestionWindow);
+  congestion_window_ = std::max(congestion_window_, min_congestion_window_);
   congestion_window_ = std::min(congestion_window_, max_congestion_window_);
 }
 
@@ -746,7 +752,7 @@ void BbrSender::CalculateRecoveryWindow(QuicByteCount bytes_acked,
   // Set up the initial recovery window.
   if (recovery_window_ == 0) {
     recovery_window_ = unacked_packets_->bytes_in_flight() + bytes_acked;
-    recovery_window_ = std::max(kMinimumCongestionWindow, recovery_window_);
+    recovery_window_ = std::max(min_congestion_window_, recovery_window_);
     return;
   }
 
@@ -769,7 +775,7 @@ void BbrSender::CalculateRecoveryWindow(QuicByteCount bytes_acked,
   // |bytes_acked| in response.
   recovery_window_ = std::max(
       recovery_window_, unacked_packets_->bytes_in_flight() + bytes_acked);
-  recovery_window_ = std::max(kMinimumCongestionWindow, recovery_window_);
+  recovery_window_ = std::max(min_congestion_window_, recovery_window_);
 }
 
 std::string BbrSender::GetDebugState() const {

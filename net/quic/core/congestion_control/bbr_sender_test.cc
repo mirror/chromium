@@ -1102,5 +1102,36 @@ TEST_F(BbrSenderTest, ResumeConnectionState) {
   DriveOutOfStartup();
 }
 
+// Test with a min CWND of 1 instead of 4 packets.
+TEST_F(BbrSenderTest, ProbeRTTMinCWND1) {
+  SetQuicReloadableFlag(quic_one_tlp, true);
+  CreateDefaultSetup();
+  SetConnectionOption(kMIN1);
+  DriveOutOfStartup();
+
+  // We have no intention of ever finishing this transfer.
+  bbr_sender_.AddBytesToTransfer(100 * 1024 * 1024);
+
+  // Wait until the connection enters PROBE_RTT.
+  const QuicTime::Delta timeout = QuicTime::Delta::FromSeconds(12);
+  bool simulator_result = simulator_.RunUntilOrTimeout(
+      [this]() {
+        return sender_->ExportDebugState().mode == BbrSender::PROBE_RTT;
+      },
+      timeout);
+  ASSERT_TRUE(simulator_result);
+  ASSERT_EQ(BbrSender::PROBE_RTT, sender_->ExportDebugState().mode);
+  // The PROBE_RTT CWND should be 1 if the min CWND is 1.
+  EXPECT_EQ(kDefaultTCPMSS, sender_->GetCongestionWindow());
+
+  // Exit PROBE_RTT.
+  const QuicTime probe_rtt_start = clock_->Now();
+  const QuicTime::Delta time_to_exit_probe_rtt =
+      kTestRtt + QuicTime::Delta::FromMilliseconds(200);
+  simulator_.RunFor(1.5 * time_to_exit_probe_rtt);
+  EXPECT_EQ(BbrSender::PROBE_BW, sender_->ExportDebugState().mode);
+  EXPECT_GE(sender_->ExportDebugState().min_rtt_timestamp, probe_rtt_start);
+}
+
 }  // namespace test
 }  // namespace net
