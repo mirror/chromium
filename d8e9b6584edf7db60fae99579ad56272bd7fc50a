@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d16b203e_f96b672b",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-22T21:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7eafeb_62e3b298",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce71330f_1930dec3",
         "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6abf6baa_1ab1930e",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-22T21:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce71330f_1930dec3",
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f1bc07_68c6f1a3",
         "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-22T19:28:32Z",
       "side": 1,
       "message": "We need to document these values somehow, or point to an enum somewhere in the C++ side. They look like magic constants.",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfb6272_399666c1",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-22T21:46:10Z",
+      "side": 1,
+      "message": "This is not related to the C++ side. Just how many calls to onInputChanged_ are expected to result from the fit to page change. Tried to make the comment more clear.",
+      "parentUuid": "e4f1bc07_68c6f1a3",
       "range": {
         "startLine": 46,
         "startChar": 46,
