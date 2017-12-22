@@ -37,6 +37,27 @@ constexpr int kPixelPerSec2K = 1920 * 1080 * 30;  // 1080p 30fps.
 // can feel "janky" to the user.
 constexpr double kMinRemotingMediaDurationInSec = 60;
 
+StopTrigger GetStopTrigger(mojom::RemotingStopReason reason) {
+  switch (reason) {
+    case mojom::RemotingStopReason::ROUTE_TERMINATED:
+      return ROUTE_TERMINATED;
+    case mojom::RemotingStopReason::LOCAL_PLAYBACK:
+      return UNKNOWN_STOP_TRIGGER;
+    case mojom::RemotingStopReason::SOURCE_GONE:
+      return MEDIA_ELEMENT_DESTROYED;
+    case mojom::RemotingStopReason::MESSAGE_SEND_FAILED:
+      return MESSAGE_SEND_FAILED;
+    case mojom::RemotingStopReason::DATA_SEND_FAILED:
+      return DATA_SEND_FAILED;
+    case mojom::RemotingStopReason::UNEXPECTED_FAILURE:
+      return UNEXPECTED_FAILURE;
+    case mojom::RemotingStopReason::SERVICE_GONE:
+      return SERVICE_GONE;
+    case mojom::RemotingStopReason::USER_DISABLED:
+      return USER_DISABLED;
+  }
+}
+
 }  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
@@ -72,7 +93,8 @@ void RendererController::OnStarted(bool success) {
 
 void RendererController::OnSessionStateChanged() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  UpdateFromSessionState(SINK_AVAILABLE, ROUTE_TERMINATED);
+  UpdateFromSessionState(SINK_AVAILABLE,
+                         GetStopTrigger(session_->GetLastStopReason()));
 }
 
 void RendererController::UpdateFromSessionState(StartTrigger start_trigger,

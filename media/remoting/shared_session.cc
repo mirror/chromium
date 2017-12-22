@@ -88,19 +88,11 @@ void SharedSession::OnSinkAvailable(mojom::RemotingSinkMetadataPtr metadata) {
 void SharedSession::OnSinkGone() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  // This will do nothing on the current session, but prevent the clients to
+  // start any future remoting sessions.
   sink_metadata_ = mojom::RemotingSinkMetadata();
-
-  if (state_ == SESSION_PERMANENTLY_STOPPED)
-    return;
-  if (state_ == SESSION_CAN_START) {
-    UpdateAndNotifyState(SESSION_UNAVAILABLE);
-    return;
-  }
-  if (state_ == SESSION_STARTED || state_ == SESSION_STARTING) {
-    VLOG(1) << "Sink is gone in a remoting session.";
-    // Remoting is being stopped by Remoter.
-    UpdateAndNotifyState(SESSION_STOPPING);
-  }
+  if (state_ == SESSION_CAN_START)
+    state_ = SESSION_UNAVAILABLE;
 }
 
 void SharedSession::OnStarted() {
@@ -133,8 +125,10 @@ void SharedSession::OnStopped(mojom::RemotingStopReason reason) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   VLOG(1) << "Remoting stopped: " << reason;
+  stop_reason_ = reason;
   if (state_ == SESSION_PERMANENTLY_STOPPED)
     return;
+  // This call will stop the current remoting session if started.
   UpdateAndNotifyState(SESSION_UNAVAILABLE);
 }
 
@@ -270,6 +264,10 @@ void SharedSession::EstimateTransmissionCapacity(
     mojom::Remoter::EstimateTransmissionCapacityCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   remoter_->EstimateTransmissionCapacity(std::move(callback));
+}
+
+mojom::RemotingStopReason SharedSession::GetLastStopReason() const {
+  return stop_reason_;
 }
 
 }  // namespace remoting
