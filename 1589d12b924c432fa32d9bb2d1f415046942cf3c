@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0afa8479_8568aecb",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T03:17:25Z",
+      "side": 1,
+      "message": "I only see one more occurrence at line 197. Either way, both are allowed, and both can be mixed in the same file, so up to you.",
+      "parentUuid": "d5901c0e_939a8a3a",
+      "range": {
+        "startLine": 264,
+        "startChar": 25,
+        "endLine": 264,
+        "endChar": 34
+      },
+      "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3c0bd6_1746eb4c",
         "filename": "chrome/browser/resources/md_extensions/toolbar.js",
         "patchSetId": 6

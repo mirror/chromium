@@ -22,6 +22,30 @@
       "revId": "51b20044a140d806ead6274d689911fe59876cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57529d6b_a75e2491",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T03:17:25Z",
+      "side": 1,
+      "message": "I believe you can only change this particular instance to BindOnce, and the PRESUBMIT will be satisfied. You don\u0027t need to change other occurrences of Bind().",
+      "parentUuid": "61af5512_8359d0b7",
+      "range": {
+        "startLine": 590,
+        "startChar": 14,
+        "endLine": 590,
+        "endChar": 18
+      },
+      "revId": "51b20044a140d806ead6274d689911fe59876cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
