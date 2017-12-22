@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f29ee96d_f69c7ac0",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T00:16:36Z",
+      "side": 1,
+      "message": "Shall we add ConstructElement here just in case?\n\nIt\u0027s very unlikely but it\u0027s theoretically possible that EmptyValue() is specialized to have a valid pointer.",
+      "revId": "0ecd9ed4c838356b273a1ed907c931751a9780fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
