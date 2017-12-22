@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "779a5c46_03b14b2e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "very optional: I think you\u0027d want to set this to `self.layer.contentsScale`, but then it should be set in -viewDidChangeBackingProperties: to handle moving between screens with different scale factors. I guess it\u0027s up to you how far you want to take it — I will say that NSImageView implements this all, so I might use it instead of a standalone layer.",
+      "range": {
+        "startLine": 48,
+        "startChar": 43,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "2201045131162d250cb930395f739a3e2f8d454d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1c422902_6eac5cce",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "It feels unusual to me for subclasses to have direct access to ivars. At least, I never see it in Apple code. Instead, I\u0027m used to seeing a mix of properties (which can be used without subclassing, and which lets the class know when the value changes), and overridable methods (like arcLength, here).\n\nYou\u0027ve been doing ObjC for significantly longer than me, so it\u0027s totally up to you, this just surprised me I guess.",
+      "parentUuid": "b8601acd_98667bee",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04128e1a_2dadd174",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 11
@@ -307,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "e4f4ec16_ad185925",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "Avi: Does constexpr resolve this? I think it might, but I\u0027m not 100% sure.",
+      "parentUuid": "12d5c565_bd5ad6ec",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d7eec66_f23ad9d9",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -336,6 +378,24 @@
       "side": 1,
       "message": "I prefer to set bounds and position because frame is derived from them (and anchorPoint). I\u0027ve found that setting the frame can sometimes result in bounds, etc. properties with tiny fractional components (because they get reverse computed from the frame).",
       "parentUuid": "2d7eec66_f23ad9d9",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c94d136_d3a2a95f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09bad9ca_b76d3ce1",
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -418,6 +478,24 @@
       "side": 1,
       "message": "Is there an advantage to doing it this way, or a reason this more modern way is preferred?",
       "parentUuid": "75325e5f_4fc359bb",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3d52c2_66c6d1df",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "drawingHandler runs lazily on a background thread when the image is displayed, and gets run again if the scale factor, color space, etc. in which it\u0027s displayed change. I think those are all of the advantages: https://developer.apple.com/documentation/appkit/nsimage/1519860-imagewithsize",
+      "parentUuid": "2517456e_9a0e5bd4",
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -634,6 +712,30 @@
       "side": 1,
       "message": "You\u0027re talking about how I\u0027m creating a group that contains a single animation?\n\nI\u0027m trying to think of ways to clean this up. I was considering setters (e.g. setSpinnerAnimation:) but there would need to be a variant that takes an animation group, and also need to pass the duration. Any suggestions? I didn\u0027t completely follow your ivar idea.",
       "parentUuid": "82a3b8b4_27ce4073",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 41
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220f6619_f6cee3d4",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-22T20:06:40Z",
+      "side": 1,
+      "message": "(All of the below is optional, because the way it works makes more sense now that I understand it better.)\n\nI might approach it by replacing |-initializeAnimation| with something like this:\n\n    - (NSArray\u003cCAAnimation*\u003e*)createAnimations;\n\n|SpinnerView| would just add all of the returned animations to the layer and use |removeAllAnimations| to clear them, instead of names.\n\nThe two-layers situation makes that a little bit tricky. You could have two versions (|createPathAnimations| and |createRotationAnimations|), but I\u0027m pretty sure that both rotation and the path animation could also be done with a single layer.",
+      "parentUuid": "cab39a83_11c7ba03",
       "range": {
         "startLine": 217,
         "startChar": 2,
