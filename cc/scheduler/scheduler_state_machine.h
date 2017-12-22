@@ -308,6 +308,9 @@ class CC_EXPORT SchedulerStateMachine {
     return main_thread_failed_to_respond_last_deadline_;
   }
 
+  void ClearHistoryOnNavigation();
+  int commit_count() const { return commit_count_; }
+
  protected:
   bool BeginFrameRequiredForAction() const;
   bool BeginFrameNeededForVideo() const;
