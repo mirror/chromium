@@ -42,6 +42,7 @@
 .project
 .pydevproject
 .checkstyle
+.tags
 cscope.*
 GPATH
 GRTAGS
