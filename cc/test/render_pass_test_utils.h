@@ -85,6 +85,12 @@ void AddOneOfEveryQuadTypeInDisplayResourceProvider(
     viz::RenderPassId child_pass_id,
     gpu::SyncToken* sync_token_for_mailbox_texture);
 
+// Transfer resources to the parent and return the child to parent map.
+const ResourceProvider::ResourceIdMap& SendResourceAndGetChildToParentMap(
+    const ResourceProvider::ResourceIdArray& resource_ids,
+    DisplayResourceProvider* resource_provider,
+    LayerTreeResourceProvider* child_resource_provider);
+
 }  // namespace cc
 
 #endif  // CC_TEST_RENDER_PASS_TEST_UTILS_H_
