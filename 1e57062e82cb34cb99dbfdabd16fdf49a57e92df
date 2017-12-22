@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ccaca7_187d8234",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-22T16:18:00Z",
+      "side": 1,
+      "message": "So rather than just setting a boolean, I think it\u0027d be nice to ensure that the newly created NavigationSimulator is properly initialized and set to the current state of the pending navigation. In particular, it should get the right NavigationHandle if it has already been created for the navigation.",
+      "revId": "1e57062e82cb34cb99dbfdabd16fdf49a57e92df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
