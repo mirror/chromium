@@ -14,18 +14,23 @@
 namespace blink {
 
 struct WebIDBValue {
-  WebIDBValue() = default;
-  explicit WebIDBValue(const WebData& data) : data(data) {}
   WebIDBValue(const WebData& data, const WebVector<WebBlobInfo>& blob_info)
-      : data(data), web_blob_info(blob_info) {}
+      : data(data),
+        web_blob_info(blob_info),
+        primary_key(WebIDBKey::CreateNull()) {}
   WebIDBValue(const WebData& data,
               const WebVector<WebBlobInfo>& blob_info,
-              const WebIDBKey& primary_key,
+              WebIDBKey primary_key,
               const WebIDBKeyPath& key_path)
       : data(data),
         web_blob_info(blob_info),
-        primary_key(primary_key),
+        primary_key(std::move(primary_key)),
         key_path(key_path) {}
+
+  WebIDBValue() noexcept : primary_key(WebIDBKey::CreateNull()) {}
+
+  WebIDBValue(WebIDBValue&&) noexcept = default;
+  WebIDBValue& operator=(WebIDBValue&&) noexcept = default;
 
   // The serialized JavaScript bits (ignoring blob data) for this IDB Value.
   // Required value.
@@ -39,6 +44,13 @@ struct WebIDBValue {
   // [[data]] object before calling the event handler.
   WebIDBKey primary_key;
   WebIDBKeyPath key_path;
+
+ private:
+  // WebIDBValue has to be move-only, because WebIDBKey is move-only. Making the
+  // restriction explicit results in slightly better compilation error messages
+  // in code that attempts copying.
+  WebIDBValue(WebIDBValue&) = delete;
+  WebIDBValue& operator=(WebIDBValue&) = delete;
 };
 
 }  // namespace blink
