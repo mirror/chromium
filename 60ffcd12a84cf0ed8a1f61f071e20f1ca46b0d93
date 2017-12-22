@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb9dd1b3_21ba9aec",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f8fd66_99127373",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59afb416_29106f3e",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3128f72_f65f8555",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Correct; we\u0027ll be removing the image building step from the runners, so the method will be removed from runner_common.py at that time.",
+      "parentUuid": "59afb416_29106f3e",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "5f12aaa8_e6093cb4",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37bb49fb_241972fb",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad0e91ec_c677c09f",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "The GN helper py scripts in //build/ use \"Main\", but I think it\u0027s strange, too. Done.",
+      "parentUuid": "b492290f_1e1145a4",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 8
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e12b7f4_c43c32bd",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07b5dc3_ca8fc7ba",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e12b7f4_c43c32bd",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6e8b9eda_28f4db17",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5842598b_3a165182",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 103
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b26c05d_8df93ad2",
         "filename": "build/config/fuchsia/package.gni",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec445f2_2ef0a698",
+        "filename": "build/config/fuchsia/package.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b26c05d_8df93ad2",
+      "range": {
+        "startLine": 55,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 66
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "35826de4_1b9a564c",
+        "filename": "testing/test.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "It doesn\u0027t. I had it set to public_deps while debugging an unrelated ninja name collision, but I didn\u0027t set it back.\n\nDone.",
+      "parentUuid": "1e278332_03e0fe68",
+      "range": {
+        "startLine": 236,
+        "startChar": 6,
+        "endLine": 236,
+        "endChar": 17
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2467b2a0_43212cf1",
         "filename": "testing/test.gni",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8297da_c15938b2",
+        "filename": "testing/test.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2467b2a0_43212cf1",
+      "range": {
+        "startLine": 245,
+        "startChar": 6,
+        "endLine": 245,
+        "endChar": 17
+      },
+      "revId": "60ffcd12a84cf0ed8a1f61f071e20f1ca46b0d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
