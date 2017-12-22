@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7eafeb_62e3b298",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T19:28:32Z",
+      "side": 1,
+      "message": "Is this needed? Per the docs at [1] this class is meant to be used in the outer label/wrapper.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/new/checkbox_radio_css.html?l\u003d68",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce71330f_1930dec3",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T19:28:32Z",
+      "side": 1,
+      "message": "Let\u0027s use a local var as follows\nconst fitToPage \u003d this.getSetting(\u0027fitToPage\u0027);\n\nTo avoid calling getSetting() multiple times.",
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f1bc07_68c6f1a3",
+        "filename": "chrome/browser/resources/print_preview/new/scaling_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-22T19:28:32Z",
+      "side": 1,
+      "message": "We need to document these values somehow, or point to an enum somewhere in the C++ side. They look like magic constants.",
+      "range": {
+        "startLine": 46,
+        "startChar": 46,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "d8e9b6584edf7db60fae99579ad56272bd7fc50a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
