@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a656886_17f9db76",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T23:08:43Z",
+      "side": 1,
+      "message": "nit: the forwarding semantics aren\u0027t important from the caller\u0027s POV; what\u0027s important is that this is specifying the SSH listening port.",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7dffd5_0b5bdaf1",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T23:08:43Z",
+      "side": 1,
+      "message": "never used?",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19497f39_3e15bef7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T23:08:43Z",
+      "side": 1,
+      "message": "never used?",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251afecc_aae448c9",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T23:08:43Z",
+      "side": 1,
+      "message": "*add an assert to check that forward_ssh_port isn\u0027t used with use_device, since it\u0027s qemu specific?\n\n* use forward_ssh_port\u003dNone for nullability instead of requiring that callers specify 0?",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1678544_3fd1245a",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-12-22T23:08:43Z",
+      "side": 1,
+      "message": "I think it\u0027d be cleaner to consolidate the architecture-specific code inside the conditionals below. You can save the virtual device driver in a variable and then populate the \"-device\" args afterward.",
+      "revId": "b7434bda6913f1362c503eeab33269b13f41ceb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
