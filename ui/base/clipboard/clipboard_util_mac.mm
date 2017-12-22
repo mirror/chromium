@@ -8,7 +8,7 @@
 #include "base/mac/scoped_cftyperef.h"
 
 namespace {
-NSString* const kWebURLsWithTitlesPboardType = @"WebURLsWithTitlesPboardType";
+NSString* const kWebURLsWithTitles = @"WebURLsWithTitlesPboardType";
 NSString* const kPublicUrl = @"public.url";
 NSString* const kPublicUrlName = @"public.url-name";
 
@@ -51,7 +51,7 @@ base::scoped_nsobject<NSPasteboardItem> ClipboardUtil::PasteboardItemFromUrl(
   // Set Safari's URL + title arrays Pboard type.
   NSArray* urlsAndTitles = @[ @[ urlString ], @[ title ] ];
   [item setPropertyList:urlsAndTitles
-                forType:UTIFromPboardType(kWebURLsWithTitlesPboardType)];
+                forType:UTIFromPboardType(kWebURLsWithTitles)];
 
   // Set NSURLPboardType. The format of the property list is divined from
   // Webkit's function PlatformPasteboard::setStringForType.
@@ -80,7 +80,7 @@ base::scoped_nsobject<NSPasteboardItem> ClipboardUtil::PasteboardItemFromUrls(
   // Set Safari's URL + title arrays Pboard type.
   NSArray* urlsAndTitles = @[ urls, titles ];
   [item setPropertyList:urlsAndTitles
-                forType:UTIFromPboardType(kWebURLsWithTitlesPboardType)];
+                forType:UTIFromPboardType(kWebURLsWithTitles)];
 
   return item;
 }
@@ -110,7 +110,7 @@ NSString* ClipboardUtil::UTIForPasteboardType(NSString* type) {
 
 // static
 NSString* ClipboardUtil::UTIForWebURLsAndTitles() {
-  return UTIFromPboardType(kWebURLsWithTitlesPboardType);
+  return UTIFromPboardType(kWebURLsWithTitles);
 }
 
 // static
@@ -133,8 +133,8 @@ void ClipboardUtil::AddDataToPasteboard(NSPasteboard* pboard,
 bool ClipboardUtil::URLsAndTitlesFromPasteboard(NSPasteboard* pboard,
                                                 NSArray** urls,
                                                 NSArray** titles) {
-  NSArray* bookmarkPairs = base::mac::ObjCCast<NSArray>([pboard
-      propertyListForType:UTIFromPboardType(kWebURLsWithTitlesPboardType)]);
+  NSArray* bookmarkPairs = base::mac::ObjCCast<NSArray>(
+      [pboard propertyListForType:UTIFromPboardType(kWebURLsWithTitles)]);
   if (!bookmarkPairs)
     return false;
 
