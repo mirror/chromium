@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "dc6837e9_20aa4091",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-22T17:11:32Z",
+      "side": 1,
+      "message": "Sorry, forgot to reply. I think it\u0027s ok to leave underscores if they are already common in Chrome tests. Otherwise underscore is technically a Style Guide violation, so as a reviewer I would not want to be responsible for introducing this \"violation\" practice.",
+      "parentUuid": "779620bf_20dfd458",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75bd87c_f73c3b7c",
         "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.h",
         "patchSetId": 2
