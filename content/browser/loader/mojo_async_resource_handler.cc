@@ -20,6 +20,7 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_scheduler.h"
 #include "content/public/browser/global_request_id.h"
+#include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/common/resource_response.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/bindings/message.h"
@@ -101,6 +102,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      resource_type_(resource_type),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
       weak_factory_(this) {
@@ -111,7 +113,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
   binding_.set_connection_error_handler(base::BindOnce(
       &MojoAsyncResourceHandler::Cancel, base::Unretained(this)));
 
-  if (IsResourceTypeFrame(resource_type)) {
+  if (IsResourceTypeFrame(resource_type_)) {
     GetRequestInfo()->set_on_transfer(base::Bind(
         &MojoAsyncResourceHandler::OnTransfer, weak_factory_.GetWeakPtr()));
   } else {
@@ -182,7 +184,11 @@ void MojoAsyncResourceHandler::OnResponseStarted(
                                      response->head.download_file_path);
   }
 
-  url_loader_client_->OnReceiveResponse(response->head, base::nullopt,
+  base::Optional<net::SSLInfo> ssl_info;
+  if (IsResourceTypeFrame(resource_type_))
+    ssl_info = request()->ssl_info();
+
+  url_loader_client_->OnReceiveResponse(response->head, std::move(ssl_info),
                                         std::move(downloaded_file_ptr));
 
   net::IOBufferWithSize* metadata = GetResponseMetadata(request());
@@ -447,6 +453,9 @@ void MojoAsyncResourceHandler::OnResponseCompleted(
   loader_status.encoded_data_length = request()->GetTotalReceivedBytes();
   loader_status.encoded_body_length = request()->GetRawBodyBytes();
   loader_status.decoded_body_length = total_written_bytes_;
+
+  if (IsResourceTypeFrame(resource_type_))
+    loader_status.ssl_info = request()->ssl_info();
 
   url_loader_client_->OnComplete(loader_status);
   controller->Resume();
