@@ -614,7 +614,7 @@ def _HandleOutputFromProcess(process, symbols_mapping):
 
 
 def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
-               test_launcher_summary_output):
+               test_launcher_summary_output=None, forward_ssh_port=None):
   if not kernel_path:
     # TODO(wez): Parameterize this on the |target_cpu| from GN.
     kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
@@ -627,6 +627,16 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     kernel_args.append('zircon.autorun.system=/boot/bin/sh+/system/cr_autorun')
 
   if use_device:
+    if test_launcher_summary_output:
+      sys.stderr.print("--test-launcher-summary-output when running " +
+                       "on a device.\n")
+      return 1
+
+    if forward_ssh_port:
+      sys.stderr.print("--forward-ssh-port is not supported when running " +
+                       "on a device.\n")
+      return 1
+
     # Deploy the boot image to the device.
     bootserver_path = os.path.join(SDK_ROOT, 'tools', 'bootserver')
     bootserver_command = [bootserver_path, '-1', kernel_path,
@@ -641,7 +651,30 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     qemu_path = os.path.join(
         SDK_ROOT, 'qemu', 'bin',
         'qemu-system-' + _TargetCpuToArch(bootfs_data.target_cpu))
+
+    # Configure the machine & CPU to emulate, based on the target architecture.
+    # Enable lightweight virtualization (KVM) if the host and guest OS run on
+    # the same architecture.
+    if bootfs_data.target_cpu == 'arm64':
+      machine_type = 'virt',
+      cpu_type = 'cortex-a53',
+      netdev_type = 'virtio-net-pci'
+      enable_kvm = platform.machine() == 'aarch64'
+    else:
+      machine_type =  'q35',
+      cpu_type = 'host,migratable=no',
+      netdev_type = 'e1000'
+      enable_kvm = platform.machine() == 'x86_64'
+
+    netdev_config = 'user,id=net0,net=%s,dhcpstart=%s,host=%s' % \
+            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS)
+    if forward_ssh_port:
+      netdev_config += ",hostfwd=tcp::%s-:22" % forward_ssh_port
+
     qemu_command = [qemu_path,
+        '-machine', machine_type,
+        '-cpu', cpu_type,
+
         '-m', '2048',
         '-nographic',
         '-kernel', kernel_path,
@@ -650,8 +683,8 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
 
         # Configure virtual network. It is used in the tests to connect to
         # testserver running on the host.
-        '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
-            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
+        '-netdev', netdev_config,
+        '-device', '%s,netdev=net0,mac=%s' % (netdev_type GUEST_MAC_ADDRESS),
 
         # Use stdio for the guest OS only; don't attach the QEMU interactive
         # monitor.
@@ -663,25 +696,8 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         '-append', 'TERM=dumb ' + ' '.join(kernel_args)
       ]
 
-    # Configure the machine & CPU to emulate, based on the target architecture.
-    # Enable lightweight virtualization (KVM) if the host and guest OS run on
-    # the same architecture.
-    if bootfs_data.target_cpu == 'arm64':
-      qemu_command.extend([
-          '-machine','virt',
-          '-cpu', 'cortex-a53',
-          '-device', 'virtio-net-pci,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
-      ])
-      if platform.machine() == 'aarch64':
-        qemu_command.append('-enable-kvm')
-    else:
-      qemu_command.extend([
-          '-machine', 'q35',
-          '-cpu', 'host,migratable=no',
-          '-device', 'e1000,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
-      ])
-      if platform.machine() == 'x86_64':
-        qemu_command.append('-enable-kvm')
+    if enable_kvm:
+      qemu_command.append('-enable-kvm')
 
     if test_launcher_summary_output:
       # Make and mount a 100M minfs formatted image that is used to copy the
