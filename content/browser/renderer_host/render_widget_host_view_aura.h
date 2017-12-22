@@ -475,7 +475,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnTextSelectionChanged(TextInputManager* text_input_mangager,
                               RenderWidgetHostViewBase* updated_view) override;
 
-  void OnBeginFrame(base::TimeTicks frame_time);
+  void OnBeginFrame();
 
   // Detaches |this| from the input method object.
   void DetachFromInputMethod();
