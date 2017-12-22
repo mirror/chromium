@@ -22,6 +22,30 @@
       "revId": "1d847f2d4f23f4f8bf80f3188d695468106dc37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddcefa6_f5cf231e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-22T09:35:37Z",
+      "side": 1,
+      "message": "For a client that is in one of Enabled groups, OnThrottlingStateChanged() is synchronously called on the observer registration to notify the initial state. So, it would be better to trace the same step even for the Disabled group.\n\nAlso, one another benefit to use kStopped as the initial value is that it should be robust against scheduler side change that could return kThrottled or kNotThrottled in the first notification for newly created frame.",
+      "parentUuid": "f5a2dce4_a6156c97",
+      "range": {
+        "startLine": 358,
+        "startChar": 8,
+        "endLine": 358,
+        "endChar": 59
+      },
+      "revId": "1d847f2d4f23f4f8bf80f3188d695468106dc37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
