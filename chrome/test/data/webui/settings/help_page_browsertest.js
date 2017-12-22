@@ -4,6 +4,9 @@
 
 /** @fileoverview Material Help page tests. */
 
+/** @const {string} Path to root from chrome/test/data/webui/settings/. */
+const ROOT_PATH = '../../../../../';
+
 GEN_INCLUDE(['settings_page_browsertest.js']);
 
 /**
@@ -31,7 +34,7 @@ SettingsHelpPageBrowserTest.prototype = {
 TEST_F('SettingsHelpPageBrowserTest', 'Load', function() {
   // Assign |self| to |this| instead of binding since 'this' in suite()
   // and test() will be a Mocha 'Suite' or 'Test' instance.
-  var self = this;
+  const self = this;
 
   // Register mocha tests.
   suite('Help page', function() {
