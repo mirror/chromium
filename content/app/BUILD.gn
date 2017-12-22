@@ -4,6 +4,7 @@
 
 import("//build/config/chrome_build.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//ppapi/features/features.gni")
 
 # Implements "content_main" given the defines and visibility. On Windows this
@@ -79,7 +80,7 @@ template("implement_content_app") {
   #
   # This will generate :content_main_runner_both, :content_main_runner_browser,
   # and :content_main_runner_child.
-  source_set(runner_target_name) {
+  jumbo_source_set(runner_target_name) {
     visibility = [ ":$main_target_name" ]
     check_includes = false
 
@@ -96,7 +97,7 @@ template("implement_content_app") {
     forward_variables_from(invoker, [ "defines" ])
   }
 
-  source_set(main_target_name) {
+  jumbo_source_set(main_target_name) {
     sources = [
       "content_service_manager_main_delegate.cc",
       "content_service_manager_main_delegate.h",

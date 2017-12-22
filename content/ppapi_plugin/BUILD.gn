@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//ppapi/features/features.gni")
 
 assert(enable_plugins, "PPAPI plugins must be enabled.")
@@ -20,7 +21,7 @@ group("ppapi_plugin") {
   }
 }
 
-source_set("ppapi_plugin_sources") {
+jumbo_source_set("ppapi_plugin_sources") {
   # Depend on via ":ppapi_plugin above.
   visibility = [
     ":ppapi_plugin",
