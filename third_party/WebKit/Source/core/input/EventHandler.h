@@ -197,6 +197,7 @@ class CORE_EXPORT EventHandler final
                                      const IntSize& touch_radius,
                                      IntRect& target_area,
                                      Node*& target_node);
+  void CachePointerEventAdjustResult(bool, uint32_t, FloatPoint);
 
   WebInputEventResult SendContextMenuEvent(
       const WebMouseEvent&,
@@ -311,7 +312,7 @@ class CORE_EXPORT EventHandler final
       const GestureEventWithHitTestResults&);
 
   bool ShouldApplyTouchAdjustment(const WebGestureEvent&) const;
-
+  bool ShouldUseTouchEventAdjustedResult(const WebGestureEvent&);
   bool IsSelectingLink(const HitTestResult&);
   bool ShouldShowIBeamForNode(const Node*, const HitTestResult&);
   bool ShouldShowResizeForNode(const Node*, const HitTestResult&);
@@ -413,6 +414,14 @@ class CORE_EXPORT EventHandler final
   // triggering |touchstart| event was canceled. This suppresses mouse event
   // firing for the current gesture sequence (i.e. until next GestureTapDown).
   bool suppress_mouse_events_from_gestures_;
+
+  // Set on GestureTapDown if unique_touch_event_id_ matches cached adjusted
+  // touchstart event id.
+  bool should_use_touch_event_adjusted_point_;
+
+  // Stored the last touch type primary pointer down adjustment result.
+  // This is used in gesture event hit test.
+  TouchAdjustmentResult pointerdown_adjusted_result_;
 
   // ShouldShowIBeamForNode's unit tests:
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnNothingDoesNotShowIBeam);
