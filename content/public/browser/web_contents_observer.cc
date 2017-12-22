@@ -41,6 +41,13 @@ void WebContentsObserver::Observe(WebContents* web_contents) {
   }
 }
 
+void WebContentsObserver::OnVisibilityChanged(Visibility visibility) {
+  if (visibility == Visibility::VISIBLE)
+    WasShown();
+  else if (visibility == Visibility::HIDDEN)
+    WasHidden();
+}
+
 bool WebContentsObserver::OnMessageReceived(
     const IPC::Message& message,
     RenderFrameHost* render_frame_host) {

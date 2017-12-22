@@ -94,12 +94,9 @@ class BrowserPluginGuest::EmbedderVisibilityObserver
   ~EmbedderVisibilityObserver() override {}
 
   // WebContentsObserver implementation.
-  void WasShown() override {
-    browser_plugin_guest_->EmbedderVisibilityChanged(true);
-  }
-
-  void WasHidden() override {
-    browser_plugin_guest_->EmbedderVisibilityChanged(false);
+  void OnVisibilityChanged(Visibility visibility) override {
+    browser_plugin_guest_->embedder_visibility_ = visibility;
+    browser_plugin_guest_->UpdateVisibility();
   }
 
  private:
@@ -120,7 +117,6 @@ BrowserPluginGuest::BrowserPluginGuest(bool has_render_view,
       mouse_locked_(false),
       pending_lock_request_(false),
       guest_visible_(false),
-      embedder_visible_(true),
       is_full_page_plugin_(false),
       has_render_view_(has_render_view),
       is_in_destruction_(false),
@@ -421,11 +417,6 @@ void BrowserPluginGuest::UpdateVisibility() {
 BrowserPluginGuestManager*
 BrowserPluginGuest::GetBrowserPluginGuestManager() const {
   return GetWebContents()->GetBrowserContext()->GetGuestManager();
-}
-
-void BrowserPluginGuest::EmbedderVisibilityChanged(bool visible) {
-  embedder_visible_ = visible;
-  UpdateVisibility();
 }
 
 void BrowserPluginGuest::PointerLockPermissionResponse(bool allow) {
@@ -1046,10 +1037,8 @@ void BrowserPluginGuest::OnSetVisibility(int browser_plugin_instance_id,
     return;
 
   guest_visible_ = visible;
-  if (embedder_visible_ && guest_visible_)
-    GetWebContents()->WasShown();
-  else
-    GetWebContents()->WasHidden();
+  GetWebContents()->OnVisibilityChanged(guest_visible_ ? embedder_visibility_
+                                                       : Visibility::HIDDEN);
 }
 
 void BrowserPluginGuest::OnUnlockMouse() {
