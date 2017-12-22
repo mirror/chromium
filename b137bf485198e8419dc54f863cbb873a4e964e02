@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c028e5e_2346964b",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T21:37:13Z",
+      "side": 1,
+      "message": "nit: can push_mode check this on its own so that we can just call push_mode(kModeWebVr) here and have Model::push_mode ignore redundant input?",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b98ec2e_d1e254bd",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T21:37:13Z",
+      "side": 1,
+      "message": "nit: can we if/DCHECK that we\u0027re in web_vr_enabled and then just call pop_mode? I don\u0027t feel strongly about this. Feel free to ignore.",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847b372c_d74a875d",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T21:37:13Z",
+      "side": 1,
+      "message": "I realize that this is not being impacted by your change, but could you please bind a std::pair and return both \"target opacity is 0\" and \"voice search enabled\". I don\u0027t think this binding will fire when the target opacity changes.",
+      "revId": "b137bf485198e8419dc54f863cbb873a4e964e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
