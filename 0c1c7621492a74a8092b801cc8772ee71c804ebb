@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "088ef7e7_a50e09e5",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T16:46:03Z",
+      "side": 1,
+      "message": "+1, for cases where we\u0027re just trying to talk to VrShellGl. In VrGLThread::ExitPresent I ricocheted through VrGLThread just to get back to some other code as well, but I put a TODO on this because VrGLThread shouldn\u0027t have been involved. If we\u0027re just passing through VrGLThread or VrShell because it\u0027s convenient, I\u0027d prefer vending other interfaces to UiSceneCreator so that, where appropriate, we have a hook back to thing we really want to talk to.",
+      "parentUuid": "57a9b5f9_fc06a5fa",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e5ad3dc_a39bab28",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -132,6 +150,24 @@
       "writtenOn": "2017-12-22T16:08:01Z",
       "side": 1,
       "message": "nitty thing:  Why not have a mode getter, so the get and set work the same way?  It\u0027s weird to be using a setter but not a getter...  not a big deal.  But I\u0027m wondering if it\u0027s worth just ditching the slightly-helpful getters.",
+      "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f968db_5a6af1dc",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-22T16:46:03Z",
+      "side": 1,
+      "message": "If we add an enter_mode(foo) or push_mode(foo) as Chris suggested, perhaps the model could avoid pushing redundant state (or DCHECK).",
+      "parentUuid": "eb3fd1cb_7611217b",
       "revId": "0c1c7621492a74a8092b801cc8772ee71c804ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
