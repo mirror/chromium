@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3be394e9_e365437f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "http://127.0.0.1/apps -\u003e has_path() returns /apps\nhttp://127.0.0.1/apps/ -\u003e has_path() returns /apps/\n\nStill need to extract file name and string op to append \"/\" and app name...",
+      "parentUuid": "b8740b3f_7eb2d1c0",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ecd5038_98bdc12f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e695187f_253e9c7b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecd5038_98bdc12f",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fada3312_c445e2e2",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-22T01:03:52Z",
       "side": 1,
       "message": "It seems unlikely for the URL to have changed. Maybe we should just always return early if there is a pending fetcher for simplicity?",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118cbfce_0034749e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "The code is here to handle sink IP address change. If request for old ip is pending, and we always return early, request for new ip wont be attempted. Request for old ip is likely to fail due to ip address change...\n\nWe can remove this if IP address change is unlikely and we are fine with having caller dealing with it (e.g. always force fetch in OnUserGesture()).",
+      "parentUuid": "fada3312_c445e2e2",
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "11a0a025_592d84c1",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b010c4f1_4ec64db6",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aecdee0_9cb5e240",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "216780a5_5fc9b47b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aecdee0_9cb5e240",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16489055_800949d1",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-22T01:03:52Z",
       "side": 1,
       "message": "NOT_FOUND should be treated as having a status of kUnavailable. Besides this case, how will error_cb_ and success_cb_ with kUnknown be treated differently upstream? (i.e., is it ok to just always run the latter callback to return kUnknown?)",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833b8a34_120d04e8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "|success_cb_| returns:\nkAvailable  // parsing succeeds, app available\nkUnavailable // parsing succeeds, app unavailable\nkUnknown // Transient HTTP error\n\n|error_cb_| does not return kUnknown. Invoked when other HTTP error and parsing error.\n\nIn patch 3, caller treats |error_cb_| as kUnavailable and removes the sink from available sink list; Caller ignores kUnknown and do nothing; It seems better to report error instead of kUnavailable to caller, so that caller has more info...",
+      "parentUuid": "16489055_800949d1",
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "da9b8c8e_dd517273",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Pass |sink| around so that caller can check if original sink issuing the request still exists (e.g. IP address or other fields may change) and update sink app status accordingly.",
+      "parentUuid": "ae2355a7_01ba146b",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da8ec5e4_73de1453",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0069d8f7_fe093de4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8ec5e4_73de1453",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "31878fb5_8a39a4c3",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37044cf_20146148",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41b8edfc_7fa4b2a7",
         "filename": "chrome/browser/media/router/test_helper.h",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8468bbc1_f68043c2",
+        "filename": "chrome/browser/media/router/test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-22T20:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b8edfc_7fa4b2a7",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
