@@ -17,6 +17,8 @@
 #include "ui/gfx/geometry/insets_f.h"
 #include "ui/gfx/geometry/rect.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace wm {
 namespace {
 
@@ -89,6 +91,7 @@ EasyResizeWindowTargeter::EasyResizeWindowTargeter(
     : container_(container) {
   DCHECK(container_);
   SetInsets(mouse_extend, touch_extend);
+  base::debug::StackTrace().Print();
 }
 
 EasyResizeWindowTargeter::~EasyResizeWindowTargeter() {}

@@ -77,6 +77,7 @@ void HideResizeShadow(aura::Window* window) {
     // TODO: http://crbug.com/640773.
     return;
   }
+
   if (!wm::GetWindowState(window)->can_be_dragged())
     return;
 
@@ -185,8 +186,9 @@ void WmToplevelWindowEventHandler::OnMouseEvent(ui::MouseEvent* event,
                                                 aura::Window* target) {
   if (event->handled())
     return;
-  if ((event->flags() &
-       (ui::EF_MIDDLE_MOUSE_BUTTON | ui::EF_RIGHT_MOUSE_BUTTON)) != 0)
+  if ((event->flags() & (ui::EF_MIDDLE_MOUSE_BUTTON |
+                         ui::EF_RIGHT_MOUSE_BUTTON | ui::EF_IS_SYNTHESIZED)) !=
+      0)
     return;
 
   if (event->type() == ui::ET_MOUSE_CAPTURE_CHANGED) {
