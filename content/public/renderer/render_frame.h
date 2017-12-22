@@ -53,6 +53,7 @@ class PluginInstanceThrottler;
 class RenderAccessibility;
 class RenderFrameVisitor;
 class RenderView;
+class URLLoaderFactoryBundle;
 struct ContextMenuParams;
 struct WebPluginInfo;
 struct WebPreferences;
@@ -262,6 +263,10 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Returns a default ChildURLLoaderFactoryGetter for the RenderFrame.
   // Used to obtain a right mojom::URLLoaderFactory.
   virtual ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter() = 0;
+
+  // Returns a URLLoaderFactoryBundle which can be used to request subresources
+  // for this frame. Only valid to call when the Network Service is enabled.
+  virtual URLLoaderFactoryBundle& GetSubresourceLoaderFactories() = 0;
 
  protected:
   ~RenderFrame() override {}
