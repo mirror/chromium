@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e9f668d_cda0e28a",
+        "filename": "cc/test/pixel_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T20:52:50Z",
+      "side": 1,
+      "message": "nit: do you know why we have a gpu memory buffer manager for software? If gpu_memory_buffer_manager_ is null, I\u0027d prefer the parameter to be explicitly nullptr.",
+      "revId": "50e00b0fc0961549ef37c14619b270059e9d216d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d06771_b508101f",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T20:52:50Z",
+      "side": 1,
+      "message": "nit: Can you bind a nop lambda here i.e. base::BindRepeating([](const vector\u003cviz::ReturnedResource\u003e\u0026){}) and remove CollectResources? It wasn\u0027t clear to me that CollectResources does nothing given that we provide \u0026returned_to_child as a parameter.",
+      "range": {
+        "startLine": 468,
+        "startChar": 27,
+        "endLine": 468,
+        "endChar": 43
+      },
+      "revId": "50e00b0fc0961549ef37c14619b270059e9d216d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
