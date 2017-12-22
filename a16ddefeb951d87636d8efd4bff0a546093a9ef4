@@ -22,6 +22,30 @@
       "revId": "a16ddefeb951d87636d8efd4bff0a546093a9ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebd8f49_046d3fbb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T06:32:44Z",
+      "side": 0,
+      "message": "I\u0027m slightly concerned if we may start to have some bugs due to this code change?  Would it be safer if we have one more member field like document_url_with_refs_ and use it for the other use case, or have GetDocumentUrlForRegistrationMatch() to return the stripped URL?",
+      "parentUuid": "5706f04d_f344351d",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 25
+      },
+      "revId": "a16ddefeb951d87636d8efd4bff0a546093a9ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
