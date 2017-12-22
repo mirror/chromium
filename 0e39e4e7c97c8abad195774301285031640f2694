@@ -46,6 +46,30 @@
       "revId": "0e39e4e7c97c8abad195774301285031640f2694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3cf9121_9796a4eb",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T23:04:37Z",
+      "side": 1,
+      "message": "I could be bike-shedding here, but I might as well explain my reasoning for mentioning this:\n\n1. The concern about delete-safety is entirely about where we are in the call stack graph.\n\n2. Generally, I feel it\u0027s good practice to bias more towards passing state through the call stack, rather than create extra state in the class (a more functional-style approach). It creates less doubt to future code readers, who may feel they have to scan the entire class to be sure the extra state isn\u0027t being changed for some other reason/event.\n\nFWIW, I think your in-line comment at the call site in the ctor makes things pretty clear/readable. :)",
+      "parentUuid": "6579c747_ccdcf203",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "0e39e4e7c97c8abad195774301285031640f2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
