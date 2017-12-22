@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d5c4ad0_247a7d88",
+        "filename": "content/common/input/synthetic_web_input_event_builders.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "I put 12.5 here is because min_gesture_bounds_length is diameter. But on second thought, I\u0027ll change it to 25 since Aura has default radius as 25.f.",
+      "parentUuid": "24b1358a_2f37f08b",
+      "range": {
+        "startLine": 203,
+        "startChar": 36,
+        "endLine": 203,
+        "endChar": 41
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025fd044_d4c94b75",
         "filename": "third_party/WebKit/LayoutTests/fast/events/hit-test-counts-expected.txt",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-21T18:07:46Z",
       "side": 1,
       "message": "Question: why did cachedHits jumped up here?",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769e9946_687df9a0",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/hit-test-counts-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "The original logic is after adjustment, use HitTestResultInFrame to get correct target at adjusted point (see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/EventHandler.cpp?type\u003dcs\u0026q\u003deventhandler.cpp\u0026l\u003d1702)\nIn my change, I use EventHandler::HitTestResultAtPoint instead.\n\nThe difference is in this test, it hit on an empty are in an iframe, HitTestResultInFrame will return null as target, HitTestResultAtPoint will return inner document. On HandleGestureTap, it will skip the 2 re-hittest when current_hit_test.InnerNode() is null.",
+      "parentUuid": "025fd044_d4c94b75",
       "range": {
         "startLine": 62,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf3c2482_afe03e1c",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointerevent_touch-adjustment_click_target.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "I think the Mac tests fail are because we can\u0027t synthesize touch input, but not because we can\u0027t get touch events? We won\u0027t get pointer events and click event either.",
+      "parentUuid": "6b9a7a64_a224ac1b",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de710505_eab49255",
         "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointerevent_touch-adjustment_click_target.html",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81071623_08d248d1",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointerevent_touch-adjustment_click_target.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de710505_eab49255",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 57
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "53e2cb00_77a2e5f9",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointerevent_touch-adjustment_click_target.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d9feec_996e630b",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 80
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7721efd_6b313bc2",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ebf39b_d4700955",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "isprimary is states in PointerEvent but not in WebPointerEvent. I added a similar function in PointerEventFactory to do this check.",
+      "parentUuid": "a7721efd_6b313bc2",
+      "range": {
+        "startLine": 1384,
+        "startChar": 19,
+        "endLine": 1384,
+        "endChar": 43
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7b33e150_5cea2eec",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "This pointer_event is a copy of original event, changing it will not affect the original coordinates. I think passing the WebFloatPoint and width and height is a bit ugly. Can we leave the pointer_event here?",
+      "parentUuid": "5d7e9ade_65caf2a8",
+      "range": {
+        "startLine": 306,
+        "startChar": 62,
+        "endLine": 306,
+        "endChar": 75
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f591e92_d2edb053",
         "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
         "patchSetId": 14
@@ -177,6 +345,24 @@
       "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58759e90_0a841217",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f591e92_d2edb053",
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +432,30 @@
       "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f29b05_ff6923eb",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-22T17:03:12Z",
+      "side": 1,
+      "message": "Done, I make it private and move to EH, use a function to set the cached result",
+      "parentUuid": "bf8df1fb_3a510834",
+      "range": {
+        "startLine": 101,
+        "startChar": 24,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "2c338d42c1abd0a6537bbd2bb6cbd282d2cd0990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
