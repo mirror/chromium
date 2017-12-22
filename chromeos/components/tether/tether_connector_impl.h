@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/time/clock.h"
 #include "chromeos/components/tether/connect_tethering_operation.h"
 #include "chromeos/components/tether/host_connection_metrics_logger.h"
 #include "chromeos/components/tether/tether_connector.h"
@@ -49,7 +50,8 @@ class TetherConnectorImpl : public TetherConnector,
       NotificationPresenter* notification_presenter,
       HostConnectionMetricsLogger* host_connection_metrics_logger,
       DisconnectTetheringRequestSender* disconnect_tethering_request_sender,
-      WifiHotspotDisconnector* wifi_hotspot_disconnector);
+      WifiHotspotDisconnector* wifi_hotspot_disconnector,
+      base::Clock* clock_);
   ~TetherConnectorImpl() override;
 
   void ConnectToNetwork(
@@ -103,11 +105,13 @@ class TetherConnectorImpl : public TetherConnector,
   HostConnectionMetricsLogger* host_connection_metrics_logger_;
   DisconnectTetheringRequestSender* disconnect_tethering_request_sender_;
   WifiHotspotDisconnector* wifi_hotspot_disconnector_;
+  base::Clock* clock_;
 
   std::string device_id_pending_connection_;
   base::Closure success_callback_;
   network_handler::StringResultCallback error_callback_;
   std::unique_ptr<ConnectTetheringOperation> connect_tethering_operation_;
+  base::Time connect_to_host_start_time_;
   base::WeakPtrFactory<TetherConnectorImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TetherConnectorImpl);
