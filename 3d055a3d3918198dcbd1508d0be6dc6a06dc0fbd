@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb1cf9f_50a40f87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-12-22T16:24:38Z",
+      "side": 1,
+      "message": "rather than litter offline pages code in downloads like this, can we instead make it so that the new states are ONLY set when the flag is turned on?",
+      "range": {
+        "startLine": 87,
+        "startChar": 42,
+        "endLine": 87,
+        "endChar": 87
+      },
+      "revId": "3d055a3d3918198dcbd1508d0be6dc6a06dc0fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
