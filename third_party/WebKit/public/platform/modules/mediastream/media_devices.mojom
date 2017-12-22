@@ -96,6 +96,8 @@ interface MediaDevicesDispatcherHost {
   // a nonexisting subscription with are invalid and result in a renderer crash.
   UnsubscribeDeviceChangeNotifications(MediaDeviceType type,
                                        uint32 subscription_id);
+
+  SetMediaDevicesListener(MediaDeviceType type, MediaDevicesListener listener);
 };
 
 // This object lives in the renderer process and is used by the browser process
