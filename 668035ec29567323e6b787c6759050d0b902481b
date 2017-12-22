@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7461d0d2_4c549af5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "with the observer below I think it\u0027s better to remove this and instead add \"OnDelegateDestroying\" to the observer.",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 56
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2dad26_16acc439",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "s/SendTimestampObserver/Observer/",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f314d6a3_a54426a1",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "nit: move below and make it protected as delegate should not be able to delete observers",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 47
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6970dde_639613e2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "s/WaylandInputDelegate::SendTimestampObserver/WaylandInputDelegate::Observer/",
+      "range": {
+        "startLine": 4582,
+        "startChar": 21,
+        "endLine": 4582,
+        "endChar": 64
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae2e3c9_178b8a34",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4586,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "nit: static_cast\u003cuint64_t\u003e()",
+      "range": {
+        "startLine": 4586,
+        "startChar": 54,
+        "endLine": 4586,
+        "endChar": 64
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea43385_77dc632b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4619,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "is this needed? can we remove \"typename D\"?",
+      "range": {
+        "startLine": 4619,
+        "startChar": 6,
+        "endLine": 4619,
+        "endChar": 21
+      },
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c518ff_047b4208",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4631,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-22T13:05:25Z",
+      "side": 1,
+      "message": "can we adjust the USE_XKBCOMMON build conditions so the WaylandKeyboardDelegate class always exists instead? ie. move the USE_XKBCOMMON ifdefs into the WaylandKeyboardDelegate instead of surrounding it. I think that might be a bit cleaner.",
+      "revId": "668035ec29567323e6b787c6759050d0b902481b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
