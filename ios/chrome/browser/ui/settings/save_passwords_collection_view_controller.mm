@@ -26,6 +26,7 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
@@ -496,15 +497,65 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
                              handler:nil];
   [exportConfirmation addAction:cancelAction];
 
-  // TODO(crbug.com/789122): Ask for password serialization
-  // and wire re-authentication.
+  __weak SavePasswordsCollectionViewController* weakSelf = self;
   UIAlertAction* exportAction = [UIAlertAction
       actionWithTitle:l10n_util::GetNSString(IDS_IOS_EXPORT_PASSWORDS)
                 style:UIAlertActionStyleDefault
-              handler:nil];
+              handler:^(UIAlertAction* action) {
+                SavePasswordsCollectionViewController* strongSelf = weakSelf;
+                if (!strongSelf) {
+                  return;
+                }
+                [strongSelf startExportReauthentication];
+              }];
   [exportConfirmation addAction:exportAction];
 
   [self presentViewController:exportConfirmation animated:YES completion:nil];
+}
+
+- (void)startExportReauthentication {
+  if ([reauthenticationModule_ canAttemptReauth]) {
+    // TODO(crbug.com/789122): Ask for password serialization before starting
+    // re-authentication.
+    void (^startPasswordsExport)(BOOL) = ^(BOOL success) {
+      // TODO(crbug.com/789122): If reauthentication was successful show
+      // "Preparing passwords..." message until data is ready.
+    };
+
+    [reauthenticationModule_
+        attemptReauthWithLocalizedReason:l10n_util::GetNSString(
+                                             IDS_IOS_EXPORT_PASSWORDS)
+                                 handler:startPasswordsExport];
+  } else {
+    [self showExportPasscodeDialog];
+  }
+}
+
+- (void)showExportPasscodeDialog {
+  UIAlertController* alertController = [UIAlertController
+      alertControllerWithTitle:l10n_util::GetNSString(
+                                   IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_TITLE)
+                       message:
+                           l10n_util::GetNSString(
+                               IDS_IOS_SETTINGS_EXPORT_PASSWORDS_SET_UP_SCREENLOCK_CONTENT)
+                preferredStyle:UIAlertControllerStyleAlert];
+
+  ProceduralBlockWithURL blockOpenURL = BlockToOpenURL(self, self.dispatcher);
+  UIAlertAction* learnAction = [UIAlertAction
+      actionWithTitle:l10n_util::GetNSString(
+                          IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_LEARN_HOW)
+                style:UIAlertActionStyleDefault
+              handler:^(UIAlertAction*) {
+                blockOpenURL(GURL(kPasscodeArticleURL));
+              }];
+  [alertController addAction:learnAction];
+  UIAlertAction* okAction =
+      [UIAlertAction actionWithTitle:l10n_util::GetNSString(IDS_OK)
+                               style:UIAlertActionStyleDefault
+                             handler:nil];
+  [alertController addAction:okAction];
+  alertController.preferredAction = okAction;
+  [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark UICollectionViewDelegate
