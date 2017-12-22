@@ -311,8 +311,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   NSMutableArray* _webViewToolbars;
   // Flag to say if browsing is enabled.
   BOOL _webUsageEnabled;
-  // Overlay view used instead of webView.
-  UIImageView* _placeholderOverlayView;
   // The touch tracking recognizer allowing us to decide if a navigation is
   // started by the user.
   CRWTouchTrackingRecognizer* _touchTrackingRecognizer;
@@ -329,8 +327,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   CFAbsoluteTime _lastTransferTimeInSeconds;
   // Default URL (about:blank).
   GURL _defaultURL;
-  // Show overlay view, don't reload web page.
-  BOOL _overlayPreviewMode;
   // Whether the web page is currently performing window.history.pushState or
   // window.history.replaceState
   // Set to YES on window.history.willChangeState message. To NO on
@@ -493,11 +489,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 + (BOOL)webControllerCanShow:(const GURL&)url;
 // Returns a lazily created CRWTouchTrackingRecognizer.
 - (CRWTouchTrackingRecognizer*)touchTrackingRecognizer;
-// Shows placeholder overlay.
-- (void)addPlaceholderOverlay;
-// Removes placeholder overlay.
-- (void)removePlaceholderOverlay;
-
 // Creates a container view if it's not yet created.
 - (void)ensureContainerViewCreated;
 // Creates a web view if it's not yet created.
@@ -907,12 +898,6 @@ GURL URLEscapedForHistory(const GURL& url) {
   // escaping would be sufficient.
   return net::GURLWithNSURL(net::NSURLWithGURL(url));
 }
-
-// Leave snapshot overlay up unless page loads.
-const NSTimeInterval kSnapshotOverlayDelay = 1.5;
-// Transition to fade snapshot overlay.
-const NSTimeInterval kSnapshotOverlayTransition = 0.5;
-
 }  // namespace
 
 @implementation CRWWebController
@@ -1169,26 +1154,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-// TODO(crbug.com/661642): This code is shared with SnapshotManager. Remove this
-// and add it as part of WebDelegate delegate API such that a default image is
-// returned immediately.
-+ (UIImage*)defaultSnapshotImage {
-  static UIImage* defaultImage = nil;
-
-  if (!defaultImage) {
-    CGRect frame = CGRectMake(0, 0, 2, 2);
-    UIGraphicsBeginImageContext(frame.size);
-    [[UIColor whiteColor] setFill];
-    CGContextFillRect(UIGraphicsGetCurrentContext(), frame);
-
-    UIImage* result = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    defaultImage = [result stretchableImageWithLeftCapWidth:1 topCapHeight:1];
-  }
-  return defaultImage;
-}
-
 - (CGPoint)scrollPosition {
   CGPoint position = CGPointMake(0.0, 0.0);
   if (!self.webScrollView)
@@ -1350,10 +1315,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   return list.currentItem == item ||
          [list.forwardList indexOfObject:item] != NSNotFound ||
          [list.backList indexOfObject:item] != NSNotFound;
-}
-
-- (BOOL)canUseViewForGeneratingOverlayPlaceholderView {
-  return _containerView != nil;
 }
 
 - (UIView*)view {
@@ -1878,26 +1839,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   if (!_containerView) {
     [self ensureContainerViewCreated];
 
-    // Is |currentUrl| a web scheme or native chrome scheme.
-    web::NavigationItem* item = self.currentNavItem;
-    const GURL currentNavigationURL =
-        item ? item->GetVirtualURL() : GURL::EmptyGURL();
-    BOOL isChromeScheme =
-        web::GetWebClient()->IsAppSpecificURL(currentNavigationURL);
-
-    // Don't immediately load the web page if in overlay mode. Always load if
-    // native.
-    if (isChromeScheme || !_overlayPreviewMode) {
-      // TODO(jimblackler): end the practice of calling |loadCurrentURL| when it
-      // is possible there is no current URL. If the call performs necessary
-      // initialization, break that out.
-      [self loadCurrentURL];
-    }
-
-    // Display overlay view until current url has finished loading or delay and
-    // then transition away.
-    if (_overlayPreviewMode && !isChromeScheme)
-      [self addPlaceholderOverlay];
+    // TODO(crbug.com/796608): end the practice of calling |loadCurrentURL|
+    // when it is possible there is no current URL. If the call performs
+    // necessary initialization, break that out.
+    [self loadCurrentURL];
   }
 }
 
@@ -1982,7 +1927,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadCompleteWithSuccess:(BOOL)loadSuccess
                   forNavigation:(WKNavigation*)navigation {
-  [self removePlaceholderOverlay];
   // The webView may have been torn down (or replaced by a native view). Be
   // safe and do nothing if that's happened.
   if (_loadPhase != web::PAGE_LOADING)
@@ -3221,77 +3165,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return _clickInProgress ||
          ((CFAbsoluteTimeGetCurrent() - _lastUserInteraction->time) <
           kMaximumDelayForUserInteractionInSeconds);
-}
-
-#pragma mark Placeholder Overlay Methods
-
-- (void)addPlaceholderOverlay {
-  if (!_overlayPreviewMode) {
-    // Create |kSnapshotOverlayDelay| second timer to remove image with
-    // transition.
-    [self performSelector:@selector(removePlaceholderOverlay)
-               withObject:nil
-               afterDelay:kSnapshotOverlayDelay];
-  }
-
-  // Add overlay image.
-  _placeholderOverlayView = [[UIImageView alloc] init];
-  CGRect frame = [self visibleFrame];
-  [_placeholderOverlayView setFrame:frame];
-  [_placeholderOverlayView
-      setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleHeight];
-  [_placeholderOverlayView setContentMode:UIViewContentModeScaleAspectFill];
-  [_containerView addSubview:_placeholderOverlayView];
-
-  id callback = ^(UIImage* image) {
-    [_placeholderOverlayView setImage:image];
-  };
-  [_delegate webController:self retrievePlaceholderOverlayImage:callback];
-
-  if (!_placeholderOverlayView.image) {
-    _placeholderOverlayView.image = [[self class] defaultSnapshotImage];
-  }
-}
-
-- (void)removePlaceholderOverlay {
-  if (!_placeholderOverlayView || _overlayPreviewMode)
-    return;
-
-  [NSObject
-      cancelPreviousPerformRequestsWithTarget:self
-                                     selector:@selector(
-                                                  removePlaceholderOverlay)
-                                       object:nil];
-  // Remove overlay with transition.
-  [UIView animateWithDuration:kSnapshotOverlayTransition
-      animations:^{
-        [_placeholderOverlayView setAlpha:0.0f];
-      }
-      completion:^(BOOL finished) {
-        [_placeholderOverlayView removeFromSuperview];
-        _placeholderOverlayView = nil;
-      }];
-}
-
-- (void)setOverlayPreviewMode:(BOOL)overlayPreviewMode {
-  _overlayPreviewMode = overlayPreviewMode;
-
-  // If we were showing the preview, remove it.
-  if (!_overlayPreviewMode && _placeholderOverlayView) {
-    [self resetContainerView];
-    // Reset |_placeholderOverlayView| directly instead of calling
-    // -removePlaceholderOverlay, which removes |_placeholderOverlayView| in an
-    // animation.
-    [_placeholderOverlayView removeFromSuperview];
-    _placeholderOverlayView = nil;
-    // There are cases when resetting the contentView, above, may happen after
-    // the web view has been created. Re-add it here, rather than
-    // relying on a subsequent call to loadCurrentURLInWebView.
-    if (_webView) {
-      [[self view] addSubview:_webView];
-    }
-  }
 }
 
 #pragma mark -
