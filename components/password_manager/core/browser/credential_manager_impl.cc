@@ -4,6 +4,9 @@
 #include "components/password_manager/core/browser/credential_manager_impl.h"
 
 #include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "base/metrics/user_metrics.h"
 #include "components/password_manager/core/browser/credential_manager_logger.h"
@@ -241,7 +244,7 @@ void CredentialManagerImpl::OnProvisionalSaveComplete() {
     // 'skip_zero_click' state, as we've gotten an explicit signal that the page
     // understands the credential management API and so can be trusted to notify
     // us when they sign the user out.
-    form_manager_->Update(*form_manager_->preferred_match());
+    form_manager_->Update(form);
     return;
   }
 
