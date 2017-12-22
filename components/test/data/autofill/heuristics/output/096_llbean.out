@@ -1,6 +1,6 @@
 UNKNOWN_TYPE | personTitle | Title (optional) |  | personTitle_1-default
 NAME_FIRST | firstName | First Name |  | personTitle_1-default
-NAME_MIDDLE | middleName | Middle Name(optional) |  | personTitle_1-default
+NAME_MIDDLE | middleName | Middle Name (optional) |  | personTitle_1-default
 NAME_LAST | lastName | Last Name |  | personTitle_1-default
 UNKNOWN_TYPE | gender | Male | M | personTitle_1-default
 UNKNOWN_TYPE | gender | Female | F | personTitle_1-default

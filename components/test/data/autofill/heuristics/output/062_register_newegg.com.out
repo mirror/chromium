@@ -10,8 +10,8 @@ COMPANY_NAME | BCompany | Company Name |  | LoginName_1-default
 ADDRESS_HOME_LINE1 | BAddress1 | Address* |  | LoginName_1-default
 ADDRESS_HOME_LINE2 | BAddress2 | Address 2 |  | LoginName_1-default
 ADDRESS_HOME_CITY | BCity | City* |  | LoginName_1-default
-ADDRESS_HOME_STATE | BState | State* | AK | LoginName_1-default
-ADDRESS_HOME_ZIP | BZip | Zip Code* |  | LoginName_1-default
+ADDRESS_HOME_STATE | BState | State * | AK | LoginName_1-default
+ADDRESS_HOME_ZIP | BZip | Zip Code * |  | LoginName_1-default
 PHONE_HOME_CITY_CODE | BNightPhone_tel1 | Shipping Phone* |  | LoginName_1-default
 PHONE_HOME_NUMBER | BNightPhone_tel2 | Exchange |  | LoginName_1-default
 PHONE_HOME_NUMBER | BNightPhone_tel3 | Last four digits |  | LoginName_1-default
@@ -29,11 +29,11 @@ COMPANY_NAME | SCompanyName | Company Name |  | LoginName_1-default
 ADDRESS_HOME_LINE1 | SAddress1 | Address* |  | LoginName_1-default
 ADDRESS_HOME_LINE2 | SAddress2 | Address 2 |  | LoginName_1-default
 ADDRESS_HOME_CITY | SCity | City* |  | LoginName_1-default
-ADDRESS_HOME_STATE | SState | State* | AK | LoginName_1-default
-ADDRESS_HOME_ZIP | SZip | Zip Code* |  | LoginName_1-default
+ADDRESS_HOME_STATE | SState | State * | AK | LoginName_1-default
+ADDRESS_HOME_ZIP | SZip | Zip Code * |  | LoginName_1-default
 PHONE_HOME_CITY_CODE | ShippingPhone_tel1 | Shipping Phone* |  | LoginName_1-default
-PHONE_HOME_NUMBER | ShippingPhone_tel2 |  |  | LoginName_1-default
-PHONE_HOME_NUMBER | ShippingPhone_tel3 |  |  | LoginName_1-default
+PHONE_HOME_NUMBER | ShippingPhone_tel2 | ( ) - Ext |  | LoginName_1-default
+PHONE_HOME_NUMBER | ShippingPhone_tel3 | ( ) - Ext |  | LoginName_1-default
 PHONE_HOME_EXTENSION | ShippingPhone_ext1 | Ext |  | LoginName_1-default
 UNKNOWN_TYPE | custtype | Is this purchase for personal or business use? | 200 | LoginName_1-default
 UNKNOWN_TYPE | Age | Age |  | LoginName_1-default
