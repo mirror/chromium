@@ -16,6 +16,24 @@
       "revId": "bd4da6577c3a2069937de0dfc74aefc48216397d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d7abcb_39d438c7",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T17:27:47Z",
+      "side": 1,
+      "message": "IDS_LOGIN_ERROR_OWNER_KEY_LOST is probably from ExistingUserController::PolicyLoadFailed. It looks like the test needs to have fake policy setup so that LoginPerformer::PerformLogin() can pass the policy check.\n\nI think this looks fine.",
+      "parentUuid": "30f0e8e1_7fdc8d66",
+      "revId": "bd4da6577c3a2069937de0dfc74aefc48216397d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
