@@ -16,6 +16,24 @@
       "revId": "ec93a008b0d45f13b4a3af18e0e821833e2ee5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2d3483_324792f5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-22T18:58:47Z",
+      "side": 1,
+      "message": "That was my first thought.\n\nUnfortunately, std::conditional still requires me to form the type WTF::Optional\u003cElement\u003e, which fails due to the enable_if on WTF::Optional. It would work if I used base::Optional directly, but I figured people would prefer this.",
+      "parentUuid": "449ddeb2_941bdbe0",
+      "revId": "ec93a008b0d45f13b4a3af18e0e821833e2ee5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
