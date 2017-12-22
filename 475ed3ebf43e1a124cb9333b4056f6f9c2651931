@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0feb326f_31ca6b25",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-22T12:39:16Z",
+      "side": 1,
+      "message": "This is kinda yucky. The alternative would be going through NSColor, like so:\n[[self layer] setBackgroundColor:skia::SkColorToSRGBNSColor(skBackgroundColor).CGColor];\nOr maybe we should put this into a new global helper \"skia::CGColorCreateFromSkColorSRGB\" (and possibly rename the existing CGColorCreateFromSkColor).\nWDYT?",
+      "range": {
+        "startLine": 176,
+        "startChar": 65,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "475ed3ebf43e1a124cb9333b4056f6f9c2651931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
