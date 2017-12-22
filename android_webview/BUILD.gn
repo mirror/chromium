@@ -57,6 +57,7 @@ generate_jni("native_jni") {
     "java/src/org/chromium/android_webview/AwResource.java",
     "java/src/org/chromium/android_webview/AwSettings.java",
     "java/src/org/chromium/android_webview/AwTokenBindingManager.java",
+    "java/src/org/chromium/android_webview/AwTracingController.java",
     "java/src/org/chromium/android_webview/AwWebContentsDelegate.java",
     "java/src/org/chromium/android_webview/AwWebResourceResponse.java",
     "java/src/org/chromium/android_webview/InputStreamUtil.java",
@@ -97,6 +98,12 @@ java_cpp_enum("aw_error_ui") {
 java_cpp_enum("aw_safe_browsing_action") {
   sources = [
     "browser/aw_url_checker_delegate_impl.h",
+  ]
+}
+
+java_cpp_enum("aw_tracing_controller") {
+  sources = [
+    "browser/tracing/aw_tracing_controller.h",
   ]
 }
 
@@ -613,6 +620,8 @@ source_set("common") {
     "browser/surfaces_instance.cc",
     "browser/surfaces_instance.h",
     "browser/token_binding_manager_bridge.cc",
+    "browser/tracing/aw_tracing_controller.cc",
+    "browser/tracing/aw_tracing_controller.h",
     "browser/tracing/aw_tracing_delegate.cc",
     "browser/tracing/aw_tracing_delegate.h",
     "common/android_webview_message_generator.cc",
@@ -805,6 +814,7 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/AwSettings.java",
     "java/src/org/chromium/android_webview/AwSwitches.java",
     "java/src/org/chromium/android_webview/AwTokenBindingManager.java",
+    "java/src/org/chromium/android_webview/AwTracingController.java",
     "java/src/org/chromium/android_webview/AwViewMethods.java",
     "java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
     "java/src/org/chromium/android_webview/AwWebContentsDelegate.java",
@@ -876,6 +886,7 @@ android_library("android_webview_java") {
     ":android_webview_java_enums_srcjar",
     ":aw_error_ui",
     ":aw_safe_browsing_action",
+    ":aw_tracing_controller",
     "//components/safe_browsing/db:sb_threat_values",
   ]
 
