@@ -52,15 +52,6 @@ class SearchResultListViewTest : public views::ViewsTestBase {
     return view_delegate_.GetSearchModel()->results();
   }
 
-  void SetLongAutoLaunchTimeout() {
-    // Sets a long timeout that lasts longer than the test run.
-    view_delegate_.set_auto_launch_timeout(base::TimeDelta::FromDays(1));
-  }
-
-  base::TimeDelta GetAutoLaunchTimeout() {
-    return view_delegate_.GetAutoLaunchTimeout();
-  }
-
   void SetUpSearchResults() {
     SearchModel::SearchResults* results = GetResults();
     for (int i = 0; i < kDefaultSearchItems; ++i) {
@@ -101,10 +92,6 @@ class SearchResultListViewTest : public views::ViewsTestBase {
     ui::KeyEvent event(ui::ET_KEY_PRESSED, key_code, ui::EF_NONE);
     return view_->OnKeyPressed(event);
   }
-
-  bool IsAutoLaunching() const { return !!view_->auto_launch_animation_; }
-
-  void ForceAutoLaunch() { view_->ForceAutoLaunchForTest(); }
 
   void ExpectConsistent() {
     // Adding results will schedule Update().
@@ -164,44 +151,6 @@ TEST_F(SearchResultListViewTest, DISABLED_Basic) {
   // Navigate off bottom of list.
   EXPECT_FALSE(KeyPress(ui::VKEY_TAB));
   EXPECT_EQ(results - 1, GetSelectedIndex());
-}
-
-// TODO(crbug.com/781407) Re-enable the test once voice search is back.
-TEST_F(SearchResultListViewTest, DISABLED_AutoLaunch) {
-  SetLongAutoLaunchTimeout();
-  SetUpSearchResults();
-
-  EXPECT_TRUE(IsAutoLaunching());
-  ForceAutoLaunch();
-
-  EXPECT_FALSE(IsAutoLaunching());
-  EXPECT_EQ(1, GetOpenResultCountAndReset(0));
-
-  // The timeout has to be cleared after the auto-launch, to prevent opening
-  // the search result twice. See the comment in AnimationEnded().
-  EXPECT_EQ(base::TimeDelta(), GetAutoLaunchTimeout());
-}
-
-// TODO(crbug.com/781407) Re-enable the test once voice search is back.
-TEST_F(SearchResultListViewTest, DISABLED_CancelAutoLaunch) {
-  SetLongAutoLaunchTimeout();
-  SetUpSearchResults();
-
-  EXPECT_TRUE(IsAutoLaunching());
-
-  EXPECT_TRUE(KeyPress(ui::VKEY_DOWN));
-  EXPECT_FALSE(IsAutoLaunching());
-
-  SetLongAutoLaunchTimeout();
-  view()->UpdateAutoLaunchState();
-  EXPECT_TRUE(IsAutoLaunching());
-
-  view()->SetVisible(false);
-  EXPECT_FALSE(IsAutoLaunching());
-
-  SetLongAutoLaunchTimeout();
-  view()->SetVisible(true);
-  EXPECT_TRUE(IsAutoLaunching());
 }
 
 TEST_F(SearchResultListViewTest, SpokenFeedback) {
