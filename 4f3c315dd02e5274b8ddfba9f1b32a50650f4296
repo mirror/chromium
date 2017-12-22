@@ -16,6 +16,24 @@
       "revId": "4f3c315dd02e5274b8ddfba9f1b32a50650f4296",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202d01ac_cd6aadc1",
+        "filename": "third_party/WebKit/Source/platform/wtf/Deque.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-22T08:29:47Z",
+      "side": 1,
+      "message": "That\u0027s done by SwapVectorBuffer.",
+      "parentUuid": "683fc6e3_2ac2c4af",
+      "revId": "4f3c315dd02e5274b8ddfba9f1b32a50650f4296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
