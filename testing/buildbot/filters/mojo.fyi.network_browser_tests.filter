@@ -829,3 +829,6 @@
 # https://crbug.com/795417
 -ContinueWhereILeftOffTest.SessionCookies
 -RestartTest.SessionCookies
+
+# Requires a replacement for ChromeNetworkDelegate.
+-VariationsHttpHeadersBrowserTest.TestStrippingHeadersFromResourceRequest
