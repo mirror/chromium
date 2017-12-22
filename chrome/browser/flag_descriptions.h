@@ -978,6 +978,11 @@ extern const char kWebvrDescription[];
 extern const char kWebVrExperimentalRenderingName[];
 extern const char kWebVrExperimentalRenderingDescription[];
 
+extern const char kWebVrRenderPathName[];
+extern const char kWebVrRenderPathDescription[];
+extern const char kWebVrRenderPathClientWait[];
+extern const char kWebVrRenderPathGpuFence[];
+
 extern const char kWebXrName[];
 extern const char kWebXrDescription[];
 

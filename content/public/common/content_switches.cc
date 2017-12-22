@@ -480,6 +480,8 @@ const char kEnableWebGLImageChromium[] = "enable-webgl-image-chromium";
 // Enables interaction with virtual reality devices.
 const char kEnableWebVR[] = "enable-webvr";
 
+const char kWebVrRenderPath[] = "webvr-render-path";
+
 // Enable rasterizer that writes directly to GPU memory associated with tiles.
 const char kEnableZeroCopy[]                = "enable-zero-copy";
 
