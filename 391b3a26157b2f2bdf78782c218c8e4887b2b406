@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ff1c823_1e9a5d01",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "+1\n\nHaving comments also helps whenever you create a new terminologies. I can imagine a few things from \"FragmentContinuation\" (continuation is used in the legacy.)",
+      "parentUuid": "094b6c8e_c153ca51",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc4df90_bdbaefaa",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -112,6 +136,24 @@
       "side": 1,
       "message": "Renamed to IsGeneratedText. Or do you have a better name for \"is (possibly indirectly) from a DOM text node\"?\n\nAdded a TODO to move it to NGPhysicalTextFragment.",
       "parentUuid": "2c576d25_fe649648",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc31457_747d4ef7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "Ah...for what does this return true? Is this for when a Text node produced multiple fragments in first-letter? I still don\u0027t understand the intention, so comments/naming to clarify the intention of the function is helpful.",
+      "parentUuid": "84d99597_21126227",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "37238dc5_d55f9537",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "Maybe you wrote only easy example, but from what I understood from your example, we can:\n* Determine the answer if it\u0027s in the mid of a fragment.\n* Cannot determine only when it\u0027s at the edge, but if we got two edges, we know the answer.\n* The two fragments maybe apart in the visual order, but if we know their bidi level, we can optimize it further.\nso that doesn\u0027t explain we need to collect all line boxes?",
+      "parentUuid": "9aaf3bf7_3f9e5d91",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f72b9a26_75f32445",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -255,6 +315,24 @@
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ce9949_5c211ede",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t know that, thx.",
+      "parentUuid": "79329b61_3aca28b3",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "861211c3_19d6fff7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "No...there\u0027s other usage for this to determine atomic inlines, so we should probably just rename. I\u0027ll put in my backlog ;)",
+      "parentUuid": "b096266c_4bbfede5",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f2ec0e_5635e30a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 21
@@ -322,6 +418,24 @@
       "side": 1,
       "message": "It is transient, but we can only use DISALLOW_NEW_EXCEPT_PLACEMENT_NEW here because we may store it in a (transient) vector. There can still be memory leak if someone stores the vector on heap.\n\nIn fact, the same loophole already exists in NGInlineFragmentIterator, which returns a vector of fragment pointers.\n\nMaybe we should change all of them to use scoped_refptr?",
       "parentUuid": "19f2ec0e_5635e30a",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20559442_4bc1e683",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T03:27:49Z",
+      "side": 1,
+      "message": "up to you, as long as it\u0027s transient and you\u0027re sure you hold a ref somewhere else while the object is alive. I think iterator is quite clear that the ref is kept in the original tree, so I\u0027m not too concerned about it, but I\u0027m also fine if you prefer.",
+      "parentUuid": "99a82f0f_773826e2",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
