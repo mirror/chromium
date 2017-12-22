@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9bbdd31_c5d65076",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:24:44Z",
+      "side": 1,
+      "message": "Yep it\u0027s used in EnableMdnsAfterEachRegister. media_sink_service() is used in ProvideSinks.",
+      "parentUuid": "ade49a25_64d4c11c",
+      "revId": "b330900ebe150b90e958ef81103e96daf0bf0eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29728af4_d2fcd78c",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "b330900ebe150b90e958ef81103e96daf0bf0eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbc386a_e4ce8ba9",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:24:44Z",
+      "side": 1,
+      "message": "Used in ProvideSinks test",
+      "parentUuid": "29728af4_d2fcd78c",
+      "revId": "b330900ebe150b90e958ef81103e96daf0bf0eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "b330900ebe150b90e958ef81103e96daf0bf0eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b894f58_e8181c56",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:24:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65576c40_35126cde",
+      "revId": "b330900ebe150b90e958ef81103e96daf0bf0eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

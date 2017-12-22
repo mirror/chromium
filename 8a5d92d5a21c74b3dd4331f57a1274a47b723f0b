@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "e825bb85_1a7e9903",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:24:44Z",
+      "side": 1,
+      "message": "There isn\u0027t another way that I know of -- I don\u0027t see another another IO thread object obtaining a reference to the system context.\n\nAgreed on latter. Assuming they are on same thread makes it easier for it and mediaRouterDesktop to call each other.",
+      "parentUuid": "dc4631f2_47402099",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cb3d60a_2438f6f9",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
         "patchSetId": 9
@@ -383,6 +401,24 @@
       "side": 1,
       "message": "In general that\u0027s my rule of thumb, since accessors for POD types are generally safe to inline, but it looks like the style guide allows some flexibility since you\u0027re returning a const ref.\n\nhttps://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-complex-methods.",
       "parentUuid": "95dbbca7_c664ecca",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bed76cf3_9ea2d557",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-22T01:24:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ab54feb_143205e4",
       "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
