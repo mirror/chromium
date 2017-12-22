@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2cfe0bb_d9ed85ba",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3841,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-22T18:24:38Z",
+      "side": 1,
+      "message": "Maybe make the part about \"cleanups are disabled by the server\" a bit more generic. \nex.\n... during the cleanup of harmful software when the cleanup failed to start for various reasons.",
+      "range": {
+        "startLine": 3841,
+        "startChar": 164,
+        "endLine": 3841,
+        "endChar": 172
+      },
+      "revId": "43af1ba220984aca85d77ba6d6745cfd28b37e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ab31ad_a9dd34c8",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3844,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-22T18:24:38Z",
+      "side": 1,
+      "message": "nit: Imperative appears twice.",
+      "range": {
+        "startLine": 3844,
+        "startChar": 264,
+        "endLine": 3844,
+        "endChar": 274
+      },
+      "revId": "43af1ba220984aca85d77ba6d6745cfd28b37e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
