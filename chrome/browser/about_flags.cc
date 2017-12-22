@@ -3251,6 +3251,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOmniboxUISwapTitleAndUrlDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(omnibox::kUIExperimentSwapTitleAndUrl)},
 
+    {"omnibox-ui-trim-displayed-url-on-blur",
+     flag_descriptions::kOmniboxUITrimDisplayedUrlOnBlurName,
+     flag_descriptions::kOmniboxUITrimDisplayedUrlOnBlurDescription, kOsAll,
+     FEATURE_VALUE_TYPE(omnibox::kUIExperimentTrimDisplayedUrlOnBlur)},
+
     {"use-suggestions-even-if-few",
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureName,
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,

@@ -131,6 +131,12 @@ const base::Feature kUIExperimentShowSuggestionFavicons{
 const base::Feature kUIExperimentSwapTitleAndUrl{
     "OmniboxUIExperimentSwapTitleAndUrl", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature used to trim the scheme and trivial subdomains from the displayed URL
+// when the Omnibox is unfocused. Trimmed portions are restored on-focus.
+const base::Feature kUIExperimentTrimDisplayedUrlOnBlur{
+    "OmniboxUIExperimentTrimDisplayedUrlOnBlur",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature used for the vertical margin UI experiment.
 const base::Feature kUIExperimentVerticalLayout{
     "OmniboxUIExperimentVerticalLayout", base::FEATURE_DISABLED_BY_DEFAULT};

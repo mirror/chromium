@@ -618,6 +618,9 @@ extern const char kOmniboxUIShowSuggestionFaviconsDescription[];
 extern const char kOmniboxUISwapTitleAndUrlName[];
 extern const char kOmniboxUISwapTitleAndUrlDescription[];
 
+extern const char kOmniboxUITrimDisplayedUrlOnBlurName[];
+extern const char kOmniboxUITrimDisplayedUrlOnBlurDescription[];
+
 extern const char kOmniboxUIVerticalLayoutName[];
 extern const char kOmniboxUIVerticalLayoutDescription[];
 

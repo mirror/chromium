@@ -1000,6 +1000,13 @@ const char kOmniboxUISwapTitleAndUrlDescription[] =
     "In the omnibox dropdown, shows titles before URLs when both are "
     "available.";
 
+const char kOmniboxUITrimDisplayedUrlOnBlurName[] =
+    "Omnibox UI Trim Displayed URL on Blur";
+const char kOmniboxUITrimDisplayedUrlOnBlurDescription[] =
+    "In the Omnibox, trim the scheme and trivial subdomains from the displayed "
+    "URL when the Omnibox is unfocused. Trimmed portions are restored "
+    "on-focus.";
+
 const char kOmniboxUIVerticalLayoutName[] = "Omnibox UI Vertical Layout";
 const char kOmniboxUIVerticalLayoutDescription[] =
     "Displays Omnibox sugestions in 2 lines - title over origin.";
