@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1bd3cb_06a7f59e",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "What\u0027s this? Shouldn\u0027t idle tasks be posted to an idle task runner instead of a per-frame task runner?",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200b665a_d724bb82",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "What\u0027s the relationship between this and the IPC task runner?",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd287d4_27391469",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "This task type should be used for tasks that should be prioritized during the loading phase.",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6624b939_0b581770",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "Drop \"use kNetworking...\" -- this part sounds confusing since JavaScript tasks should be posted to kJavaScriptTimer.",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85b1cf8_4c053678",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "Is it limited to asynchronous closing?",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198806ef_aac08119",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "Drop \"InterfaceBinder\u0027s ...\". The description looks too specific.",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b7622a_26bb0091",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-22T09:09:44Z",
+      "side": 1,
+      "message": "service workers \u003d\u003e workers.",
+      "revId": "4ca9093d329c5298b48eeccc2494126e570b95c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
