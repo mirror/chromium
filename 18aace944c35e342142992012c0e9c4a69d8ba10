@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68f73b83_1e8bd5f3",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-22T16:42:12Z",
+      "side": 1,
+      "message": "+1 We had a bug where this was happening.",
+      "parentUuid": "335499a8_3bd36e03",
+      "range": {
+        "startLine": 630,
+        "startChar": 35,
+        "endLine": 630,
+        "endChar": 58
+      },
+      "revId": "18aace944c35e342142992012c0e9c4a69d8ba10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67fbac6_6b6e8c59",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
