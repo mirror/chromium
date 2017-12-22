@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e432e25b_257dcbf6",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-22T21:56:16Z",
+      "side": 1,
+      "message": "Good idea - I\u0027ve opened https://crbug.com/797360 to track this.",
+      "parentUuid": "fe717c2a_343417cb",
+      "revId": "5f55ba9dc9296f07075900d49a18b57ff4c06ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c554fa_cd51ae37",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 17
