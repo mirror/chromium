@@ -1318,6 +1318,14 @@ void FieldTrialList::InstantiateFieldTrialAllocatorIfNeeded() {
   // via the command line.
   global_->readonly_allocator_handle_ =
       global_->field_trial_allocator_->shared_memory()->GetReadOnlyHandle();
+
+#if defined(OS_ANDROID)
+  // On Android, turn the region read-only. This prevents any future
+  // writable mapping attempts, but the original one in |shm| survives
+  // and is still usable in the current process.
+  global_->readonly_allocator_handle_.SetRegionReadOnly();
+#endif
+
 #endif
 }
 
