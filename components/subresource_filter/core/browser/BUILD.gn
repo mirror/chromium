@@ -57,3 +57,17 @@ source_set("unit_tests") {
     "//third_party/protobuf:protobuf_lite",
   ]
 }
+
+if (is_linux || is_mac || is_win) {
+  executable("servicetool") {
+    sources = [
+      "tool/service_tool.cc",
+    ]
+    deps = [
+      ":browser",
+      "//base",
+      "//build/config:exe_and_shlib_deps",
+      "//components/subresource_filter/core/common",
+    ]
+  }
+}

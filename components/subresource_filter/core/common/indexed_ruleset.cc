@@ -8,6 +8,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "components/subresource_filter/core/common/first_party_origin.h"
+#include "components/url_pattern_index/url_pattern.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -94,7 +95,6 @@ bool IndexedRulesetMatcher::ShouldDisallowResourceLoad(
     const FirstPartyOrigin& first_party,
     proto::ElementType element_type,
     bool disable_generic_rules) const {
-  const bool is_third_party = first_party.IsThirdParty(url);
   return !!blacklist_.FindMatch(url, first_party.origin(), element_type,
                                 proto::ACTIVATION_TYPE_UNSPECIFIED,
                                 is_third_party, disable_generic_rules,
@@ -103,6 +103,29 @@ bool IndexedRulesetMatcher::ShouldDisallowResourceLoad(
                                proto::ACTIVATION_TYPE_UNSPECIFIED,
                                is_third_party, disable_generic_rules,
                                FindRuleStrategy::kAny);
+}
+
+const url_pattern_index::flat::UrlRule* IndexedRulesetMatcher::MatchedUrlRule(
+    const GURL& url,
+    const FirstPartyOrigin& first_party,
+    url_pattern_index::proto::ElementType element_type,
+    bool disable_generic_rules) const {
+  const bool is_third_party = first_party.IsThirdParty(url);
+
+  const url_pattern_index::flat::UrlRule* blacklist_rule =
+      blacklist_.FindMatch(url, first_party.origin(), element_type,
+                           proto::ACTIVATION_TYPE_UNSPECIFIED, is_third_party,
+                           disable_generic_rules, FindRuleStrategy::kAny);
+  if (blacklist_rule) {
+    const url_pattern_index::flat::UrlRule* whitelist_rule =
+        whitelist_.FindMatch(url, first_party.origin(), element_type,
+                             proto::ACTIVATION_TYPE_UNSPECIFIED, is_third_party,
+                             disable_generic_rules, FindRuleStrategy::kAny);
+
+    return whitelist_rule ? whitelist_rule : blacklist_rule;
+  }
+
+  return nullptr;
 }
 
 }  // namespace subresource_filter
