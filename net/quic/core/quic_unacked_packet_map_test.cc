@@ -17,19 +17,12 @@ namespace {
 // Default packet length.
 const uint32_t kDefaultLength = 1000;
 
-class MockStreamNotifier : public StreamNotifierInterface {
- public:
-  MOCK_METHOD2(OnStreamFrameAcked,
-               void(const QuicStreamFrame&, QuicTime::Delta));
-  MOCK_METHOD1(OnStreamFrameRetransmitted, void(const QuicStreamFrame&));
-};
-
 class QuicUnackedPacketMapTest : public QuicTest {
  protected:
   QuicUnackedPacketMapTest()
       : unacked_packets_(),
         now_(QuicTime::Zero() + QuicTime::Delta::FromMilliseconds(1000)) {
-    unacked_packets_.SetStreamNotifier(&notifier_);
+    unacked_packets_.SetSessionNotifier(&notifier_);
   }
 
   ~QuicUnackedPacketMapTest() override {}
@@ -115,7 +108,7 @@ class QuicUnackedPacketMapTest : public QuicTest {
   }
   QuicUnackedPacketMap unacked_packets_;
   QuicTime now_;
-  MockStreamNotifier notifier_;
+  MockSessionNotifier notifier_;
 };
 
 TEST_F(QuicUnackedPacketMapTest, RttOnly) {
