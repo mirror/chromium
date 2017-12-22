@@ -3641,16 +3641,13 @@ void GLRenderer::AllocateRenderPassResourceIfNeeded(
     const RenderPassId& render_pass_id,
     const gfx::Size& enlarged_size,
     ResourceTextureHint texturehint) {
-  const auto& caps = output_surface_->context_provider()->ContextCapabilities();
   auto contents_texture_it = render_pass_textures_.find(render_pass_id);
   if (contents_texture_it != render_pass_textures_.end())
     return;
 
   ScopedRenderPassTexture contents_texture(
-      output_surface_->context_provider()->ContextGL(), enlarged_size,
-      texturehint, BackbufferFormat(),
-      current_frame()->current_render_pass->color_space, caps.texture_usage,
-      caps.texture_storage, caps.texture_npot);
+      output_surface_->context_provider(), enlarged_size, texturehint,
+      BackbufferFormat(), current_frame()->current_render_pass->color_space);
   render_pass_textures_[render_pass_id] = std::move(contents_texture);
 }
 
