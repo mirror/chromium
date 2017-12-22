@@ -167,6 +167,11 @@ BookmarkButton* gDraggedButton = nil; // Weak
   return  [self isFolder] || [self acceptsTrackIn];
 }
 
+- (void)updateMouseInside {
+  GradientButtonCell* cell =
+      base::mac::ObjCCastStrict<GradientButtonCell>([self cell]);
+  [cell setMouseInside:[cell isMouseReallyInside] animate:NO];
+}
 
 // Overridden from DraggableButton.
 - (void)beginDrag:(NSEvent*)event {
@@ -367,15 +372,6 @@ BookmarkButton* gDraggedButton = nil; // Weak
 - (void)mouseDragged:(NSEvent*)theEvent {
   if ([delegate_ respondsToSelector:@selector(mouseDragged:)])
     [id(delegate_) mouseDragged:theEvent];
-}
-
-- (void)mouseUp:(NSEvent*)theEvent {
-  [super mouseUp:theEvent];
-
-  // Update the highlight on mouse up.
-  GradientButtonCell* cell =
-      base::mac::ObjCCastStrict<GradientButtonCell>([self cell]);
-  [cell setMouseInside:[cell isMouseReallyInside] animate:NO];
 }
 
 - (void)willOpenMenu:(NSMenu *)menu withEvent:(NSEvent *)event {
