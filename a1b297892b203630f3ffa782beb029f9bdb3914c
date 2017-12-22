@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b9fe0a37_becf11e5",
+        "filename": "third_party/WebKit/Source/core/css/CSSSelector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-22T13:27:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means in practice. Is it stored on the first simple selector of the first (rightmost) compound and per complex selector in a complex selector list?",
+      "revId": "a1b297892b203630f3ffa782beb029f9bdb3914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e1797d6_2afc1e43",
         "filename": "third_party/WebKit/Source/core/css/RuleSet.h",
         "patchSetId": 1
