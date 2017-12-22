@@ -50,9 +50,12 @@ void PasswordStoreDefault::ReportMetricsImpl(
 
 PasswordStoreChangeList PasswordStoreDefault::AddLoginImpl(
     const PasswordForm& form) {
+  LOG(ERROR) << "AAAAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDLLLLLLLLLL impl";
   DCHECK(background_task_runner()->RunsTasksInCurrentSequence());
-  if (!login_db_)
+  if (!login_db_) {
+    LOG(ERROR) << "No login DB";
     return PasswordStoreChangeList();
+  }
   return login_db_->AddLogin(form);
 }
 

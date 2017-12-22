@@ -810,6 +810,7 @@ void LoginDatabase::ReportMetrics(const std::string& sync_username,
 }
 
 PasswordStoreChangeList LoginDatabase::AddLogin(const PasswordForm& form) {
+  LOG(ERROR) << "!!!!!!!!!!!! PasswordStoreChangeList LoginDatabase::AddLogin";
   PasswordStoreChangeList list;
   if (!DoesMatchConstraints(form))
     return list;

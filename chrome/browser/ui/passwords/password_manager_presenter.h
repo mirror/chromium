@@ -80,6 +80,12 @@ class PasswordManagerPresenter
   // undo action to |undo_manager_|.
   void RemoveLogin(const autofill::PasswordForm& form);
 
+  // Add password entry typed by user.
+  void AddPasswordEntry(const std::string& site,
+                        const std::string username,
+                        const std::string& password,
+                        const std::string& origin);
+
  private:
   friend class PasswordManagerPresenterTest;
 
