@@ -69,6 +69,24 @@
       "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e77008f4_88485034",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-22T21:44:28Z",
+      "side": 1,
+      "message": "I\u0027m not certain that we can use 10-10-10-2 surfaces as overlays.\n\nLet\u0027s leave IOSurfaces off until we test that. I\u0027m taking a look at it now, but it may take a bit to sort out.",
+      "parentUuid": "bf5414b0_0434420a",
+      "revId": "e0ae34d54f11b19f6daaec174f66106ec93ca198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
