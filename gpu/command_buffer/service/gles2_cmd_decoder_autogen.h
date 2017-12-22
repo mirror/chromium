@@ -4893,6 +4893,23 @@ error::Error GLES2DecoderImpl::HandleFlushDriverCachesCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderImpl::HandleCreateVkImage(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::CreateVkImage& c =
+      *static_cast<const volatile gles2::cmds::CreateVkImage*>(cmd_data);
+  GLint width = static_cast<GLint>(c.width);
+  GLint height = static_cast<GLint>(c.height);
+  typedef cmds::CreateVkImage::Result Result;
+  Result* result_dst = GetSharedMemoryAs<Result*>(
+      c.result_shm_id, c.result_shm_offset, sizeof(*result_dst));
+  if (!result_dst) {
+    return error::kOutOfBounds;
+  }
+  *result_dst = DoCreateVkImage(width, height);
+  return error::kNoError;
+}
+
 error::Error GLES2DecoderImpl::HandleMatrixLoadfCHROMIUMImmediate(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {

@@ -619,6 +619,9 @@ interface PPB_OpenGLES2 {
                 [in] GLint y,
                 [in] GLsizei width,
                 [in] GLsizei height);
+  GLintptr CreateVkImage([in] PP_Resource context,
+                         [in] GLint width,
+                         [in] GLint height);
 };
 
 

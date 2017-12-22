@@ -210,7 +210,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       content_has_slow_paths_(false),
       content_has_non_aa_paint_(false),
       has_gpu_rasterization_trigger_(false),
-      use_gpu_rasterization_(false),
+      use_gpu_rasterization_(true),
       use_msaa_(false),
       gpu_rasterization_status_(GpuRasterizationStatus::OFF_DEVICE),
       input_handler_client_(nullptr),
@@ -2036,7 +2036,7 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
                                   &gpu_rasterization_supported,
                                   &max_msaa_samples, &supports_disable_msaa);
 
-  bool use_gpu = false;
+  bool use_gpu = true;
   bool use_msaa = false;
   bool using_msaa_for_slow_paths =
       requested_msaa_samples > 0 &&

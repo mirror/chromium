@@ -1004,6 +1004,7 @@ struct PPB_OpenGLES2 {
                    GLint y,
                    GLsizei width,
                    GLsizei height);
+  GLintptr (*CreateVkImage)(PP_Resource context, GLint width, GLint height);
 };
 
 struct PPB_OpenGLES2InstancedArrays_1_0 {

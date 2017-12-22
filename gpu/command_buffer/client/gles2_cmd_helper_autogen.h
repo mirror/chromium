@@ -2827,6 +2827,16 @@ void ScheduleDCLayerCHROMIUM(GLsizei num_textures,
   }
 }
 
+void CreateVkImage(GLint width,
+                   GLint height,
+                   uint32_t result_shm_id,
+                   uint32_t result_shm_offset) {
+  gles2::cmds::CreateVkImage* c = GetCmdSpace<gles2::cmds::CreateVkImage>();
+  if (c) {
+    c->Init(width, height, result_shm_id, result_shm_offset);
+  }
+}
+
 void MatrixLoadfCHROMIUMImmediate(GLenum matrixMode, const GLfloat* m) {
   const uint32_t size =
       gles2::cmds::MatrixLoadfCHROMIUMImmediate::ComputeSize();
