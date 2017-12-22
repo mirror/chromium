@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb0aadc8_96f34cdd",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-22T01:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3532d14d_5d37dea7",
+      "revId": "b08a3ba34ec94b5d047f8f415928ba660ae9b46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdee0019_965f5e53",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b08a3ba34ec94b5d047f8f415928ba660ae9b46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e537f13_ee7b2e4a",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-22T01:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdee0019_965f5e53",
+      "revId": "b08a3ba34ec94b5d047f8f415928ba660ae9b46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
