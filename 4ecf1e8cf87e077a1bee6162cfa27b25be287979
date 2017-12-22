@@ -1,0 +1,318 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7656621_e8201552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Skia",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900ef9fe_ada00a00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "OOPIF",
+      "range": {
+        "startLine": 9,
+        "startChar": 48,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2cd59a_172742a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "https:/crbug.com/c/822155",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c54f90_7c92a5f1",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Just get rid of printing:: here, and move the anonymous namespace inside namespace printing.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb074706_7a82f1d7",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "canvas?",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86471c9_b31afbaa",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Is this absolutely needed? Can you add a comment?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ad8ebe_c5b85f5e",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Can we call GetEmptyPicture() as needed? We may not end up using its result.",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5586f33f_fc3f39ee",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "This looks familiar. Can we make it a function, and call the function from all the places that need it?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5748b3e5_5250157e",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "What does the uint64_t represent?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864c1628_d2e87d37",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Can you add a blank line after this?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f91351_3df67d56",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Why is this called process_id, when the value passed in is a frame_id?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d37b05_8597a9cf",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Can you name this picture_ids and the ctor param pic_ids? This way the members consistently have the more descriptive names.",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fca02eb_1e1c800b",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "This looks odd.",
+      "range": {
+        "startLine": 322,
+        "startChar": 21,
+        "endLine": 322,
+        "endChar": 22
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a154af5_d250a329",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "Is 0 \"no frame id\" then? Should there be a constant somewhere?",
+      "range": {
+        "startLine": 330,
+        "startChar": 58,
+        "endLine": 330,
+        "endChar": 59
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb64cfcb_c76646e7",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "No longer explicit",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c5f023_fd5b0e86",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-22T00:34:55Z",
+      "side": 1,
+      "message": "What are the #include rules inside third_party/WebKit/Source? If we can\u0027t find a way to share the constant with printing/metafile_skia_wrapper.cc, then can we at least add comments in both places to cross-ref each other?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
