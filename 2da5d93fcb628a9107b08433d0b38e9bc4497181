@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1318dada_f3c9dcef",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-22T23:09:02Z",
+      "side": 1,
+      "message": "Actually did it in this CL, now the enum from base/trace_event is used directly. Done.",
+      "parentUuid": "5b4f60be_6fab7dae",
+      "revId": "2da5d93fcb628a9107b08433d0b38e9bc4497181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ea96f04_519cc33e",
         "filename": "android_webview/browser/tracing/aw_tracing_controller.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "2da5d93fcb628a9107b08433d0b38e9bc4497181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4453d8e1_b427f353",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-22T23:09:02Z",
+      "side": 1,
+      "message": "AwTracingMode is removed now. ACK + DONE.",
+      "parentUuid": "8ea96f04_519cc33e",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "2da5d93fcb628a9107b08433d0b38e9bc4497181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

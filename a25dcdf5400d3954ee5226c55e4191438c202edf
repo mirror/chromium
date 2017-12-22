@@ -69,6 +69,24 @@
       "revId": "a25dcdf5400d3954ee5226c55e4191438c202edf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f978bed0_f47e1ee3",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-12-22T23:09:02Z",
+      "side": 1,
+      "message": "I\u0027ve replaced the StringEndpoint with a custom implementation which does not cache intermediate results. Uploaded the code in a new patch on this CL. Done.",
+      "parentUuid": "39675b6f_ac86bb6d",
+      "revId": "a25dcdf5400d3954ee5226c55e4191438c202edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
