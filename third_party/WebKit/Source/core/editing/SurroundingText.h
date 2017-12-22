@@ -36,22 +36,31 @@
 #include "core/editing/Forward.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/web/WebSurroundingText.h"
 
 namespace blink {
 
 class Range;
 
-class CORE_EXPORT SurroundingText {
+class CORE_EXPORT SurroundingText final : public WebSurroundingText {
   USING_FAST_MALLOC(SurroundingText);
 
  public:
   // TODO(editing-dev): We should introduce |Create()| function and make
   // constructor does nothing, since this constructor is too heavy.
   SurroundingText(const EphemeralRange&, unsigned max_length);
+  ~SurroundingText() final = default;
 
+  // TODO(xiaochengh): Condense these functions with the overrides below.
   String Content() const;
   unsigned StartOffsetInContent() const;
   unsigned EndOffsetInContent() const;
+
+  // WebSurroundingText implementations.
+  bool IsNull() const final;
+  WebString TextContent() const final;
+  size_t StartOffsetInTextContent() const final;
+  size_t EndOffsetInTextContent() const final;
 
  private:
   void Initialize(const Position&, const Position&, unsigned max_length);
