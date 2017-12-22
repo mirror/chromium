@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2121cd80_81b681f6",
+        "filename": "chromeos/components/tether/tether_connector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T22:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13887105_a2d068c2",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8caa6134_90860d12",
         "filename": "chromeos/components/tether/tether_connector_impl.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f22ea5c_0b788085",
+        "filename": "chromeos/components/tether/tether_connector_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T22:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8caa6134_90860d12",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3e14cd14_34f0d8b2",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T22:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b17b77_d03fcdfb",
+      "range": {
+        "startLine": 673,
+        "startChar": 0,
+        "endLine": 673,
+        "endChar": 7
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336f87bb_e810c660",
         "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8c5ac4f9_3fc441b5",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T22:02:32Z",
+      "side": 1,
+      "message": "Did this for the other local TimeDelta variable as well.",
+      "parentUuid": "336f87bb_e810c660",
+      "range": {
+        "startLine": 743,
+        "startChar": 2,
+        "endLine": 743,
+        "endChar": 58
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df539f43_b3529381",
         "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96910628_a662c80a",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T22:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df539f43_b3529381",
+      "range": {
+        "startLine": 821,
+        "startChar": 0,
+        "endLine": 821,
+        "endChar": 9
+      },
+      "revId": "b236e59726c3651f1d53c755202a4d3c0743b872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
