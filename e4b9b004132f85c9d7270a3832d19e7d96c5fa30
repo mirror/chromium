@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8a1ae3_3771c9b7",
+        "filename": "gpu/command_buffer/service/buffer_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "nit: It\u0027s too late to check for feature_info_ because we already directly used it above.\n\nI think at this point it\u0027s safe to assume it\u0027s non-null.",
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3af4405_548e783b",
+        "filename": "gpu/command_buffer/service/buffer_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "nit: why not just use the cached error_state? I do think either way is acceptable, but I do think it\u0027s good to be consistent.",
+      "range": {
+        "startLine": 780,
+        "startChar": 28,
+        "endLine": 780,
+        "endChar": 41
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5218e769_55cd5283",
+        "filename": "gpu/command_buffer/service/buffer_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "Same here, you can probably DCHECK(feature_info_).",
+      "range": {
+        "startLine": 862,
+        "startChar": 8,
+        "endLine": 862,
+        "endChar": 21
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfdb909_4fdec9df",
+        "filename": "gpu/command_buffer/service/buffer_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "Same here, you can probably DCHECK(feature_info_).",
+      "range": {
+        "startLine": 910,
+        "startChar": 6,
+        "endLine": 910,
+        "endChar": 19
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc6d2a9_6033fc0b",
+        "filename": "gpu/command_buffer/service/indexed_buffer_binding_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "If you cache target_ already, then you don\u0027t need |target| param here. It only adds confusion.",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2743a78_34802e86",
+        "filename": "gpu/command_buffer/service/indexed_buffer_binding_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "Same here, no need for |target|.",
+      "range": {
+        "startLine": 112,
+        "startChar": 11,
+        "endLine": 112,
+        "endChar": 17
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105371e0_896b4d1e",
+        "filename": "gpu/command_buffer/service/indexed_buffer_binding_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "Same here, get rid of |target|.",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a36df6b_6dac497a",
+        "filename": "gpu/command_buffer/service/indexed_buffer_binding_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "Same here, get rid of |target|. I actually think there is a bug in the original code. We should always use |target_| when we call DoAdjustedBindBufferRange, which in turn calls glBindBufferBase. Using |target| is incorrect if the buffer is bound to both |target| and |target_| (they are different) and BufferData is called on |target|, say, ARRAY_BUFFER.",
+      "range": {
+        "startLine": 161,
+        "startChar": 51,
+        "endLine": 161,
+        "endChar": 57
+      },
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ee18c5_335a4e72",
+        "filename": "gpu/command_buffer/service/vertex_attrib_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "nit: use nullptr in new code",
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a238acc0_abce8695",
+        "filename": "gpu/command_buffer/service/vertex_attrib_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-22T18:38:35Z",
+      "side": 1,
+      "message": "nit: explicit.",
+      "revId": "e4b9b004132f85c9d7270a3832d19e7d96c5fa30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
