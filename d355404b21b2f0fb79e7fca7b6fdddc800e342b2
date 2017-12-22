@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ced68a_810d7568",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33993,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-22T18:16:19Z",
+      "side": 1,
+      "message": "Trailing slash in this label seems weird.\n\nditto in many below",
+      "range": {
+        "startLine": 33993,
+        "startChar": 44,
+        "endLine": 33993,
+        "endChar": 45
+      },
+      "revId": "d355404b21b2f0fb79e7fca7b6fdddc800e342b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932aed88_f75ac050",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34001,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-22T18:16:19Z",
+      "side": 1,
+      "message": "nit: k, not c",
+      "range": {
+        "startLine": 34001,
+        "startChar": 31,
+        "endLine": 34001,
+        "endChar": 32
+      },
+      "revId": "d355404b21b2f0fb79e7fca7b6fdddc800e342b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
