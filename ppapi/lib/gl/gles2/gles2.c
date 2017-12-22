@@ -1046,3 +1046,8 @@ void GL_APIENTRY glDrawBuffersEXT(GLsizei count, const GLenum* bufs) {
   if (ext)
     ext->DrawBuffersEXT(glGetCurrentContextPPAPI(), count, bufs);
 }
+
+GLintptr GL_APIENTRY glCreateVkImage(GLint width, GLint height) {
+  return glGetInterfacePPAPI()->CreateVkImage(glGetCurrentContextPPAPI(), width,
+                                              height);
+}

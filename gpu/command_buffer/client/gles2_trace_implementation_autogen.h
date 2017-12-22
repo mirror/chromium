@@ -764,6 +764,7 @@ void ScheduleDCLayerCHROMIUM(GLsizei num_textures,
                              GLuint edge_aa_mask,
                              const GLfloat* bounds_rect,
                              GLuint filter) override;
+GLintptr CreateVkImage(GLint width, GLint height) override;
 void MatrixLoadfCHROMIUM(GLenum matrixMode, const GLfloat* m) override;
 void MatrixLoadIdentityCHROMIUM(GLenum matrixMode) override;
 GLuint GenPathsCHROMIUM(GLsizei range) override;

@@ -2215,6 +2215,11 @@ void GLES2TraceImplementation::ScheduleDCLayerCHROMIUM(
                                bounds_rect, filter);
 }
 
+GLintptr GLES2TraceImplementation::CreateVkImage(GLint width, GLint height) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::CreateVkImage");
+  return gl_->CreateVkImage(width, height);
+}
+
 void GLES2TraceImplementation::MatrixLoadfCHROMIUM(GLenum matrixMode,
                                                    const GLfloat* m) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::MatrixLoadfCHROMIUM");

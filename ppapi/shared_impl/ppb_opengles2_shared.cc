@@ -1592,6 +1592,15 @@ void DrawBuffersEXT(PP_Resource context_id, GLsizei count, const GLenum* bufs) {
   }
 }
 
+GLintptr CreateVkImage(PP_Resource context_id, GLint width, GLint height) {
+  Enter3D enter(context_id, true);
+  if (enter.succeeded()) {
+    return ToGles2Impl(&enter)->CreateVkImage(width, height);
+  } else {
+    return 0;
+  }
+}
+
 }  // namespace
 const PPB_OpenGLES2* PPB_OpenGLES2_Shared::GetInterface() {
   static const struct PPB_OpenGLES2 ppb_opengles2 = {
@@ -1736,7 +1745,8 @@ const PPB_OpenGLES2* PPB_OpenGLES2_Shared::GetInterface() {
       &VertexAttrib4f,
       &VertexAttrib4fv,
       &VertexAttribPointer,
-      &Viewport};
+      &Viewport,
+      &CreateVkImage};
   return &ppb_opengles2;
 }
 const PPB_OpenGLES2InstancedArrays*
