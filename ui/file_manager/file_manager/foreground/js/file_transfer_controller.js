@@ -1002,6 +1002,11 @@ FileTransferController.prototype.onDragStart_ = function(list, event) {
       this.dragSelector_.startDragSelection(list, event);
     return;
   }
+  if (!list.isInsideFileList(event)) {
+    // touch, outside
+    event.preventDefault();
+    return;
+  }
 
   // Nothing selected.
   if (!this.selectionHandler_.selection.entries.length) {

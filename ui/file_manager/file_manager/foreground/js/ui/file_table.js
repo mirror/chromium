@@ -463,6 +463,7 @@ FileTable.decorate = function(
   }.bind(self), true);
   self.list.shouldStartDragSelection =
       self.shouldStartDragSelection_.bind(self);
+  self.list.isInsideFileList = self.isInsideFileList_.bind(self);
 
   /**
    * Obtains the index list of elements that are hit by the point or the
@@ -635,6 +636,75 @@ FileTable.prototype.setUseModificationByMeTime = function(
 };
 
 /**
+ * @enum {string}
+ * @const
+ */
+FileTable.RegionType = {
+  ERROR: 'error',
+  BACKGROUND: 'background',
+  ROW: 'row',
+  NAME_LABEL: 'name_label'
+};
+
+/**
+ *
+ * @param {*} pos
+ * @return {number}
+ */
+FileTable.prototype.getItemIndex_ = function(pos) {
+  var itemHeight = this.list.measureItem().height;
+  // Faster alternative to Math.floor for non-negative numbers.
+  return ~~(pos.y / itemHeight);
+};
+
+/**
+ *
+ * @param {*} pos
+ * @return {FileTable.RegionType}
+ */
+FileTable.prototype.getRegionType_ = function(pos) {
+  // If the position values are negative, it points the out of list.
+  // It should start the drag selection.
+  if (!pos)
+    return FileTable.RegionType.ERROR;
+  if (pos.x < 0 || pos.y < 0)
+    return FileTable.RegionType.BACKGROUND;
+
+  var itemIndex = this.getItemIndex_(pos);
+  if (itemIndex >= this.list.dataModel.length)
+    return FileTable.RegionType.BACKGROUND;
+
+  // If the horizontal value is not hit to column, it should start the drag
+  // selection.
+  var hitColumn = this.columnModel.getHitColumn(pos.x);
+  if (!hitColumn)
+    return FileTable.RegionType.BACKGROUND;
+
+  // Check if the point is on the column contents or not.
+  switch (this.columnModel.columns_[hitColumn.index].id) {
+    case 'name':
+      var item = this.list.getListItemByIndex(itemIndex);
+      if (!item)
+        return FileTable.RegionType.ERROR;
+
+      var spanElement = item.querySelector('.filename-label span');
+      var spanRect = spanElement.getBoundingClientRect();
+      // The this.list.cachedBounds_ object is set by
+      // DragSelector.getScrolledPosition.
+      if (!this.list.cachedBounds)
+        // TODO: this returned true for should start drag. why?
+        return FileTable.RegionType.ERROR;
+      var textRight =
+          spanRect.left - this.list.cachedBounds.left + spanRect.width;
+      return textRight <= hitColumn.hitPosition ?
+          FileTable.RegionType.ROW :
+          FileTable.RegionType.NAME_LABEL;
+    default:
+      return FileTable.RegionType.ROW;
+  }
+};
+
+/**
  * Obtains if the drag selection should be start or not by referring the mouse
  * event.
  * @param {MouseEvent} event Drag start event.
@@ -649,51 +719,20 @@ FileTable.prototype.shouldStartDragSelection_ = function(event) {
   if (event.sourceCapabilities && event.sourceCapabilities.firesTouchEvents)
     return false;
 
-  // If the position values are negative, it points the out of list.
-  // It should start the drag selection.
   var pos = DragSelector.getScrolledPosition(this.list, event);
-  if (!pos)
-    return false;
-  if (pos.x < 0 || pos.y < 0)
+  const regionType = this.getRegionType_(pos);
+  if (regionType != FileTable.RegionType.NAME_LABEL)
     return true;
-
-  // If the item index is out of range, it should start the drag selection.
-  var itemHeight = this.list.measureItem().height;
-  // Faster alternative to Math.floor for non-negative numbers.
-  var itemIndex = ~~(pos.y / itemHeight);
-  if (itemIndex >= this.list.dataModel.length)
-    return true;
-
   // If the pointed item is already selected, it should not start the drag
   // selection.
-  if (this.lastSelection_ && this.lastSelection_.indexOf(itemIndex) !== -1)
-    return false;
+  var itemIndex = this.getItemIndex_(pos);
+  const draggingSelectedFiles =
+      (this.lastSelection_ && this.lastSelection_.indexOf(itemIndex) !== -1);
+  return !draggingSelectedFiles;
+};
 
-  // If the horizontal value is not hit to column, it should start the drag
-  // selection.
-  var hitColumn = this.columnModel.getHitColumn(pos.x);
-  if (!hitColumn)
-    return true;
-
-  // Check if the point is on the column contents or not.
-  switch (this.columnModel.columns_[hitColumn.index].id) {
-    case 'name':
-      var item = this.list.getListItemByIndex(itemIndex);
-      if (!item)
-        return false;
-
-      var spanElement = item.querySelector('.filename-label span');
-      var spanRect = spanElement.getBoundingClientRect();
-      // The this.list.cachedBounds_ object is set by
-      // DragSelector.getScrolledPosition.
-      if (!this.list.cachedBounds)
-        return true;
-      var textRight =
-          spanRect.left - this.list.cachedBounds.left + spanRect.width;
-      return textRight <= hitColumn.hitPosition;
-    default:
-      return true;
-  }
+FileTable.prototype.isInsideFileList_ = function(event) {
+  return this.getRegionType_(event) != FileTable.RegionType.BACKGROUND;
 };
 
 /**
