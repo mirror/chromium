@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6329061_d58f5d16",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T17:05:02Z",
+      "side": 1,
+      "message": "Why is this test disabled now? Replaced by the Nano one?",
+      "revId": "659cb100f81180d2b9147628ddfd564861b18f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f4af22_dd562e04",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T17:05:02Z",
+      "side": 1,
+      "message": "Which test(s) is this supposed to replace for M65? If either the one above or below then looks like you have dropped the InfoBar verification.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "659cb100f81180d2b9147628ddfd564861b18f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483ff929_93df6874",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-22T17:05:02Z",
+      "side": 1,
+      "message": "So where is the M65 replacement? Is it supposed to be the one above (testLoFiWithServerPreviewsFlag)?",
+      "range": {
+        "startLine": 79,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "659cb100f81180d2b9147628ddfd564861b18f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
