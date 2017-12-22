@@ -29,7 +29,7 @@
 #include "net/quic/core/quic_stream_send_buffer.h"
 #include "net/quic/core/quic_stream_sequencer.h"
 #include "net/quic/core/quic_types.h"
-#include "net/quic/core/stream_notifier_interface.h"
+#include "net/quic/core/session_notifier_interface.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_mem_slice_span.h"
 #include "net/quic/platform/api/quic_reference_counted.h"
