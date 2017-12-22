@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a2815b_87640004",
+        "filename": "ui/events/ozone/gamepad/gamepad_event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-22T12:47:11Z",
+      "side": 1,
+      "message": "this really should be a struct as per styleguide :/",
+      "revId": "55fcbdd2eedcbb1f3b3e20ec12e78861d4ebb44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
