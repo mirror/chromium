@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "59ba79d6_b3d83915",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-22T00:19:16Z",
+      "side": 1,
+      "message": "can we add a comment on how this switch works with the \"Ignore Blacklist\" button on the chrome://interventions-internals/?\n\ne.g., if the flag is set, what would we see in chrome://interventions-internals/ on the \"Blacklist Status\" tab and button?",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336edeaf_2808c33d",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-22T00:19:16Z",
+      "side": 1,
+      "message": "nit: \"Switch\" and \"Flag\" seem redundant. May be use just one of them?",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "008da012ea83934d869419619caba617693ef8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "802ec358_a2821394",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 2
