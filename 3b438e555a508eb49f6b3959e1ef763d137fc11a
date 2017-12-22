@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "5b7d0eda_9fa9df69",
+        "filename": "media/midi/midi_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-22T09:22:36Z",
+      "side": 1,
+      "message": "what I want to say in the last part is hat all posted tasks to the I/O thread in this method should run even on the browser shutdown sequence, there the I/O thread stops soon. But, probably what I should say here is \"the I/O thread may stop soon after this method call\".",
+      "parentUuid": "e0d0df0f_22dbc9a0",
+      "revId": "3b438e555a508eb49f6b3959e1ef763d137fc11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97a8e7cd_543cc652",
         "filename": "media/midi/midi_manager.h",
         "patchSetId": 4
