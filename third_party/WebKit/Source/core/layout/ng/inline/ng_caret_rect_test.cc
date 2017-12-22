@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_caret_rect.h"
 
+#include "core/editing/VisibleUnits.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/ng/inline/ng_inline_fragment_traversal.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
@@ -189,6 +190,69 @@ TEST_F(NGCaretRectTest, CaretPositionAtSoftLineWrapBetweenImages) {
              img2_fragment, kBeforeBox, WTF::nullopt);
   TEST_CARET(ComputeNGCaretPosition(1, TextAffinity::kUpstream), img1_fragment,
              kAfterBox, WTF::nullopt);
+}
+
+TEST_F(NGCaretRectTest, LocalCaretRectsInOneLineText) {
+  SetInlineFormattingContext("t", "foo", 3);
+  const Node* foo = container_->firstChild();
+
+  EXPECT_EQ(LayoutRect(0, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 0), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(1, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 1), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(2, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 2), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(3, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 3), TextAffinity::kDownstream})
+                .rect);
+}
+
+TEST_F(NGCaretRectTest, LocalCaretRectsInTwoLinesOfTextWithSoftWrap) {
+  SetInlineFormattingContext("t", "foobar", 3);
+  const Node* foo = container_->firstChild();
+
+  // First line
+  EXPECT_EQ(LayoutRect(0, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 0), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(1, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 1), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(2, 0, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 2), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(3, 0, 0, 1),
+            ComputeNGLocalCaretRect(*context_,
+                                    {Position(foo, 3), TextAffinity::kUpstream})
+                .rect);
+
+  // Second line
+  EXPECT_EQ(LayoutRect(0, 1, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 3), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(1, 1, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 4), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(2, 1, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 5), TextAffinity::kDownstream})
+                .rect);
+  EXPECT_EQ(LayoutRect(3, 1, 0, 1),
+            ComputeNGLocalCaretRect(
+                *context_, {Position(foo, 6), TextAffinity::kDownstream})
+                .rect);
 }
 
 }  // namespace blink

@@ -15,6 +15,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "platform/fonts/CharacterRange.h"
 
 namespace blink {
 
@@ -172,10 +173,20 @@ NGPhysicalOffsetRect ComputeLocalCaretRectByBoxSide(
 }
 
 NGPhysicalOffsetRect ComputeLocalCaretRectAtTextOffset(
-    const NGPhysicalTextFragment&,
-    unsigned) {
-  // TODO(xiaochengh): Implementation.
-  return {};
+    const NGPhysicalTextFragment& fragment,
+    unsigned offset) {
+  unsigned offset_in_fragment = offset - fragment.StartOffset();
+  const ShapeResult* shape_result = fragment.TextShapeResult();
+  CharacterRange character_range =
+      shape_result->GetCharacterRange(offset_in_fragment, offset_in_fragment);
+
+  // TODO(xiaochengh): Handle vertical writing direction.
+  // TODO(xiaochengh): Adjust with caret width.
+  // TODO(xiaochengh): Should we use line height instead of text height?
+  NGPhysicalOffset caret_location(LayoutUnit(character_range.start),
+                                  LayoutUnit());
+  NGPhysicalSize caret_size(LayoutUnit(), fragment.Size().height);
+  return NGPhysicalOffsetRect(caret_location, caret_size);
 }
 
 // -------------------------------------
