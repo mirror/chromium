@@ -12955,9 +12955,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   EXPECT_NE(nullptr, controller.GetPendingEntry());
   EXPECT_EQ(another_url, controller.GetPendingEntry()->GetURL());
 
-  RenderProcessHostWatcher exit_observer(
-      root->current_frame_host()->GetProcess(),
-      RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  RenderProcessHostKillWaiter kill_waiter(
+      root->current_frame_host()->GetProcess());
 
   // Create commit params with a different origin than the origin lock
   // of the process.
@@ -12990,8 +12989,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // considered alive.
   EXPECT_TRUE(root->current_frame_host()->GetProcess()->HasConnection());
 
-  exit_observer.Wait();
-  EXPECT_FALSE(exit_observer.did_exit_normally());
+  EXPECT_EQ(bad_message::RFH_INVALID_ORIGIN_ON_COMMIT, kill_waiter.Wait());
 }
 
 }  // namespace content
