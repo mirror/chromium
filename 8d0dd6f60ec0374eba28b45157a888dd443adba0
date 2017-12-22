@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91756ba6_55ecc6d7",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-22T01:25:40Z",
+      "side": 1,
+      "message": "Should there be a media_flag to conditionally include this code? Otherwise we add and delete it with every CDM revision.",
+      "range": {
+        "startLine": 874,
+        "startChar": 15,
+        "endLine": 874,
+        "endChar": 41
+      },
+      "revId": "8d0dd6f60ec0374eba28b45157a888dd443adba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583f42e7_cb715472",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-22T01:25:40Z",
+      "side": 1,
+      "message": "Should this (and below) also call OnTestComplete(false) just in case it gets called?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "8d0dd6f60ec0374eba28b45157a888dd443adba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
