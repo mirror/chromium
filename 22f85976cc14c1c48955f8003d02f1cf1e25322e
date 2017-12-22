@@ -37,6 +37,75 @@
     },
     {
       "key": {
+        "uuid": "c64924c6_4a1b2776",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T13:20:25Z",
+      "side": 1,
+      "message": "Is this test failing w/o the fix? shall we add \"prefered\u003dtrue\" or swap the order of credentials storing (i.e. store user2 first)? You can also iterate over various cases.",
+      "range": {
+        "startLine": 341,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 32
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c198e3_0615f0a0",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T13:20:25Z",
+      "side": 1,
+      "message": "A bit complicated to parse the comment. How about \n\"Call the API to store \u0027user1\u0027 with old password and \u0027user2\u0027 with a new password.\"",
+      "range": {
+        "startLine": 434,
+        "startChar": 2,
+        "endLine": 434,
+        "endChar": 71
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5f2b6f_78b9982c",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-22T13:20:25Z",
+      "side": 1,
+      "message": "could you change it to sth significantly different to the old password (just for better redability)? Say, \"XYZ\"",
+      "range": {
+        "startLine": 438,
+        "startChar": 58,
+        "endLine": 438,
+        "endChar": 65
+      },
+      "revId": "22f85976cc14c1c48955f8003d02f1cf1e25322e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d35f23d_8f09b72f",
         "filename": "components/password_manager/core/browser/credential_manager_impl.cc",
         "patchSetId": 1
