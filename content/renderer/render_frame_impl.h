@@ -1122,7 +1122,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // browser at navigation time. For any other frames (i.e. frames on the
   // initial about:blank Document), the bundle returned here is lazily cloned
   // from the parent or opener's own bundle.
-  URLLoaderFactoryBundle& GetSubresourceLoaderFactories();
+  URLLoaderFactoryBundle& GetSubresourceLoaderFactories() override;
 
   // Update current main frame's encoding and send it to browser window.
   // Since we want to let users see the right encoding info from menu

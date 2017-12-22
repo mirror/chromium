@@ -615,18 +615,7 @@
 # Switch test from using a custom net::URLRequestFileJob to using a test
 # URLLoaderFactory via SetNetworkFactoryForTesting.
 -ErrorPageOfflineTestWithAllowDinosaurFalse.CheckEasterEggIsDisabled
--ErrorPageTest.CheckEasterEggIsNotDisabled
--ErrorPageTest.DNSError_Basic
--ErrorPageTest.DNSError_DoClickLink
--ErrorPageTest.DNSError_DoReload
--ErrorPageTest.DNSError_DoReloadAfterSameDocumentNavigation
--ErrorPageTest.DNSError_DoSearch
--ErrorPageTest.DNSError_GoBack1
--ErrorPageTest.DNSError_GoBack2
--ErrorPageTest.DNSError_GoBack2AndForward
--ErrorPageTest.DNSError_GoBack2Forward2
 -ErrorPageTest.Empty404
--ErrorPageTest.Failed
 -ErrorPageTest.SniffSmallHttpErrorResponseAsDownload
 -ErrorPageTest.StaleCacheStatus
 

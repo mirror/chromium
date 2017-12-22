@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/i18n/rtl.h"
 #include "base/json/json_writer.h"
 #include "base/metrics/histogram.h"
@@ -23,7 +24,9 @@
 #include "components/error_page/common/localized_error.h"
 #include "components/error_page/common/net_error_info.h"
 #include "components/grit/components_resources.h"
+#include "content/common/url_loader_factory_bundle.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/child_url_loader_factory_getter.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -294,6 +297,17 @@ void NetErrorHelper::FetchNavigationCorrections(
     const std::string& navigation_correction_request_body) {
   DCHECK(!correction_fetcher_.get());
 
+  content::mojom::URLLoaderFactory* factory = nullptr;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    factory =
+        render_frame()->GetSubresourceLoaderFactories().GetFactoryForRequest(
+            navigation_correction_url);
+  } else {
+    factory = render_frame()
+                  ->GetDefaultURLLoaderFactoryGetter()
+                  ->GetNetworkLoaderFactory();
+  }
+
   correction_fetcher_ =
       content::ResourceFetcher::Create(navigation_correction_url);
   correction_fetcher_->SetMethod("POST");
@@ -302,10 +316,7 @@ void NetErrorHelper::FetchNavigationCorrections(
 
   correction_fetcher_->Start(
       render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
-      render_frame()
-          ->GetDefaultURLLoaderFactoryGetter()
-          ->GetNetworkLoaderFactory(),
+      blink::WebURLRequest::kRequestContextInternal, factory,
       GetNetworkTrafficAnnotationTag(),
       base::BindOnce(&NetErrorHelper::OnNavigationCorrectionsFetched,
                      base::Unretained(this)));
@@ -321,6 +332,17 @@ void NetErrorHelper::CancelFetchNavigationCorrections() {
 void NetErrorHelper::SendTrackingRequest(
     const GURL& tracking_url,
     const std::string& tracking_request_body) {
+  content::mojom::URLLoaderFactory* factory = nullptr;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    factory =
+        render_frame()->GetSubresourceLoaderFactories().GetFactoryForRequest(
+            tracking_url);
+  } else {
+    factory = render_frame()
+                  ->GetDefaultURLLoaderFactoryGetter()
+                  ->GetNetworkLoaderFactory();
+  }
+
   // If there's already a pending tracking request, this will cancel it.
   tracking_fetcher_ = content::ResourceFetcher::Create(tracking_url);
   tracking_fetcher_->SetMethod("POST");
@@ -329,10 +351,7 @@ void NetErrorHelper::SendTrackingRequest(
 
   tracking_fetcher_->Start(
       render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
-      render_frame()
-          ->GetDefaultURLLoaderFactoryGetter()
-          ->GetNetworkLoaderFactory(),
+      blink::WebURLRequest::kRequestContextInternal, factory,
       GetNetworkTrafficAnnotationTag(),
       base::BindOnce(&NetErrorHelper::OnTrackingRequestComplete,
                      base::Unretained(this)));
