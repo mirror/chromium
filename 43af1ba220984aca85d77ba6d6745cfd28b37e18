@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "610b96a1_e2bd8c78",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3841,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-22T18:47:21Z",
+      "side": 1,
+      "message": "We already have an error message for failures to clean (not just to start).\n\nI think in the description it would make sense to mention the server to emphasize that this error is transient and may go away later. What do you think of \"... message that could appear before the cleanup of harmful software because Chrome failed to contact the server\"?",
+      "parentUuid": "e2cfe0bb_d9ed85ba",
+      "range": {
+        "startLine": 3841,
+        "startChar": 164,
+        "endLine": 3841,
+        "endChar": 172
+      },
+      "revId": "43af1ba220984aca85d77ba6d6745cfd28b37e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90ab31ad_a9dd34c8",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "43af1ba220984aca85d77ba6d6745cfd28b37e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7450463_68d39390",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3844,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-22T18:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90ab31ad_a9dd34c8",
+      "range": {
+        "startLine": 3844,
+        "startChar": 264,
+        "endLine": 3844,
+        "endChar": 274
+      },
+      "revId": "43af1ba220984aca85d77ba6d6745cfd28b37e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
