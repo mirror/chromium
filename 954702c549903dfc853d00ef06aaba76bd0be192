@@ -22,6 +22,30 @@
       "revId": "954702c549903dfc853d00ef06aaba76bd0be192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf177973_31d2f107",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-22T20:12:33Z",
+      "side": 1,
+      "message": "Can you please also add browsertests to exercise scenarios where:\n 1) the existing form in the password store has the same username, but also a non-empty |username_element|, |password_element| and/or an |origin| with a path?\n 2) the previously stored credential is a PSL match with the same username.\n\nUpdate() expects that the |form| passed in here comes from the PasswordStore, so that it can be updated based on the primary key (signon_realm, username_value, origin, username_element, password_element).\n\nIn (1), it\u0027s not entirely obvious to me whether the latter 3 attributes of the |form| will match those of stored or submitted credential (where _elements would be empty, I think). Not sure what exactly Update will result in in this scenario (duplicate credentials or failed update).\n\nIn (2), it\u0027s not obviously clear what should happen, but would be good to codify the expectations in a browser test.\n\nTL;DR: I think this will work, but it\u0027s obvious that it\u0027s correct.",
+      "parentUuid": "08b5acf8_c8fbe1ff",
+      "range": {
+        "startLine": 247,
+        "startChar": 26,
+        "endLine": 247,
+        "endChar": 30
+      },
+      "revId": "954702c549903dfc853d00ef06aaba76bd0be192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
