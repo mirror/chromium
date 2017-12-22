@@ -88,6 +88,24 @@
       "revId": "71bb9274dcc99666657d402dea9f661558094a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8ac41e_f8aba55b",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-22T00:19:34Z",
+      "side": 1,
+      "message": "\u003e Yes, with site isolation we\u0027ve got a variety of defenses in place for blob URLs.  I didn\u0027t go through this CL in detail, but hopefully it won\u0027t interfere with them (mek@ - can you please sanity-check that?):\n\u003e \n\u003e 1. A renderer process should not be allowed to create blob URLs for origins that it wouldn\u0027t be allowed to commit.  nick@ did a lot of work on this to disallow a web renderer from creating a blob URL for a chrome-extension:// origin in issue 644966 (and in particular, in r422474).  I don\u0027t think this lockdown applies in non-extension cases yet though, given the TODO in ChildProcessSecurityPolicyImpl::CanCommitURL().  We will likely need to extend it to apply to all sites requiring dedicated processes, so it works in --site-per-process and --isolate-origins modes as well.\n\nSame checks should still be in place. https://crbug.com/777585 tracks updating the test for this to also work with the new code path.\n\n\u003e 2. A navigation to a cross-origin blob URLs should be detected and kicked out of process, when either the source or target origin requires a dedicated process.  We\u0027ve fixed a bunch of bugs here as part of issues 644966 and 645028.\n\nThis doesn\u0027t change anything yet with regard to navigation to blob URLs, but follow up changes before I can enable this code path will have to to ensure proper ordering between creating/revoking of blob URLs and navigating to one. So definitely something I should keep in mind, but out of scope of this CL.\n\n\u003e 3. If there\u0027s still a bypass of (1) and (2), we should still catch that the renderer is trying to commit a blob URL with an origin that\u0027s not allowed to commit in the current process and kill it.  lukasza@ is actually working on a CL right now (https://crrev.com/c/769647) which should give us that protection in most cases (with --site-per-process or --isolate-origins modes) by strengthening RenderFrameHostImpl::CanCommitOrigin(), and we should make sure it works properly with blob/filesystem URLs.\n\u003e \n\u003e As for the |origin| here, I\u0027d support ensuring that the URLs a renderer later tries to create match the origin it says it was going to create URLs for, and killing it otherwise.  Would also checking CanCommitURL() on the |origin| here would buy us anything meaningful?  Looks like we\u0027ll still check CanCommitURL when creating actual blob URLs later in Register(), so that one is equivalent (except we\u0027d catch it a bit earlier), but does it make any sense to lock down Revoke() and Resolve() like this also?  Would it help prevent a renderer from unregistering or looking up blob URLs that it shouldn\u0027t have access to?\n\nCurrently I don\u0027t think we gain anything by adding an extra check here, other than earlier failure. I\u0027m fairly confident that this CL as written has exactly the same protections as the current IPC based code path. In the future if Register is refactored to return a URL rather than get one passed in of course it becomes essential to have a CanCommit check on |origin| here.",
+      "parentUuid": "9a4aa57b_c6099299",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
