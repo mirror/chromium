@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390aaeb6_946671af",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-12-22T18:54:22Z",
+      "side": 1,
+      "message": "You\u0027d also need to test that the characters you don\u0027t want escaped are passed through as-is.",
+      "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43345744_b5bfaa9e",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-12-22T18:54:22Z",
+      "side": 1,
+      "message": "In the example you\u0027ve used in the test, this would result in incorrect behavior, right? E.g.: web+example://foo\u003dbar\u0026bar\u003dbaz would result in https://example.org/search?q\u003dweb+example://foo\u003dbar\u0026bar\u003dbaz . The latter would be treated as a request for path /search on example.com with query parameters q\u003dweb+example://foo\u003dbar and bar\u003dbaz. This seems wrong.",
+      "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
