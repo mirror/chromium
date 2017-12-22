@@ -59,13 +59,15 @@ struct CORE_EXPORT PaintInfo {
             PaintPhase new_phase,
             GlobalPaintFlags global_paint_flags,
             PaintLayerFlags paint_flags,
-            const LayoutBoxModelObject* new_paint_container = nullptr)
+            const LayoutBoxModelObject* new_paint_container = nullptr,
+            bool use_pixel_snapping = true)
       : context(new_context),
         phase(new_phase),
         cull_rect_(cull_rect),
         paint_container_(new_paint_container),
         paint_flags_(paint_flags),
-        global_paint_flags_(global_paint_flags) {}
+        global_paint_flags_(global_paint_flags),
+        use_pixel_snapping_(use_pixel_snapping) {}
 
   PaintInfo(GraphicsContext& new_context,
             const PaintInfo& copy_other_fields_from)
@@ -74,7 +76,8 @@ struct CORE_EXPORT PaintInfo {
         cull_rect_(copy_other_fields_from.cull_rect_),
         paint_container_(copy_other_fields_from.paint_container_),
         paint_flags_(copy_other_fields_from.paint_flags_),
-        global_paint_flags_(copy_other_fields_from.global_paint_flags_) {}
+        global_paint_flags_(copy_other_fields_from.global_paint_flags_),
+        use_pixel_snapping_(copy_other_fields_from.use_pixel_snapping_) {}
 
   // Creates a PaintInfo for painting descendants. See comments about the paint
   // phases in PaintPhase.h for details.
@@ -128,6 +131,8 @@ struct CORE_EXPORT PaintInfo {
                                           local_to_parent_transform);
   }
 
+  bool UsePixelSnapping() const { return use_pixel_snapping_; }
+
   // FIXME: Introduce setters/getters at some point. Requires a lot of changes
   // throughout layout/.
   GraphicsContext& context;
@@ -141,6 +146,8 @@ struct CORE_EXPORT PaintInfo {
 
   const PaintLayerFlags paint_flags_;
   const GlobalPaintFlags global_paint_flags_;
+
+  bool use_pixel_snapping_;
 
   // TODO(chrishtr): temporary while we implement CullRect everywhere.
   friend class SVGPaintContext;
