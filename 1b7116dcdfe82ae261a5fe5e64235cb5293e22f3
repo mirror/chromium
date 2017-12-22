@@ -34,6 +34,24 @@
       "revId": "1b7116dcdfe82ae261a5fe5e64235cb5293e22f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cb2bce_5976c321",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-22T05:10:54Z",
+      "side": 1,
+      "message": "\u003e How does it handle control codes in the range \\x00 through \\x1F ? By the spec they should be %-escaped.\n\nHmm, net::EscapeExternalHandlerValue doesn\u0027t convert the range \\x00 through x1F. So I don\u0027t know how to handle it for now.\n\n\u003e How does it handle %-escapes in the substituted (custom protocol) URL? For instance, custom-protocol://host/example%20with%20%25%20percent ? By the spec, those \u0027%\u0027 should not be doubly-escaped.\n\nyes, net::EscapeExternalHandlerValue doesn\u0027t escape %-escape duplicated. It returns original one without any change.\n\n\u003e How does it handle Unicode outside the ASCII range? For instance, does custom-protocol://host/tears-of-joy-😂 correctly convert to custom-protocol://host/tears-of-joy-%F0%9F%98%82 during substitution?\n\nYes, net::EscapeExternalHandlerValue converts 😂 to %F0%9F%98%82 correctly.\n\n\u003e If this spec behavior does not match an existing escape method it may be worthwhile to add a new one for it.\n\nI agree. BTW, I wonder if we can add net::EscapeFoo() for the spec.",
+      "parentUuid": "c82fc499_04e7e865",
+      "revId": "1b7116dcdfe82ae261a5fe5e64235cb5293e22f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
