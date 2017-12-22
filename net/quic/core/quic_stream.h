@@ -168,6 +168,10 @@ class QUIC_EXPORT_PRIVATE QuicStream {
   // Returns the version of QUIC being used for this stream.
   QuicTransportVersion transport_version() const;
 
+  // Returns the crypto handshake protocol that was used on this stream's
+  // connection.
+  HandshakeProtocol handshake_protocol() const;
+
   bool fin_received() const { return fin_received_; }
 
   // Sets the sequencer to consume all incoming data itself and not call

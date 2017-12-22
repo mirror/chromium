@@ -465,6 +465,10 @@ QuicTransportVersion QuicStream::transport_version() const {
   return session_->connection()->transport_version();
 }
 
+HandshakeProtocol QuicStream::handshake_protocol() const {
+  return session_->connection()->version().handshake_protocol;
+}
+
 void QuicStream::StopReading() {
   QUIC_DLOG(INFO) << ENDPOINT << "Stop reading from stream " << id();
   sequencer_.StopReading();
