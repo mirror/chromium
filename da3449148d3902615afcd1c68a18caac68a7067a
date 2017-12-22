@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "63f68135_8fc2033d",
+        "filename": "components/viz/service/surfaces/surface_hittest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-22T00:21:37Z",
+      "side": 1,
+      "message": "Makes sense. Thanks!",
+      "parentUuid": "fbba14b1_3e50f08e",
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce9caf57_be0c717a",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 3
