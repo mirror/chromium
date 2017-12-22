@@ -19,7 +19,7 @@
 class MsiUtil;
 
 // This class inspects the user's installed programs and builds a mapping of
-// files to its associated program name.
+// files to its associated program.
 //
 // Installed programs are found by searching the
 // "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" registry key and
@@ -40,10 +40,10 @@ class MsiUtil;
 //     If multiple products installed the same file as the same component,
 //     Windows keeps a reference count of that component so that the file
 //     doesn't get removed if one of them is uninstalled. So both programs are
-//     returned by GetInstalledProgramNames().
+//     returned by GetInstalledPrograms().
 //
 //  Note: Programs may be skipped and so would not be returned by
-//        GetInstalledProgramNames() for the following reasons:
+//        GetInstalledPrograms() for the following reasons:
 //        - The program is owned by Microsoft.
 //        - The uninstall entry is marked as a system component.
 //        - The uninstall entry has no display name.
@@ -53,25 +53,34 @@ class MsiUtil;
 // sequence.
 class InstalledPrograms {
  public:
+  struct ProgramInfo {
+    base::string16 name;
+
+    // Holds the path to the uninstall entry in the registry.
+    HKEY registry_root;
+    base::string16 registry_key_path;
+    REGSAM registry_wow64_access;
+  };
+
   // The guts of the class, this structure is populated on a background sequence
   // and moved back to this instance after initialization.
   struct ProgramsData {
     ProgramsData();
     ~ProgramsData();
 
-    // Program names are stored in this vector because multiple entries in
-    // |installed_files_map_| could point to the same one. This is to avoid
+    // Programs are stored in this vector because multiple entries in
+    // |installed_files| could point to the same one. This is to avoid
     // duplicating them.
-    std::vector<base::string16> program_names;
+    std::vector<ProgramInfo> programs;
 
     // Contains all the files from programs installed via Microsoft Installer.
-    // The second part of the pair is the index into |program_names|.
+    // The second part of the pair is the index into |programs|.
     std::vector<std::pair<base::FilePath, size_t>> installed_files;
 
     // For some programs, the best information available is the directory of the
     // installation. The compare functor treats file paths where one is the
     // parent of the other as equal.
-    // The second part of the pair is the index into |program_names|.
+    // The second part of the pair is the index into |programs|.
     std::vector<std::pair<base::FilePath, size_t>> install_directories;
   };
 
@@ -82,10 +91,10 @@ class InstalledPrograms {
   void Initialize(const base::Closure& on_initialized_callback);
 
   // Given a |file|, checks if it matches with an installed program on the
-  // user's machine and returns all the matching program names. Do not call this
+  // user's machine and returns all the matching programs. Do not call this
   // before the initialization is done.
-  bool GetInstalledProgramNames(const base::FilePath& file,
-                                std::vector<base::string16>* program_names);
+  bool GetInstalledPrograms(const base::FilePath& file,
+                            std::vector<ProgramInfo>* programs) const;
 
  protected:
   // Protected so that tests can subclass InstalledPrograms and access it.
@@ -93,11 +102,11 @@ class InstalledPrograms {
                   std::unique_ptr<MsiUtil> msi_util);
 
  private:
-  bool GetNamesFromInstalledFiles(const base::FilePath& file,
-                                  std::vector<base::string16>* program_names);
-  bool GetNamesFromInstallDirectories(
+  bool GetProgramsFromInstalledFiles(const base::FilePath& file,
+                                     std::vector<ProgramInfo>* programs) const;
+  bool GetProgramsFromInstallDirectories(
       const base::FilePath& file,
-      std::vector<base::string16>* program_names);
+      std::vector<ProgramInfo>* programs) const;
 
   // Takes the result from the initialization and moves it to this instance,
   // then calls |on_initialized_callback| to indicate that the initialization
@@ -106,7 +115,7 @@ class InstalledPrograms {
                             std::unique_ptr<ProgramsData> programs_data);
 
   // Used to assert that initialization was completed before calling
-  // GetInstalledProgramNames().
+  // GetInstalledPrograms().
   bool initialized_;
 
   std::unique_ptr<ProgramsData> programs_data_;
