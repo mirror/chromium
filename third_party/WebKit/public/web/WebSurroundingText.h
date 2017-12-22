@@ -26,51 +26,35 @@
 #define WebSurroundingText_h
 
 #include "public/platform/WebString.h"
-#include "WebNode.h"
-#include "WebRange.h"
-#include <memory>
 
 namespace blink {
 
-class SurroundingText;
-class WebNode;
-class WebRange;
 class WebLocalFrame;
-struct WebPoint;
 
 // WebSurroundingText is a Blink API that gives access to the SurroundingText
 // API. It allows caller to know the text surrounding a point or a range.
 class WebSurroundingText {
  public:
-  BLINK_EXPORT WebSurroundingText();
-  BLINK_EXPORT ~WebSurroundingText();
+  BLINK_EXPORT virtual ~WebSurroundingText() = default;
 
-  BLINK_EXPORT bool IsNull() const;
-
-  // Initializes the object with the current selection in a given frame.
+  // Creates the object with the current selection in a given frame.
   // The maximum length of the contents retrieved is defined by maxLength.
   // It does not include the text inside the range.
-  BLINK_EXPORT void InitializeFromCurrentSelection(WebLocalFrame*,
-                                                   size_t max_length);
+  BLINK_EXPORT static WebSurroundingText* CreateFromCurrentSelection(
+      WebLocalFrame*,
+      size_t max_length);
+
+  // Whether surrounding text is found or not.
+  BLINK_EXPORT virtual bool IsNull() const = 0;
 
   // Surrounding text content retrieved.
-  BLINK_EXPORT WebString TextContent() const;
-
-  // Offset in the text content of the initial hit position (or provided
-  // offset in the node).
-  // This should only be called when WebSurroundingText has been initialized
-  // with a WebPoint.
-  // DEPRECATED: use startOffsetInTextContent() or endOffsetInTextContent().
-  BLINK_EXPORT size_t HitOffsetInTextContent() const;
+  BLINK_EXPORT virtual WebString TextContent() const = 0;
 
   // Start offset of the initial text in the text content.
-  BLINK_EXPORT size_t StartOffsetInTextContent() const;
+  BLINK_EXPORT virtual size_t StartOffsetInTextContent() const = 0;
 
   // End offset of the initial text in the text content.
-  BLINK_EXPORT size_t EndOffsetInTextContent() const;
-
- protected:
-  std::unique_ptr<SurroundingText> private_;
+  BLINK_EXPORT virtual size_t EndOffsetInTextContent() const = 0;
 };
 
 }  // namespace blink

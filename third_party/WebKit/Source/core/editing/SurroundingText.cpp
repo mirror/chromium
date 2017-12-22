@@ -114,6 +114,10 @@ void SurroundingText::Initialize(const Position& start_position,
   DCHECK(content_range_);
 }
 
+bool SurroundingText::IsNull() const {
+  return content_range_.Get();
+}
+
 String SurroundingText::Content() const {
   if (content_range_) {
     // SurroundingText is created with clean layout and must not be stored
