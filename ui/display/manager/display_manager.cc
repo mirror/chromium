@@ -1407,6 +1407,46 @@ void DisplayManager::ClearTouchCalibrationData(
   }
   UpdateDisplaysWith(display_info_list);
 }
+
+void DisplayManager::UpdateZoomFactor(int64_t display_id,
+                                      const ManagedDisplayMode& mode,
+                                      float zoom_factor) {
+  DCHECK(zoom_factor > 0);
+  DCHECK(display_id != kInvalidDisplayId);
+
+  bool update = false;
+  DisplayInfoList display_info_list;
+  for (const auto& display : active_display_list_) {
+    if (display.id() == display_id)
+      update = true;
+  }
+  if (!base::ContainsKey(display_zoom_factors_, display_id))
+    display_zoom_factors_[display_id] = std::map<int, float>();
+
+  display_zoom_factors_[display_id][mode.size().width()] = zoom_factor;
+
+  if (update)
+    UpdateDisplays();
+}
+
+float DisplayManager::GetZoomFactorForDisplay(
+    int64_t display_id,
+    const ManagedDisplayMode& mode) const {
+  // If there is no entry for the given display id, then the zoom factor is
+  // still at its default level of 100% zoom.
+  if (!base::ContainsKey(display_zoom_factors_, display_id))
+    return 1.f;
+
+  // If we have no entry for the given ManagedDisplayMode, then the zoom factor
+  // for this |mode| for the display identified by |display_id| is still
+  // 100% or default.
+  if (!base::ContainsKey(display_zoom_factors_.at(display_id),
+                         mode.size().width())) {
+    return 1.f;
+  }
+
+  return display_zoom_factors_.at(display_id).at(mode.size().width());
+}
 #endif
 
 void DisplayManager::SetDefaultMultiDisplayModeForCurrentDisplays(
@@ -1858,6 +1898,12 @@ Display DisplayManager::CreateDisplayFromDisplayInfoById(int64_t id) {
   Display new_display(display_info.id());
   gfx::Rect bounds_in_native(display_info.size_in_pixel());
   float device_scale_factor = display_info.GetEffectiveDeviceScaleFactor();
+
+  // Apply the zoom factor for the display. The zoom factor correspondiung to
+  // the current display mode needs to be applied.
+  ManagedDisplayMode mode;
+  GetActiveModeForDisplayId(id, &mode);
+  device_scale_factor *= GetZoomFactorForDisplay(id, mode);
 
   // Simply set the origin to (0,0).  The primary display's origin is
   // always (0,0) and the bounds of non-primary display(s) will be updated
