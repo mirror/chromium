@@ -41,6 +41,7 @@ include_rules = [
   "+components/visitedlink/renderer",
   "+components/web_cache/renderer",
   "+content/app/strings/grit",
+  "+content/common",
   "+content/public/child",
   "+content/public/common",
   "+content/public/renderer",
