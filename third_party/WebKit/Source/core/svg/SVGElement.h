@@ -228,6 +228,8 @@ class CORE_EXPORT SVGElement : public Element {
       const AtomicString&,
       MutableCSSPropertyValueSet*) override;
 
+  bool HasInstances() const;
+
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;
   void ChildrenChanged(const ChildrenChange&) override;

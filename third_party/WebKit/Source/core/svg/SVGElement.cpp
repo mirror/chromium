@@ -444,7 +444,8 @@ void SVGElement::ChildrenChanged(const ChildrenChange& change) {
   Element::ChildrenChanged(change);
 
   // Invalidate all instances associated with us.
-  InvalidateInstances();
+  if (HasInstances())
+    InvalidateInstances();
 }
 
 CSSPropertyID SVGElement::CssPropertyIdForSVGAttributeName(
@@ -1120,6 +1121,10 @@ void SVGElement::MarkForLayoutAndParentResourceInvalidation(
   DCHECK(layout_object);
   LayoutSVGResourceContainer::MarkForLayoutAndParentResourceInvalidation(
       layout_object, true);
+}
+
+bool SVGElement::HasInstances() const {
+  return HasSVGRareData() && !SvgRareData()->ElementInstances().IsEmpty();
 }
 
 void SVGElement::InvalidateInstances() {
