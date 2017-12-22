@@ -5772,6 +5772,7 @@ source_set("net_fuzzer_test_support") {
   testonly = true
 
   sources = [
+    "base/fuzzer_main.cc",
     "base/fuzzer_test_support.cc",
     "dns/fuzzed_host_resolver.cc",
     "dns/fuzzed_host_resolver.h",

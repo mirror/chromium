@@ -15,7 +15,8 @@
 // Fuzzer for BrotliSourceStream.
 //
 // |data| is used to create a FuzzedSourceStream.
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+namespace net {
+int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   net::TestCompletionCallback callback;
   base::FuzzedDataProvider data_provider(data, size);
   std::unique_ptr<net::FuzzedSourceStream> fuzzed_source_stream(
@@ -35,4 +36,5 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   }
 
   return 0;
+}
 }

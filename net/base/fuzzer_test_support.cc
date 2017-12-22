@@ -16,9 +16,7 @@ namespace {
 // Note that in general static initializers are not allowed, however this is
 // just being used by test code.
 struct InitGlobals {
-  InitGlobals()
-      : scoped_task_environment(
-            base::test::ScopedTaskEnvironment::MainThreadType::IO) {
+  InitGlobals() {
     base::CommandLine::Init(0, nullptr);
 
     // Set up ICU. ICU is used internally by GURL, which is used throughout the
@@ -35,14 +33,18 @@ struct InitGlobals {
     logging::SetMinLogLevel(logging::LOG_FATAL);
   }
 
-  // A number of tests use async code which depends on there being a
-  // ScopedTaskEnvironment.  Setting one up here allows tests to reuse the
-  // ScopedTaskEnvironment between runs.
-  base::test::ScopedTaskEnvironment scoped_task_environment;
-
   base::AtExitManager at_exit_manager;
 };
+}  // namespace
 
 InitGlobals* init_globals = new InitGlobals();
 
-}  // namespace
+namespace net {
+int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size);
+} // namespace net
+
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+  static base::test::ScopedTaskEnvironment scoped_task_environment(
+      base::test::ScopedTaskEnvironment::MainThreadType::IO);
+  return net::LLVMFuzzerTestOneInput(data, size);
+}

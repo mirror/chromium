@@ -165,8 +165,10 @@ class URLRequestDataJobFuzzerHarness : public net::URLRequest::Delegate {
   DISALLOW_COPY_AND_ASSIGN(URLRequestDataJobFuzzerHarness);
 };
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+namespace net {
+int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   // Using a static singleton test harness lets the test run ~3-4x faster.
   return URLRequestDataJobFuzzerHarness::GetInstance()
       ->CreateAndReadFromDataURLRequest(data, size);
+}
 }
