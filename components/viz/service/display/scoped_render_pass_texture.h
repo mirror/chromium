@@ -9,26 +9,23 @@
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_texture_hint.h"
 #include "components/viz/service/viz_service_export.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace viz {
+class ContextProvider;
 
 // ScopedRenderPassTexture is resource used inside the same GL context and will
 // not being sent into another process. So no need to create fence and mailbox
 // for these resources.
 class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
  public:
-  explicit ScopedRenderPassTexture(gpu::gles2::GLES2Interface* gl,
+  explicit ScopedRenderPassTexture(ContextProvider* context_provider,
                                    const gfx::Size& size,
                                    ResourceTextureHint hint,
                                    ResourceFormat format,
-                                   const gfx::ColorSpace& color_space,
-                                   bool use_texture_usage_hint,
-                                   bool use_texture_storage,
-                                   bool use_texture_npot);
+                                   const gfx::ColorSpace& color_space);
 
   ScopedRenderPassTexture();
   ScopedRenderPassTexture(ScopedRenderPassTexture&& other);
@@ -43,7 +40,7 @@ class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
  private:
   void Free();
 
-  gpu::gles2::GLES2Interface* gl_;
+  ContextProvider* context_provider_;
   // The GL texture id.
   GLuint gl_id_ = 0;
   // Size of the resource in pixels.
