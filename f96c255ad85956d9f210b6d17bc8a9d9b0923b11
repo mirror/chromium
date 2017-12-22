@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a91a73_7e557130",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-22T21:25:10Z",
+      "side": 1,
+      "message": "Upon review, I like \"ConfirmAdvancedOptions,\" since it\u0027s slightly different than what happens on pressing \"Cancel\".",
+      "range": {
+        "startLine": 513,
+        "startChar": 26,
+        "endLine": 513,
+        "endChar": 47
+      },
+      "revId": "f96c255ad85956d9f210b6d17bc8a9d9b0923b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e2f82b_3e4e5070",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-22T21:25:10Z",
+      "side": 1,
+      "message": "\"before_translate_options_button_\" and then put a comment in the .h file like: \"Used to trigger the options menu in tests.\"",
+      "range": {
+        "startLine": 684,
+        "startChar": 2,
+        "endLine": 684,
+        "endChar": 49
+      },
+      "revId": "f96c255ad85956d9f210b6d17bc8a9d9b0923b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
