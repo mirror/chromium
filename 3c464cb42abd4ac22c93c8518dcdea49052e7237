@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4588ff89_02d8142c",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "see comment above about adding a DCHECK to make sure it\u0027s also registered with Plugin Info.",
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1211174b_a316a8e6",
+        "filename": "content/browser/media/key_system_support_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "nit: this comment is redundant",
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998c299e_576631d8",
+        "filename": "content/browser/media/key_system_support_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d33444_d9905c78",
+        "filename": "content/public/renderer/key_system_support_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "optional nit: how about just key_system_support.h?",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 62
+      },
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4aeb51f_f4776527",
+        "filename": "content/public/renderer/key_system_support_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "Since this is a \"support\" checker, how about call it IsKeySystemSupported()?\n\nSame for |is_available|, which can be |is_supported|.",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6340088_1fd10dd4",
+        "filename": "content/public/renderer/key_system_support_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "It seems you don\u0027t really need a class. You can just define a IsKeySystemSupported() function. Also, you can call content::RenderThread::Get() directly in this file such that you don\u0027t need to pass the RendererThread in.\n\nWith that, this file will be much simpler.",
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c5bc07_2ed644aa",
+        "filename": "media/mojo/interfaces/key_system_support.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "ditto about naming, e.g. IsKeySystemSupported()",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681fbe3e_6a9bfcd7",
+        "filename": "media/mojo/interfaces/key_system_support.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-22T08:21:02Z",
+      "side": 1,
+      "message": "supported or is_supported, needs to be consistent with the caller (currently the checker).",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "3c464cb42abd4ac22c93c8518dcdea49052e7237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
