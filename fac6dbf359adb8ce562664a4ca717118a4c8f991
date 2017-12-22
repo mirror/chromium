@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9422d521_0e19aa66",
+        "filename": "device/ctap/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-22T00:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a7744b_878b1aae",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "fac6dbf359adb8ce562664a4ca717118a4c8f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667cf0ce_0c1fda18",
         "filename": "device/ctap/OWNERS",
         "patchSetId": 16
@@ -39,6 +63,24 @@
       "revId": "fac6dbf359adb8ce562664a4ca717118a4c8f991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f6506a_74e1091e",
+        "filename": "device/ctap/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-22T00:17:46Z",
+      "side": 1,
+      "message": "Please let me know if security-dev@chromium.org is not the correct team!",
+      "parentUuid": "667cf0ce_0c1fda18",
+      "revId": "fac6dbf359adb8ce562664a4ca717118a4c8f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
