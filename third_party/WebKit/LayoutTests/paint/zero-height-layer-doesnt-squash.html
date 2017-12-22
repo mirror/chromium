@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<style>
+#test {
+  border-color:#e3e9ef;
+}
+.hologram-container{
+  will-change:opacity;
+}
+.input-item{
+  position:relative;
+}
+</style>
+<p>crbug.com/787565: There should be a box shadow below.</p>
+<div class="hologram-container"></div>
+<div class="input-item">
+  <input id="test" type="email" placeholder="Email address">
+</div>
+<script>
+document.body.offsetTop;
+document.getElementById("test").style.boxShadow = "0 10px 20px 0";
+</script>
