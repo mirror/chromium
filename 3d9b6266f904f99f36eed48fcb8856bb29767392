@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149e1392_0589879f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-22T08:36:54Z",
+      "side": 0,
+      "message": "I am surprised that you can remove the top anchor and not add a height constraint.\nCan you check that there is not an ambiguous constraint in the visual debugger? (It is not a broken constraint in the console.)",
+      "range": {
+        "startLine": 575,
+        "startChar": 22,
+        "endLine": 575,
+        "endChar": 64
+      },
+      "revId": "3d9b6266f904f99f36eed48fcb8856bb29767392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
