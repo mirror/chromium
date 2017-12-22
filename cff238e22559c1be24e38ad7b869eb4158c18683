@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba696922_fb2be283",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T21:48:05Z",
+      "side": 1,
+      "message": "I\u0027d prefer if this state, i.e. minimum events before timing history is relevant, were encapsulated in CompositorTimingHistory.",
+      "parentUuid": "23671aa9_f1a55638",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8869e342_db37b639",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 3
@@ -42,6 +60,47 @@
     },
     {
       "key": {
+        "uuid": "48ad3abf_a1f7f8c3",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T21:48:05Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer the name to say what it does, e.g. ResetHeuristics or ClearTimingHistory, etc., but I don\u0027t feel strongly about this.",
+      "parentUuid": "8869e342_db37b639",
+      "range": {
+        "startLine": 940,
+        "startChar": 16,
+        "endLine": 940,
+        "endChar": 40
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740f3b19_2d751d69",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T21:48:05Z",
+      "side": 1,
+      "message": "Can you explain why last_frame_events_ is being cleared?",
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5c6d48a_c96bfa61",
         "filename": "cc/scheduler/scheduler_state_machine.h",
         "patchSetId": 3
@@ -59,6 +118,47 @@
         "endLine": 351,
         "endChar": 19
       },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3be014_463fa204",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T21:48:05Z",
+      "side": 1,
+      "message": "nit: Separate this from the other \"used for tracing only\" vars.",
+      "parentUuid": "e5c6d48a_c96bfa61",
+      "range": {
+        "startLine": 351,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 19
+      },
+      "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016c464e_910f2412",
+        "filename": "cc/trees/single_thread_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-22T21:48:05Z",
+      "side": 1,
+      "message": "nit: if (condition) do thing instead of if (!condition) return",
       "revId": "cff238e22559c1be24e38ad7b869eb4158c18683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
