@@ -46,11 +46,6 @@ struct TouchCalibration {
   int bezel_bottom = 0;
 };
 
-// Convert tilt from [min, min + num_values) to [-90deg, +90deg)
-float ScaleTilt(int value, int min_value, int num_values) {
-  return 180.f * (value - min_value) / num_values - 90.f;
-}
-
 void GetTouchCalibration(TouchCalibration* cal) {
   std::vector<std::string> parts = base::SplitString(
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(

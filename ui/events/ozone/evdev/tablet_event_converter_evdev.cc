@@ -17,11 +17,6 @@ namespace ui {
 
 namespace {
 
-// Convert tilt from [min, min + num_values) to [-90deg, +90deg)
-float ScaleTilt(int value, int min_value, int num_values) {
-  return 180.f * (value - min_value) / num_values - 90.f;
-}
-
 EventPointerType GetToolType(int button_tool) {
   if (button_tool == BTN_TOOL_RUBBER)
     return EventPointerType::POINTER_TYPE_ERASER;
