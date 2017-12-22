@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b192d182_94d053e4",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T23:02:57Z",
+      "side": 1,
+      "message": "+1 on moving the comment down inside the case.\n\nAlso maybe this whole case should be moved to the end of the switch rather than mixed in with the other cases?",
+      "parentUuid": "f20be2d0_68446cc2",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7926096d_d9031a14",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2017-12-22T22:51:36Z",
       "side": 1,
       "message": "Suggested wording for this rather complex edge-case: \"This RemotingStopReason indicates the RendererController initiated the session shutdown in the immediate past, and the trigger for that should have already been recorded in the metrics. Here, this is just duplicate feedback from the sink for that same event. Return UNKNOWN_STOP_TRIGGER because it would be a logic flaw for this value to be recorded in the metrics.\"\n\nOpen to proofreading of the above! Actually, we\u0027re only succeeding here if amp@ groks what\u0027s going on by reading the comment. :-)",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432ba0ca_1681334f",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T23:02:57Z",
+      "side": 1,
+      "message": "This is much clearer.  Xiangjun also discussed with me offline (so I cheated a bit) and calling ot the difference between StopReason and STOP_TRIGGER might help as well.  The overarching reason being that we don\u0027t want to record invalid metrics also makes it a lot clearer as to the intent here, but that could perhaps be added to the method comments.",
+      "parentUuid": "7926096d_d9031a14",
       "range": {
         "startLine": 50,
         "startChar": 6,
