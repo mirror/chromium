@@ -128,6 +128,7 @@ public class ContextualSearchSelectionController {
      * Notifies that the base page has started loading a page.
      */
     void onBasePageLoadStarted() {
+        System.out.println("ctxs onBasePageLoadStarted");
         resetAllStates();
     }
 
@@ -219,6 +220,8 @@ public class ContextualSearchSelectionController {
      * @param selection The selection portion of the context.
      */
     void handleSelectionChanged(String selection) {
+        System.out.println("ctxs handleSelectionChanged");
+        mHandler.installMojoIfNeeded();
         if (mDidExpandSelection) {
             mSelectedText = selection;
             mDidExpandSelection = false;
@@ -322,6 +325,7 @@ public class ContextualSearchSelectionController {
      * Resets all of the internal state of this class.
      */
     void onTabSelected() {
+        System.out.println("ctxs onTabSelected");
         resetAllStates();
     }
 
@@ -331,6 +335,7 @@ public class ContextualSearchSelectionController {
      * @param y The y coordinate in px.
      */
     void handleShowUnhandledTapUIIfNeeded(int x, int y) {
+        System.out.println("ctxs legacy-handleShowUnhandledTapUIIfNeeded");
         mWasTapGestureDetected = false;
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {

@@ -13,6 +13,15 @@
 #include "chrome/browser/android/contextualsearch/contextual_search_delegate.h"
 #include "components/contextual_search/browser/contextual_search_js_api_handler.h"
 
+#include "base/memory/weak_ptr.h"
+#include "content/public/browser/render_frame_host.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/platform/unhandled_tap_notifier.mojom.h"
+
+namespace contextual_search {
+class ContextualSearchUnhandledTapServiceImpl;
+}
+
 // Manages the native extraction and request logic for Contextual Search,
 // and interacts with the Java ContextualSearchManager for UX.
 // Most of the work is done by the associated ContextualSearchDelegate.
@@ -63,6 +72,8 @@ class ContextualSearchManager
       jobject obj,
       const base::android::JavaParamRef<jobject>& j_web_contents);
 
+  void InstallMojoIfNeeded(JNIEnv* env, jobject obj);
+
   // ContextualSearchJsApiHandler overrides:
   void SetCaption(std::string caption, bool does_answer) override;
 
@@ -78,11 +89,23 @@ class ContextualSearchManager
       size_t start_offset,
       size_t end_offset);
 
+  void CreateUnhandledTapService(
+      blink::mojom::UnhandledTapNotifierRequest request,
+      content::RenderFrameHost* render_frame_host);
+
+  std::unique_ptr<contextual_search::ContextualSearchUnhandledTapServiceImpl>
+      unhandled_tap_service_;
+
+  service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>
+      frame_interfaces_;
+
   // Our global reference to the Java ContextualSearchManager.
   base::android::ScopedJavaGlobalRef<jobject> java_manager_;
 
   // The delegate we're using the do the real work.
   std::unique_ptr<ContextualSearchDelegate> delegate_;
+
+  base::WeakPtrFactory<ContextualSearchManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchManager);
 };

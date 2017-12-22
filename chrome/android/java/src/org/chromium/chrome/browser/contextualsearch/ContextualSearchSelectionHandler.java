@@ -21,6 +21,7 @@ interface ContextualSearchSelectionHandler {
      */
     public void handleSelectionCleared();
 
+    public void installMojoIfNeeded();
     /**
      * Handle a valid tap gesture on the base page.
      */

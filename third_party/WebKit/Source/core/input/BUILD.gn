@@ -36,6 +36,8 @@ blink_core_sources("input") {
     "TouchEventManager.h",
     "TouchList.cpp",
     "TouchList.h",
+    "UnhandledTapInfo.cpp",
+    "UnhandledTapInfo.h",
   ]
 
   configs += [

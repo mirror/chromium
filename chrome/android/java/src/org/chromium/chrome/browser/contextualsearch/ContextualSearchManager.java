@@ -275,6 +275,7 @@ public class ContextualSearchManager
         mInternalStateController.reset(StateChangeReason.UNKNOWN);
 
         listenForTabModelSelectorNotifications();
+        System.out.println("ctxs CSM initialize");
     }
 
     /**
@@ -1250,6 +1251,7 @@ public class ContextualSearchManager
      * Notifies Contextual Search whether the UI should be suppressed for Smart Selection.
      */
     void suppressContextualSearchForSmartSelection(boolean isSmartSelectionEnabled) {
+        System.out.println("ctxs suppressContextualSearchForSmartSelection");
         mDoSuppressContextualSearchForSmartSelection = isSmartSelectionEnabled;
     }
 
@@ -1475,6 +1477,11 @@ public class ContextualSearchManager
         // The selection was just cleared, so we'll want to remove our UX unless it was due to
         // another Tap while the Bar is showing.
         mInternalStateController.enter(InternalState.SELECTION_CLEARED_RECOGNIZED);
+    }
+
+    @Override
+    public void installMojoIfNeeded() {
+        nativeInstallMojoIfNeeded(mNativeContextualSearchManagerPtr);
     }
 
     /** Shows the given selection as the Search Term in the Bar. */
@@ -1751,6 +1758,8 @@ public class ContextualSearchManager
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
     private native void nativeEnableContextualSearchJsApiForOverlay(
             long nativeContextualSearchManager, WebContents overlayWebContents);
+    private native void nativeInstallMojoIfNeeded(long nativeContextualSearchManager);
+
     // Don't call these directly, instead call the private methods that cache the results.
     private native String nativeGetTargetLanguage(long nativeContextualSearchManager);
     private native String nativeGetAcceptLanguages(long nativeContextualSearchManager);

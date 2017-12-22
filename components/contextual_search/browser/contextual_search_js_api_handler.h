@@ -12,7 +12,7 @@
 namespace contextual_search {
 
 // Interface that the Contextual Search Renderer uses to call back to
-// the browser to handle its JavaScript API.
+// the browser to handle its mojo service API.
 class ContextualSearchJsApiHandler {
  public:
   ContextualSearchJsApiHandler() {}

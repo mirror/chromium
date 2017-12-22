@@ -29,6 +29,8 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
+#include "components/contextual_search/browser/contextual_search_unhandled_tap_service_impl.h"
+
 using base::android::JavaParamRef;
 using base::android::JavaRef;
 using content::WebContents;
@@ -79,7 +81,8 @@ class ContextualSearchObserver : public content::WebContentsObserver,
 // Most of the work is actually done in an associated delegate to this class:
 // the ContextualSearchDelegate.
 ContextualSearchManager::ContextualSearchManager(JNIEnv* env,
-                                                 const JavaRef<jobject>& obj) {
+                                                 const JavaRef<jobject>& obj)
+    : weak_factory_(this) {
   java_manager_.Reset(obj);
   Java_ContextualSearchManager_setNativeManager(
       env, obj, reinterpret_cast<intptr_t>(this));
@@ -101,6 +104,27 @@ ContextualSearchManager::~ContextualSearchManager() {
 void ContextualSearchManager::Destroy(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj) {
   delete this;
+}
+
+void ContextualSearchManager::InstallMojoIfNeeded(JNIEnv* env, jobject obj) {
+  // Add an interface to the UnhandledTap Service for tap notifications from
+  // Blink.
+  DVLOG(0) << "ctxs InstallMojoIfNeeded, adding interface.";
+  //  frame_interfaces_.AddInterface(
+  //    base::BindRepeating(&ContextualSearchManager::CreateUnhandledTapService,
+  //                          weak_factory_.GetWeakPtr()));
+}
+
+void ContextualSearchManager::CreateUnhandledTapService(
+    blink::mojom::UnhandledTapNotifierRequest request,
+    content::RenderFrameHost* render_frame_host) {
+  DVLOG(0) << "ctxs ContextualSearchManager::CreateUnhandledTapService...";
+  if (unhandled_tap_service_)
+    return;
+
+  unhandled_tap_service_ = base::MakeUnique<
+      contextual_search::ContextualSearchUnhandledTapServiceImpl>(
+      render_frame_host, this, std::move(request));
 }
 
 void ContextualSearchManager::StartSearchTermResolutionRequest(

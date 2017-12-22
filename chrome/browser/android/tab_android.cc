@@ -92,6 +92,8 @@
 #include "ui/gfx/favicon_size.h"
 #include "ui/gfx/image/image_skia.h"
 
+#include "components/contextual_search/browser/contextual_search_unhandled_tap_service_impl.h"
+
 using base::android::AttachCurrentThread;
 using base::android::ConvertUTF8ToJavaString;
 using base::android::JavaParamRef;
@@ -175,6 +177,9 @@ TabAndroid::TabAndroid(JNIEnv* env, const JavaRef<jobject>& obj)
 
   frame_interfaces_.AddInterface(base::Bind(
       &TabAndroid::CreateInProductHelpService, weak_factory_.GetWeakPtr()));
+
+  frame_interfaces_.AddInterface(base::BindRepeating(
+      &TabAndroid::CreateUnhandledTapNotifier, weak_factory_.GetWeakPtr()));
 }
 
 TabAndroid::~TabAndroid() {
@@ -938,6 +943,19 @@ void TabAndroid::CreateInProductHelpService(
 
   media_in_product_help_ = base::MakeUnique<MediaDownloadInProductHelp>(
       render_frame_host, this, std::move(request));
+}
+
+void TabAndroid::CreateUnhandledTapNotifier(
+    blink::mojom::UnhandledTapNotifierRequest request,
+    content::RenderFrameHost* render_frame_host) {
+  // If we are showing the UI already, ignore the request.
+  DVLOG(0) << "ctxs CreateUnhandledTapNotifier!!!";
+  std::unique_ptr<contextual_search::ContextualSearchUnhandledTapServiceImpl>
+      service;
+  service = base::MakeUnique<
+      contextual_search::ContextualSearchUnhandledTapServiceImpl>(
+      render_frame_host, nullptr, std::move(request));
+  DVLOG(0) << "ctxs got service!";
 }
 
 void TabAndroid::OnMediaDownloadInProductHelpConnectionError() {

@@ -27,6 +27,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/platform/media_download_in_product_help.mojom.h"
+#include "third_party/WebKit/public/platform/unhandled_tap_notifier.mojom.h"
 
 class GURL;
 class Profile;
@@ -291,6 +292,9 @@ class TabAndroid : public CoreTabHelperDelegate,
   // methods used by MediaDownloadInProductHelp.
   void CreateInProductHelpService(
       blink::mojom::MediaDownloadInProductHelpRequest request,
+      content::RenderFrameHost* render_frame_host);
+  void CreateUnhandledTapNotifier(
+      blink::mojom::UnhandledTapNotifierRequest request,
       content::RenderFrameHost* render_frame_host);
   void ShowMediaDownloadInProductHelp(const gfx::Rect& rect_in_frame);
   void DismissMediaDownloadInProductHelp();
