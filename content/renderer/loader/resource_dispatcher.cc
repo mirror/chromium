@@ -68,9 +68,10 @@ void CrashOnMapFailure() {
 }
 
 void CheckSchemeForReferrerPolicy(const ResourceRequest& request) {
-  if ((request.referrer_policy == blink::kWebReferrerPolicyDefault ||
+  if ((request.referrer_policy == Referrer::GetDefaultReferrerPolicy() ||
        request.referrer_policy ==
-           blink::kWebReferrerPolicyNoReferrerWhenDowngrade) &&
+           net::URLRequest::
+               REDUCE_REFERRER_GRANULARITY_ON_TRANSITION_CROSS_ORIGIN) &&
       request.referrer.SchemeIsCryptographic() &&
       !request.url.SchemeIsCryptographic()) {
     LOG(FATAL) << "Trying to send secure referrer for insecure request "
