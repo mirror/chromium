@@ -48,9 +48,16 @@
 
 namespace blink {
 
-const char* const kQuotedPrintable = "quoted-printable";
-const char* const kBase64 = "base64";
-const char* const kBinary = "binary";
+const size_t kMaximumLineLength = 76;
+
+const char kRFC2047EncodingPrefix[] = "=?utf-8?Q?";
+const size_t kRFC2047EncodingPrefixLength = 10;
+const char kRFC2047EncodingSuffix[] = "?=";
+const size_t kRFC2047EncodingSuffixLength = 2;
+
+const char kQuotedPrintable[] = "quoted-printable";
+const char kBase64[] = "base64";
+const char kBinary[] = "binary";
 
 static String ConvertToPrintableCharacters(const String& text) {
   // If the text contains all printable ASCII characters, no need for encoding.
@@ -66,13 +73,44 @@ static String ConvertToPrintableCharacters(const String& text) {
 
   // Encode the text as sequences of printable ASCII characters per RFC 2047
   // (https://tools.ietf.org/html/rfc2047). Specially, the encoded text will be
-  // as:   =?utf-8?Q?encoded_text?=
+  // as:   =?utf-8?Q?quoted_printable_encoded_text?=
   // where, "utf-8" is the chosen charset to represent the text and "Q" is the
   // Quoted-Printable format to convert to 7-bit printable ASCII characters.
+
+  // 1) Convert to UTF-8.
   CString utf8_text = text.Utf8();
+
+  // 2) Encode the UTF-8 text in Quoted-Printable format.
+  Vector<char> quoted_printable_encoded_text;
+  QuotedPrintableEncode(utf8_text.data(), utf8_text.length(),
+                        QuotedPrintableEncodeType::kForHeader,
+                        kMaximumLineLength - kRFC2047EncodingPrefixLength -
+                            kRFC2047EncodingSuffixLength,
+                        quoted_printable_encoded_text);
+
+  // 3) Add the encoding information per RFC 2047.
+  // Note that per RFC 2047, the encoded text, "=?utf-8?Q?...?=", may not be
+  // more than 75 characters. Multiple encoded text (separated by CRLF+SPACE)
+  // may be used if it is desirable to encode more text than will fit in an
+  // encoded text of 75 characters.
   Vector<char> encoded_text;
-  QuotedPrintableEncode(utf8_text.data(), utf8_text.length(), encoded_text);
-  return "=?utf-8?Q?" + String(encoded_text.data(), encoded_text.size()) + "?=";
+  encoded_text.Append(kRFC2047EncodingPrefix, kRFC2047EncodingPrefixLength);
+  for (size_t i = 0; i < quoted_printable_encoded_text.size(); ++i) {
+    if (i + 2 < quoted_printable_encoded_text.size() &&
+        quoted_printable_encoded_text[i] == '\r' &&
+        quoted_printable_encoded_text[i + 1] == '\n' &&
+        quoted_printable_encoded_text[i + 2] == ' ') {
+      encoded_text.Append(kRFC2047EncodingSuffix, kRFC2047EncodingSuffixLength);
+      encoded_text.Append("\r\n ", 3u);
+      encoded_text.Append(kRFC2047EncodingPrefix, kRFC2047EncodingPrefixLength);
+      i += 2;
+      continue;
+    }
+    encoded_text.Append(&(quoted_printable_encoded_text[i]), 1u);
+  }
+  encoded_text.Append(kRFC2047EncodingSuffix, kRFC2047EncodingSuffixLength);
+
+  return String(encoded_text.data(), encoded_text.size());
 }
 
 MHTMLArchive::MHTMLArchive() {}
@@ -245,7 +283,9 @@ void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
     size_t data_length = flat_data.size();
     Vector<char> encoded_data;
     if (!strcmp(content_encoding, kQuotedPrintable)) {
-      QuotedPrintableEncode(data, data_length, encoded_data);
+      QuotedPrintableEncode(data, data_length,
+                            QuotedPrintableEncodeType::kForBody,
+                            kMaximumLineLength, encoded_data);
       output_buffer.Append(encoded_data.data(), encoded_data.size());
       output_buffer.Append("\r\n", 2u);
     } else {
@@ -253,7 +293,6 @@ void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
       // We are not specifying insertLFs = true below as it would cut the lines
       // with LFs and MHTML requires CRLFs.
       Base64Encode(data, data_length, encoded_data);
-      const size_t kMaximumLineLength = 76;
       size_t index = 0;
       size_t encoded_data_length = encoded_data.size();
       do {

@@ -34,8 +34,6 @@
 
 namespace blink {
 
-static const size_t kMaximumLineLength = 76;
-
 static const char kCrlfLineEnding[] = "\r\n";
 
 static size_t LengthOfLineEndingAtIndex(const char* input,
@@ -54,12 +52,10 @@ static size_t LengthOfLineEndingAtIndex(const char* input,
   return 0;
 }
 
-void QuotedPrintableEncode(const Vector<char>& in, Vector<char>& out) {
-  QuotedPrintableEncode(in.data(), in.size(), out);
-}
-
 void QuotedPrintableEncode(const char* input,
                            size_t input_length,
+                           QuotedPrintableEncodeType encode_type,
+                           size_t max_line_length,
                            Vector<char>& out) {
   out.clear();
   out.ReserveCapacity(input_length);
@@ -74,13 +70,20 @@ void QuotedPrintableEncode(const char* input,
         current_character != '\t')
       requires_encoding = true;
 
-    // Space and tab characters have to be encoded if they appear at the end of
-    // a line.
+    // Decide if space and tab characters need to be encoded.
     if (!requires_encoding &&
-        (current_character == '\t' || current_character == ' ') &&
-        (is_last_character ||
-         LengthOfLineEndingAtIndex(input, input_length, i + 1)))
-      requires_encoding = true;
+        (current_character == '\t' || current_character == ' ')) {
+      // They should always be encoded if they appear anywhere in the header.
+      if (encode_type == QuotedPrintableEncodeType::kForHeader) {
+        requires_encoding = true;
+      } else {
+        // They should be encoded only if they appear at the end of a body line.
+        if (is_last_character ||
+            LengthOfLineEndingAtIndex(input, input_length, i + 1)) {
+          requires_encoding = true;
+        }
+      }
+    }
 
     // End of line should be converted to CR-LF sequences.
     if (!is_last_character) {
@@ -102,10 +105,12 @@ void QuotedPrintableEncode(const char* input,
       length_of_encoded_character += 1;  // + 1 for the = (soft line break).
 
     // Insert a soft line break if necessary.
-    if (current_line_length + length_of_encoded_character >
-        kMaximumLineLength) {
-      out.push_back('=');
+    if (current_line_length + length_of_encoded_character > max_line_length) {
+      if (encode_type == QuotedPrintableEncodeType::kForBody)
+        out.push_back('=');
       out.Append(kCrlfLineEnding, strlen(kCrlfLineEnding));
+      if (encode_type == QuotedPrintableEncodeType::kForHeader)
+        out.push_back(' ');
       current_line_length = 0;
     }
 
