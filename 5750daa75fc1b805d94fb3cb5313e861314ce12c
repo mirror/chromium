@@ -22,6 +22,30 @@
       "revId": "5750daa75fc1b805d94fb3cb5313e861314ce12c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5a10d0_f8004952",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-22T17:57:21Z",
+      "side": 1,
+      "message": "The start progress is between 0 and 1 and is rounded to create the final progress.  Since the maximum difference between the two values is 0.5, I\u0027m multiplying by two to scale it to be within [0, 1.0].  I\u0027ve added a comment for this as well.",
+      "parentUuid": "37f91673_b729e150",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "5750daa75fc1b805d94fb3cb5313e861314ce12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
