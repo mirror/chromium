@@ -491,6 +491,10 @@
       status: "test",
     },
     {
+      name: "ImplicitRootScroller",
+      status: "experimental",
+    },
+    {
       name: "IncrementalShadowDOM",
     },
     {
