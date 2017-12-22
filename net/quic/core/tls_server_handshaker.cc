@@ -218,7 +218,7 @@ void TlsServerHandshaker::FinishHandshake() {
 
   session()->connection()->SetDefaultEncryptionLevel(ENCRYPTION_FORWARD_SECURE);
 
-  session()->connection()->NeuterUnencryptedPackets();
+  session()->NeuterUnencryptedData();
   encryption_established_ = true;
   handshake_confirmed_ = true;
 }

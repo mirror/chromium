@@ -2736,9 +2736,9 @@ void QuicConnection::UpdatePacketContent(PacketContent type) {
   current_peer_migration_type_ = NO_CHANGE;
 }
 
-void QuicConnection::SetStreamNotifier(
-    StreamNotifierInterface* stream_notifier) {
-  sent_packet_manager_.SetStreamNotifier(stream_notifier);
+void QuicConnection::SetSessionNotifier(
+    SessionNotifierInterface* session_notifier) {
+  sent_packet_manager_.SetSessionNotifier(session_notifier);
 }
 
 void QuicConnection::SetDataProducer(

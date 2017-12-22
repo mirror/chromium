@@ -845,6 +845,9 @@ MockConnectionCloseDelegate::~MockConnectionCloseDelegate() {}
 MockPacketCreatorDelegate::MockPacketCreatorDelegate() {}
 MockPacketCreatorDelegate::~MockPacketCreatorDelegate() {}
 
+MockSessionNotifier::MockSessionNotifier() {}
+MockSessionNotifier::~MockSessionNotifier() {}
+
 void CreateClientSessionForTest(
     QuicServerId server_id,
     bool supports_stateless_rejects,

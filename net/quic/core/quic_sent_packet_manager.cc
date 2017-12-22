@@ -455,7 +455,7 @@ void QuicSentPacketManager::MarkPacketHandled(QuicPacketNumber packet_number,
   pending_retransmissions_.erase(newest_transmission);
 
   if (newest_transmission == packet_number) {
-    unacked_packets_.NotifyStreamFramesAcked(*info, ack_delay_time);
+    unacked_packets_.NotifyFramesAcked(*info, ack_delay_time);
   } else {
     RecordSpuriousRetransmissions(*info, packet_number);
     // Remove the most recent packet from flight if it's a crypto handshake
@@ -466,8 +466,8 @@ void QuicSentPacketManager::MarkPacketHandled(QuicPacketNumber packet_number,
     // only handle nullptr encrypted packets in a special way.
     const QuicTransmissionInfo& newest_transmission_info =
         unacked_packets_.GetTransmissionInfo(newest_transmission);
-    unacked_packets_.NotifyStreamFramesAcked(newest_transmission_info,
-                                             ack_delay_time);
+    unacked_packets_.NotifyFramesAcked(newest_transmission_info,
+                                       ack_delay_time);
     if (HasCryptoHandshake(newest_transmission_info)) {
       unacked_packets_.RemoveFromInFlight(newest_transmission);
     }
@@ -954,9 +954,9 @@ const SendAlgorithmInterface* QuicSentPacketManager::GetSendAlgorithm() const {
   return send_algorithm_.get();
 }
 
-void QuicSentPacketManager::SetStreamNotifier(
-    StreamNotifierInterface* stream_notifier) {
-  unacked_packets_.SetStreamNotifier(stream_notifier);
+void QuicSentPacketManager::SetSessionNotifier(
+    SessionNotifierInterface* session_notifier) {
+  unacked_packets_.SetSessionNotifier(session_notifier);
 }
 
 }  // namespace net
