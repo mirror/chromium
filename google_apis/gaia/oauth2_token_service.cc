@@ -611,7 +611,6 @@ void OAuth2TokenService::InvalidateAccessTokenImpl(
                         account_id,
                         scopes),
       access_token);
-  delegate_->InvalidateAccessToken(account_id, client_id, scopes, access_token);
 }
 
 void OAuth2TokenService::OnFetchComplete(Fetcher* fetcher) {

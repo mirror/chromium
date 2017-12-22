@@ -46,11 +46,6 @@ class OAuth2TokenServiceDelegate {
   virtual std::vector<std::string> GetAccounts();
   virtual void RevokeAllCredentials(){};
 
-  virtual void InvalidateAccessToken(const std::string& account_id,
-                                     const std::string& client_id,
-                                     const std::set<std::string>& scopes,
-                                     const std::string& access_token) {}
-
   virtual void Shutdown() {}
   virtual void LoadCredentials(const std::string& primary_account_id) {}
   virtual void UpdateCredentials(const std::string& account_id,
