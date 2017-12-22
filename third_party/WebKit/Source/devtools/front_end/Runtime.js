@@ -39,7 +39,7 @@ for (var k of []) {
 }
 
 (function() {
-  var baseUrl = self.location ? self.location.origin + self.location.pathname : '';
+  var baseUrl = self.location ? self.location.origin + self.location.pathname : '';;
   self._importScriptPathPrefix = baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1);
 })();
 
