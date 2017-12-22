@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "de3d73f9_f754d961",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T19:33:06Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "2e843e40_656fcea0",
+      "range": {
+        "startLine": 438,
+        "startChar": 8,
+        "endLine": 438,
+        "endChar": 70
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a097605_74efe554",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -234,6 +258,30 @@
       "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc81cd6_191bd32b",
+        "filename": "cc/tiles/software_image_decode_cache_unittest_combinations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T19:33:06Z",
+      "side": 1,
+      "message": "Duh. Yes, it does.",
+      "parentUuid": "0fefe781_1022f2f4",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
