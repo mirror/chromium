@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583395b5_297473f6",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-22T22:24:49Z",
+      "side": 1,
+      "message": "This is a user visible string so it has to be localized.",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88dc7a6_751faf32",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-22T22:24:49Z",
+      "side": 1,
+      "message": "I\u0027m unsure about this. I\u0027m looking at other implementations of filename generators and I don\u0027t see this function being used. Instead other conversion functions are. Can you please confirm using this one is safe in our case?",
+      "range": {
+        "startLine": 42,
+        "startChar": 51,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f025022_5af9cc92",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-22T22:24:49Z",
+      "side": 1,
+      "message": "We still need to truncate the filename to comply with the limitations of the file system.",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c55d5a_150a358a",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-22T22:24:49Z",
+      "side": 1,
+      "message": "As the objective of this test is to test the code is properly \"filling the holes\" we don\u0027t have to retest here that it works for other things.\nWith that in mind wouldn\u0027t it be possible to move all (or most) of this initial setup to generate files on disk from \"*.mhtml\" to \"* (99).mhtml\" to happen inside the for loop below?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 13
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
