@@ -50,7 +50,9 @@ DialAppDiscoveryService::DialAppDiscoveryService(
     const DialAppInfoParseErrorCallback& error_cb)
     : success_cb_(success_cb),
       error_cb_(error_cb),
-      parser_(base::MakeUnique<SafeDialAppInfoParser>(connector)) {}
+      parser_(base::MakeUnique<SafeDialAppInfoParser>(connector)) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 DialAppDiscoveryService::~DialAppDiscoveryService() = default;
 
