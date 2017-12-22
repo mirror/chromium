@@ -16,6 +16,24 @@
       "revId": "ae2da6a0c3967620214ee56efcfc23aaccff32e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31946a9b_880868b9",
+        "filename": "media/midi/midi_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-22T10:29:16Z",
+      "side": 1,
+      "message": "Agreed. Probably keeping on having two constructors would be better.",
+      "parentUuid": "8a547967_70439efd",
+      "revId": "ae2da6a0c3967620214ee56efcfc23aaccff32e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
