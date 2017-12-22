@@ -79,6 +79,7 @@ static_library("core") {
   deps = [
     ":switches",
     "//base",
+    "//base:i18n",
     "//components/keyed_service/core",
     "//net",
     "//services/metrics/public/cpp:metrics_cpp",
