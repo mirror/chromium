@@ -401,6 +401,30 @@
       "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0bdf94_13e85b59",
+        "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-22T20:56:03Z",
+      "side": 1,
+      "message": "It seems that RFC 2047 has introduced a number of stricter or unique definitions. Soft line break in \"CRLF+SPACE\" is one of them. So I changed to use SPACE instead of TAB.\n\nAlso I found out 2 more differences:\n1) SPACE and TAB in the original text should be always encoded.\n2) Multiple encoded text separated by soft line break, instead of one encoded text with soft line break, should be used.\n\nI fixed all these.",
+      "parentUuid": "714f930a_2e8ed85f",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
