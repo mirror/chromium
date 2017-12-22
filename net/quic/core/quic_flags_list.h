@@ -140,7 +140,7 @@ QUIC_FLAG(bool,
           true)
 
 // If true, use deframer from net/quic/http instead of net/http2.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, true)
 
 // If true, then 1) at sender, avoid sending empty acks, 2) at receiver, close
 // connection when a ack frame\'s first block length is 0, unless the ack is
