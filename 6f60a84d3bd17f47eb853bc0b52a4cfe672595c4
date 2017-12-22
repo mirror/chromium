@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62334add_6ac0d815",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-22T18:17:58Z",
+      "side": 1,
+      "message": "nit: I think this is redundant.",
+      "revId": "6f60a84d3bd17f47eb853bc0b52a4cfe672595c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b43b84f_5f9cb2f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-22T18:17:58Z",
+      "side": 1,
+      "message": "so the return type for the function is either false or object? Can we rather return string or null?",
+      "revId": "6f60a84d3bd17f47eb853bc0b52a4cfe672595c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149c8e31_0a24d985",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-22T18:17:58Z",
+      "side": 1,
+      "message": "@return {?function(object, string)} perhaps?",
+      "revId": "6f60a84d3bd17f47eb853bc0b52a4cfe672595c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63fbd64_399a810b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-22T18:17:58Z",
+      "side": 1,
+      "message": "ls`Unable to parse...` (we need to mark a string as localizeble)",
+      "revId": "6f60a84d3bd17f47eb853bc0b52a4cfe672595c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75dc0acb_4bbf2e71",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-22T18:17:58Z",
+      "side": 1,
+      "message": "ls`No value...`",
+      "revId": "6f60a84d3bd17f47eb853bc0b52a4cfe672595c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
