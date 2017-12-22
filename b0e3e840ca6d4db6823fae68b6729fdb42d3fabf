@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0249feea_6bae7c05",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-22T15:59:09Z",
+      "side": 1,
+      "message": "I\u0027ll add new strings in a separate CL.",
+      "parentUuid": "11e9eba2_f33add73",
+      "range": {
+        "startLine": 907,
+        "startChar": 71,
+        "endLine": 907,
+        "endChar": 0
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe25d054_02608ab9",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 2
