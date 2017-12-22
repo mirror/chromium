@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "309d66eb_769bfbe9",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T02:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db7102a7_7e7109e9",
+      "range": {
+        "startLine": 293,
+        "startChar": 2,
+        "endLine": 293,
+        "endChar": 20
+      },
+      "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df27f427_7cfd365e",
         "filename": "chrome/browser/resources/md_extensions/service.js",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5901c0e_939a8a3a",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T02:33:07Z",
+      "side": 1,
+      "message": "All arrow functions in this file use parens for single arg, keeping to match style.\nI can change all to not use parens if you\u0027d prefer. I don\u0027t feel strongly either way.",
+      "parentUuid": "df27f427_7cfd365e",
+      "range": {
+        "startLine": 264,
+        "startChar": 25,
+        "endLine": 264,
+        "endChar": 34
+      },
+      "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57a55cd5_6f957f2e",
+        "filename": "chrome/browser/resources/md_extensions/toolbar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T02:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3c0bd6_1746eb4c",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb14dfb_25d1ee3b",
         "filename": "chrome/common/extensions/api/developer_private.idl",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b150a6a2_898d8f81",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T02:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb14dfb_25d1ee3b",
+      "range": {
+        "startLine": 503,
+        "startChar": 20,
+        "endLine": 503,
+        "endChar": 50
+      },
+      "revId": "1589d12b924c432fa32d9bb2d1f415046942cf3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

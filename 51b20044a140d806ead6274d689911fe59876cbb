@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61af5512_8359d0b7",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-22T02:33:07Z",
+      "side": 1,
+      "message": "I have a presubmit warning here about using BindOnce or BindRepeating since Bind is deprecated.\n\nSince this is only going to reply once, I\u0027m thinking I need BindOnce, but that change is starting to touch a few files as it ripples. I\u0027ll create a separate CL for it.\n\nShould I land that change first or should I proceed with this CL as is and change to BindOnce in a followup cl?",
+      "range": {
+        "startLine": 590,
+        "startChar": 14,
+        "endLine": 590,
+        "endChar": 18
+      },
+      "revId": "51b20044a140d806ead6274d689911fe59876cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
