@@ -21,16 +21,14 @@
 #include "services/preferences/public/cpp/persistent_pref_store_client.h"
 #include "services/preferences/public/cpp/scoped_pref_update.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
+#include "services/preferences/unittest_common.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace prefs {
 namespace {
 
-constexpr int kInitialValue = 1;
-constexpr char kKey[] = "key";
 constexpr char kChildKey[] = "child";
 constexpr char kOtherKey[] = "other_key";
-constexpr char kDictionaryKey[] = "a.dictionary.pref";
 
 void DoNothingHandleReadError(PersistentPrefStore::PrefReadError error) {}
 
