@@ -736,6 +736,24 @@
     },
     {
       "key": {
+        "uuid": "771fb25f_6945031b",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T23:25:29Z",
+      "side": 1,
+      "message": "Yes, there is currently no fs-in-tab specific event notification, nor any \"began capturing\" event from WebContents or anything like that. There is a long-standing desire to add a \"began capturing\" event from WebContents; for things like this and others (e.g., OffscreenTab auto-destruction without a poll timer).",
+      "parentUuid": "a9c4298f_dacf5a82",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c13ff90_09f1bc4d",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 9
