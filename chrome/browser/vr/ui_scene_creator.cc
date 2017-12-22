@@ -492,6 +492,14 @@ void UiSceneCreator::CreateContentQuad() {
   main_content->AddBinding(VR_BIND_FUNC(
       UiElementRenderer::TextureLocation, Model, model_, content_location,
       ContentElement, main_content.get(), SetTextureLocation));
+  main_content->AddBinding(
+      VR_BIND_FUNC(unsigned int, Model, model_, content_overlay_texture_id,
+                   ContentElement, main_content.get(), SetOverlayTextureId));
+  main_content->AddBinding(VR_BIND_FUNC(UiElementRenderer::TextureLocation,
+                                        Model, model_, content_overlay_location,
+                                        ContentElement, main_content.get(),
+                                        SetOverlayTextureLocation));
+
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
   // Limit reticle distance to a sphere based on content distance.

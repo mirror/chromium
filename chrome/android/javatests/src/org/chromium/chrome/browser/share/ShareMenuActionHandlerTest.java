@@ -401,6 +401,16 @@ public class ShareMenuActionHandlerTest {
         public void setSize(int width, int height) {}
 
         @Override
+        public int getWidth() {
+            return 0;
+        }
+
+        @Override
+        public int getHeight() {
+            return 0;
+        }
+
+        @Override
         public Map<String, Pair<Object, Class>> getJavascriptInterfaces() {
             return null;
         }

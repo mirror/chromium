@@ -39,7 +39,10 @@ struct Model {
   const ColorScheme& color_scheme() const;
   gfx::Transform projection_matrix;
   unsigned int content_texture_id = 0;
+  unsigned int content_overlay_texture_id = 0;
   UiElementRenderer::TextureLocation content_location =
+      UiElementRenderer::kTextureLocationLocal;
+  UiElementRenderer::TextureLocation content_overlay_location =
       UiElementRenderer::kTextureLocationLocal;
   bool background_available = false;
   bool background_loaded = false;
