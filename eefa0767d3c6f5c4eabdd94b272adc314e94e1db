@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d61f9998_e4c39667",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-22T18:06:39Z",
+      "side": 1,
+      "message": "nit: i guess you can inline this now",
+      "range": {
+        "startLine": 461,
+        "startChar": 6,
+        "endLine": 461,
+        "endChar": 63
+      },
+      "revId": "eefa0767d3c6f5c4eabdd94b272adc314e94e1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
