@@ -599,9 +599,9 @@ WebSize WebLocalFrameImpl::ContentsSize() const {
 }
 
 bool WebLocalFrameImpl::HasVisibleContent() const {
-  LayoutEmbeddedContentItem layout_item = GetFrame()->OwnerLayoutItem();
-  if (!layout_item.IsNull() &&
-      layout_item.Style()->Visibility() != EVisibility::kVisible) {
+  auto* layout_object = GetFrame()->OwnerLayoutObject();
+  if (layout_object &&
+      layout_object->StyleRef().Visibility() != EVisibility::kVisible) {
     return false;
   }
 
