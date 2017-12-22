@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c4b9cc1_27fb9a21",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T05:16:39Z",
+      "side": 1,
+      "message": "will wake it up --\u003e will reset the idle status and make it live longer ?\n\n(Otherwise \u0027That means\u0027 feels a bit off)",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1565c3ce_442562d0",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T05:16:39Z",
+      "side": 1,
+      "message": "Now we have more usage, might be good to slightly rephrase the last sentence.\n\n(Also it might be clearer if we rename this to something like HasWorkInBrowser in a follow-up)",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02bbb83_29511dd9",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-22T05:16:39Z",
+      "side": 1,
+      "message": "I wonder if this name could imply the state that the renderer thinks it\u0027s idle while there may be other tasks in the browser-side.\n\nWould it work if we simply say\n\nidle_timer_fired_in_renderer_\n\n?\n\nWe reset it in StartRequest* or StopWorker, and in StopWorkerIfIdle\n\n  // We may still have some work in the browser-side that are not\n  // observable by the renderer, i.e. response streaming. In such case\n  // we toggle the |idle_timer_fired_in_renderer_| flag and return here,\n  // but will check later (i.e. when streaming finished) to see if we\n  // we should fire OnNoWork().\n  if (HasWork()) {\n    idle_timer_fired_in_renderer_ \u003d true;\n    return;\n  }\n\nOne more thing. Would it be possible to consolidate the comments and logic for OnNoWork in s13n case?  Say, would we be able to write something like following?\n\nvoid OnNoWorkInBrowser() {\n  DCHECK(!HasNoWorkInBrowser());\n\n  if (!ServiceWorkerUtils::IsServicificationEnabled()) {\n    for (auto\u0026 observer : listeners_)\n      observer.OnNoWork(this);\n    return;\n  }\n\n  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());\n  if (!idle_timer_fired_in_renderer_)\n    return;\n  for (auto\u0026 observer : listeners_)\n    observer.OnNoWork(this);\n  idle_timer_fired_in_renderer_ \u003d false;\n}",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
