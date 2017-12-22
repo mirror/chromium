@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c6df522_4a9f3581",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T21:21:20Z",
+      "side": 0,
+      "message": "Yeah, this is where I stopped :) Will be addressed in the next CL.",
+      "parentUuid": "a9b89a31_fad3610a",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "f1a2626b5cfdde0fb46c508245a87b46ef862ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db80560e_686f7de7",
         "filename": "chrome/browser/ui/app_list/start_page_observer.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-22T21:04:42Z",
       "side": 0,
       "message": "Could you please check if really need this observer? It seems it is used in one place only and I have feeling to support voice query.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "f1a2626b5cfdde0fb46c508245a87b46ef862ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fcb2aa_fe52192c",
+        "filename": "chrome/browser/ui/app_list/start_page_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-22T21:21:20Z",
+      "side": 0,
+      "message": "Will be a part of another CL; thanks!",
+      "parentUuid": "db80560e_686f7de7",
       "range": {
         "startLine": 15,
         "startChar": 6,
