@@ -45,6 +45,40 @@
       "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4708b865_61cf4c22",
+        "filename": "components/viz/service/surfaces/surface_hittest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-22T00:13:23Z",
+      "side": 1,
+      "message": "It\u0027s not clear what the return value and |transform| will be set to if |out_query_renderer| is set to true. Can you please update the comment here? More specifically: if |out_query_renderer| is set to true, should the caller ignore the return value? Or should the caller find the renderer associated with the return value, and ask *that* renderer (instead of the renderer for the |root_surface_id|). Similarly, should |transform| be applied to the event-location before querying the renderer?",
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9caf57_be0c717a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-22T00:13:23Z",
+      "side": 1,
+      "message": "The same comment in surface_hittest.h applies (i.e. clarify what the other out-params mean if |out_query_renderer| is set to true).",
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
