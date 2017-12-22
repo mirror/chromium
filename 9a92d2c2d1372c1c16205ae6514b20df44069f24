@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5effe2ef_0cd44cf7",
+        "filename": "media/remoting/remoting_cdm_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-22T20:26:50Z",
+      "side": 1,
+      "message": "When |is_remoting_| is true, it indicates that a remoting CDM was created. So need to shut down the session when the state is not starting nor started. The RemotingCdmController is used only in unit tests for now, and the real implementation of the RemotingCDM was never checked in. This file will be completely removed in a coming clean up CL since we don\u0027t have plan to support remoting encrypted videos.",
+      "parentUuid": "97890fbe_0842ae5f",
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced41847_7beea791",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2d644a96_12ba0d7e",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-22T20:26:50Z",
+      "side": 1,
+      "message": "Add a comment to explain this.",
+      "parentUuid": "ced41847_7beea791",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e4d5e3_502bec12",
         "filename": "media/remoting/shared_session.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44634603_45781af1",
+        "filename": "media/remoting/shared_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-22T20:26:50Z",
+      "side": 1,
+      "message": "Reworded the comments. \nWhen OnSinkGone() is called, it only indicates that a remoting sink is not available, i.e., can not start a remoting session. It doesn\u0027t mean that the receiver actually lost connection.",
+      "parentUuid": "27e4d5e3_502bec12",
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
