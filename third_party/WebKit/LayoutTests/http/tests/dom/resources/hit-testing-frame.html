@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<style>
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+</style>
+
+<script>
+var message_port = null;
+
+window.onload = function() {
+  document.body.addEventListener('click', () => {
+    message_port.postMessage(true, "*");
+    console.log('clicked!');
+  });
+}
+
+window.addEventListener('message', (e) => {
+  message_port = e.source;
+});
+
+</script>

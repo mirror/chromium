@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<!-- This test confirms that hit testing works correctly in the presence of
+  "squashable" content that succeeds an out-of-process iframe in stacking
+  order. -->
+
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+#A {
+  /* Dummy layer which is not allowed to squash */
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+
+#B {
+  top: 0px;
+  width: 400px;
+  height: 20px;
+}
+
+#C {
+  top: 0px;
+  left: 0px;
+  width: 40px;
+  height: 200px;
+}
+
+div {
+  position: absolute;
+  background: #a0a0ee;
+  border: 3px solid #1010ff;
+}
+
+iframe {
+  backface-visibility: hidden; /* force compositing */
+}
+</style>
+<iframe id="frame" width="400" height="240" src="http://localhost:8000/dom/resources/hit-testing-frame.html" frameborder="0" allowfullscreen=""></iframe>
+<div id="A"></div>
+<div id="B"></div>
+<div id="C"></div>
+
+<script>
+if (window.testRunner)
+  testRunner.dumpAsText();
+
+let testFrameTap = async_test("Test that hit testing out-of-process iframes is not affected by squashing.");
+
+var frame = document.querySelector('#frame');
+
+frame.onload = () => {
+  // Check how many animation frames have been served to the frame after it has
+  // been given time to load.
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      // By the time this runs, the frame should be in a steady state.
+      var frame = document.querySelector('#frame');
+      frame.contentWindow.postMessage(null, '*');
+      if (window.chrome && chrome.gpuBenchmarking) {
+        var targetRect = frame.getBoundingClientRect();
+        var offset = 100;
+        var x = targetRect.left + offset;
+        var y = targetRect.top + offset;
+        chrome.gpuBenchmarking.tap(x, y, function() {
+            console.log('tapped at: ' + x + ', ' + y);
+        });
+      }
+    }, 0)
+  });
+};
+
+window.addEventListener('message', (e) => {
+  testFrameTap.done();
+  console.log('received click back');
+});
+</script>
