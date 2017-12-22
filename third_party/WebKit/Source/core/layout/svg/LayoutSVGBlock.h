@@ -53,7 +53,7 @@ class LayoutSVGBlock : public LayoutBlockFlow {
 
   AffineTransform LocalSVGTransform() const final { return local_transform_; }
 
-  PaintLayerType LayerTypeRequired() const final { return kNoPaintLayer; }
+  PaintLayerType LayerTypeRequired() const { return kNoPaintLayer; }
 
  protected:
   void WillBeDestroyed() override;

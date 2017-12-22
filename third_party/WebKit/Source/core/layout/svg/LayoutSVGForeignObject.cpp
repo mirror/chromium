@@ -152,4 +152,19 @@ bool LayoutSVGForeignObject::NodeAtFloatPoint(HitTestResult& result,
                                   kHitTestChildBlockBackgrounds);
 }
 
+bool LayoutSVGForeignObject::NodeAtPoint(
+    HitTestResult& result,
+    const HitTestLocation& location_in_parent,
+    const LayoutPoint& accumulated_offset,
+    HitTestAction hit_test_action) {
+  // TODO: This is not correct because it does not take into accout svg to local
+  // border box transforms.
+  return NodeAtFloatPoint(result, FloatPoint(accumulated_offset),
+                          hit_test_action);
+}
+
+PaintLayerType LayoutSVGForeignObject::LayerTypeRequired() const {
+  return LayoutBlockFlow::LayerTypeRequired();
+}
+
 }  // namespace blink

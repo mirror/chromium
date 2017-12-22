@@ -60,6 +60,11 @@ class LayoutSVGForeignObject final : public LayoutSVGBlock {
     return ObjectBoundingBox();
   }
 
+  bool NodeAtPoint(HitTestResult&,
+                   const HitTestLocation&,
+                   const LayoutPoint&,
+                   HitTestAction) override;
+
   bool NodeAtFloatPoint(HitTestResult&,
                         const FloatPoint& point_in_parent,
                         HitTestAction) override;
@@ -69,6 +74,8 @@ class LayoutSVGForeignObject final : public LayoutSVGBlock {
   }
 
   void SetNeedsTransformUpdate() override { needs_transform_update_ = true; }
+
+  PaintLayerType LayerTypeRequired() const final;
 
  private:
   LayoutUnit ElementX() const;

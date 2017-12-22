@@ -1984,7 +1984,8 @@ scoped_refptr<ComputedStyle> Element::StyleForLayoutObject() {
   }
 
   style->UpdateIsStackingContext(this == GetDocument().documentElement(),
-                                 IsInTopLayer());
+                                 IsInTopLayer(),
+                                 IsSVGForeignObjectElement(*this));
 
   return style;
 }

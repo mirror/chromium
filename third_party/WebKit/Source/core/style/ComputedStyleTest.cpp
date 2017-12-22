@@ -72,12 +72,18 @@ TEST(ComputedStyleTest, FocusRingOutset) {
 #endif
 }
 
+TEST(ComputedStyleTest, SVGStackingContext) {
+  scoped_refptr<ComputedStyle> style = ComputedStyle::Create();
+  style->UpdateIsStackingContext(false, false, true);
+  EXPECT_TRUE(style->IsStackingContext());
+}
+
 TEST(ComputedStyleTest, Preserve3dForceStackingContext) {
   scoped_refptr<ComputedStyle> style = ComputedStyle::Create();
   style->SetTransformStyle3D(ETransformStyle3D::kPreserve3d);
   style->SetOverflowX(EOverflow::kHidden);
   style->SetOverflowY(EOverflow::kHidden);
-  style->UpdateIsStackingContext(false, false);
+  style->UpdateIsStackingContext(false, false, false);
   EXPECT_EQ(ETransformStyle3D::kFlat, style->UsedTransformStyle3D());
   EXPECT_TRUE(style->IsStackingContext());
 }
