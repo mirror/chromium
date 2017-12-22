@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c8abf4_0d60a308",
+        "filename": "chrome/browser/ui/webui/ntp/ntp_resource_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-22T17:45:52Z",
+      "side": 1,
+      "message": "Not easily, because of this TODO: We actually have the non-incognito ThemeProvider here, so it\u0027ll return the wrong color.",
+      "range": {
+        "startLine": 457,
+        "startChar": 75,
+        "endLine": 457,
+        "endChar": 0
+      },
+      "revId": "0a0d5e20f142631249a363c87837c0dab9519fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
