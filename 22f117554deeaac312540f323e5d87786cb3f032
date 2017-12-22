@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1f4088d_99995775",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-22T17:59:59Z",
+      "side": 1,
+      "message": "Closure complained, it didn\u0027t understand that it was already checked in shouldIgnoreNode. I moved it up into the previous if statement and added a comment.",
+      "parentUuid": "a04766bb_66ba4912",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ed07f37_a9502b8d",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-22T17:21:04Z",
       "side": 1,
       "message": "I typically see this defined as a function, like a constructor:\n\nfunction SelectedNode() {\n}\n\nAlso, in other browser code we typically call this a \"Position\"\n(a node plus an offset), and a start and end position together\nare called a \"Range\". I think using those terms would make sense.",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3240717e_e614f0fb",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-22T17:59:59Z",
+      "side": 1,
+      "message": "I tried that but Closure got a bit mad. Maybe I did it wrong? Bug Chromevox seems to do it this way, and also it looks like this in the JS style guide: https://google.github.io/styleguide/jsguide.html#jsdoc-enum-and-typedef-comments and in closure: https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System#typedefs.\n\nDone with rename to Position.",
+      "parentUuid": "8ed07f37_a9502b8d",
       "revId": "22f117554deeaac312540f323e5d87786cb3f032",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b54081fc_bf706904",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-22T17:59:59Z",
+      "side": 1,
+      "message": "I don\u0027t always have a staticText, so it\u0027s needed a lot of the time.\n\n* Highlighting the Google search box on a new tab gives a genericContainer start and end\n* Highlighting a bunch of stuff on the Wikipedia.org home page gives a staticText and genericContainer\n* Highlighting image search results gives link nodes\n\netc",
+      "parentUuid": "bc15cec6_acbda598",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d20d8469_02fdfe53",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "22f117554deeaac312540f323e5d87786cb3f032",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ecf878_331a208f",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-22T17:59:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d20d8469_02fdfe53",
+      "revId": "22f117554deeaac312540f323e5d87786cb3f032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
