@@ -847,7 +847,7 @@ void FrameSelection::DidLayout() {
 }
 
 void FrameSelection::UpdateAppearance() {
-  DCHECK(!frame_->ContentLayoutItem().IsNull());
+  DCHECK(frame_->ContentLayoutObject());
   frame_caret_->ScheduleVisualUpdateForPaintInvalidationIfNeeded();
   layout_selection_->SetHasPendingSelection();
 }
@@ -939,9 +939,9 @@ String FrameSelection::SelectedTextForClipboard() const {
 
 LayoutRect FrameSelection::UnclippedBounds() const {
   LocalFrameView* view = frame_->View();
-  LayoutViewItem layout_view = frame_->ContentLayoutItem();
+  auto* layout_view = frame_->ContentLayoutObject();
 
-  if (!view || layout_view.IsNull())
+  if (!view || !layout_view)
     return LayoutRect();
 
   view->UpdateLifecycleToLayoutClean();
