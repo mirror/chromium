@@ -30,6 +30,7 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
+#include "ui/display/types/display_constants.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -45,6 +46,7 @@ class MirroringScreenPositionClient
 
   void ConvertPointToScreen(const aura::Window* window,
                             gfx::PointF* point) override {
+    LOG(ERROR) << "MSW MirroringScreenPositionClient::ConvertPointToScreen A"; 
     const aura::Window* root = window->GetRootWindow();
     aura::Window::ConvertPointToTarget(window, root, point);
     const display::Display& display =
@@ -143,6 +145,7 @@ void MirrorWindowController::UpdateWindow(
       display::Screen::GetScreen()->GetPrimaryDisplay();
   const display::ManagedDisplayInfo& source_display_info =
       display_manager->GetDisplayInfo(primary.id());
+  LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow A IsInUnifiedMode:" << display_manager->IsInUnifiedMode() << " unified-id:" << display::kUnifiedDisplayId << " primary-id:" << primary.id(); 
 
   multi_display_mode_ = GetCurrentMultiDisplayMode();
 
@@ -210,16 +213,21 @@ void MirrorWindowController::UpdateWindow(
           new aura::Window(nullptr);
       mirror_window->Init(ui::LAYER_SOLID_COLOR);
       host->window()->AddChild(mirror_window);
+      host->window()->SetName("Mirror host window"); 
+      mirror_window->SetName("Mirror host child 'mirror_window'"); 
       host_info->ash_host->SetRootWindowTransformer(std::move(transformer));
       mirror_window->SetBounds(host->window()->bounds());
       mirror_window->Show();
       // The classic config creates the accelerated widget synchronously. Mus
       // (without viz) creates the reflector in OnAcceleratedWidgetOverridden.
       if (host->GetAcceleratedWidget() != gfx::kNullAcceleratedWidget) {
+        LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow B creating reflector? aw:" << host->GetAcceleratedWidget(); 
         DCHECK_EQ(Shell::GetAshConfig(), Config::CLASSIC);
         if (reflector_) {
+          LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow B adding mirroring layer aw:" << host->GetAcceleratedWidget(); 
           reflector_->AddMirroringLayer(mirror_window->layer());
         } else if (aura::Env::GetInstance()->context_factory_private()) {
+          LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow C creating reflector aw:" << host->GetAcceleratedWidget(); 
           reflector_ =
               aura::Env::GetInstance()
                   ->context_factory_private()
@@ -286,6 +294,12 @@ void MirrorWindowController::CloseIfNotNecessary() {
   }
 }
 
+// MirroringHostInfo* MirrorWindowController::GetMirroringHostInfo(
+//     int64_t display_id) const {
+//   const auto& iter = mirroring_host_info_map_.find(display_id);
+//   return iter == mirroring_host_info_map_.end() ? nullptr : iter.second;
+// }
+
 void MirrorWindowController::Close(bool delay_host_deletion) {
   for (auto& info : mirroring_host_info_map_)
     CloseAndDeleteHost(info.second, delay_host_deletion);
@@ -326,9 +340,12 @@ void MirrorWindowController::OnAcceleratedWidgetOverridden(
   DCHECK_NE(Shell::GetAshConfig(), Config::CLASSIC);
   DCHECK(!switches::IsMusHostingViz());
   MirroringHostInfo* info = mirroring_host_info_map_[host->GetDisplayId()];
+  LOG(ERROR) << "MSW MirrorWindowController::OnAcceleratedWidgetOverridden creating reflector! primary-aw:" << Shell::GetPrimaryRootWindow()->GetHost()->GetAcceleratedWidget() << " mirror-aw:" << host->GetAcceleratedWidget(); 
   if (reflector_) {
     reflector_->AddMirroringLayer(info->mirror_window->layer());
+    LOG(ERROR) << "MSW MirrorWindowController::OnAcceleratedWidgetOverridden adding reflector layer! primary-aw:" << Shell::GetPrimaryRootWindow()->GetHost()->GetAcceleratedWidget() << " mirror-aw:" << host->GetAcceleratedWidget(); 
   } else if (aura::Env::GetInstance()->context_factory_private()) {
+    LOG(ERROR) << "MSW MirrorWindowController::OnAcceleratedWidgetOverridden creating reflector! primary-aw:" << Shell::GetPrimaryRootWindow()->GetHost()->GetAcceleratedWidget() << " mirror-aw:" << host->GetAcceleratedWidget(); 
     reflector_ =
         aura::Env::GetInstance()->context_factory_private()->CreateReflector(
             Shell::GetPrimaryRootWindow()->GetHost()->compositor(),

@@ -22,7 +22,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_conversions.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ui {
 namespace ws {
 
@@ -112,6 +112,10 @@ bool EventDispatcher::SetCaptureWindow(ServerWindow* window,
   if (window == capture_window_ && client_id == capture_window_client_id_)
     return true;
 
+  LOG(ERROR) << "MSW EventDispatcher::SetCaptureWindow A window:" << window
+            //  << "(" << (window? window->GetName() : "") << ") capture_window_:" << capture_window_; 
+            << " bounds:" << (window? window->bounds().ToString() : ""); 
+  // base::debug::StackTrace().Print(); 
   // A window that is blocked by a modal window cannot gain capture.
   if (window && modal_window_controller_.IsWindowBlocked(window))
     return false;

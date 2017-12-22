@@ -42,6 +42,7 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/platform_window/mojo/ime_type_converters.h"
 #include "ui/platform_window/text_input_state.h"
+  #include "base/debug/stack_trace.h" 
 
 using mojo::InterfaceRequest;
 
@@ -1164,6 +1165,8 @@ bool WindowTree::ShouldRouteToWindowManager(const ServerWindow* window) const {
 void WindowTree::ProcessCaptureChanged(const ServerWindow* new_capture,
                                        const ServerWindow* old_capture,
                                        bool originated_change) {
+  LOG(ERROR) << "MSW WindowTree::ProcessCaptureChanged A:" << old_capture << " -> " << new_capture << " bounds:" << (new_capture? new_capture->bounds().ToString() : ""); 
+  // base::debug::StackTrace().Print(); 
   ClientWindowId new_capture_window_client_id;
   ClientWindowId old_capture_window_client_id;
   const bool new_capture_window_known =
@@ -1512,10 +1515,31 @@ void WindowTree::DispatchInputEventImpl(ServerWindow* target,
   // Should only get events from windows attached to a host.
   DCHECK(event_source_wms_);
   bool matched_pointer_watcher = EventMatchesPointerWatcher(event);
+  // if (event.IsLocatedEvent() && event.AsLocatedEvent()->location().x() < 0) 
+  //   base::debug::StackTrace().Print(); 
+
+  LOG(ERROR) << "MSW WindowTree::DispatchInputEventImpl A "
+      << event_location.raw_location.ToString()
+      << " display:" << event_location.display_id
+      << " " << window_server_
+      << " " << (window_server_ ? window_server_->display_manager() : nullptr); 
+  Display* display = window_server_->display_manager()->GetDisplayById(event_location.display_id);
+  LOG(ERROR) << "MSW WindowTree::DispatchInputEventImpl B display:" << display; 
+  // ServerWindow* display_root_window = display->GetActiveRootWindow();//root_window();
+  WindowManagerDisplayRoot* event_wm_display_root = nullptr;
+  if (display && window_manager_state_)
+    event_wm_display_root = display->GetWindowManagerDisplayRootForUser(window_manager_state_->user_id());
+  LOG(ERROR) << "MSW WindowTree::DispatchInputEventImpl C event_wm_display_root:" << event_wm_display_root; 
+    // event_wm_display_root = display->GetActiveWindowManagerDisplayRoot(); 
+  ServerWindow* display_root_window = event_wm_display_root ? event_wm_display_root->GetClientVisibleRoot() : nullptr;
+  LOG(ERROR) << "MSW WindowTree::DispatchInputEventImpl D display_root_window:" << display_root_window; 
   client()->OnWindowInputEvent(
       event_ack_id_, TransportIdForWindow(target), event_location.display_id,
-      event_location.raw_location, ui::Event::Clone(event),
-      matched_pointer_watcher);
+      // TransportIdForWindow(display_root->GetClientVisibleRoot()),
+      // TransportIdForWindow(display_root->root()),
+      display_root_window ? TransportIdForWindow(display_root_window) : Id(),
+      event_location.raw_location,
+      ui::Event::Clone(event), matched_pointer_watcher);
 }
 
 bool WindowTree::EventMatchesPointerWatcher(const ui::Event& event) const {

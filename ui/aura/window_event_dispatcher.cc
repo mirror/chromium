@@ -486,6 +486,7 @@ ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
 }
 
 ui::EventTarget* WindowEventDispatcher::GetRootForEvent(ui::Event* event) {
+  LOG(ERROR) << "WindowEventDispatcher::GetRootForEvent A target:" << event->target(); 
   if (Env::GetInstance()->mode() == Env::Mode::LOCAL)
     return window();
 

@@ -84,6 +84,8 @@ class ASH_EXPORT MirrorWindowController
     return current_event_targeter_src_host_;
   }
 
+  // MirroringHostInfo* GetMirroringHostInfo(int64_t display_id) const;
+
  private:
   friend class MirrorWindowTestApi;
 
