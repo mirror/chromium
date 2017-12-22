@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "build/buildflag.h"
+#include "media/base/localized_strings.h"
 #include "media/media_features.h"
 #include "media/remoting/remoting_cdm.h"
 #include "media/remoting/remoting_cdm_context.h"
@@ -36,6 +37,33 @@ constexpr int kPixelPerSec2K = 1920 * 1080 * 30;  // 1080p 30fps.
 // Frequent switching into and out of media remoting for short-duration media
 // can feel "janky" to the user.
 constexpr double kMinRemotingMediaDurationInSec = 60;
+
+// TODO(xjz): Handle more stop triggers (crbug.com/797176).
+std::string GetRemotingStopMessage(StopTrigger stop_trigger) {
+  switch (stop_trigger) {
+    case FRAME_DROP_RATE_HIGH:
+    case PACING_TOO_SLOWLY:
+      return GetLocalizedStringUTF8(MEDIA_REMOTING_STOP_BY_BANDWIDTH_TEXT);
+    case EXITED_FULLSCREEN:
+    case BECAME_AUXILIARY_CONTENT:
+    case DISABLED_BY_PAGE:
+    case UNKNOWN_STOP_TRIGGER:
+      return GetLocalizedStringUTF8(MEIDA_REMOTING_STOP_TEXT);
+    case UNSUPPORTED_AUDIO_CODEC:
+    case UNSUPPORTED_VIDEO_CODEC:
+    case UNSUPPORTED_AUDIO_AND_VIDEO_CODECS:
+    case DECRYPTION_ERROR:
+    case RECEIVER_INITIALIZE_FAILED:
+    case RECEIVER_PIPELINE_ERROR:
+    case PEERS_OUT_OF_SYNC:
+    case RPC_INVALID:
+    case DATA_PIPE_CREATE_ERROR:
+    case MOJO_PIPE_ERROR:
+      return GetLocalizedStringUTF8(MEDIA_REMOTING_STOP_BY_ERROR_TEXT);
+    default:
+      return std::string();
+  }
+}
 
 }  // namespace
 
@@ -410,7 +438,7 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
     DCHECK(!is_encrypted_);
     DCHECK_NE(stop_trigger, UNKNOWN_STOP_TRIGGER);
     metrics_recorder_.WillStopSession(stop_trigger);
-    client_->SwitchToLocalRenderer();
+    client_->SwitchToLocalRenderer(GetRemotingStopMessage(stop_trigger));
     VLOG(2) << "Request to stop remoting: stop_trigger=" << stop_trigger;
     session_->StopRemoting(this);
   }

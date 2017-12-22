@@ -15,6 +15,7 @@ namespace {
 
 constexpr double kStyleChangeTransSeconds = 0.2;
 constexpr double kHiddenAnimationSeconds = 0.3;
+constexpr double kShowToastSeconds = 5;
 
 }  // namespace
 
@@ -44,11 +45,16 @@ MediaRemotingInterstitial::MediaRemotingInterstitial(
   cast_text_message_->SetShadowPseudoId(
       AtomicString("-internal-media-remoting-cast-text-message"));
   AppendChild(cast_text_message_);
+
+  toast_message_ = HTMLDivElement::Create(GetDocument());
+  toast_message_->SetShadowPseudoId(
+      AtomicString("-internal-media-remoting-toast-message"));
+  AppendChild(toast_message_);
 }
 
 void MediaRemotingInterstitial::Show(
     const WebString& remote_device_friendly_name) {
-  if (should_be_visible_)
+  if (IsVisible())
     return;
   if (remote_device_friendly_name.IsEmpty()) {
     cast_text_message_->setInnerText(
@@ -64,18 +70,25 @@ void MediaRemotingInterstitial::Show(
   }
   if (toggle_insterstitial_timer_.IsActive())
     toggle_insterstitial_timer_.Stop();
-  should_be_visible_ = true;
+  state_ = VISIBLE;
   RemoveInlineStyleProperty(CSSPropertyDisplay);
+  SetInlineStyleProperty(CSSPropertyOpacity, 0,
+                         CSSPrimitiveValue::UnitType::kNumber);
   toggle_insterstitial_timer_.StartOneShot(kStyleChangeTransSeconds,
                                            BLINK_FROM_HERE);
 }
 
-void MediaRemotingInterstitial::Hide() {
-  if (!should_be_visible_)
+void MediaRemotingInterstitial::Hide(const WebString& stop_text) {
+  if (!IsVisible())
     return;
   if (toggle_insterstitial_timer_.IsActive())
     toggle_insterstitial_timer_.Stop();
-  should_be_visible_ = false;
+  if (stop_text.IsEmpty()) {
+    state_ = HIDDEN;
+  } else {
+    toast_message_->setInnerText(stop_text, ASSERT_NO_EXCEPTION);
+    state_ = TOAST;
+  }
   SetInlineStyleProperty(CSSPropertyOpacity, 0,
                          CSSPrimitiveValue::UnitType::kNumber);
   toggle_insterstitial_timer_.StartOneShot(kHiddenAnimationSeconds,
@@ -84,11 +97,33 @@ void MediaRemotingInterstitial::Hide() {
 
 void MediaRemotingInterstitial::ToggleInterstitialTimerFired(TimerBase*) {
   toggle_insterstitial_timer_.Stop();
-  if (should_be_visible_) {
+  if (IsVisible()) {
+    // Show interstitial except the |toast_message_|.
+    background_image_->RemoveInlineStyleProperty(CSSPropertyDisplay);
+    cast_icon_->RemoveInlineStyleProperty(CSSPropertyDisplay);
+    cast_text_message_->RemoveInlineStyleProperty(CSSPropertyDisplay);
+    toast_message_->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+    SetInlineStyleProperty(CSSPropertyBackgroundColor, CSSValueBlack);
     SetInlineStyleProperty(CSSPropertyOpacity, 1,
                            CSSPrimitiveValue::UnitType::kNumber);
-  } else {
+  } else if (state_ == HIDDEN) {
     SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+    toast_message_->setInnerText(WebString(), ASSERT_NO_EXCEPTION);
+  } else {
+    // Show |toast_message_| only.
+    toast_message_->RemoveInlineStyleProperty(CSSPropertyDisplay);
+    SetInlineStyleProperty(CSSPropertyBackgroundColor, CSSValueTransparent);
+    SetInlineStyleProperty(CSSPropertyOpacity, 1,
+                           CSSPrimitiveValue::UnitType::kNumber);
+    background_image_->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+    cast_icon_->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
+    cast_text_message_->SetInlineStyleProperty(CSSPropertyDisplay,
+                                               CSSValueNone);
+    toast_message_->SetInlineStyleProperty(
+        CSSPropertyOpacity, 1, CSSPrimitiveValue::UnitType::kNumber);
+    state_ = HIDDEN;
+    toggle_insterstitial_timer_.StartOneShot(kShowToastSeconds,
+                                             BLINK_FROM_HERE);
   }
 }
 
@@ -109,6 +144,7 @@ void MediaRemotingInterstitial::Trace(blink::Visitor* visitor) {
   visitor->Trace(background_image_);
   visitor->Trace(cast_icon_);
   visitor->Trace(cast_text_message_);
+  visitor->Trace(toast_message_);
   HTMLDivElement::Trace(visitor);
 }
 

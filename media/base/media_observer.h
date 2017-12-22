@@ -19,9 +19,12 @@ class MEDIA_EXPORT MediaObserverClient {
   // possible. When switching to remote renderer, all the optimizations that
   // might suspend the media pipeline should be disabled.
   // |remote_device_friendly_name| can be empty if the remote device is unknown.
+  // When switching to local renderer, if |stop_rendering_remotely_text| is not
+  // empty, it will be shown on top of the video for a short period.
   virtual void SwitchToRemoteRenderer(
       const std::string& remote_device_friendly_name) = 0;
-  virtual void SwitchToLocalRenderer() = 0;
+  virtual void SwitchToLocalRenderer(
+      const std::string& stop_rendering_remotely_text) = 0;
 
   // Requests to activate monitoring changes on viewport intersection.
   virtual void ActivateViewportIntersectionMonitoring(bool activate) = 0;

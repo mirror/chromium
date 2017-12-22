@@ -120,10 +120,11 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   // Informs that media starts/stops being rendered and played back remotely.
   // |remote_device_friendly_name| will be shown in the remoting UI to indicate
   // which device the content is rendered on. An empty name indicates an unknown
-  // remote device. A default message will be shown in this case.
+  // remote device. A default message will be shown in this case. |stop_text|
+  // will be shown on top of the media for a short period if not empty.
   virtual void MediaRemotingStarted(
       const WebString& remote_device_friendly_name) = 0;
-  virtual void MediaRemotingStopped() = 0;
+  virtual void MediaRemotingStopped(const WebString& stop_text) = 0;
 
   // Returns whether the media element has native controls. It does not mean
   // that the controls are currently visible.

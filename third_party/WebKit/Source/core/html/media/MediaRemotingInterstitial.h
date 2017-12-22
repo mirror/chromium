@@ -23,7 +23,9 @@ class HTMLVideoElement;
 // \-HTMLDivElement
 // |    (-internal-media-remoting-cast-icon)
 // \-HTMLDivElement
-//      (-internal-media-remoting-cast-text-message)
+// |    (-internal-media-remoting-cast-text-message)
+// |-HTMLDivElement
+//      (-internal-media-remoting-toast-message)
 class MediaRemotingInterstitial final : public HTMLDivElement {
  public:
   explicit MediaRemotingInterstitial(HTMLVideoElement&);
@@ -31,14 +33,14 @@ class MediaRemotingInterstitial final : public HTMLDivElement {
   // Show/Hide Media Remoting interstitial. |remote_device_friendly_name| will
   // be shown in the UI to indicate which device the content is rendered on. An
   // empty name indicates an unknown remote device. A default message will be
-  // shown in this case.
+  // shown in this case. If not empty, |stop_text| will be shown for 5 seconds.
   void Show(const WebString& remote_device_friendly_name);
-  void Hide();
+  void Hide(const WebString& stop_text);
 
   void OnPosterImageChanged();
 
   // Query for whether the remoting interstitial is visible.
-  bool IsVisible() const { return should_be_visible_; }
+  bool IsVisible() const { return state_ == VISIBLE; }
 
   HTMLVideoElement& GetVideoElement() const { return *video_element_; }
 
@@ -53,13 +55,19 @@ class MediaRemotingInterstitial final : public HTMLDivElement {
 
   // Indicates whether the interstitial should be visible. It is set/changed
   // when Show()/Hide() is called.
-  bool should_be_visible_ = false;
+  enum State {
+    HIDDEN,   // The interstitial is currently not showing.
+    VISIBLE,  // The interstitial is currently visible except the toast.
+    TOAST,    // Only the toast is visible.
+  };
+  State state_ = HIDDEN;
 
   TaskRunnerTimer<MediaRemotingInterstitial> toggle_insterstitial_timer_;
   Member<HTMLVideoElement> video_element_;
   Member<HTMLImageElement> background_image_;
   Member<HTMLDivElement> cast_icon_;
   Member<HTMLDivElement> cast_text_message_;
+  Member<HTMLDivElement> toast_message_;
 };
 
 }  // namespace blink
