@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8fd234c_5a6b106d",
+        "filename": "third_party/WebKit/Source/core/script/ClassicPendingScript.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-22T13:05:36Z",
+      "side": 1,
+      "message": "How about renaming this to |is_external_script| and adding a link to the corresponding spec text? \"external\" sounds unclear to me.",
+      "range": {
+        "startLine": 124,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "2c53cb695bda73713c9addbbb678261d870dadf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
