@@ -1288,3 +1288,47 @@ util.isTouchModeEnabled = function() {
         });
   });
 };
+
+util.readEntriesRecursively = function(
+    rootEntry, entriesCallback, successCallback, errorCallback, shouldStop) {
+  var numRunningTasks = 0;
+  var error = null;
+  var maybeRunCallback = function() {
+    if (numRunningTasks === 0) {
+      if (shouldStop())
+        errorCallback(util.createDOMError(util.FileError.ABORT_ERR));
+      else if (error)
+        errorCallback(error);
+      else
+        successCallback();
+    }
+  };
+  var processEntry = function(entry) {
+    var onError = function(fileError) {
+      if (!error)
+        error = fileError;
+      numRunningTasks--;
+      maybeRunCallback();
+    };
+    var onSuccess = function(entries) {
+      if (shouldStop() || error || entries.length === 0) {
+        numRunningTasks--;
+        maybeRunCallback();
+        return;
+      }
+      entriesCallback(entries);
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isDirectory)
+          processEntry(entries[i]);
+      }
+      // Read remaining entries.
+      reader.readEntries(onSuccess, onError);
+    };
+
+    numRunningTasks++;
+    var reader = entry.createReader();
+    reader.readEntries(onSuccess, onError);
+  };
+
+  processEntry(rootEntry);
+};
