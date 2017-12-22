@@ -245,7 +245,7 @@ class ImageCreationData(object):
   def __init__(self, output_directory, exe_name, runtime_deps, target_cpu,
                dry_run=False, child_args=[], use_device=False, bootdata=None,
                summary_output=None, shutdown_machine=False,
-               wait_for_network=False, use_autorun=False):
+               wait_for_network=False, use_autorun=False, forward_ssh_port=0):
     self.output_directory = output_directory
     self.exe_name = exe_name
     self.runtime_deps = runtime_deps
@@ -258,6 +258,7 @@ class ImageCreationData(object):
     self.shutdown_machine = shutdown_machine
     self.wait_for_network = wait_for_network
     self.use_autorun = use_autorun
+    self.forward_ssh_port = forward_ssh_port
 
 
 class BootfsData(object):
@@ -614,7 +615,7 @@ def _HandleOutputFromProcess(process, symbols_mapping):
 
 
 def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
-               test_launcher_summary_output):
+               test_launcher_summary_output, forward_ssh_port):
   if not kernel_path:
     # TODO(wez): Parameterize this on the |target_cpu| from GN.
     kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
@@ -641,6 +642,12 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     qemu_path = os.path.join(
         SDK_ROOT, 'qemu', 'bin',
         'qemu-system-' + _TargetCpuToArch(bootfs_data.target_cpu))
+
+    netdev_config = 'user,id=net0,net=%s,dhcpstart=%s,host=%s' % \
+            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS)
+    if forward_ssh_port:
+      netdev_config += ",hostfwd=tcp::%s-:22" % forward_ssh_port
+
     qemu_command = [qemu_path,
         '-m', '2048',
         '-nographic',
@@ -650,8 +657,10 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
 
         # Configure virtual network. It is used in the tests to connect to
         # testserver running on the host.
-        '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
-            (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
+        '-netdev', netdev_config,
+        '-device', '%s,netdev=net0,mac=%s' %
+            ('virtio-net-pci' if bootfs_data.target_cpu == 'arm64' else 'e1000',
+             GUEST_MAC_ADDRESS),
 
         # Use stdio for the guest OS only; don't attach the QEMU interactive
         # monitor.
@@ -670,7 +679,6 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
       qemu_command.extend([
           '-machine','virt',
           '-cpu', 'cortex-a53',
-          '-device', 'virtio-net-pci,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
       ])
       if platform.machine() == 'aarch64':
         qemu_command.append('-enable-kvm')
@@ -678,7 +686,6 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
       qemu_command.extend([
           '-machine', 'q35',
           '-cpu', 'host,migratable=no',
-          '-device', 'e1000,netdev=net0,mac=' + GUEST_MAC_ADDRESS,
       ])
       if platform.machine() == 'x86_64':
         qemu_command.append('-enable-kvm')
