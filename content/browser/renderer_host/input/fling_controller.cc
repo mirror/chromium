@@ -101,6 +101,13 @@ bool FlingController::FilterGestureEventForFlingBoosting(
   if (!fling_booster_)
     return false;
 
+  // TODO(sahel): Don't boost touchpad fling for now. Once browserside
+  // touchscreen fling is implemented, move the fling_controller_ from
+  // GestureEventQueue to RednerWidgetHostImpl. This will gaurantee proper
+  // gesture scroll event order in RednerWidgetHostImpl while boosting.
+  if (gesture_event.event.source_device == blink::kWebGestureDeviceTouchpad)
+    return false;
+
   bool cancel_current_fling;
   bool should_filter_event = fling_booster_->FilterGestureEventForFlingBoosting(
       gesture_event.event, &cancel_current_fling);
@@ -249,10 +256,12 @@ void FlingController::GenerateAndSendWheelEvents(
   // sent to JS.
   if (phase == blink::WebMouseWheelEvent::kPhaseEnded) {
     synthetic_wheel.event.dispatch_type = WebInputEvent::kEventNonBlocking;
+    LOG(ERROR) << "wheel end sent";
   } else {
     synthetic_wheel.event.dispatch_type = send_wheel_events_nonblocking_
                                               ? WebInputEvent::kEventNonBlocking
                                               : WebInputEvent::kBlocking;
+    LOG(ERROR) << "wheel sent";
   }
 
   client_->SendGeneratedWheelEvent(synthetic_wheel);
