@@ -5,10 +5,10 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_INSTALL_DIALOG_VIEW_H_
 #define CHROME_BROWSER_UI_VIEWS_EXTENSIONS_EXTENSION_INSTALL_DIALOG_VIEW_H_
 
+#include <vector>
+
 #include "base/macros.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
-#include "ui/gfx/animation/animation_delegate.h"
-#include "ui/gfx/animation/slide_animation.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/view.h"
@@ -25,14 +25,12 @@ namespace extensions {
 class ExperienceSamplingEvent;
 }
 
-namespace ui {
-class ResourceBundle;
-}
-
 namespace views {
-class GridLayout;
 class Link;
 }
+
+// TODO: make this a proper inner-class
+struct ExtensionInfoSection;
 
 // Implements the extension installation dialog for TOOLKIT_VIEWS.
 class ExtensionInstallDialogView : public views::DialogDelegateView,
@@ -50,43 +48,39 @@ class ExtensionInstallDialogView : public views::DialogDelegateView,
 
   // Returns the interior ScrollView of the dialog. This allows us to inspect
   // the contents of the DialogView.
-  const views::ScrollView* scroll_view() const { return scroll_view_; }
+  views::ScrollView* scroll_view() { return scroll_view_; }
+
+  void ResizeWidget();
 
   static void SetInstallButtonDelayForTesting(int timeout_in_ms);
 
  private:
-  // views::View:
-  void VisibilityChanged(views::View* starting_from, bool is_visible) override;
-
   // views::DialogDelegateView:
+  void AddedToWidget() override;
+  void VisibilityChanged(views::View* starting_from, bool is_visible) override;
   int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   int GetDefaultDialogButton() const override;
   bool Cancel() override;
   bool Accept() override;
   ui::ModalType GetModalType() const override;
-  void Layout() override;
   views::View* CreateExtraView() override;
   bool IsDialogButtonEnabled(ui::DialogButton button) const override;
 
   // views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
 
-  // Initializes the dialog view, adding in permissions if they exist.
-  void InitView();
+  // Initializes the contets area that contains permissions and other extension
+  // info, if necessary.
+  void CreateContents();
 
   // Enables the install button and updates the dialog buttons.
   void EnableInstallButton();
 
   // Adds permissions of |perm_type| to the dialog view if they exist.
-  bool AddPermissions(views::GridLayout* layout,
-                      ui::ResourceBundle& rb,
-                      int column_set_id,
+  void AddPermissions(std::vector<ExtensionInfoSection>& sections,
                       int left_column_width,
                       ExtensionInstallPrompt::PermissionsType perm_type);
-
-  // Creates a layout consisting of dialog header, extension name and icon.
-  views::GridLayout* CreateLayout(int left_column_width, int column_set_id);
 
   bool is_external_install() const {
     return prompt_->type() == ExtensionInstallPrompt::EXTERNAL_INSTALL_PROMPT;
@@ -99,11 +93,6 @@ class ExtensionInstallDialogView : public views::DialogDelegateView,
   content::PageNavigator* navigator_;
   ExtensionInstallPrompt::DoneCallback done_callback_;
   std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt_;
-
-  // The container view that contains all children (heading, icon, webstore
-  // data, and the scroll view with permissions etc.), excluding the buttons,
-  // which are added automatically by the dialog system.
-  View* container_;
 
   // The scroll view containing all the details for the dialog (including all
   // collapsible/expandable sections).
@@ -136,10 +125,7 @@ class BulletedView : public views::View {
 };
 
 // A view to display text with an expandable details section.
-class ExpandableContainerView : public views::View,
-                                public views::ButtonListener,
-                                public views::LinkListener,
-                                public gfx::AnimationDelegate {
+class ExpandableContainerView : public views::View, public views::LinkListener {
  public:
   ExpandableContainerView(const PermissionDetails& details,
                           int horizontal_space,
@@ -149,15 +135,8 @@ class ExpandableContainerView : public views::View,
   // views::View:
   void ChildPreferredSizeChanged(views::View* child) override;
 
-  // views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
-
   // views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
-
-  // gfx::AnimationDelegate:
-  void AnimationProgressed(const gfx::Animation* animation) override;
-  void AnimationEnded(const gfx::Animation* animation) override;
 
  private:
   // A view which displays all the details of an IssueAdviceInfoEntry.
@@ -169,11 +148,13 @@ class ExpandableContainerView : public views::View,
     // views::View:
     gfx::Size CalculatePreferredSize() const override;
 
-    // Animates this to be a height proportional to |state|.
-    void AnimateToState(double state);
+    // Opens or closes the details.
+    void ToggleExpanded();
 
    private:
-    double state_;
+    // Whether the details section is expanded.
+    // TODO: two copies of |expanded_|...
+    bool expanded_ = false;
 
     DISALLOW_COPY_AND_ASSIGN(DetailsView);
   };
@@ -183,8 +164,6 @@ class ExpandableContainerView : public views::View,
 
   // A view for showing |issue_advice.details|.
   DetailsView* details_view_;
-
-  gfx::SlideAnimation slide_animation_;
 
   // The 'Show Details' link shown under the heading (changes to 'Hide Details'
   // when the details section is expanded).

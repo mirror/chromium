@@ -339,6 +339,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewInteractiveBrowserTest,
   RunDialog();
 }
 
+// TODO: need tests for retained files and retained devices
+
 class ExtensionInstallDialogRatingsSectionTest
     : public ExtensionInstallDialogViewTest {
  public:
