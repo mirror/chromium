@@ -96,6 +96,12 @@ class MockMediaDevicesDispatcherHost
     NOTREACHED();
   }
 
+  void SetMediaDevicesListener(
+      MediaDeviceType type,
+      mojom::blink::MediaDevicesListenerPtr listener) override {
+    NOTREACHED();
+  }
+
   MOCK_METHOD2(SubscribeDeviceChangeNotifications,
                void(MediaDeviceType type, uint32_t subscription_id));
   MOCK_METHOD2(UnsubscribeDeviceChangeNotifications,

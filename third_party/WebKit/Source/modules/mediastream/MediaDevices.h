@@ -12,6 +12,7 @@
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "modules/mediastream/MediaDeviceInfo.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/AsyncMethodRunner.h"
 #include "platform/heap/HeapAllocator.h"
 #include "public/platform/modules/mediastream/media_devices.mojom-blink.h"
@@ -24,12 +25,12 @@ class MediaTrackSupportedConstraints;
 class ScriptPromise;
 class ScriptPromiseResolver;
 class ScriptState;
-class UserMediaController;
 
 class MODULES_EXPORT MediaDevices final
     : public EventTargetWithInlineData,
       public ActiveScriptWrappable<MediaDevices>,
-      public PausableObject {
+      public PausableObject,
+      public mojom::blink::MediaDevicesListener {
   USING_GARBAGE_COLLECTED_MIXIN(MediaDevices);
   DEFINE_WRAPPERTYPEINFO();
   USING_PRE_FINALIZER(MediaDevices, Dispose);
@@ -43,7 +44,6 @@ class MODULES_EXPORT MediaDevices final
   ScriptPromise getUserMedia(ScriptState*,
                              const MediaStreamConstraints&,
                              ExceptionState&);
-  void DidChangeMediaDevices();
 
   // EventTarget overrides.
   const AtomicString& InterfaceName() const override;
@@ -57,6 +57,11 @@ class MODULES_EXPORT MediaDevices final
   void ContextDestroyed(ExecutionContext*) override;
   void Pause() override;
   void Unpause() override;
+
+  // mojom::blink::MediaDevicesListener implementation.
+  void OnDevicesChanged(MediaDeviceType,
+                        uint32_t subscription_id,
+                        Vector<mojom::blink::MediaDeviceInfoPtr>) override;
 
   // Callback for testing only.
   using EnumerateDevicesTestCallback =
@@ -90,7 +95,6 @@ class MODULES_EXPORT MediaDevices final
   void DispatchScheduledEvent();
   void StartObserving();
   void StopObserving();
-  UserMediaController* GetUserMediaController();
   void Dispose();
   void DevicesEnumerated(ScriptPromiseResolver*,
                          Vector<Vector<mojom::blink::MediaDeviceInfoPtr>>);
@@ -105,6 +109,7 @@ class MODULES_EXPORT MediaDevices final
   Member<AsyncMethodRunner<MediaDevices>> dispatch_scheduled_event_runner_;
   HeapVector<Member<Event>> scheduled_events_;
   mojom::blink::MediaDevicesDispatcherHostPtr dispatcher_host_;
+  mojo::Binding<mojom::blink::MediaDevicesListener> binding_;
   HeapHashSet<Member<ScriptPromiseResolver>> requests_;
 
   EnumerateDevicesTestCallback enumerate_devices_test_callback_;
