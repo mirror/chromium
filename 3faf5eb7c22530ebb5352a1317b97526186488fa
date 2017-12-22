@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32bebedf_8485152c",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-22T17:33:29Z",
+      "side": 1,
+      "message": "nit: immutible-\u003eimmutable",
+      "revId": "3faf5eb7c22530ebb5352a1317b97526186488fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
