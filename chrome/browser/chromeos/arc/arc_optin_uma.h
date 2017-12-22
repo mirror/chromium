@@ -7,6 +7,7 @@
 
 #include <ostream>
 
+#include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
 #include "components/arc/common/auth.mojom.h"
 
 namespace base {
@@ -187,12 +188,15 @@ void UpdateOptInActionUMA(OptInActionType type);
 void UpdateOptInCancelUMA(OptInCancelReason reason);
 void UpdateOptInFlowResultUMA(OptInFlowResult result);
 void UpdateEnabledStateUMA(bool enabled);
-void UpdateProvisioningResultUMA(ProvisioningResult result, bool managed);
+void UpdateProvisioningResultUMA(ProvisioningResult result,
+                                 const Profile* const profile);
 void UpdateProvisioningTiming(const base::TimeDelta& elapsed_time,
                               bool success,
-                              bool managed);
-void UpdateReauthorizationResultUMA(ProvisioningResult result, bool managed);
-void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time, bool managed);
+                              const Profile* const profile);
+void UpdateReauthorizationResultUMA(ProvisioningResult result,
+                                    const Profile* profile);
+void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time,
+                             const Profile* profile);
 void UpdateSilentAuthCodeUMA(OptInSilentAuthCode state);
 void UpdateReauthorizationSilentAuthCodeUMA(OptInSilentAuthCode state);
 void UpdateAuthTiming(const char* histogram_name, base::TimeDelta elapsed_time);
