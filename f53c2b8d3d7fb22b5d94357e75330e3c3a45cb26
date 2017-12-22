@@ -69,6 +69,30 @@
       "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85b8785_6d475446",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1257330
+      },
+      "writtenOn": "2017-12-22T08:58:51Z",
+      "side": 1,
+      "message": "Ah, but you appear to have missed the beforeunload handler, which is what makes that test work. If you add that, the second probably isn\u0027t a big deal.\n\nAnd yes, please add the step_func to the other two tests as well. Thanks!",
+      "parentUuid": "3493904b_6a2a9858",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "f53c2b8d3d7fb22b5d94357e75330e3c3a45cb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
