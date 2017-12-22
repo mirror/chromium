@@ -22,6 +22,30 @@
       "revId": "caba1f13a124b2e21351ff5f2ba40275809fc9f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e022154_6e2b95f2",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-22T07:15:50Z",
+      "side": 1,
+      "message": "Hmm .. simply calling it cannot reset multiplier.\nThere are two ways letting UpdatePageInfo update (or reset) multiplier:\n1. The hacky way that I used previously - Change some factors (e.g., window size, accessibility font scale factor) which results in change of multiplier\n2. Enforce calling ResetMultipliers - In this case, page_info_.page_needs_autosizing_ must be false. However, in this unit test it is already true (when it is initialied).\n\nIn my personal opinion, making ResetMultipliers as public is one of the simplest solution.",
+      "parentUuid": "82c325ca_785f3949",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 54
+      },
+      "revId": "caba1f13a124b2e21351ff5f2ba40275809fc9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
