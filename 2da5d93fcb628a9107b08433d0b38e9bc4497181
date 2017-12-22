@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b4f60be_6fab7dae",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-22T17:23:58Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s fine to just add java enums in base, there\u0027s several already. You could probably just do that now, it shouldn\u0027t be any more complicated than adding it here. Up to you if you want to do that in this CL or not.",
+      "revId": "2da5d93fcb628a9107b08433d0b38e9bc4497181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea96f04_519cc33e",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-22T17:23:58Z",
+      "side": 1,
+      "message": "spelling: CONTINUOUSLY",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "2da5d93fcb628a9107b08433d0b38e9bc4497181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
