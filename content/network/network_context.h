@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <set>
+#include <string>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -20,11 +21,16 @@
 #include "content/public/network/url_request_context_owner.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace net {
 class URLRequestContext;
 class HttpServerPropertiesManager;
 }
+
+namespace network {
+class UDPSocketFactory;
+};  // namespace network
 
 namespace content {
 class NetworkServiceImpl;
@@ -90,6 +96,10 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void ClearNetworkingHistorySince(
       base::Time time,
       base::OnceClosure completion_callback) override;
+  void SetNetworkConditions(const std::string& profile_id,
+                            mojom::NetworkConditionsPtr conditions) override;
+  void GetUDPSocketFactory(
+      network::mojom::UDPSocketFactoryRequest request) override;
 
   // Called when the associated NetworkServiceImpl is going away. Guaranteed to
   // destroy NetworkContext's URLRequestContext.
@@ -97,9 +107,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   // Disables use of QUIC by the NetworkContext.
   void DisableQuic();
-
-  void SetNetworkConditions(const std::string& profile_id,
-                            mojom::NetworkConditionsPtr conditions) override;
 
   // Applies the values in |network_context_params| to |builder|, and builds
   // the URLRequestContext.
@@ -143,6 +150,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<CookieManager> cookie_manager_;
+
+  std::unique_ptr<network::UDPSocketFactory> udp_socket_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkContext);
 };
