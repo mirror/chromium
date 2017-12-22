@@ -125,7 +125,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
     // Guards accees to the other members, and is notifyAll() signalled on the UI thread
     // when the chromium process has been started.
-    private final Object mLock = new Object();
+    protected final Object mLock = new Object();
 
     // Initialization guarded by mLock.
     private AwBrowserContext mBrowserContext;
@@ -316,7 +316,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                 applicationContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.O);
     }
 
-    private void ensureChromiumStartedLocked(boolean onMainThread) {
+    protected void ensureChromiumStartedLocked(boolean onMainThread) {
         assert Thread.holdsLock(mLock);
 
         if (mStarted) { // Early-out for the common case.
