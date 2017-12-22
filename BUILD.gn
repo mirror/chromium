@@ -855,7 +855,7 @@ group("gn_visibility") {
   }
 }
 
-if (!is_ios && !is_fuchsia) {
+if (!is_ios) {
   # This group includes all of the targets needed to build and test Blink,
   # including running the layout tests (see below).
   group("blink_tests") {
@@ -926,6 +926,10 @@ if (!is_ios && !is_fuchsia) {
         "//third_party/breakpad:symupload",
         "//tools/android/forwarder2",
       ]
+    }
+
+    if (!is_fuchsia) {
+      data_deps += [ "//content/shell:content_shell_fuchsia" ]
     }
 
     if (!is_win && !is_android) {
