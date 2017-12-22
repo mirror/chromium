@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef547c7d_891a800e",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-22T16:11:50Z",
+      "side": 1,
+      "message": "\u0027does not be cropped\u0027 ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 50
+      },
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38a4319_4674bb4e",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-22T16:11:50Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to directly explain with this prop.",
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f896768e_c4c47df6",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-22T16:11:50Z",
+      "side": 1,
+      "message": "why is this Color here and below when testing RetrieveGReySnapshot?",
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
