@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed4f14b_47afada8",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-22T17:29:03Z",
+      "side": 1,
+      "message": "Having to do this is kinda gross, but I don\u0027t see a nice way to avoid it. However:\n1) don\u0027t make it protected, just leave it as package - the downstream code is in the same package.\n2) add a comment in both places explaining that it\u0027s only not private so that downstream can access it and that it shouldn\u0027t be touched from anywhere else.",
+      "revId": "5fc6a5a66a0fea6ca63850ccebabd9e421e0e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
