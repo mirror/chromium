@@ -59,6 +59,7 @@ public class OfflinePageBridge {
     /** Whether an offline sub-feature is enabled or not. */
     private static Boolean sOfflineBookmarksEnabled;
     private static Boolean sIsPageSharingEnabled;
+    private static Boolean sIsOfflinePagesDescriptivePendingStatusEnabled;
 
     /**
      * Callback used when saving an offline page.
@@ -137,6 +138,18 @@ public class OfflinePageBridge {
             sIsPageSharingEnabled = nativeIsPageSharingEnabled();
         }
         return sIsPageSharingEnabled;
+    }
+
+    /**
+     * @return True if descriptive pending download status texts should be used.
+     */
+    public static boolean isOfflinePagesDescriptivePendingStatusEnabled() {
+        ThreadUtils.assertOnUiThread();
+        if (sIsOfflinePagesDescriptivePendingStatusEnabled == null) {
+            sIsOfflinePagesDescriptivePendingStatusEnabled =
+                    nativeIsOfflinePagesDescriptivePendingStatusEnabled();
+        }
+        return sIsOfflinePagesDescriptivePendingStatusEnabled;
     }
 
     /**
@@ -683,6 +696,7 @@ public class OfflinePageBridge {
 
     private static native boolean nativeIsOfflineBookmarksEnabled();
     private static native boolean nativeIsPageSharingEnabled();
+    private static native boolean nativeIsOfflinePagesDescriptivePendingStatusEnabled();
     private static native boolean nativeCanSavePage(String url);
     private static native OfflinePageBridge nativeGetOfflinePageBridgeForProfile(Profile profile);
     @VisibleForTesting
