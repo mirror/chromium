@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e83b31c_41978dde",
+        "filename": "components/security_state/core/features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-22T22:50:52Z",
+      "side": 1,
+      "message": "This one isn\u0027t in the proposal but I want to have it as a backup to experiment with.",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 75
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
