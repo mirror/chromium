@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d053c704_7c2fc025",
+        "filename": "chromeos/components/tether/tether_connector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T19:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d91055b_a6339c65",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36c94129_5f42aa32",
         "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c1b0448b_8aa9d6d5",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T19:44:53Z",
+      "side": 1,
+      "message": "You\u0027re right that time is only advanced manually during the WiFi connection, but this metric is intended to reflect the whole time spent connecting to the host. I\u0027d prefer to keep this as is for clarity\u0027s sake.",
+      "parentUuid": "36c94129_5f42aa32",
+      "range": {
+        "startLine": 244,
+        "startChar": 25,
+        "endLine": 244,
+        "endChar": 43
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "040021c1_6e7763aa",
         "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aaab78c_cdc5ae27",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-22T19:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040021c1_6e7763aa",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 732,
+        "endChar": 1
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
