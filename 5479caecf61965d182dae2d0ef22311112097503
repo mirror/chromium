@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71214c98_fcf27370",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "nit: NULL -\u003e nullptr",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 13
+      },
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c4720_3fd2c62d",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "Think getters should be publicly accessible. Can we get rid of this?",
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ab6f46_43316453",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "I wish this could be gone afterwards.",
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3d9c55_62922537",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "Strange that we need this. Can we get rid of this and |icon_for_test_| member as well.",
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3b62e6_56a2ca43",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "nit: make this longer to cover the full line",
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5be3a5_c989303d",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-22T16:27:26Z",
+      "side": 1,
+      "message": "We might want to change the model_ interface to have something like SetItemIcon(id, icon) so that we don\u0027t need to do this Find then update thing. And no need to have updater as a friend of AppListItem.\n\nAnyway, we can do that later when adding mojo interfaces.",
+      "revId": "5479caecf61965d182dae2d0ef22311112097503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
