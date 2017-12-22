@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a96b4f83_8d309646",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T23:11:48Z",
+      "side": 1,
+      "message": "Is this duplication the preferred method for translation (as opposed to re-using the above text in a template in some form)?",
+      "range": {
+        "startLine": 10964,
+        "startChar": 35,
+        "endLine": 10964,
+        "endChar": 63
+      },
+      "revId": "b41c8ecf780b72bd5ea57a83b50444732ec1051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbe7ebf_f19a2c04",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T23:11:48Z",
+      "side": 1,
+      "message": "I believe format like TODO(https://crbug.com/797176) is preferred to straight user name.\n\nBut it might be worth creating a separate bug which references not just handling more stop triggers, but reporting them in other ways (ala something like per sink info notices) with updated UX.",
+      "revId": "b41c8ecf780b72bd5ea57a83b50444732ec1051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
