@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff425ca_b229294a",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-22T17:49:41Z",
+      "side": 1,
+      "message": "URLFetcher/URLFetcherDelegate presume that net/ is running in the browser process.\n\nCan you make a request using content::LoadBasicRequest which will work with/without the network service? That will block until the response is received, which I think is what you\u0027re trying to do here as well?",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
