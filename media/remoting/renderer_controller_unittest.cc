@@ -85,7 +85,8 @@ class RendererControllerTest : public ::testing::Test,
     sink_name_ = remote_device_friendly_name;
   }
 
-  void SwitchToLocalRenderer() override {
+  void SwitchToLocalRenderer(
+      const std::string& stop_rendering_remotely_text) override {
     is_rendering_remotely_ = false;
     disable_pipeline_suspend_ = false;
     sink_name_.clear();
