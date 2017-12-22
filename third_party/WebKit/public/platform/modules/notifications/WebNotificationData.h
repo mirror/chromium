@@ -28,13 +28,13 @@ struct WebNotificationData {
   WebURL image;
   WebURL icon;
   WebURL badge;
-  WebVector<int> vibrate;
+  WebVector<int> vibrate{};
   double timestamp = 0;
   bool renotify = false;
   bool silent = false;
   bool require_interaction = false;
-  WebVector<char> data;
-  WebVector<WebNotificationAction> actions;
+  WebVector<char> data{};
+  WebVector<WebNotificationAction> actions{};
 };
 
 }  // namespace blink
