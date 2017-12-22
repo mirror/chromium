@@ -105,6 +105,10 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'SetColor', function() {
   this.runMochaTest(settings_sections_tests.TestNames.SetColor);
 });
 
+TEST_F('PrintPreviewSettingsSectionsTest', 'SetScaling', function() {
+  this.runMochaTest(settings_sections_tests.TestNames.SetScaling);
+});
+
 PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {
   /** @override */
   get browsePreload() {
