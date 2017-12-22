@@ -75,6 +75,7 @@ namespace blink {
 namespace scheduler {
 class RenderWidgetSchedulingState;
 }
+struct WebActiveWheelFlingParameters;
 struct WebDeviceEmulationParams;
 class WebDragData;
 class WebFrameWidget;
@@ -409,6 +410,9 @@ class CONTENT_EXPORT RenderWidget
   // Helper to convert |point| using ConvertWindowToViewport().
   gfx::PointF ConvertWindowPointToViewport(const gfx::PointF& point);
   gfx::Point ConvertWindowPointToViewport(const gfx::Point& point);
+
+  void TransferActiveWheelFlingAnimation(
+      const blink::WebActiveWheelFlingParameters& params);
 
   uint32_t GetContentSourceId();
   void IncrementContentSourceId();

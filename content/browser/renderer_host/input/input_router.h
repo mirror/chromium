@@ -66,9 +66,6 @@ class InputRouter : public IPC::Listener {
   // Associate this InputRouter with a remote host channel.
   virtual void BindHost(mojom::WidgetInputHandlerHostRequest request,
                         bool frame_handler) = 0;
-
-  // Used to progress an active fling on every begin frame.
-  virtual void ProgressFling(base::TimeTicks current_time) = 0;
 };
 
 }  // namespace content

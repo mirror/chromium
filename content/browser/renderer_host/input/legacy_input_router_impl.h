@@ -47,7 +47,6 @@ struct InputEventAck;
 class CONTENT_EXPORT LegacyInputRouterImpl
     : public InputRouter,
       public GestureEventQueueClient,
-      public FlingControllerClient,
       public MouseWheelEventQueueClient,
       public TouchEventQueueClient,
       public TouchpadTapSuppressionControllerClient {
@@ -75,7 +74,6 @@ class CONTENT_EXPORT LegacyInputRouterImpl
   void SetDeviceScaleFactor(float device_scale_factor) override;
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override;
-  void ProgressFling(base::TimeTicks current_time) override;
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -116,11 +114,6 @@ class CONTENT_EXPORT LegacyInputRouterImpl
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckSource ack_source,
                          InputEventAckState ack_result) override;
-
-  // FlingControllerClient
-  void SendGeneratedWheelEvent(
-      const MouseWheelEventWithLatencyInfo& wheel_event) override;
-  void SetNeedsBeginFrameForFlingProgress() override;
 
   // MouseWheelEventQueueClient
   void SendMouseWheelEventImmediately(

@@ -88,9 +88,8 @@ WebGestureCurveImpl::WebGestureCurveImpl(std::unique_ptr<GestureCurve> curve,
 
 WebGestureCurveImpl::~WebGestureCurveImpl() {}
 
-bool WebGestureCurveImpl::Advance(double time,
-                                  gfx::Vector2dF& out_current_velocity,
-                                  gfx::Vector2dF& out_delta_to_scroll) {
+bool WebGestureCurveImpl::Apply(double time,
+                                blink::WebGestureCurveTarget* target) {
   // If the fling has yet to start, simply return and report true to prevent
   // fling termination.
   if (time <= 0)
@@ -108,14 +107,23 @@ bool WebGestureCurveImpl::Advance(double time,
 
   const base::TimeTicks time_ticks =
       base::TimeTicks() + base::TimeDelta::FromSecondsD(time);
-  gfx::Vector2dF offset;
+  gfx::Vector2dF offset, velocity;
   bool still_active =
-      curve_->ComputeScrollOffset(time_ticks, &offset, &out_current_velocity);
+      curve_->ComputeScrollOffset(time_ticks, &offset, &velocity);
 
-  out_delta_to_scroll = offset - last_offset_;
+  gfx::Vector2dF delta = offset - last_offset_;
   last_offset_ = offset;
 
-  return still_active;
+  // As successive timestamps can be arbitrarily close (but monotonic!), don't
+  // assume that a zero delta means the curve has terminated.
+  if (delta.IsZero())
+    return still_active;
+
+  // scrollBy() could delete this curve if the animation is over, so don't touch
+  // any member variables after making that call.
+  bool did_scroll = target->ScrollBy(blink::WebFloatSize(delta),
+                                     blink::WebFloatSize(velocity));
+  return did_scroll && still_active;
 }
 
 }  // namespace ui

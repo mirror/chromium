@@ -51,7 +51,6 @@ class CONTENT_EXPORT InputRouterImplClient : public InputRouterClient {
 class CONTENT_EXPORT InputRouterImpl
     : public InputRouter,
       public GestureEventQueueClient,
-      public FlingControllerClient,
       public MouseWheelEventQueueClient,
       public TouchEventQueueClient,
       public TouchpadTapSuppressionControllerClient,
@@ -79,7 +78,6 @@ class CONTENT_EXPORT InputRouterImpl
   cc::TouchAction AllowedTouchAction() override;
   void BindHost(mojom::WidgetInputHandlerHostRequest request,
                 bool frame_handler) override;
-  void ProgressFling(base::TimeTicks current_time) override;
 
   // InputHandlerHost impl
   void CancelTouchTimeout() override;
@@ -120,11 +118,6 @@ class CONTENT_EXPORT InputRouterImpl
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckSource ack_source,
                          InputEventAckState ack_result) override;
-
-  // FlingControllerClient
-  void SendGeneratedWheelEvent(
-      const MouseWheelEventWithLatencyInfo& wheel_event) override;
-  void SetNeedsBeginFrameForFlingProgress() override;
 
   // MouseWheelEventQueueClient
   void SendMouseWheelEventImmediately(
