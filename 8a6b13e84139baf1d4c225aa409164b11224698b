@@ -70,6 +70,30 @@
       "revId": "8a6b13e84139baf1d4c225aa409164b11224698b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b500d42_d951a316",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidViewIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-22T02:12:19Z",
+      "side": 1,
+      "message": "Yes, you are right. I will update the code to apply DSF to the SMALL_ERROR and also consider how to allow the small error only when DSF is enabled.",
+      "parentUuid": "f6f534cf_16a37d20",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 5
+      },
+      "revId": "8a6b13e84139baf1d4c225aa409164b11224698b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
