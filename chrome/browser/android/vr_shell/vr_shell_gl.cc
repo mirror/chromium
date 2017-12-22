@@ -56,6 +56,28 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#if 0
+#undef DVLOG
+#define DVLOG(x) LOG(INFO)
+#endif
+
+#define EXPENSIVE_GL_ERROR_CHECKING 0
+#if EXPENSIVE_GL_ERROR_CHECKING
+#define CHECK_ERR                                            \
+  do {                                                       \
+    GLint err;                                               \
+    DVLOG(2) << __FUNCTION__ << ";;; error check START";     \
+    while ((err = glGetError()) != GL_NO_ERROR) { \
+      LOG(INFO) << __FUNCTION__ << ";;; GL ERROR " << err;   \
+    }                                                        \
+    DVLOG(2) << __FUNCTION__ << ";;; error check DONE";      \
+  } while (0)
+#else
+#define CHECK_ERR \
+  do {            \
+  } while (0)
+#endif
+
 namespace vr_shell {
 
 namespace {
@@ -217,6 +239,7 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   // We should only ever re-initialize when our surface is destroyed, which
   // should only ever happen when drawing to a surface.
   CHECK(!reinitializing || !surfaceless_rendering_);
+  LOG(INFO) << __FUNCTION__ << ";;;";
   if (gl::GetGLImplementation() == gl::kGLImplementationNone &&
       !gl::init::InitializeGLOneOff()) {
     LOG(ERROR) << "gl::init::InitializeGLOneOff failed";
@@ -308,6 +331,7 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   }
 
   if (reinitializing && mailbox_bridge_) {
+    LOG(INFO) << __FUNCTION__ << ";;; reinitializing && mailbox_bridge_";
     mailbox_bridge_ = nullptr;
     mailbox_bridge_ready_ = false;
     CreateOrResizeWebVRSurface(webvr_surface_size_);
@@ -330,6 +354,8 @@ void VrShellGl::CreateContentSurface() {
 }
 
 void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
+  LOG(INFO) << __FUNCTION__ << ";;; size=" << size.width() << "x"
+            << size.height();
   if (!webvr_surface_texture_) {
     DLOG(ERROR) << "No WebVR surface texture available";
     return;
@@ -365,6 +391,8 @@ void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
 }
 
 void VrShellGl::SetWebVrSharedBufferSize(const gfx::Size& size) {
+  LOG(INFO) << __FUNCTION__ << ";;; size=" << size.width() << "x"
+            << size.height();
   DCHECK(mailbox_bridge_);
 
   if (size == webvr_sharedbuffer_size_)
@@ -375,6 +403,8 @@ void VrShellGl::SetWebVrSharedBufferSize(const gfx::Size& size) {
   webvr_bufferimages_.clear();
   webvr_sharedbuffer_mailbox_holders_.clear();
 
+  CHECK_ERR;
+  LOG(INFO) << __FUNCTION__ << ";;; width=" << webvr_surface_size_.width() << " height=" << webvr_surface_size_.height();
   for (int i = 0; i < 4; ++i) {
     gfx::GpuMemoryBufferId kBufferId(i + 1);
 
@@ -387,6 +417,7 @@ void VrShellGl::SetWebVrSharedBufferSize(const gfx::Size& size) {
     std::unique_ptr<gpu::MailboxHolder> holder =
         base::MakeUnique<gpu::MailboxHolder>();
     mailbox_bridge_->GenerateMailbox(holder->mailbox);
+    CHECK_ERR;
     holder->texture_target = GL_TEXTURE_2D;
     webvr_sharedbuffer_mailbox_holders_.push_back(std::move(holder));
 
@@ -401,12 +432,15 @@ void VrShellGl::SetWebVrSharedBufferSize(const gfx::Size& size) {
         webvr_sharedbuffers_[i]->GetHandle(),
         webvr_surface_size_, gfx::BufferFormat::RGBA_8888,
         gfx::BufferUsage::SCANOUT, nullptr, nullptr);
+    CHECK_ERR;
   }
   webvr_sharedbuffer_size_ = size;
 }
 
 void VrShellGl::OnWebVRTokenSignaled(int16_t frame_index, std::unique_ptr<gfx::GpuFence> gpu_fence) {
   TRACE_EVENT1("gpu", "VrShellGl::OnWebVRTokenSignaled", "frame", frame_index);
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", frame_index, "TokenSignaled");
+  LOG(INFO) << __FUNCTION__ << ";;; frame_index=" << (int)frame_index << " gpu_fence=" << gpu_fence.get();
 
   webvr_frame_presubmit_fence_[frame_index % kPoseRingBufferSize] =
       gl::GLFence::CreateFromGpuFence(*gpu_fence);
@@ -417,8 +451,10 @@ void VrShellGl::OnWebVRTokenSignaled(int16_t frame_index, std::unique_ptr<gfx::G
 void VrShellGl::SubmitFrameZeroCopy3(int16_t frame_index,
                                      const gpu::SyncToken& sync_token,
                                      base::TimeDelta time_waited) {
+  //LOG(INFO) << __FUNCTION__ << ";;; frame=" << (int)frame_index;
   TRACE_EVENT1("gpu", "VrShellGl::SubmitWebVRFrameZeroCopy3", "frame",
                frame_index);
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", frame_index, "JSSubmitZeroCopy");
   webvr_time_js_submit_[frame_index % kPoseRingBufferSize] =
       base::TimeTicks::Now();
 
@@ -447,6 +483,7 @@ void VrShellGl::SubmitFrame(int16_t frame_index,
                             const gpu::MailboxHolder& mailbox,
                             base::TimeDelta time_waited) {
   TRACE_EVENT0("gpu", "VrShellGl::SubmitWebVRFrame");
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", frame_index, "JSSubmit");
 
   // submit_client_ could be null when we exit presentation, if there were
   // pending SubmitFrame messages queued.  VRDisplayClient::OnExitPresent
@@ -557,6 +594,7 @@ void VrShellGl::OnWebVRFrameAvailable() {
   webvr_surface_texture_->UpdateTexImage();
   int frame_index = pending_frames_.front();
   TRACE_EVENT1("gpu", "VrShellGl::OnWebVRFrameAvailable", "frame", frame_index);
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", frame_index, "FrameAvailable");
   pending_frames_.pop();
 
   ui_->OnWebVrFrameAvailable();
@@ -1086,6 +1124,7 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
   }
 
   if (!overlay_elements.empty() && ShouldDrawWebVr()) {
+    LOG(INFO) << __FUNCTION__ << ";;; Got overlay elements!!!!!!!!!!!!!!!!!!!!!!!!";
     // WebVR content may use an arbitray size buffer. We need to draw browser UI
     // on a different buffer to make sure that our UI has enough resolution.
     acquired_frame_.BindBuffer(kFrameWebVrBrowserUiBuffer);
@@ -1230,6 +1269,8 @@ void VrShellGl::AddWebVrRenderTimeEstimate(int16_t frame_index,
 
 void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
                                    const gfx::Transform& head_pose) {
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", frame_index, "SubmitNow");
+
   TRACE_EVENT1("gpu", "VrShellGl::DrawFrameSubmitNow", "frame", frame_index);
 
   gvr::Mat4f mat;
@@ -1290,6 +1331,8 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
   fps_meter_.AddFrame(base::TimeTicks::Now());
   DVLOG(1) << "fps: " << fps_meter_.GetFPS();
   TRACE_COUNTER1("gpu", "WebVR FPS", fps_meter_.GetFPS());
+
+  TRACE_EVENT_FLOW_END0("gpu", "vrframe", frame_index);
 }
 
 bool VrShellGl::ShouldDrawWebVr() {
@@ -1299,26 +1342,36 @@ bool VrShellGl::ShouldDrawWebVr() {
 void VrShellGl::DrawWebVr(int16_t frame_index) {
   DVLOG(2) << __FUNCTION__ << ": frame_index=" << (int)frame_index;
   TRACE_EVENT0("gpu", "VrShellGl::DrawWebVr");
+  CHECK_ERR;
   // Don't need face culling, depth testing, blending, etc. Turn it all off.
   glDisable(GL_CULL_FACE);
   glDisable(GL_SCISSOR_TEST);
   glDisable(GL_BLEND);
   glDisable(GL_POLYGON_OFFSET_FILL);
+  CHECK_ERR;
 
   float y_sign = -1.0f;
   if (webvr_use_shared_buffer_draw_) {
     int mailbox_idx = frame_index % 4;
     WebVrWaitForServerFence(frame_index);
+  CHECK_ERR;
 
+    LOG(INFO) << __FUNCTION__ << ";;; width=" << webvr_surface_size_.width() << " height=" << webvr_surface_size_.height();
     scoped_refptr<gl::GLImageEGL> img(new gl::GLImageAHardwareBuffer(webvr_surface_size_));
+  CHECK_ERR;
     EGLint attribs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
     AHardwareBuffer* buffer = webvr_sharedbuffers_[mailbox_idx]->GetHandle().handle.GetMemoryObject();
     EGLClientBuffer clientBuffer = eglGetNativeClientBufferANDROID(buffer);
-    bool ret = img->Initialize(EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID, clientBuffer, attribs);
+  CHECK_ERR;
+  bool ret = img->Initialize(EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID, clientBuffer, attribs);
+  CHECK_ERR;
+    //LOG(INFO) << __FUNCTION__ << ";;; InitializeFromHardwareBuffer ret=" << ret;
     if (!ret)
       return;
     glBindTexture(GL_TEXTURE_EXTERNAL_OES, webvr_texture_id_);
+  CHECK_ERR;
     img->BindTexImage(GL_TEXTURE_EXTERNAL_OES);
+  CHECK_ERR;
     webvr_bufferimages_[mailbox_idx] = img;
     // TODO(klausw): figure out how come these drawing modes
     // need opposite Y directions. Who is flipping one of them?
@@ -1526,6 +1579,10 @@ base::TimeDelta VrShellGl::GetPredictedFrameTime() {
                  webvr_submit_time_.GetAverage().InMilliseconds());
   TRACE_COUNTER1("gpu", "WebVR pose prediction (ms)",
                  expected_frame_time.InMilliseconds());
+  LOG(INFO) << ";;; pose prediction=" << expected_frame_time.InMillisecondsF()
+            << "ms (js=" << js_time.InMillisecondsF()
+            << "ms, render=" << render_time.InMillisecondsF()
+            << "ms), fps=" << fps_meter_.GetFPS();
   return expected_frame_time;
 }
 
@@ -1579,6 +1636,7 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
 
   base::Optional<gpu::MailboxHolder> opt_buffer = base::nullopt;
 
+  LOG(INFO) << __FUNCTION__ << ";;; frame_index_=" << (int)frame_index_;
   if (webvr_use_shared_buffer_draw_) {
     if (!mailbox_bridge_ || !mailbox_bridge_ready_) {
       callback_ = std::move(callback);
@@ -1606,6 +1664,8 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
   // From here on, we're committed to using this VSync, increment the frame
   // index.
   uint8_t frame_index = frame_index_++;
+
+  TRACE_EVENT_FLOW_BEGIN0("gpu", "vrframe", frame_index);
 
   webvr_head_pose_[frame_index % kPoseRingBufferSize] = head_mat;
   webvr_frame_oustanding_[frame_index % kPoseRingBufferSize] = true;

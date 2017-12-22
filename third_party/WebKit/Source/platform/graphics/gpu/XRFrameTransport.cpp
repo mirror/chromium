@@ -13,6 +13,31 @@
 #include "platform/graphics/StaticBitmapImage.h"
 #include "ui/gfx/gpu_fence.h"
 
+#if 0
+#undef DVLOG
+#define DVLOG(x) LOG(INFO)
+#endif
+
+// WARNING: error checking has a huge performance cost. Only
+// enable this when actively debugging problems.
+#define EXPENSIVE_GL_ERROR_CHECKING 0
+
+#if EXPENSIVE_GL_ERROR_CHECKING
+#define CHECK_ERR                                            \
+  do {                                                       \
+    DVLOG(2) << __FUNCTION__ << ";;; error check START";     \
+    GLint err;                                               \
+    while ((err = gl->GetError()) != GL_NO_ERROR) { \
+      LOG(INFO) << __FUNCTION__ << ";;; GL ERROR " << err;   \
+    }                                                        \
+    DVLOG(2) << __FUNCTION__ << ";;; error check DONE";      \
+  } while (0)
+#else
+#define CHECK_ERR \
+  do {            \
+  } while (0)
+#endif
+
 namespace blink {
 
 XRFrameTransport::XRFrameTransport(int sample_count) :
@@ -82,12 +107,20 @@ void XRFrameTransport::FramePreImage(gpu::gles2::GLES2Interface* gl) {
   if (transport_options_->transportMethod ==
              device::mojom::blink::VRDisplayFrameTransportMethod::
                  DRAW_INTO_TEXTURE_MAILBOX) {
+#if 0
+    static int fnum = 0;
+    ++fnum;
+    gl->ClearColor(0.25 + 0.75 * (fnum % 64) / 64.0, 0.0, 0.1, 1.0);
+    gl->Clear(GL_COLOR_BUFFER_BIT);
+#endif
 
     TRACE_EVENT0("gpu", "XRFrameTransport::FinishDraw");
+    CHECK_ERR;
     DVLOG(2) << __FUNCTION__;
     // We're done with the framebuffer, the caller will unbind it after this
     // call. Give a hint to the driver that we're done with the attachments.
     gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+    CHECK_ERR;
     // Discard attachments to tell GL we're done with them.
     // Not sure if we can discard COLOR_ATTACHMENT0, the content is still
     // needed.
@@ -96,6 +129,7 @@ void XRFrameTransport::FramePreImage(gpu::gles2::GLES2Interface* gl) {
     gl->DiscardFramebufferEXT(
         GL_FRAMEBUFFER, sizeof(kAttachments) / sizeof(kAttachments[0]),
         kAttachments);
+    CHECK_ERR;
   }
 }
 
@@ -194,9 +228,13 @@ void XRFrameTransport::FrameSubmit(
     {
       TRACE_EVENT0("gpu", "GenSyncTokenCHROMIUM");
       gl->GenSyncTokenCHROMIUM(sync_token.GetData());
+      CHECK_ERR;
     }
+    // LOG(INFO) << __FUNCTION__ << ";;; frame=" << vr_frame_id_;
+    LOG(INFO) << __FUNCTION__ << ";;; frame_wait_time_=" << frame_wait_time_;
     vr_presentation_provider->SubmitFrameZeroCopy3(vr_frame_id, sync_token,
                                                     frame_wait_time_);
+    CHECK_ERR;
   } else {
     NOTREACHED() << "Unimplemented frame transport method";
   }
@@ -263,21 +301,26 @@ void XRFrameTransport::AllocateAHBResources(gpu::gles2::GLES2Interface* gl) {
   ahb_depthbuffer_ = 0;
   ahb_texture_ = 0;
   gl->GenFramebuffers(1, &ahb_fbo_);
+  CHECK_ERR;
   gl->GenRenderbuffers(1, &ahb_depthbuffer_);
+  CHECK_ERR;
   // ahb_texture_ is created per frame and lazily deleted.
 }
 
 void XRFrameTransport::ReleaseAHBResources(gpu::gles2::GLES2Interface* gl) {
   if (ahb_texture_ > 0) {
     gl->DeleteTextures(1, &ahb_texture_);
+    CHECK_ERR;
     ahb_texture_ = 0;
   }
   if (ahb_depthbuffer_ > 0) {
     gl->DeleteRenderbuffers(1, &ahb_depthbuffer_);
+    CHECK_ERR;
     ahb_depthbuffer_ = 0;
   }
   if (ahb_fbo_ > 0) {
     gl->DeleteFramebuffers(1, &ahb_fbo_);
+    CHECK_ERR;
     ahb_fbo_ = 0;
   }
 }
@@ -295,6 +338,8 @@ void XRFrameTransport::CreateAndBindAHBImage(
     gl->DeleteTextures(1, &ahb_texture_);
   }
   ahb_texture_ = gl->CreateAndConsumeTextureCHROMIUM(buffer_holder->mailbox.name);
+  LOG(INFO) << __FUNCTION__ << ";;; texture=" << ahb_texture_;
+  CHECK_ERR;
   gl->BindTexture(GL_TEXTURE_2D, ahb_texture_);
   gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                              GL_NEAREST);
@@ -304,11 +349,23 @@ void XRFrameTransport::CreateAndBindAHBImage(
                              GL_CLAMP_TO_EDGE);
   gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
                              GL_CLAMP_TO_EDGE);
+  CHECK_ERR;
   TRACE_EVENT_END0("gpu", "XRFrameTransport::BindTexImage");
 
   gl->FramebufferTexture2DMultisampleEXT(
       GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ahb_texture_, 0,
       ahb_sample_count_);
+  CHECK_ERR;
+
+#if EXPENSIVE_GL_ERROR_CHECKING
+  auto fbstatus = gl->CheckFramebufferStatus(GL_FRAMEBUFFER);
+  if (fbstatus != GL_FRAMEBUFFER_COMPLETE) {
+    LOG(ERROR) << __FUNCTION__
+               << ";;; FRAMEBUFFER NOT COMPLETE, fbstatus=0x" << std::hex << fbstatus;
+    gl->BindFramebuffer(GL_FRAMEBUFFER, 0);
+  }
+  CHECK_ERR;
+#endif
 
   drawing_buffer_client->DrawingBufferClientRestoreTexture2DBinding();
 }
@@ -318,6 +375,7 @@ GLuint XRFrameTransport::BindAHBToBufferHolder(
     DrawingBuffer::Client* drawing_buffer_client,
     const base::Optional<gpu::MailboxHolder>& buffer_holder,
     const blink::WebSize& buffer_size) {
+  CHECK_ERR;
 
   TRACE_EVENT_BEGIN0("gpu", "XRFrameTransport::WaitSyncToken");
   gl->WaitSyncTokenCHROMIUM(buffer_holder->sync_token.GetConstData());
@@ -331,26 +389,44 @@ GLuint XRFrameTransport::BindAHBToBufferHolder(
   }
 
   gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+  CHECK_ERR;
 
   if (buffer_size.width != ahb_width_ || buffer_size.height != ahb_height_) {
+    LOG(INFO) << __FUNCTION__ << ";;; width=" << buffer_size.width << " height=" << buffer_size.height;
     gl->BindFramebuffer(GL_FRAMEBUFFER, ahb_fbo_);
+    CHECK_ERR;
     gl->BindRenderbuffer(GL_RENDERBUFFER, ahb_depthbuffer_);
+    CHECK_ERR;
 
     gl->RenderbufferStorageMultisampleEXT(
         GL_RENDERBUFFER, ahb_sample_count_, GL_DEPTH24_STENCIL8_OES,
         buffer_size.width, buffer_size.height);
+    CHECK_ERR;
 
     gl->FramebufferRenderbuffer(GL_FRAMEBUFFER,
                                          GL_DEPTH_STENCIL_ATTACHMENT,
                                          GL_RENDERBUFFER, ahb_depthbuffer_);
 
+    CHECK_ERR;
     ahb_width_ = buffer_size.width;
     ahb_height_ = buffer_size.height;
 
     drawing_buffer_client->DrawingBufferClientRestoreRenderbufferBinding();
   }
 
+#if 0
+  // Invalidate all attachments, we're drawing fresh content. Redundant?
+  // TODO(klausw): research and/or benchmark if this is helpful.
+  const GLenum kAttachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT,
+                                 GL_STENCIL_ATTACHMENT};
+  gl->DiscardFramebufferEXT(
+      GL_FRAMEBUFFER, sizeof(kAttachments) / sizeof(kAttachments[0]),
+      kAttachments);
+  CHECK_ERR;
+#endif
+
   CreateAndBindAHBImage(gl, drawing_buffer_client, buffer_holder);
+  CHECK_ERR;
 
   // TODO(klausw): handle preserveBuffer=true
 
