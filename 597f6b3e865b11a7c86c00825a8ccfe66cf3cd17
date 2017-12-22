@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f67ca2c_031a4c44",
+        "filename": "ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-22T16:02:19Z",
+      "side": 1,
+      "message": "optional: maybe add a DCHECK for viewIsLoaded in setIncognito:?",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "597f6b3e865b11a7c86c00825a8ccfe66cf3cd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
