@@ -27,8 +27,6 @@ void DestroyResource(wl_client* client, wl_resource* resource) {
   wl_resource_destroy(resource);
 }
 
-// wl_compositor
-
 void CreateSurface(wl_client* client, wl_resource* resource, uint32_t id) {
   auto* compositor =
       static_cast<MockCompositor*>(wl_resource_get_user_data(resource));
@@ -45,8 +43,6 @@ const struct wl_compositor_interface compositor_impl = {
     &CreateSurface,  // create_surface
     nullptr,         // create_region
 };
-
-// wl_surface
 
 void Attach(wl_client* client,
             wl_resource* resource,
@@ -84,8 +80,6 @@ const struct wl_surface_interface surface_impl = {
     nullptr,           // damage_buffer
 };
 
-// xdg_shell
-
 void UseUnstableVersion(wl_client* client,
                         wl_resource* resource,
                         int32_t version) {
@@ -93,13 +87,9 @@ void UseUnstableVersion(wl_client* client,
       ->UseUnstableVersion(version);
 }
 
-// xdg_shell and zxdg_shell_v6
-
 void Pong(wl_client* client, wl_resource* resource, uint32_t serial) {
   static_cast<MockXdgShell*>(wl_resource_get_user_data(resource))->Pong(serial);
 }
-
-// xdg_shell
 
 void GetXdgSurfaceV5(wl_client* client,
                      wl_resource* resource,
@@ -114,8 +104,6 @@ const struct xdg_shell_interface xdg_shell_impl = {
     &Pong,                // pong
 };
 
-// zxdg_shell_v6
-
 void GetXdgSurfaceV6(wl_client* client,
                      wl_resource* resource,
                      uint32_t id,
@@ -127,8 +115,6 @@ const struct zxdg_shell_v6_interface zxdg_shell_v6_impl = {
     &GetXdgSurfaceV6,  // get_xdg_surface
     &Pong,             // pong
 };
-
-// wl_seat
 
 void GetPointer(wl_client* client, wl_resource* resource, uint32_t id) {
   auto* seat = static_cast<MockSeat*>(wl_resource_get_user_data(resource));
@@ -152,27 +138,36 @@ void GetKeyboard(wl_client* client, wl_resource* resource, uint32_t id) {
   seat->keyboard.reset(new MockKeyboard(keyboard_resource));
 }
 
+void GetTouch(wl_client* client, wl_resource* resource, uint32_t id) {
+  auto* seat = static_cast<MockSeat*>(wl_resource_get_user_data(resource));
+  wl_resource* touch_resource = wl_resource_create(
+      client, &wl_touch_interface, wl_resource_get_version(resource), id);
+  if (!touch_resource) {
+    wl_client_post_no_memory(client);
+    return;
+  }
+  seat->touch.reset(new MockTouch(touch_resource));
+}
+
 const struct wl_seat_interface seat_impl = {
     &GetPointer,       // get_pointer
     &GetKeyboard,      // get_keyboard
-    nullptr,           // get_touch,
+    &GetTouch,         // get_touch,
     &DestroyResource,  // release
 };
-
-// wl_keyboard
 
 const struct wl_keyboard_interface keyboard_impl = {
     &DestroyResource,  // release
 };
-
-// wl_pointer
 
 const struct wl_pointer_interface pointer_impl = {
     nullptr,           // set_cursor
     &DestroyResource,  // release
 };
 
-// xdg_surface, zxdg_surface_v6 and zxdg_toplevel shared methods.
+const struct wl_touch_interface touch_impl = {
+    &DestroyResource,  // release
+};
 
 void SetTitle(wl_client* client, wl_resource* resource, const char* title) {
   static_cast<MockXdgSurface*>(wl_resource_get_user_data(resource))
@@ -243,8 +238,6 @@ const struct xdg_surface_interface xdg_surface_impl = {
     &SetMinimized,       // set_minimized
 };
 
-// zxdg_surface specific interface
-
 void GetTopLevel(wl_client* client, wl_resource* resource, uint32_t id) {
   auto* surface =
       static_cast<MockXdgSurface*>(wl_resource_get_user_data(resource));
@@ -313,8 +306,6 @@ void GetXdgSurfaceImpl(wl_client* client,
       new MockXdgSurface(xdg_surface_resource, implementation));
 }
 
-// xdg_shell
-
 void GetXdgSurfaceV5(wl_client* client,
                      wl_resource* resource,
                      uint32_t id,
@@ -322,8 +313,6 @@ void GetXdgSurfaceV5(wl_client* client,
   GetXdgSurfaceImpl(client, resource, id, surface_resource,
                     &xdg_surface_interface, &xdg_surface_impl);
 }
-
-// zxdg_shell_v6
 
 void GetXdgSurfaceV6(wl_client* client,
                      wl_resource* resource,
@@ -342,7 +331,6 @@ ServerObject::~ServerObject() {
     wl_resource_destroy(resource_);
 }
 
-// static
 void ServerObject::OnResourceDestroyed(wl_resource* resource) {
   auto* obj = static_cast<ServerObject*>(wl_resource_get_user_data(resource));
   obj->resource_ = nullptr;
@@ -395,6 +383,13 @@ MockKeyboard::MockKeyboard(wl_resource* resource) : ServerObject(resource) {
 
 MockKeyboard::~MockKeyboard() {}
 
+MockTouch::MockTouch(wl_resource* resource) : ServerObject(resource) {
+  wl_resource_set_implementation(resource, &touch_impl, this,
+                                 &ServerObject::OnResourceDestroyed);
+}
+
+MockTouch::~MockTouch() {}
+
 void GlobalDeleter::operator()(wl_global* global) {
   wl_global_destroy(global);
 }
@@ -413,7 +408,6 @@ bool Global::Initialize(wl_display* display) {
   return global_ != nullptr;
 }
 
-// static
 void Global::Bind(wl_client* client,
                   void* data,
                   uint32_t version,
@@ -432,7 +426,6 @@ void Global::Bind(wl_client* client,
   global->OnBind();
 }
 
-// static
 void Global::OnResourceDestroyed(wl_resource* resource) {
   auto* global = static_cast<Global*>(wl_resource_get_user_data(resource));
   if (global->resource_ == resource)
@@ -453,7 +446,6 @@ MockOutput::MockOutput()
 
 MockOutput::~MockOutput() {}
 
-// Notify clients of the change for output position.
 void MockOutput::OnBind() {
   const char* kUnknownMake = "unknown";
   const char* kUnknownModel = "unknown";
