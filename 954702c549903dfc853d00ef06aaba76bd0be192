@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08b5acf8_c8fbe1ff",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-22T15:53:47Z",
+      "side": 1,
+      "message": "@Balazs: We can\u0027t use `form_manager_-\u003eFindBestSavedMatch` here since it\u0027s a private method. However, given that we know that |form| is not a new credential when we enter this branch, |form| should be the same form set which is set here: https://cs.chromium.org/chromium/src/components/password_manager/core/browser/password_form_manager.cc?l\u003d1011\u0026rcl\u003d9c0e4f94f2cfc6f7782a2cc763105fde55beb603",
+      "range": {
+        "startLine": 247,
+        "startChar": 26,
+        "endLine": 247,
+        "endChar": 30
+      },
+      "revId": "954702c549903dfc853d00ef06aaba76bd0be192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
