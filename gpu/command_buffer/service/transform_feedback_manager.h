@@ -22,8 +22,10 @@ class TransformFeedbackManager;
 // Info about TransformFeedbacks currently in the system.
 class GPU_EXPORT TransformFeedback : public IndexedBufferBindingHost {
  public:
-  TransformFeedback(
-      TransformFeedbackManager* manager, GLuint client_id, GLuint service_id);
+  TransformFeedback(TransformFeedbackManager* manager,
+                    GLuint client_id,
+                    GLuint service_id,
+                    bool do_buffer_refcounting);
 
   // All the following functions do state update and call the underlying GL
   // function.  All validations have been done already and the GL function is
@@ -82,7 +84,8 @@ class GPU_EXPORT TransformFeedbackManager {
   // However, we set it to true everywhere, not to trust drivers to handle
   // out-of-bounds buffer accesses.
   TransformFeedbackManager(GLuint max_transform_feedback_separate_attribs,
-                           bool needs_emulation);
+                           bool needs_emulation,
+                           bool do_buffer_refcounting);
   ~TransformFeedbackManager();
 
   void MarkContextLost() {
@@ -123,6 +126,7 @@ class GPU_EXPORT TransformFeedbackManager {
 
   bool needs_emulation_;
   bool lost_context_;
+  bool do_buffer_refcounting_;
 
   DISALLOW_COPY_AND_ASSIGN(TransformFeedbackManager);
 };
