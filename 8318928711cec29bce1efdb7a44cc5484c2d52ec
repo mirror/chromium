@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a90f42_14d41320",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T10:17:57Z",
+      "side": 1,
+      "message": "nit: candidate image?",
+      "range": {
+        "startLine": 415,
+        "startChar": 26,
+        "endLine": 415,
+        "endChar": 31
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5260176f_8610e5f7",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T10:17:57Z",
+      "side": 1,
+      "message": "If the supported decode size is larger than the target size but less than original, should we be using that as the candidate? I guess it would be complicated because then the key for that size would target the closest mip level.",
+      "range": {
+        "startLine": 438,
+        "startChar": 8,
+        "endLine": 438,
+        "endChar": 70
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a097605_74efe554",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T10:17:57Z",
+      "side": 1,
+      "message": "nit: We already know we used original here.",
+      "range": {
+        "startLine": 458,
+        "startChar": 11,
+        "endLine": 458,
+        "endChar": 63
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c2da89_63dd43cc",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T10:17:57Z",
+      "side": 1,
+      "message": "Also DCHECK that the key has no subrect?",
+      "range": {
+        "startLine": 526,
+        "startChar": 2,
+        "endLine": 526,
+        "endChar": 63
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8519371_6b0f37f6",
+        "filename": "cc/tiles/software_image_decode_cache_unittest_combinations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-22T10:17:57Z",
+      "side": 1,
+      "message": "nit: Should this also include the full image size? Wouldn\u0027t this hit a DCHECK in FakePaintImageGenerator if we query the supported size for the full image?",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "8318928711cec29bce1efdb7a44cc5484c2d52ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
