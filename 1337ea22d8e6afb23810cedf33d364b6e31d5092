@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "5ff3a9fe_fca53c8f",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-22T20:20:58Z",
+      "side": 1,
+      "message": "I\u0027m uncertain of the lifetime of |media_task_runner_| and also what you mean by real destruction:\n1) Is it guaranteed that at some time after ~WMPI completes that the task posted in ~WMPI to it would still execute?\n2) Or do you mean change ~WMPI to run on the media_task_runner_ (and if so, what\u0027s a good idiom to do that in Chromium?)",
+      "parentUuid": "080eddc0_e9d229c9",
+      "range": {
+        "startLine": 1416,
+        "startChar": 2,
+        "endLine": 1417,
+        "endChar": 30
+      },
+      "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c83aa42b_e692b3c7",
         "filename": "media/filters/chunk_demuxer_unittest.cc",
         "patchSetId": 5
