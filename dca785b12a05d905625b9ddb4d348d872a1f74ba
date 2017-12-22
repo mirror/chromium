@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a836b844_71670963",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-22T08:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e21ad3e5_47888866",
+      "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0344ad7_16cd4836",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-22T07:58:01Z",
       "side": 1,
       "message": "Does this code eventually make a copy of HeapVector\u003cMember\u003cNode\u003e\u003e and go through each member?",
+      "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b3256f_94967957",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-22T08:28:13Z",
+      "side": 1,
+      "message": "Yeah, another way that will not make a copy is to do the same checks as in line 86-89 but instead of returning, we\u0027re filtering either distributed_nodes_/assigned_nodes_ and adding them to the result vector. But I wasn\u0027t sure of doing that. What do you think?",
+      "parentUuid": "f0344ad7_16cd4836",
       "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2feb3af_7ab183ba",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-22T08:28:13Z",
+      "side": 1,
+      "message": "Whoops sorry, totally missed changing Node -\u003e Element.\nI see. Done!",
+      "parentUuid": "4eeed448_fd3e3a3d",
+      "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07ca76d7_283861d0",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.idl",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a0f49a_1d6b59f1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-22T08:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ca76d7_283861d0",
+      "revId": "dca785b12a05d905625b9ddb4d348d872a1f74ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
