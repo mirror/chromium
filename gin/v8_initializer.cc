@@ -225,7 +225,8 @@ LoadV8FileResult MapOpenedFile(const OpenedFileMap::mapped_type& file_region,
 
 // static
 void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
-                               IsolateHolder::V8ExtrasMode v8_extras_mode) {
+                               IsolateHolder::V8ExtrasMode v8_extras_mode,
+                               UseCustomContext use_custom_context) {
   static bool v8_is_initialized = false;
   if (v8_is_initialized)
     return;
@@ -251,14 +252,19 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
   v8::StartupData natives;
-  natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
-  natives.raw_size = static_cast<int>(g_mapped_natives->length());
+  GetMappedFileData(g_mapped_natives, &natives);
   v8::V8::SetNativesDataBlob(&natives);
 
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
-    snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
-    snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
+  v8::StartupData snapshot{};
+  switch (use_custom_context) {
+    case UseCustomContext::kDontUseCustomContext:
+      GetMappedFileData(g_mapped_snapshot, &snapshot);
+      break;
+    case UseCustomContext::kUseCustomContext:
+      GetMappedFileData(g_mapped_v8_context_snapshot, &snapshot);
+      break;
+  }
+  if (snapshot.data) {
     v8::V8::SetSnapshotDataBlob(&snapshot);
   }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
