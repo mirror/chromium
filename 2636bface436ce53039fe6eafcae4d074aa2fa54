@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558119de_625c0793",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-22T03:59:20Z",
+      "side": 1,
+      "message": "I would rather call this as CheckEnumValues, and have this function check all enum values. You don\u0027t need to pass |mode_string| as it\u0027s accessible from here as |mode_|.",
+      "range": {
+        "startLine": 154,
+        "startChar": 18,
+        "endLine": 154,
+        "endChar": 27
+      },
+      "revId": "2636bface436ce53039fe6eafcae4d074aa2fa54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
