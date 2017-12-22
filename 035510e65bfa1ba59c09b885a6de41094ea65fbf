@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e740a97_f33f8bcb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "I got the impression that those are true from looking at the interface [1], and looking at the Windows implementation it seems to be true.\n\n[1] https://cs.chromium.org/chromium/src/ui/display/display.h?q\u003ddisplay::display\u0026sq\u003dpackage:chromium\u0026l\u003d111",
+      "parentUuid": "aaf77c55_7ef2c81c",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "560dd8b2_f0cabc07",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T20:17:48Z",
       "side": 1,
       "message": "Per earlier comment, std::move should not be necessary if Presentation were move-only.\n\nif there is already a presentation running on Display, it needs to be terminated first.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fbfb32_6f81907f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Wouldn\u0027t std::move still be necessary even if we made it move-only? I get a \"no matching constructor\" error when I remove std::move.\n\nDone terminating existing presentation.",
+      "parentUuid": "560dd8b2_f0cabc07",
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eced4bbe_52758bd6",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d52867c_d831aaf1",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28e7cd1_745dc2fc",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-21T20:17:48Z",
       "side": 1,
       "message": "I wonder if we need to propagate locale information along with the text (e.g., to ensure correct LTR vs. RTL rendering).",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522c589a_f64540c2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "The entire dialog does LTR or RTL depending on Chrome\u0027s language settings, so I wonder if it\u0027d be inconsistent if we showed the route description text with a different text alignment.",
+      "parentUuid": "b28e7cd1_745dc2fc",
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82559eaf_53088113",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "I tried that, but I couldn\u0027t cast from a callback returning std::unique_ptr\u003cPRWC\u003e to std::unique_ptr\u003cWDPR\u003e, even though PRWC is a subclass of WDPR.",
+      "parentUuid": "e459d9d6_b0a7b1f7",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5db3b22_30ad268f",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "adbeaaff_d03d7c72",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Yes, |this| owns WDPR.",
+      "parentUuid": "b5db3b22_30ad268f",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58580eb9_c2863985",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-21T20:17:48Z",
       "side": 1,
       "message": "Would it make more sense to keep a set of sink ids when we get a list of displays from the display observer?  This check would be simpler.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452723ac_f1e28963",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "I didn\u0027t want to keep a list of sink IDs because it\u0027d be somewhat complicated to maintain (e.g. if a display starts mirroring a primary display then it can\u0027t be used as a sink anymore, vice versa).",
+      "parentUuid": "58580eb9_c2863985",
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "db0ffaca_8b82f9eb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Only in .cc, so moving there.",
+      "parentUuid": "a90b1364_99766fee",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8974b240_90f4e1cf",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ea4275_f2cfe1c7",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "8974b240_90f4e1cf",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "adac120b_60c0d11f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done. Forward-declaration seems sufficient for WDPR.",
+      "parentUuid": "f1d4cf25_0897e01b",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35446a74_0951743e",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 6
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d33756aa_61c9744e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35446a74_0951743e",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f514c30_28ed8aad",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-21T20:17:48Z",
       "side": 1,
       "message": "This doesn\u0027t seem specific to this MRP.  Does it make more sense to track presentations in the MR itself? +imcheng",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ad79e8_1ca018f2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "For now, this struct contains just the MediaRoute and WiredDisplayPresentationReceiver, so I\u0027d say it\u0027s specific to WiredDisplayMRP.",
+      "parentUuid": "3f514c30_28ed8aad",
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "2ecb7c0d_1c3b08c9",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "That makes sense. Adding DISALLOW_COPY_AND_ASSIGN.",
+      "parentUuid": "f7177fa0_1efabd47",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91b37734_62624444",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 6
@@ -237,6 +471,24 @@
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5773936_2e3e2de8",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "We also use the attributes of the display later in CreateRoute(), so returning a pointer to a local variable wouldn\u0027t work.",
+      "parentUuid": "91b37734_62624444",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "9d6ae599_e29efcf0",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a204d0_046c46ce",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa7ec5a_0e00e8d8",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
         "patchSetId": 6
@@ -271,6 +541,24 @@
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54fa0f0_80f4cce4",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Since we\u0027re resetting |provider_| in TearDown(), the destruction order should be fine.",
+      "parentUuid": "4aa7ec5a_0e00e8d8",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "6d6099d1_fe70b612",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Yes. This is to retain a pointer after we transfer ownership of the receiver to the MRP in ON_CALL() callback below.",
+      "parentUuid": "0971d421_519568df",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de848ee1_4384878e",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
         "patchSetId": 6
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "12391505_9982ce76",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de848ee1_4384878e",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f2f0fa_f58445d1",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
         "patchSetId": 6
@@ -322,6 +646,24 @@
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaf687b_0d9e6cf2",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-22T16:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f2f0fa_f58445d1",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
