@@ -10,42 +10,50 @@
 #include <string>
 #include <vector>
 
+#include "base/containers/span.h"
+#include "base/optional.h"
 #include "extensions/browser/api/socket/socket.h"
-#include "net/socket/udp_socket.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 
 namespace extensions {
 
-class UDPSocket : public Socket {
+class UDPSocket : public Socket, public network::mojom::UDPSocketReceiver {
  public:
-  explicit UDPSocket(const std::string& owner_extension_id);
+  explicit UDPSocket(network::mojom::UDPSocketFactoryPtr factory,
+                     const std::string& owner_extension_id);
   ~UDPSocket() override;
 
+  // Socket implementation.
   void Connect(const net::AddressList& address,
                const CompletionCallback& callback) override;
   void Disconnect(bool socket_destroying) override;
-  int Bind(const std::string& address, uint16_t port) override;
+  void Bind(const std::string& address,
+            uint16_t port,
+            const CompletionCallback& callback) override;
   void Read(int count, const ReadCompletionCallback& callback) override;
   void RecvFrom(int count, const RecvFromCompletionCallback& callback) override;
   void SendTo(scoped_refptr<net::IOBuffer> io_buffer,
               int byte_count,
               const net::IPEndPoint& address,
               const CompletionCallback& callback) override;
-
   bool IsConnected() override;
-
   bool GetPeerAddress(net::IPEndPoint* address) override;
   bool GetLocalAddress(net::IPEndPoint* address) override;
   Socket::SocketType GetSocketType() const override;
 
-  bool IsBound();
+  void JoinGroup(const std::string& address,
+                 const net::CompletionCallback& callback);
+  void LeaveGroup(const std::string& address,
+                  const net::CompletionCallback& callback);
 
-  int JoinGroup(const std::string& address);
-  int LeaveGroup(const std::string& address);
-
+  // Multicast options must be set before Bind()/Connect() is called.
   int SetMulticastTimeToLive(int ttl);
   int SetMulticastLoopbackMode(bool loopback);
 
-  int SetBroadcast(bool enabled);
+  // Sets broadcast to |enabled|. Should be called after the socket has finished
+  // Bind()/Connect().
+  void SetBroadcast(bool enabled, const net::CompletionCallback& callback);
 
   const std::vector<std::string>& GetJoinedGroups() const;
 
@@ -58,13 +66,32 @@ class UDPSocket : public Socket {
   // Make net::IPEndPoint can be refcounted
   typedef base::RefCountedData<net::IPEndPoint> IPEndPoint;
 
-  void OnReadComplete(scoped_refptr<net::IOBuffer> io_buffer, int result);
-  void OnRecvFromComplete(scoped_refptr<net::IOBuffer> io_buffer,
-                          scoped_refptr<IPEndPoint> address,
-                          int result);
-  void OnSendToComplete(int result);
+  // network::mojom::UDPSocketReceiver implementation.
+  void OnReceived(int32_t result,
+                  const base::Optional<net::IPEndPoint>& src_addr,
+                  base::Optional<base::span<const uint8_t>> data) override;
 
-  net::UDPSocket socket_;
+  void OnConnectOrBindComplete(
+      const net::CompletionCallback& user_callback,
+      int result,
+      const base::Optional<net::IPEndPoint>& local_addr);
+
+  void OnWriteComplete(const net::CompletionCallback& user_callback,
+                       int result);
+  void OnSendToComplete(int result);
+  void OnJoinGroupComplete(const net::CompletionCallback& user_callback,
+                           const std::string& normalized_address,
+                           int result);
+  void OnLeaveGroupComplete(const net::CompletionCallback& user_callback,
+                            const std::string& normalized_address,
+                            int result);
+
+  network::mojom::UDPSocketFactoryPtr socket_factory_;
+  network::mojom::UDPSocketOptionsPtr socket_options_;
+  network::mojom::UDPSocketPtr socket_;
+
+  mojo::Binding<network::mojom::UDPSocketReceiver> receiver_binding_;
+  net::IPEndPoint local_addr_;
 
   ReadCompletionCallback read_callback_;
 
@@ -80,7 +107,8 @@ class UDPSocket : public Socket {
 // the "sockets.udp" namespace.
 class ResumableUDPSocket : public UDPSocket {
  public:
-  explicit ResumableUDPSocket(const std::string& owner_extension_id);
+  explicit ResumableUDPSocket(network::mojom::UDPSocketFactoryPtr factory,
+                              const std::string& owner_extension_id);
 
   // Overriden from ApiResource
   bool IsPersistent() const override;
