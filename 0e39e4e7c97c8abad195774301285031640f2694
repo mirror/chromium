@@ -22,6 +22,30 @@
       "revId": "0e39e4e7c97c8abad195774301285031640f2694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6579c747_ccdcf203",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T22:22:43Z",
+      "side": 1,
+      "message": "I\u0027ve wired that up, but I\u0027m not sure how I feel about passing in \u0027true\u0027 or \u0027false\u0027 now, seems a little less readable from the calling side.",
+      "parentUuid": "76c31ef2_95178813",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "0e39e4e7c97c8abad195774301285031640f2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
