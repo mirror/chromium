@@ -87,6 +87,24 @@
       "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7107a488_f6f850b6",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-22T00:01:29Z",
+      "side": 1,
+      "message": "Do you mean:\nStartDetection(...) \u003d\u003e (bool triggered)\n\n?\n\nActually that was my first attempt but looks like we can\u0027t hold response callback outside the event loop. I did something like below but it didn\u0027t work:\n\nclass Impl {\n  void StartDetection(..., StartDetectionCallback callback) {\n    ...\n    callback_ \u003d std::move(callback);\n    PostTask(Check);\n  }\n  void Check() {\n    std::move(callback_).Run();\n  }\n  StartDetectionCallback callback_;\n}\n\nMaybe I\u0027m wrong but if we want to make async outgoing calls, I think we need to define an interface.",
+      "parentUuid": "4bb63c43_cce07195",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
