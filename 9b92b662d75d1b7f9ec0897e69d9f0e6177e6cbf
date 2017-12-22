@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f41d6681_c6263bd9",
+        "filename": "ios/chrome/browser/ui/image_util/image_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-22T16:44:55Z",
+      "side": 1,
+      "message": "The bug is fine, but don\u0027t editorialize (or speak in the first person) in comments. Something like \"Provide a way for the user to easily reach the photos app\".",
+      "range": {
+        "startLine": 251,
+        "startChar": 31,
+        "endLine": 254,
+        "endChar": 80
+      },
+      "revId": "9b92b662d75d1b7f9ec0897e69d9f0e6177e6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
