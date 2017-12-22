@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed902b43_9af602c0",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-22T17:25:31Z",
+      "side": 1,
+      "message": "0.5 is really low and 1.5 is really high. In comparison I believe\nChromeVox just uses +0.1 to the pitch to emphasize something.\n\nConsider a slightly smaller range, or else a few more options.",
+      "revId": "a4f1bcb6f0f3c8dbc86c2d53e007acc02ec2a53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
