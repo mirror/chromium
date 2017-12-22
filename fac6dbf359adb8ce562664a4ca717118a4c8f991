@@ -81,6 +81,24 @@
       "revId": "fac6dbf359adb8ce562664a4ca717118a4c8f991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3994edb6_33ead42c",
+        "filename": "device/ctap/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-22T00:28:24Z",
+      "side": 1,
+      "message": "It should be your team or whatever team will be owning this long term. Probably the same as the webauth and credentialmanager directories elsewhere in Chromium which I notice also don\u0027t have team owners.",
+      "parentUuid": "10f6506a_74e1091e",
+      "revId": "fac6dbf359adb8ce562664a4ca717118a4c8f991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
