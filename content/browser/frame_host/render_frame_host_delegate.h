@@ -347,6 +347,12 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
                                           const std::string& ip,
                                           net::CertStatus cert_status) {}
 
+  // Notifies to print a remote frame.
+  virtual void PrintOopSubframe(int src_frame_id,
+                                const gfx::Rect& rect,
+                                uint32_t content_id,
+                                RenderFrameHost* target_rfh) {}
+
  protected:
   virtual ~RenderFrameHostDelegate() {}
 };
