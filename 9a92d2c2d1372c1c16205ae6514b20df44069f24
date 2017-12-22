@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97890fbe_0842ae5f",
+        "filename": "media/remoting/remoting_cdm_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T19:01:25Z",
+      "side": 1,
+      "message": "This logic is a bit hard to follow.  Checking for SESSION_STOPPING made sense that we would call shutdown, but why do we call shutdown if it\u0027s not starting and not started?\n\nMaybe add a comment or if this is explained elsewhere (like what all the states are) link to that?",
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced41847_7beea791",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T19:01:25Z",
+      "side": 1,
+      "message": "why is LOCAL_PLAYBACK mapped to UNKNOWN?  What does LOCAL_PLAYBACK as a stop reason mean?",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e4d5e3_502bec12",
+        "filename": "media/remoting/shared_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-22T19:01:25Z",
+      "side": 1,
+      "message": "Confusing comment.  I\u0027m not sure what \u0027This\u0027 refers to, setting the state?\n\nMaybe just say \u0027Prevent clients from starting new remote sessions if the sink is gone.\u0027\n\nI\u0027m also not sure what \u0027OnSinkGone\u0027 means, it sounds like we wouldn\u0027t be able to connect for even mirroring in that case, but perhaps the semantics are remote specific here.",
+      "revId": "9a92d2c2d1372c1c16205ae6514b20df44069f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
