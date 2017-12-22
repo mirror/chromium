@@ -37,9 +37,6 @@
 
 namespace {
 
-// A help article on how to set up a passcode.
-constexpr char kPasscodeArticleURL[] = "https://support.apple.com/HT204060";
-
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierSite = kSectionIdentifierEnumZero,
   SectionIdentifierUsername,

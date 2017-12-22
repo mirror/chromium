@@ -9,6 +9,9 @@
 
 #import "ios/chrome/browser/ui/settings/reauthentication_protocol.h"
 
+// A help article on how to set up a passcode.
+extern const char kPasscodeArticleURL[];
+
 @protocol SuccessfulReauthTimeAccessor<NSObject>
 
 // Method meant to be called by the |ReauthenticationModule| to update
