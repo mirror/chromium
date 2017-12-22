@@ -16,6 +16,24 @@
       "revId": "5fb89f8ad079acf65bf1086e6f7adcbf3a1246bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef2b258_d9423ca4",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1592,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-22T22:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3818350_86c7aaaf",
+      "revId": "5fb89f8ad079acf65bf1086e6f7adcbf3a1246bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
