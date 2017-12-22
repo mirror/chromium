@@ -98,12 +98,14 @@ void GetAddressComponents(const std::string& country_code,
         components[i - 1].length_hint == AddressUiComponent::HINT_LONG ||
         components[i].length_hint == AddressUiComponent::HINT_LONG) {
       line = new base::ListValue;
+      auto* old_line = line;
       address_components->Append(base::WrapUnique(line));
       // |line| is invalidated at this point, so it needs to be reset.
       address_components->GetList(address_components->GetSize() - 1, &line);
+      DCHECK_EQ(old_line, line);
     }
 
-    std::unique_ptr<base::DictionaryValue> component(new base::DictionaryValue);
+    auto component = std::make_unique<base::DictionaryValue>();
     component->SetString(kFieldNameKey, components[i].name);
 
     switch (components[i].field) {
@@ -162,10 +164,9 @@ void SetCountryData(const PersonalDataManager& manager,
                                countries.front()->country_code());
 
   // An ordered list of options to show in the <select>.
-  std::unique_ptr<base::ListValue> country_list(new base::ListValue());
+  auto country_list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < countries.size(); ++i) {
-    std::unique_ptr<base::DictionaryValue> option_details(
-        new base::DictionaryValue());
+    auto option_details = std::make_unique<base::DictionaryValue>();
     option_details->SetString("name", model.GetItemAt(i));
     option_details->SetString(
         "value", countries[i] ? countries[i]->country_code() : "separator");
@@ -173,8 +174,7 @@ void SetCountryData(const PersonalDataManager& manager,
   }
   localized_strings->Set("autofillCountrySelectList", std::move(country_list));
 
-  std::unique_ptr<base::ListValue> default_country_components(
-      new base::ListValue);
+  auto default_country_components = std::make_unique<base::ListValue>();
   std::string default_country_language_code;
   GetAddressComponents(countries.front()->country_code(), ui_language_code,
                        default_country_components.get(),
