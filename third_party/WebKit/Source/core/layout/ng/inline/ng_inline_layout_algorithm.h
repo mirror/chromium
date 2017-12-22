@@ -69,6 +69,11 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   void PlaceLayoutResult(NGInlineItemResult*,
                          NGInlineBoxState*,
                          LayoutUnit inline_offset = LayoutUnit());
+  void PlaceOutOfFlowPositioned(LayoutObject*,
+                                const NGLineInfo&,
+                                const NGLineHeightMetrics&,
+                                LayoutObject* containing_box,
+                                NGLogicalOffset);
   void PlaceListMarker(const NGInlineItem&,
                        NGInlineItemResult*,
                        const NGLineInfo&);
