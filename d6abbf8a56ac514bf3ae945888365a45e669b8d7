@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd1c0c14_929fb2ae",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-22T23:12:41Z",
+      "side": 1,
+      "message": "Is it legal to call this more than once? Init() usually implies one-time initialization, and it\u0027s not clear to me what the expectations around this are.",
+      "revId": "d6abbf8a56ac514bf3ae945888365a45e669b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9485dc9c_66a3aa41",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
