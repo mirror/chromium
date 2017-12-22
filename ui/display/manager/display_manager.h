@@ -24,6 +24,7 @@
 #include "ui/display/display_layout.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/manager/display_manager_export.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/mojo/dev_display_controller.mojom.h"
 #include "ui/display/types/display_constants.h"
@@ -41,8 +42,6 @@ class Rect;
 }
 
 namespace display {
-using DisplayInfoList = std::vector<ManagedDisplayInfo>;
-
 class DisplayLayoutStore;
 class DisplayObserver;
 class Screen;
@@ -335,6 +334,14 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     external_display_mirror_info_ = external_display_mirror_info;
   }
 
+  const MixedModeParam* mixed_mode_param() const {
+    return mixed_mode_param_.get();
+  }
+
+  void set_mixed_mode_param(std::unique_ptr<MixedModeParam> mixed_mode_param) {
+    mixed_mode_param_ = std::move(mixed_mode_param);
+  }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -385,6 +392,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Change the mirror mode.
   void SetMirrorMode(bool mirrored);
+
+  bool IsMixedModeParamValid(const DisplayInfoList& display_info_list);
+
+  void SetMixedMode(bool mixed,
+                    int64_t mirroring_source_id,
+                    const DisplayIdList& mirroring_destination_ids);
 
   // Used to emulate display change when run in a desktop environment instead
   // of on a device.
@@ -618,6 +631,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   base::ObserverList<DisplayObserver> observers_;
 
   display::mojom::DevDisplayControllerPtr dev_display_controller_;
+
+  std::unique_ptr<MixedModeParam> mixed_mode_param_;
 
   // This is incremented whenever a BeginEndNotifier is created and decremented
   // when destroyed. BeginEndNotifier uses this to track when it should call

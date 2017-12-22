@@ -153,7 +153,6 @@ void MirrorWindowController::UpdateWindow(
 
   multi_display_mode_ = GetCurrentMultiDisplayMode();
   reflecting_source_id_ = GetCurrentReflectingSourceId();
-
   for (const display::ManagedDisplayInfo& display_info : display_info_list) {
     std::unique_ptr<RootWindowTransformer> transformer;
     if (display_manager->IsInSoftwareMirrorMode()) {
@@ -248,6 +247,11 @@ void MirrorWindowController::UpdateWindow(
     }
   }
 
+  if (display_info_list.empty()) {
+    Close(true);
+    return;
+  }
+
   // Deleting WTHs for disconnected displays.
   if (mirroring_host_info_map_.size() > display_info_list.size()) {
     for (MirroringHostInfoMap::iterator iter = mirroring_host_info_map_.begin();
@@ -298,8 +302,9 @@ void MirrorWindowController::CloseIfNotNecessary() {
 }
 
 void MirrorWindowController::Close(bool delay_host_deletion) {
-  for (auto& info : mirroring_host_info_map_)
+  for (auto& info : mirroring_host_info_map_) {
     CloseAndDeleteHost(info.second, delay_host_deletion);
+  }
 
   mirroring_host_info_map_.clear();
   if (reflector_) {

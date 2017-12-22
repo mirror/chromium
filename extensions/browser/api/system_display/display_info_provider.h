@@ -94,6 +94,12 @@ class DisplayInfoProvider {
   virtual bool ClearTouchCalibration(const std::string& id, std::string* error);
   virtual bool IsNativeTouchCalibrationActive(std::string* error);
 
+  virtual bool SetMixedMode(
+      bool mixed,
+      const std::string& mirroring_source_id,
+      const std::vector<std::string>& mirroring_destination_ids,
+      std::string* error);
+
  protected:
   DisplayInfoProvider();
 

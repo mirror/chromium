@@ -20,6 +20,7 @@ class Size;
 namespace display {
 class ManagedDisplayInfo;
 class ManagedDisplayMode;
+using DisplayInfoList = std::vector<ManagedDisplayInfo>;
 
 // Creates the display mode list for internal display
 // based on |native_mode|.
@@ -96,6 +97,17 @@ DISPLAY_MANAGER_EXPORT display::ManagedDisplayInfo CreateDisplayInfo(
 
 // Get the display id after the output index (8 bits) is masked out.
 DISPLAY_MANAGER_EXPORT int64_t GetDisplayIdWithoutOutputIndex(int64_t id);
+
+// Defines parameters needed to set mixed mode.
+struct MixedModeParam {
+  DISPLAY_MANAGER_EXPORT MixedModeParam(int64_t src_id,
+                                        const DisplayIdList& dst_ids);
+  DISPLAY_MANAGER_EXPORT ~MixedModeParam();
+
+  int64_t mirroring_source_id;
+
+  DisplayIdList mirroring_destination_ids;
+};
 
 }  // namespace display
 
