@@ -89,6 +89,16 @@ const HeapVector<Member<Node>> HTMLSlotElement::assignedNodesForBinding(
   return assigned_nodes_;
 }
 
+const HeapVector<Member<Element>> HTMLSlotElement::assignedElements(
+    const AssignedNodesOptions& options) {
+  HeapVector<Member<Element>> elements;
+  for (auto node : assignedNodesForBinding(options)) {
+    if (node->IsElementNode())
+      elements.push_back(ToElement(node));
+  }
+  return elements;
+}
+
 const HeapVector<Member<Node>>& HTMLSlotElement::GetDistributedNodes() {
   DCHECK(!NeedsDistributionRecalc());
   DCHECK(SupportsAssignment() || distributed_nodes_.IsEmpty());
