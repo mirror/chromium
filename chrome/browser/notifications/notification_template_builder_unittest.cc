@@ -81,10 +81,11 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
   // Converts the notification data to XML and verifies it is as expected. Calls
   // must be wrapped in ASSERT_NO_FATAL_FAILURE().
   void VerifyXml(const message_center::Notification& notification,
-                 const base::string16& xml_template) {
+                 const base::string16& xml_template,
+                 const NotificationMetadata* metadata = nullptr) {
     MockNotificationImageRetainer image_retainer;
-    template_ = NotificationTemplateBuilder::Build(&image_retainer, kEncodedId,
-                                                   kProfileId, notification);
+    template_ = NotificationTemplateBuilder::Build(
+        &image_retainer, kEncodedId, kProfileId, notification, metadata);
 
     ASSERT_TRUE(template_);
 
@@ -254,7 +255,8 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
 TEST_F(NotificationTemplateBuilderTest, Silent) {
   std::unique_ptr<message_center::Notification> notification =
       InitializeBasicNotification();
-  notification->set_silent(true);
+  WebNotificationMetadata metadata;
+  metadata.silent = true;
 
   const wchar_t kExpectedXml[] =
       LR"(<toast launch="0|Default|0|https://example.com/|notification_id" displayTimestamp="1998-09-04T01:02:03Z">
@@ -272,7 +274,7 @@ TEST_F(NotificationTemplateBuilderTest, Silent) {
 </toast>
 )";
 
-  ASSERT_NO_FATAL_FAILURE(VerifyXml(*notification, kExpectedXml));
+  ASSERT_NO_FATAL_FAILURE(VerifyXml(*notification, kExpectedXml, &metadata));
 }
 
 TEST_F(NotificationTemplateBuilderTest, RequireInteraction) {

@@ -356,9 +356,10 @@ void PlatformNotificationServiceImpl::DisplayNotification(
   DCHECK_EQ(0u, notification_data.actions.size());
   DCHECK_EQ(0u, notification_resources.action_icons.size());
 
+  auto metadata = std::make_unique<WebNotificationMetadata>();
   message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
-      notification_resources, nullptr /* delegate */);
+      notification_resources, nullptr /* delegate */, metadata.get());
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
       NotificationHandler::Type::WEB_NON_PERSISTENT, notification);
@@ -382,11 +383,11 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
   Profile* profile = Profile::FromBrowserContext(browser_context);
   DCHECK(profile);
 
+  auto metadata = std::make_unique<PersistentWebNotificationMetadata>();
+  metadata->service_worker_scope = service_worker_scope;
   message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
-      notification_resources, nullptr /* delegate */);
-  auto metadata = std::make_unique<PersistentNotificationMetadata>();
-  metadata->service_worker_scope = service_worker_scope;
+      notification_resources, nullptr /* delegate */, metadata.get());
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
       NotificationHandler::Type::WEB_PERSISTENT, notification,
@@ -473,7 +474,8 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
     const std::string& notification_id,
     const content::PlatformNotificationData& notification_data,
     const content::NotificationResources& notification_resources,
-    scoped_refptr<message_center::NotificationDelegate> delegate) const {
+    scoped_refptr<message_center::NotificationDelegate> delegate,
+    WebNotificationMetadata* metadata) const {
   DCHECK_EQ(notification_data.actions.size(),
             notification_resources.action_icons.size());
 
@@ -499,10 +501,7 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
 
   notification.set_context_message(
       DisplayNameForContextMessage(profile, origin));
-  notification.set_vibration_pattern(notification_data.vibration_pattern);
   notification.set_timestamp(notification_data.timestamp);
-  notification.set_renotify(notification_data.renotify);
-  notification.set_silent(notification_data.silent);
   if (ShouldDisplayWebNotificationOnFullScreen(profile, origin)) {
     notification.set_fullscreen_visibility(
         message_center::FullscreenVisibility::OVER_USER);
@@ -561,6 +560,12 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
   // On mobile, this is ignored (notifications are minimized at all times).
   if (notification_data.require_interaction)
     notification.set_never_timeout(true);
+
+  if (metadata) {
+    metadata->vibration_pattern = notification_data.vibration_pattern;
+    metadata->renotify = notification_data.renotify;
+    metadata->silent = notification_data.silent;
+  }
 
   return notification;
 }

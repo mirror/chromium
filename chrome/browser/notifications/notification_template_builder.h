@@ -48,7 +48,8 @@ class NotificationTemplateBuilder {
       NotificationImageRetainer* notification_image_retainer,
       const std::string& launch_attribute,
       const std::string& profile_id,
-      const message_center::Notification& notification);
+      const message_center::Notification& notification,
+      const NotificationCommon::Metadata* metadata);
 
   // Set label for the context menu item in testing. The caller owns |label| and
   // is responsible for resetting the override back to nullptr.

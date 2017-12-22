@@ -245,7 +245,8 @@ class NotificationPlatformBridgeWinImpl
         notification->origin_url());
     std::unique_ptr<NotificationTemplateBuilder> notification_template =
         NotificationTemplateBuilder::Build(image_retainer_.get(), encoded_id,
-                                           profile_id, *notification);
+                                           profile_id, *notification,
+                                           metadata.get());
     mswr::ComPtr<winui::Notifications::IToastNotification> toast;
     HRESULT hr =
         GetToastNotification(*notification, *notification_template, &toast);
@@ -488,10 +489,10 @@ void NotificationPlatformBridgeWin::Display(
       notification, /*include_body_image=*/true, /*include_small_image=*/true,
       /*include_icon_images=*/true);
 
-  PostTaskToTaskRunnerThread(base::BindOnce(
-      &NotificationPlatformBridgeWinImpl::Display, impl_, notification_type,
-      profile_id, is_incognito, base::Passed(&notification_copy),
-      base::Passed(&metadata)));
+  PostTaskToTaskRunnerThread(
+      base::BindOnce(&NotificationPlatformBridgeWinImpl::Display, impl_,
+                     notification_type, profile_id, is_incognito,
+                     base::Passed(&notification_copy), std::move(metadata)));
 }
 
 void NotificationPlatformBridgeWin::Close(const std::string& profile_id,

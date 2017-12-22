@@ -13,19 +13,38 @@
 
 NotificationCommon::Metadata::~Metadata() = default;
 
-PersistentNotificationMetadata::PersistentNotificationMetadata() {
+WebNotificationMetadata::WebNotificationMetadata() {
+  type = NotificationHandler::Type::WEB_NON_PERSISTENT;
+}
+
+WebNotificationMetadata::~WebNotificationMetadata() = default;
+
+// static
+const WebNotificationMetadata* WebNotificationMetadata::From(
+    const Metadata* metadata) {
+  if (!metadata ||
+      !(metadata->type == NotificationHandler::Type::WEB_NON_PERSISTENT ||
+        metadata->type == NotificationHandler::Type::WEB_PERSISTENT)) {
+    return nullptr;
+  }
+
+  return static_cast<const WebNotificationMetadata*>(metadata);
+}
+
+PersistentWebNotificationMetadata::PersistentWebNotificationMetadata() {
   type = NotificationHandler::Type::WEB_PERSISTENT;
 }
 
-PersistentNotificationMetadata::~PersistentNotificationMetadata() = default;
+PersistentWebNotificationMetadata::~PersistentWebNotificationMetadata() =
+    default;
 
 // static
-const PersistentNotificationMetadata* PersistentNotificationMetadata::From(
-    const Metadata* metadata) {
+const PersistentWebNotificationMetadata*
+PersistentWebNotificationMetadata::From(const Metadata* metadata) {
   if (!metadata || metadata->type != NotificationHandler::Type::WEB_PERSISTENT)
     return nullptr;
 
-  return static_cast<const PersistentNotificationMetadata*>(metadata);
+  return static_cast<const PersistentWebNotificationMetadata*>(metadata);
 }
 
 // static

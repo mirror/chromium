@@ -84,7 +84,8 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
     NotificationImageRetainer* notification_image_retainer,
     const std::string& launch_attribute,
     const std::string& profile_id,
-    const message_center::Notification& notification) {
+    const message_center::Notification& notification,
+    const NotificationCommon::Metadata* metadata) {
   std::unique_ptr<NotificationTemplateBuilder> builder = base::WrapUnique(
       new NotificationTemplateBuilder(notification_image_retainer, profile_id));
 
@@ -133,7 +134,8 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   builder->AddContextMenu();
   builder->EndActionsElement();
 
-  if (notification.silent())
+  const auto* web_metadata = WebNotificationMetadata::From(metadata);
+  if (web_metadata && web_metadata->silent)
     builder->WriteAudioSilentElement();
 
   builder->EndToastElement();

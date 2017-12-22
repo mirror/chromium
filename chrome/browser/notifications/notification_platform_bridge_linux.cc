@@ -298,7 +298,7 @@ class NotificationPlatformBridgeLinuxImpl
     PostTaskToTaskRunnerThread(base::BindOnce(
         &NotificationPlatformBridgeLinuxImpl::DisplayOnTaskRunner, this,
         notification_type, profile_id, is_incognito,
-        base::Passed(&notification_copy)));
+        base::Passed(&notification_copy), std::move(metadata)));
   }
 
   void Close(const std::string& profile_id,
@@ -489,7 +489,8 @@ class NotificationPlatformBridgeLinuxImpl
       NotificationHandler::Type notification_type,
       const std::string& profile_id,
       bool is_incognito,
-      std::unique_ptr<message_center::Notification> notification) {
+      std::unique_ptr<message_center::Notification> notification,
+      std::unique_ptr<NotificationCommon::Metadata> metadata) {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
     NotificationData* data =
         FindNotificationData(notification->id(), profile_id, is_incognito);
@@ -631,7 +632,8 @@ class NotificationPlatformBridgeLinuxImpl
         NotificationPriorityToFdoUrgency(notification->priority()));
     hints_writer.CloseContainer(&urgency_writer);
 
-    if (notification->silent()) {
+    const auto* web_metadata = WebNotificationMetadata::From(metadata.get());
+    if (web_metadata && web_metadata->silent) {
       dbus::MessageWriter suppress_sound_writer(nullptr);
       hints_writer.OpenDictEntry(&suppress_sound_writer);
       suppress_sound_writer.AppendString("suppress-sound");

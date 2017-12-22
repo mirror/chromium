@@ -26,7 +26,7 @@ class NotificationCommon {
   };
 
   // A struct that contains extra data about a notification specific to one of
-  // the above types.
+  // the types in NotificationHandler.
   struct Metadata {
     virtual ~Metadata();
 
@@ -37,12 +37,35 @@ class NotificationCommon {
   static void OpenNotificationSettings(Profile* profile, const GURL& origin);
 };
 
-// Metadata for PERSISTENT notifications.
-struct PersistentNotificationMetadata : public NotificationCommon::Metadata {
-  PersistentNotificationMetadata();
-  ~PersistentNotificationMetadata() override;
+// Metadata specific to web notifications (persistent and non).
+struct WebNotificationMetadata : public NotificationCommon::Metadata {
+  WebNotificationMetadata();
+  ~WebNotificationMetadata() override;
 
-  static const PersistentNotificationMetadata* From(const Metadata* metadata);
+  static const WebNotificationMetadata* From(const Metadata* metadata);
+
+  // Vibration pattern to play when displaying the notification. There must be
+  // an odd number of entries in this pattern when it's set: numbers of
+  // milliseconds to vibrate separated by numbers of milliseconds to pause.
+  // Currently only respected on Android.
+  std::vector<int> vibration_pattern;
+
+  // Whether the vibration pattern and other applicable announcement mechanisms
+  // should be considered when updating the notification.
+  bool renotify = false;
+
+  // When true, the notification should not make a noise or vibration regardless
+  // of device settings.
+  bool silent = false;
+};
+
+// Metadata for WEB_PERSISTENT notifications.
+struct PersistentWebNotificationMetadata : public WebNotificationMetadata {
+  PersistentWebNotificationMetadata();
+  ~PersistentWebNotificationMetadata() override;
+
+  static const PersistentWebNotificationMetadata* From(
+      const Metadata* metadata);
 
   GURL service_worker_scope;
 };

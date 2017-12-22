@@ -198,10 +198,11 @@ TEST_F(PlatformNotificationServiceTest, DisplayNonPersistentPropertiesMatch) {
   EXPECT_EQ("Hello, world!",
       base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
-      testing::ElementsAreArray(kNotificationVibrationPattern));
-
-  EXPECT_TRUE(notification.silent());
+  const auto* metadata = WebNotificationMetadata::From(
+      display_service_tester_->GetMetadataForNotification(notification));
+  EXPECT_THAT(metadata->vibration_pattern,
+              testing::ElementsAreArray(kNotificationVibrationPattern));
+  EXPECT_TRUE(metadata->silent);
 }
 
 TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
@@ -213,6 +214,7 @@ TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
   notification_data.title = base::ASCIIToUTF16("My notification's title");
   notification_data.body = base::ASCIIToUTF16("Hello, world!");
   notification_data.vibration_pattern = vibration_pattern;
+  notification_data.renotify = true;
   notification_data.silent = true;
   notification_data.actions.resize(2);
   notification_data.actions[0].type =
@@ -239,10 +241,12 @@ TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
   EXPECT_EQ("My notification's title", base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Hello, world!", base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
+  const auto* metadata = PersistentWebNotificationMetadata::From(
+      display_service_tester_->GetMetadataForNotification(notification));
+  EXPECT_THAT(metadata->vibration_pattern,
               testing::ElementsAreArray(kNotificationVibrationPattern));
-
-  EXPECT_TRUE(notification.silent());
+  EXPECT_TRUE(metadata->renotify);
+  EXPECT_TRUE(metadata->silent);
 
   const auto& buttons = notification.buttons();
   ASSERT_EQ(2u, buttons.size());
@@ -339,7 +343,7 @@ TEST_F(PlatformNotificationServiceTest, CreateNotificationFromData) {
 
   Notification notification = service()->CreateNotificationFromData(
       profile_, origin, "id", notification_data, NotificationResources(),
-      nullptr /* delegate */);
+      nullptr /* delegate */, nullptr /* metadata */);
   EXPECT_TRUE(notification.context_message().empty());
 
   // Create a mocked extension.
@@ -361,7 +365,8 @@ TEST_F(PlatformNotificationServiceTest, CreateNotificationFromData) {
   notification = service()->CreateNotificationFromData(
       profile_,
       GURL("chrome-extension://honijodknafkokifofgiaalefdiedpko/main.html"),
-      "id", notification_data, NotificationResources(), nullptr /* delegate */);
+      "id", notification_data, NotificationResources(), nullptr /* delegate */,
+      nullptr /* metadata */);
   EXPECT_EQ("NotificationTest",
             base::UTF16ToUTF8(notification.context_message()));
 }

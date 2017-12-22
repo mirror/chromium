@@ -120,7 +120,8 @@ class PlatformNotificationServiceImpl
       content::PersistentNotificationStatus status);
 
   // Creates a new Web Notification-based Notification object. Should only be
-  // called when the notification is first shown.
+  // called when the notification is first shown. |metadata| is an out-param
+  // that holds extra web-specific fields.
   // TODO(peter): |delegate| can be a scoped_refptr, but properly passing this
   // through requires changing a whole lot of Notification constructor calls.
   message_center::Notification CreateNotificationFromData(
@@ -129,7 +130,8 @@ class PlatformNotificationServiceImpl
       const std::string& notification_id,
       const content::PlatformNotificationData& notification_data,
       const content::NotificationResources& notification_resources,
-      scoped_refptr<message_center::NotificationDelegate> delegate) const;
+      scoped_refptr<message_center::NotificationDelegate> delegate,
+      WebNotificationMetadata* metadata) const;
 
   // Returns a display name for an origin, to be used in the context message
   base::string16 DisplayNameForContextMessage(Profile* profile,

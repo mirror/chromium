@@ -84,11 +84,6 @@ class NotificationBuilder {
     return *this;
   }
 
-  NotificationBuilder& SetSilent(bool silent) {
-    notification_.set_silent(silent);
-    return *this;
-  }
-
   NotificationBuilder& SetTitle(const base::string16& title) {
     notification_.set_title(title);
     return *this;
@@ -513,12 +508,17 @@ TEST_F(NotificationPlatformBridgeLinuxTest, Silent) {
           2));
 
   CreateNotificationBridgeLinux();
+  auto metadata = std::make_unique<WebNotificationMetadata>();
+  metadata->silent = false;
   notification_bridge_linux_->Display(
       NotificationHandler::Type::WEB_PERSISTENT, "", false,
-      NotificationBuilder("1").SetSilent(false).GetResult(), nullptr);
+      NotificationBuilder("1").GetResult(), std::move(metadata));
+
+  metadata = std::make_unique<WebNotificationMetadata>();
+  metadata->silent = true;
   notification_bridge_linux_->Display(
       NotificationHandler::Type::WEB_PERSISTENT, "", false,
-      NotificationBuilder("2").SetSilent(true).GetResult(), nullptr);
+      NotificationBuilder("2").GetResult(), std::move(metadata));
 }
 
 TEST_F(NotificationPlatformBridgeLinuxTest, OriginUrlFormat) {
