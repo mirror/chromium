@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ffcc703_3f5d771b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-22T19:41:44Z",
+      "side": 1,
+      "message": "DCHECK(target size \u003c\u003d src_rect size) somewhere",
+      "revId": "1f7485b68d375ca6c5dd5f57f02437e97d287431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00bc46d_56310c5f",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-22T19:41:44Z",
+      "side": 1,
+      "message": "It seems there should be a way to not recurse here, since we already found a thing in the\ncache.",
+      "revId": "1f7485b68d375ca6c5dd5f57f02437e97d287431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e1c3f5_ad5a2875",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-22T19:41:44Z",
+      "side": 1,
+      "message": "This code seems not to be reachable.",
+      "revId": "1f7485b68d375ca6c5dd5f57f02437e97d287431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f9cdaf_db03d95c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-22T19:41:44Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s worth it to store the image keys pre-sorted so that any client\ncan\u0027t possibly see them in the wrong order.",
+      "revId": "1f7485b68d375ca6c5dd5f57f02437e97d287431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
