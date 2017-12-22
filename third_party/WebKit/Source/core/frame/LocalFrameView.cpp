@@ -1881,6 +1881,10 @@ void LocalFrameView::RestoreScrollbar() {
 
 bool LocalFrameView::RestoreScrollAnchor(
     const ScrollAnchor::SerializedAnchor& serialized_anchor) {
+  if (ShouldPerformScrollAnchoring()) {
+    return scroll_anchor_.RestoreAnchor(serialized_anchor);
+  }
+
   return false;
 }
 
