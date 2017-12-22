@@ -10,6 +10,7 @@
 #include "chrome/common/env_vars.h"
 #include "chrome/common/logging_chrome.h"
 #include "content/public/common/content_switches.h"
+#include "testing/gmock/include/gmock/gmock-matchers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class ChromeLoggingTest : public testing::Test {
@@ -86,3 +87,13 @@ TEST_F(ChromeLoggingTest, EnvironmentAndFlagLogFileName) {
 
   RestoreEnvironmentVariable();
 }
+
+#if defined(OS_CHROMEOS)
+TEST_F(ChromeLoggingTest, TimestampedName) {
+  base::FilePath path = base::FilePath(FILE_PATH_LITERAL("xy.zzy"));
+  base::FilePath timestamped_path =
+      logging::GenerateTimestampedName(path, base::Time::Now());
+  EXPECT_THAT(timestamped_path.value(),
+              ::testing::MatchesRegex("^xy[-_0-9]+.zzy"));
+}
+#endif  // OS_CHROMEOS
