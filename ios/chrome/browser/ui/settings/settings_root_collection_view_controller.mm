@@ -11,6 +11,7 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
+#import "ios/chrome/browser/ui/icons/chrome_icon.h"
 #import "ios/chrome/browser/ui/settings/bar_button_activity_indicator.h"
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_utils.h"
@@ -98,13 +99,30 @@ const CGFloat kActivityIndicatorDimensionIPhone = 56;
              action:@selector(editButtonPressed)];
 }
 
+- (UIBarButtonItem*)createSearchButton {
+  return [ChromeIcon templateBarButtonItemWithImage:[ChromeIcon searchIcon]
+                                             target:self
+                                             action:@selector(enterSearchMode)];
+}
+
 - (void)updateEditButton {
+  self.navigationItem.rightBarButtonItems = @[];
   if ([self.editor isEditing]) {
     self.navigationItem.rightBarButtonItem = [self createEditDoneButton];
   } else if ([self shouldShowEditButton]) {
     self.navigationItem.rightBarButtonItem = [self createEditButton];
   } else {
     self.navigationItem.rightBarButtonItem = [self doneButtonIfNeeded];
+  }
+
+  if ([self shouldShowSearchButton]) {
+    if (self.navigationItem.rightBarButtonItems.count == 0) {
+      self.navigationItem.rightBarButtonItems = @[ [self createSearchButton] ];
+    } else {
+      self.navigationItem.rightBarButtonItems = @[
+        self.navigationItem.rightBarButtonItem, [self createSearchButton]
+      ];
+    }
   }
 }
 
@@ -180,6 +198,10 @@ const CGFloat kActivityIndicatorDimensionIPhone = 56;
 }
 
 - (BOOL)editButtonEnabled {
+  return NO;
+}
+
+- (BOOL)shouldShowSearchButton {
   return NO;
 }
 

@@ -37,6 +37,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/icons/chrome_icon.h"
 #import "ios/chrome/browser/ui/settings/password_details_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/password_details_collection_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
@@ -185,6 +186,7 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
                    prefName:password_manager::prefs::kCredentialsEnableService];
     [passwordManagerEnabled_ setObserver:self];
     [self getLoginsFromPasswordStore];
+
     [self updateEditButton];
     // TODO(crbug.com/764578): -loadModel should not be called from
     // initializer. Consider moving the other calls on instance methods as well.
@@ -505,6 +507,14 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
   [exportConfirmation addAction:exportAction];
 
   [self presentViewController:exportConfirmation animated:YES completion:nil];
+}
+
+- (BOOL)shouldShowSearchButton {
+  return YES;
+}
+
+- (void)enterSearchMode {
+  // TODO: implement
 }
 
 #pragma mark UICollectionViewDelegate
