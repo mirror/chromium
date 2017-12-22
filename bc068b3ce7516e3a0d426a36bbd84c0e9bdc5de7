@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87f1372f_6462e9fc",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-22T07:52:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4b9cc1_27fb9a21",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1565c3ce_442562d0",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4e107ba3_e6b6c1cd",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-22T07:52:44Z",
+      "side": 1,
+      "message": "Done. Agreed to renaming, too.",
+      "parentUuid": "1565c3ce_442562d0",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c02bbb83_29511dd9",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51bf5b8_62f66869",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-22T07:52:44Z",
+      "side": 1,
+      "message": "That seems good! :)\nUpdated.",
+      "parentUuid": "c02bbb83_29511dd9",
+      "revId": "bc068b3ce7516e3a0d426a36bbd84c0e9bdc5de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
