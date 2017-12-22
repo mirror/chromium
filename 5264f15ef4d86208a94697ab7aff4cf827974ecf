@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9ca596_dccb4600",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T06:40:25Z",
+      "side": 1,
+      "message": "The comment says \"ordered by block-start, then by block-size\" but we\u0027re not looking at block-size?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c14e7cd_9f383a4d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-22T06:40:25Z",
+      "side": 1,
+      "message": "This logic can\u0027t insert at 0 if not empty. Would it never happen?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
