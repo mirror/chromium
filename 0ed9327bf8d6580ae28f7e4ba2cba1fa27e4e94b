@@ -22,6 +22,145 @@
       "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20be2d0_68446cc2",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "I think I understand what was meant here. (IMHO, the comment should be moved down to be after the \"case LOCAL_PLAYBACK\" and before the \"return UNKNOWN.\") See my next comment for suggested wording...",
+      "parentUuid": "862a3266_92e8723d",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7926096d_d9031a14",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "Suggested wording for this rather complex edge-case: \"This RemotingStopReason indicates the RendererController initiated the session shutdown in the immediate past, and the trigger for that should have already been recorded in the metrics. Here, this is just duplicate feedback from the sink for that same event. Return UNKNOWN_STOP_TRIGGER because it would be a logic flaw for this value to be recorded in the metrics.\"\n\nOpen to proofreading of the above! Actually, we\u0027re only succeeding here if amp@ groks what\u0027s going on by reading the comment. :-)",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afab69ed_ff11d612",
+        "filename": "media/remoting/shared_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "s/of the current session/of the currently-running session (if any)/",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 36
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87882f93_ba1d0509",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "Since this is a simple accessor, please adjust style and make it in-line:\n\n  mojom::RemotingStopReason get_last_stop_reason() const {\n    return stop_reason_;\n  }",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 54
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af645fc_0abd694e",
+        "filename": "media/remoting/triggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "nit: s/message/RPC message/",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 56
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55100aa_3917791b",
+        "filename": "media/remoting/triggers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-22T22:51:36Z",
+      "side": 1,
+      "message": "nit: s/consume data/pull from pipe/",
+      "range": {
+        "startLine": 77,
+        "startChar": 42,
+        "endLine": 77,
+        "endChar": 54
+      },
+      "revId": "0ed9327bf8d6580ae28f7e4ba2cba1fa27e4e94b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
