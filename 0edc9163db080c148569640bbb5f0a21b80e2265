@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ac1b38_9b6afcac",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-22T03:09:46Z",
+      "side": 1,
+      "message": "I believe you want a strictly greater than here.",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 14
+      },
+      "revId": "0edc9163db080c148569640bbb5f0a21b80e2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbe3345_ebad3c89",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-22T03:09:46Z",
+      "side": 1,
+      "message": "What are your thoughts on adding a new error code, or otherwise clarifying this in the error page?",
+      "range": {
+        "startLine": 608,
+        "startChar": 36,
+        "endLine": 608,
+        "endChar": 65
+      },
+      "revId": "0edc9163db080c148569640bbb5f0a21b80e2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
