@@ -973,7 +973,8 @@ TEST_P(ArcAppModelBuilderTest, RequestIcons) {
       ArcAppItem* app_item = FindArcItem(ArcAppTest::GetAppId(app));
       ASSERT_NE(nullptr, app_item);
       const float scale = ui::GetScaleForScaleFactor(scale_factor);
-      app_item->icon().GetRepresentation(scale);
+      ChromeAppListItem::TestApi test_api(app_item);
+      test_api.icon().GetRepresentation(scale);
 
       // This does not result in an icon being loaded, so WaitForIconUpdates
       // cannot be used.
@@ -1080,10 +1081,11 @@ TEST_P(ArcAppModelBuilderTest, InstallIcon) {
   const base::FilePath icon_path = prefs->GetIconPath(app_id, scale_factor);
   EXPECT_FALSE(IsIconCreated(prefs, app_id, scale_factor));
 
-  const ArcAppItem* app_item = FindArcItem(app_id);
+  ArcAppItem* app_item = FindArcItem(app_id);
   EXPECT_NE(nullptr, app_item);
   // This initiates async loading.
-  app_item->icon().GetRepresentation(scale);
+  ChromeAppListItem::TestApi test_api(app_item);
+  test_api.icon().GetRepresentation(scale);
 
   // Now send generated icon for the app.
   std::string png_data;
@@ -1503,12 +1505,13 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderWithBadIcon) {
   const std::vector<ui::ScaleFactor>& scale_factors =
       ui::GetSupportedScaleFactors();
   ArcAppItem* app_item = FindArcItem(app_id);
+  ChromeAppListItem::TestApi test_api(app_item);
   for (auto& scale_factor : scale_factors) {
     app_instance()->GenerateAndSendBadIcon(
         app, static_cast<arc::mojom::ScaleFactor>(scale_factor));
     const float scale = ui::GetScaleForScaleFactor(scale_factor);
     // Force the icon to be loaded.
-    app_item->icon().GetRepresentation(scale);
+    test_api.icon().GetRepresentation(scale);
     WaitForIconCreation(prefs, app_id, scale_factor);
   }
 
@@ -1552,13 +1555,14 @@ TEST_P(ArcAppModelBuilderTest, IconLoader) {
   const std::vector<ui::ScaleFactor>& scale_factors =
       ui::GetSupportedScaleFactors();
   ArcAppItem* app_item = FindArcItem(app_id);
+  ChromeAppListItem::TestApi test_api(app_item);
   for (auto& scale_factor : scale_factors) {
     std::string png_data;
     EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
         app, static_cast<arc::mojom::ScaleFactor>(scale_factor), &png_data));
     const float scale = ui::GetScaleForScaleFactor(scale_factor);
     // Force the icon to be loaded.
-    app_item->icon().GetRepresentation(scale);
+    test_api.icon().GetRepresentation(scale);
   }
 
   delegate.WaitForIconUpdates(scale_factors.size());

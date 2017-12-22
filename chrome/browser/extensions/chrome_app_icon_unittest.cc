@@ -302,9 +302,10 @@ TEST_F(ChromeAppIconWithModelTest, IconsTheSame) {
   // updated and take image snapshot.
   ChromeAppListItem* app_list_item = FindAppListItem(kTestAppId);
   ASSERT_TRUE(app_list_item);
-  WaitForIconUpdates<ChromeAppListItem>(*app_list_item);
+  ChromeAppListItem::TestApi item_test_api(app_list_item);
+  WaitForIconUpdates<ChromeAppListItem::TestApi>(item_test_api);
   std::unique_ptr<gfx::ImageSkia> app_list_item_image =
-      app_list_item->icon().DeepCopy();
+      item_test_api.icon().DeepCopy();
 
   // Load reference icon.
   TestAppIcon reference_icon(profile(), kTestAppId,

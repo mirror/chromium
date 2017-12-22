@@ -5,7 +5,9 @@
 #ifndef CHROME_BROWSER_UI_APP_LIST_CHROME_APP_LIST_ITEM_H_
 #define CHROME_BROWSER_UI_APP_LIST_CHROME_APP_LIST_ITEM_H_
 
+#include <memory>
 #include <string>
+#include <utility>
 
 #include "ash/app_list/model/app_list_item.h"
 #include "base/macros.h"
@@ -26,7 +28,28 @@ class ImageSkia;
 // Base class of all chrome app list items.
 class ChromeAppListItem : public app_list::AppListItem {
  public:
+  class TestApi {
+   public:
+    explicit TestApi(ChromeAppListItem* item) : item_(item) {}
+    ~TestApi() = default;
+
+    void set_folder_id(const std::string& folder_id) {
+      item_->set_folder_id(folder_id);
+    }
+
+    void set_position(const syncer::StringOrdinal& position) {
+      item_->set_position(position);
+    }
+
+    const gfx::ImageSkia& icon() const { return item_->icon(); }
+
+   private:
+    ChromeAppListItem* item_;
+  };
+
+  ChromeAppListItem(Profile* profile, const std::string& app_id);
   ~ChromeAppListItem() override;
+
   // AppListControllerDelegate is not properly implemented in tests. Use mock
   // |controller| for unit_tests.
   static void OverrideAppListControllerDelegateForTesting(
@@ -34,12 +57,24 @@ class ChromeAppListItem : public app_list::AppListItem {
 
   static gfx::ImageSkia CreateDisabledIcon(const gfx::ImageSkia& icon);
 
- protected:
-  // TODO(hejq): Remove this once we break the inheritance from AppListItem and
-  //             move those protected methods to public.
-  friend class FakeAppListModelUpdater;
+  // Activates (opens) the item. Does nothing by default.
+  void Activate(int event_flags) override;
 
-  ChromeAppListItem(Profile* profile, const std::string& app_id);
+  // Returns a static const char* identifier for the subclass (defaults to "").
+  // Pointers can be compared for quick type checking.
+  const char* GetItemType() const override;
+
+  // Returns the context menu model for this item, or NULL if there is currently
+  // no menu for the item (e.g. during install).
+  // Note the returned menu model is owned by this item.
+  ui::MenuModel* GetContextMenuModel() override;
+
+  bool CompareForTest(const app_list::AppListItem* other) const override;
+
+  std::string ToDebugString() const override;
+
+ protected:
+  friend class ChromeAppListModelUpdater;
 
   Profile* profile() const { return profile_; }
 
@@ -55,7 +90,10 @@ class ChromeAppListItem : public app_list::AppListItem {
   void SetDefaultPositionIfApplicable();
 
  private:
+  const gfx::ImageSkia& icon_for_test() const { return icon_for_test_; }
+
   Profile* profile_;
+  gfx::ImageSkia icon_for_test_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListItem);
 };
