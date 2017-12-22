@@ -189,7 +189,8 @@ std::string PolicyToText(std::string debug_string) {
 
 // Writes a TSV file of all annotations and their content.
 bool WriteAnnotationsFile(const base::FilePath& filepath,
-                          const std::vector<AnnotationInstance>& annotations) {
+                          const std::vector<AnnotationInstance>& annotations,
+                          std::vector<std::string> missing_ids) {
   std::vector<std::string> lines;
   std::string title =
       "Unique ID\tLast Update\tSender\tDescription\tTrigger\tData\t"
@@ -198,6 +199,8 @@ bool WriteAnnotationsFile(const base::FilePath& filepath,
       "ID Hash Code\tContent Hash Code";
 
   for (auto& instance : annotations) {
+    if (instance.type != AnnotationInstance::Type::ANNOTATION_COMPLETE)
+      continue;
     // Unique ID
     std::string line = instance.proto.unique_id();
 
@@ -269,7 +272,7 @@ bool WriteAnnotationsFile(const base::FilePath& filepath,
     line += base::StringPrintf("\t%s", UpdateTextForTSV(policies_text).c_str());
 
     // Comments.
-    line += "\t" + instance.proto.comments();
+    line += "\t" + UpdateTextForTSV(instance.proto.comments());
 
     // Source.
     const auto source = instance.proto.source();
@@ -284,6 +287,16 @@ bool WriteAnnotationsFile(const base::FilePath& filepath,
 
     lines.push_back(line);
   }
+
+  // Add missing annotations.
+  std::string tabs;
+  std::string::size_type pos = 0;
+  while (pos != std::string::npos) {
+    tabs = tabs + "\t";
+    pos = title.find("\t", pos + 1);
+  }
+  for (const std::string& id : missing_ids)
+    lines.push_back(id + tabs);
 
   std::sort(lines.begin(), lines.end());
   lines.insert(lines.begin(), title);
@@ -409,11 +422,14 @@ int main(int argc, char* argv[]) {
   }
 
   // Write annotations TSV file.
-  if (!annotations_file.empty() &&
-      !WriteAnnotationsFile(annotations_file,
-                            auditor.extracted_annotations())) {
-    LOG(ERROR) << "Could not write TSV file.";
-    return 1;
+  if (!annotations_file.empty()) {
+    std::vector<std::string> missing_ids;
+    if (!auditor.exporter().GetOtherPlatformsAnnotationIDs(&missing_ids) ||
+        !WriteAnnotationsFile(annotations_file, auditor.extracted_annotations(),
+                              missing_ids)) {
+      LOG(ERROR) << "Could not write TSV file.";
+      return 1;
+    }
   }
 
   const std::vector<AuditorResult>& errors = auditor.errors();
