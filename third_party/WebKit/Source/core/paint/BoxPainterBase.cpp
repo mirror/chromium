@@ -412,9 +412,12 @@ inline bool PaintFastBottomLayer(const DisplayItemClient& image_client,
   // fits within a single tile, and we can paint it using direct draw(R)Rect()
   // calls.
   GraphicsContext& context = paint_info.context;
-  FloatRoundedRect border = info.is_rounded_fill
-                                ? border_rect
-                                : FloatRoundedRect(PixelSnappedIntRect(rect));
+  FloatRoundedRect border;
+  if (info.is_rounded_fill)
+    border = border_rect;
+  else
+    border.SetRect(SnappedFloatRect(rect, paint_info.Scale()));
+
   Optional<RoundedInnerRectClipper> clipper;
   if (info.is_rounded_fill && !border.IsRenderable()) {
     // When the rrect is not renderable, we resort to clipping.

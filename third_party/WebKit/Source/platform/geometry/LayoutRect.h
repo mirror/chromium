@@ -32,6 +32,7 @@
 #define LayoutRect_h
 
 #include <iosfwd>
+#include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/geometry/LayoutRectOutsets.h"
@@ -41,7 +42,6 @@
 
 namespace blink {
 
-class FloatRect;
 class DoubleRect;
 
 class PLATFORM_EXPORT LayoutRect {
@@ -278,6 +278,20 @@ inline IntRect PixelSnappedIntRect(const LayoutRect& rect) {
   return IntRect(RoundedIntPoint(rect.Location()),
                  IntSize(SnapSizeToPixel(rect.Width(), rect.X()),
                          SnapSizeToPixel(rect.Height(), rect.Y())));
+}
+
+// Same as PixelSnappedIntRect, but accounts for scale. If scale > 1.0,
+// then the result should be rounded off to the nearest 1 / scale.
+inline FloatRect SnappedFloatRect(const LayoutRect& rect, float scale) {
+  if (scale <= 1.0)
+    return FloatRect(PixelSnappedIntRect(rect));
+
+  LayoutRect scaled_rect(rect);
+  scaled_rect.Scale(scale);
+
+  FloatRect snapped(PixelSnappedIntRect(LayoutRect(scaled_rect)));
+  snapped.Scale(1.f / scale);
+  return snapped;
 }
 
 inline IntRect EnclosingIntRect(const LayoutRect& rect) {
