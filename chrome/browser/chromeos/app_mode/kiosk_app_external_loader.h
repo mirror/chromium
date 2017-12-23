@@ -5,30 +5,54 @@
 #ifndef CHROME_BROWSER_CHROMEOS_APP_MODE_KIOSK_APP_EXTERNAL_LOADER_H_
 #define CHROME_BROWSER_CHROMEOS_APP_MODE_KIOSK_APP_EXTERNAL_LOADER_H_
 
+#include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
+#include "base/scoped_observer.h"
+#include "chrome/browser/chromeos/app_mode/kiosk_app_manager_observer.h"
 #include "chrome/browser/extensions/external_loader.h"
 
 namespace chromeos {
 
+class KioskAppManager;
+
 // A custom extensions::ExternalLoader that is created by KioskAppManager and
 // used for install kiosk app extensions.
-class KioskAppExternalLoader
-    : public extensions::ExternalLoader,
-      public base::SupportsWeakPtr<KioskAppExternalLoader> {
+class KioskAppExternalLoader : public extensions::ExternalLoader,
+                               public KioskAppManagerObserver {
  public:
-  KioskAppExternalLoader();
+  enum class AppClass { PRIMARY, SECONDARY };
 
-  // Sets current kiosk app extensions to be loaded.
-  void SetCurrentAppExtensions(std::unique_ptr<base::DictionaryValue> prefs);
+  explicit KioskAppExternalLoader(AppClass app_class);
 
   // extensions::ExternalLoader overrides:
   void StartLoading() override;
 
- private:
+  // KioskAppManagerObserver:
+  void OnPrimaryKioskAppReadyToLoad() override;
+  void OnSecondaryKioskAppsReadyToLoad() override;
+
+  using PrefsInterceptor = base::RepeatingCallback<
+      void(bool initial_load, std::unique_ptr<base::DictionaryValue> prefs)>;
+  void set_prefs_interceptor_for_testing(const PrefsInterceptor& interceptor) {
+    prefs_interceptor_ = interceptor;
+  }
+
+ protected:
   ~KioskAppExternalLoader() override;
 
-  std::unique_ptr<base::DictionaryValue> prefs_;
+ private:
+  enum class State { INITIAL, LOADING, LOADED };
+
+  std::unique_ptr<base::DictionaryValue> GetAppsPrefs();
+  void SendPrefsIfAvailable();
+
+  const AppClass app_class_;
+  State state_ = State::INITIAL;
+
+  PrefsInterceptor prefs_interceptor_;
+
+  ScopedObserver<KioskAppManager, KioskAppManagerObserver>
+      kiosk_app_manager_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(KioskAppExternalLoader);
 };

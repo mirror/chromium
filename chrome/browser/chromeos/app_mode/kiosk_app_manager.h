@@ -14,9 +14,11 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_data_delegate.h"
 #include "chrome/browser/chromeos/extensions/external_cache.h"
+#include "chrome/browser/chromeos/extensions/external_cache_delegate.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/install_attributes.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -32,21 +34,20 @@ class CommandLine;
 
 namespace extensions {
 class Extension;
-class ExternalLoader;
 }
 
 namespace chromeos {
 
 class AppSession;
+class ExternalCache;
 class KioskAppData;
-class KioskAppExternalLoader;
 class KioskAppManagerObserver;
 class KioskExternalUpdater;
 class OwnerSettingsServiceChromeOS;
 
 // KioskAppManager manages cached app data.
 class KioskAppManager : public KioskAppDataDelegate,
-                        public ExternalCache::Delegate {
+                        public ExternalCacheDelegate {
  public:
   enum ConsumerKioskAutoLaunchStatus {
     // Consumer kiosk mode auto-launch feature can be enabled on this machine.
@@ -81,6 +82,26 @@ class KioskAppManager : public KioskAppDataDelegate,
   };
   typedef std::vector<App> Apps;
 
+  // Interface that can be used to override default KioskAppManager behavior.
+  // For example, it can be used in tests to inject test components
+  // implementations.
+  class Overrides {
+   public:
+    virtual ~Overrides() = default;
+
+    // Creates the external cache that should be used by the
+    // KioskAppManager. It should always return a valid object.
+    virtual std::unique_ptr<ExternalCache> CreateExternalCache(
+        ExternalCacheDelegate* delegate,
+        bool always_check_updates) = 0;
+
+    // Creates an AppSession object that will mantain a started kiosk app
+    // session.
+    // Called when the KioskAppManager initializes the session.
+    // It can return nullptr.
+    virtual std::unique_ptr<AppSession> CreateAppSession() = 0;
+  };
+
   // Name of a dictionary that holds kiosk app info in Local State.
   // Sample layout:
   //   "kiosk": {
@@ -92,15 +113,14 @@ class KioskAppManager : public KioskAppDataDelegate,
   // Sub directory under DIR_USER_DATA to store cached icon files.
   static const char kIconCacheDir[];
 
-  // Sub directory under DIR_USER_DATA to store cached crx files.
-  static const char kCrxCacheDir[];
-
-  // Sub directory under DIR_USER_DATA to store unpacked crx file for validating
-  // its signature.
-  static const char kCrxUnpackDir[];
-
-  // Gets the KioskAppManager instance, which is lazily created on first call..
+  // Gets the KioskAppManager instance, which is lazily created on first call.
   static KioskAppManager* Get();
+
+  // Initializes KioskAppManager for testing, injecting the provided overrides.
+  // |overrides| can be null, in which case KioskAppManager will use default
+  // behavior.
+  // Must be called before Get().
+  static void InitializeForTesting(Overrides* overrides);
 
   // Prepares for shutdown and calls CleanUp() if needed.
   static void Shutdown();
@@ -187,19 +207,11 @@ class KioskAppManager : public KioskAppDataDelegate,
   void AddObserver(KioskAppManagerObserver* observer);
   void RemoveObserver(KioskAppManagerObserver* observer);
 
-  // Creates extensions::ExternalLoader for installing the primary kiosk app
-  // during its first time launch.
-  extensions::ExternalLoader* CreateExternalLoader();
+  void SetPrimaryAppReady(const std::string& id);
+  void SetSecondaryAppsReady(const std::vector<std::string>& ids);
 
-  // Creates extensions::ExternalLoader for installing secondary kiosk apps
-  // before launching the primary app for the first time.
-  extensions::ExternalLoader* CreateSecondaryAppExternalLoader();
-
-  // Installs kiosk app with |id| from cache.
-  void InstallFromCache(const std::string& id);
-
-  // Installs the secondary apps listed in |ids|.
-  void InstallSecondaryApps(const std::vector<std::string>& ids);
+  std::unique_ptr<base::DictionaryValue> GetPrimaryAppPrefs();
+  std::unique_ptr<base::DictionaryValue> GetSecondaryAppsPrefs();
 
   void UpdateExternalCache();
 
@@ -244,10 +256,6 @@ class KioskAppManager : public KioskAppDataDelegate,
                      const std::string& required_platform_version);
 
   AppSession* app_session() { return app_session_.get(); }
-  bool external_loader_created() const { return external_loader_created_; }
-  bool secondary_app_external_loader_created() const {
-    return secondary_app_external_loader_created_;
-  }
 
  private:
   friend struct base::LazyInstanceTraitsBase<KioskAppManager>;
@@ -265,6 +273,9 @@ class KioskAppManager : public KioskAppDataDelegate,
 
   KioskAppManager();
   ~KioskAppManager() override;
+
+  // Initializes the kiosk app manager instance.
+  void Initialize();
 
   // Stop all data loading and remove its dependency on CrosSettings.
   void CleanUp();
@@ -287,8 +298,9 @@ class KioskAppManager : public KioskAppDataDelegate,
   void GetKioskAppIconCacheDir(base::FilePath* cache_dir) override;
   void OnKioskAppDataChanged(const std::string& app_id) override;
   void OnKioskAppDataLoadFailure(const std::string& app_id) override;
+  std::string GetInstalledExtensionVersion(const std::string& id) override;
 
-  // ExternalCache::Delegate:
+  // ExternalCacheDelegate:
   void OnExtensionListsUpdated(const base::DictionaryValue* prefs) override;
   void OnExtensionLoadedInCache(const std::string& id) override;
   void OnExtensionDownloadFailed(
@@ -314,9 +326,6 @@ class KioskAppManager : public KioskAppDataDelegate,
   AutoLoginState GetAutoLoginState() const;
   void SetAutoLoginState(AutoLoginState state);
 
-  void GetCrxCacheDir(base::FilePath* cache_dir);
-  void GetCrxUnpackDir(base::FilePath* unpack_dir);
-
   // Returns the auto launch delay.
   base::TimeDelta GetAutoLaunchDelay() const;
 
@@ -329,8 +338,10 @@ class KioskAppManager : public KioskAppDataDelegate,
   bool GetSwitchesForSessionRestore(const std::string& app_id,
                                     base::CommandLine* switches);
 
+  bool initialized_ = false;
+
   // True if machine ownership is already established.
-  bool ownership_established_;
+  bool ownership_established_ = false;
   std::vector<std::unique_ptr<KioskAppData>> apps_;
   std::string auto_launch_app_id_;
   std::string currently_auto_launched_with_zero_delay_app_;
@@ -345,13 +356,8 @@ class KioskAppManager : public KioskAppDataDelegate,
 
   std::unique_ptr<KioskExternalUpdater> usb_stick_updater_;
 
-  // The extension external loader for deploying primary app.
-  bool external_loader_created_;
-  base::WeakPtr<KioskAppExternalLoader> external_loader_;
-
-  // The extension external loader for deploying secondary apps.
-  bool secondary_app_external_loader_created_;
-  base::WeakPtr<KioskAppExternalLoader> secondary_app_external_loader_;
+  base::Optional<std::string> primary_app_id_;
+  base::Optional<std::vector<std::string>> secondary_app_ids_;
 
   std::unique_ptr<AppSession> app_session_;
 

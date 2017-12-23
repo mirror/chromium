@@ -33,6 +33,10 @@ class KioskAppManagerObserver {
   // |success| indicates if all the updates are completed successfully.
   virtual void OnKioskAppExternalUpdateComplete(bool success) {}
 
+  virtual void OnPrimaryKioskAppReadyToLoad() {}
+
+  virtual void OnSecondaryKioskAppsReadyToLoad() {}
+
  protected:
   virtual ~KioskAppManagerObserver() {}
 };
