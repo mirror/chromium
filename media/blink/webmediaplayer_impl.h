@@ -523,6 +523,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
 
+  // Called when the first frame is provided for drawing by |compositor_|.
+  void OnFirstFrameDrawn();
+
   blink::WebLocalFrame* frame_;
 
   // The playback state last reported to |delegate_|, to avoid setting duplicate
