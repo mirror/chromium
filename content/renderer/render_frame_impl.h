@@ -504,6 +504,9 @@ class CONTENT_EXPORT RenderFrameImpl
   // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
   ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter() override;
 
+  mojom::URLLoaderFactory* GetURLLoaderFactory(
+      const GURL& request_url) override;
+
   // blink::mojom::EngagementClient implementation:
   void SetEngagementLevel(const url::Origin& origin,
                           blink::mojom::EngagementLevel level) override;
