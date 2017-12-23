@@ -491,6 +491,7 @@ willAnimateFromState:(BookmarkBar::State)oldState
 - (BookmarkButton*)buttonForDroppingOnAtPoint:(NSPoint)point;
 - (BOOL)isEventAnExitEvent:(NSEvent*)event;
 - (void)unhighlightBookmark:(const bookmarks::BookmarkNode*)node;
+- (BookmarkButton*)buttonForNode:(const bookmarks::BookmarkNode*)node;
 
 @end
 

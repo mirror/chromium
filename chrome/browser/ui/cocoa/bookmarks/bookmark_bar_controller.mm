@@ -772,6 +772,12 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   if (!animate)
     [self closeFolderAndStopTrackingMenus];
   RecordBookmarkLaunch(node, [self bookmarkLaunchLocation]);
+
+  // Non-folder bookmark button items may lose their "mouse inside" highlight
+  // state when they are pressed. Ensure the button is updated after it opens
+  // the bookmark.
+  BookmarkButton* button = [self buttonForNode:node];
+  [button updateMouseInside];
 }
 
 // Common function to open a bookmark folder of any type.
