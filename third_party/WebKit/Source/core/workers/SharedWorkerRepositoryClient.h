@@ -33,13 +33,13 @@
 
 #include "base/macros.h"
 #include "core/CoreExport.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class Document;
-class MessagePortChannel;
 class KURL;
 class SharedWorker;
 
@@ -51,7 +51,7 @@ class CORE_EXPORT SharedWorkerRepositoryClient {
   virtual ~SharedWorkerRepositoryClient() {}
 
   virtual void Connect(SharedWorker*,
-                       MessagePortChannel,
+                       mojo::ScopedMessagePipeHandle,
                        const KURL&,
                        const String& name) = 0;
 

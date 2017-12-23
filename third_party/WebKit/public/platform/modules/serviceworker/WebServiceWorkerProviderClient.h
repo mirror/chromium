@@ -40,7 +40,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 class WebServiceWorker;
 class WebString;
 
@@ -56,9 +55,10 @@ class WebServiceWorkerProviderClient {
   virtual void SetController(std::unique_ptr<WebServiceWorker::Handle>,
                              bool should_notify_controller_change) = 0;
 
-  virtual void DispatchMessageEvent(std::unique_ptr<WebServiceWorker::Handle>,
-                                    const WebString& message,
-                                    WebVector<MessagePortChannel>) = 0;
+  virtual void DispatchMessageEvent(
+      std::unique_ptr<WebServiceWorker::Handle>,
+      const WebString& message,
+      WebVector<mojo::ScopedMessagePipeHandle>) = 0;
   virtual void CountFeature(mojom::WebFeature) = 0;
 };
 

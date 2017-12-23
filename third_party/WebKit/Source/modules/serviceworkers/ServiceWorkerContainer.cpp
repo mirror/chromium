@@ -465,7 +465,7 @@ void ServiceWorkerContainer::SetController(
 void ServiceWorkerContainer::DispatchMessageEvent(
     std::unique_ptr<WebServiceWorker::Handle> handle,
     const WebString& message,
-    WebVector<MessagePortChannel> channels) {
+    WebVector<mojo::ScopedMessagePipeHandle> channels) {
   if (!GetExecutionContext() || !GetExecutionContext()->ExecutingWindow())
     return;
 

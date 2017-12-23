@@ -61,7 +61,7 @@ SharedWorker* SharedWorker::Create(ExecutionContext* context,
 
   MessageChannel* channel = MessageChannel::Create(context);
   worker->port_ = channel->port1();
-  MessagePortChannel remote_port = channel->port2()->Disentangle();
+  mojo::ScopedMessagePipeHandle remote_port = channel->port2()->Disentangle();
 
   // We don't currently support nested workers, so workers can only be created
   // from documents.

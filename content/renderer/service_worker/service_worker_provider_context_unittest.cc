@@ -117,7 +117,7 @@ class MockWebServiceWorkerProviderClientImpl
   void DispatchMessageEvent(
       std::unique_ptr<blink::WebServiceWorker::Handle> handle,
       const blink::WebString& message,
-      blink::WebVector<blink::MessagePortChannel> ports) override {
+      blink::WebVector<mojo::ScopedMessagePipeHandle> ports) override {
     was_dispatch_message_event_called_ = true;
   }
 

@@ -24,11 +24,7 @@ struct StructTraits<blink::mojom::blink::TransferableMessage::DataView,
 
   static Vector<mojo::ScopedMessagePipeHandle> ports(
       blink::BlinkTransferableMessage& input) {
-    Vector<mojo::ScopedMessagePipeHandle> result;
-    result.ReserveInitialCapacity(input.ports.size());
-    for (const auto& port : input.ports)
-      result.push_back(port.ReleaseHandle());
-    return result;
+    return std::move(input.ports);
   }
 
   static bool Read(blink::mojom::blink::TransferableMessage::DataView,

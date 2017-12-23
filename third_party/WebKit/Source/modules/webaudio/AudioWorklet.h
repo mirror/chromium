@@ -15,7 +15,6 @@ class AudioWorkletHandler;
 class AudioWorkletMessagingProxy;
 class BaseAudioContext;
 class CrossThreadAudioParamInfo;
-class MessagePortChannel;
 
 class MODULES_EXPORT AudioWorklet final : public Worklet {
   DEFINE_WRAPPERTYPEINFO();
@@ -29,7 +28,7 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
 
   ~AudioWorklet() = default;
 
-  void CreateProcessor(AudioWorkletHandler*, MessagePortChannel);
+  void CreateProcessor(AudioWorkletHandler*, mojo::ScopedMessagePipeHandle);
 
   // Invoked by AudioWorkletMessagingProxy. Notifies |context_| when
   // AudioWorkletGlobalScope finishes the first script evaluation and is ready

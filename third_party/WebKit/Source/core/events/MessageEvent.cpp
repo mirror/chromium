@@ -98,7 +98,7 @@ MessageEvent::MessageEvent(scoped_refptr<SerializedScriptValue> data,
                            const String& origin,
                            const String& last_event_id,
                            EventTarget* source,
-                           Vector<MessagePortChannel> channels,
+                           Vector<mojo::ScopedMessagePipeHandle> channels,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeSerializedScriptValue),

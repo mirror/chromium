@@ -68,7 +68,7 @@ v8::Local<v8::Value> RoundTrip(
                                         : scope.GetExceptionState();
 
   // Extract message ports and disentangle them.
-  Vector<MessagePortChannel> channels;
+  Vector<mojo::ScopedMessagePipeHandle> channels;
   if (transferables) {
     channels = MessagePort::DisentanglePorts(scope.GetExecutionContext(),
                                              transferables->message_ports,

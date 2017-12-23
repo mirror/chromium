@@ -619,7 +619,8 @@ void RenderFrameProxy::ForwardPostMessage(
   if (!target_origin.IsNull())
     params.target_origin = target_origin.ToString().Utf16();
 
-  params.message_ports = event.ReleaseChannels().ReleaseVector();
+  params.message_ports = blink::MessagePortChannel::CreateFromHandles(
+      event.ReleaseChannels().ReleaseVector());
 
   // Include the routing ID for the source frame (if one exists), which the
   // browser process will translate into the routing ID for the equivalent

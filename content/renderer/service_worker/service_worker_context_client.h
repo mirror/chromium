@@ -239,7 +239,7 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   void PostMessageToClient(
       const blink::WebString& uuid,
       const blink::WebString& message,
-      blink::WebVector<blink::MessagePortChannel> channels) override;
+      blink::WebVector<mojo::ScopedMessagePipeHandle> channels) override;
   void Focus(const blink::WebString& uuid,
              std::unique_ptr<blink::WebServiceWorkerClientCallbacks>) override;
   void Navigate(

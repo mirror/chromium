@@ -10,15 +10,10 @@ bool StructTraits<blink::mojom::blink::TransferableMessage::DataView,
                   blink::BlinkTransferableMessage>::
     Read(blink::mojom::blink::TransferableMessage::DataView data,
          blink::BlinkTransferableMessage* out) {
-  Vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadMessage(static_cast<blink::BlinkCloneableMessage*>(out)) ||
-      !data.ReadPorts(&ports)) {
+      !data.ReadPorts(&out->ports)) {
     return false;
   }
-
-  out->ports.ReserveInitialCapacity(ports.size());
-  out->ports.AppendRange(std::make_move_iterator(ports.begin()),
-                         std::make_move_iterator(ports.end()));
   return true;
 }
 

@@ -119,7 +119,7 @@ class MockWebServiceWorkerContextProxy
       int event_id,
       const blink::WebString& message,
       const blink::WebSecurityOrigin& source_origin,
-      blink::WebVector<blink::MessagePortChannel>,
+      blink::WebVector<mojo::ScopedMessagePipeHandle>,
       const blink::WebServiceWorkerClientInfo&) override {
     NOTREACHED();
   }
@@ -127,7 +127,7 @@ class MockWebServiceWorkerContextProxy
       int event_id,
       const blink::WebString& message,
       const blink::WebSecurityOrigin& source_origin,
-      blink::WebVector<blink::MessagePortChannel>,
+      blink::WebVector<mojo::ScopedMessagePipeHandle>,
       std::unique_ptr<blink::WebServiceWorker::Handle>) override {
     NOTREACHED();
   }

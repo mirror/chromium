@@ -23,8 +23,9 @@ AudioWorklet* AudioWorklet::Create(BaseAudioContext* context) {
 AudioWorklet::AudioWorklet(BaseAudioContext* context)
     : Worklet(ToDocument(context->GetExecutionContext())), context_(context) {}
 
-void AudioWorklet::CreateProcessor(AudioWorkletHandler* handler,
-                                   MessagePortChannel message_port_channel) {
+void AudioWorklet::CreateProcessor(
+    AudioWorkletHandler* handler,
+    mojo::ScopedMessagePipeHandle message_port_channel) {
   DCHECK(IsMainThread());
   DCHECK(GetMessagingProxy());
   GetMessagingProxy()->CreateProcessor(handler,

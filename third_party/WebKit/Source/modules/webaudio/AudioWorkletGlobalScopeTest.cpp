@@ -181,9 +181,10 @@ class AudioWorkletGlobalScopeTest : public PageTestBase {
     EXPECT_TRUE(definition->ProcessLocal(isolate)->IsFunction());
 
     MessageChannel* channel = MessageChannel::Create(thread->GlobalScope());
-    MessagePortChannel dummy_port_channel = channel->port2()->Disentangle();
+    mojo::ScopedMessagePipeHandle dummy_port_channel =
+        channel->port2()->Disentangle();
     AudioWorkletProcessor* processor = global_scope->CreateProcessor(
-        "testProcessor", kTestingSampleRate, dummy_port_channel);
+        "testProcessor", kTestingSampleRate, std::move(dummy_port_channel));
     EXPECT_TRUE(processor);
     EXPECT_EQ(processor->Name(), "testProcessor");
     v8::Local<v8::Value> processor_value =
@@ -279,9 +280,10 @@ class AudioWorkletGlobalScopeTest : public PageTestBase {
     ASSERT_TRUE(EvaluateScriptModule(global_scope, source_code));
 
     MessageChannel* channel = MessageChannel::Create(thread->GlobalScope());
-    MessagePortChannel dummy_port_channel = channel->port2()->Disentangle();
+    mojo::ScopedMessagePipeHandle dummy_port_channel =
+        channel->port2()->Disentangle();
     AudioWorkletProcessor* processor = global_scope->CreateProcessor(
-        "testProcessor", kTestingSampleRate, dummy_port_channel);
+        "testProcessor", kTestingSampleRate, std::move(dummy_port_channel));
     EXPECT_TRUE(processor);
 
     Vector<AudioBus*> input_buses;

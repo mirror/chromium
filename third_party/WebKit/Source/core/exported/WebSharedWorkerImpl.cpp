@@ -188,7 +188,7 @@ void WebSharedWorkerImpl::DidTerminateWorkerThread() {
   delete this;
 }
 
-void WebSharedWorkerImpl::Connect(MessagePortChannel web_channel) {
+void WebSharedWorkerImpl::Connect(mojo::ScopedMessagePipeHandle web_channel) {
   DCHECK(IsMainThread());
   // The HTML spec requires to queue a connect event using the DOM manipulation
   // task source.
@@ -201,7 +201,7 @@ void WebSharedWorkerImpl::Connect(MessagePortChannel web_channel) {
 }
 
 void WebSharedWorkerImpl::ConnectTaskOnWorkerThread(
-    MessagePortChannel channel) {
+    mojo::ScopedMessagePipeHandle channel) {
   // Wrap the passed-in channel in a MessagePort, and send it off via a connect
   // event.
   DCHECK(worker_thread_->IsCurrentThread());

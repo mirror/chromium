@@ -38,7 +38,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 struct WebBackgroundFetchSettledFetch;
 struct WebCanMakePaymentEventData;
 class WebDataConsumerHandle;
@@ -83,13 +82,13 @@ class WebServiceWorkerContextProxy {
       int event_id,
       const WebString& message,
       const WebSecurityOrigin& source_origin,
-      WebVector<MessagePortChannel>,
+      WebVector<mojo::ScopedMessagePipeHandle>,
       const WebServiceWorkerClientInfo&) = 0;
   virtual void DispatchExtendableMessageEvent(
       int event_id,
       const WebString& message,
       const WebSecurityOrigin& source_origin,
-      WebVector<MessagePortChannel>,
+      WebVector<mojo::ScopedMessagePipeHandle>,
       std::unique_ptr<WebServiceWorker::Handle>) = 0;
   virtual void DispatchInstallEvent(int event_id) = 0;
   virtual void DispatchFetchEvent(int fetch_event_id,

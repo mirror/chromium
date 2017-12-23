@@ -98,13 +98,13 @@ class ServiceWorkerGlobalScopeProxy final
       int event_id,
       const WebString& message,
       const WebSecurityOrigin& source_origin,
-      WebVector<MessagePortChannel>,
+      WebVector<mojo::ScopedMessagePipeHandle>,
       const WebServiceWorkerClientInfo&) override;
   void DispatchExtendableMessageEvent(
       int event_id,
       const WebString& message,
       const WebSecurityOrigin& source_origin,
-      WebVector<MessagePortChannel>,
+      WebVector<mojo::ScopedMessagePipeHandle>,
       std::unique_ptr<WebServiceWorker::Handle>) override;
   void DispatchFetchEvent(int fetch_event_id,
                           const WebServiceWorkerRequest&,

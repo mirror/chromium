@@ -235,7 +235,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     int event_id,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    WebVector<MessagePortChannel> channels,
+    WebVector<mojo::ScopedMessagePipeHandle> channels,
     const WebServiceWorkerClientInfo& client) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WebSerializedScriptValue value =
@@ -262,7 +262,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     int event_id,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    WebVector<MessagePortChannel> channels,
+    WebVector<mojo::ScopedMessagePipeHandle> channels,
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WebSerializedScriptValue value =

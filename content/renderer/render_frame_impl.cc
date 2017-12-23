@@ -2527,7 +2527,8 @@ void RenderFrameImpl::OnPostMessageEvent(
 
   WebDOMMessageEvent msg_event(
       serialized_script_value, WebString::FromUTF16(params.source_origin),
-      source_frame, frame_->GetDocument(), std::move(params.message_ports));
+      source_frame, frame_->GetDocument(),
+      blink::MessagePortChannel::ReleaseHandles(params.message_ports));
   frame_->DispatchMessageEventWithOriginCheck(target_origin, msg_event);
 }
 

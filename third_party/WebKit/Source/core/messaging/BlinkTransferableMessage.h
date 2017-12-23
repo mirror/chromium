@@ -24,7 +24,7 @@ struct CORE_EXPORT BlinkTransferableMessage : BlinkCloneableMessage {
   BlinkTransferableMessage(BlinkTransferableMessage&&);
   BlinkTransferableMessage& operator=(BlinkTransferableMessage&&);
 
-  Vector<MessagePortChannel> ports;
+  Vector<mojo::ScopedMessagePipeHandle> ports;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BlinkTransferableMessage);

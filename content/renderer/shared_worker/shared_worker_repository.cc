@@ -25,7 +25,7 @@ void SharedWorkerRepository::Connect(
     blink::WebContentSecurityPolicyType content_security_policy_type,
     blink::WebAddressSpace creation_address_space,
     blink::mojom::SharedWorkerCreationContextType creation_context_type,
-    blink::MessagePortChannel channel,
+    mojo::ScopedMessagePipeHandle channel,
     std::unique_ptr<blink::WebSharedWorkerConnectListener> listener) {
   // Lazy bind the connector.
   if (!connector_)
@@ -41,7 +41,7 @@ void SharedWorkerRepository::Connect(
             mojo::MakeRequest(&client));
 
   connector_->Connect(std::move(info), std::move(client), creation_context_type,
-                      channel.ReleaseHandle());
+                      std::move(channel));
 }
 
 void SharedWorkerRepository::DocumentDetached(DocumentID document_id) {

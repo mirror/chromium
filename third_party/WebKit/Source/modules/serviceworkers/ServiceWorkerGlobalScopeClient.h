@@ -142,7 +142,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
                                     double event_dispatch_time);
   void PostMessageToClient(const WebString& client_uuid,
                            const WebString& message,
-                           Vector<MessagePortChannel>);
+                           Vector<mojo::ScopedMessagePipeHandle>);
   void SkipWaiting(std::unique_ptr<WebServiceWorkerSkipWaitingCallbacks>);
   void Claim(std::unique_ptr<WebServiceWorkerClientsClaimCallbacks>);
   void Focus(const WebString& client_uuid,

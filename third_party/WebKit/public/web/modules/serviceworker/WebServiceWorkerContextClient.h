@@ -45,7 +45,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 struct WebPaymentHandlerResponse;
 struct WebServiceWorkerClientQueryOptions;
 class WebServiceWorkerContextProxy;
@@ -300,9 +299,10 @@ class WebServiceWorkerContextClient {
   // Callee receives ownership of the passed vector.
   // TODO(mek): Blob refs should be passed to maintain ref counts.
   // crbug.com/351753
-  virtual void PostMessageToClient(const WebString& uuid,
-                                   const WebString&,
-                                   WebVector<MessagePortChannel>) = 0;
+  virtual void PostMessageToClient(
+      const WebString& uuid,
+      const WebString&,
+      WebVector<mojo::ScopedMessagePipeHandle>) = 0;
 
   // For WindowClient#focus(). Requests the embedder to focus a window.
   virtual void Focus(const WebString& uuid,

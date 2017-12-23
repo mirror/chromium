@@ -150,7 +150,7 @@ void AudioWorkletGlobalScope::registerProcessor(
 AudioWorkletProcessor* AudioWorkletGlobalScope::CreateProcessor(
     const String& name,
     float sample_rate,
-    MessagePortChannel message_port_channel) {
+    mojo::ScopedMessagePipeHandle message_port_channel) {
   DCHECK(IsContextThread());
 
   // TODO(hongchan): do this only once when the association between

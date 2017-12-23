@@ -37,7 +37,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 class WebSharedWorkerConnectListener;
 class WebString;
 class WebURL;
@@ -57,7 +56,7 @@ class WebSharedWorkerRepositoryClient {
       WebContentSecurityPolicyType,
       WebAddressSpace,
       mojom::SharedWorkerCreationContextType,
-      MessagePortChannel,
+      mojo::ScopedMessagePipeHandle,
       std::unique_ptr<blink::WebSharedWorkerConnectListener>) = 0;
 
   // Invoked when a document has been detached. DocumentID can be re-used after

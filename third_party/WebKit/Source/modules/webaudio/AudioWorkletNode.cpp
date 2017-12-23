@@ -295,7 +295,8 @@ AudioWorkletNode* AudioWorkletNode::Create(
 
   MessageChannel* channel =
       MessageChannel::Create(context->GetExecutionContext());
-  MessagePortChannel processor_port_channel = channel->port2()->Disentangle();
+  mojo::ScopedMessagePipeHandle processor_port_channel =
+      channel->port2()->Disentangle();
 
   AudioWorkletNode* node =
       new AudioWorkletNode(*context, name, options,

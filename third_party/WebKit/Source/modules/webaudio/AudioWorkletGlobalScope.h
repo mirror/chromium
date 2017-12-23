@@ -20,7 +20,6 @@ class AudioWorkletProcessor;
 class AudioWorkletProcessorDefinition;
 class CrossThreadAudioWorkletProcessorInfo;
 class ExceptionState;
-class MessagePortChannel;
 struct GlobalScopeCreationParams;
 
 
@@ -29,17 +28,17 @@ struct GlobalScopeCreationParams;
 class MODULES_EXPORT ProcessorCreationParams final {
  public:
   ProcessorCreationParams(const String& name,
-                          MessagePortChannel message_port_channel)
-      : name_(name), message_port_channel_(message_port_channel) {}
+                          mojo::ScopedMessagePipeHandle message_port_channel)
+      : name_(name), message_port_channel_(std::move(message_port_channel)) {}
 
   ~ProcessorCreationParams() = default;
 
   const String& Name() const { return name_; }
-  MessagePortChannel PortChannel() {  return message_port_channel_; }
+  mojo::ScopedMessagePipeHandle& PortChannel() { return message_port_channel_; }
 
  private:
   const String name_;
-  MessagePortChannel message_port_channel_;
+  mojo::ScopedMessagePipeHandle message_port_channel_;
 };
 
 
@@ -71,7 +70,7 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
   // for some reason.
   AudioWorkletProcessor* CreateProcessor(const String& name,
                                          float sample_rate,
-                                         MessagePortChannel);
+                                         mojo::ScopedMessagePipeHandle);
 
   // Invokes the JS audio processing function from an instance of
   // AudioWorkletProcessor, along with given AudioBuffer from the audio graph.

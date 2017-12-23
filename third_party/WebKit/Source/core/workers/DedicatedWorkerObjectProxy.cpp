@@ -63,7 +63,7 @@ DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() {}
 
 void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels,
+    Vector<mojo::ScopedMessagePipeHandle> channels,
     const v8_inspector::V8StackTraceId& stack_id) {
   PostCrossThreadTask(
       *GetParentFrameTaskRunners()->Get(TaskType::kPostedMessage), FROM_HERE,
@@ -74,7 +74,7 @@ void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
 
 void DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels,
+    Vector<mojo::ScopedMessagePipeHandle> channels,
     WorkerThread* worker_thread,
     const v8_inspector::V8StackTraceId& stack_id) {
   WorkerGlobalScope* global_scope =

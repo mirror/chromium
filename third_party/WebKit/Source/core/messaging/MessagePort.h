@@ -38,7 +38,6 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebVector.h"
-#include "third_party/WebKit/common/message_port/message_port_channel.h"
 
 namespace blink {
 
@@ -68,20 +67,19 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
   void close();
 
   void Entangle(mojo::ScopedMessagePipeHandle);
-  void Entangle(MessagePortChannel);
-  MessagePortChannel Disentangle();
+  mojo::ScopedMessagePipeHandle Disentangle();
 
   // Returns an empty array if there is an exception, or if the passed array is
   // empty.
-  static Vector<MessagePortChannel> DisentanglePorts(ExecutionContext*,
-                                                     const MessagePortArray&,
-                                                     ExceptionState&);
+  static Vector<mojo::ScopedMessagePipeHandle>
+  DisentanglePorts(ExecutionContext*, const MessagePortArray&, ExceptionState&);
 
   // Returns an empty array if the passed array is empty.
   static MessagePortArray* EntanglePorts(ExecutionContext&,
-                                         Vector<MessagePortChannel>);
-  static MessagePortArray* EntanglePorts(ExecutionContext&,
-                                         WebVector<MessagePortChannel>);
+                                         Vector<mojo::ScopedMessagePipeHandle>);
+  static MessagePortArray* EntanglePorts(
+      ExecutionContext&,
+      WebVector<mojo::ScopedMessagePipeHandle>);
 
   bool Started() const { return started_; }
 

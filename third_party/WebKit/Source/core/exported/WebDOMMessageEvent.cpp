@@ -47,7 +47,7 @@ WebDOMMessageEvent::WebDOMMessageEvent(
     const WebString& origin,
     const WebFrame* source_frame,
     const WebDocument& target_document,
-    WebVector<MessagePortChannel> channels)
+    WebVector<mojo::ScopedMessagePipeHandle> channels)
     : WebDOMMessageEvent(MessageEvent::Create()) {
   DOMWindow* window = nullptr;
   if (source_frame)
@@ -77,7 +77,7 @@ WebString WebDOMMessageEvent::Origin() const {
   return WebString(ConstUnwrap<MessageEvent>()->origin());
 }
 
-WebVector<MessagePortChannel> WebDOMMessageEvent::ReleaseChannels() {
+WebVector<mojo::ScopedMessagePipeHandle> WebDOMMessageEvent::ReleaseChannels() {
   return Unwrap<MessageEvent>()->ReleaseChannels();
 }
 

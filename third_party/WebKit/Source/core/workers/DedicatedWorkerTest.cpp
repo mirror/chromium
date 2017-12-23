@@ -187,7 +187,7 @@ class DedicatedWorkerTest : public PageTestBase {
 
   void DispatchMessageEvent() {
     WorkerMessagingProxy()->PostMessageToWorkerGlobalScope(
-        nullptr /* message */, Vector<MessagePortChannel>(),
+        nullptr /* message */, Vector<mojo::ScopedMessagePipeHandle>(),
         v8_inspector::V8StackTraceId());
   }
 

@@ -76,7 +76,7 @@ class MockServiceWorkerContextClient : public WebServiceWorkerContextClient {
   }
   void PostMessageToClient(const WebString& uuid,
                            const WebString&,
-                           WebVector<MessagePortChannel>) override {
+                           WebVector<mojo::ScopedMessagePipeHandle>) override {
     NOTREACHED();
   }
   void SkipWaiting(

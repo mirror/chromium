@@ -1216,9 +1216,10 @@ ServiceWorkerContextClient::CreateServiceWorkerProvider() {
 void ServiceWorkerContextClient::PostMessageToClient(
     const blink::WebString& uuid,
     const blink::WebString& message,
-    blink::WebVector<MessagePortChannel> channels) {
+    blink::WebVector<mojo::ScopedMessagePipeHandle> channels) {
   Send(new ServiceWorkerHostMsg_PostMessageToClient(
-      GetRoutingID(), uuid.Utf8(), message.Utf16(), channels.ReleaseVector()));
+      GetRoutingID(), uuid.Utf8(), message.Utf16(),
+      MessagePortChannel::CreateFromHandles(channels.ReleaseVector())));
 }
 
 void ServiceWorkerContextClient::Focus(
@@ -1478,9 +1479,7 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
         ToWebServiceWorkerClientInfo(event->source.client_info);
     proxy_->DispatchExtendableMessageEvent(
         request_id, blink::WebString::FromUTF16(event->message),
-        event->source_origin,
-        MessagePortChannel::CreateFromHandles(std::move(event->message_ports)),
-        web_client);
+        event->source_origin, std::move(event->message_ports), web_client);
     return;
   }
 
@@ -1498,8 +1497,7 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
       dispatcher->GetOrCreateServiceWorker(std::move(handle));
   proxy_->DispatchExtendableMessageEvent(
       request_id, blink::WebString::FromUTF16(event->message),
-      event->source_origin,
-      MessagePortChannel::CreateFromHandles(std::move(event->message_ports)),
+      event->source_origin, std::move(event->message_ports),
       WebServiceWorkerImpl::CreateHandle(worker));
 }
 

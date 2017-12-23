@@ -288,6 +288,25 @@ struct CrossThreadCopier<
   }
 };
 
+template <>
+struct CrossThreadCopier<mojo::ScopedMessagePipeHandle> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = mojo::ScopedMessagePipeHandle;
+  static Type Copy(Type request) {
+    return request;  // This is in fact a move.
+  }
+};
+
+template <size_t inlineCapacity, typename Allocator>
+struct CrossThreadCopier<
+    Vector<mojo::ScopedMessagePipeHandle, inlineCapacity, Allocator>> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = Vector<mojo::ScopedMessagePipeHandle, inlineCapacity, Allocator>;
+  static Type Copy(Type request) {
+    return request;  // This is in fact a move.
+  }
+};
+
 }  // namespace blink
 
 #endif  // CrossThreadCopier_h

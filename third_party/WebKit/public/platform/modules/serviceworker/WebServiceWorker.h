@@ -39,7 +39,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 class WebSecurityOrigin;
 class WebServiceWorkerProvider;
 class WebServiceWorkerProxy;
@@ -72,10 +71,11 @@ class WebServiceWorker {
 
   // Callee receives ownership of the passed vector.
   // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
-  virtual void PostMessageToWorker(WebServiceWorkerProvider*,
-                                   const WebString&,
-                                   const WebSecurityOrigin&,
-                                   WebVector<MessagePortChannel>) = 0;
+  virtual void PostMessageToWorker(
+      WebServiceWorkerProvider*,
+      const WebString&,
+      const WebSecurityOrigin&,
+      WebVector<mojo::ScopedMessagePipeHandle>) = 0;
 
   virtual void Terminate() {}
 };

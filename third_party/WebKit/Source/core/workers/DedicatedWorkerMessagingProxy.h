@@ -48,7 +48,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                               const v8_inspector::V8StackTraceId&,
                               const String& source_code);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
-                                      Vector<MessagePortChannel>,
+                                      Vector<mojo::ScopedMessagePipeHandle>,
                                       const v8_inspector::V8StackTraceId&);
 
   bool HasPendingActivity() const;
@@ -56,7 +56,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   // These methods come from worker context thread via
   // DedicatedWorkerObjectProxy and are called on the parent context thread.
   void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
-                                 Vector<MessagePortChannel>,
+                                 Vector<mojo::ScopedMessagePipeHandle>,
                                  const v8_inspector::V8StackTraceId&);
   void DispatchErrorEvent(const String& error_message,
                           std::unique_ptr<SourceLocation>,

@@ -88,11 +88,12 @@ void WebServiceWorkerImpl::PostMessageToWorker(
     blink::WebServiceWorkerProvider* provider,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    blink::WebVector<blink::MessagePortChannel> channels) {
+    blink::WebVector<mojo::ScopedMessagePipeHandle> channels) {
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_PostMessageToWorker(
       handle_ref_->handle_id(),
       static_cast<WebServiceWorkerProviderImpl*>(provider)->provider_id(),
-      message.Utf16(), url::Origin(source_origin), channels.ReleaseVector()));
+      message.Utf16(), url::Origin(source_origin),
+      blink::MessagePortChannel::CreateFromHandles(channels.ReleaseVector())));
 }
 
 void WebServiceWorkerImpl::Terminate() {

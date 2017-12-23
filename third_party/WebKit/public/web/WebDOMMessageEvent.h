@@ -54,13 +54,14 @@ class WebDOMMessageEvent : public WebDOMEvent {
       const WebString& origin = WebString(),
       const WebFrame* source_frame = nullptr,
       const WebDocument& target_document = WebDocument(),
-      WebVector<MessagePortChannel> ports = WebVector<MessagePortChannel>());
+      WebVector<mojo::ScopedMessagePipeHandle> ports =
+          WebVector<mojo::ScopedMessagePipeHandle>());
   WebDOMMessageEvent() {}
 
   BLINK_EXPORT WebSerializedScriptValue Data() const;
   BLINK_EXPORT WebString Origin() const;
 
-  BLINK_EXPORT WebVector<MessagePortChannel> ReleaseChannels();
+  BLINK_EXPORT WebVector<mojo::ScopedMessagePipeHandle> ReleaseChannels();
 
 #if INSIDE_BLINK
   explicit WebDOMMessageEvent(MessageEvent* e) : WebDOMEvent(e) {}

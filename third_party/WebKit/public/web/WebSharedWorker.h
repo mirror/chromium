@@ -38,7 +38,6 @@
 
 namespace blink {
 
-class MessagePortChannel;
 class WebString;
 class WebSharedWorkerClient;
 class WebURL;
@@ -62,7 +61,7 @@ class BLINK_EXPORT WebSharedWorker {
       mojo::ScopedMessagePipeHandle interface_provider) = 0;
 
   // Sends a connect event to the SharedWorker context.
-  virtual void Connect(MessagePortChannel) = 0;
+  virtual void Connect(mojo::ScopedMessagePipeHandle) = 0;
 
   // Invoked to shutdown the worker when there are no more associated documents.
   // This eventually deletes this instance.

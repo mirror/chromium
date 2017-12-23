@@ -107,10 +107,11 @@ static WebSharedWorkerRepositoryClient::DocumentID GetId(void* document) {
       document);
 }
 
-void SharedWorkerRepositoryClientImpl::Connect(SharedWorker* worker,
-                                               MessagePortChannel port,
-                                               const KURL& url,
-                                               const String& name) {
+void SharedWorkerRepositoryClientImpl::Connect(
+    SharedWorker* worker,
+    mojo::ScopedMessagePipeHandle port,
+    const KURL& url,
+    const String& name) {
   DCHECK(client_);
 
   // No nested workers (for now) - connect() should only be called from document

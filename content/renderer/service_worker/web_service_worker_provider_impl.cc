@@ -215,11 +215,9 @@ void WebServiceWorkerProviderImpl::PostMessageToClient(
       GetDispatcher()->GetOrCreateServiceWorker(
           ServiceWorkerHandleReference::Create(std::move(source),
                                                thread_safe_sender_.get()));
-  auto message_ports =
-      blink::MessagePortChannel::CreateFromHandles(std::move(message_pipes));
   provider_client_->DispatchMessageEvent(
       WebServiceWorkerImpl::CreateHandle(std::move(worker)),
-      blink::WebString::FromUTF16(message), std::move(message_ports));
+      blink::WebString::FromUTF16(message), std::move(message_pipes));
 }
 
 void WebServiceWorkerProviderImpl::CountFeature(

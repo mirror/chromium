@@ -91,7 +91,7 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       const WebString& instrumentation_token,
       mojo::ScopedMessagePipeHandle content_settings_handle,
       mojo::ScopedMessagePipeHandle interface_provider) override;
-  void Connect(MessagePortChannel) override;
+  void Connect(mojo::ScopedMessagePipeHandle) override;
   void TerminateWorkerContext() override;
 
   void PauseWorkerContextOnStart() override;
@@ -120,7 +120,7 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   void DidReceiveScriptLoaderResponse();
   void OnScriptLoaderFinished();
 
-  void ConnectTaskOnWorkerThread(MessagePortChannel);
+  void ConnectTaskOnWorkerThread(mojo::ScopedMessagePipeHandle);
 
   std::unique_ptr<WorkerShadowPage> shadow_page_;
   // Unique worker token used by DevTools to attribute different instrumentation

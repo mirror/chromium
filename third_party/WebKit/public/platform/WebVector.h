@@ -82,6 +82,11 @@ class WebVector {
 
   WebVector(std::vector<T>&& other) noexcept : data_(std::move(other)) {}
 
+  template <typename C>
+  WebVector(C&& other)
+      : data_(std::make_move_iterator(other.begin()),
+              std::make_move_iterator(other.end())) {}
+
   std::vector<T> ReleaseVector() noexcept { return std::move(data_); }
 
   WebVector& operator=(const WebVector& other) {

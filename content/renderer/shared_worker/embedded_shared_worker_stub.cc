@@ -317,22 +317,21 @@ void EmbeddedSharedWorkerStub::Shutdown() {
 
 void EmbeddedSharedWorkerStub::ConnectToChannel(
     int connection_request_id,
-    blink::MessagePortChannel channel) {
+    mojo::ScopedMessagePipeHandle channel) {
   impl_->Connect(std::move(channel));
   host_->OnConnected(connection_request_id);
 }
 
 void EmbeddedSharedWorkerStub::Connect(int connection_request_id,
                                        mojo::ScopedMessagePipeHandle port) {
-  blink::MessagePortChannel channel(std::move(port));
   if (running_) {
-    ConnectToChannel(connection_request_id, std::move(channel));
+    ConnectToChannel(connection_request_id, std::move(port));
   } else {
     // If two documents try to load a SharedWorker at the same time, the
     // mojom::SharedWorker::Connect() for one of the documents can come in
     // before the worker is started. Just queue up the connect and deliver it
     // once the worker starts.
-    pending_channels_.emplace_back(connection_request_id, std::move(channel));
+    pending_channels_.emplace_back(connection_request_id, std::move(port));
   }
 }
 

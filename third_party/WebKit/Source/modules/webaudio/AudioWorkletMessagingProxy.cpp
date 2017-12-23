@@ -25,7 +25,7 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 
 void AudioWorkletMessagingProxy::CreateProcessor(
     AudioWorkletHandler* handler,
-    MessagePortChannel message_port_channel) {
+    mojo::ScopedMessagePipeHandle message_port_channel) {
   DCHECK(IsMainThread());
   PostCrossThreadTask(
       *GetWorkerThread()->GetTaskRunner(TaskType::kMiscPlatformAPI), FROM_HERE,
@@ -34,7 +34,8 @@ void AudioWorkletMessagingProxy::CreateProcessor(
           WrapCrossThreadPersistent(this),
           CrossThreadUnretained(GetWorkerThread()),
           CrossThreadUnretained(handler), handler->Name(),
-          handler->Context()->sampleRate(), std::move(message_port_channel)));
+          handler->Context()->sampleRate(),
+          WTF::Passed(std::move(message_port_channel))));
 }
 
 void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
@@ -42,12 +43,12 @@ void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
     AudioWorkletHandler* handler,
     const String& name,
     float sample_rate,
-    MessagePortChannel message_port_channel) {
+    mojo::ScopedMessagePipeHandle message_port_channel) {
   DCHECK(worker_thread->IsCurrentThread());
   AudioWorkletGlobalScope* global_scope =
       ToAudioWorkletGlobalScope(worker_thread->GlobalScope());
-  AudioWorkletProcessor* processor =
-      global_scope->CreateProcessor(name, sample_rate, message_port_channel);
+  AudioWorkletProcessor* processor = global_scope->CreateProcessor(
+      name, sample_rate, std::move(message_port_channel));
   handler->SetProcessorOnRenderThread(processor);
 }
 

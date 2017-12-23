@@ -93,10 +93,9 @@ void MessagePort::postMessage(ScriptState* script_state,
   connector_->Accept(&mojo_message);
 }
 
-MessagePortChannel MessagePort::Disentangle() {
+mojo::ScopedMessagePipeHandle MessagePort::Disentangle() {
   DCHECK(!IsNeutered());
-  auto result = MessagePortChannel(connector_->PassMessagePipe());
-  return result;
+  return connector_->PassMessagePipe();
 }
 
 void MessagePort::start() {
@@ -133,10 +132,6 @@ void MessagePort::Entangle(mojo::ScopedMessagePipeHandle handle) {
   connector_->set_incoming_receiver(this);
 }
 
-void MessagePort::Entangle(MessagePortChannel channel) {
-  Entangle(channel.ReleaseHandle());
-}
-
 const AtomicString& MessagePort::InterfaceName() const {
   return EventTargetNames::MessagePort;
 }
@@ -150,12 +145,12 @@ bool MessagePort::HasPendingActivity() const {
   return started_ && IsEntangled();
 }
 
-Vector<MessagePortChannel> MessagePort::DisentanglePorts(
+Vector<mojo::ScopedMessagePipeHandle> MessagePort::DisentanglePorts(
     ExecutionContext* context,
     const MessagePortArray& ports,
     ExceptionState& exception_state) {
   if (!ports.size())
-    return Vector<MessagePortChannel>();
+    return Vector<mojo::ScopedMessagePipeHandle>();
 
   HeapHashSet<Member<MessagePort>> visited;
 
@@ -174,7 +169,7 @@ Vector<MessagePortChannel> MessagePort::DisentanglePorts(
       exception_state.ThrowDOMException(
           kDataCloneError,
           "Port at index " + String::Number(i) + " is " + type + ".");
-      return Vector<MessagePortChannel>();
+      return Vector<mojo::ScopedMessagePipeHandle>();
     }
     visited.insert(port);
   }
@@ -182,7 +177,7 @@ Vector<MessagePortChannel> MessagePort::DisentanglePorts(
   UseCounter::Count(context, WebFeature::kMessagePortsTransferred);
 
   // Passed-in ports passed validity checks, so we can disentangle them.
-  Vector<MessagePortChannel> channels;
+  Vector<mojo::ScopedMessagePipeHandle> channels;
   channels.ReserveInitialCapacity(ports.size());
   for (unsigned i = 0; i < ports.size(); ++i)
     channels.push_back(ports[i]->Disentangle());
@@ -191,14 +186,14 @@ Vector<MessagePortChannel> MessagePort::DisentanglePorts(
 
 MessagePortArray* MessagePort::EntanglePorts(
     ExecutionContext& context,
-    Vector<MessagePortChannel> channels) {
-  return EntanglePorts(context,
-                       WebVector<MessagePortChannel>(std::move(channels)));
+    Vector<mojo::ScopedMessagePipeHandle> channels) {
+  return EntanglePorts(
+      context, WebVector<mojo::ScopedMessagePipeHandle>(std::move(channels)));
 }
 
 MessagePortArray* MessagePort::EntanglePorts(
     ExecutionContext& context,
-    WebVector<MessagePortChannel> channels) {
+    WebVector<mojo::ScopedMessagePipeHandle> channels) {
   // https://html.spec.whatwg.org/multipage/comms.html#message-ports
   // |ports| should be an empty array, not null even when there is no ports.
   MessagePortArray* port_array = new MessagePortArray(channels.size());
