@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f157dec7_828da462",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-23T04:16:49Z",
+      "side": 1,
+      "message": "On Android, If there are no cards we show \"Scan card\" (and dont show any Autofill settings). Just make sure things dont break in that situation.",
+      "range": {
+        "startLine": 1577,
+        "startChar": 2,
+        "endLine": 1577,
+        "endChar": 3
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
