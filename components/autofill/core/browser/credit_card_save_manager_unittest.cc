@@ -92,17 +92,18 @@ class MockAutofillClient : public TestAutofillClient {
 
 class TestAutofillManager : public AutofillManager {
  public:
-  TestAutofillManager(AutofillDriver* driver,
-                      AutofillClient* client,
-                      CreditCardSaveManager* credit_card_save_manager,
-                      payments::TestPaymentsClient* payments_client,
-                      TestPersonalDataManager* personal_data)
+  TestAutofillManager(
+      AutofillDriver* driver,
+      AutofillClient* client,
+      std::unique_ptr<CreditCardSaveManager> credit_card_save_manager,
+      payments::TestPaymentsClient* payments_client,
+      TestPersonalDataManager* personal_data)
       : AutofillManager(driver, client, personal_data),
         personal_data_(personal_data),
         test_form_data_importer_(
             new TestFormDataImporter(client,
                                      payments_client,
-                                     credit_card_save_manager,
+                                     std::move(credit_card_save_manager),
                                      personal_data,
                                      "en-US")) {
     set_payments_client(payments_client);
@@ -239,7 +240,8 @@ class CreditCardSaveManagerTest : public testing::Test {
         new TestCreditCardSaveManager(autofill_driver_.get(), &autofill_client_,
                                       payments_client_, &personal_data_);
     autofill_manager_.reset(new TestAutofillManager(
-        autofill_driver_.get(), &autofill_client_, credit_card_save_manager_,
+        autofill_driver_.get(), &autofill_client_,
+        std::unique_ptr<TestCreditCardSaveManager>(credit_card_save_manager_),
         payments_client_, &personal_data_));
   }
 
