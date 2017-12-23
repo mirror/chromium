@@ -114,11 +114,15 @@ RequestInit::RequestInit(ExecutionContext* context,
   if (exception_state.HadException())
     return;
 
-  auto v8_credentials = h.Get<IDLPassThrough>("credentials");
+  credentials_ = h.Get<IDLUSVString>("credentials").value_or(String());
   if (exception_state.HadException())
     return;
 
   are_any_members_set_ = h.AreAnyMembersSet();
+
+  CheckEnumValues(exception_state);
+  if (exception_state.HadException())
+    return;
 
   SetUpReferrer(referrer_string, referrer_policy_string, exception_state);
   if (exception_state.HadException())
@@ -134,16 +138,44 @@ RequestInit::RequestInit(ExecutionContext* context,
       return;
   }
 
-  if (v8_credentials.has_value()) {
-    SetUpCredentials(context, isolate, *v8_credentials, exception_state);
-    if (exception_state.HadException())
-      return;
-  }
-
   if (v8_body.has_value()) {
     SetUpBody(context, isolate, *v8_body, exception_state);
     if (exception_state.HadException())
       return;
+  }
+}
+
+void RequestInit::CheckEnumValues(ExceptionState& exception_state) {
+  if (!are_any_members_set_)
+    return;
+
+  // Validate cache_
+  if (!cache_.IsNull() && cache_ != "default" && cache_ != "no-store" &&
+      cache_ != "reload" && cache_ != "no-cache" && cache_ != "force-cache" &&
+      cache_ != "only-if-cached") {
+    exception_state.ThrowTypeError("Invalid cache mode");
+    return;
+  }
+
+  // Validate credentials_
+  if (!credentials_.IsNull() && credentials_ != "omit" &&
+      credentials_ != "same-origin" && credentials_ != "include") {
+    exception_state.ThrowTypeError("Invalid credentials mode");
+    return;
+  }
+
+  // Validate mode_
+  if (!mode_.IsNull() && mode_ != "navigate" && mode_ != "same-origin" &&
+      mode_ != "no-cors" && mode_ != "cors") {
+    exception_state.ThrowTypeError("Invalid mode");
+    return;
+  }
+
+  // Validate redirect_
+  if (!redirect_.IsNull() && redirect_ != "follow" && redirect_ != "error" &&
+      redirect_ != "manual") {
+    exception_state.ThrowTypeError("Invalid redirect mode");
+    return;
   }
 }
 
@@ -187,17 +219,6 @@ void RequestInit::SetUpReferrer(
       exception_state.ThrowTypeError("Invalid referrer policy");
       return;
     }
-  }
-}
-
-void RequestInit::SetUpCredentials(ExecutionContext* context,
-                                   v8::Isolate* isolate,
-                                   v8::Local<v8::Value> v8_credentials,
-                                   ExceptionState& exception_state) {
-  if (v8_credentials->IsString()) {
-    credentials_ = ToUSVString(isolate, v8_credentials, exception_state);
-    if (exception_state.HadException())
-      return;
   }
 }
 

@@ -43,53 +43,9 @@ test(function() {
 
 test(function() {
     [new Request(URL),
-     // All mode/credentials below are invalid and thus ignored.
-     new Request(URL, {mode: null}),
-     new Request(URL, {mode: undefined}),
-     new Request(URL, {mode: 'sameorigin'}),
-     new Request(URL, {mode: 'same origin'}),
-     new Request(URL, {mode: 'same-origin\0'}),
-     new Request(URL, {mode: ' same-origin'}),
-     new Request(URL, {mode: 'same--origin'}),
-     new Request(URL, {mode: 'SAME-ORIGIN'}),
-     new Request(URL, {mode: 'nocors'}),
-     new Request(URL, {mode: 'no cors'}),
-     new Request(URL, {mode: 'no-cors\0'}),
-     new Request(URL, {mode: ' no-cors'}),
-     new Request(URL, {mode: 'no--cors'}),
-     new Request(URL, {mode: 'NO-CORS'}),
-     new Request(URL, {mode: 'cors\0'}),
-     new Request(URL, {mode: ' cors'}),
-     new Request(URL, {mode: 'co rs'}),
-     new Request(URL, {mode: 'CORS'}),
-     new Request(URL, {mode: 'navigate\0'}),
-     new Request(URL, {mode: ' navigate'}),
-     new Request(URL, {mode: 'navi gate'}),
-     new Request(URL, {mode: 'NAVIGATE'}),
-     new Request(URL, {mode: '\0'.repeat(100000)}),
-     new Request(URL, {mode: 'x'.repeat(100000)}),
-     new Request(URL, {credentials: null}),
-     new Request(URL, {credentials: undefined}),
-     new Request(URL, {credentials: 'omit\0'}),
-     new Request(URL, {credentials: ' omit'}),
-     new Request(URL, {credentials: 'om it'}),
-     new Request(URL, {credentials: 'OMIT'}),
-     new Request(URL, {credentials: 'sameorigin'}),
-     new Request(URL, {credentials: 'same origin'}),
-     new Request(URL, {credentials: 'same-origin\0'}),
-     new Request(URL, {credentials: ' same-origin'}),
-     new Request(URL, {credentials: 'same--origin'}),
-     new Request(URL, {credentials: 'SAME-ORIGIN'}),
-     new Request(URL, {credentials: 'include\0'}),
-     new Request(URL, {credentials: ' include'}),
-     new Request(URL, {credentials: 'inc lude'}),
-     new Request(URL, {credentials: 'INCLUDE'}),
-     new Request(URL, {credentials: '\0'.repeat(100000)}),
-     new Request(URL, {credentials: 'x'.repeat(100000)})]
-      .concat(INVALID_TOKENS.map(
-          function(name) { return new Request(URL, {mode: name}); }))
-      .concat(INVALID_TOKENS.map(
-          function(name) { return new Request(URL, {credentials: name}); }))
+    new Request(URL, {method: undefined}),
+    new Request(URL, {mode: undefined}),
+    new Request(URL, {credentials: undefined})]
       .forEach(function(request) {
           assert_equals(request.url, URL,
                         'Request.url should match');
@@ -99,8 +55,60 @@ test(function() {
                         'Default Request.mode should be cors');
           assert_equals(request.credentials, 'omit',
                         'Default Request.credentials should be omit');
+      });
+}, "Request default value test");
+
+test(function() {
+     // All mode/credentials below are invalid and thus ignored.
+     [function() { new Request(URL, {mode: null}); },
+     function() { new Request(URL, {mode: 'sameorigin'}); },
+     function() { new Request(URL, {mode: 'same origin'}); },
+     function() { new Request(URL, {mode: 'same-origin\0'}); },
+     function() { new Request(URL, {mode: ' same-origin'}); },
+     function() { new Request(URL, {mode: 'same--origin'}); },
+     function() { new Request(URL, {mode: 'SAME-ORIGIN'}); },
+     function() { new Request(URL, {mode: 'nocors'}); },
+     function() { new Request(URL, {mode: 'no cors'}); },
+     function() { new Request(URL, {mode: 'no-cors\0'}); },
+     function() { new Request(URL, {mode: ' no-cors'}); },
+     function() { new Request(URL, {mode: 'no--cors'}); },
+     function() { new Request(URL, {mode: 'NO-CORS'}); },
+     function() { new Request(URL, {mode: 'cors\0'}); },
+     function() { new Request(URL, {mode: ' cors'}); },
+     function() { new Request(URL, {mode: 'co rs'}); },
+     function() { new Request(URL, {mode: 'CORS'}); },
+     function() { new Request(URL, {mode: 'navigate\0'}); },
+     function() { new Request(URL, {mode: ' navigate'}); },
+     function() { new Request(URL, {mode: 'navi gate'}); },
+     function() { new Request(URL, {mode: 'NAVIGATE'}); },
+     function() { new Request(URL, {mode: '\0'.repeat(100000)}); },
+     function() { new Request(URL, {mode: 'x'.repeat(100000)}); },
+     function() { new Request(URL, {credentials: null}); },
+     function() { new Request(URL, {credentials: 'omit\0'}); },
+     function() { new Request(URL, {credentials: ' omit'}); },
+     function() { new Request(URL, {credentials: 'om it'}); },
+     function() { new Request(URL, {credentials: 'OMIT'}); },
+     function() { new Request(URL, {credentials: 'sameorigin'}); },
+     function() { new Request(URL, {credentials: 'same origin'}); },
+     function() { new Request(URL, {credentials: 'same-origin\0'}); },
+     function() { new Request(URL, {credentials: ' same-origin'}); },
+     function() { new Request(URL, {credentials: 'same--origin'}); },
+     function() { new Request(URL, {credentials: 'SAME-ORIGIN'}); },
+     function() { new Request(URL, {credentials: 'include\0'}); },
+     function() { new Request(URL, {credentials: ' include'}); },
+     function() { new Request(URL, {credentials: 'inc lude'}); },
+     function() { new Request(URL, {credentials: 'INCLUDE'}); },
+     function() { new Request(URL, {credentials: '\0'.repeat(100000)}); },
+     function() { new Request(URL, {credentials: 'x'.repeat(100000)}); }]
+      .concat(INVALID_TOKENS.map(
+          function(name) { return function() { new Request(URL, {mode: name}); } }))
+      .concat(INVALID_TOKENS.map(
+          function(name) { return function() { new Request(URL, {credentials: name}); } }))
+      .forEach(function(requestInvoker) {
+          assert_throws({name: "TypeError"}, requestInvoker,
+                        'Invalid Request.{mode, credentials} should throw a TypeError');
         });
-  }, 'Request default value test');
+  }, 'Request invalid value test');
 
 test(function() {
     var request = new Request(URL);
@@ -162,7 +170,7 @@ test(function() {
     var request2 = {};
     var METHODS = ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'OPTIONS',
                    undefined];
-    var MODES = ['same-origin', 'no-cors', 'cors', '', undefined];
+    var MODES = ['same-origin', 'no-cors', 'cors', undefined];
     function isSimpleMethod(method) {
       return ['GET', 'HEAD', 'POST', undefined].indexOf(method) != -1;
     };
@@ -229,7 +237,7 @@ test(function() {
 test(function() {
     var request1 = {};
     var request2 = {};
-    var CREDENTIALS = ['omit', 'same-origin', 'include', '', undefined];
+    var CREDENTIALS = ['omit', 'same-origin', 'include', undefined];
     CREDENTIALS.forEach(function(credentials1) {
         var init1 = {};
         if (credentials1 != undefined) { init1['credentials'] = credentials1; }
@@ -256,7 +264,7 @@ test(function() {
 test(function() {
     var request1 = {};
     var request2 = {};
-    var REDIRECTS = ['follow', 'error', 'manual', '', undefined];
+    var REDIRECTS = ['follow', 'error', 'manual', undefined];
     REDIRECTS.forEach(function(redirect1) {
         var init1 = {};
         if (redirect1 != undefined) { init1['redirect'] = redirect1; }
@@ -528,7 +536,7 @@ test(() => {
 
     assert_equals(new Request(r, {foo: 32}).referrerPolicy,
         'origin', 'kept original policy');
-    assert_equals(new Request(r, {mode: 44}).referrerPolicy,
+    assert_equals(new Request(r, {mode: "cors"}).referrerPolicy,
         '', 'cleared policy');
     assert_equals(new Request(r, {referrerPolicy: 'unsafe-url'}).referrerPolicy,
         'unsafe-url', 'overriden policy');
