@@ -271,6 +271,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
     bool is_suspended;
   };
 
+  float player_priority() const { return player_priority_; }
+  bool have_drawn_first_frame() const { return have_drawn_first_frame_; }
+  base::TimeTicks first_frame_time() const { return first_frame_time_; }
+  base::TimeTicks constructed_at() const { return constructed_at_; }
+  bool has_been_played() const { return has_been_played_; }
+
  private:
   friend class WebMediaPlayerImplTest;
   friend class WebMediaPlayerImplBackgroundBehaviorTest;
@@ -522,6 +528,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // negative or kInfiniteDuration value. See http://crbug.com/409280,
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
+
+  // Called when the first frame is provided for drawing by |compositor_|.
+  void OnFirstFrameDrawn();
 
   blink::WebLocalFrame* frame_;
 
@@ -840,6 +849,14 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  float player_priority_ = 0;
+  int player_order_ = 0;
+  base::TimeTicks constructed_at_;
+  // TODO(liberato): base::Optional or default to +infinity.
+  bool have_drawn_first_frame_ = false;
+  base::TimeTicks first_frame_time_;
+  bool has_been_played_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };
