@@ -136,6 +136,8 @@ class QuicTestPacketMaker {
       bool should_include_version,
       bool fin,
       SpdyPriority priority,
+      QuicStreamId parent_stream_id,
+      bool exclusive,
       SpdyHeaderBlock headers,
       QuicStreamOffset* header_stream_offset,
       size_t* spdy_headers_frame_length,
@@ -149,6 +151,8 @@ class QuicTestPacketMaker {
       bool should_include_version,
       bool fin,
       SpdyPriority priority,
+      QuicStreamId parent_stream_id,
+      bool exclusive,
       SpdyHeaderBlock headers,
       size_t* spdy_headers_frame_length);
 
@@ -158,6 +162,8 @@ class QuicTestPacketMaker {
       bool should_include_version,
       bool fin,
       SpdyPriority priority,
+      QuicStreamId parent_stream_id,
+      bool exclusive,
       SpdyHeaderBlock headers,
       size_t* spdy_headers_frame_length,
       QuicStreamOffset* offset);
@@ -169,6 +175,8 @@ class QuicTestPacketMaker {
       bool should_include_version,
       bool fin,
       SpdyPriority priority,
+      QuicStreamId parent_stream_id,
+      bool exclusive,
       SpdyHeaderBlock headers,
       size_t* spdy_headers_frame_length,
       QuicStreamOffset* offset,
@@ -182,6 +190,8 @@ class QuicTestPacketMaker {
                                              bool should_include_version,
                                              bool fin,
                                              SpdyPriority priority,
+                                             QuicStreamId parent_stream_id,
+                                             bool exclusive,
                                              SpdyHeaderBlock headers,
                                              QuicStreamOffset* offset);
 

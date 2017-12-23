@@ -234,7 +234,8 @@ class QuicStreamFactoryTestBase {
         migrate_sessions_early_v2_(false),
         allow_server_migration_(false),
         race_cert_verification_(false),
-        estimate_initial_rtt_(false) {
+        estimate_initial_rtt_(false),
+        headers_include_h2_stream_dependency_(false) {
     clock_.AdvanceTime(QuicTime::Delta::FromSeconds(1));
   }
 
@@ -259,8 +260,8 @@ class QuicStreamFactoryTestBase {
         base::TimeDelta::FromSeconds(kMaxTimeOnNonDefaultNetworkSecs),
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
-        connection_options_, client_connection_options_,
-        /*enable_token_binding*/ false));
+        headers_include_h2_stream_dependency_, connection_options_,
+        client_connection_options_, /*enable_token_binding*/ false));
   }
 
   void InitializeConnectionMigrationTest(
@@ -413,8 +414,8 @@ class QuicStreamFactoryTestBase {
         ConvertRequestPriorityToQuicPriority(DEFAULT_PRIORITY);
     size_t spdy_headers_frame_len;
     return client_maker_.MakeRequestHeadersPacket(
-        packet_number, stream_id, should_include_version, fin, priority,
-        std::move(headers), &spdy_headers_frame_len);
+        packet_number, stream_id, should_include_version, fin, priority, 0,
+        false, std::move(headers), &spdy_headers_frame_len);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructGetRequestPacket(
@@ -429,8 +430,44 @@ class QuicStreamFactoryTestBase {
         ConvertRequestPriorityToQuicPriority(DEFAULT_PRIORITY);
     size_t spdy_headers_frame_len;
     return client_maker_.MakeRequestHeadersPacket(
-        packet_number, stream_id, should_include_version, fin, priority,
-        std::move(headers), &spdy_headers_frame_len, offset);
+        packet_number, stream_id, should_include_version, fin, priority, 0,
+        false, std::move(headers), &spdy_headers_frame_len, offset);
+  }
+
+  std::unique_ptr<QuicEncryptedPacket> ConstructGetRequestPacketWithDep(
+      QuicPacketNumber packet_number,
+      QuicStreamId stream_id,
+      bool should_include_version,
+      RequestPriority priority,
+      QuicStreamId parent_stream_id,
+      bool fin) {
+    SpdyHeaderBlock headers =
+        client_maker_.GetRequestHeaders("GET", "https", "/");
+    SpdyPriority spdy_priority =
+        ConvertRequestPriorityToQuicPriority(priority);
+    size_t spdy_headers_frame_len;
+    return client_maker_.MakeRequestHeadersPacket(
+        packet_number, stream_id, should_include_version, fin, spdy_priority,
+        parent_stream_id, true, std::move(headers), &spdy_headers_frame_len);
+  }
+
+  std::unique_ptr<QuicEncryptedPacket> ConstructGetRequestPacketWithDep(
+      QuicPacketNumber packet_number,
+      QuicStreamId stream_id,
+      bool should_include_version,
+      RequestPriority priority,
+      QuicStreamId parent_stream_id,
+      bool fin,
+      QuicStreamOffset* offset) {
+    SpdyHeaderBlock headers =
+        client_maker_.GetRequestHeaders("GET", "https", "/");
+    SpdyPriority spdy_priority =
+        ConvertRequestPriorityToQuicPriority(priority);
+    size_t spdy_headers_frame_len;
+    return client_maker_.MakeRequestHeadersPacket(
+        packet_number, stream_id, should_include_version, fin, spdy_priority,
+        parent_stream_id, true, std::move(headers), &spdy_headers_frame_len,
+        offset);
   }
 
   std::unique_ptr<QuicEncryptedPacket> ConstructOkResponsePacket(
@@ -798,6 +835,7 @@ class QuicStreamFactoryTestBase {
   bool allow_server_migration_;
   bool race_cert_verification_;
   bool estimate_initial_rtt_;
+  bool headers_include_h2_stream_dependency_;
   QuicTagVector connection_options_;
   QuicTagVector client_connection_options_;
 };
@@ -5804,6 +5842,13 @@ TEST_P(QuicStreamFactoryTest, ConfigMaxTimeBeforeCryptoHandshake) {
             config->max_time_before_crypto_handshake());
   EXPECT_EQ(QuicTime::Delta::FromSeconds(13),
             config->max_idle_time_before_crypto_handshake());
+}
+
+TEST_P(QuicStreamFactoryTest, HeadersIncludeH2StreamDependency) {
+  
+  headers_include_h2_stream_dependency_ = true;
+
+  Initialize();
 }
 
 }  // namespace test
