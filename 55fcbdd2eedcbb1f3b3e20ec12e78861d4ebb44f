@@ -16,6 +16,24 @@
       "revId": "55fcbdd2eedcbb1f3b3e20ec12e78861d4ebb44f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f86883_86c3b685",
+        "filename": "ui/events/ozone/gamepad/gamepad_event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-23T00:07:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a2815b_87640004",
+      "revId": "55fcbdd2eedcbb1f3b3e20ec12e78861d4ebb44f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
