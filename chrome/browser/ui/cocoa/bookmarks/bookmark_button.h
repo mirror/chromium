@@ -234,6 +234,8 @@ class BookmarkNode;
 
 - (BOOL)acceptsTrackInFrom:(id)sender;
 
+- (void)updateMouseInside;
+
 // At this time we represent an empty folder (e.g. the string
 // '(empty)') as a disabled button with no associated node.
 //

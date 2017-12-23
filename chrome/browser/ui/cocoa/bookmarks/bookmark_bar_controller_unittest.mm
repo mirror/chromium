@@ -1114,6 +1114,28 @@ TEST_F(BookmarkBarControllerTest, OpenBookmark) {
   EXPECT_EQ(noOpenBar()->dispositions_[0], WindowOpenDisposition::CURRENT_TAB);
 }
 
+// Confirm that the bookmark button's highlight is correct after openBookmark
+// is called.
+TEST_F(BookmarkBarControllerTest, OpenBookmarkHighlight) {
+  GURL gurl("http://google.com");
+  std::unique_ptr<BookmarkNode> node(new BookmarkNode(gurl));
+
+  BookmarkButton* button = [bar_ buttonForNode:node.get()];
+  BookmarkButtonCell* cell = static_cast<BookmarkButtonCell*>([button cell]);
+
+  NSEvent* event = cocoa_test_event_utils::MouseEventAtPoint([button center],
+                                                             NSMouseMoved, 0);
+
+  [cell mouseEntered:event];
+  EXPECT_TRUE([cell isMouseInside]);
+
+  [button mouseDown:event];
+  EXPECT_TRUE([cell isMouseInside]);
+
+  [bar_ openBookmark:button];
+  EXPECT_EQ([cell isMouseReallyInside], [cell isMouseInside]);
+}
+
 TEST_F(BookmarkBarControllerTest, TestAddRemoveAndClear) {
   BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile());
   EXPECT_EQ(0U, [[bar_ buttons] count]);
