@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "250202d5_76784c54",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-23T21:30:45Z",
+      "side": 1,
+      "message": "Why is this method not symmetric w.r.t. vertical and horizontal scrollbar?",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937ec67d_42d7167b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-23T21:30:45Z",
+      "side": 1,
+      "message": "Does VisibleContentRect(kExcludeScrollbars) do what you want?",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f446889_daa562f9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1593,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-23T21:30:45Z",
+      "side": 1,
+      "message": "Same question here - why not also the vertical scrollbar?",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
