@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78352f95_3296d760",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-23T20:19:50Z",
+      "side": 0,
+      "message": "Does this mean we can clean up all the code related to old navigation path?",
+      "revId": "b2eac3263e143f0e9df94f55679b744d5f490b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
