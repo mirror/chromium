@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec726d3_19af545b",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-23T00:45:35Z",
+      "side": 1,
+      "message": "This looks like the only callsite of ImageContents(). I don\u0027t see why not to always\nobey the orientation, so just change the default to that.",
+      "revId": "eedc0f1ff0783bbfb2150f89cde3a49c124740b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
