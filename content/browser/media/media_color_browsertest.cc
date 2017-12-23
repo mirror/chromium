@@ -92,8 +92,8 @@ IN_PROC_BROWSER_TEST_F(MediaColorTest, MAYBE_Yuv420pRec709H264) {
   RunColorTest("yuv420p_rec709.mp4");
 }
 
-// Android devices usually only support baseline, main and high.
 #if !defined(OS_ANDROID)
+// Android devices usually only support baseline, main and high.
 IN_PROC_BROWSER_TEST_F(MediaColorTest, Yuv420pHighBitDepth) {
   RunColorTest("yuv420p_hi10p.mp4");
 }
