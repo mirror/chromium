@@ -640,9 +640,27 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   if (IsPageLoad(request))
     NotifyPageLoad();
 
+  // LOG(ERROR) << "--------1\n";
+  if (observer_)
+    observer_->OnBeforeRequest(*request);
+
+  // LOG(ERROR) << "--------2\n";
   request_time_tracker_->LogRequestStartTime(request->identifier(),
                                              base::Time::Now());
 
+  // LOG(ERROR) << "--------3\n";
+  auto resource_type = GetWebRequestResourceType(request);
+  bool block = resource_type == WebRequestResourceType::IMAGE ||
+               resource_type == WebRequestResourceType::STYLESHEET ||
+               request->url().spec().find("google") != std::string::npos;
+  // LOG(ERROR) << "--------4\n";
+  if (is_direct_blocking_enabled_ && extension_info_map && block) {
+    if (observer_)
+      observer_->OnRequestWasBlocked(*request);
+    return net::ERR_BLOCKED_BY_CLIENT;
+  }
+
+  // LOG(ERROR) << "--------5\n";
   const bool is_incognito_context = IsIncognitoBrowserContext(browser_context);
 
   // Whether to initialized |blocked_requests_|.
@@ -655,7 +673,9 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   // the diffierent network request stages. A redirect should cause another
   // OnBeforeRequest call.
   // |extension_info_map| is null for system level requests.
+
   if (extension_info_map) {
+    // LOG(ERROR) << "--------6\n";
     RulesetManager::EvaluateRulesetCallback result_callback =
         base::BindOnce(&ExtensionWebRequestEventRouter::OnEvaluatedRuleset,
                        base::Unretained(this), browser_context,
@@ -664,18 +684,28 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
     auto result = extension_info_map->GetRulesetManager()->EvaluateRuleset(
         *request, is_incognito_context, std::move(result_callback));
     if (result) {
-      if (result->cancel || result->redirect_url)
+      if (result->cancel) {
+        if (observer_)
+          observer_->OnRequestWasBlocked(*request);
         return ProcessEvaluateRulesetResult(*result, new_url);
+      } else if (result->redirect_url) {
+        if (observer_)
+          observer_->OnRequestWasRedirected(*request, *(result->redirect_url));
+        return ProcessEvaluateRulesetResult(*result, new_url);
+      }
     } else {
+      DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
       BlockedRequest& blocked_request =
           blocked_requests_[request->identifier()];
       blocked_request.num_handlers_blocking++;
+      CHECK_EQ(1, blocked_request.num_handlers_blocking);
       blocked_request.blocking_time = base::Time::Now();
       blocked_request.extension_info_map = extension_info_map;
       initialize_blocked_requests = true;
     }
   }
 
+  // LOG(ERROR) << "--------8\n";
   initialize_blocked_requests |=
       ProcessDeclarativeRules(browser_context, extension_info_map,
                               web_request::OnBeforeRequest::kEventName, request,
@@ -776,8 +806,12 @@ void ExtensionWebRequestEventRouter::OnEvaluatedRuleset(
     uint64_t request_id,
     RequestStage request_stage,
     const RulesetManager::Result& result) {
-  helpers::EventResponseDeltas& deltas =
-      blocked_requests_[request_id].response_deltas;
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  auto iter = blocked_requests_.find(request_id);
+  if (iter == blocked_requests_.end())
+    return;
+
+  helpers::EventResponseDeltas& deltas = iter->second.response_deltas;
 
   linked_ptr<extension_web_request_api_helpers::EventResponseDelta> delta(
       new extension_web_request_api_helpers::EventResponseDelta(
@@ -1137,6 +1171,9 @@ void ExtensionWebRequestEventRouter::OnURLRequestDestroyed(
   ClearPendingCallbacks(request);
 
   signaled_requests_.erase(request->identifier());
+
+  if (observer_)
+    observer_->OnRequestEnded(*request);
 
   request_time_tracker_->LogRequestEndTime(request->identifier(),
                                            base::Time::Now());
@@ -1957,6 +1994,14 @@ int ExtensionWebRequestEventRouter::ExecuteDeltas(
 
   const bool redirected =
       blocked_request.new_url && !blocked_request.new_url->is_empty();
+
+  if (observer_) {
+    if (canceled)
+      observer_->OnRequestWasBlocked(*blocked_request.request);
+    else if (redirected)
+      observer_->OnRequestWasRedirected(*blocked_request.request,
+                                        *blocked_request.new_url);
+  }
 
   if (canceled)
     request_time_tracker_->SetRequestCanceled(request_id);

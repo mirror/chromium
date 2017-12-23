@@ -17,12 +17,17 @@
 #include "base/time/time.h"
 #include "extensions/common/extension_id.h"
 #include "url/gurl.h"
+// #include "components/url_pattern_index/url_pattern_index.h"
 
 class GURL;
 
 namespace net {
 class URLRequest;
 }  // namespace net
+
+namespace url {
+class Origin;
+}  // namespace url
 
 namespace extensions {
 class InfoMap;
@@ -81,8 +86,6 @@ class RulesetManager {
 
   using EvaluateRulesetCallback = base::OnceCallback<void(const Result&)>;
 
-  static bool IsAsync;
-
   // If nullopt, callback will be used (async).
   base::Optional<Result> EvaluateRuleset(
       const net::URLRequest& request,
@@ -99,55 +102,37 @@ class RulesetManager {
   void RemoveRuleset(const ExtensionId& extension_id);
 
   // Returns the number of RulesetMatcher currently being managed.
-  size_t GetMatcherCountForTest() const {
-    DCHECK(!IsAsync);
-    return core_.rulesets_.size();
-  }
+  size_t GetMatcherCountForTest() const;
+
+  void SetAsync();
 
   // Sets the TestObserver. Client maintains ownership of |observer|.
   void SetObserverForTest(TestObserver* observer);
 
+  void PrintRulesetEvalTime();
+
  private:
-  class Core {
-   public:
-    ~Core();
-    Core();
+  class Core;
 
-    void AddRuleset(ExtensionRulesetData);
-    void RemoveRuleset(const ExtensionId& extension_id);
-    Result EvaluateRuleset(const net::URLRequest& request,
-                           bool is_incognito_context) const;
-
-   private:
-    friend class RulesetManager;
-
-    bool ShouldBlockRequest(const net::URLRequest& request,
-                            bool is_incognito_context,
-                            Result* result) const;
-    bool ShouldRedirectRequest(const net::URLRequest& request,
-                               bool is_incognito_context,
-                               Result* result) const;
-
-    // Sorted in decreasing order of |extension_install_time|.
-    // Use a flat_set instead of std::set/map. This makes [Add/Remove]Ruleset
-    // O(n), but it's fine since the no. of rulesets are expected to be quite
-    // small.
-    base::flat_set<ExtensionRulesetData> rulesets_;
-
-    SEQUENCE_CHECKER(sequence_checker_);
-
-    DISALLOW_COPY_AND_ASSIGN(Core);
-  };
+  Core* GetCore() const;
 
   // Non-owning pointer to InfoMap. Owns us.
   const InfoMap* const info_map_;
+
+  bool async_ = false;
 
   // Non-owning pointer to TestObserver.
   TestObserver* test_observer_ = nullptr;
 
   scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
 
-  Core core_;
+  std::unique_ptr<Core> core_;
+
+  std::unique_ptr<Core, base::OnTaskRunnerDeleter> core_async_;
+
+  bool has_added_ruleset_ = false;
+
+  mutable base::TimeDelta third_party_time_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

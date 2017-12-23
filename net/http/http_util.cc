@@ -57,8 +57,9 @@ size_t FindStringEnd(const std::string& line, size_t start, char delim) {
 // static
 std::string HttpUtil::SpecForRequest(const GURL& url) {
   // We may get ftp scheme when fetching ftp resources through proxy.
-  DCHECK(url.is_valid() && (url.SchemeIsHTTPOrHTTPS() || url.SchemeIs("ftp") ||
-                            url.SchemeIsWSOrWSS()));
+  // DCHECK(url.is_valid() && (url.SchemeIsHTTPOrHTTPS() || url.SchemeIs("ftp")
+  // ||
+  //                           url.SchemeIsWSOrWSS())) << url.spec();
   return SimplifyUrlForRequest(url).spec();
 }
 

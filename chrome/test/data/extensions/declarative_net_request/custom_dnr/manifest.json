@@ -1,0 +1,9 @@
+{
+  "name" : "custom DNR",
+  "version" : "1",
+  "declarative_net_request" : {
+    "rule_resources" : ["rules_full_new.json"]
+  },
+  "manifest_version": 2,
+  "permissions": ["declarativeNetRequest"]
+}

@@ -136,14 +136,26 @@ bool RulesetMatcher::ShouldBlockRequest(const GURL& url,
   // an empty included domains list.
   const bool disable_generic_rules = false;
 
-  bool success =
-      !!blacklist_matcher_.FindMatch(
-          url, first_party_origin, element_type, flat_rule::ActivationType_NONE,
-          is_third_party, disable_generic_rules, FindRuleStrategy::kAny) &&
-      !whitelist_matcher_.FindMatch(
+  const url_pattern_index::flat::UrlRule* blacklist =
+      blacklist_matcher_.FindMatch(
           url, first_party_origin, element_type, flat_rule::ActivationType_NONE,
           is_third_party, disable_generic_rules, FindRuleStrategy::kAny);
-  return success;
+
+  const url_pattern_index::flat::UrlRule* whitelist = whitelist_matcher_.FindMatch(
+          url, first_party_origin, element_type, flat_rule::ActivationType_NONE,
+          is_third_party, disable_generic_rules, FindRuleStrategy::kAny);
+
+
+  const std::string search_url = "yimg.com/rq/darla/";
+  if (url.spec().find(search_url) != std::string::npos) {
+    LOG(ERROR) << "--------search_url " << search_url << "\n";
+    LOG(ERROR) << "--------url.spec() " << url.spec() << "\n";
+    if (blacklist)
+      LOG(ERROR) << "--------blacklist->id() " << blacklist->id() << "\n";
+    if (whitelist)
+      LOG(ERROR) << "--------whitelist->id() " << whitelist->id() << "\n";
+  }
+  return blacklist && !whitelist;
 }
 
 bool RulesetMatcher::ShouldRedirectRequest(

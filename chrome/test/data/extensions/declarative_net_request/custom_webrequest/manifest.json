@@ -1,0 +1,10 @@
+{
+  "name" : "Custom webRequest",
+  "version" : "1",
+  "manifest_version": 2,
+  "permissions": ["<all_urls>", "webRequest", "webRequestBlocking"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  }
+}

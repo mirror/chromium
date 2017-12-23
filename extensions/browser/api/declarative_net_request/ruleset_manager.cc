@@ -10,6 +10,7 @@
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/timer/elapsed_timer.h"
 #include "base/stl_util.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -78,7 +79,8 @@ flat_rule::ElementType GetElementType(const net::URLRequest& request) {
               : flat_rule::ElementType_OTHER;
 }
 
-// Returns whether the request to |url| is third party to its |document_origin|.
+// Returns whether the request to |url| is third party to its
+// |document_origin|.
 // TODO(crbug.com/696822): Look into caching this.
 bool IsThirdPartyRequest(const GURL& url, const url::Origin& document_origin) {
   if (document_origin.unique())
@@ -93,7 +95,8 @@ void ClearRendererCacheOnUI() {
   web_cache::WebCacheManager::GetInstance()->ClearCacheOnNavigation();
 }
 
-// Helper to clear each renderer's in-memory cache the next time it navigates.
+// Helper to clear each renderer's in-memory cache the next time it
+// navigates.
 void ClearRendererCacheOnNavigation() {
   if (content::BrowserThread::CurrentlyOn(content::BrowserThread::UI)) {
     ClearRendererCacheOnUI();
@@ -105,11 +108,137 @@ void ClearRendererCacheOnNavigation() {
 
 }  // namespace
 
+class RulesetManager::Core {
+ public:
+  ~Core();
+  Core();
+
+  void AddRuleset(RulesetManager::ExtensionRulesetData);
+  void RemoveRuleset(const ExtensionId& extension_id);
+  RulesetManager::Result EvaluateRuleset(bool is_incognito_context,
+                                         const GURL& url,
+                                         const url::Origin& first_party_origin,
+                                         flat_rule::ElementType element_type,
+                                         bool is_third_party) const {
+    base::ElapsedTimer timer;
+    DCHECK_CALLED_ON_VALID_SEQUENCE(core_sequence_checker_);
+
+    Result result;
+    if (ShouldBlockRequest(url, first_party_origin, element_type,
+                           is_third_party, is_incognito_context, &result)) {
+    } else if (ShouldRedirectRequest(url, first_party_origin, element_type,
+                                     is_third_party, is_incognito_context,
+                                     &result)) {
+    }
+    ruleset_eval_time_ += timer.Elapsed();
+    max_eval_time_ = std::max(max_eval_time_, timer.Elapsed());
+    return result;
+  }
+  void PrintRulesetEvalTime() {
+    LOG(ERROR) << "--------ruleset_eval_time_ " << ruleset_eval_time_.InMillisecondsF() << "\n";
+    LOG(ERROR) << "--------max_eval_time_ " << max_eval_time_.InMillisecondsF() << "\n";
+  }
+
+ private:
+  friend class RulesetManager;
+
+  mutable base::TimeDelta ruleset_eval_time_;
+  mutable base::TimeDelta max_eval_time_;
+
+  bool ShouldBlockRequest(const GURL& url,
+                          const url::Origin& first_party_origin,
+                          flat_rule::ElementType element_type,
+                          bool is_third_party,
+                          bool is_incognito_context,
+                          RulesetManager::Result* result) const {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(core_sequence_checker_);
+    DCHECK(result);
+
+    // Return early if DNR is not enabled.
+    if (!IsAPIAvailable())
+      return false;
+
+    SCOPED_UMA_HISTOGRAM_TIMER(
+        "Extensions.DeclarativeNetRequest.ShouldBlockRequestTime."
+        "AllExtensions");
+
+    for (const auto& ruleset_data : rulesets_) {
+      const bool evaluate_ruleset =
+          !is_incognito_context || ruleset_data.is_incognito_enabled;
+
+      // TODO(crbug.com/777714): Check host permissions etc.
+      if (evaluate_ruleset &&
+          ruleset_data.matcher->ShouldBlockRequest(
+              url, first_party_origin, element_type, is_third_party)) {
+        result->extension_id = ruleset_data.extension_id;
+        result->extension_install_time = ruleset_data.extension_install_time;
+        result->cancel = true;
+        return true;
+      }
+    }
+    return false;
+  }
+  bool ShouldRedirectRequest(const GURL& url,
+                             const url::Origin& first_party_origin,
+                             flat_rule::ElementType element_type,
+                             bool is_third_party,
+                             bool is_incognito_context,
+                             RulesetManager::Result* result) const {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(core_sequence_checker_);
+    DCHECK(result);
+
+    // Return early if DNR is not enabled.
+    if (!IsAPIAvailable())
+      return false;
+
+    // Redirecting WebSocket handshake request is prohibited.
+    if (element_type == flat_rule::ElementType_WEBSOCKET)
+      return false;
+
+    SCOPED_UMA_HISTOGRAM_TIMER(
+        "Extensions.DeclarativeNetRequest.ShouldRedirectRequestTime."
+        "AllExtensions");
+
+    // This iterates in decreasing order of extension installation time. Hence
+    // more recently installed extensions get higher priority in choosing the
+    // redirect url.
+    for (const auto& ruleset_data : rulesets_) {
+      const bool evaluate_ruleset =
+          !is_incognito_context || ruleset_data.is_incognito_enabled;
+
+      // TODO(crbug.com/777714): Check host permissions etc.
+      GURL redirect_url;
+      if (evaluate_ruleset && ruleset_data.matcher->ShouldRedirectRequest(
+                                  url, first_party_origin, element_type,
+                                  is_third_party, &redirect_url)) {
+        result->extension_id = ruleset_data.extension_id;
+        result->extension_install_time = ruleset_data.extension_install_time;
+        *(result->redirect_url) = std::move(redirect_url);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // Sorted in decreasing order of |extension_install_time|.
+  // Use a flat_set instead of std::set/map. This makes [Add/Remove]Ruleset
+  // O(n), but it's fine since the no. of rulesets are expected to be quite
+  // small.
+  base::flat_set<RulesetManager::ExtensionRulesetData> rulesets_;
+
+  SEQUENCE_CHECKER(core_sequence_checker_);
+
+  DISALLOW_COPY_AND_ASSIGN(Core);
+};
+
 RulesetManager::RulesetManager(const InfoMap* info_map)
     : info_map_(info_map),
       file_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
+      core_(new Core()),
+      core_async_(new Core(), base::OnTaskRunnerDeleter(file_task_runner_)) {
   DCHECK(info_map_);
 
   // RulesetManager can be created on any sequence.
@@ -126,25 +255,32 @@ void RulesetManager::AddRuleset(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsAPIAvailable());
 
+  has_added_ruleset_ = true;
+
   ExtensionRulesetData data(
       extension_id, info_map_->GetInstallTime(extension_id),
       info_map_->IsIncognitoEnabled(extension_id), std::move(ruleset_matcher));
   base::OnceClosure task = base::BindOnce(
-      &Core::AddRuleset, base::Unretained(&core_), std::move(data));
+      &Core::AddRuleset, base::Unretained(GetCore()), std::move(data));
 
-  if (IsAsync) {
+  if (async_)
     file_task_runner_->PostTask(FROM_HERE, std::move(task));
-  } else {
+  else
     std::move(task).Run();
-  }
+}
+
+void RulesetManager::SetAsync() {
+  DCHECK(core_->rulesets_.empty());
+  async_ = true;
 }
 
 void RulesetManager::Core::AddRuleset(ExtensionRulesetData data) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(core_sequence_checker_);
 
   rulesets_.insert(std::move(data));
 
-  // Clear the renderers' cache so that they take the new rules into account.
+  // Clear the renderers' cache so that they take the new rules into
+  // account.
   ClearRendererCacheOnNavigation();
 }
 
@@ -153,8 +289,8 @@ void RulesetManager::RemoveRuleset(const ExtensionId& extension_id) {
   DCHECK(IsAPIAvailable());
 
   base::OnceClosure task = base::BindOnce(
-      &Core::RemoveRuleset, base::Unretained(&core_), extension_id);
-  if (IsAsync) {
+      &Core::RemoveRuleset, base::Unretained(GetCore()), extension_id);
+  if (async_) {
     file_task_runner_->PostTask(FROM_HERE, std::move(task));
   } else {
     std::move(task).Run();
@@ -162,17 +298,18 @@ void RulesetManager::RemoveRuleset(const ExtensionId& extension_id) {
 }
 
 void RulesetManager::Core::RemoveRuleset(const ExtensionId& extension_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(core_sequence_checker_);
 
   auto compare_by_id =
       [&extension_id](const ExtensionRulesetData& ruleset_data) {
         return ruleset_data.extension_id == extension_id;
       };
 
-  DCHECK(std::find_if(rulesets_.begin(), rulesets_.end(), compare_by_id) !=
-         rulesets_.end())
-      << "RemoveRuleset called without a corresponding AddRuleset for "
-      << extension_id;
+  // DCHECK(std::find_if(rulesets_.begin(), rulesets_.end(), compare_by_id)
+  // !=
+  //        rulesets_.end())
+  //     << "RemoveRuleset called without a corresponding AddRuleset for "
+  //     << extension_id;
 
   base::EraseIf(rulesets_, compare_by_id);
 
@@ -190,10 +327,22 @@ base::Optional<RulesetManager::Result> RulesetManager::EvaluateRuleset(
   if (test_observer_)
     test_observer_->OnEvaluateRuleset(request, is_incognito_context);
 
+  if (!has_added_ruleset_)
+    return RulesetManager::Result();
+
+  GURL url = request.url();
+  url::Origin first_party_origin = request.initiator().value_or(url::Origin());
+  const flat_rule::ElementType element_type = GetElementType(request);
+
+  base::ElapsedTimer timer;
+  const bool is_third_party = IsThirdPartyRequest(url, first_party_origin);
+  third_party_time_ += timer.Elapsed();
+
   base::OnceCallback<Result()> task = base::BindOnce(
-      &RulesetManager::Core::EvaluateRuleset, base::Unretained(&core_),
-      base::ConstRef(request), is_incognito_context);
-  if (IsAsync) {
+      &RulesetManager::Core::EvaluateRuleset, base::Unretained(GetCore()),
+      is_incognito_context, std::move(url), std::move(first_party_origin),
+      element_type, is_third_party);
+  if (async_) {
     base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
                                      std::move(task), std::move(callback));
     return base::nullopt;
@@ -202,105 +351,9 @@ base::Optional<RulesetManager::Result> RulesetManager::EvaluateRuleset(
   }
 }
 
-RulesetManager::Result RulesetManager::Core::EvaluateRuleset(
-    const net::URLRequest& request,
-    bool is_incognito_context) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  Result result;
-  if (ShouldBlockRequest(request, is_incognito_context, &result)) {
-    return result;
-  } else if (ShouldRedirectRequest(request, is_incognito_context, &result)) {
-    return result;
-  }
-  return result;
-}
-
-bool RulesetManager::Core::ShouldBlockRequest(const net::URLRequest& request,
-                                              bool is_incognito_context,
-                                              Result* result) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(result);
-
-  // Return early if DNR is not enabled.
-  if (!IsAPIAvailable())
-    return false;
-
-  SCOPED_UMA_HISTOGRAM_TIMER(
-      "Extensions.DeclarativeNetRequest.ShouldBlockRequestTime.AllExtensions");
-
-  const GURL& url = request.url();
-  const url::Origin first_party_origin =
-      request.initiator().value_or(url::Origin());
-  const flat_rule::ElementType element_type = GetElementType(request);
-  const bool is_third_party = IsThirdPartyRequest(url, first_party_origin);
-
-  for (const auto& ruleset_data : rulesets_) {
-    const bool evaluate_ruleset =
-        !is_incognito_context || ruleset_data.is_incognito_enabled;
-
-    // TODO(crbug.com/777714): Check host permissions etc.
-    if (evaluate_ruleset &&
-        ruleset_data.matcher->ShouldBlockRequest(
-            url, first_party_origin, element_type, is_third_party)) {
-      result->extension_id = ruleset_data.extension_id;
-      result->extension_install_time = ruleset_data.extension_install_time;
-      result->cancel = true;
-      return true;
-    }
-  }
-  return false;
-}
-
-bool RulesetManager::Core::ShouldRedirectRequest(const net::URLRequest& request,
-                                                 bool is_incognito_context,
-                                                 Result* result) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(result);
-
-  // Return early if DNR is not enabled.
-  if (!IsAPIAvailable())
-    return false;
-
-  // Redirecting WebSocket handshake request is prohibited.
-  const flat_rule::ElementType element_type = GetElementType(request);
-  if (element_type == flat_rule::ElementType_WEBSOCKET)
-    return false;
-
-  SCOPED_UMA_HISTOGRAM_TIMER(
-      "Extensions.DeclarativeNetRequest.ShouldRedirectRequestTime."
-      "AllExtensions");
-
-  const GURL& url = request.url();
-  const url::Origin first_party_origin =
-      request.initiator().value_or(url::Origin());
-  const bool is_third_party = IsThirdPartyRequest(url, first_party_origin);
-
-  // This iterates in decreasing order of extension installation time. Hence
-  // more recently installed extensions get higher priority in choosing the
-  // redirect url.
-  for (const auto& ruleset_data : rulesets_) {
-    const bool evaluate_ruleset =
-        !is_incognito_context || ruleset_data.is_incognito_enabled;
-
-    // TODO(crbug.com/777714): Check host permissions etc.
-    GURL redirect_url;
-    if (evaluate_ruleset && ruleset_data.matcher->ShouldRedirectRequest(
-                                url, first_party_origin, element_type,
-                                is_third_party, &redirect_url)) {
-      result->extension_id = ruleset_data.extension_id;
-      result->extension_install_time = ruleset_data.extension_install_time;
-      *(result->redirect_url) = std::move(redirect_url);
-      return true;
-    }
-  }
-
-  return false;
-}
-
 void RulesetManager::SetObserverForTest(TestObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(!IsAsync);
+  DCHECK(!async_);
   test_observer_ = observer;
 }
 
@@ -328,13 +381,33 @@ bool RulesetManager::ExtensionRulesetData::operator<(
              : (extension_id < other.extension_id);
 }
 
+RulesetManager::Core* RulesetManager::GetCore() const {
+  if (async_)
+    return core_async_.get();
+  return core_.get();
+}
+
 RulesetManager::Result::Result() = default;
 RulesetManager::Result::~Result() = default;
 RulesetManager::Result::Result(const Result&) = default;
-RulesetManager::Core::Core() = default;
+RulesetManager::Core::Core() {
+  DETACH_FROM_SEQUENCE(core_sequence_checker_);
+}
+
+void RulesetManager::PrintRulesetEvalTime() {
+  LOG(ERROR) << "--------third_party_time_ " << third_party_time_.InMillisecondsF() << "\n";
+  base::OnceClosure task = base::BindOnce(&Core::PrintRulesetEvalTime, base::Unretained(GetCore()));
+  if (async_)
+    file_task_runner_->PostTask(FROM_HERE, std::move(task));
+  else
+    std::move(task).Run();
+}
+
 RulesetManager::Core::~Core() = default;
 
-bool RulesetManager::IsAsync = false;
+size_t RulesetManager::GetMatcherCountForTest() const {
+  return core_->rulesets_.size();
+}
 
 }  // namespace declarative_net_request
 }  // namespace extensions

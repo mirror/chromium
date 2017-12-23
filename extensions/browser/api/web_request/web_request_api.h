@@ -96,6 +96,21 @@ class WebRequestAPI : public BrowserContextKeyedAPI,
 // thread unless otherwise specified.
 class ExtensionWebRequestEventRouter {
  public:
+  class TestObserver {
+   public:
+    virtual void OnRequestWasBlocked(const net::URLRequest& request) = 0;
+
+    virtual void OnRequestWasRedirected(const net::URLRequest& request,
+                                        const GURL& url) = 0;
+
+    virtual void OnBeforeRequest(const net::URLRequest& request) = 0;
+
+    virtual void OnRequestEnded(const net::URLRequest& request) = 0;
+
+   protected:
+    virtual ~TestObserver() {}
+  };
+
   struct BlockedRequest;
 
   enum EventTypes {
@@ -157,6 +172,8 @@ class ExtensionWebRequestEventRouter {
   };
 
   static ExtensionWebRequestEventRouter* GetInstance();
+
+  void SetDirectBrowserBlockingForTest() { is_direct_blocking_enabled_ = true; }
 
   // Registers a rule registry. Pass null for |rules_registry| to unregister
   // the rule registry for |browser_context|.
@@ -308,6 +325,9 @@ class ExtensionWebRequestEventRouter {
   // Registers a |callback| that is executed when the next page load happens.
   // The callback is then deleted.
   void AddCallbackForPageLoad(const base::Closure& callback);
+
+  // Owned by client.
+  void SetObserverForTest(TestObserver* observer) { observer_ = observer; }
 
  private:
   friend class WebRequestAPI;
@@ -566,6 +586,10 @@ class ExtensionWebRequestEventRouter {
 
   std::unique_ptr<extensions::WebRequestEventRouterDelegate>
       web_request_event_router_delegate_;
+
+  TestObserver* observer_ = nullptr;
+
+  bool is_direct_blocking_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionWebRequestEventRouter);
 };
