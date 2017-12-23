@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2923f467_9f112943",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-12-23T00:02:12Z",
+      "side": 1,
+      "message": "Maybe we should either name this \"PENDING\" or add it in this enum, and explicitly set \"PENDING\" as the default down below.\n\nThis is because in the download notification factory, it reads very strange:\nif (download is pending) {\n  switch (pending state)\n    default: (which corresponds to NOT_PENDING)\n}",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "2bf1ab763022f6b210dd20cc9194b3b709b8d2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
