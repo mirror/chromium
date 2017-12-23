@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "73f8b86e_de58cd1e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-23T02:09:09Z",
+      "side": 1,
+      "message": "True, the IP of the sink can change. However, since we don\u0027t erase from pending_fetcher_map_ until after the parsing is complete in the \"fetch success\" case, I can think of a race condition where replacing the entry on IP change could result in internal inconsistencies:\n\n- OnDialAppInfoFetchComplete called under old IP address; post task to parse app info.\n- FetchDialAppInfo called with new IP address; this creates a new DialAppInfoFetcher which replaces existing entry in map\n- OnDialAppInfo called under old IP address. This erases the entry containing new DialAppInfoFetcher, and presumably stops the fetch under new IP address.\n\nSo my thinking is either we add a app_url check in OnDialAppInfo to prevent this from happening, or just don\u0027t do this at all. Since this is a corner case, I prefer the latter to keep it simple. (And also because this is recoverable by forcing on user gesture)",
+      "parentUuid": "118cbfce_0034749e",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b010c4f1_4ec64db6",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "8d8c8d0e_56325834",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-23T02:09:09Z",
+      "side": 1,
+      "message": "That makes sense, though in the 3rd patch, DMSSImpl doesn\u0027t do anything with |error_message|. Since |error_message| is internal, it would be sufficient to just log it here as you\u0027ve already done above. Then we could simplify this to only take a single callback as opposed to two.",
+      "parentUuid": "833b8a34_120d04e8",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae2355a7_01ba146b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 10
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Pass |sink| around so that caller can check if original sink issuing the request still exists (e.g. IP address or other fields may change) and update sink app status accordingly.",
       "parentUuid": "ae2355a7_01ba146b",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7b57ec_2cb84a0d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-23T02:09:09Z",
+      "side": 1,
+      "message": "Ok but DialMediaSinkServiceImpl::OnAppInfoUpdated in patch 3 only uses the sink ID? Also, I thought IP address change shouldn\u0027t affect the result.",
+      "parentUuid": "da9b8c8e_dd517273",
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
