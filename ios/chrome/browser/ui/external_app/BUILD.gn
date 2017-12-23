@@ -7,16 +7,25 @@ import("//build/config/ios/rules.gni")
 source_set("external_app") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "external_app_coordinator.h",
+    "external_app_coordinator.mm",
+    "external_app_presenter.h",
+    "external_app_util.h",
+    "external_app_util.mm",
     "open_mail_handler_view_controller.h",
     "open_mail_handler_view_controller.mm",
   ]
   deps = [
     "//base",
+    "//components/strings:components_strings_grit",
     "//ios/chrome/app/strings:ios_strings_grit",
-    "//ios/chrome/browser/ui/collection_view:collection_view",
+    "//ios/chrome/browser",
+    "//ios/chrome/browser/ui/collection_view",
     "//ios/chrome/browser/web",
-    "//ui/base:base",
-    "//url:url",
+    "//ios/third_party/material_components_ios",
+    "//net",
+    "//ui/base",
+    "//url",
   ]
 }
 
@@ -24,6 +33,7 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "external_app_util_unittest.mm",
     "open_mail_handler_view_controller_unittest.mm",
   ]
   deps = [
@@ -31,9 +41,9 @@ source_set("unit_tests") {
     "//base",
     "//ios/chrome/app/strings:ios_strings_grit",
     "//ios/chrome/browser/ui/collection_view:test_support",
-    "//ios/chrome/browser/ui/collection_view/cells:cells",
+    "//ios/chrome/browser/ui/collection_view/cells",
     "//ios/chrome/browser/web",
-    "//ios/third_party/material_components_ios:material_components_ios",
+    "//ios/third_party/material_components_ios",
     "//testing/gtest",
     "//third_party/ocmock",
   ]

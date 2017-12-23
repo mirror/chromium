@@ -1,0 +1,20 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef IOS_CHROME_BROWSER_UI_EXTERNAL_APP_EXTERNAL_APP_COORDINATOR_H_
+#define IOS_CHROME_BROWSER_UI_EXTERNAL_APP_EXTERNAL_APP_COORDINATOR_H_
+
+#import <UIKit/UIKit.h>
+
+#import "ios/chrome/browser/ui/external_app/external_app_presenter.h"
+
+@interface ExternalAppCoordinator : NSObject<ExternalAppPresenter>
+@property(nonatomic, weak) UIViewController* baseViewController;
+
+- (instancetype)initWithBaseViewController:(UIViewController*)baseViewController
+    NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+@end
+
+#endif  // IOS_CHROME_BROWSER_UI_EXTERNAL_APP_EXTERNAL_APP_COORDINATOR_H_

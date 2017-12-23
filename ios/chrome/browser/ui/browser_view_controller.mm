@@ -142,6 +142,7 @@
 #import "ios/chrome/browser/ui/download/legacy_download_manager_controller.h"
 #import "ios/chrome/browser/ui/download/pass_kit_coordinator.h"
 #import "ios/chrome/browser/ui/elements/activity_overlay_coordinator.h"
+#import "ios/chrome/browser/ui/external_app/external_app_coordinator.h"
 #import "ios/chrome/browser/ui/external_file_controller.h"
 #import "ios/chrome/browser/ui/external_search/external_search_coordinator.h"
 #import "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.h"
@@ -211,6 +212,7 @@
 #include "ios/chrome/browser/upgrade/upgrade_center.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
 #import "ios/chrome/browser/web/error_page_content.h"
+#import "ios/chrome/browser/web/external_app_launcher_tab_helper.h"
 #import "ios/chrome/browser/web/load_timing_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_tab_helper.h"
@@ -607,6 +609,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // Coordinator for the PassKit UI presentation.
   PassKitCoordinator* _passKitCoordinator;
 
+  // Coordinator for UI related to launching external apps.
+  ExternalAppCoordinator* _externalAppCoordinator;
+
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
 
@@ -997,6 +1002,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
     _passKitCoordinator =
         [[PassKitCoordinator alloc] initWithBaseViewController:self];
+
+    _externalAppCoordinator =
+        [[ExternalAppCoordinator alloc] initWithBaseViewController:self];
 
     _javaScriptDialogPresenter.reset(
         new JavaScriptDialogPresenterImpl(_dialogPresenter));
@@ -2656,6 +2664,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
               self.browserState)) {
     accountConsistencyService->SetWebStateHandler(tab.webState, self);
   }
+
+  if (ExternalAppLauncherTabHelper* externalAppLauncherTabHelper =
+          ExternalAppLauncherTabHelper::FromWebState(tab.webState)) {
+    externalAppLauncherTabHelper->SetPresenter(_externalAppCoordinator);
+  }
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -2687,6 +2700,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
           ios::AccountConsistencyServiceFactory::GetForBrowserState(
               self.browserState)) {
     accountConsistencyService->RemoveWebStateHandler(tab.webState);
+  }
+  if (ExternalAppLauncherTabHelper* externalAppLauncherTabHelper =
+          ExternalAppLauncherTabHelper::FromWebState(tab.webState)) {
+    externalAppLauncherTabHelper->SetPresenter(nil);
   }
 }
 
