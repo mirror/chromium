@@ -186,6 +186,9 @@ This file contains the strings for ash.
       </message>
 
       <!-- Status tray items -->
+      <message name="IDS_ASH_STATUS_TRAY_SYSTEM_TRAY_TOOLTIP" desc="Message for the system tray tooltip.">
+        Status tray
+      </message>
       <message name="IDS_ASH_STATUS_TRAY_ACCESSIBLE_DESCRIPTION" desc="The accessible description of the status tray and the information on it.">
         Status tray, time <ph name="time">$1<ex>9:50</ex></ph>, <ph name="battery">$2<ex>Battery is full.</ex></ph>
       </message>

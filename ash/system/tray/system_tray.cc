@@ -82,6 +82,8 @@
 #include "ui/wm/public/activation_change_observer.h"
 #include "ui/wm/public/activation_client.h"
 
+#include "base/debug/stack_trace.h"
+
 using views::TrayBubbleView;
 
 namespace ash {
@@ -605,6 +607,10 @@ views::TrayBubbleView* SystemTray::GetBubbleView() {
              : nullptr;
 }
 
+base::string16 SystemTray::GetTrayTooltipText() const {
+  return l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SYSTEM_TRAY_TOOLTIP);
+}
+
 void SystemTray::BubbleViewDestroyed() {
   if (system_bubble_) {
     system_bubble_->bubble()->BubbleViewDestroyed();
@@ -612,11 +618,15 @@ void SystemTray::BubbleViewDestroyed() {
 }
 
 void SystemTray::OnMouseEnteredView() {
+  LOG(ERROR)<<"======================SystemTray::OnMouseEnteredView.";
+  //base::debug::StackTrace().Print();
   if (system_bubble_)
     system_bubble_->bubble()->StopAutoCloseTimer();
 }
 
 void SystemTray::OnMouseExitedView() {
+  LOG(ERROR)<<"===================SystemTray::OnMouseExitedView.";
+ // base::debug::StackTrace().Print();
   if (system_bubble_)
     system_bubble_->bubble()->RestartAutoCloseTimer();
 }

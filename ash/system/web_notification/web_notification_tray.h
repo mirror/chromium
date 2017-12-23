@@ -80,6 +80,7 @@ class ASH_EXPORT WebNotificationTray
   void CloseBubble() override;
   void ShowBubble(bool show_by_click) override;
   views::TrayBubbleView* GetBubbleView() override;
+  base::string16 GetTrayTooltipText() const override;
 
   // Overridden from views::TrayBubbleView::Delegate.
   void BubbleViewDestroyed() override;

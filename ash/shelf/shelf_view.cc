@@ -1630,6 +1630,10 @@ bool ShelfView::OnMouseWheel(const ui::MouseWheelEvent& event) {
   return true;
 }
 
+/*void ShelfView::OnMouseEvent(ui::MouseEvent* event) {
+  LOG(ERROR)<<"=================ShelfView::OnMouseEvent,type:"<<event->type();
+}*/
+
 void ShelfView::ShelfItemAdded(int model_index) {
   {
     base::AutoReset<bool> cancelling_drag(&cancelling_drag_model_changed_,

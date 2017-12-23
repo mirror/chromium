@@ -136,6 +136,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   void CloseBubble() override;
   void ShowBubble(bool show_by_click) override;
   views::TrayBubbleView* GetBubbleView() override;
+  base::string16 GetTrayTooltipText() const override;
 
   // views::TrayBubbleView::Delegate:
   void BubbleViewDestroyed() override;

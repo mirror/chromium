@@ -12,8 +12,10 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_tooltip_bubble.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/status_area_widget_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -22,6 +24,7 @@
 #include "ash/system/tray/tray_event_filter.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_element.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -38,6 +41,7 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/painter.h"
 #include "ui/wm/core/window_animations.h"
+#include "ash/shelf/shelf_layout_manager.h"
 
 namespace {
 
@@ -184,12 +188,18 @@ TrayBackgroundView::TrayBackgroundView(Shelf* shelf)
   layer()->SetFillsBoundsOpaquely(false);
   // Start the tray items not visible, because visibility changes are animated.
   views::View::SetVisible(false);
+
+ // shelf_->AddObserver(this);
+//  Shell::Get()->AddPreTargetHandler(this);
 }
 
 TrayBackgroundView::~TrayBackgroundView() {
   if (GetWidget())
     GetWidget()->RemoveObserver(widget_observer_.get());
   StopObservingImplicitAnimations();
+
+ // shelf_->RemoveObserver(this);
+  //Shell::Get()->RemovePreTargetHandler(this);
 }
 
 void TrayBackgroundView::Initialize() {
@@ -268,6 +278,95 @@ void TrayBackgroundView::OnGestureEvent(ui::GestureEvent* event) {
   if (!event->handled())
     ActionableView::OnGestureEvent(event);
 }
+
+/* void TrayBackgroundView::OnMouseEvent(ui::MouseEvent* event) {
+  LOG(ERROR)<<"--------------TrayBackgroundView::OnMouseEvent,type:"<<event->type();
+  if (event->type() == ui::ET_MOUSE_EXITED) {
+    CloseTooltipBubble();
+    return;
+  }
+
+  //if (event->type() != ui::ET_MOUSE_MOVED)
+  if (event->type() != ui::ET_MOUSE_ENTERED)
+    return;
+
+  bool is_shelf_visible = shelf_ && shelf_->shelf_layout_manager() && shelf_->shelf_layout_manager()->IsVisible();
+  if (!is_shelf_visible)
+    return;
+  if (tooltip_bubble_ && tooltip_bubble_->GetWidget()->IsVisible() && tooltip_bubble_->GetAnchorView() != this) {
+    ShowTooltip();
+  } else {
+    ShowTooltipWithDelay();
+  }
+
+}*/
+
+ /*void TrayBackgroundView::OnMouseEntered(const ui::MouseEvent& event) {
+  // Close if one is exist already.
+  //CloseTooltipBubble();
+  LOG(ERROR)<<"==============TrayBackgroundView::OnMouseEntered,type:"<<event.type();
+
+  bool is_shelf_visible = shelf_ && shelf_->shelf_layout_manager() && shelf_->shelf_layout_manager()->IsVisible();
+  if (!is_shelf_visible)
+    return;
+
+
+  StatusAreaWidgetDelegate* delegate = shelf_->GetStatusAreaWidget()->status_area_widget_delegate();
+  gfx::Point point = event.location();
+  views::View::ConvertPointFromWidget(delegate, &point);
+  views::View* view = delegate->GetTooltipHandlerForPoint(point);
+
+  if (tooltip_bubble_ && tooltip_bubble_->GetWidget()->IsVisible() && tooltip_bubble_->GetAnchorView() != view) {
+    ShowTooltip();
+  } else {
+    ShowTooltipWithDelay();
+  }
+}
+
+void TrayBackgroundView::OnMouseExited(const ui::MouseEvent& event) {
+  LOG(ERROR)<<"=============TrayBackgroundView::OnMouseExited, type:"<<event.type();
+    CloseTooltipBubble();
+  if (tooltip_bubble_ && tooltip_bubble_->GetWidget()->IsVisible()) {
+    move_from_tooltip_view_ = true;
+  } else {
+    move_from_tooltip_view_ = false;
+  }
+}*/
+
+/*void TrayBackgroundView::ShowTooltipWithDelay() {
+  LOG(ERROR)<<"-------------ShowTooltipWithDelay.";
+  tooltip_timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(1000), this, &TrayBackgroundView::ShowTooltip);
+}
+
+void TrayBackgroundView::ShowTooltip() {
+  LOG(ERROR)<<"------------TrayBackgroundView::ShowTooltip.";
+
+  tooltip_timer_.Stop();
+  CloseTooltipBubble();
+
+  if (GetTrayTooltipText().empty())
+    return;
+
+  views::BubbleBorder::Arrow arrow = views::BubbleBorder::Arrow::NONE;
+  switch (shelf_->alignment()) {
+    case SHELF_ALIGNMENT_BOTTOM:
+    case SHELF_ALIGNMENT_BOTTOM_LOCKED:
+      arrow = views::BubbleBorder::BOTTOM_CENTER;
+      break;
+    case SHELF_ALIGNMENT_LEFT:
+      arrow = views::BubbleBorder::LEFT_CENTER;
+      break;
+    case SHELF_ALIGNMENT_RIGHT:
+      arrow = views::BubbleBorder::RIGHT_CENTER;
+      break;
+  }
+
+  tooltip_bubble_ = new ShelfTooltipBubble(this, arrow, GetTrayTooltipText(),
+                                   shelf_->shelf_widget()->GetNativeTheme(),
+                                   false // asymmetrical_border );
+  tooltip_bubble_->GetWidget()->Show();
+}*/
+
 
 void TrayBackgroundView::AboutToRequestFocusFromTabTraversal(bool reverse) {
   Shelf* shelf = Shelf::ForWindow(GetWidget()->GetNativeWindow());
@@ -356,6 +455,20 @@ void TrayBackgroundView::ProcessGestureEventForBubble(ui::GestureEvent* event) {
     drag_controller_->ProcessGestureEvent(event, this);
 }
 
+/*void TrayBackgroundView::WillChangeVisibilityState(ShelfVisibilityState new_state) {
+  if (new_state == SHELF_HIDDEN)
+    CloseTooltipBubble();
+}
+
+void TrayBackgroundView::OnAutoHideStateChanged(ShelfAutoHideState new_state) {
+  LOG(ERROR)<<"---------TrayBackgroundView::OnAutoHideStateChanged,new_state:"<<new_state;
+  if (new_state == SHELF_AUTO_HIDE_HIDDEN) {
+    tooltip_timer_.Stop();
+    LOG(ERROR)<<"------------TrayBackgroundView::OnAutoHideStateChanged, new state is SHELF_AUTO_HIDE_HIDDEN.Close tooltip bubble.";
+    CloseTooltipBubble();
+  }
+}*/
+
 TrayBubbleView* TrayBackgroundView::GetBubbleView() {
   return nullptr;
 }
@@ -384,6 +497,10 @@ void TrayBackgroundView::AnchorUpdated() {
 
 void TrayBackgroundView::BubbleResized(
     const views::TrayBubbleView* bubble_view) {}
+
+base::string16 TrayBackgroundView::GetTrayTooltipText() const {
+  return base::string16();
+}
 
 void TrayBackgroundView::OnImplicitAnimationsCompleted() {
   // If there is another animation in the queue, the reverse animation was
@@ -552,5 +669,11 @@ gfx::Insets TrayBackgroundView::GetBackgroundInsets() const {
   return insets;
 }
 
+/*void TrayBackgroundView::CloseTooltipBubble() {
+  tooltip_timer_.Stop();
+  if (tooltip_bubble_)
+    tooltip_bubble_->GetWidget()->Close();
+  tooltip_bubble_ = nullptr;
+}*/
 
 }  // namespace ash

@@ -307,6 +307,8 @@ class ASH_EXPORT ShelfView : public views::View,
   void OnGestureEvent(ui::GestureEvent* event) override;
   bool OnMouseWheel(const ui::MouseWheelEvent& event) override;
 
+//  void OnMouseEvent(ui::MouseEvent* event) override;
+
   // Overridden from ShelfModelObserver:
   void ShelfItemAdded(int model_index) override;
   void ShelfItemRemoved(int model_index, const ShelfItem& old_item) override;

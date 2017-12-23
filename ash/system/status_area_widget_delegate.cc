@@ -20,6 +20,8 @@
 #include "ui/views/border.h"
 #include "ui/views/layout/grid_layout.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace {
 
 using session_manager::SessionState;
@@ -50,7 +52,7 @@ class StatusAreaWidgetDelegateAnimationSettings
 namespace ash {
 
 StatusAreaWidgetDelegate::StatusAreaWidgetDelegate(Shelf* shelf)
-    : shelf_(shelf), focus_cycler_for_testing_(nullptr) {
+    : shelf_(shelf), focus_cycler_for_testing_(nullptr), tooltip_(this, shelf_) {
   DCHECK(shelf_);
 
   // Allow the launcher to surrender the focus to another window upon
@@ -58,6 +60,8 @@ StatusAreaWidgetDelegate::StatusAreaWidgetDelegate(Shelf* shelf)
   set_allow_deactivate_on_esc(true);
   SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
+
+  tooltip_.Init();
 }
 
 StatusAreaWidgetDelegate::~StatusAreaWidgetDelegate() = default;
@@ -92,6 +96,8 @@ const views::Widget* StatusAreaWidgetDelegate::GetWidget() const {
 }
 
 void StatusAreaWidgetDelegate::OnGestureEvent(ui::GestureEvent* event) {
+  LOG(ERROR)<<"==========StatusAreaWidgetDelegate::OnGestureEvent,type:"<<event->type();
+ // base::debug::StackTrace().Print();
   views::Widget* target_widget =
       static_cast<views::View*>(event->target())->GetWidget();
   Shelf* shelf = Shelf::ForWindow(target_widget->GetNativeWindow());
@@ -108,6 +114,17 @@ void StatusAreaWidgetDelegate::OnGestureEvent(ui::GestureEvent* event) {
   else
     views::AccessiblePaneView::OnGestureEvent(event);
 }
+
+/*void StatusAreaWidgetDelegate::OnMouseEvent(ui::MouseEvent* event) {
+  LOG(ERROR)<<"----------------StatusAreaWidgetDelegate::OnMouseEvent,type:"<<event->type();
+}
+
+void StatusAreaWidgetDelegate::OnMouseEntered(const ui::MouseEvent& event) {
+  LOG(ERROR)<<"============StatusAreaWidgetDelegate::OnMouseEntered.";
+}
+void StatusAreaWidgetDelegate::OnMouseExited(const ui::MouseEvent& event) {
+  LOG(ERROR)<<"=====StatusAreaWidgetDelegate::OnMouseExited.";
+}*/
 
 bool StatusAreaWidgetDelegate::CanActivate() const {
   // We don't want mouse clicks to activate us, but we need to allow

@@ -20,6 +20,7 @@
 #include "base/i18n/time_formatting.h"
 #include "ui/display/display.h"
 #include "ui/native_theme/native_theme_dark_aura.h"
+#include "base/debug/stack_trace.h"
 
 namespace ash {
 
@@ -177,6 +178,10 @@ void StatusAreaWidget::UpdateShelfItemBackground(SkColor color) {
   overview_button_tray_->UpdateShelfItemBackground(color);
 }
 
+/*bool StatusAreaWidget::HasTooltip() const {
+  return system_tray_->
+}*/
+
 void StatusAreaWidget::AddSystemTray() {
   system_tray_ = new SystemTray(shelf_);
   status_area_widget_delegate_->AddTray(system_tray_);
@@ -213,5 +218,16 @@ void StatusAreaWidget::AddOverviewButtonTray() {
   overview_button_tray_ = new OverviewButtonTray(shelf_);
   status_area_widget_delegate_->AddTray(overview_button_tray_);
 }
+
+/*void StatusAreaWidget::OnGestureEvent(ui::GestureEvent* event) {
+  LOG(ERROR)<<"=====StatusAreaWidget::OnGestureEvent,type:"<<event->type();
+}
+
+void StatusAreaWidget::OnMouseEvent(ui::MouseEvent* event) {
+  base::debug::StackTrace().Print();
+  LOG(ERROR)<<"===============StatusAreaWidget::OnMouseEvent,type:"<<event->type();
+  if (event->type() != ui::ET_MOUSE_MOVED)
+    return;
+}*/
 
 }  // namespace ash

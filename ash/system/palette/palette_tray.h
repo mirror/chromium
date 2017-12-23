@@ -80,6 +80,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void CloseBubble() override;
   void ShowBubble(bool show_by_click) override;
   views::TrayBubbleView* GetBubbleView() override;
+  base::string16 GetTrayTooltipText() const override;
 
   // PaletteToolManager::Delegate:
   void HidePalette() override;

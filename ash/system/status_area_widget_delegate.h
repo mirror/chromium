@@ -11,6 +11,7 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/views/accessible_pane_view.h"
 #include "ui/views/widget/widget_delegate.h"
+#include "ash/system/status_area_tooltip_manager.h"
 
 namespace ash {
 class FocusCycler;
@@ -47,6 +48,10 @@ class ASH_EXPORT StatusAreaWidgetDelegate : public views::AccessiblePaneView,
   // Overridden from ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
 
+//  void OnMouseEvent(ui::MouseEvent* event) override;
+ // void OnMouseEntered(const ui::MouseEvent& event) override;
+ // void OnMouseExited(const ui::MouseEvent& event) override;
+
   // views::WidgetDelegate overrides:
   bool CanActivate() const override;
   void DeleteDelegate() override;
@@ -74,6 +79,8 @@ class ASH_EXPORT StatusAreaWidgetDelegate : public views::AccessiblePaneView,
   // When true, the default focus of the status area widget is the last
   // focusable child.
   bool default_last_focusable_child_ = false;
+
+  StatusAreaTooltipManager tooltip_;
 
   DISALLOW_COPY_AND_ASSIGN(StatusAreaWidgetDelegate);
 };

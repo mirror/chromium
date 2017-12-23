@@ -49,6 +49,8 @@ class VIEWS_EXPORT AccessiblePaneView : public View,
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void RequestFocus() override;
 
+//  void OnMouseEvent(ui::MouseEvent* event) override;
+
   // Overridden from FocusChangeListener:
   void OnWillChangeFocus(View* focused_before, View* focused_now) override;
   void OnDidChangeFocus(View* focused_before, View* focused_now) override;

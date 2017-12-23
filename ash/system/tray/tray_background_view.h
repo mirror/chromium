@@ -15,6 +15,7 @@
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/bubble/tray_bubble_view.h"
+#include "ash/shelf/shelf_observer.h"
 
 namespace ash {
 class Shelf;
@@ -29,7 +30,8 @@ class TrayEventFilter;
 class ASH_EXPORT TrayBackgroundView : public ActionableView,
                                       public ui::ImplicitAnimationObserver,
                                       public ShelfBackgroundAnimatorObserver,
-                                      public views::TrayBubbleView::Delegate {
+                                      public views::TrayBubbleView::Delegate,
+                                      public ShelfObserver {
  public:
   static const char kViewClassName[];
 
@@ -46,9 +48,13 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   void SetVisible(bool visible) override;
   const char* GetClassName() const override;
   void OnGestureEvent(ui::GestureEvent* event) override;
+ // void OnMouseEvent(ui::MouseEvent* event) override;
   void AboutToRequestFocusFromTabTraversal(bool reverse) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void ChildPreferredSizeChanged(views::View* child) override;
+
+//  void OnMouseEntered(const ui::MouseEvent& event) override;
+//  void OnMouseExited(const ui::MouseEvent& event) override;
 
   // ActionableView:
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
@@ -58,6 +64,10 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
 
   // TrayBubbleView::Delegate:
   void ProcessGestureEventForBubble(ui::GestureEvent* event) override;
+
+  // ShelfObserver:
+ // void WillChangeVisibilityState(ShelfVisibilityState new_state) override;
+ // void OnAutoHideStateChanged(ShelfAutoHideState new_state) override;
 
   // Returns the associated tray bubble view, if one exists. Otherwise returns
   // nullptr.
@@ -90,6 +100,8 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // Called by the bubble wrapper when a click event occurs outside the bubble.
   // May close the bubble.
   virtual void ClickedOutsideBubble() = 0;
+
+  virtual base::string16 GetTrayTooltipText() const;
 
   // Returns the bubble anchor alignment based on |shelf_alignment_|.
   views::TrayBubbleView::AnchorAlignment GetAnchorAlignment() const;
@@ -131,6 +143,8 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // based on background insets returned from GetBackgroundInsets().
   gfx::Rect GetBackgroundBounds() const;
 
+  //views::BubbleDialogDelegateView* tooltip_bubble() { return tooltip_bubble_; }
+
  protected:
   // ActionableView:
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
@@ -161,6 +175,10 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   gfx::Insets GetBackgroundInsets() const;
 
 
+//  void ShowTooltip();
+//  void ShowTooltipWithDelay();
+//  void CloseTooltipBubble();
+
   // The shelf containing the system tray for this view.
   Shelf* shelf_;
 
@@ -187,6 +205,14 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
 
   std::unique_ptr<TrayWidgetObserver> widget_observer_;
   std::unique_ptr<TrayEventFilter> tray_event_filter_;
+
+  // TODO, tooltip bubble
+ // views::BubbleDialogDelegateView* tooltip_bubble_ = nullptr;
+
+  // TODO, tooltip timer, should
+ // base::OneShotTimer tooltip_timer_;
+
+  //bool move_from_tooltip_view_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TrayBackgroundView);
 };

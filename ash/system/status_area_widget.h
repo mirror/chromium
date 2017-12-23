@@ -92,6 +92,8 @@ class ASH_EXPORT StatusAreaWidget : public views::Widget,
     return virtual_keyboard_tray_;
   }
 
+//  bool HasTooltip() const;
+
  private:
   void AddSystemTray();
   void AddWebNotificationTray();
@@ -100,6 +102,9 @@ class ASH_EXPORT StatusAreaWidget : public views::Widget,
   void AddVirtualKeyboardTray();
   void AddImeMenuTray();
   void AddOverviewButtonTray();
+
+//  void OnGestureEvent(ui::GestureEvent* event) override;
+//  void OnMouseEvent(ui::MouseEvent* event) override;
 
   // Weak pointers to View classes that are parented to StatusAreaWidget:
   StatusAreaWidgetDelegate* status_area_widget_delegate_;

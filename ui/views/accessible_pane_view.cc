@@ -212,6 +212,10 @@ void AccessiblePaneView::RequestFocus() {
   SetPaneFocusAndFocusDefault();
 }
 
+/*void AccessiblePaneView::OnMouseEvent(ui::MouseEvent* event) {
+  LOG(ERROR)<<"=============AccessiblePaneView::OnMouseEvent,type:"<<event->type();
+}*/
+
 ////////////////////////////////////////////////////////////////////////////////
 // FocusChangeListener overrides:
 

@@ -387,6 +387,7 @@ int TrayBubbleView::GetHeightForWidth(int width) const {
 }
 
 void TrayBubbleView::OnMouseEntered(const ui::MouseEvent& event) {
+//  LOG(ERROR)<<"====================TrayBubbleView::OnMouseEntered,type:"<<event.type();
   mouse_watcher_.reset();
   if (delegate_ && !(event.flags() & ui::EF_IS_SYNTHESIZED)) {
     // Coming here the user was actively moving the mouse over the bubble and

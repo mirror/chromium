@@ -229,8 +229,6 @@ class WebNotificationImage : public WebNotificationItem {
            gfx::Size(kTrayItemInnerIconSize, kTrayItemInnerIconSize));
     view_ = new views::ImageView();
     view_->SetImage(image);
-    view_->SetTooltipText(
-        l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_FOOTER_TITLE));
     AddChildView(view_);
   }
 
@@ -646,6 +644,10 @@ void WebNotificationTray::ShowBubble(bool show_by_click) {
 views::TrayBubbleView* WebNotificationTray::GetBubbleView() {
   return message_center_bubble_ ? message_center_bubble_->bubble_view()
                                 : nullptr;
+}
+
+base::string16 WebNotificationTray::GetTrayTooltipText() const {
+  return l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_FOOTER_TITLE);
 }
 
 message_center::MessageCenter* WebNotificationTray::message_center() const {
