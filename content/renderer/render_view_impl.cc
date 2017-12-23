@@ -287,7 +287,8 @@ Referrer RenderViewImpl::GetReferrerFromRequest(
     const WebURLRequest& request) {
   return Referrer(blink::WebStringToGURL(
                       request.HttpHeaderField(WebString::FromUTF8("Referer"))),
-                  request.GetReferrerPolicy());
+                  Referrer::Referrer::Referrer::ReferrerPolicyForUrlRequest(
+                      request.GetReferrerPolicy()));
 }
 
 // static

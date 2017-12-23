@@ -90,7 +90,9 @@ ContentSerializedNavigationBuilder::ToNavigationEntry(
           navigation->virtual_url_,
           content::Referrer::SanitizeForRequest(
               navigation->virtual_url_,
-              content::Referrer(navigation->referrer_url_, policy)),
+              content::Referrer(
+                  navigation->referrer_url_,
+                  content::Referrer::ReferrerPolicyForUrlRequest(policy))),
           // Use a transition type of reload so that we don't incorrectly
           // increase the typed count.
           ui::PAGE_TRANSITION_RELOAD, false,

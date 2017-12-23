@@ -197,7 +197,8 @@ void ResourcePrefetcher::SendRequest(const GURL& url) {
   url_request->set_site_for_cookies(main_frame_url_);
   url_request->set_initiator(url::Origin::Create(main_frame_url_));
 
-  content::Referrer referrer(main_frame_url_, blink::kWebReferrerPolicyDefault);
+  content::Referrer referrer(main_frame_url_,
+                             content::Referrer::GetDefaultReferrerPolicy());
   content::Referrer sanitized_referrer =
       content::Referrer::SanitizeForRequest(url, referrer);
   content::Referrer::SetReferrerForRequest(url_request.get(),

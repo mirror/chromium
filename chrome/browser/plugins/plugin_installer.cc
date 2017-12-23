@@ -54,7 +54,7 @@ void PluginInstaller::OpenDownloadURL(const GURL& plugin_url,
   web_contents->OpenURL(content::OpenURLParams(
       plugin_url,
       content::Referrer(web_contents->GetURL(),
-                        blink::kWebReferrerPolicyDefault),
+                        content::Referrer::GetDefaultReferrerPolicy()),
       WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_TYPED,
       false));
   for (PluginInstallerObserver& observer : observers_)

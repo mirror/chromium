@@ -18,13 +18,12 @@ namespace content {
 // up being used for URL requests, always use this struct.
 
 struct CONTENT_EXPORT Referrer {
-  // TODO(jam): convert this to hold the net enum
-  Referrer(const GURL& url, blink::WebReferrerPolicy policy)
+  Referrer(const GURL& url, net::URLRequest::ReferrerPolicy policy)
       : url(url), policy(policy) {}
-  Referrer() : policy(blink::kWebReferrerPolicyDefault) {}
+  Referrer() : policy(GetDefaultReferrerPolicy()) {}
 
   GURL url;
-  blink::WebReferrerPolicy policy;
+  net::URLRequest::ReferrerPolicy policy;
 
   static Referrer SanitizeForRequest(const GURL& request,
                                      const Referrer& referrer);
