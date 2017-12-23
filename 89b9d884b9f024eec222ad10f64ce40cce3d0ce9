@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70f35cc8_af1ba579",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-23T00:32:59Z",
+      "side": 1,
+      "message": "Also updating the bug number to be the open bug.",
+      "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25bc19e3_e164e582",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-23T00:32:59Z",
+      "side": 1,
+      "message": "Things were way too confusing for me to do everything at the same time, and I eventaully ripped out the de-dupe code and I hope to follow this up with another CL that dedupes. Mostly the deduping _should_ only be for historical clients, shouldn\u0027t be possible after this CL, but we should histogram it too.",
+      "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21cfd094_82349982",
+        "filename": "components/sync_sessions/sessions_sync_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-23T00:32:59Z",
+      "side": 1,
+      "message": "Presubmit complaind about not having https:// so I updated all the sessions files to have it now.",
+      "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0958799f_45262b0c",
+        "filename": "components/sync_sessions/sessions_sync_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-23T00:32:59Z",
+      "side": 1,
+      "message": "I need to remove \"cold start\" from this, it is misleading. You can have an initialized Chrome that has it\u0027s main window closed, but still running with custom tabs.",
+      "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
