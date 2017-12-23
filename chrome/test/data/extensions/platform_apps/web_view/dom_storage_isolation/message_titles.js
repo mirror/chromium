@@ -4,5 +4,12 @@
 
 var INIT_DOM_STORAGE = 'Initialize DOM Storage';
 var INIT_DOM_STORAGE_COMPLETE = 'Initialization Complete';
+
 var GET_DOM_STORAGE_INFO = 'Get DOM Storage Info.';
 var GET_DOM_STORAGE_INFO_COMPLETE = 'DOM Storage Info Ready.';
+
+var SET_WINDOW_NAME = 'Set window.name.';
+var SET_WINDOW_NAME_COMPLETE = 'Set window.name - complete.';
+
+var FIND_WINDOW_BY_NAME = 'Find window by name.';
+var FIND_WINDOW_BY_NAME_COMPLETE = 'Find window by name - complete.';

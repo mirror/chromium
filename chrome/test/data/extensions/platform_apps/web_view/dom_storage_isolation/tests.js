@@ -49,6 +49,40 @@ function askWebviewForStorageInfo(webview, callback) {
       webview.contentWindow);
 }
 
+// Sets window.name of the given webview.  |callback| will be called with no
+// arguments upon completion.
+function askWebviewToSetWindowName(webview, name, callback) {
+  var messageHandler = new Messaging.Handler();
+  // Listen for 'SET_WINDOW_NAME_COMPLETE'
+  messageHandler.addHandler(SET_WINDOW_NAME_COMPLETE, function(message, port) {
+    // Remove this handler since it is no longer needed.
+    messageHandler.removeHandler(SET_WINDOW_NAME_COMPLETE);
+    callback();
+  });
+  // Send the request to set the window name.
+  messageHandler.sendMessage(
+      new Messaging.Message(SET_WINDOW_NAME, {windowName: name}),
+      webview.contentWindow);
+}
+
+// Checks if |webview| can find a window/frame named |name|.
+// |callback| will be called with a boolean |found| argument upon completion.
+function askWebviewToFindWindowByName(webview, name, callback) {
+  var messageHandler = new Messaging.Handler();
+  // Listen for 'FIND_WINDOW_BY_NAME_COMPLETE'
+  messageHandler.addHandler(
+      FIND_WINDOW_BY_NAME_COMPLETE,
+      function(message, port) {
+        // Remove this handler since it is no longer needed.
+        messageHandler.removeHandler(FIND_WINDOW_BY_NAME_COMPLETE);
+        callback(message.found);
+      });
+  // Send the request to set the window name.
+  messageHandler.sendMessage(
+      new Messaging.Message(FIND_WINDOW_BY_NAME, {windowName: name}),
+      webview.contentWindow);
+}
+
 // Initializes a webview's DOM storage and then reads the storage information
 // and verifies if they are what was expected. Then it invokes a callback with
 // the result.
@@ -120,10 +154,41 @@ function addTests(webviews) {
           callBack(false);
         });
       });
+  // The fourth test makes sure that the webviews in the same storage partition
+  // (webviews[0] and webviews[1]) can find each other via
+  // window.open('', <frame name>).  This is a regression test for
+  // https://crbug.com/794079.
+  test4 = new Testing.Test('window.open_findability_between_webview[0]and[1]',
+      function(callBack) {
+        askWebviewToSetWindowName(webviews[1], "test4-webviews1", function() {
+          askWebviewToFindWindowByName(
+              webviews[0], "test4-webviews1", function(found) {
+                // Windows should be findable if they are in the same storage
+                // partition.
+                callBack(found == true);
+              });
+        });
+      });
+  // The fifth test makes sure that the webviews in a different storage
+  // partition (webviews[0] and webviews[2]) can NOT find each other via
+  // window.open('', <frame name>).
+  test5 = new Testing.Test('window.open_findability_between_webview[0]and[2]',
+      function(callBack) {
+        askWebviewToSetWindowName(webviews[2], "test5-webviews2", function() {
+          askWebviewToFindWindowByName(
+              webviews[0], "test5-webviews2", function(found) {
+                // Windows shouldn't be findable across different storage
+                // partitions.
+                callBack(found == false);
+              });
+        });
+      });
   // Link the tests so that they will run one after another.
   test1.setNextTest(test2);
   test2.setNextTest(test3);
-  test3.setNextTest(null); // End of all tests.
+  test3.setNextTest(test4);
+  test4.setNextTest(test5);
+  test5.setNextTest(null); // End of all tests.
   window.firstTest = test1; // The first test to run.
 }
 
