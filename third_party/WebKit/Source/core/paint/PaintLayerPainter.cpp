@@ -838,8 +838,15 @@ PaintResult PaintLayerPainter::PaintFragmentByApplyingTransform(
   transform.PostTranslate(rounded_delta.X(), rounded_delta.Y());
 
   LayoutSize new_sub_pixel_accumulation;
-  if (transform.IsIdentityOrTranslation())
+  float scale = 1.0f;
+  if (transform.IsIdentityOrTranslation()) {
     new_sub_pixel_accumulation += delta - rounded_delta;
+  } else {
+    TransformationMatrix::DecomposedType decomposed;
+    if (transform.Decompose(decomposed))
+      scale = std::max(decomposed.scale_x, decomposed.scale_y);
+  }
+
   // Otherwise discard the sub-pixel remainder because paint offset can't be
   // transformed by a non-translation transform.
 
@@ -853,7 +860,7 @@ PaintResult PaintLayerPainter::PaintFragmentByApplyingTransform(
   // Now do a paint with the root layer shifted to be us.
   PaintLayerPaintingInfo transformed_painting_info(
       &paint_layer_, LayoutRect(LayoutRect::InfiniteIntRect()),
-      painting_info.GetGlobalPaintFlags(), new_sub_pixel_accumulation);
+      painting_info.GetGlobalPaintFlags(), new_sub_pixel_accumulation, scale);
   transformed_painting_info.ancestor_has_clip_path_clipping =
       painting_info.ancestor_has_clip_path_clipping;
 
@@ -1089,7 +1096,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   }
   PaintInfo paint_info(context, PixelSnappedIntRect(new_cull_rect), phase,
                        painting_info.GetGlobalPaintFlags(), paint_flags,
-                       &painting_info.root_layer->GetLayoutObject());
+                       &painting_info.root_layer->GetLayoutObject(),
+                       painting_info.scale);
 
   paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset);
 }
