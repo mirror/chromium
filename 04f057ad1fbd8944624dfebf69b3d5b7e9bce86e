@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ee9c05_b076b47b",
+        "filename": "chrome/test/data/webui/settings/focus_row_behavior_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-23T01:15:51Z",
+      "side": 1,
+      "message": "optional: it looks common to put these on two lines.\n/** @type {FocusableIronListItemElement} */ \nlet testElement;",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2bfea5_d6b3fe86",
+        "filename": "chrome/test/data/webui/settings/people_page_sync_page_interactive_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-23T01:15:51Z",
+      "side": 1,
+      "message": "Maybe: \\nlet",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc12947_a5567cc3",
+        "filename": "chrome/test/data/webui/settings/protocol_handlers_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-23T01:15:51Z",
+      "side": 1,
+      "message": "Maybe do one per line while we\u0027re here (optional).",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
