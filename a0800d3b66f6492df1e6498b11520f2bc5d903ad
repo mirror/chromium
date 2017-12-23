@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43e80ac9_be85708c",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a779c1_d29609ac",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb877356_9fd6edf2",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3c8a6d84_cce6e5c2",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb877356_9fd6edf2",
+      "range": {
+        "startLine": 136,
+        "startChar": 54,
+        "endLine": 136,
+        "endChar": 55
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c9e9dd_2b5a8180",
         "filename": "chrome/installer/zucchini/equivalence_map.h",
         "patchSetId": 22
@@ -68,6 +116,30 @@
       "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0ba585_072b38d6",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Going for |*_image_index|. Sorry for missing this comment in the previous patch!",
+      "parentUuid": "a1c9e9dd_2b5a8180",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

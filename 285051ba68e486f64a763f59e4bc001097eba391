@@ -1267,6 +1267,30 @@
     },
     {
       "key": {
+        "uuid": "3cfe3cd8_853f644e",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e449d92_8164192d",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04d6ae1b_c8153c94",
         "filename": "chrome/installer/zucchini/reference_set.h",
         "patchSetId": 21
@@ -1338,6 +1362,30 @@
     },
     {
       "key": {
+        "uuid": "509ae7a5_53952a2a",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760d2c86_f2bbf52b",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81f3a7b8_b1efc5a7",
         "filename": "chrome/installer/zucchini/reference_set.h",
         "patchSetId": 21
@@ -1349,6 +1397,30 @@
       "writtenOn": "2017-12-10T21:11:23Z",
       "side": 1,
       "message": "Would it be appropriate to make this inherit from ReferenceTypeTraits?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a72c23a_5ffaaa3b",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Inheritance would be used as an implementation detail, and since there\u0027s no clear benefit (other than convenience), I think it\u0027s simpler to stick with composition.",
+      "parentUuid": "81f3a7b8_b1efc5a7",
       "range": {
         "startLine": 19,
         "startChar": 6,
@@ -1899,6 +1971,30 @@
       "revId": "285051ba68e486f64a763f59e4bc001097eba391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acf13b3_fecbcae4",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-23T23:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1d899a_17e8c236",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
