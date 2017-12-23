@@ -22,6 +22,30 @@
       "revId": "2c867ed3de903c09fbe25dfe946eec4b5153fd13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c85495d_5d142efc",
+        "filename": "components/autofill/core/browser/test_credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-23T04:28:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to work as far as I can tell.\n\n- Adding \"class TestPaymentsClient;\" doesn\u0027t work\n- Adding \"class payments::TestPaymentsClient;\" isn\u0027t allowed apparently\n- Adding \"namespace payments { class TestPaymentsClient; }\" doesn\u0027t work because it needs the complete type due to test_payments_client_-\u003eSetSaveDelegate() on line 20 of the .cc",
+      "parentUuid": "8ee3a786_8986a537",
+      "range": {
+        "startLine": 11,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "2c867ed3de903c09fbe25dfe946eec4b5153fd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
