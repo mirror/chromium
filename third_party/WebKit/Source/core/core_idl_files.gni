@@ -494,6 +494,8 @@ core_dependency_idl_files =
                     "dom/ParentNode.idl",
                     "dom/events/EventListener.idl",
                     "events/NavigatorEvents.idl",
+                    "fetch/WindowFetch.idl",
+                    "fetch/WorkerFetch.idl",
                     "fileapi/URLFileAPI.idl",
                     "frame/NavigatorAutomationInformation.idl",
                     "frame/NavigatorConcurrentHardware.idl",
@@ -641,6 +643,8 @@ core_testing_dictionary_idl_files =
 
 webcore_testing_idl_files =
     get_path_info([
+                    "fetch/testing/InternalsFetch.idl",
+                    "fetch/testing/WorkerInternalsFetch.idl",
                     "testing/CallbackFunctionTest.idl",
                     "testing/DeathAwareScriptWrappable.idl",
                     "testing/DictionaryTest.idl",
