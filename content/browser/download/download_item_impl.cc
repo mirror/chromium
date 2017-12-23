@@ -2301,7 +2301,7 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   // (which is the contents of the Referer header for the last download request)
   // will only be sent to the URL returned by GetURL().
   download_params->set_referrer(
-      Referrer(GetReferrerUrl(), blink::kWebReferrerPolicyAlways));
+      Referrer(GetReferrerUrl(), net::URLRequest::NEVER_CLEAR_REFERRER));
 
   TransitionTo(RESUMING_INTERNAL);
   RecordDownloadSource(source == ResumptionRequestSource::USER

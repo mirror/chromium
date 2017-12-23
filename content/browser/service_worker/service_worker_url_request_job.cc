@@ -595,8 +595,8 @@ ServiceWorkerURLRequestJob::CreateFetchRequest() {
     CHECK(
         request_->referrer_policy() ==
         net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE);
-    request->referrer =
-        Referrer(GURL(request_->referrer()), blink::kWebReferrerPolicyDefault);
+    request->referrer = Referrer(GURL(request_->referrer()),
+                                 Referrer::GetDefaultReferrerPolicy());
   }
   request->fetch_type = fetch_type_;
   return request;

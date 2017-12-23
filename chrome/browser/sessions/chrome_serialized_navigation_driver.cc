@@ -39,9 +39,10 @@ ChromeSerializedNavigationDriver::GetInstance() {
 
 void ChromeSerializedNavigationDriver::Sanitize(
     sessions::SerializedNavigationEntry* navigation) const {
-  content::Referrer old_referrer(
-      navigation->referrer_url(),
-      static_cast<blink::WebReferrerPolicy>(navigation->referrer_policy()));
+  content::Referrer old_referrer(navigation->referrer_url(),
+                                 content::Referrer::ReferrerPolicyForUrlRequest(
+                                     static_cast<blink::WebReferrerPolicy>(
+                                         navigation->referrer_policy())));
   content::Referrer new_referrer = content::Referrer::SanitizeForRequest(
       navigation->virtual_url(), old_referrer);
 

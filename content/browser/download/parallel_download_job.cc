@@ -281,8 +281,8 @@ void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
 
   // Subsequent range requests have the same referrer URL as the original
   // download request.
-  download_params->set_referrer(Referrer(download_item_->GetReferrerUrl(),
-                                         blink::kWebReferrerPolicyAlways));
+  download_params->set_referrer(Referrer(
+      download_item_->GetReferrerUrl(), net::URLRequest::NEVER_CLEAR_REFERRER));
   // Send the request.
   worker->SendRequest(std::move(download_params));
   DCHECK(workers_.find(offset) == workers_.end());

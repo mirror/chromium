@@ -424,8 +424,9 @@ content::Referrer CreateReferrer(const GURL& url,
                                  const content::ContextMenuParams& params) {
   const GURL& referring_url = GetDocumentURL(params);
   return content::Referrer::SanitizeForRequest(
-      url,
-      content::Referrer(referring_url.GetAsReferrer(), params.referrer_policy));
+      url, content::Referrer(referring_url.GetAsReferrer(),
+                             content::Referrer::ReferrerPolicyForUrlRequest(
+                                 params.referrer_policy)));
 }
 
 content::WebContents* GetWebContentsToUse(content::WebContents* web_contents) {

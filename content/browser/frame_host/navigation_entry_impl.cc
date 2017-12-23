@@ -66,7 +66,7 @@ void RecursivelyGenerateFrameEntries(
       state.item_sequence_number, state.document_sequence_number, nullptr,
       nullptr, GURL(state.url_string.value_or(base::string16())),
       Referrer(GURL(state.referrer.value_or(base::string16())),
-               state.referrer_policy),
+               Referrer::ReferrerPolicyForUrlRequest(state.referrer_policy)),
       std::vector<GURL>(), PageState::CreateFromEncodedData(data), "GET", -1);
 
   // Don't pass the file list to subframes, since that would result in multiple

@@ -417,11 +417,14 @@ WebURLRequest CreateURLRequestForNavigation(
     request.SetCacheMode(blink::mojom::FetchCacheMode::kForceCache);
 
   WebString web_referrer;
+  blink::WebReferrerPolicy blink_referrer_policy =
+      Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+          common_params.referrer.policy);
   if (common_params.referrer.url.is_valid()) {
     web_referrer = WebSecurityPolicy::GenerateReferrerHeader(
-        common_params.referrer.policy, common_params.url,
+        blink_referrer_policy, common_params.url,
         WebString::FromUTF8(common_params.referrer.url.spec()));
-    request.SetHTTPReferrer(web_referrer, common_params.referrer.policy);
+    request.SetHTTPReferrer(web_referrer, blink_referrer_policy);
     if (!web_referrer.IsEmpty()) {
       request.AddHTTPOriginIfNeeded(
           WebSecurityOrigin(url::Origin::Create(common_params.referrer.url)));
@@ -429,8 +432,8 @@ WebURLRequest CreateURLRequestForNavigation(
   }
 
   if (!web_referrer.IsEmpty() ||
-      common_params.referrer.policy != blink::kWebReferrerPolicyDefault) {
-    request.SetHTTPReferrer(web_referrer, common_params.referrer.policy);
+      common_params.referrer.policy != Referrer::GetDefaultReferrerPolicy()) {
+    request.SetHTTPReferrer(web_referrer, blink_referrer_policy);
   }
 
   request.SetIsSameDocumentNavigation(is_same_document_navigation);
@@ -478,7 +481,8 @@ CommonNavigationParams MakeCommonNavigationParams(
   Referrer referrer(
       GURL(info.url_request.HttpHeaderField(WebString::FromUTF8("Referer"))
                .Latin1()),
-      info.url_request.GetReferrerPolicy());
+      Referrer::ReferrerPolicyForUrlRequest(
+          info.url_request.GetReferrerPolicy()));
 
   // Set the ui timestamp for this navigation. Currently the timestamp here is
   // only non empty when the navigation was triggered by an Android intent, or
@@ -5489,7 +5493,8 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   if (document_loader->IsClientRedirect()) {
     params->referrer =
         Referrer(params->redirects[0],
-                 document_loader->GetRequest().GetReferrerPolicy());
+                 Referrer::ReferrerPolicyForUrlRequest(
+                     document_loader->GetRequest().GetReferrerPolicy()));
   } else {
     params->referrer = RenderViewImpl::GetReferrerFromRequest(
         frame, document_loader->GetRequest());
@@ -5979,7 +5984,8 @@ void RenderFrameImpl::OnGetSavableResourceLinks() {
   }
 
   Referrer referrer = Referrer(frame_->GetDocument().Url(),
-                               frame_->GetDocument().GetReferrerPolicy());
+                               Referrer::ReferrerPolicyForUrlRequest(
+                                   frame_->GetDocument().GetReferrerPolicy()));
 
   Send(new FrameHostMsg_SavableResourceLinksResponse(
       routing_id_, resources_list, referrer, subframes));

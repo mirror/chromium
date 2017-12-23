@@ -65,7 +65,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
       bool enable_upload_progress,
       bool do_not_prompt_for_login,
       bool keepalive,
-      blink::WebReferrerPolicy referrer_policy,
+      net::URLRequest::ReferrerPolicy referrer_policy,
       blink::mojom::PageVisibilityState visibility_state,
       ResourceContext* context,
       bool report_raw_headers,
@@ -88,7 +88,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   bool IsMainFrame() const override;
   ResourceType GetResourceType() const override;
   int GetProcessType() const override;
-  blink::WebReferrerPolicy GetReferrerPolicy() const override;
+  net::URLRequest::ReferrerPolicy GetReferrerPolicy() const override;
   blink::mojom::PageVisibilityState GetVisibilityState() const override;
   ui::PageTransition GetPageTransition() const override;
   bool HasUserGesture() const override;
@@ -230,7 +230,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   ResourceType resource_type_;
   ui::PageTransition transition_type_;
   int memory_cost_;
-  blink::WebReferrerPolicy referrer_policy_;
+  net::URLRequest::ReferrerPolicy referrer_policy_;
   blink::mojom::PageVisibilityState visibility_state_;
   ResourceContext* context_;
   bool report_raw_headers_;

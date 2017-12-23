@@ -62,7 +62,7 @@ void PDFPluginPlaceholderObserver::OnOpenPDF(
 
   content::Referrer referrer = content::Referrer::SanitizeForRequest(
       url, content::Referrer(web_contents()->GetURL(),
-                             blink::kWebReferrerPolicyDefault));
+                             content::Referrer::GetDefaultReferrerPolicy()));
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   content::StoragePartition* storage_partition =

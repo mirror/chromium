@@ -353,7 +353,8 @@ void PageHandler::Navigate(const std::string& url,
 
   web_contents->GetController().LoadURL(
       gurl,
-      Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
+      Referrer(GURL(referrer.fromMaybe("")),
+               Referrer::GetDefaultReferrerPolicy()),
       type, std::string());
   if (IsBrowserSideNavigationEnabled()) {
     std::string frame_id =

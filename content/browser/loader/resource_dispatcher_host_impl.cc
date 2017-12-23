@@ -1112,8 +1112,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     // for the stream is not a secure scheme (specifically, in the call to
     // ComputeReferrerForRedirect).
     const Referrer referrer(request_data.referrer,
-                            Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
-                                request_data.referrer_policy));
+                            request_data.referrer_policy);
     Referrer::SetReferrerForRequest(new_request.get(), referrer);
 
     new_request->SetExtraRequestHeaders(headers);
@@ -1215,11 +1214,9 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       allow_download, request_data.has_user_gesture,
       request_data.enable_load_timing, request_data.enable_upload_progress,
       do_not_prompt_for_login, request_data.keepalive,
-      Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
-          request_data.referrer_policy),
-      request_data.visibility_state, resource_context, report_raw_headers,
-      !is_sync_load, previews_state, request_data.request_body,
-      request_data.initiated_in_secure_context);
+      request_data.referrer_policy, request_data.visibility_state,
+      resource_context, report_raw_headers, !is_sync_load, previews_state,
+      request_data.request_body, request_data.initiated_in_secure_context);
   extra_info->SetBlobHandles(std::move(blob_handles));
 
   // Request takes ownership.
@@ -1510,7 +1507,7 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       false,     // enable_upload_progress
       false,     // do_not_prompt_for_login
       false,     // keepalive
-      blink::kWebReferrerPolicyDefault,
+      Referrer::GetDefaultReferrerPolicy(),
       blink::mojom::PageVisibilityState::kVisible, context,
       false,           // report_raw_headers
       true,            // is_async

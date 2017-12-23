@@ -370,9 +370,9 @@ void RenderViewContextMenuBase::OpenURLWithExtraHeaders(
     const std::string& extra_headers,
     bool started_from_context_menu) {
   content::Referrer referrer = content::Referrer::SanitizeForRequest(
-      url,
-      content::Referrer(referring_url.GetAsReferrer(),
-                        params_.referrer_policy));
+      url, content::Referrer(referring_url.GetAsReferrer(),
+                             content::Referrer::ReferrerPolicyForUrlRequest(
+                                 params_.referrer_policy)));
 
   if (params_.link_url == url &&
       disposition != WindowOpenDisposition::OFF_THE_RECORD)
