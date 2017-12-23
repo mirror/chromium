@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6741e09_18d46288",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-23T04:09:38Z",
+      "side": 1,
+      "message": "This seems to be where the bug is. Should we instead reset it between the tests?",
+      "revId": "e9930f75278e14b634d836a2c67d84001c016011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
