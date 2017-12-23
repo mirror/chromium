@@ -262,6 +262,24 @@
       "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49303d37_ea17a76f",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-23T00:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b579f9_4cf541e8",
+      "revId": "3cd3529704c583aac61cfb8df0d04d6b732f0b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
