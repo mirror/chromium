@@ -25,12 +25,10 @@
       </style>
       <iframe id="scale-iframe" src="resources/highlight-node-scaled-iframe.html"></iframe>
     `);
+  await TestRunner.setPageScaleFactor(2);
+  // Fully scroll the visual viewport.
   await TestRunner.evaluateInPagePromise(`
-      if (window.internals)
-          window.internals.setPageScaleFactor(2);
-      // Fully scroll the visual viewport.
       internals.setVisualViewportOffset(1000, 1000);
   `);
-
   ElementsTestRunner.dumpInspectorHighlightJSON('div', TestRunner.completeTest.bind(TestRunner));
 })();
