@@ -95,7 +95,12 @@ TestRunner._executeTestScript = function() {
 /** @type {!Array<string>} */
 TestRunner._results = [];
 
-TestRunner.completeTest = function() {
+/** @type {!Array<function():*>} */
+TestRunner._tearDownTasks = [];
+
+TestRunner.completeTest = async function() {
+  for (var task of TestRunner._tearDownTasks)
+    await task();
   TestRunner.flushResults();
   self.testRunner.notifyDone();
 };
@@ -1338,6 +1343,17 @@ TestRunner.dumpSyntaxHighlight = function(str, mimeType) {
 
     TestRunner.addResult(str + ': ' + node_parts.join(', '));
   }
+};
+
+/**
+ * Wrapper around internals.setPageScaleFactor to make sure we clean up
+ * afterwards, otherwise subsequent tests may flake.
+ * @param {number} factor
+ * @return {!Promise<*>}
+ */
+TestRunner.setPageScaleFactor = function(factor) {
+  TestRunner._tearDownTasks.push(() => TestRunner.evaluateInPageAnonymously(`internals.setPageScaleFactor(1)`));
+  return TestRunner.evaluateInPageAnonymously(`internals.setPageScaleFactor(${factor})`);
 };
 
 /**
