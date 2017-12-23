@@ -292,6 +292,29 @@ TEST_P(VideoFrameCompositorTest, UpdateCurrentFrameIfStale) {
   StopVideoRendererSink(false);
 }
 
+TEST_P(VideoFrameCompositorTest, FirstFrameCallbackIsCalledWhenPut) {
+  // Make sure that the first PutCurrentFrame causes the first frame cb to run.
+  bool first_frame_drawn_ = false;
+  compositor()->SetFirstFrameCallback(
+      base::BindOnce([](bool* flag) { *flag = true; }, &first_frame_drawn_));
+  StartVideoRendererSink();
+  RenderFrame();
+  ASSERT_TRUE(first_frame_drawn_);
+  StopVideoRendererSink(true);
+}
+
+TEST_P(VideoFrameCompositorTest, FirstFrameCallbackIsCalledByFrameGet) {
+  // The first GetCurrentFrameOnAnyThread should cause the first frame callback
+  // to be run.
+  bool first_frame_drawn_ = false;
+  compositor()->SetFirstFrameCallback(
+      base::BindOnce([](bool* flag) { *flag = true; }, &first_frame_drawn_));
+  StartVideoRendererSink();
+  compositor()->GetCurrentFrameOnAnyThread();
+  ASSERT_TRUE(first_frame_drawn_);
+  StopVideoRendererSink(true);
+}
+
 INSTANTIATE_TEST_CASE_P(SubmitterEnabled,
                         VideoFrameCompositorTest,
                         ::testing::Bool());

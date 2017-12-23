@@ -142,6 +142,10 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
     submitter_ = std::move(submitter);
   }
 
+  // Provide a callback that we'll call the first time any frame is drawn after
+  // the callback is set.
+  void SetFirstFrameCallback(base::OnceClosure first_frame_cb);
+
  private:
   // Ran on the |task_runner_| to initalize |submitter_|;
   void InitializeSubmitter();
@@ -212,6 +216,9 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
 
   // Whether the use of a surface layer instead of a video layer is enabled.
   bool surface_layer_for_video_enabled_ = false;
+
+  // Called when the first frame is used by anybody.
+  base::OnceClosure first_frame_cb_;
 
   base::WeakPtrFactory<VideoFrameCompositor> weak_ptr_factory_;
 
