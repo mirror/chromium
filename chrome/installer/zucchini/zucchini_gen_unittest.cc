@@ -67,6 +67,21 @@ std::vector<int32_t> GenerateReferencesDeltaTest(
   return delta_vec;
 }
 
+// Helper function wrapping FindExtraTargets().
+std::vector<offset_t> FindExtraTargetsTest(
+    std::vector<Reference>&& new_references,
+    std::vector<offset_t>&& new_labels,
+    EquivalenceMap&& equivalence_map) {
+  TargetPool new_targets;
+  new_targets.InsertTargets(new_references);
+  ReferenceSet reference_set({1, TypeTag(0), PoolTag(0)}, new_targets);
+  reference_set.InitReferences(new_references);
+
+  UnorderedLabelManager new_label_manager;
+  new_label_manager.Init(std::move(new_labels));
+  return FindExtraTargets(reference_set, new_label_manager, equivalence_map);
+}
+
 }  // namespace
 
 TEST(ZucchiniGenTest, MakeNewTargetsFromEquivalenceMap) {
@@ -109,31 +124,46 @@ TEST(ZucchiniGenTest, FindExtraTargets) {
   // Note that |new_offsets| provided are sorted, and |equivalences| provided
   // are sorted by |dst_offset|.
 
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({}, {}));
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({{0, 0}}, {}));
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({{0, IsMarked(0)}}, {}));
-
-  EXPECT_EQ(OffsetVector({0}),
-            FindExtraTargets({{0, 0}}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {kUnusedIndex}, {}));
   EXPECT_EQ(OffsetVector(),
-            FindExtraTargets({{0, MarkIndex(0)}},
-                             EquivalenceMap({{{0, 0, 2}, 0.0}})));
+            FindExtraTargetsTest({{0, 0}, {3, 0}}, {},
+                                 EquivalenceMap({{{2, 1, 2}, 0.0}})));
+
+  EXPECT_EQ(
+      OffsetVector({1}),
+      FindExtraTargetsTest({{0, 1}}, {}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({1}),
+            FindExtraTargetsTest({{0, 1}}, {kUnusedIndex},
+                                 EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({}),
+      FindExtraTargetsTest({{0, 1}}, {1}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
 
   EXPECT_EQ(OffsetVector({1, 2}),
-            FindExtraTargets({{0, 0}, {1, 1}, {2, 2}, {3, 3}},
-                             EquivalenceMap({{{0, 1, 2}, 0.0}})));
-  EXPECT_EQ(OffsetVector({2}),
-            FindExtraTargets({{0, 0}, {1, MarkIndex(1)}, {2, 2}, {3, 3}},
-                             EquivalenceMap({{{0, 1, 2}, 0.0}})));
+            FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {},
+                                 EquivalenceMap({{{0, 1, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({1, 2}),
+      FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {kUnusedIndex, 11},
+                           EquivalenceMap({{{0, 1, 2}, 0.0}})));
 
-  EXPECT_EQ(
-      OffsetVector({1, 2, 4, 5}),
-      FindExtraTargets({{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
-                       EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
-  EXPECT_EQ(
-      OffsetVector({4, 5}),
-      FindExtraTargets({{3, 3}, {4, 4}, {5, 5}, {6, 6}},
-                       EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({1, 2, 4, 5}),
+            FindExtraTargetsTest(
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
+                {kUnusedIndex},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({2, 4}),
+            FindExtraTargetsTest(
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
+                {5, kUnusedIndex, 1},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({4, 5}),
+            FindExtraTargetsTest(
+                {{3, 3}, {4, 4}, {5, 5}, {6, 6}}, {},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
 }
 
 TEST(ZucchiniGenTest, GenerateReferencesDelta) {
