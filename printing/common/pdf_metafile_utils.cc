@@ -46,4 +46,13 @@ uint64_t GenFrameGuid(int process_id, int frame_id) {
   return static_cast<uint64_t>(process_id) << 32 | frame_id;
 }
 
+std::vector<uint64_t> GenContentUniqueIds(
+    int process_id,
+    const std::vector<uint32_t>& content_ids) {
+  std::vector<uint64_t> uids;
+  for (auto id : content_ids)
+    uids.push_back(static_cast<uint64_t>(process_id) << 32 | id);
+  return uids;
+}
+
 }  // namespace printing

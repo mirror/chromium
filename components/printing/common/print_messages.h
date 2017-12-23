@@ -79,6 +79,17 @@ struct PrintMsg_PrintPages_Params {
   std::vector<int> pages;
 };
 
+struct PrintHostMsg_DidPrintContent_Params {
+  PrintHostMsg_DidPrintContent_Params();
+  PrintHostMsg_DidPrintContent_Params(
+      const PrintHostMsg_DidPrintContent_Params& other);
+  ~PrintHostMsg_DidPrintContent_Params();
+
+  base::SharedMemoryHandle metafile_data_handle;
+  uint32_t data_size;
+  std::vector<uint32_t> subframe_content_ids;
+};
+
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 struct PrintHostMsg_RequestPrintPreview_Params {
   PrintHostMsg_RequestPrintPreview_Params();
@@ -230,14 +241,23 @@ IPC_STRUCT_TRAITS_BEGIN(PrintMsg_PrintPages_Params)
   IPC_STRUCT_TRAITS_MEMBER(pages)
 IPC_STRUCT_TRAITS_END()
 
+// Parameters to describe the rendered content of a frame or a page.
+IPC_STRUCT_TRAITS_BEGIN(PrintHostMsg_DidPrintContent_Params)
+  // A shared memory handle to metafile data.
+  IPC_STRUCT_TRAITS_MEMBER(metafile_data_handle)
+
+  // Size of metafile data.
+  IPC_STRUCT_TRAITS_MEMBER(data_size)
+
+  // All out-of-process subframe ids.
+  IPC_STRUCT_TRAITS_MEMBER(subframe_content_ids)
+IPC_STRUCT_TRAITS_END()
+
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
 // Parameters to describe a rendered document.
 IPC_STRUCT_BEGIN(PrintHostMsg_DidPreviewDocument_Params)
-  // A shared memory handle to metafile data.
-  IPC_STRUCT_MEMBER(base::SharedMemoryHandle, metafile_data_handle)
-
-  // Size of metafile data.
-  IPC_STRUCT_MEMBER(uint32_t, data_size)
+  // Document's content including metafile data and subframe info.
+  IPC_STRUCT_MEMBER(PrintHostMsg_DidPrintContent_Params, content)
 
   // Cookie for the document to ensure correctness.
   IPC_STRUCT_MEMBER(int, document_cookie)
@@ -254,11 +274,8 @@ IPC_STRUCT_END()
 
 // Parameters to describe a rendered preview page.
 IPC_STRUCT_BEGIN(PrintHostMsg_DidPreviewPage_Params)
-  // A shared memory handle to metafile data for a draft document of the page.
-  IPC_STRUCT_MEMBER(base::SharedMemoryHandle, metafile_data_handle)
-
-  // Size of metafile data.
-  IPC_STRUCT_MEMBER(uint32_t, data_size)
+  // Page's content including metafile data and subframe info.
+  IPC_STRUCT_MEMBER(PrintHostMsg_DidPrintContent_Params, content)
 
   // |page_number| is zero-based and should not be negative.
   IPC_STRUCT_MEMBER(int, page_number)
@@ -285,12 +302,8 @@ IPC_STRUCT_END()
 
 // Parameters to describe a rendered page.
 IPC_STRUCT_BEGIN(PrintHostMsg_DidPrintDocument_Params)
-  // A shared memory handle to the PDF data. This data can be quite large so a
-  // memory map needs to be used.
-  IPC_STRUCT_MEMBER(base::SharedMemoryHandle, metafile_data_handle)
-
-  // Size of the metafile data.
-  IPC_STRUCT_MEMBER(uint32_t, data_size)
+  // Page's content including metafile data and subframe info.
+  IPC_STRUCT_MEMBER(PrintHostMsg_DidPrintContent_Params, content)
 
   // Cookie for the document to ensure correctness.
   IPC_STRUCT_MEMBER(int, document_cookie)
@@ -337,6 +350,11 @@ IPC_MESSAGE_ROUTED0(PrintMsg_PrintPages)
 
 // Like PrintMsg_PrintPages, but using the print preview document's frame/node.
 IPC_MESSAGE_ROUTED0(PrintMsg_PrintForSystemDialog)
+
+// Print content of an out-of-process subframe.
+IPC_MESSAGE_ROUTED2(PrintMsg_PrintFrameContent,
+                    gfx::Rect /* rect of the content area */,
+                    uint32_t /* content unique id */)
 #endif
 
 // Tells the RenderFrame that printing is done so it can clean up.
@@ -377,6 +395,11 @@ IPC_MESSAGE_ROUTED0(PrintHostMsg_DidShowPrintDialog)
 // this message is already valid in the browser process.
 IPC_MESSAGE_ROUTED1(PrintHostMsg_DidPrintDocument,
                     PrintHostMsg_DidPrintDocument_Params /* page content */)
+
+// Sends back to the browser the rendered subframe content that was
+// requested by a PrintMsg_PrintFrameContent message.
+IPC_MESSAGE_ROUTED1(PrintHostMsg_DidPrintFrameContent,
+                    PrintHostMsg_DidPrintContent_Params)
 
 // The renderer wants to know the default print settings.
 IPC_SYNC_MESSAGE_ROUTED0_1(PrintHostMsg_GetDefaultPrintSettings,
