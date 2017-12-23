@@ -61,6 +61,10 @@ class DisplayInfoProviderChromeOS : public DisplayInfoProvider {
   bool ClearTouchCalibration(const std::string& id,
                              std::string* error) override;
   bool IsNativeTouchCalibrationActive(std::string* error) override;
+  bool SetMixedMode(bool mixed,
+                    const std::string& mirroring_source_id,
+                    const std::vector<std::string>& mirroring_destination_ids,
+                    std::string* error) override;
 
  private:
   ash::TouchCalibratorController* GetTouchCalibrator();

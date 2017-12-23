@@ -147,6 +147,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "mash/public/interfaces/launchable.mojom.h"
+#include "my_out.h"
 #include "services/preferences/public/cpp/pref_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -823,9 +824,13 @@ Shell::~Shell() {
   instance_ = nullptr;
 }
 
+AF_SEG_FAULT_HANDLER_IMPL
+
 void Shell::Init(ui::ContextFactory* context_factory,
                  ui::ContextFactoryPrivate* context_factory_private) {
   const Config config = shell_port_->GetAshConfig();
+
+  InstallSIGSEGVHandler();
 
   // These controllers call Shell::Get() in their constructors, so they cannot
   // be in the member initialization list.
