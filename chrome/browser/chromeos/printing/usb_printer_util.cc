@@ -6,6 +6,8 @@
 
 #include <ctype.h>
 #include <stdint.h>
+
+#include <algorithm>
 #include <vector>
 
 #include "base/big_endian.h"
@@ -121,6 +123,23 @@ bool UsbDeviceIsPrinter(const device::UsbDevice& usb_device) {
   return UsbDeviceFilterMatches(*printer_filter, usb_device);
 }
 
+// Searches through the interfaces corresponding to |usb_device| and checks to
+// see if any of the interfaces support ipp-over-usb.
+bool DeviceSupportsIppOverUsb(const device::UsbDevice& usb_device) {
+  auto ippusb_check = [](const device::UsbInterfaceDescriptor& d) {
+    return d.interface_class == 7 && d.interface_subclass == 1 &&
+           d.interface_protocol == 4;
+  };
+
+  for (const auto& configuration : usb_device.configurations()) {
+    const auto& interfaces = configuration.interfaces;
+    if (std::any_of(interfaces.begin(), interfaces.end(), ippusb_check))
+      return true;
+  }
+
+  return false;
+}
+
 std::string UsbPrinterDeviceDetailsAsString(const device::UsbDevice& device) {
   return base::StringPrintf(
       " guid:                %s\n"
@@ -184,6 +203,9 @@ std::unique_ptr<Printer> UsbDeviceToPrinter(const device::UsbDevice& device) {
   printer->set_description(printer->display_name());
   printer->set_uri(UsbPrinterUri(device));
   printer->set_id(UsbPrinterId(device));
+  printer->set_vendor_id(device.vendor_id());
+  printer->set_product_id(device.product_id());
+  printer->set_supports_ippusb(DeviceSupportsIppOverUsb(device));
   return printer;
 }
 
