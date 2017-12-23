@@ -2529,6 +2529,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckWATCHLISTS(input_api, output_api))
   results.extend(input_api.RunTests(
     input_api.canned_checks.CheckVPythonSpec(input_api, output_api)))
+  results.extend(_CheckTranslationScreenshots(input_api, output_api))
 
   if any('PRESUBMIT.py' == f.LocalPath() for f in input_api.AffectedFiles()):
     results.extend(input_api.canned_checks.RunUnitTestsInDirectory(
@@ -2840,3 +2841,38 @@ def CheckChangeOnCommit(input_api, output_api):
   results.extend(input_api.canned_checks.CheckChangeHasDescription(
       input_api, output_api))
   return results
+
+def _CheckTranslationScreenshots(input_api, output_api):
+  import sys
+  sys.path = sys.path + [input_api.os_path.join(
+        input_api.PresubmitLocalPath(), 'tools', 'grit')]
+  import grit
+  import grit.grd_reader
+  import grit.node.message
+  from io import StringIO
+  for f in input_api.AffectedFiles():
+    # TODO: Handle grdp files.
+    if f.LocalPath().endswith('.grd'):
+      old_stream = StringIO(unicode("\n".join(f.OldContents())))
+      old_doc = grit.grd_reader.Parse(old_stream, '.')
+
+      new_stream = StringIO(unicode("\n".join(f.NewContents())))
+      new_doc = grit.grd_reader.Parse(new_stream, '.')
+
+      old_id_to_msg_map = {
+        msg.attrs['name']:msg for msg in old_doc.GetChildrenOfType(
+          grit.node.message.MessageNode)
+      }
+      new_id_to_msg_map = {
+       msg.attrs['name']:msg for msg in new_doc.GetChildrenOfType(
+        grit.node.message.MessageNode)
+      }
+      old_ids = set(old_id_to_msg_map)
+      new_ids = set(new_id_to_msg_map)
+      print "Added messages: ", old_ids - new_ids
+      print "Removed messages: ", new_ids - old_ids
+      for key in old_ids.intersection(new_ids):
+        if (old_id_to_msg_map[key].FormatXml()
+            != new_id_to_msg_map[key].FormatXml()):
+          print "Changed messages: ", key
+  return []
