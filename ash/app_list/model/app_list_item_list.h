@@ -65,6 +65,8 @@ class APP_LIST_MODEL_EXPORT AppListItemList {
   }
   size_t item_count() const { return app_list_items_.size(); }
 
+  int BADGECO() const;
+
  private:
   friend class AppListItemListTest;
   friend class AppListModel;
