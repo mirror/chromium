@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "175ce517_4b1b6d28",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2035a1a3_22246494",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c0aa83_a242d4be",
         "filename": "chrome/browser/media/cast_remoting_sender.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fee68c6_4da83cfb",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c0aa83_a242d4be",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "49443f61_295c6f9d",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371de99c_365034be",
+      "range": {
+        "startLine": 375,
+        "startChar": 15,
+        "endLine": 375,
+        "endChar": 34
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28201bc4_26f4dbc2",
         "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bee9a9_9d719098",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done. Removed ClearNextFrameData(). But since the |next_frame_data_| was not updated, the size will be the first frame\u0027s data size. \nPreviously, when CancelInFlightData() was called, |next_frame_data_| was immediately cleared. Now with the change, it might be still used by the MojoDataPipeWriter. I don\u0027t think the clear is necessar, so just removed the clear.",
+      "parentUuid": "28201bc4_26f4dbc2",
+      "range": {
+        "startLine": 378,
+        "startChar": 2,
+        "endLine": 378,
+        "endChar": 23
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ee969d52_89ff762d",
+        "filename": "chrome/browser/media/cast_remoting_sender_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a4d5eb_ffa0907f",
+      "range": {
+        "startLine": 514,
+        "startChar": 14,
+        "endLine": 514,
+        "endChar": 19
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a3484d0_3935ae9d",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f906f20_3a8fc425",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3484d0_3935ae9d",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "da2add10_d5e4ec2c",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b45c441_288aa933",
+      "range": {
+        "startLine": 89,
+        "startChar": 29,
+        "endLine": 89,
+        "endChar": 35
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "385a88aa_5346a54b",
         "filename": "media/remoting/demuxer_stream_adapter.h",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20102c10_559d8f20",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-23T00:42:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385a88aa_5346a54b",
+      "range": {
+        "startLine": 118,
+        "startChar": 29,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "645d8f616a9f11389f3016c1a9da779a51932962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
