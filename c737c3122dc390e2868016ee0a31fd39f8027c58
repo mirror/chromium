@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dfaecc_43ae6bf0",
+        "filename": "third_party/WebKit/Source/core/dom/ViewportDescription.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-23T01:11:31Z",
+      "side": 1,
+      "message": "Clarify that this depends on the use-zoom-for-dsf setting?  When disabled, the unit will be DIPs instead.",
+      "revId": "c737c3122dc390e2868016ee0a31fd39f8027c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
