@@ -94,6 +94,30 @@
       "revId": "49edf658458303d6ee1b3bbbe275f9a55532661c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504f388f_76906364",
+        "filename": "ui/webui/resources/html/load_time_data.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-12-23T00:18:45Z",
+      "side": 1,
+      "message": "eventually, modules/import/require:\nhttps://caniuse.com/#feat\u003des6-module\n\nnow: making scripts that accidentally get re-imported no-op",
+      "parentUuid": "d38a22c6_bccc6ab2",
+      "range": {
+        "startLine": 1,
+        "startChar": 11,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "49edf658458303d6ee1b3bbbe275f9a55532661c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
