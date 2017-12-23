@@ -51,6 +51,9 @@ class ChromeAppIcon : public IconImage::Observer {
 
   const gfx::ImageSkia& image_skia() const { return image_skia_; }
   const std::string& app_id() const { return app_id_; }
+#if defined(OS_CHROMEOS)
+  bool BADGED() const { return BADGED_; }
+#endif
 
  private:
   const Extension* GetExtension();
@@ -70,6 +73,10 @@ class ChromeAppIcon : public IconImage::Observer {
   // Contains current icon image. This is static image with applied effects and
   // it is updated each time when |icon_| is updated.
   gfx::ImageSkia image_skia_;
+
+#if defined(OS_CHROMEOS)
+  bool BADGED_ = false;
+#endif
 
   const int resource_size_in_dip_;
 

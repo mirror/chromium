@@ -269,4 +269,11 @@ void AppListItemList::FixItemPosition(size_t index) {
     observer.OnListItemMoved(index, index, item);
 }
 
+int AppListItemList::BADGECO() const {
+  int count = 0;
+  for (size_t i = 0; i < app_list_items_.size(); ++i)
+    count += app_list_items_[i]->BADGECO();
+  return count;
+}
+
 }  // namespace app_list

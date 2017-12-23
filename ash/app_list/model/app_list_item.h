@@ -88,6 +88,8 @@ class APP_LIST_MODEL_EXPORT AppListItem {
   virtual bool CompareForTest(const AppListItem* other) const;
   virtual std::string ToDebugString() const;
 
+  virtual int BADGECO() const;
+
  protected:
   // TODO(hejq): remove this when we have mojo interfaces.
   friend class ::ChromeAppListModelUpdater;

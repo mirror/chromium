@@ -71,6 +71,7 @@ class APP_LIST_MODEL_EXPORT AppListFolderItem : public AppListItem,
   AppListItem* FindChildItem(const std::string& id) override;
   size_t ChildItemCount() const override;
   bool CompareForTest(const AppListItem* other) const override;
+  int BADGECO() const override;
 
   // Returns an id for a new folder.
   static std::string GenerateId();

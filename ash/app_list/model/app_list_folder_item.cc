@@ -82,4 +82,8 @@ void AppListFolderItem::OnFolderImageUpdated() {
   SetIcon(folder_image_.icon());
 }
 
+int AppListFolderItem::BADGECO() const {
+  return item_list_->BADGECO();  // null check?
+}
+
 }  // namespace app_list

@@ -105,4 +105,8 @@ void AppListItem::SetNameAndShortName(const std::string& name,
     observer.ItemNameChanged();
 }
 
+int AppListItem::BADGECO() const {
+  return 0;
+}
+
 }  // namespace app_list

@@ -176,6 +176,10 @@ const char* ExtensionAppItem::GetItemType() const {
   return ExtensionAppItem::kItemType;
 }
 
+int ExtensionAppItem::BADGECO() const {
+  return icon_->BADGED() ? 1 : 0;
+}  // null check?
+
 void ExtensionAppItem::ExecuteLaunchCommand(int event_flags) {
   Launch(event_flags);
 }

@@ -110,7 +110,8 @@ void ChromeAppIcon::UpdateIcon() {
 
   image_skia_ = icon_->image_skia();
 #if defined(OS_CHROMEOS)
-  util::MaybeApplyChromeBadge(browser_context_, app_id_, &image_skia_);
+  BADGED_ =
+      util::MaybeApplyChromeBadge(browser_context_, app_id_, &image_skia_);
 #endif
 
   if (!util::IsAppLaunchable(app_id_, browser_context_)) {
@@ -126,7 +127,7 @@ void ChromeAppIcon::UpdateIcon() {
                        image_skia_.size());
   }
 
-  delegate_->OnIconUpdated(this);
+  delegate_->OnIconUpdated(this);  // consider passing BADGED here as a param
 }
 
 void ChromeAppIcon::OnExtensionIconImageChanged(IconImage* icon) {
