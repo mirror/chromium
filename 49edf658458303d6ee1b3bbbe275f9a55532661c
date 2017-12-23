@@ -70,6 +70,30 @@
       "revId": "49edf658458303d6ee1b3bbbe275f9a55532661c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38a22c6_bccc6ab2",
+        "filename": "ui/webui/resources/html/load_time_data.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-23T00:05:29Z",
+      "side": 1,
+      "message": "dpapad@ had to convert a \u003cscript\u003e to an html-include to avoid it being included multiple times, so that he could convert vars to let/const. Any ideas for a viable solution that solves both the iOS and the let/const issues?\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/843144",
+      "parentUuid": "3ce182ae_19281228",
+      "range": {
+        "startLine": 1,
+        "startChar": 11,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "49edf658458303d6ee1b3bbbe275f9a55532661c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
