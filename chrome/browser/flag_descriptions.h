@@ -198,6 +198,10 @@ extern const char kEnableAutofillCreditCardAblationExperimentDescription[];
 extern const char kEnableAutofillCreditCardBankNameDisplayName[];
 extern const char kEnableAutofillCreditCardBankNameDisplayDescription[];
 
+extern const char kEnableAutofillCreditCardDownstreamGooglePayBrandingName[];
+extern const char
+    kEnableAutofillCreditCardDownstreamGooglePayBrandingDescription[];
+
 extern const char kEnableAutofillCreditCardLastUsedDateDisplayName[];
 extern const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[];
 
@@ -216,6 +220,9 @@ extern const char kEnableAutofillSendBillingCustomerNumberDescription[];
 
 extern const char kEnableAutofillToolkitViewsCreditCardDialogsMac[];
 extern const char kEnableAutofillToolkitViewsCreditCardDialogsMacDescription[];
+
+extern const char kEnableAutofillUseNewSettingNameInDropdownName[];
+extern const char kEnableAutofillUseNewSettingNameInDropdownDescription[];
 
 extern const char kEnableBreakingNewsPushName[];
 extern const char kEnableBreakingNewsPushDescription[];
