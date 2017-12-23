@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9420e7f2_d2d9a7ed",
+        "filename": "third_party/WebKit/Source/core/exported/WebSurroundingText.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-23T01:05:13Z",
+      "side": 1,
+      "message": "This is the same function as the old SurroundingText::Initialize()",
+      "revId": "502badcf41e7dec63a12f688146344f01c4d569a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
