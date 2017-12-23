@@ -1901,7 +1901,7 @@ LayoutUnit LayoutBlockFlow::CollapseMargins(
                           previous_block_flow->LowestFloatLogicalBottom();
       if (lowest_float > logical_top)
         AddOverhangingFloats(previous_block_flow, false);
-      else
+      else if (!previous_block_flow->CreatesNewFormattingContext())
         break;
       LayoutObject* prev = previous_block_flow->PreviousSibling();
       if (prev && prev->IsLayoutBlockFlow())
