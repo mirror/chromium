@@ -24,6 +24,7 @@
 #include "ui/display/display_layout_builder.h"
 #include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/display/unified_desktop_utils.h"
 #include "ui/gfx/geometry/point.h"
@@ -475,6 +476,43 @@ bool ValidateParamsForTouchCalibration(const std::string& id,
 
 bool IsTabletModeWindowManagerEnabled() {
   return TabletModeClient::Get()->tablet_mode_enabled();
+}
+
+bool ValidateParamsForMixedMode(
+    display::DisplayManager* display_manager,
+    int64_t mirroring_source_id,
+    const display::DisplayIdList& mirroring_destination_ids,
+    std::string* error) {
+  if (display_manager->num_connected_displays() <= 1) {
+    *error = "Mixed mode cannot be turned on for single display.";
+    return false;
+  }
+  std::set<int64_t> all_display_ids;
+  for (auto& id : display_manager->GetCurrentDisplayIdList())
+    all_display_ids.insert(id);
+
+  if (!all_display_ids.count(mirroring_source_id)) {
+    *error = "Mirroring source id " + base::Int64ToString(mirroring_source_id) +
+             " cannot be found.";
+    return false;
+  }
+  if (mirroring_destination_ids.empty()) {
+    *error = "At least one mirroring destination id should be specified.";
+    return false;
+  }
+  for (auto& id : mirroring_destination_ids) {
+    if (!all_display_ids.count(id)) {
+      *error = "Mirroring destination id " + base::Int64ToString(id) +
+               " cannot be found.";
+      return false;
+    }
+    if (id == mirroring_source_id) {
+      *error = "Display id " + base::Int64ToString(id) +
+               " cannot be both mirroring destination and source id.";
+      return false;
+    }
+  }
+  return true;
 }
 
 }  // namespace
@@ -1017,6 +1055,44 @@ bool DisplayInfoProviderChromeOS::IsNativeTouchCalibrationActive(
     return true;
   }
   return false;
+}
+
+bool DisplayInfoProviderChromeOS::SetMixedMode(
+    bool mixed,
+    const std::string& mirroring_source_id,
+    const std::vector<std::string>& mirroring_destination_ids,
+    std::string* error) {
+  display::DisplayManager* display_manager =
+      ash::Shell::Get()->display_manager();
+
+  if (!mixed) {
+    display_manager->SetMixedMode(false, display::kInvalidDisplayId,
+                                  display::DisplayIdList());
+    return true;
+  }
+
+  int64_t source_id;
+  if (!base::StringToInt64(mirroring_source_id, &source_id)) {
+    *error = "Mirroring source id " + mirroring_source_id + " is invalid.";
+    return false;
+  }
+
+  display::DisplayIdList destination_ids;
+  for (auto& id : mirroring_destination_ids) {
+    int64_t destination_id;
+    if (!base::StringToInt64(id, &destination_id)) {
+      *error = "Mirroring destination id " + id + " is invalid.";
+      return false;
+    }
+    destination_ids.emplace_back(destination_id);
+  }
+
+  if (!ValidateParamsForMixedMode(display_manager, source_id, destination_ids,
+                                  error)) {
+    return false;
+  }
+  display_manager->SetMixedMode(true, source_id, destination_ids);
+  return true;
 }
 
 ash::OverscanCalibrator* DisplayInfoProviderChromeOS::GetOverscanCalibrator(

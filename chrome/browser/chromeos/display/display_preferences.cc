@@ -360,6 +360,49 @@ void LoadExternalDisplayMirrorInfo() {
       external_display_mirror_info);
 }
 
+// Loads mixed mode parameters which will later be used to restore mixed mode.
+void LoadDisplayMixedModeParam() {
+  PrefService* local_state = g_browser_process->local_state();
+  const base::DictionaryValue* pref_data =
+      local_state->GetDictionary(prefs::kDisplayMixedModeParam);
+
+  std::unique_ptr<display::MixedModeParam> mixed_mode_param;
+  if (pref_data->empty()) {
+    GetDisplayManager()->set_mixed_mode_param(std::move(mixed_mode_param));
+    return;
+  }
+
+  auto* mirroring_source_id_value = pref_data->FindKey("mirroring_source_id");
+  if (!mirroring_source_id_value)
+    return;
+
+  DCHECK(mirroring_source_id_value->is_string());
+  int64_t mirroring_source_id;
+  if (!base::StringToInt64(mirroring_source_id_value->GetString(),
+                           &mirroring_source_id)) {
+    return;
+  }
+
+  auto* mirroring_destination_ids_value =
+      pref_data->FindKey("mirroring_destination_ids");
+  if (!mirroring_destination_ids_value)
+    return;
+
+  DCHECK(mirroring_destination_ids_value->is_list());
+  display::DisplayIdList mirroring_destination_ids;
+  for (const auto& entry : mirroring_destination_ids_value->GetList()) {
+    DCHECK(entry.is_string());
+    int64_t id;
+    if (!base::StringToInt64(entry.GetString(), &id))
+      return;
+    mirroring_destination_ids.emplace_back(id);
+  }
+
+  mixed_mode_param.reset(new display::MixedModeParam(
+      mirroring_source_id, mirroring_destination_ids));
+  GetDisplayManager()->set_mixed_mode_param(std::move(mixed_mode_param));
+}
+
 void StoreDisplayLayoutPref(const display::DisplayIdList& list,
                             const display::DisplayLayout& display_layout) {
   DCHECK(display::DisplayLayout::Validate(list, display_layout));
@@ -568,6 +611,32 @@ void StoreExternalDisplayMirrorInfo() {
     pref_data->GetList().emplace_back(base::Value(base::Int64ToString(id)));
 }
 
+// Stores mixed mode parameters.
+void StoreDisplayMixedModeParam() {
+  PrefService* local_state = g_browser_process->local_state();
+  DictionaryPrefUpdate update(local_state, prefs::kDisplayMixedModeParam);
+  base::DictionaryValue* pref_data = update.Get();
+  pref_data->Clear();
+
+  const display::MixedModeParam* mixed_mode_param =
+      GetDisplayManager()->mixed_mode_param();
+
+  if (!mixed_mode_param)
+    return;
+
+  pref_data->SetKey(
+      "mirroring_source_id",
+      base::Value(base::Int64ToString(mixed_mode_param->mirroring_source_id)));
+
+  base::ListValue mirroring_destination_ids_value;
+  for (const auto& id : mixed_mode_param->mirroring_destination_ids) {
+    mirroring_destination_ids_value.GetList().emplace_back(
+        base::Value(base::Int64ToString(id)));
+  }
+  pref_data->SetKey("mirroring_destination_ids",
+                    std::move(mirroring_destination_ids_value));
+}
+
 }  // namespace
 
 void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
@@ -580,6 +649,7 @@ void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(prefs::kDisplayRotationLock);
   registry->RegisterDictionaryPref(prefs::kDisplayTouchAssociations);
   registry->RegisterListPref(prefs::kExternalDisplayMirrorInfo);
+  registry->RegisterDictionaryPref(prefs::kDisplayMixedModeParam);
 }
 
 void StoreDisplayPrefs() {
@@ -599,6 +669,7 @@ void StoreDisplayPrefs() {
   StoreCurrentDisplayProperties();
   StoreDisplayTouchAssociations();
   StoreExternalDisplayMirrorInfo();
+  StoreDisplayMixedModeParam();
 }
 
 void StoreDisplayRotationPrefs(bool rotation_lock) {
@@ -620,6 +691,7 @@ void LoadDisplayPreferences(bool first_run_after_boot) {
   LoadDisplayLayouts();
   LoadDisplayProperties();
   LoadExternalDisplayMirrorInfo();
+  LoadDisplayMixedModeParam();
   LoadDisplayRotationState();
   LoadDisplayTouchAssociations();
   if (!first_run_after_boot) {
