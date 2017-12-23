@@ -54,8 +54,10 @@ void KioskAppUpdateService::Init(const std::string& app_id) {
   if (KioskAppManager::Get())
     KioskAppManager::Get()->AddObserver(this);
 
-  if (automatic_reboot_manager_->reboot_requested())
+  if (automatic_reboot_manager_ &&
+      automatic_reboot_manager_->reboot_requested()) {
     OnRebootRequested(automatic_reboot_manager_->reboot_reason());
+  }
 }
 
 void KioskAppUpdateService::StartAppUpdateRestartTimer() {
