@@ -6,6 +6,7 @@
 #define PRINTING_COMMON_PDF_METAFILE_UTILS_H_
 
 #include <string>
+#include <vector>
 
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkDocument.h"
@@ -25,6 +26,10 @@ sk_sp<SkDocument> MakePdfDocument(const std::string& creator,
                                   SkWStream* stream);
 
 uint64_t GenFrameGuid(int process_id, int frame_id);
+
+std::vector<uint64_t> GenContentUniqueIds(
+    int process_id,
+    const std::vector<uint32_t>& content_ids);
 
 }  // namespace printing
 
