@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b8bd0cec_23b53ea7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b704ba2b_111c7f1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Technically, all non-secure pages, right? We\u0027ve been a bit inconsistent in how we talk about this feature.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e83b31c_41978dde",
         "filename": "components/security_state/core/features.cc",
         "patchSetId": 5
@@ -22,6 +68,438 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72922b12_4231ca0f",
+        "filename": "components/security_state/core/features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Seems reasonable.",
+      "parentUuid": "7e83b31c_41978dde",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 75
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4648798d_b41fa2da",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "It feels a bit weird to reuse a name with a different meaning. Could we do something like either NOT_SECURE or NON_SECURE_MINOR or something of that nature?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c932e56_f9b47396",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Nit: Maybe AFTER_EDITING for parallelism with the old value?",
+      "range": {
+        "startLine": 32,
+        "startChar": 27,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad72c39d_de798bc1",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Can we remove this nesting?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffee3201_e60a1546",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "can we remove this nesting?",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56660b34_1359388d",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "can we remove this nesting?",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816576e0_6cfb3017",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Do we need to do something more elaborate here now to account for the scenario whereby one of the _DANGEROUS_ experiments is enabled? We wouldn\u0027t want sites to use DATA URIs to evade more alarming warnings.",
+      "range": {
+        "startLine": 151,
+        "startChar": 26,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dcf598_64ada0fa",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t technically test the command-line flag. Should it?",
+      "range": {
+        "startLine": 728,
+        "startChar": 58,
+        "endLine": 728,
+        "endChar": 76
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3183616_f51a8abf",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Since this is used in each block, should it be hoisted?",
+      "range": {
+        "startLine": 741,
+        "startChar": 0,
+        "endLine": 741,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24f5e50_720befa2",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Do we need a test that verifies that DANGEROUS doesn\u0027t come up when a sensitive form field is present? You\u0027ve got that check in the WarningAndDangerousOnFormEdits, below.",
+      "range": {
+        "startLine": 751,
+        "startChar": 1,
+        "endLine": 751,
+        "endChar": 3
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b392225_2813638a",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t technically test the command-line flag. Should it?",
+      "range": {
+        "startLine": 755,
+        "startChar": 61,
+        "endLine": 755,
+        "endChar": 74
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fd26eb_0fb2eb96",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Since this is used in each block, should it be hoisted?",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 769,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43e88c7_cea8a0e1",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "This doesn\u0027t technically test the command-line flag. Should it?",
+      "range": {
+        "startLine": 792,
+        "startChar": 56,
+        "endLine": 793,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fe04cc_8a16f5fd",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Hoist?",
+      "range": {
+        "startLine": 806,
+        "startChar": 0,
+        "endLine": 806,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fe2068_0283eb53",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "helper.set_insecure_field_edit(false);  // clear old flag",
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f51716_8d435f97",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e258b9_62c8f271",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Is this from a rebase or something?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668b5622_2183855a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 25576,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Do we need to remove the old   \u003cint value\u003d\"867512869\" label\u003d\"mark-non-secure-as\"/\u003e\n?",
+      "range": {
+        "startLine": 25576,
+        "startChar": 0,
+        "endLine": 25576,
+        "endChar": 54
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b02775_b8d519a0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-23T13:42:28Z",
+      "side": 1,
+      "message": "Do we want to change this to \"Dangerous\"?",
+      "range": {
+        "startLine": 27359,
+        "startChar": 24,
+        "endLine": 27359,
+        "endChar": 34
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
