@@ -128,8 +128,8 @@ class HttpProxyClientSocketWrapperTest
         base::TimeDelta::FromSeconds(kMaxTimeOnNonDefaultNetworkSecs),
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
-        connection_options_, client_connection_options_,
-        /*enable_token_binding=*/false));
+        /*headers_include_h2_stream_dependency=*/false, connection_options_,
+        client_connection_options_, /*enable_token_binding=*/false));
   }
 
   void PopulateConnectRequestIR(SpdyHeaderBlock* block) {

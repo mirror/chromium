@@ -142,10 +142,10 @@ class QuicChromiumClientSessionTest
         kMaxMigrationsToNonDefaultNetworkOnPathDegrading,
         kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
-        /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
-        "CONNECTION_UNKNOWN", base::TimeTicks::Now(), base::TimeTicks::Now(),
-        &push_promise_index_, &test_push_delegate_,
-        base::ThreadTaskRunnerHandle::Get().get(),
+        /*cert_verify_flags=*/0, /*headers_include_h2_stream_dependency=*/false,
+        DefaultQuicConfig(), &crypto_config_, "CONNECTION_UNKNOWN",
+        base::TimeTicks::Now(), base::TimeTicks::Now(), &push_promise_index_,
+        &test_push_delegate_, base::ThreadTaskRunnerHandle::Get().get(),
         /*socket_performance_watcher=*/nullptr, &net_log_));
 
     scoped_refptr<X509Certificate> cert(
