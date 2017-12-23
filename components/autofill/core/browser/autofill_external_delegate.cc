@@ -85,6 +85,14 @@ void AutofillExternalDelegate::OnQuery(int query_id,
 void AutofillExternalDelegate::OnSuggestionsReturned(
     int query_id,
     const std::vector<Suggestion>& input_suggestions) {
+  OnSuggestionsReturned(query_id, input_suggestions,
+                        false /* is_all_server_suggestions */);
+}
+
+void AutofillExternalDelegate::OnSuggestionsReturned(
+    int query_id,
+    const std::vector<Suggestion>& input_suggestions,
+    bool is_all_server_suggestions) {
   if (query_id != query_id_)
     return;
 
@@ -126,7 +134,7 @@ void AutofillExternalDelegate::OnSuggestionsReturned(
   }
 
   if (has_autofill_suggestions_)
-    ApplyAutofillOptions(&suggestions);
+    ApplyAutofillOptions(&suggestions, is_all_server_suggestions);
 
   // Append the credit card signin promo, if appropriate (there are no other
   // suggestions).
@@ -340,7 +348,8 @@ void AutofillExternalDelegate::PossiblyRemoveAutofillWarnings(
 }
 
 void AutofillExternalDelegate::ApplyAutofillOptions(
-    std::vector<Suggestion>* suggestions) {
+    std::vector<Suggestion>* suggestions,
+    bool is_all_server_suggestions) {
   // The form has been auto-filled, so give the user the chance to clear the
   // form.  Append the 'Clear form' menu item.
   if (query_field_.is_autofilled) {
@@ -360,6 +369,11 @@ void AutofillExternalDelegate::ApplyAutofillOptions(
   // |POPUP_ITEM_ID_CLEAR_FORM|, include a hint for keyboard accessory.
   suggestions->push_back(Suggestion(GetSettingsSuggestionValue()));
   suggestions->back().frontend_id = POPUP_ITEM_ID_AUTOFILL_OPTIONS;
+  if (is_all_server_suggestions &&
+      ShowGooglePayLogoInAutofillCreditCardDownstream()) {
+    suggestions->back().icon = base::ASCIIToUTF16("googlePay");
+  }
+
 #if defined(OS_ANDROID)
   if (IsKeyboardAccessoryEnabled()) {
     suggestions->back().icon = base::ASCIIToUTF16("settings");
@@ -415,9 +429,15 @@ base::string16 AutofillExternalDelegate::GetSettingsSuggestionValue()
   if (IsKeyboardAccessoryEnabled()) {
     return l10n_util::GetStringUTF16(IDS_AUTOFILL_OPTIONS_CONTENT_DESCRIPTION);
   }
-  return l10n_util::GetStringUTF16(is_credit_card_popup_ ?
-                                   IDS_AUTOFILL_CREDIT_CARD_OPTIONS_POPUP :
-                                   IDS_AUTOFILL_OPTIONS_POPUP);
+
+  if (AutofillUseNewSettingNameInDropdown()) {
+    return l10n_util::GetStringUTF16(
+        is_credit_card_popup_ ? IDS_AUTOFILL_CREDIT_CARD_SETTINGS_POPUP
+                              : IDS_AUTOFILL_SETTINGS_POPUP);
+  }
+  return l10n_util::GetStringUTF16(is_credit_card_popup_
+                                       ? IDS_AUTOFILL_CREDIT_CARD_OPTIONS_POPUP
+                                       : IDS_AUTOFILL_OPTIONS_POPUP);
 }
 
 }  // namespace autofill
