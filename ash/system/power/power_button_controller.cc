@@ -110,6 +110,7 @@ void PowerButtonController::OnPowerButtonEvent(
     // Avoid awkwardly keeping the display on at the lock screen for a long time
     // if we're forcing clamshell behavior on a convertible device, since it
     // makes it difficult to transport the device while it's in tablet mode.
+    // TODO, move this to TabletPowerButtonController---------------
     if (force_clamshell_power_button_ &&
         started_lock_animation_for_power_button_down_ &&
         (session_controller->IsScreenLocked() ||
@@ -186,12 +187,6 @@ void PowerButtonController::PowerButtonEventReceived(
   if (lock_state_controller_->ShutdownRequested())
     return;
 
-  // PowerButtonDisplayController ignores power button events, so tell it to
-  // stop forcing the display off if TabletPowerButtonController isn't being
-  // used.
-  if (down && force_clamshell_power_button_)
-    display_controller_->SetBacklightsForcedOff(false);
-
   // Handle tablet mode power button screenshot accelerator.
   if (screenshot_controller_ &&
       screenshot_controller_->OnPowerButtonEvent(down, timestamp)) {
@@ -215,15 +210,15 @@ void PowerButtonController::OnAccelerometerUpdated(
   // tablet mode, which must have seen accelerometer data before user actions.
   if (!enable_tablet_mode_)
     return;
-  if (!force_clamshell_power_button_ && !tablet_controller_) {
+  if (!tablet_controller_) {
     tablet_controller_ = std::make_unique<TabletPowerButtonController>(
-        display_controller_.get(), tick_clock_.get());
+        display_controller_.get(), tick_clock_.get(),
+        force_clamshell_power_button_);
   }
 
   if (!screenshot_controller_) {
     screenshot_controller_ = std::make_unique<PowerButtonScreenshotController>(
-        tablet_controller_.get(), tick_clock_.get(),
-        force_clamshell_power_button_);
+        tablet_controller_.get(), tick_clock_.get());
   }
 }
 

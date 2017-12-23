@@ -6,11 +6,13 @@
 
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shutdown_reason.h"
 #include "ash/system/power/power_button_display_controller.h"
+#include "ash/system/power/power_off_menu_screen_view.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/logging.h"
@@ -21,6 +23,7 @@
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/stylus_state.h"
 #include "ui/events/event.h"
+#include "ui/views/widget/widget.h"
 
 namespace ash {
 
@@ -52,10 +55,12 @@ constexpr base::TimeDelta
 
 TabletPowerButtonController::TabletPowerButtonController(
     PowerButtonDisplayController* display_controller,
-    base::TickClock* tick_clock)
+    base::TickClock* tick_clock,
+    bool force_clamshell_power_button)
     : lock_state_controller_(Shell::Get()->lock_state_controller()),
       display_controller_(display_controller),
-      tick_clock_(tick_clock) {
+      tick_clock_(tick_clock),
+      force_clamshell_power_button_(force_clamshell_power_button) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   Shell::Get()->tablet_mode_controller()->AddObserver(this);
@@ -93,7 +98,13 @@ void TabletPowerButtonController::OnPowerButtonEvent(
 
     screen_off_when_power_button_down_ = !display_controller_->IsScreenOn();
     display_controller_->SetBacklightsForcedOff(false);
-    StartShutdownTimer();
+    if (in_tablet_mode_) {
+      power_off_menu_timer_.Start(
+          FROM_HERE, kPowerOffMenuTimeout, this,
+          &TabletPowerButtonController::OnPowerOffMenuTimeout);
+    } else {
+      StartShutdownTimer();
+    }
   } else {
     const base::TimeTicks previous_up_time = last_button_up_time_;
     last_button_up_time_ = timestamp;
@@ -106,13 +117,18 @@ void TabletPowerButtonController::OnPowerButtonEvent(
     // Ignore the event if it comes too soon after the last one.
     if (timestamp - previous_up_time <= kIgnoreRepeatedButtonUpDelay) {
       shutdown_timer_.Stop();
+      power_off_menu_timer_.Stop();
       return;
     }
 
-    if (shutdown_timer_.IsRunning()) {
+    if (power_off_menu_timer_.IsRunning() || shutdown_timer_.IsRunning()) {
       shutdown_timer_.Stop();
+      power_off_menu_timer_.Stop();
       if (!screen_off_when_power_button_down_ && force_off_on_button_up_) {
-        display_controller_->SetBacklightsForcedOff(true);
+        // TODO, we may don't need the |in_tablet_mode_| check.
+        if (!force_clamshell_power_button_ || in_tablet_mode_)
+          display_controller_->SetBacklightsForcedOff(true);
+        DismissMenu();
         LockScreenIfRequired();
       }
     }
@@ -125,12 +141,16 @@ void TabletPowerButtonController::SuspendDone(
 }
 
 void TabletPowerButtonController::OnTabletModeStarted() {
+  in_tablet_mode_ = true;
+  power_off_menu_timer_.Stop();
   shutdown_timer_.Stop();
   if (lock_state_controller_->CanCancelShutdownAnimation())
     lock_state_controller_->CancelShutdownAnimation();
 }
 
 void TabletPowerButtonController::OnTabletModeEnded() {
+  in_tablet_mode_ = false;
+  power_off_menu_timer_.Stop();
   shutdown_timer_.Stop();
   if (lock_state_controller_->CanCancelShutdownAnimation())
     lock_state_controller_->CancelShutdownAnimation();
@@ -141,6 +161,7 @@ void TabletPowerButtonController::CancelTabletPowerButton() {
     lock_state_controller_->CancelShutdownAnimation();
   force_off_on_button_up_ = false;
   shutdown_timer_.Stop();
+  power_off_menu_timer_.Stop();
 }
 
 void TabletPowerButtonController::StartShutdownTimer() {
@@ -163,6 +184,45 @@ void TabletPowerButtonController::LockScreenIfRequired() {
       !lock_state_controller_->LockRequested()) {
     lock_state_controller_->LockWithoutAnimation();
   }
+}
+
+bool TabletPowerButtonController::IsMenuOpened() const {
+  return fullscreen_widget_ &&
+         fullscreen_widget_->GetLayer()->GetTargetVisibility();
+}
+
+void TabletPowerButtonController::DismissMenu() {
+  if (IsMenuOpened())
+    fullscreen_widget_->Hide();
+}
+
+void TabletPowerButtonController::OnPowerOffMenuTimeout() {
+  fullscreen_widget_ = CreateFullscreenWidget();
+  fullscreen_widget_->SetContentsView(new PowerOffMenuScreenView());
+
+  static_cast<PowerOffMenuScreenView*>(fullscreen_widget_->GetContentsView())
+      ->ScheduleShowHideAnimation(true);
+}
+
+std::unique_ptr<views::Widget>
+TabletPowerButtonController::CreateFullscreenWidget() {
+  std::unique_ptr<views::Widget> fullscreen_widget(new views::Widget);
+  views::Widget::InitParams params(
+      views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
+  params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
+  params.keep_on_top = true;
+  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  params.name = "PowerOffMenuWindow";
+  params.layer_type = ui::LAYER_SOLID_COLOR;
+  params.parent = Shell::GetPrimaryRootWindow()->GetChildById(
+      kShellWindowId_OverlayContainer);
+  fullscreen_widget->Init(params);
+
+  gfx::Rect widget_bounds =
+      display::Screen::GetScreen()->GetPrimaryDisplay().bounds();
+  fullscreen_widget->SetBounds(widget_bounds);
+  fullscreen_widget->Show();
+  return fullscreen_widget;
 }
 
 }  // namespace ash

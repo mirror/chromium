@@ -33,8 +33,7 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
 
   PowerButtonScreenshotController(
       TabletPowerButtonController* tablet_controller,
-      base::TickClock* tick_clock,
-      bool force_clamshell_power_button);
+      base::TickClock* tick_clock);
   ~PowerButtonScreenshotController() override;
 
   // Returns true if power button event is consumed by |this|, otherwise false.
@@ -53,10 +52,6 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
 
   // Called by |volume_down_timer_| to perform volume down accelerator.
   void OnVolumeDownTimeout();
-
-  // Called by |clamshell_power_button_timer_| to start clamshell power button
-  // behavior.
-  void OnClamshellPowerButtonTimeout();
 
   // True if volume down key is pressed.
   bool volume_down_key_pressed_ = false;
@@ -81,19 +76,10 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
   // volume down accelerator.
   base::OneShotTimer volume_down_timer_;
 
-  // Started when clamshell power button is pressed and volume key is not
-  // pressed. Stopped when volume key is pressed or power button is released.
-  // Runs OnClamshellTimeout to start clamshell power button behavior.
-  base::OneShotTimer clamshell_power_button_timer_;
-
   TabletPowerButtonController* tablet_controller_;  // Not owned.
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
-
-  // Initialized by PowerButtonController to indicate using non-tablet-style
-  // power button behavior even if we're running on a convertible device.
-  const bool force_clamshell_power_button_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonScreenshotController);
 };

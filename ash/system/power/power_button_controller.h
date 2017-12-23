@@ -59,16 +59,16 @@ class ASH_EXPORT PowerButtonController
   // Handles lock button behavior.
   void OnLockButtonEvent(bool down, const base::TimeTicks& timestamp);
 
-  // Overridden from ui::EventHandler:
+  // ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnTouchEvent(ui::TouchEvent* event) override;
 
-  // Overridden from display::DisplayConfigurator::Observer:
+  // display::DisplayConfigurator::Observer:
   void OnDisplayModeChanged(
       const display::DisplayConfigurator::DisplayStateList& outputs) override;
 
-  // Overridden from chromeos::PowerManagerClient::Observer:
+  // chromeos::PowerManagerClient::Observer:
   void BrightnessChanged(int level, bool user_initiated) override;
   void PowerButtonEventReceived(bool down,
                                 const base::TimeTicks& timestamp) override;

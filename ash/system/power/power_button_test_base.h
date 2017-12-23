@@ -31,6 +31,8 @@ class LockStateController;
 class LockStateControllerTestApi;
 class PowerButtonScreenshotController;
 class TabletPowerButtonControllerTestApi;
+//class PowerOffMenuController;
+//class PowerOffMenuControllerTestApi;
 enum class LoginStatus;
 
 // Base test fixture and utils for testing power button related functions.
@@ -119,6 +121,7 @@ class PowerButtonTestBase : public AshTestBase {
       nullptr;  // Not owned.
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
   std::unique_ptr<TabletPowerButtonControllerTestApi> tablet_test_api_;
+  //std::unique_ptr<PowerOffMenuControllerTestApi> power_off_menu_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
 
   // Indicates whether switches::kAshEnableTabletMode is appended.

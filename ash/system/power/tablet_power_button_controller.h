@@ -23,6 +23,10 @@ namespace base {
 class TickClock;
 }  // namespace base
 
+namespace views {
+class Widget;
+}  // namespace views
+
 namespace ash {
 
 class LockStateController;
@@ -48,8 +52,13 @@ class ASH_EXPORT TabletPowerButtonController
   static constexpr base::TimeDelta kIgnoreRepeatedButtonUpDelay =
       base::TimeDelta::FromMilliseconds(500);
 
+  // Time that power button should be pressed before to show the power off menu.
+  static constexpr base::TimeDelta kPowerOffMenuTimeout =
+      base::TimeDelta::FromSeconds(3);
+
   TabletPowerButtonController(PowerButtonDisplayController* display_controller,
-                              base::TickClock* tick_clock);
+                              base::TickClock* tick_clock,
+                              bool force_clamshell_power_button);
   ~TabletPowerButtonController() override;
 
   // Handles a power button event.
@@ -65,6 +74,12 @@ class ASH_EXPORT TabletPowerButtonController
   // Cancel the ongoing tablet power button behavior.
   void CancelTabletPowerButton();
 
+  // True if the power off menu is opened.
+  bool IsMenuOpened() const;
+
+  // Dismisses the opened power off menu.
+  void DismissMenu();
+
  private:
   friend class TabletPowerButtonControllerTestApi;
 
@@ -78,6 +93,18 @@ class ASH_EXPORT TabletPowerButtonController
   // Locks the screen if the "require password to wake from sleep" pref is set
   // and locking is possible.
   void LockScreenIfRequired();
+
+  // Called by |power_off_menu_timer_| to start showing the power off menu.
+  void OnPowerOffMenuTimeout();
+
+  // Creates the fullscreen widget responsible for showing the power off menu.
+  std::unique_ptr<views::Widget> CreateFullscreenWidget();
+
+  // Started when the power button is pressed in tablet mode and stopped when
+  // it's released. Runs OnPowerOffMenuTimeout() to show the power off menu.
+  base::OneShotTimer power_off_menu_timer_;
+
+  std::unique_ptr<views::Widget> fullscreen_widget_;
 
   // True if the screen was off when the power button was pressed.
   bool screen_off_when_power_button_down_ = false;
@@ -103,6 +130,12 @@ class ASH_EXPORT TabletPowerButtonController
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
+
+  // Initialized by PowerButtonController to indicate using non-tablet-style
+  // power button behavior even if we're running on a convertible device.
+  const bool force_clamshell_power_button_;
+
+  bool in_tablet_mode_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TabletPowerButtonController);
 };

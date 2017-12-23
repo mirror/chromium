@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/power/power_button_controller.h"
+//#include "ash/system/power/power_off_menu_controller_test_api.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
@@ -89,6 +90,14 @@ void PowerButtonTestBase::InitPowerButtonControllerMembers(
     tablet_controller_ = nullptr;
     screenshot_controller_ = nullptr;
   }
+ /* power_off_menu_controller_ =
+      power_button_controller_->power_off_menu_controller_for_test();
+  if (power_off_menu_controller_) {
+    power_off_menu_test_api_ = std::make_unique<PowerOffMenuControllerTestApi>(
+        power_off_menu_controller_);
+  } else {
+    power_off_menu_test_api_ = nullptr;
+  }*/
 }
 
 void PowerButtonTestBase::SendAccelerometerUpdate(
@@ -161,6 +170,14 @@ void PowerButtonTestBase::UnlockScreen() {
 
 void PowerButtonTestBase::EnableTabletMode(bool enable) {
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(enable);
+  /*power_off_menu_controller_ =
+      power_button_controller_->power_off_menu_controller_for_test();
+  if (power_off_menu_controller_) {
+    power_off_menu_test_api_ = std::make_unique<PowerOffMenuControllerTestApi>(
+        power_off_menu_controller_);
+  } else {
+    power_off_menu_test_api_ = nullptr;
+  }*/
 }
 
 }  // namespace ash

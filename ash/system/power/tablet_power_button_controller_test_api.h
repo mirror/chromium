@@ -12,9 +12,14 @@ namespace ui {
 class KeyEvent;
 }  // namespace ui
 
-namespace ash {
+namespace gfx {
+class Rect;
+} // namespace gfx
 
+
+namespace ash {
 class TabletPowerButtonController;
+class PowerOffMenuView;
 
 // Helper class used by tests to access TabletPowerButtonController's internal
 // state.
@@ -33,6 +38,22 @@ class TabletPowerButtonControllerTestApi {
 
   // Sends |event| to |controller_->display_controller_|.
   void SendKeyEvent(ui::KeyEvent* event);
+
+
+  // Returns true when |power_off_menu_timer_| is running.
+  bool PowerOffMenuTimerIsRunning() const;
+
+  // If |controller_->power_off_menu_timer_| is running, stops it, runs its
+  // task, and returns true. Otherwise, returns false.
+  bool TriggerPowerOffMenuTimeout() WARN_UNUSED_RESULT;
+
+  gfx::Rect GetMenuBoundsInScreen() const;
+  PowerOffMenuView* GetPowerOffMenuView() const;
+  bool IsMenuOpened() const;
+  bool HasSignOut() const;
+
+
+
 
  private:
   TabletPowerButtonController* controller_;  // Not owned.
