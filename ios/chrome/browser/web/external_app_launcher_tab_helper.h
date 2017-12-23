@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #import "ios/web/public/web_state/web_state_user_data.h"
 
+@protocol ExternalAppPresenter;
 @class ExternalAppsLaunchPolicyDecider;
 class GURL;
 
@@ -17,6 +18,9 @@ class ExternalAppLauncherTabHelper
     : public web::WebStateUserData<ExternalAppLauncherTabHelper> {
  public:
   ~ExternalAppLauncherTabHelper() override;
+
+  // Sets the |presenter| which can present UI.
+  void SetPresenter(id<ExternalAppPresenter> presenter);
 
   // Requests to open URL in an external application.
   // The method checks if the application for |url| has been opened repeatedly
@@ -29,18 +33,14 @@ class ExternalAppLauncherTabHelper
   // method returns NO.
   bool RequestToOpenUrl(const GURL& url,
                         const GURL& source_page_url,
-                        bool link_clicked);
+                        bool link_tapped);
 
  private:
   friend class web::WebStateUserData<ExternalAppLauncherTabHelper>;
   explicit ExternalAppLauncherTabHelper(web::WebState* web_state);
 
-  // Handles launching an external app for |url| when there are repeated
-  // attempts by |source_page_url|. |allowed| indicates whether the user has
-  // explicitly allowed the external app to launch.
-  void HandleRepeatedAttemptsToLaunch(const GURL& url,
-                                      const GURL& source_page_url,
-                                      bool allowed);
+  // The presenter can present UI.
+  __weak id<ExternalAppPresenter> presenter_ = nil;
 
   // Used to check for repeated launches and provide policy for launching apps.
   ExternalAppsLaunchPolicyDecider* policy_decider_ = nil;
