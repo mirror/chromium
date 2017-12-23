@@ -11,6 +11,9 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "components/web_cache/browser/web_cache_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
@@ -102,7 +105,11 @@ void ClearRendererCacheOnNavigation() {
 
 }  // namespace
 
-RulesetManager::RulesetManager(const InfoMap* info_map) : info_map_(info_map) {
+RulesetManager::RulesetManager(const InfoMap* info_map)
+    : info_map_(info_map),
+      file_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
   DCHECK(info_map_);
 
   // RulesetManager can be created on any sequence.
@@ -119,12 +126,23 @@ void RulesetManager::AddRuleset(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsAPIAvailable());
 
-  bool inserted;
-  std::tie(std::ignore, inserted) =
-      rulesets_.emplace(extension_id, info_map_->GetInstallTime(extension_id),
-                        std::move(ruleset_matcher));
-  DCHECK(inserted) << "AddRuleset called twice in succession for "
-                   << extension_id;
+  ExtensionRulesetData data(
+      extension_id, info_map_->GetInstallTime(extension_id),
+      info_map_->IsIncognitoEnabled(extension_id), std::move(ruleset_matcher));
+  base::OnceClosure task = base::BindOnce(
+      &Core::AddRuleset, base::Unretained(&core_), std::move(data));
+
+  if (IsAsync) {
+    file_task_runner_->PostTask(FROM_HERE, std::move(task));
+  } else {
+    std::move(task).Run();
+  }
+}
+
+void RulesetManager::Core::AddRuleset(ExtensionRulesetData data) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  rulesets_.insert(std::move(data));
 
   // Clear the renderers' cache so that they take the new rules into account.
   ClearRendererCacheOnNavigation();
@@ -133,6 +151,18 @@ void RulesetManager::AddRuleset(
 void RulesetManager::RemoveRuleset(const ExtensionId& extension_id) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(IsAPIAvailable());
+
+  base::OnceClosure task = base::BindOnce(
+      &Core::RemoveRuleset, base::Unretained(&core_), extension_id);
+  if (IsAsync) {
+    file_task_runner_->PostTask(FROM_HERE, std::move(task));
+  } else {
+    std::move(task).Run();
+  }
+}
+
+void RulesetManager::Core::RemoveRuleset(const ExtensionId& extension_id) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   auto compare_by_id =
       [&extension_id](const ExtensionRulesetData& ruleset_data) {
@@ -151,16 +181,50 @@ void RulesetManager::RemoveRuleset(const ExtensionId& extension_id) {
   ClearRendererCacheOnNavigation();
 }
 
-bool RulesetManager::ShouldBlockRequest(const net::URLRequest& request,
-                                        bool is_incognito_context) const {
+base::Optional<RulesetManager::Result> RulesetManager::EvaluateRuleset(
+    const net::URLRequest& request,
+    bool is_incognito_context,
+    EvaluateRulesetCallback callback) const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (test_observer_)
+    test_observer_->OnEvaluateRuleset(request, is_incognito_context);
+
+  base::OnceCallback<Result()> task = base::BindOnce(
+      &RulesetManager::Core::EvaluateRuleset, base::Unretained(&core_),
+      base::ConstRef(request), is_incognito_context);
+  if (IsAsync) {
+    base::PostTaskAndReplyWithResult(file_task_runner_.get(), FROM_HERE,
+                                     std::move(task), std::move(callback));
+    return base::nullopt;
+  } else {
+    return std::move(task).Run();
+  }
+}
+
+RulesetManager::Result RulesetManager::Core::EvaluateRuleset(
+    const net::URLRequest& request,
+    bool is_incognito_context) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  Result result;
+  if (ShouldBlockRequest(request, is_incognito_context, &result)) {
+    return result;
+  } else if (ShouldRedirectRequest(request, is_incognito_context, &result)) {
+    return result;
+  }
+  return result;
+}
+
+bool RulesetManager::Core::ShouldBlockRequest(const net::URLRequest& request,
+                                              bool is_incognito_context,
+                                              Result* result) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(result);
 
   // Return early if DNR is not enabled.
   if (!IsAPIAvailable())
     return false;
-
-  if (test_observer_)
-    test_observer_->OnShouldBlockRequest(request, is_incognito_context);
 
   SCOPED_UMA_HISTOGRAM_TIMER(
       "Extensions.DeclarativeNetRequest.ShouldBlockRequestTime.AllExtensions");
@@ -173,24 +237,26 @@ bool RulesetManager::ShouldBlockRequest(const net::URLRequest& request,
 
   for (const auto& ruleset_data : rulesets_) {
     const bool evaluate_ruleset =
-        !is_incognito_context ||
-        info_map_->IsIncognitoEnabled(ruleset_data.extension_id);
+        !is_incognito_context || ruleset_data.is_incognito_enabled;
 
     // TODO(crbug.com/777714): Check host permissions etc.
     if (evaluate_ruleset &&
         ruleset_data.matcher->ShouldBlockRequest(
             url, first_party_origin, element_type, is_third_party)) {
+      result->extension_id = ruleset_data.extension_id;
+      result->extension_install_time = ruleset_data.extension_install_time;
+      result->cancel = true;
       return true;
     }
   }
   return false;
 }
 
-bool RulesetManager::ShouldRedirectRequest(const net::URLRequest& request,
-                                           bool is_incognito_context,
-                                           GURL* redirect_url) const {
+bool RulesetManager::Core::ShouldRedirectRequest(const net::URLRequest& request,
+                                                 bool is_incognito_context,
+                                                 Result* result) const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(redirect_url);
+  DCHECK(result);
 
   // Return early if DNR is not enabled.
   if (!IsAPIAvailable())
@@ -215,13 +281,16 @@ bool RulesetManager::ShouldRedirectRequest(const net::URLRequest& request,
   // redirect url.
   for (const auto& ruleset_data : rulesets_) {
     const bool evaluate_ruleset =
-        (!is_incognito_context ||
-         info_map_->IsIncognitoEnabled(ruleset_data.extension_id));
+        !is_incognito_context || ruleset_data.is_incognito_enabled;
 
     // TODO(crbug.com/777714): Check host permissions etc.
+    GURL redirect_url;
     if (evaluate_ruleset && ruleset_data.matcher->ShouldRedirectRequest(
                                 url, first_party_origin, element_type,
-                                is_third_party, redirect_url)) {
+                                is_third_party, &redirect_url)) {
+      result->extension_id = ruleset_data.extension_id;
+      result->extension_install_time = ruleset_data.extension_install_time;
+      *(result->redirect_url) = std::move(redirect_url);
       return true;
     }
   }
@@ -231,15 +300,18 @@ bool RulesetManager::ShouldRedirectRequest(const net::URLRequest& request,
 
 void RulesetManager::SetObserverForTest(TestObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!IsAsync);
   test_observer_ = observer;
 }
 
 RulesetManager::ExtensionRulesetData::ExtensionRulesetData(
-    const ExtensionId& extension_id,
-    const base::Time& extension_install_time,
+    ExtensionId extension_id,
+    base::Time extension_install_time,
+    bool is_incognito_enabled,
     std::unique_ptr<RulesetMatcher> matcher)
-    : extension_id(extension_id),
-      extension_install_time(extension_install_time),
+    : extension_id(std::move(extension_id)),
+      extension_install_time(std::move(extension_install_time)),
+      is_incognito_enabled(is_incognito_enabled),
       matcher(std::move(matcher)) {}
 RulesetManager::ExtensionRulesetData::~ExtensionRulesetData() = default;
 RulesetManager::ExtensionRulesetData::ExtensionRulesetData(
@@ -255,6 +327,14 @@ bool RulesetManager::ExtensionRulesetData::operator<(
              ? (extension_install_time > other.extension_install_time)
              : (extension_id < other.extension_id);
 }
+
+RulesetManager::Result::Result() = default;
+RulesetManager::Result::~Result() = default;
+RulesetManager::Result::Result(const Result&) = default;
+RulesetManager::Core::Core() = default;
+RulesetManager::Core::~Core() = default;
+
+bool RulesetManager::IsAsync = false;
 
 }  // namespace declarative_net_request
 }  // namespace extensions

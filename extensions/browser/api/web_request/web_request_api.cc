@@ -81,6 +81,7 @@
 using content::BrowserThread;
 using content::ResourceRequestInfo;
 using extension_web_request_api_helpers::ExtraInfoSpec;
+using RulesetManager = extensions::declarative_net_request::RulesetManager;
 
 namespace activity_log = activity_log_web_request_constants;
 namespace helpers = extension_web_request_api_helpers;
@@ -384,6 +385,15 @@ std::unique_ptr<WebRequestEventDetails> CreateEventDetails(
   return std::make_unique<WebRequestEventDetails>(request, extra_info_spec);
 }
 
+int ProcessEvaluateRulesetResult(const RulesetManager::Result& result,
+                                 GURL* new_url) {
+  if (result.cancel)
+    return net::ERR_BLOCKED_BY_CLIENT;
+  if (result.redirect_url)
+    *new_url = result.redirect_url.value();
+  return net::OK;
+}
+
 }  // namespace
 
 WebRequestAPI::WebRequestAPI(content::BrowserContext* context)
@@ -635,6 +645,9 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
 
   const bool is_incognito_context = IsIncognitoBrowserContext(browser_context);
 
+  // Whether to initialized |blocked_requests_|.
+  bool initialize_blocked_requests = false;
+
   // Handle Declarative Net Request API rules. This gets preference over the Web
   // Request and Declarative Web Request APIs. Only checking the rules in the
   // OnBeforeRequest stage works, since the rules currently only depend on the
@@ -643,20 +656,25 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
   // OnBeforeRequest call.
   // |extension_info_map| is null for system level requests.
   if (extension_info_map) {
-    // Give priority to blocking rules over redirect rules.
-    if (extension_info_map->GetRulesetManager()->ShouldBlockRequest(
-            *request, is_incognito_context)) {
-      return net::ERR_BLOCKED_BY_CLIENT;
-    }
-
-    if (extension_info_map->GetRulesetManager()->ShouldRedirectRequest(
-            *request, is_incognito_context, new_url)) {
-      return net::OK;
+    RulesetManager::EvaluateRulesetCallback result_callback =
+        base::BindOnce(&ExtensionWebRequestEventRouter::OnEvaluatedRuleset,
+                       base::Unretained(this), browser_context,
+                       web_request::OnBeforeRequest::kEventName,
+                       request->identifier(), ON_BEFORE_REQUEST);
+    auto result = extension_info_map->GetRulesetManager()->EvaluateRuleset(
+        *request, is_incognito_context, std::move(result_callback));
+    if (result) {
+      if (result->cancel || result->redirect_url)
+        return ProcessEvaluateRulesetResult(*result, new_url);
+    } else {
+      BlockedRequest& blocked_request =
+          blocked_requests_[request->identifier()];
+      blocked_request.num_handlers_blocking++;
+      blocked_request.blocking_time = base::Time::Now();
+      blocked_request.extension_info_map = extension_info_map;
+      initialize_blocked_requests = true;
     }
   }
-
-  // Whether to initialized |blocked_requests_|.
-  bool initialize_blocked_requests = false;
 
   initialize_blocked_requests |=
       ProcessDeclarativeRules(browser_context, extension_info_map,
@@ -750,6 +768,27 @@ int ExtensionWebRequestEventRouter::OnBeforeSendHeaders(
                          navigation_ui_data, false /* call_callback*/);
   }
   return net::ERR_IO_PENDING;
+}
+
+void ExtensionWebRequestEventRouter::OnEvaluatedRuleset(
+    void* browser_context,
+    const std::string& event_name,
+    uint64_t request_id,
+    RequestStage request_stage,
+    const RulesetManager::Result& result) {
+  helpers::EventResponseDeltas& deltas =
+      blocked_requests_[request_id].response_deltas;
+
+  linked_ptr<extension_web_request_api_helpers::EventResponseDelta> delta(
+      new extension_web_request_api_helpers::EventResponseDelta(
+          result.extension_id, result.extension_install_time));
+  delta->cancel = result.cancel;
+  if (result.redirect_url)
+    delta->new_url = *result.redirect_url;
+
+  deltas.push_back(delta);
+  DecrementBlockCount(browser_context, std::string(), event_name, request_id,
+                      NULL);
 }
 
 void ExtensionWebRequestEventRouter::OnSendHeaders(

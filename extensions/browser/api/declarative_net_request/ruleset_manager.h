@@ -10,9 +10,13 @@
 
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
+#include "base/memory/scoped_refptr.h"
+#include "base/optional.h"
 #include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "extensions/common/extension_id.h"
+#include "url/gurl.h"
 
 class GURL;
 
@@ -37,42 +41,29 @@ class RulesetManager {
   // An interface used for testing purposes.
   class TestObserver {
    public:
-    virtual void OnShouldBlockRequest(const net::URLRequest& request,
-                                      bool is_incognito_context) = 0;
+    virtual void OnEvaluateRuleset(const net::URLRequest& request,
+                                   bool is_incognito_context) = 0;
 
    protected:
     virtual ~TestObserver() {}
   };
 
-  // Adds the ruleset for the given |extension_id|. Should not be called twice
-  // in succession for an extension.
-  void AddRuleset(const ExtensionId& extension_id,
-                  std::unique_ptr<RulesetMatcher> ruleset_matcher);
+  struct Result {
+    Result();
+    ~Result();
+    Result(const Result&);
 
-  // Removes the ruleset for |extension_id|. Should be called only after a
-  // corresponding AddRuleset.
-  void RemoveRuleset(const ExtensionId& extension_id);
+    // Do nothing if |cancel| is false and |redirect_url| is empty.
+    bool cancel = false;
+    base::Optional<GURL> redirect_url = base::nullopt;
+    std::string extension_id;
+    base::Time extension_install_time;
+  };
 
-  // Returns whether the given |request| should be blocked.
-  bool ShouldBlockRequest(const net::URLRequest& request,
-                          bool is_incognito_context) const;
-
-  // Returns whether the given |request| should be redirected along with the
-  // |redirect_url|. |redirect_url| must not be null.
-  bool ShouldRedirectRequest(const net::URLRequest& request,
-                             bool is_incognito_context,
-                             GURL* redirect_url) const;
-
-  // Returns the number of RulesetMatcher currently being managed.
-  size_t GetMatcherCountForTest() const { return rulesets_.size(); }
-
-  // Sets the TestObserver. Client maintains ownership of |observer|.
-  void SetObserverForTest(TestObserver* observer);
-
- private:
   struct ExtensionRulesetData {
-    ExtensionRulesetData(const ExtensionId&,
-                         const base::Time&,
+    ExtensionRulesetData(ExtensionId,
+                         base::Time,
+                         bool is_incognito_enabled,
                          std::unique_ptr<RulesetMatcher>);
     ~ExtensionRulesetData();
     ExtensionRulesetData(ExtensionRulesetData&& other);
@@ -80,6 +71,7 @@ class RulesetManager {
 
     ExtensionId extension_id;
     base::Time extension_install_time;
+    bool is_incognito_enabled;
     std::unique_ptr<RulesetMatcher> matcher;
 
     bool operator<(const ExtensionRulesetData& other) const;
@@ -87,17 +79,75 @@ class RulesetManager {
     DISALLOW_COPY_AND_ASSIGN(ExtensionRulesetData);
   };
 
-  // Sorted in decreasing order of |extension_install_time|.
-  // Use a flat_set instead of std::set/map. This makes [Add/Remove]Ruleset
-  // O(n), but it's fine since the no. of rulesets are expected to be quite
-  // small.
-  base::flat_set<ExtensionRulesetData> rulesets_;
+  using EvaluateRulesetCallback = base::OnceCallback<void(const Result&)>;
+
+  static bool IsAsync;
+
+  // If nullopt, callback will be used (async).
+  base::Optional<Result> EvaluateRuleset(
+      const net::URLRequest& request,
+      bool is_incognito_context,
+      EvaluateRulesetCallback callback) const;
+
+  // Adds the ruleset for the given |extension_id|. Call again if extension's
+  // incognito status or in install time changes.
+  void AddRuleset(const ExtensionId& extension_id,
+                  std::unique_ptr<RulesetMatcher> ruleset_matcher);
+
+  // Removes the ruleset for |extension_id|. Should be called only after a
+  // corresponding AddRuleset.
+  void RemoveRuleset(const ExtensionId& extension_id);
+
+  // Returns the number of RulesetMatcher currently being managed.
+  size_t GetMatcherCountForTest() const {
+    DCHECK(!IsAsync);
+    return core_.rulesets_.size();
+  }
+
+  // Sets the TestObserver. Client maintains ownership of |observer|.
+  void SetObserverForTest(TestObserver* observer);
+
+ private:
+  class Core {
+   public:
+    ~Core();
+    Core();
+
+    void AddRuleset(ExtensionRulesetData);
+    void RemoveRuleset(const ExtensionId& extension_id);
+    Result EvaluateRuleset(const net::URLRequest& request,
+                           bool is_incognito_context) const;
+
+   private:
+    friend class RulesetManager;
+
+    bool ShouldBlockRequest(const net::URLRequest& request,
+                            bool is_incognito_context,
+                            Result* result) const;
+    bool ShouldRedirectRequest(const net::URLRequest& request,
+                               bool is_incognito_context,
+                               Result* result) const;
+
+    // Sorted in decreasing order of |extension_install_time|.
+    // Use a flat_set instead of std::set/map. This makes [Add/Remove]Ruleset
+    // O(n), but it's fine since the no. of rulesets are expected to be quite
+    // small.
+    base::flat_set<ExtensionRulesetData> rulesets_;
+
+    SEQUENCE_CHECKER(sequence_checker_);
+
+    DISALLOW_COPY_AND_ASSIGN(Core);
+  };
 
   // Non-owning pointer to InfoMap. Owns us.
   const InfoMap* const info_map_;
 
   // Non-owning pointer to TestObserver.
   TestObserver* test_observer_ = nullptr;
+
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
+
+  Core core_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

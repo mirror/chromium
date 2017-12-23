@@ -12,6 +12,7 @@
 #include "base/path_service.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/timer/elapsed_timer.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -70,8 +71,8 @@ class URLRequestMonitor : public RulesetManager::TestObserver {
 
  private:
   // RulesetManager::TestObserver implementation.
-  void OnShouldBlockRequest(const net::URLRequest& request,
-                            bool is_incognito_context) override {
+  void OnEvaluateRuleset(const net::URLRequest& request,
+                         bool is_incognito_context) override {
     if (request.url() == url_)
       GetAndResetRequestSeen(true);
   }
@@ -201,6 +202,74 @@ using DeclarativeNetRequestBrowserTest_Packed =
 // Tests the "urlFilter" property of a declarative rule condition.
 IN_PROC_BROWSER_TEST_P(DeclarativeNetRequestBrowserTest,
                        BlockRequests_UrlFilter) {
+  struct {
+    std::string url_filter;
+    int id;
+  } rules_data[] = {
+      {"pages_with_script/*ex", 1},
+      {"||a.b.com", 2},
+      {"|http://*.us", 3},
+      {"pages_with_script/page2.html|", 4},
+      {"|http://msn*/pages_with_script/page.html|", 5},
+      {"%20", 6},  // Block any urls with space.
+  };
+
+  // Rule |i| is the rule with id |i|.
+  struct {
+    std::string hostname;
+    std::string path;
+    bool expect_main_frame_loaded;
+  } test_cases[] = {
+      {"example.com", "/pages_with_script/index.html", false},  // Rule 1
+      {"example.com", "/pages_with_script/page.html", true},
+      {"a.b.com", "/pages_with_script/page.html", false},    // Rule 2
+      {"c.a.b.com", "/pages_with_script/page.html", false},  // Rule 2
+      {"b.com", "/pages_with_script/page.html", true},
+      {"example.us", "/pages_with_script/page.html", false},  // Rule 3
+      {"example.jp", "/pages_with_script/page.html", true},
+      {"example.jp", "/pages_with_script/page2.html", false},  // Rule 4
+      {"example.jp", "/pages_with_script/page2.html?q=hello", true},
+      {"msn.com", "/pages_with_script/page.html", false},  // Rule 5
+      {"msn.com", "/pages_with_script/page.html?q=hello", true},
+      {"a.msn.com", "/pages_with_script/page.html", true},
+      {"abc.com", "/pages_with_script/page.html?q=hi bye", false},    // Rule 6
+      {"abc.com", "/pages_with_script/page.html?q=hi%20bye", false},  // Rule 6
+      {"abc.com", "/pages_with_script/page.html?q=hibye", true},
+  };
+
+  // Load the extension.
+  std::vector<TestRule> rules;
+  for (const auto& rule_data : rules_data) {
+    TestRule rule = CreateGenericRule();
+    rule.condition->url_filter = rule_data.url_filter;
+    rule.id = rule_data.id;
+    rules.push_back(rule);
+  }
+  ASSERT_NO_FATAL_FAILURE(LoadExtensionWithRules(rules));
+
+  // Verify that the extension correctly intercepts network requests.
+  for (const auto& test_case : test_cases) {
+    GURL url =
+        embedded_test_server()->GetURL(test_case.hostname, test_case.path);
+    SCOPED_TRACE(base::StringPrintf("Testing %s", url.spec().c_str()));
+
+    ui_test_utils::NavigateToURL(browser(), url);
+    EXPECT_EQ(test_case.expect_main_frame_loaded,
+              WasFrameWithScriptLoaded(GetMainFrame()));
+
+    content::PageType expected_page_type = test_case.expect_main_frame_loaded
+                                               ? content::PAGE_TYPE_NORMAL
+                                               : content::PAGE_TYPE_ERROR;
+    EXPECT_EQ(expected_page_type, GetPageType());
+  }
+}
+
+
+// Tests RulesetManager::IsAsync.
+IN_PROC_BROWSER_TEST_P(DeclarativeNetRequestBrowserTest,
+                       Async_BlockRequests_UrlFilter) {
+  RulesetManager::IsAsync = true;
+
   struct {
     std::string url_filter;
     int id;
@@ -900,6 +969,7 @@ IN_PROC_BROWSER_TEST_P(DeclarativeNetRequestBrowserTest,
 // rule condition.
 IN_PROC_BROWSER_TEST_P(DeclarativeNetRequestBrowserTest,
                        BlockRequests_ResourceTypes) {
+  base::ElapsedTimer timer;
   // TODO(crbug.com/696822): Add tests for "object", "ping", "other", "font".
   enum ResourceTypeMask {
     kNone = 0,
@@ -1037,6 +1107,7 @@ IN_PROC_BROWSER_TEST_P(DeclarativeNetRequestBrowserTest,
                              base::StringPrintf("testWebSocket('%s');",
                                                 websocket_url.spec().c_str())));
   }
+  LOG(ERROR) << "--------timer.Elapsed() " << timer.Elapsed() << "\n";
 }
 
 // Ensure extensions can't intercept chrome:// urls.

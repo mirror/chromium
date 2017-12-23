@@ -34,8 +34,24 @@ struct UrlRuleMetadata;
 // requests against declarative rules. Since this class is immutable, it is
 // thread-safe. In practice it is accessed on the IO thread but created on a
 // sequence where file IO is allowed.
+// This can also be templated on the policy type instead of using inheritance.
 class RulesetMatcher {
  public:
+  class RulesetDataWrapper {
+   public:
+    // cons vs protected destructor.
+    virtual ~RulesetDataWrapper() {}
+    virtual const uint8_t* data() const = 0;
+    virtual size_t length() const = 0;
+  };
+
+  enum class RulesetDataPolicy {
+    kMemoryMap,
+    kInMemory,
+  };
+
+  static RulesetDataPolicy default_policy;
+
   // Describes the result of creating a RulesetMatcher instance.
   // This is logged as part of UMA. Hence existing values should not be re-
   // numbered or deleted. New values should be added before kLoadRulesetMax.
@@ -79,10 +95,9 @@ class RulesetMatcher {
   using ExtensionMetadataList =
       flatbuffers::Vector<flatbuffers::Offset<flat::UrlRuleMetadata>>;
 
-  explicit RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset_file);
+  explicit RulesetMatcher(std::unique_ptr<RulesetDataWrapper> ruleset);
 
-  // The memory mapped ruleset file.
-  std::unique_ptr<base::MemoryMappedFile> ruleset_;
+  std::unique_ptr<RulesetDataWrapper> ruleset_;
 
   const flat::ExtensionIndexedRuleset* const root_;
   const UrlPatternIndexMatcher blacklist_matcher_;

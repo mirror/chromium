@@ -19,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/time/time.h"
 #include "extensions/browser/api/declarative/rules_registry.h"
+#include "extensions/browser/api/declarative_net_request/ruleset_manager.h"
 #include "extensions/browser/api/declarative_webrequest/request_stage.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
 #include "extensions/browser/api/web_request/web_request_permissions.h"
@@ -527,6 +528,13 @@ class ExtensionWebRequestEventRouter {
   // Get the number of listeners - for testing only.
   size_t GetListenerCountForTesting(void* browser_context,
                                     const std::string& event_name);
+
+  void OnEvaluatedRuleset(
+      void* browser_context,
+      const std::string& event_name,
+      uint64_t request_id,
+      RequestStage request_stage,
+      const declarative_net_request::RulesetManager::Result& result);
 
   // A map for each browser_context that maps an event name to a set of
   // extensions that are listening to that event.

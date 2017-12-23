@@ -23,12 +23,70 @@ namespace declarative_net_request {
 namespace flat_rule = url_pattern_index::flat;
 
 namespace {
+
 void DeleteRulesetHelper(std::unique_ptr<base::MemoryMappedFile> ruleset) {
   base::AssertBlockingAllowed();
 }
 
 using FindRuleStrategy =
     url_pattern_index::UrlPatternIndexMatcher::FindRuleStrategy;
+
+class MemoryMappedDataWrapper : public RulesetMatcher::RulesetDataWrapper {
+ public:
+  MemoryMappedDataWrapper(const base::FilePath& file_path) {
+    file_ = std::make_unique<base::MemoryMappedFile>();
+    CHECK(file_->Initialize(file_path, base::MemoryMappedFile::READ_ONLY));
+  }
+
+  ~MemoryMappedDataWrapper() override {
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+        base::BindOnce(&DeleteRulesetHelper, std::move(file_)));
+  }
+
+  const uint8_t* data() const override { return file_->data(); }
+
+  size_t length() const override { return file_->length(); }
+
+ private:
+  std::unique_ptr<base::MemoryMappedFile> file_;
+
+  DISALLOW_COPY_AND_ASSIGN(MemoryMappedDataWrapper);
+};
+
+class InMemoryDataWrapper : public RulesetMatcher::RulesetDataWrapper {
+ public:
+  InMemoryDataWrapper(const base::FilePath& file_path) {
+    CHECK(base::ReadFileToString(file_path, &data_));
+  }
+
+  ~InMemoryDataWrapper() override = default;
+
+  const uint8_t* data() const override {
+    return reinterpret_cast<const uint8_t*>(data_.data());
+  }
+
+  size_t length() const override { return data_.size(); }
+
+ private:
+  std::string data_;
+  DISALLOW_COPY_AND_ASSIGN(InMemoryDataWrapper);
+};
+
+std::unique_ptr<RulesetMatcher::RulesetDataWrapper> CreateDataWrapper(
+    const base::FilePath& file_path,
+    RulesetMatcher::RulesetDataPolicy policy) {
+  switch (policy) {
+    case RulesetMatcher::RulesetDataPolicy::kMemoryMap:
+      return std::make_unique<MemoryMappedDataWrapper>(file_path);
+      break;
+    case RulesetMatcher::RulesetDataPolicy::kInMemory:
+      return std::make_unique<InMemoryDataWrapper>(file_path);
+      break;
+  }
+  NOTREACHED();
+  return nullptr;
+}
 
 }  // namespace
 
@@ -46,12 +104,7 @@ RulesetMatcher::LoadRulesetResult RulesetMatcher::CreateVerifiedMatcher(
   if (!base::PathExists(indexed_ruleset_path))
     return kLoadErrorInvalidPath;
 
-  // TODO(crbug.com/774271): Revisit mmap-ing the file.
-  auto ruleset = std::make_unique<base::MemoryMappedFile>();
-  if (!ruleset->Initialize(indexed_ruleset_path,
-                           base::MemoryMappedFile::READ_ONLY)) {
-    return kLoadErrorMemoryMap;
-  }
+  auto ruleset = CreateDataWrapper(indexed_ruleset_path, default_policy);
 
   // This guarantees that no memory access will end up outside the buffer.
   if (!IsValidRulesetData(ruleset->data(), ruleset->length(),
@@ -69,14 +122,7 @@ RulesetMatcher::LoadRulesetResult RulesetMatcher::CreateVerifiedMatcher(
   return kLoadSuccess;
 }
 
-RulesetMatcher::~RulesetMatcher() {
-  // |ruleset_| must be destroyed on a sequence which supports file IO.
-  // TODO(crbug.com/696822): Revisit this to ensure that this is safe and causes
-  // no resource leak even if this task fails.
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::BindOnce(&DeleteRulesetHelper, std::move(ruleset_)));
-}
+RulesetMatcher::~RulesetMatcher() = default;
 
 bool RulesetMatcher::ShouldBlockRequest(const GURL& url,
                                         const url::Origin& first_party_origin,
@@ -141,13 +187,16 @@ bool RulesetMatcher::ShouldRedirectRequest(
   return true;
 }
 
-RulesetMatcher::RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset)
+RulesetMatcher::RulesetMatcher(std::unique_ptr<RulesetDataWrapper> ruleset)
     : ruleset_(std::move(ruleset)),
       root_(flat::GetExtensionIndexedRuleset(ruleset_->data())),
       blacklist_matcher_(root_->blacklist_index()),
       whitelist_matcher_(root_->whitelist_index()),
       redirect_matcher_(root_->redirect_index()),
       metadata_list_(root_->extension_metadata()) {}
+
+RulesetMatcher::RulesetDataPolicy RulesetMatcher::default_policy =
+    RulesetMatcher::RulesetDataPolicy::kInMemory;
 
 }  // namespace declarative_net_request
 }  // namespace extensions
