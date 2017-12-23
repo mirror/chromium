@@ -301,6 +301,10 @@ unsigned GpuVideoAcceleratorFactoriesImpl::ImageTextureTarget(
 media::GpuVideoAcceleratorFactories::OutputFormat
 GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat() {
   DCHECK(task_runner_->BelongsToCurrentThread());
+
+  return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
+
+
   if (CheckContextLost())
     return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
