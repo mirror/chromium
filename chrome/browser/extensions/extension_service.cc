@@ -1197,8 +1197,7 @@ void ExtensionService::OnAllExternalProvidersReady() {
   if (update_once_all_providers_are_ready_ && updater()) {
     update_once_all_providers_are_ready_ = false;
     extensions::ExtensionUpdater::CheckParams params;
-    params.callback = external_updates_finished_callback_;
-    updater()->CheckNow(params);
+    updater()->CheckNow(params, external_updates_finished_callback_);
   }
 
   // Uninstall all the unclaimed extensions.

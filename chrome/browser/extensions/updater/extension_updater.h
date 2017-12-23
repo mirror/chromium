@@ -54,6 +54,7 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
                          public content::NotificationObserver {
  public:
   typedef base::Closure FinishedCallback;
+  typedef base::OnceClosure FinishedCallbackOnce;
 
   struct CheckParams {
     // Creates a default CheckParams instance that checks for all extensions.
@@ -73,10 +74,6 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
     // When the value of |fetch_priority| is FOREGROUND, the update request was
     // initiated by a user.
     ManifestFetchData::FetchPriority fetch_priority;
-
-    // Callback to call when the update check is complete. Can be null, if
-    // you're not interested in when this happens.
-    FinishedCallback callback;
   };
 
   // Holds a pointer to the passed |service|, using it for querying installed
@@ -105,11 +102,12 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
 
   // Starts an update check for the specified extension soon.
   void CheckExtensionSoon(const std::string& extension_id,
-                          const FinishedCallback& callback);
+                          FinishedCallback&& callback);
 
   // Starts an update check right now, instead of waiting for the next
   // regularly scheduled check or a pending check from CheckSoon().
   void CheckNow(const CheckParams& params);
+  void CheckNow(const CheckParams& params, FinishedCallbackOnce&& callback);
 
   // Returns true iff CheckSoon() has been called but the update check
   // hasn't been performed yet.  This is used mostly by tests; calling
@@ -146,13 +144,15 @@ class ExtensionUpdater : public ExtensionDownloaderDelegate,
 
   struct InProgressCheck {
     InProgressCheck();
-    InProgressCheck(const InProgressCheck& other);
     ~InProgressCheck();
 
     bool install_immediately;
-    FinishedCallback callback;
+    FinishedCallbackOnce callback;
     // The ids of extensions that have in-progress update checks.
     std::list<std::string> in_progress_ids_;
+
+   private:
+    InProgressCheck(const InProgressCheck& other) = delete;
   };
 
   // Ensure that we have a valid ExtensionDownloader instance referenced by

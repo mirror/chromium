@@ -124,9 +124,6 @@ ExtensionUpdater::FetchedCRXFile::~FetchedCRXFile() {}
 ExtensionUpdater::InProgressCheck::InProgressCheck()
     : install_immediately(false) {}
 
-ExtensionUpdater::InProgressCheck::InProgressCheck(
-    const InProgressCheck& other) = default;
-
 ExtensionUpdater::InProgressCheck::~InProgressCheck() {}
 
 ExtensionUpdater::ExtensionUpdater(
@@ -326,6 +323,12 @@ void ExtensionUpdater::AddToDownloader(
 }
 
 void ExtensionUpdater::CheckNow(const CheckParams& params) {
+  FinishedCallbackOnce emptyCallback;
+  CheckNow(params, std::move(emptyCallback));
+}
+
+void ExtensionUpdater::CheckNow(const CheckParams& params,
+                                FinishedCallbackOnce&& callback) {
   int request_id = next_request_id_++;
 
   VLOG(2) << "Starting update check " << request_id;
@@ -335,7 +338,7 @@ void ExtensionUpdater::CheckNow(const CheckParams& params) {
   DCHECK(alive_);
 
   InProgressCheck& request = requests_in_progress_[request_id];
-  request.callback = params.callback;
+  request.callback = std::move(callback);
   request.install_immediately = params.install_immediately;
 
   EnsureDownloaderCreated();
@@ -399,11 +402,10 @@ void ExtensionUpdater::CheckNow(const CheckParams& params) {
 }
 
 void ExtensionUpdater::CheckExtensionSoon(const std::string& extension_id,
-                                          const FinishedCallback& callback) {
+                                          FinishedCallback&& callback) {
   CheckParams params;
   params.ids.push_back(extension_id);
-  params.callback = callback;
-  CheckNow(params);
+  CheckNow(params, callback);
 }
 
 void ExtensionUpdater::OnExtensionDownloadFailed(
@@ -600,11 +602,11 @@ void ExtensionUpdater::NotifyStarted() {
 
 void ExtensionUpdater::NotifyIfFinished(int request_id) {
   DCHECK(base::ContainsKey(requests_in_progress_, request_id));
-  const InProgressCheck& request = requests_in_progress_[request_id];
+  InProgressCheck& request = requests_in_progress_[request_id];
   if (request.in_progress_ids_.empty()) {
     VLOG(2) << "Finished update check " << request_id;
     if (!request.callback.is_null())
-      request.callback.Run();
+      std::move(request.callback).Run();
     requests_in_progress_.erase(request_id);
   }
 }
