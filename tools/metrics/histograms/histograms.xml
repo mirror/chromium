@@ -83661,6 +83661,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SSL.MarkHttpAsStatus" enum="MarkHttpAsStatus">
+  <obsolete>
+    Deprecated December 2017 (M65).
+  </obsolete>
   <owner>estark@chromium.org</owner>
   <owner>felt@chromium.org</owner>
   <summary>
