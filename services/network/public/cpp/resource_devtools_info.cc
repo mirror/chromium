@@ -2,16 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/resource_devtools_info.h"
+#include "services/network/public/cpp/resource_devtools_info.h"
 
-namespace content {
+namespace network {
 
-ResourceDevToolsInfo::ResourceDevToolsInfo()
-    : http_status_code(0) {
-}
+ResourceDevToolsInfo::ResourceDevToolsInfo() : http_status_code(0) {}
 
-ResourceDevToolsInfo::~ResourceDevToolsInfo() {
-}
+ResourceDevToolsInfo::~ResourceDevToolsInfo() {}
 
 scoped_refptr<ResourceDevToolsInfo> ResourceDevToolsInfo::DeepCopy() const {
   scoped_refptr<ResourceDevToolsInfo> new_info = new ResourceDevToolsInfo;
@@ -24,4 +21,4 @@ scoped_refptr<ResourceDevToolsInfo> ResourceDevToolsInfo::DeepCopy() const {
   return new_info;
 }
 
-}  // namespace content
+}  // namespace network

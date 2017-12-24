@@ -215,7 +215,7 @@ TEST_F(NetworkServiceTestWithService, RawRequestHeadersPresent) {
   client()->RunUntilRedirectReceived();
   EXPECT_TRUE(client()->has_received_redirect());
   {
-    scoped_refptr<ResourceDevToolsInfo> devtools_info =
+    scoped_refptr<network::ResourceDevToolsInfo> devtools_info =
         client()->response_head().devtools_info;
     ASSERT_TRUE(devtools_info);
     EXPECT_EQ(301, devtools_info->http_status_code);
@@ -232,7 +232,7 @@ TEST_F(NetworkServiceTestWithService, RawRequestHeadersPresent) {
   loader()->FollowRedirect();
   client()->RunUntilComplete();
   {
-    scoped_refptr<ResourceDevToolsInfo> devtools_info =
+    scoped_refptr<network::ResourceDevToolsInfo> devtools_info =
         client()->response_head().devtools_info;
     EXPECT_EQ(200, devtools_info->http_status_code);
     EXPECT_EQ("OK", devtools_info->http_status_text);
@@ -262,7 +262,7 @@ TEST_F(NetworkServiceTestWithService, RawRequestAccessControl) {
   StartLoadingURL(request, process_id);
   client()->RunUntilComplete();
   {
-    scoped_refptr<ResourceDevToolsInfo> devtools_info =
+    scoped_refptr<network::ResourceDevToolsInfo> devtools_info =
         client()->response_head().devtools_info;
     ASSERT_TRUE(devtools_info);
     EXPECT_EQ(200, devtools_info->http_status_code);
