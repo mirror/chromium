@@ -197,10 +197,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   // SwiftShader force-disabled due to GPU crashes using SwiftShader.
   bool swiftshader_disabled_;
 
-  // We disable histogram stuff in testing, especially in unit tests because
-  // they cause random failures.
-  bool update_histograms_;
-
   DomainBlockMap blocked_domains_;
   mutable std::list<base::Time> timestamps_of_gpu_resets_;
   bool domain_blocking_enabled_;

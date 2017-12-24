@@ -36,6 +36,11 @@ GPU_EXPORT extern const char kGpuTestingGLVersion[];
 GPU_EXPORT extern const char kGpuVendorID[];
 GPU_EXPORT extern const char kIgnoreGpuBlacklist[];
 
+GPU_EXPORT extern const char kDisableAccelerated2dCanvas[];
+GPU_EXPORT extern const char kDisableGpu[];
+GPU_EXPORT extern const char kDisableWebGL[];
+GPU_EXPORT extern const char kDisableWebGL2[];
+
 }  // namespace switches
 
 #endif  // GPU_CONFIG_GPU_SWITCHES_H_

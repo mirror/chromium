@@ -9,6 +9,8 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
@@ -185,6 +187,180 @@ void AdjustGpuFeatureStatusToWorkarounds(GpuFeatureInfo* gpu_feature_info) {
   }
 }
 
+#if defined(OS_WIN)
+enum WinSubVersion {
+  kWinOthers = 0,
+  kWinXP,
+  kWinVista,
+  kWin7,
+  kWin8,
+  kWin8_1,
+  kWin10,
+  kWin10_TH2,
+  kWin10_RS1,
+  kWin10_RS2,
+  kNumWinSubVersions
+};
+
+int GetGpuBlacklistHistogramValueWin(GpuFeatureStatus status) {
+  static WinSubVersion sub_version = kNumWinSubVersions;
+  if (sub_version == kNumWinSubVersions) {
+    sub_version = kWinOthers;
+    switch (base::win::GetVersion()) {
+      case base::win::VERSION_PRE_XP:
+      case base::win::VERSION_XP:
+      case base::win::VERSION_SERVER_2003:
+      case base::win::VERSION_VISTA:
+      case base::win::VERSION_WIN_LAST:
+        break;
+      case base::win::VERSION_WIN7:
+        sub_version = kWin7;
+        break;
+      case base::win::VERSION_WIN8:
+        sub_version = kWin8;
+        break;
+      case base::win::VERSION_WIN8_1:
+        sub_version = kWin8_1;
+        break;
+      case base::win::VERSION_WIN10:
+        sub_version = kWin10;
+        break;
+      case base::win::VERSION_WIN10_TH2:
+        sub_version = kWin10_TH2;
+        break;
+      case base::win::VERSION_WIN10_RS1:
+        sub_version = kWin10_RS1;
+        break;
+      case base::win::VERSION_WIN10_RS2:
+        sub_version = kWin10_RS2;
+        break;
+    }
+  }
+  int entry_index = static_cast<int>(sub_version) * kGpuFeatureStatusMax;
+  switch (status) {
+    case kGpuFeatureStatusEnabled:
+      break;
+    case kGpuFeatureStatusBlacklisted:
+      entry_index++;
+      break;
+    case kGpuFeatureStatusDisabled:
+      entry_index += 2;
+      break;
+    case kGpuFeatureStatusSoftware:
+      entry_index += 3;
+      break;
+    case kGpuFeatureStatusUndefined:
+    case kGpuFeatureStatusMax:
+      NOTREACHED();
+      break;
+  }
+  return entry_index;
+}
+#endif  // OS_WIN
+
+// Send UMA histograms about the enabled features and GPU properties.
+void UpdateFeatureStats(const GPUInfo& gpu_info,
+                        const GpuBlacklist* blacklist,
+                        const std::set<int>& blacklisted_features) {
+  DCHECK(blacklist && blacklist->max_entry_id() > 0);
+  uint32_t max_entry_id = blacklist->max_entry_id();
+
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+
+  // Use entry 0 to capture the total number of times that data
+  // was recorded in this histogram in order to have a convenient
+  // denominator to compute blacklist percentages for the rest of the
+  // entries.
+  UMA_HISTOGRAM_EXACT_LINEAR("GPU.BlacklistTestResultsPerEntry", 0,
+                             max_entry_id + 1);
+
+  if (blacklisted_features.size() != 0) {
+    const std::vector<uint32_t>& entry_indices = blacklist->GetActiveEntries();
+    DCHECK_GT(entry_indices.size(), 0u);
+    std::vector<uint32_t> entry_ids =
+        blacklist->GetEntryIDsFromIndices(entry_indices);
+    DCHECK_EQ(entry_indices.size(), entry_ids.size());
+    for (auto id : entry_ids) {
+      DCHECK_GE(max_entry_id, id);
+      UMA_HISTOGRAM_EXACT_LINEAR("GPU.BlacklistTestResultsPerEntry", id,
+                                 max_entry_id + 1);
+    }
+  }
+
+  const GpuFeatureType kGpuFeatures[] = {
+      GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS,
+      GPU_FEATURE_TYPE_GPU_COMPOSITING,
+      GPU_FEATURE_TYPE_GPU_RASTERIZATION,
+      GPU_FEATURE_TYPE_ACCELERATED_WEBGL,
+      GPU_FEATURE_TYPE_ACCELERATED_WEBGL2};
+  const std::string kGpuBlacklistFeatureHistogramNames[] = {
+      "GPU.BlacklistFeatureTestResults.Accelerated2dCanvas",
+      "GPU.BlacklistFeatureTestResults.GpuCompositing",
+      "GPU.BlacklistFeatureTestResults.GpuRasterization",
+      "GPU.BlacklistFeatureTestResults.Webgl",
+      "GPU.BlacklistFeatureTestResults.Webgl2"};
+  const bool kGpuFeatureUserFlags[] = {
+      command_line.HasSwitch(switches::kDisableAccelerated2dCanvas),
+      command_line.HasSwitch(switches::kDisableGpu),
+      command_line.HasSwitch(switches::kDisableGpuRasterization),
+      command_line.HasSwitch(switches::kDisableWebGL),
+      (command_line.HasSwitch(switches::kDisableWebGL) ||
+       command_line.HasSwitch(switches::kDisableWebGL2))};
+#if defined(OS_WIN)
+  const std::string kGpuBlacklistFeatureHistogramNamesWin[] = {
+      "GPU.BlacklistFeatureTestResultsWindows.Accelerated2dCanvas",
+      "GPU.BlacklistFeatureTestResultsWindows.GpuCompositing",
+      "GPU.BlacklistFeatureTestResultsWindows.GpuRasterization",
+      "GPU.BlacklistFeatureTestResultsWindows.Webgl",
+      "GPU.BlacklistFeatureTestResultsWindows.Webgl2"};
+#endif
+  const size_t kNumFeatures =
+      sizeof(kGpuFeatures) / sizeof(GpuFeatureType);
+  for (size_t i = 0; i < kNumFeatures; ++i) {
+    // We can't use UMA_HISTOGRAM_ENUMERATION here because the same name is
+    // expected if the macro is used within a loop.
+    GpuFeatureStatus value = kGpuFeatureStatusEnabled;
+    if (blacklisted_features.count(kGpuFeatures[i]))
+      value = kGpuFeatureStatusBlacklisted;
+    else if (kGpuFeatureUserFlags[i])
+      value = kGpuFeatureStatusDisabled;
+    base::HistogramBase* histogram_pointer = base::LinearHistogram::FactoryGet(
+        kGpuBlacklistFeatureHistogramNames[i], 1, kGpuFeatureStatusMax,
+        kGpuFeatureStatusMax + 1,
+        base::HistogramBase::kUmaTargetedHistogramFlag);
+    histogram_pointer->Add(value);
+#if defined(OS_WIN)
+    histogram_pointer = base::LinearHistogram::FactoryGet(
+        kGpuBlacklistFeatureHistogramNamesWin[i], 1,
+        kNumWinSubVersions * kGpuFeatureStatusMax,
+        kNumWinSubVersions * kGpuFeatureStatusMax + 1,
+        base::HistogramBase::kUmaTargetedHistogramFlag);
+    histogram_pointer->Add(GetGpuBlacklistHistogramValueWin(value));
+#endif
+  }
+}
+
+void UpdateDriverBugListStats(
+    const GpuDriverBugList* driver_bug_list,
+    const std::vector<uint32_t>& applied_entries) {
+  // Use entry 0 to capture the total number of times that data was recorded
+  // in this histogram in order to have a convenient denominator to compute
+  // driver bug list percentages for the rest of the entries.
+  base::UmaHistogramSparse("GPU.DriverBugTestResultsPerEntry", 0);
+
+  if (applied_entries.empty())
+    return;
+  DCHECK(driver_bug_list && driver_bug_list->max_entry_id() > 0);
+  std::vector<uint32_t> entry_ids = driver_bug_list->GetEntryIDsFromIndices(
+      applied_entries);
+  DCHECK_EQ(applied_entries.size(), entry_ids.size());
+  for (auto id : entry_ids) {
+    DCHECK_GE(driver_bug_list->max_entry_id(), id);
+    base::UmaHistogramSparse("GPU.DriverBugTestResultsPerEntry", id);
+  }
+}
+
 GPUInfo* g_gpu_info_cache = nullptr;
 GpuFeatureInfo* g_gpu_feature_info_cache = nullptr;
 
@@ -219,7 +395,7 @@ void ParseSecondaryGpuDevicesFromCommandLine(
   DCHECK(vendor_ids.size() == device_ids.size());
   gpu_info->secondary_gpus.clear();
   for (size_t i = 0; i < vendor_ids.size() && i < device_ids.size(); ++i) {
-    gpu::GPUInfo::GPUDevice secondary_device;
+    GPUInfo::GPUDevice secondary_device;
     secondary_device.active = false;
     secondary_device.vendor_id = vendor_ids[i];
     secondary_device.device_id = device_ids[i];
@@ -249,7 +425,7 @@ void GetGpuInfoFromCommandLine(const base::CommandLine& command_line,
       command_line.GetSwitchValueASCII(switches::kGpuDriverVersion);
   gpu_info->driver_date =
       command_line.GetSwitchValueASCII(switches::kGpuDriverDate);
-  gpu::ParseSecondaryGpuDevicesFromCommandLine(command_line, gpu_info);
+  ParseSecondaryGpuDevicesFromCommandLine(command_line, gpu_info);
 
   // Set active gpu device.
   if (command_line.HasSwitch(switches::kGpuActiveVendorID) &&
@@ -359,6 +535,7 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
     std::unique_ptr<GpuBlacklist> list(GpuBlacklist::Create());
     blacklisted_features =
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
+    UpdateFeatureStats(gpu_info, list.get(), blacklisted_features);
   }
 
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] =
@@ -402,17 +579,19 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
   std::set<int> enabled_driver_bug_workarounds;
   std::vector<std::string> driver_bug_disabled_extensions;
   if (!command_line->HasSwitch(switches::kDisableGpuDriverBugWorkarounds)) {
-    std::unique_ptr<gpu::GpuDriverBugList> list(GpuDriverBugList::Create());
+    std::unique_ptr<GpuDriverBugList> list(GpuDriverBugList::Create());
     enabled_driver_bug_workarounds =
         list->MakeDecision(GpuControlList::kOsAny, std::string(), gpu_info);
     gpu_feature_info.applied_gpu_driver_bug_list_entries =
         list->GetActiveEntries();
+    UpdateDriverBugListStats(
+        list.get(), gpu_feature_info.applied_gpu_driver_bug_list_entries);
 
     driver_bug_disabled_extensions = list->GetDisabledExtensions();
     all_disabled_extensions.insert(driver_bug_disabled_extensions.begin(),
                                    driver_bug_disabled_extensions.end());
   }
-  gpu::GpuDriverBugList::AppendWorkaroundsFromCommandLine(
+  GpuDriverBugList::AppendWorkaroundsFromCommandLine(
       &enabled_driver_bug_workarounds, *command_line);
 
   gpu_feature_info.enabled_gpu_driver_bug_workarounds.insert(
