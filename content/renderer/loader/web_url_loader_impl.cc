@@ -93,7 +93,7 @@ namespace content {
 
 namespace {
 
-using HeadersVector = ResourceDevToolsInfo::HeadersVector;
+using HeadersVector = network::HttpRawRequestResponseInfo::HeadersVector;
 
 class KeepAliveHandleWithChildProcessReference {
  public:

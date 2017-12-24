@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/resource_devtools_info.h"
+#include "services/network/public/cpp/http_raw_request_response_info.h"
 
-namespace content {
+namespace network {
 
-ResourceDevToolsInfo::ResourceDevToolsInfo()
-    : http_status_code(0) {
-}
+HttpRawRequestResponseInfo::HttpRawRequestResponseInfo()
+    : http_status_code(0) {}
 
-ResourceDevToolsInfo::~ResourceDevToolsInfo() {
-}
+HttpRawRequestResponseInfo::~HttpRawRequestResponseInfo() {}
 
-scoped_refptr<ResourceDevToolsInfo> ResourceDevToolsInfo::DeepCopy() const {
-  scoped_refptr<ResourceDevToolsInfo> new_info = new ResourceDevToolsInfo;
+scoped_refptr<HttpRawRequestResponseInfo> HttpRawRequestResponseInfo::DeepCopy()
+    const {
+  scoped_refptr<HttpRawRequestResponseInfo> new_info =
+      new HttpRawRequestResponseInfo;
   new_info->http_status_code = http_status_code;
   new_info->http_status_text = http_status_text;
   new_info->request_headers = request_headers;
@@ -24,4 +24,4 @@ scoped_refptr<ResourceDevToolsInfo> ResourceDevToolsInfo::DeepCopy() const {
   return new_info;
 }
 
-}  // namespace content
+}  // namespace network

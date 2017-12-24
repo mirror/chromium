@@ -39,10 +39,6 @@ namespace net {
 struct LoadTimingInfo;
 }
 
-namespace content {
-struct ResourceDevToolsInfo;
-}
-
 namespace IPC {
 
 template <>
@@ -58,16 +54,6 @@ struct ParamTraits<scoped_refptr<net::HttpResponseHeaders> > {
 template <>
 struct CONTENT_EXPORT ParamTraits<storage::DataElement> {
   typedef storage::DataElement param_type;
-  static void Write(base::Pickle* m, const param_type& p);
-  static bool Read(const base::Pickle* m,
-                   base::PickleIterator* iter,
-                   param_type* r);
-  static void Log(const param_type& p, std::string* l);
-};
-
-template <>
-struct ParamTraits<scoped_refptr<content::ResourceDevToolsInfo> > {
-  typedef scoped_refptr<content::ResourceDevToolsInfo> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,
