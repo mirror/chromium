@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a7d53f54_6608de6d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-24T12:40:10Z",
+      "side": 1,
+      "message": "Done.\n\nDiscussing unsignedness in another issue.",
+      "parentUuid": "cd99c553_e9e20dd3",
+      "range": {
+        "startLine": 1289,
+        "startChar": 41,
+        "endLine": 1289,
+        "endChar": 44
+      },
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e570b89a_485443f4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -71,6 +95,24 @@
       "writtenOn": "2017-12-21T18:44:10Z",
       "side": 1,
       "message": "Can first_overflowing_line_ ever be more than line_count?",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7feb86be_97d203c3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1306,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-24T12:40:10Z",
+      "side": 1,
+      "message": "I really hope not. :) Adding a DCHECK.",
+      "parentUuid": "e570b89a_485443f4",
       "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3006b300_d1384037",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-24T12:40:10Z",
+      "side": 1,
+      "message": "I meant it as an imperative, but I\u0027m not too happy with the current name either. Other suggestions?",
+      "parentUuid": "76dbea1c_43fc5853",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 211,
+        "endChar": 10
+      },
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de60f765_d7dfd54f",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
         "patchSetId": 2
@@ -117,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ceaf79d0_15a971dc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-24T12:40:10Z",
+      "side": 1,
+      "message": "Something has really gone wrong if we don\u0027t have children, but still have added lines. Adding a DCHECK.\n\nVector::At() has a CHECK, so I guess DCHECK is enough here.",
+      "parentUuid": "de60f765_d7dfd54f",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bab31144_63b2d458",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.h",
         "patchSetId": 2
@@ -128,6 +212,24 @@
       "writtenOn": "2017-12-21T18:44:10Z",
       "side": 1,
       "message": "How about making this (and line_number) unsigned?",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ad702a_c0fc990e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-24T12:40:10Z",
+      "side": 1,
+      "message": "Generally a bit afraid of unsigned, and doesn\u0027t the coding style guide discourage use of it unless we need all the bits for the value?\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md\n\u0027Do not use unsigned types to mean “this value should never be \u003c 0”.\u0027",
+      "parentUuid": "bab31144_63b2d458",
       "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
