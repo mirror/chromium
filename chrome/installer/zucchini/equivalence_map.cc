@@ -32,17 +32,21 @@ double GetTokenSimilarity(const ImageIndex& old_image,
                                                                     : -1.5;
   }
 
-  Reference old_reference = old_image.FindReference(old_type, src);
-  Reference new_reference = new_image.FindReference(new_type, dst);
+  IndirectReference old_reference = old_image.refs(old_type).at(src);
+  IndirectReference new_reference = new_image.refs(new_type).at(dst);
+  PoolTag pool = old_image.refs(old_type).pool_tag();
+
+  offset_t old_target =
+      old_image.pool(pool).OffsetForKey(old_reference.target_key);
+  offset_t new_target =
+      new_image.pool(pool).OffsetForKey(new_reference.target_key);
 
   // Both targets are not associated, which implies a weak match.
-  if (!IsMarked(old_reference.target) && !IsMarked(new_reference.target))
-    return 0.5 * old_image.GetTraits(old_type).width;
+  if (!IsMarked(old_target) && !IsMarked(new_target))
+    return 0.5 * old_image.refs(old_type).width();
 
   // At least one target is associated, so values are compared.
-  return old_reference.target == new_reference.target
-             ? old_image.GetTraits(old_type).width
-             : -2.0;
+  return old_target == new_target ? old_image.refs(old_type).width() : -2.0;
 }
 
 double GetEquivalenceSimilarity(const ImageIndex& old_image,
