@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b9c1c6_214a80b8",
+        "filename": "third_party/WebKit/Source/core/exported/WebSurroundingText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-24T18:26:43Z",
+      "side": 1,
+      "message": "Should this be IsNull() or IsEmpty()? Following the intent of the original code, it seems like it should be IsNull() -- but I don\u0027t know if this would be \"more correct\".\n\nBoth before and after this CL, if we called InitializeFromCurrentSelection() twice, and there\u0027s no range the second time, we don\u0027t reset the internal fields. So maybe the right thing to do here is make the initialization INSIDE_BLINK only, and have a WebLocalFrame getter that returns this? WDYT?",
+      "range": {
+        "startLine": 141,
+        "startChar": 23,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "4f980fab2921a1afc6879dea1ece930a8de4d092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
