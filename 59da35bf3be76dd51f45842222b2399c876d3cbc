@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d29095_6b8aff62",
+        "filename": "chrome/browser/extensions/api/file_system/request_file_system_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-24T08:54:04Z",
+      "side": 1,
+      "message": "nit: f -\u003e F",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "59da35bf3be76dd51f45842222b2399c876d3cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e81db699_31453bc0",
+        "filename": "chrome/browser/extensions/api/file_system/request_file_system_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-24T08:54:04Z",
+      "side": 1,
+      "message": "This class no longer represents a notification, as it lives shorter than notification. It\u0027s more like an intent or launcher. Actually, RequestFileSystemNotification knows nothing about the actual notification. All it does now is loading the app icon and showing the passed notification.\n\n\nHow about renaming this class to an anonymous AppNotificationLaucher, and just having one function in the header: ShowAutoGrantedNotification?",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 36
+      },
+      "revId": "59da35bf3be76dd51f45842222b2399c876d3cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de914579_aacd8c28",
+        "filename": "chrome/browser/extensions/api/file_system/request_file_system_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-24T08:54:04Z",
+      "side": 1,
+      "message": "Can we move this to constructor? We\u0027d have one less method.",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 47
+      },
+      "revId": "59da35bf3be76dd51f45842222b2399c876d3cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89e137d3_88b8b904",
+        "filename": "chrome/browser/extensions/api/file_system/request_file_system_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-24T08:54:04Z",
+      "side": 1,
+      "message": "How about renaming to ShowIfIconReady. IIUC pending_notification_ is never null.",
+      "range": {
+        "startLine": 98,
+        "startChar": 36,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "59da35bf3be76dd51f45842222b2399c876d3cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a97c828_aed2a319",
+        "filename": "chrome/browser/extensions/api/file_system/request_file_system_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-24T08:54:04Z",
+      "side": 1,
+      "message": "When can this happen? If never, then DCHECK?",
+      "range": {
+        "startLine": 99,
+        "startChar": 26,
+        "endLine": 99,
+        "endChar": 48
+      },
+      "revId": "59da35bf3be76dd51f45842222b2399c876d3cbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
