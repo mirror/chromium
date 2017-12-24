@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869feb64_c37da635",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-24T14:15:41Z",
+      "side": 1,
+      "message": "This is an omission.\nI removed it in Patchset 4.",
+      "revId": "f5ea8723142d724dbd75c19b54a6093fea2e3c06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
