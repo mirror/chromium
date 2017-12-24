@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8490de04_e2a2703c",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-24T18:53:48Z",
+      "side": 1,
+      "message": "If that\u0027s the case, can we DCHECK() that in the implementation of WallpaperController (i.e. check that |wallpaper_controller_client_| is not already bound to something)",
+      "parentUuid": "709462f5_033d7b87",
+      "revId": "d6abbf8a56ac514bf3ae945888365a45e669b8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9485dc9c_66a3aa41",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
