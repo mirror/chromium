@@ -39,7 +39,7 @@ namespace net {
 struct LoadTimingInfo;
 }
 
-namespace content {
+namespace network {
 struct ResourceDevToolsInfo;
 }
 
@@ -66,8 +66,8 @@ struct CONTENT_EXPORT ParamTraits<storage::DataElement> {
 };
 
 template <>
-struct ParamTraits<scoped_refptr<content::ResourceDevToolsInfo> > {
-  typedef scoped_refptr<content::ResourceDevToolsInfo> param_type;
+struct ParamTraits<scoped_refptr<network::ResourceDevToolsInfo>> {
+  typedef scoped_refptr<network::ResourceDevToolsInfo> param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,

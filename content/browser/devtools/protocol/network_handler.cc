@@ -39,7 +39,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/resource_devtools_info.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "net/base/net_errors.h"
@@ -50,6 +49,7 @@
 #include "net/http/http_util.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/cpp/resource_devtools_info.h"
 #include "services/network/public/cpp/url_loader_completion_status.h"
 
 namespace content {

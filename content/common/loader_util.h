@@ -14,8 +14,11 @@ class HttpResponseHeaders;
 class URLRequest;
 }
 
-namespace content {
+namespace network {
 struct ResourceDevToolsInfo;
+}
+
+namespace content {
 struct ResourceRequest;
 struct ResourceResponse;
 
@@ -28,7 +31,7 @@ bool ShouldSniffContent(net::URLRequest* url_request,
                         ResourceResponse* response);
 
 // Fill ResourceDevToolsInfo based on raw headers.
-scoped_refptr<ResourceDevToolsInfo> BuildDevToolsInfo(
+scoped_refptr<network::ResourceDevToolsInfo> BuildDevToolsInfo(
     const net::URLRequest& request,
     const net::HttpRawRequestHeaders& raw_request_headers,
     const net::HttpResponseHeaders* raw_response_headers);
