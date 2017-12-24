@@ -64,6 +64,8 @@ mojom_generator_sources = [
   "$mojom_generator_script",
 ]
 
+mojom_parsing_script = "$mojom_generator_root/mojom_bindings_generator.py"
+
 if (enable_scrambled_message_ids) {
   declare_args() {
     # The path to a file whose contents can be used as the basis for a message
@@ -316,6 +318,24 @@ template("mojom") {
     }
   }
 
+  if (defined(invoker.sources)) {
+    parser_shared_outputs = [ "{{source_gen_dir}}/{{source_name_part}}.p" ]
+    parser_target_name = "${target_name}__parsed"
+    action_foreach(parser_target_name) {
+      script = mojom_parsing_script
+      sources = invoker.sources
+      outputs = parser_shared_outputs
+      args = [
+        "parse",
+        "{{source}}",
+        "-o",
+        rebase_path(root_gen_dir, root_build_dir),
+        "-d",
+        rebase_path("//", root_build_dir),
+      ]
+    }
+  }
+
   # Generate code that is shared by different variants.
   if (defined(invoker.sources)) {
     common_generator_args = [
@@ -416,6 +436,7 @@ template("mojom") {
       inputs = mojom_generator_sources
       sources = invoker.sources
       deps = [
+        ":$parser_target_name",
         "//mojo/public/tools/bindings:precompile_templates",
       ]
       outputs = generator_shared_cpp_outputs
@@ -474,7 +495,10 @@ template("mojom") {
     if (defined(invoker.sources)) {
       sources =
           process_file_template(invoker.sources, generator_shared_cpp_outputs)
-      deps += [ ":$generator_shared_target_name" ]
+      deps += [
+        ":$generator_shared_target_name",
+        ":$parser_target_name",
+      ]
     }
     public_deps = [
       "//mojo/public/cpp/bindings",
@@ -641,6 +665,7 @@ template("mojom") {
         inputs = mojom_generator_sources
         sources = invoker.sources
         deps = [
+          ":$parser_target_name",
           ":$type_mappings_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
@@ -824,7 +849,10 @@ template("mojom") {
         "//mojo/public/cpp/bindings",
       ]
       if (enabled_sources != []) {
-        public_deps += [ ":$generator_target_name" ]
+        public_deps += [
+          ":$generator_target_name",
+          ":$parser_target_name",
+        ]
       }
       if (defined(invoker.component_macro_prefix)) {
         output_name = "${invoker.component_output_prefix}${variant_suffix}"
@@ -917,6 +945,7 @@ template("mojom") {
         if (enabled_sources != []) {
           deps = [
             ":$generator_target_name",
+            ":$parser_target_name",
           ]
         }
       }
@@ -924,6 +953,7 @@ template("mojom") {
       java_target_name = target_name + "_java"
       android_library(java_target_name) {
         deps = [
+          ":$parser_target_name",
           "//base:base_java",
           "//mojo/public/java:bindings_java",
           "//mojo/public/java:system_java",
@@ -955,6 +985,7 @@ template("mojom") {
           sources += invoker.sources
         }
         deps = [
+          ":$parser_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
         outputs = generator_js_outputs
@@ -970,7 +1001,10 @@ template("mojom") {
     group(js_target_name) {
       public_deps = []
       if (defined(invoker.sources)) {
-        public_deps += [ ":$generator_js_target_name" ]
+        public_deps += [
+          ":$generator_js_target_name",
+          ":$parser_target_name",
+        ]
       }
 
       foreach(d, all_deps) {
@@ -984,7 +1018,10 @@ template("mojom") {
       deps = []
       if (defined(invoker.sources)) {
         data = process_file_template(invoker.sources, generator_js_outputs)
-        deps += [ ":$generator_js_target_name" ]
+        deps += [
+          ":$generator_js_target_name",
+          ":$parser_target_name",
+        ]
       }
 
       data_deps = []
