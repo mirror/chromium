@@ -167,14 +167,15 @@ base::FilePath SetUpSymlinkIfNeeded(const base::FilePath& symlink_path,
   if (symlink_path.Extension() == ".LATEST") {
     base::FilePath extensionless_path = symlink_path.ReplaceExtension("");
     base::FilePath target_path;
+    bool extensionless_symlink_exists =
+        base::ReadSymbolicLink(extensionless_path, &target_path);
 
-    base::ReadSymbolicLink(extensionless_path, &target_path);
     if (target_path != symlink_path) {
       // No link, or wrong link.  Clean up.  This should happen only once in
       // each log directory after the OS version update, but some of those
       // directories may not be accessed for a long time, so this code needs to
       // stay in forever :/
-      if (base::PathExists(extensionless_path) &&
+      if (extensionless_symlink_exists &&
           !base::DeleteFile(extensionless_path, false)) {
         DPLOG(WARNING) << "Cannot delete " << extensionless_path.value();
       }
@@ -190,10 +191,16 @@ base::FilePath SetUpSymlinkIfNeeded(const base::FilePath& symlink_path,
   //
   // If starting a new log, then rename the old symlink as
   // symlink_path.PREVIOUS and make a new symlink to a fresh log file.
+
+  // Check for existence of the symlink.  Ignore symlink target.
+  base::FilePath ignored_path;
+  bool symlink_exists = base::ReadSymbolicLink(symlink_path, &ignored_path);
+
   base::FilePath target_path;
-  bool symlink_exists = base::PathExists(symlink_path);
   if (new_log || !symlink_exists) {
-    target_path = GenerateTimestampedName(symlink_path, base::Time::Now());
+    // Remove any extension before time-stamping.
+    target_path = symlink_path.RemoveExtension();
+    target_path = GenerateTimestampedName(target_path, base::Time::Now());
 
     if (symlink_exists) {
       base::FilePath previous_symlink_path =
@@ -417,11 +424,6 @@ base::FilePath GenerateTimestampedName(const base::FilePath& base_path,
                                        base::Time timestamp) {
   base::Time::Exploded time_deets;
   timestamp.LocalExplode(&time_deets);
-  base::FilePath new_path = base_path;
-  // Assume that the base_path is "chrome.LATEST", and remove the extension.
-  // Ideally we would also check the value of base_path, but we cannot reliably
-  // log anything here, and aborting seems too harsh a choice.
-  new_path = new_path.ReplaceExtension("");
   std::string suffix = base::StringPrintf("_%02d%02d%02d-%02d%02d%02d",
                                           time_deets.year,
                                           time_deets.month,
@@ -429,7 +431,7 @@ base::FilePath GenerateTimestampedName(const base::FilePath& base_path,
                                           time_deets.hour,
                                           time_deets.minute,
                                           time_deets.second);
-  return new_path.InsertBeforeExtensionASCII(suffix);
+  return base_path.InsertBeforeExtensionASCII(suffix);
 }
 #endif  // defined(OS_CHROMEOS)
 
