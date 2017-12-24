@@ -45,6 +45,8 @@
 #include "chrome/service/service_process_prefs.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/prefs/json_pref_store.h"
+#include "components/translate/core/browser/translate_prefs.h"
+#include "components/translate/core/common/translate_util.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
@@ -220,6 +222,9 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
     // the prefs.
     locale =
         service_prefs_->GetString(prefs::kApplicationLocale, std::string());
+    if (base::FeatureList::IsEnabled(translate::kRegionalLocalesAsDisplayUI)) {
+      translate::ConvertToActualUILocale(&locale);
+    }
     // If no locale was specified anywhere, use the default one.
     if (locale.empty())
       locale = kDefaultServiceProcessLocale;

@@ -116,3 +116,168 @@ TEST_F(TranslateUtilTest, ContainsSameBaseLanguage) {
   list = {"en-US", "fr", "es-AR", "fr-FR"};
   EXPECT_EQ(true, translate::ContainsSameBaseLanguage(list, "fr-FR"));
 }
+
+TEST_F(TranslateUtilTest, ConvertToActualUILocale) {
+  std::string locale;
+
+  //---------------------------------------------------------------------------
+  // Languages that are enabled as display UI.
+  //---------------------------------------------------------------------------
+  locale = "en-US";
+  bool is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-US", locale);
+
+  locale = "it";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", locale);
+
+  locale = "fr-FR";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("fr-FR", locale);
+
+  //---------------------------------------------------------------------------
+  // Languages that are converted to their fallback version.
+  //---------------------------------------------------------------------------
+
+  // All Latin American Spanish languages fall back to "es-419".
+  locale = "es-AR";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-CL";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-CO";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-CR";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-HN";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-MX";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-PE";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-US";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-UY";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  locale = "es-VE";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", locale);
+
+  // English falls back to US.
+  locale = "en";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-US", locale);
+
+  // All other regional English languages fall back to UK.
+  locale = "en-AU";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", locale);
+
+  locale = "en-CA";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", locale);
+
+  locale = "en-IN";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", locale);
+
+  locale = "en-NZ";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", locale);
+
+  locale = "en-ZA";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", locale);
+
+  locale = "pt";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("pt-PT", locale);
+
+  locale = "it-CH";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", locale);
+
+  locale = "nn";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("nb", locale);
+
+  locale = "no";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("nb", locale);
+
+  //---------------------------------------------------------------------------
+  // Languages that have their base language is a UI language.
+  //---------------------------------------------------------------------------
+  locale = "it-IT";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", locale);
+
+  locale = "de-DE";
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("de", locale);
+
+  //---------------------------------------------------------------------------
+  // Languages that cannot be used as display UI.
+  //---------------------------------------------------------------------------
+  locale = "af";  // Afrikaans
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_FALSE(is_ui);
+
+  locale = "ga";  // Irish
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_FALSE(is_ui);
+
+  locale = "ky";  // Kyrgyz
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_FALSE(is_ui);
+
+  locale = "sd";  // Sindhi
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_FALSE(is_ui);
+
+  locale = "zu";  // Zulu
+  is_ui = translate::ConvertToActualUILocale(&locale);
+  EXPECT_FALSE(is_ui);
+}

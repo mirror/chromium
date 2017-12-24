@@ -78,6 +78,8 @@
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "components/translate/core/browser/translate_prefs.h"
+#include "components/translate/core/common/translate_util.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_service.h"
@@ -1313,8 +1315,10 @@ void ShowLoginWizard(OobeScreen first_screen) {
   }
 
   PrefService* prefs = g_browser_process->local_state();
-  const std::string& current_locale =
-      prefs->GetString(prefs::kApplicationLocale);
+  std::string current_locale = prefs->GetString(prefs::kApplicationLocale);
+  if (base::FeatureList::IsEnabled(translate::kRegionalLocalesAsDisplayUI)) {
+    translate::ConvertToActualUILocale(&current_locale);
+  }
   VLOG(1) << "Current locale: " << current_locale;
 
   if (ShouldShowSigninScreen(first_screen)) {
