@@ -223,7 +223,7 @@ void InputEventFilter::ForwardToHandler(int associated_routing_id,
          dispatch_type == DISPATCH_TYPE_NON_BLOCKING);
 
   if (!received_time.is_null())
-    event->SetTimeStampSeconds(ui::EventTimeStampToSeconds(received_time));
+    event->SetTimeStamp(received_time);
 
   input_handler_manager_->HandleInputEvent(
       associated_routing_id, std::move(event), latency_info,

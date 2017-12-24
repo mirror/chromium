@@ -34,6 +34,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/time/time.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreInitializer.h"
@@ -517,7 +518,7 @@ void WebDevToolsAgentImpl::InspectElementAt(
   HitTestRequest request(hit_type);
   WebMouseEvent dummy_event(WebInputEvent::kMouseDown,
                             WebInputEvent::kNoModifiers,
-                            WTF::CurrentTimeTicksInMilliseconds());
+                            WTF::CurrentTimeTicks());
   dummy_event.SetPositionInWidget(point.x, point.y);
   IntPoint transformed_point = FlooredIntPoint(
       TransformWebMouseEvent(web_local_frame_impl_->GetFrameView(), dummy_event)

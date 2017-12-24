@@ -58,20 +58,20 @@ namespace content {
 
 namespace {
 
-int64_t GetEventLatencyMicros(double event_timestamp, base::TimeTicks now) {
-  return (now - base::TimeDelta::FromSecondsD(event_timestamp))
-      .ToInternalValue();
+int64_t GetEventLatencyMicros(base::TimeTicks event_timestamp,
+                              base::TimeTicks now) {
+  return (now - event_timestamp).InMicroseconds();
 }
 
 void LogInputEventLatencyUma(const WebInputEvent& event, base::TimeTicks now) {
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Event.AggregatedLatency.Renderer2",
-      GetEventLatencyMicros(event.TimeStampSeconds(), now), 1, 10000000, 100);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Event.AggregatedLatency.Renderer2",
+                              GetEventLatencyMicros(event.TimeStamp(), now), 1,
+                              10000000, 100);
 }
 
 void LogPassiveEventListenersUma(WebInputEventResult result,
                                  WebInputEvent::DispatchType dispatch_type,
-                                 double event_timestamp,
+                                 base::TimeTicks event_timestamp,
                                  const ui::LatencyInfo& latency_info) {
   enum ListenerEnum {
     PASSIVE_LISTENER_UMA_ENUM_PASSIVE,
@@ -305,12 +305,12 @@ void RenderWidgetInputHandler::HandleInputEvent(
     const WebTouchEvent& touch = static_cast<const WebTouchEvent&>(input_event);
 
     LogPassiveEventListenersUma(processed, touch.dispatch_type,
-                                input_event.TimeStampSeconds(), latency_info);
+                                input_event.TimeStamp(), latency_info);
   } else if (input_event.GetType() == WebInputEvent::kMouseWheel) {
     LogPassiveEventListenersUma(
         processed,
         static_cast<const WebMouseWheelEvent&>(input_event).dispatch_type,
-        input_event.TimeStampSeconds(), latency_info);
+        input_event.TimeStamp(), latency_info);
   }
 
   // If this RawKeyDown event corresponds to a browser keyboard shortcut and
