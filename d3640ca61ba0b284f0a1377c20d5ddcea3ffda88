@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45656cca_464070fa",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-24T15:59:39Z",
+      "side": 1,
+      "message": "Looking at this more, I think unsent_sources contains sources that we aren\u0027t sure should be sent yet (might not be whitelisted, and might be associated with non-whitelisted entries), so i don\u0027t think we want to compute carryover_urls_whitelist_ based on the contents of unsent_sources.\n\nA couple options:\n1.  we only send sources that match a URL from the current set of whitelisted sources, accepting that if whitelisted source A is sent before non-whitelisted source B with the same URL, non-whitelisted source B\u0027s URL won\u0027t be sent.\n2. we retain URLs of whitelisted sources for a brief period of time, to mitigate the drawbacks to (1).\n\nIn practice web pages can be open for a very long time, so hanging on to URLs of whitelisted sources indefinitely seems like it isn\u0027t a realistic option memory-wise if we want to make any guarantees about always sending URLs that were known to be associated with whitelisted sources at some time in the past.\n\nSo my inclination is to do (1), which is simple, and creates incentive for UKM implementers to migrate to navigation-based source ids if they don\u0027t want their URLs to be dropped. It was hard for me to follow the current logic as I think we\u0027re just now getting to a point where the complexity becomes difficult to reason about, so I think keeping the code simpler has significant benefits.\n\nA third option would be to enumerate the committed URLs of all currently active WebContents and use those, plus the URLs from whitelisted sources, as our list of allowed URLs. This should mitigate most of the issues with lost sources (though not perfect). But IIRC enumerating tabs / webcontents is sadly more complex than it needs to be (might require a different codepath for Android, IIRC, with TabStripModel in one case and something else on Android last I checked), though maybe it has become less complex since I last looked into it.\n\nLet\u0027s revisit this after the holiday and meet with Alexei and Rob once they are back, to figure out which approach we\u0027re happiest with, given that the various approaches all have tradeoffs.",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
