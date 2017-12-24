@@ -215,7 +215,7 @@ void ParamTraits<storage::DataElement>::Log(const param_type& p,
   l->append("<storage::DataElement>");
 }
 
-void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Write(
+void ParamTraits<scoped_refptr<network::ResourceDevToolsInfo>>::Write(
     base::Pickle* m,
     const param_type& p) {
   WriteParam(m, p.get() != nullptr);
@@ -229,7 +229,7 @@ void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Write(
   }
 }
 
-bool ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Read(
+bool ParamTraits<scoped_refptr<network::ResourceDevToolsInfo>>::Read(
     const base::Pickle* m,
     base::PickleIterator* iter,
     param_type* r) {
@@ -238,7 +238,7 @@ bool ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Read(
     return false;
   if (!has_object)
     return true;
-  *r = new content::ResourceDevToolsInfo();
+  *r = new network::ResourceDevToolsInfo();
   return
       ReadParam(m, iter, &(*r)->http_status_code) &&
       ReadParam(m, iter, &(*r)->http_status_text) &&
@@ -248,8 +248,9 @@ bool ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Read(
       ReadParam(m, iter, &(*r)->response_headers_text);
 }
 
-void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo> >::Log(
-    const param_type& p, std::string* l) {
+void ParamTraits<scoped_refptr<network::ResourceDevToolsInfo>>::Log(
+    const param_type& p,
+    std::string* l) {
   l->append("(");
   if (p.get()) {
     LogParam(p->request_headers, l);
