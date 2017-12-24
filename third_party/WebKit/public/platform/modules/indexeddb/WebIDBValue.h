@@ -14,19 +14,6 @@
 namespace blink {
 
 struct WebIDBValue {
-  WebIDBValue() = default;
-  explicit WebIDBValue(const WebData& data) : data(data) {}
-  WebIDBValue(const WebData& data, const WebVector<WebBlobInfo>& blob_info)
-      : data(data), web_blob_info(blob_info) {}
-  WebIDBValue(const WebData& data,
-              const WebVector<WebBlobInfo>& blob_info,
-              const WebIDBKey& primary_key,
-              const WebIDBKeyPath& key_path)
-      : data(data),
-        web_blob_info(blob_info),
-        primary_key(primary_key),
-        key_path(key_path) {}
-
   // The serialized JavaScript bits (ignoring blob data) for this IDB Value.
   // Required value.
   WebData data;
@@ -39,6 +26,37 @@ struct WebIDBValue {
   // [[data]] object before calling the event handler.
   WebIDBKey primary_key;
   WebIDBKeyPath key_path;
+
+  WebIDBValue(const WebData& data, const WebVector<WebBlobInfo>& blob_info)
+      : data(data),
+        web_blob_info(blob_info),
+        primary_key(WebIDBKey::CreateNull()) {}
+  WebIDBValue(const WebData& data,
+              const WebVector<WebBlobInfo>& blob_info,
+              WebIDBKey primary_key,
+              const WebIDBKeyPath& key_path)
+      : data(data),
+        web_blob_info(blob_info),
+        primary_key(std::move(primary_key)),
+        key_path(key_path) {}
+
+  WebIDBValue() noexcept : primary_key(WebIDBKey::CreateNull()) {}
+
+  // This constructor can be =defaulted everywhere except in Visual Studio.
+  BLINK_EXPORT WebIDBValue(WebIDBValue&& other) noexcept
+      : data(std::move(other.data)),
+        web_blob_info(std::move(other.web_blob_info)),
+        primary_key(std::move(other.primary_key)),
+        key_path(std::move(other.key_path)) {}
+
+  WebIDBValue& operator=(WebIDBValue&&) noexcept = default;
+
+ private:
+  // WebIDBValue has to be move-only, because WebIDBKey is move-only. Making the
+  // restriction explicit results in slightly better compilation error messages
+  // in code that attempts copying.
+  WebIDBValue(const WebIDBValue&) = delete;
+  WebIDBValue& operator=(const WebIDBValue&) = delete;
 };
 
 }  // namespace blink

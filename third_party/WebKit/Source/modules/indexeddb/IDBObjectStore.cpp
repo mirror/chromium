@@ -39,6 +39,7 @@
 #include "modules/indexeddb/IDBAny.h"
 #include "modules/indexeddb/IDBCursorWithValue.h"
 #include "modules/indexeddb/IDBDatabase.h"
+#include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBKeyPath.h"
 #include "modules/indexeddb/IDBTracing.h"
 #include "modules/indexeddb/IDBValueWrapping.h"
@@ -47,6 +48,8 @@
 #include "platform/bindings/ScriptState.h"
 #include "public/platform/WebBlobInfo.h"
 #include "public/platform/WebData.h"
+#include "public/platform/WebVector.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabase.h"
 #include "public/platform/modules/indexeddb/WebIDBKey.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyRange.h"
 #include "v8/include/v8.h"
@@ -57,11 +60,6 @@ using blink::WebIDBCursor;
 using blink::WebIDBDatabase;
 
 namespace blink {
-
-namespace {
-
-using IndexKeys = HeapVector<Member<IDBKey>>;
-}
 
 IDBObjectStore::IDBObjectStore(scoped_refptr<IDBObjectStoreMetadata> metadata,
                                IDBTransaction* transaction)
@@ -298,17 +296,15 @@ IDBRequest* IDBObjectStore::getAllKeys(ScriptState* script_state,
   return request;
 }
 
-static void GenerateIndexKeysForValue(v8::Isolate* isolate,
-                                      const IDBIndexMetadata& index_metadata,
-                                      const ScriptValue& object_value,
-                                      IndexKeys* index_keys) {
-  DCHECK(index_keys);
+static WebVector<WebIDBKey> GenerateIndexKeysForValue(
+    v8::Isolate* isolate,
+    const IDBIndexMetadata& index_metadata,
+    const ScriptValue& object_value) {
   NonThrowableExceptionState exception_state;
-  IDBKey* index_key = ScriptValue::To<IDBKey*>(
+  std::unique_ptr<IDBKey> index_key = ScriptValue::To<std::unique_ptr<IDBKey>>(
       isolate, object_value, exception_state, index_metadata.key_path);
-
   if (!index_key)
-    return;
+    return WebVector<WebIDBKey>();
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, key_type_histogram,
@@ -318,17 +314,21 @@ static void GenerateIndexKeysForValue(v8::Isolate* isolate,
   if (!index_metadata.multi_entry ||
       index_key->GetType() != IDBKey::kArrayType) {
     if (!index_key->IsValid())
-      return;
+      return WebVector<WebIDBKey>();
 
-    index_keys->push_back(index_key);
-    key_type_histogram.Count(static_cast<int>(index_key->GetType()));
+    std::vector<WebIDBKey> index_keys;
+    index_keys.emplace_back(std::move(index_key));
+    key_type_histogram.Count(
+        static_cast<int>(index_keys.back().View().KeyType()));
+    return WebVector<WebIDBKey>(std::move(index_keys));
   } else {
     DCHECK(index_metadata.multi_entry);
     DCHECK_EQ(index_key->GetType(), IDBKey::kArrayType);
-    IDBKey::KeyArray array = index_key->ToMultiEntryArray();
-    for (const IDBKey* key : array)
-      key_type_histogram.Count(static_cast<int>(key->GetType()));
-    index_keys->AppendVector(array);
+    WebVector<WebIDBKey> index_keys =
+        IDBKey::ToMultiEntryArray(std::move(index_key));
+    for (const WebIDBKey& key : index_keys)
+      key_type_histogram.Count(static_cast<int>(key.View().KeyType()));
+    return index_keys;
   }
 }
 
@@ -338,8 +338,8 @@ IDBRequest* IDBObjectStore::add(ScriptState* script_state,
                                 ExceptionState& exception_state) {
   IDB_TRACE1("IDBObjectStore::addRequestSetup", "store_name",
              metadata_->name.Utf8());
-  return put(script_state, kWebIDBPutModeAddOnly, IDBAny::Create(this), value,
-             key, exception_state);
+  return DoPut(script_state, kWebIDBPutModeAddOnly, IDBAny::Create(this), value,
+               key, exception_state);
 }
 
 IDBRequest* IDBObjectStore::put(ScriptState* script_state,
@@ -348,31 +348,33 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
                                 ExceptionState& exception_state) {
   IDB_TRACE1("IDBObjectStore::putRequestSetup", "store_name",
              metadata_->name.Utf8());
-  return put(script_state, kWebIDBPutModeAddOrUpdate, IDBAny::Create(this),
-             value, key, exception_state);
+  return DoPut(script_state, kWebIDBPutModeAddOrUpdate, IDBAny::Create(this),
+               value, key, exception_state);
 }
 
-IDBRequest* IDBObjectStore::put(ScriptState* script_state,
-                                WebIDBPutMode put_mode,
-                                IDBAny* source,
-                                const ScriptValue& value,
-                                const ScriptValue& key_value,
-                                ExceptionState& exception_state) {
-  IDBKey* key = key_value.IsUndefined()
-                    ? nullptr
-                    : ScriptValue::To<IDBKey*>(script_state->GetIsolate(),
-                                               key_value, exception_state);
+IDBRequest* IDBObjectStore::DoPut(ScriptState* script_state,
+                                  WebIDBPutMode put_mode,
+                                  IDBAny* source,
+                                  const ScriptValue& value,
+                                  const ScriptValue& key_value,
+                                  ExceptionState& exception_state) {
+  std::unique_ptr<IDBKey> key =
+      key_value.IsUndefined()
+          ? nullptr
+          : ScriptValue::To<std::unique_ptr<IDBKey>>(
+                script_state->GetIsolate(), key_value, exception_state);
   if (exception_state.HadException())
     return nullptr;
-  return put(script_state, put_mode, source, value, key, exception_state);
+  return DoPut(script_state, put_mode, source, value, key.get(),
+               exception_state);
 }
 
-IDBRequest* IDBObjectStore::put(ScriptState* script_state,
-                                WebIDBPutMode put_mode,
-                                IDBAny* source,
-                                const ScriptValue& value,
-                                IDBKey* key,
-                                ExceptionState& exception_state) {
+IDBRequest* IDBObjectStore::DoPut(ScriptState* script_state,
+                                  WebIDBPutMode put_mode,
+                                  IDBAny* source,
+                                  const ScriptValue& value,
+                                  const IDBKey* key,
+                                  ExceptionState& exception_state) {
   const char* tracing_name = nullptr;
   switch (put_mode) {
     case kWebIDBPutModeAddOrUpdate:
@@ -430,13 +432,17 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
     return nullptr;
   }
 
+  // If the primary key is extracted from the value using a key path, this holds
+  // onto the extracted key for the duration of the function.
+  std::unique_ptr<IDBKey> key_path_key;
+
   // This test logically belongs in IDBCursor, but must operate on the cloned
   // value.
   if (put_mode == kWebIDBPutModeCursorUpdate && uses_in_line_keys) {
     DCHECK(key);
     DCHECK(clone.IsEmpty());
     value_wrapper.Clone(script_state, &clone);
-    IDBKey* key_path_key = ScriptValue::To<IDBKey*>(
+    key_path_key = ScriptValue::To<std::unique_ptr<IDBKey>>(
         script_state->GetIsolate(), clone, exception_state, key_path);
     if (exception_state.HadException())
       return nullptr;
@@ -457,20 +463,26 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
                                       "parameter was not provided.");
     return nullptr;
   }
+
   if (uses_in_line_keys) {
-    if (clone.IsEmpty())
+    if (clone.IsEmpty()) {
       value_wrapper.Clone(script_state, &clone);
-    IDBKey* key_path_key = ScriptValue::To<IDBKey*>(
-        script_state->GetIsolate(), clone, exception_state, key_path);
-    if (exception_state.HadException())
-      return nullptr;
-    if (key_path_key && !key_path_key->IsValid()) {
-      exception_state.ThrowDOMException(
-          kDataError,
-          "Evaluating the object store's key path "
-          "yielded a value that is not a valid "
-          "key.");
-      return nullptr;
+      key_path_key = ScriptValue::To<std::unique_ptr<IDBKey>>(
+          script_state->GetIsolate(), clone, exception_state, key_path);
+      if (exception_state.HadException())
+        return nullptr;
+      if (key_path_key && !key_path_key->IsValid()) {
+        exception_state.ThrowDOMException(
+            kDataError,
+            "Evaluating the object store's key path "
+            "yielded a value that is not a valid "
+            "key.");
+        return nullptr;
+      }
+    } else {
+      // The clone should have been created in the large if above, which throws
+      // if the condition below does not hold.
+      DCHECK(key_path_key && key_path_key->IsValid());
     }
     if (!has_key_generator && !key_path_key) {
       exception_state.ThrowDOMException(
@@ -488,7 +500,7 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
       }
     }
     if (key_path_key)
-      key = key_path_key;
+      key = key_path_key.get();
   }
   if (key && !key->IsValid()) {
     exception_state.ThrowDOMException(kDataError,
@@ -511,15 +523,13 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   }
 
   Vector<int64_t> index_ids;
-  HeapVector<IndexKeys> index_keys;
+  std::vector<WebVector<WebIDBKey>> index_keys;
   for (const auto& it : Metadata().indexes) {
     if (clone.IsEmpty())
       value_wrapper.Clone(script_state, &clone);
-    IndexKeys keys;
-    GenerateIndexKeysForValue(script_state->GetIsolate(), *it.value, clone,
-                              &keys);
     index_ids.push_back(it.key);
-    index_keys.push_back(keys);
+    index_keys.emplace_back(GenerateIndexKeysForValue(
+        script_state->GetIsolate(), *it.value, clone));
   }
   // Records 1KB to 1GB.
   UMA_HISTOGRAM_COUNTS_1M("WebCore.IndexedDB.PutValueSize2",
@@ -534,8 +544,10 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   request->transit_blob_handles() = value_wrapper.TakeBlobDataHandles();
   BackendDB()->Put(
       transaction_->Id(), Id(), WebData(value_wrapper.TakeWireBytes()),
-      value_wrapper.TakeBlobInfo(), key, static_cast<WebIDBPutMode>(put_mode),
-      request->CreateWebCallbacks().release(), index_ids, index_keys);
+      value_wrapper.TakeBlobInfo(), WebIDBKeyView(key),
+      static_cast<WebIDBPutMode>(put_mode),
+      request->CreateWebCallbacks().release(), index_ids,
+      WebVector<WebIDBDatabase::WebIndexKeys>(std::move(index_keys)));
 
   return request;
 }
@@ -696,19 +708,17 @@ class IndexPopulator final : public EventListener {
       cursor->Continue(nullptr, nullptr, IDBRequest::AsyncTraceState(),
                        ASSERT_NO_EXCEPTION);
 
-      IDBKey* primary_key = cursor->IdbPrimaryKey();
+      const IDBKey* primary_key = cursor->IdbPrimaryKey();
       ScriptValue value = cursor->value(script_state_.get());
 
-      IndexKeys index_keys;
-      GenerateIndexKeysForValue(script_state_->GetIsolate(), IndexMetadata(),
-                                value, &index_keys);
+      std::vector<WebVector<WebIDBKey>> index_keys_list;
+      index_keys_list.emplace_back(GenerateIndexKeysForValue(
+          script_state_->GetIsolate(), IndexMetadata(), value));
 
-      HeapVector<IndexKeys> index_keys_list;
-      index_keys_list.push_back(index_keys);
-
-      database_->Backend()->SetIndexKeys(transaction_id_, object_store_id_,
-                                         primary_key, index_ids,
-                                         index_keys_list);
+      database_->Backend()->SetIndexKeys(
+          transaction_id_, object_store_id_, WebIDBKeyView(primary_key),
+          index_ids,
+          WebVector<WebIDBDatabase::WebIndexKeys>(std::move(index_keys_list)));
     } else {
       // Now that we are done indexing, tell the backend to go
       // back to processing tasks of type NormalTask.
