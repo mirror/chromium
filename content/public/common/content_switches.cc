@@ -76,9 +76,6 @@ const char kDisable2dCanvasImageChromium[] = "disable-2d-canvas-image-chromium";
 // support for controlling access to these APIs.
 const char kDisable3DAPIs[]                 = "disable-3d-apis";
 
-// Disable gpu-accelerated 2d canvas.
-const char kDisableAccelerated2dCanvas[]    = "disable-accelerated-2d-canvas";
-
 // Disable hardware acceleration of mjpeg decode for captured frame, where
 // available.
 const char kDisableAcceleratedMjpegDecode[] =
@@ -119,12 +116,6 @@ const char kDisableDatabases[]              = "disable-databases";
 const char kDisableDomainBlockingFor3DAPIs[] =
     "disable-domain-blocking-for-3d-apis";
 
-// Disable all versions of WebGL.
-const char kDisableWebGL[] = "disable-webgl";
-
-// Disable WebGL2.
-const char kDisableWebGL2[] = "disable-webgl2";
-
 // Disable FileSystem API.
 const char kDisableFileSystem[]             = "disable-file-system";
 
@@ -137,10 +128,6 @@ const char kDisableFlashStage3d[]           = "disable-flash-stage3d";
 // Disable user gesture requirement for presentation.
 const char kDisableGestureRequirementForPresentation[] =
     "disable-gesture-requirement-for-presentation";
-
-// Disables GPU hardware acceleration.  If software renderer is not in place,
-// then the GPU process won't launch.
-const char kDisableGpu[]                    = "disable-gpu";
 
 // Prevent the compositor from using its GPU implementation.
 const char kDisableGpuCompositing[]         = "disable-gpu-compositing";

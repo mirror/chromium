@@ -90,4 +90,17 @@ const char kGpuVendorID[] = "gpu-vendor-id";
 // Ignores GPU blacklist.
 const char kIgnoreGpuBlacklist[] = "ignore-gpu-blacklist";
 
+// Disable gpu-accelerated 2d canvas.
+const char kDisableAccelerated2dCanvas[]    = "disable-accelerated-2d-canvas";
+
+// Disables GPU hardware acceleration.  If software renderer is not in place,
+// then the GPU process won't launch.
+const char kDisableGpu[]                    = "disable-gpu";
+
+// Disable all versions of WebGL.
+const char kDisableWebGL[] = "disable-webgl";
+
+// Disable WebGL2.
+const char kDisableWebGL2[] = "disable-webgl2";
+
 }  // namespace switches

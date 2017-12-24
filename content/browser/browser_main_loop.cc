@@ -107,6 +107,7 @@
 #include "content/public/common/result_codes.h"
 #include "content/public/common/service_names.mojom.h"
 #include "device/gamepad/gamepad_service.h"
+#include "gpu/config/gpu_switches.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
 #include "media/audio/audio_system.h"

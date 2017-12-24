@@ -1,3 +1,7 @@
+include_rules = [
+  "+gpu/config/gpu_switches.h",
+]
+
 specific_include_rules = {
   "headless_web_contents_browsertest.cc": [
     "+cc/base/switches.h",
