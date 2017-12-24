@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a8ae64_2579ad14",
+        "filename": "content/browser/renderer_host/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-24T01:30:14Z",
+      "side": 1,
+      "message": "You\u0027ve got this on the other side of the holidays; good.",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "6fe4a0f48158fd20ca33a648570e9fbf596fdbfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
