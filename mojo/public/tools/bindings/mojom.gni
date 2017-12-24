@@ -64,6 +64,8 @@ mojom_generator_sources = [
   "$mojom_generator_script",
 ]
 
+mojom_parsing_script = "$mojom_generator_root/mojom_bindings_generator.py"
+
 if (enable_scrambled_message_ids) {
   declare_args() {
     # The path to a file whose contents can be used as the basis for a message
@@ -316,6 +318,25 @@ template("mojom") {
     }
   }
 
+  if (defined(invoker.sources)) {
+    parser_shared_outputs =
+        [ "{{source_gen_dir}}/{{source_name_part}}.pruned-ast.p" ]
+    parser_target_name = "${target_name}__parsed"
+    action_foreach(parser_target_name) {
+      script = mojom_parsing_script
+      sources = invoker.sources
+      outputs = parser_shared_outputs
+      args = [
+        "parse",
+        "{{source}}",
+        "-o",
+        rebase_path(root_gen_dir, root_build_dir),
+        "-d",
+        rebase_path("//", root_build_dir),
+      ]
+    }
+  }
+
   # Generate code that is shared by different variants.
   if (defined(invoker.sources)) {
     common_generator_args = [
@@ -416,6 +437,7 @@ template("mojom") {
       inputs = mojom_generator_sources
       sources = invoker.sources
       deps = [
+        ":$parser_target_name",
         "//mojo/public/tools/bindings:precompile_templates",
       ]
       outputs = generator_shared_cpp_outputs
@@ -641,6 +663,7 @@ template("mojom") {
         inputs = mojom_generator_sources
         sources = invoker.sources
         deps = [
+          ":$parser_target_name",
           ":$type_mappings_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
@@ -955,6 +978,7 @@ template("mojom") {
           sources += invoker.sources
         }
         deps = [
+          ":$parser_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
         outputs = generator_js_outputs
