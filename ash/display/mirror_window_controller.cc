@@ -248,6 +248,12 @@ void MirrorWindowController::UpdateWindow(
     }
   }
 
+  if (display_info_list.empty()) {
+    // Close the mirror window if all displays are disconnected.
+    Close(true);
+    return;
+  }
+
   // Deleting WTHs for disconnected displays.
   if (mirroring_host_info_map_.size() > display_info_list.size()) {
     for (MirroringHostInfoMap::iterator iter = mirroring_host_info_map_.begin();
