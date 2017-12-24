@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30da9208_59c886aa",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "nit: I think the new hotness is:\n\nauto new_info \u003d base::MakeRefCounted\u003cHttpRawRequestResponseInfo\u003e();",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a216af3_5369e09f",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "FWIW, you can use \u003ccstdint\u003e to avoid having an old C-style include.",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa7e8bd_4b0b432e",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "Super not important, but you could do somehthing in DeepCopy like:\n\nstatic_assert(sizof(HttpRawRequestResponseInfo) \u003d\u003d 1234u, \"DeepCopy needs to be changed\");\n\nOr some such...",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f56b95_46784c3e",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "Your call, but it might be worth mentioning that this field is not present in HTTP/2 (or QUIC).",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d3eb19_d912a83f",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "Would it make sense to order these so that the Request field appear together, and the Response headers appear together?\n\nHeadersVector request_headers;\nstd::string request_headers_test;\n\nint32_t http_status_code;\nstd::string http_status_text;\nHeadersVector response_headers;\nstd::string response_headers_text;",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a98484_23b29ae9",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-24T21:42:36Z",
+      "side": 1,
+      "message": "nit: early return for the win!\n\nif (!p.get())\n  return;",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
