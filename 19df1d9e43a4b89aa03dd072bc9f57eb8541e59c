@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d38a177c_32c64a4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8bd0cec_23b53ea7",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b704ba2b_111c7f1c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09a73a3_81137329",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b704ba2b_111c7f1c",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "75021031_c4250d96",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "In the process of changing this, I realized that this enum+histogram isn\u0027t really useful. We record the histogram every time the security level is computed, which happens often and arbitrarily (e.g. when the toolbar is redrawn for non-security reasons), so at best the histogram serves to give a count of unique users with the different flag values set, but we can get that from the LoginCustomFlags histogram. So I\u0027ve removed it and removed the need to plumb |mark_http_as| back to the caller for setting SecurityInfo fields in favor of just setting them directly.",
+      "parentUuid": "4648798d_b41fa2da",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c932e56_f9b47396",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 5
@@ -138,6 +210,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1ff26a_ffef7984",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "(see above)",
+      "parentUuid": "4c932e56_f9b47396",
+      "range": {
+        "startLine": 32,
+        "startChar": 27,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2a8cd5d6_04daed30",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad72c39d_de798bc1",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffee3201_e60a1546",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 5
@@ -184,6 +304,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99ce0b9_4bf5e2de",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffee3201_e60a1546",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e083ebc6_2e24a91e",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56660b34_1359388d",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "816576e0_6cfb3017",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 5
@@ -230,6 +398,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fc3984_935f7bf7",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Hmm, good point. I filed crbug.com/797533 for this; I don\u0027t think it matters for experimentation purposes in m65.",
+      "parentUuid": "816576e0_6cfb3017",
+      "range": {
+        "startLine": 151,
+        "startChar": 26,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "984c03b4_38efb723",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Oops, no, this is leftover from before I switched to the Feature API.",
+      "parentUuid": "70dcf598_64ada0fa",
+      "range": {
+        "startLine": 728,
+        "startChar": 58,
+        "endLine": 728,
+        "endChar": 76
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3183616_f51a8abf",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -276,6 +492,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3a592e_79e1be89",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "No, I put it here to make sure that we\u0027re not checking a leftover old value in the next block, e.g.\n\n  SecurityInfo security_info;\n  ...\n  helper.GetSecurityInfo(\u0026security_info);\n  EXPECT_EQ(HTTP_SHOW_WARNING, security_info.security_level);\n  helper.set_insecure_field_edit(true);\n  // imagine GetSecurityInfo has a bug that neglects to set security_level\n  helper.GetSecurityInfo(\u0026security_info);\n  EXPECT_EQ(HTTP_SHOW_WARNING, security_info.security_level);\n  // bug isn\u0027t caught because we\u0027re checking the security_level set previously\n\nAdded a comment on the next block.",
+      "parentUuid": "a3183616_f51a8abf",
+      "range": {
+        "startLine": 741,
+        "startChar": 0,
+        "endLine": 741,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "0f646a9a_7e59d5b9",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24f5e50_720befa2",
+      "range": {
+        "startLine": 751,
+        "startChar": 1,
+        "endLine": 751,
+        "endChar": 3
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b392225_2813638a",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -322,6 +586,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d762d9_631395d9",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done, see above",
+      "parentUuid": "7b392225_2813638a",
+      "range": {
+        "startLine": 755,
+        "startChar": 61,
+        "endLine": 755,
+        "endChar": 74
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "7f1468e9_50d7dfb5",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "40fd26eb_0fb2eb96",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 769,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a43e88c7_cea8a0e1",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -368,6 +680,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a948da_d272f15c",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "a43e88c7_cea8a0e1",
+      "range": {
+        "startLine": 792,
+        "startChar": 56,
+        "endLine": 793,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "92d4aaf7_8f9e7b35",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "41fe04cc_8a16f5fd",
+      "range": {
+        "startLine": 806,
+        "startChar": 0,
+        "endLine": 806,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fe2068_0283eb53",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -408,6 +768,24 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8244b1_835c704e",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4fe2068_0283eb53",
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -434,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "f5bc2ccd_29ae3fa9",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0f51716_8d435f97",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e258b9_62c8f271",
         "filename": "ios/chrome/browser/about_flags.mm",
         "patchSetId": 5
@@ -454,6 +856,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbf98c3_5d436d80",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "oops, yes, rebase mishap",
+      "parentUuid": "51e258b9_62c8f271",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -480,6 +906,30 @@
     },
     {
       "key": {
+        "uuid": "5f0ef62e_047f9146",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 25576,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "No, per https://cs.chromium.org/chromium/src/tools/metrics/histograms/README.md?q\u003dhistograms/READ\u0026sq\u003dpackage:chromium\u0026l\u003d94",
+      "parentUuid": "668b5622_2183855a",
+      "range": {
+        "startLine": 25576,
+        "startChar": 0,
+        "endLine": 25576,
+        "endChar": 54
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b02775_b8d519a0",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -500,6 +950,30 @@
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88606627_3b2d5cdc",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-24T14:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b02775_b8d519a0",
+      "range": {
+        "startLine": 27359,
+        "startChar": 24,
+        "endLine": 27359,
+        "endChar": 34
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
