@@ -17,7 +17,7 @@
             // We want to ensure that our keepalive requests hang slightly before completing so we can validate
             // the effects of a rolling quota. To do this we will utilize trickle.py with a 1s delay. This should
             // prevent any of the Fetch's from finishing in this window.
-            const trickleURL = '../resources/trickle.py?count=1&ms=';
+            const trickleURL = '../resources/delay.py&ms=';
             const noDelay = 0;
             const standardDelay = 1000;
             function wait(ms) {
