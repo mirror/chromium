@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "41819c4d_a8b4209b",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-25T02:35:45Z",
+      "side": 1,
+      "message": "I suspect we can remove this one now?  All other usage of ChildURLLoaderFactoryGetter seems to be in content.",
+      "revId": "fc494194a51232688544760123506dd7e0589938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98be98c1_5749b353",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 4
