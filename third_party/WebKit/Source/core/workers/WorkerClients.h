@@ -35,6 +35,7 @@
 #include "core/CoreExport.h"
 #include "platform/Supplementable.h"
 #include "platform/wtf/Forward.h"
+#include "public/platform/WebWorkerFetchContext.h"
 
 namespace blink {
 
