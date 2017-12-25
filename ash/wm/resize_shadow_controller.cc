@@ -9,6 +9,7 @@
 
 #include "ash/wm/resize_shadow.h"
 #include "ui/aura/window.h"
+#include "ui/wm/core/window_util.h"
 
 namespace ash {
 
@@ -20,6 +21,7 @@ ResizeShadowController::~ResizeShadowController() {
 }
 
 void ResizeShadowController::ShowShadow(aura::Window* window, int hit_test) {
+  window = ::wm::GetToplevelWindow(window);
   ResizeShadow* shadow = GetShadowForWindow(window);
   if (!shadow)
     shadow = CreateShadow(window);
@@ -27,6 +29,7 @@ void ResizeShadowController::ShowShadow(aura::Window* window, int hit_test) {
 }
 
 void ResizeShadowController::HideShadow(aura::Window* window) {
+  window = ::wm::GetToplevelWindow(window);
   ResizeShadow* shadow = GetShadowForWindow(window);
   if (shadow)
     shadow->Hide();
@@ -34,6 +37,7 @@ void ResizeShadowController::HideShadow(aura::Window* window) {
 
 ResizeShadow* ResizeShadowController::GetShadowForWindowForTest(
     aura::Window* window) {
+  window = ::wm::GetToplevelWindow(window);
   return GetShadowForWindow(window);
 }
 
@@ -57,6 +61,9 @@ ResizeShadow* ResizeShadowController::CreateShadow(aura::Window* window) {
 }
 
 ResizeShadow* ResizeShadowController::GetShadowForWindow(aura::Window* window) {
+
+
+
   auto it = window_shadows_.find(window);
   return it != window_shadows_.end() ? it->second.get() : nullptr;
 }

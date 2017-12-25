@@ -46,6 +46,9 @@ class ShellSurface : public ShellSurfaceBase,
   // Prevents shell surface from being moved.
   void DisableMovement();
 
+  // Start an interactive move of surface.
+  void Move();
+
   // Start an interactive resize of surface. |component| is one of the windows
   // HT constants (see ui/base/hit_test.h) and describes in what direction the
   // surface should be resized.

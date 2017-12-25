@@ -147,6 +147,16 @@ void ShellSurface::DisableMovement() {
     widget_->set_movement_disabled(true);
 }
 
+void ShellSurface::Move() {
+  TRACE_EVENT0("exo", "ShellSurface::Move");
+
+  if (!widget_)
+    return;
+
+  AttemptToStartDrag(HTCAPTION);
+}
+
+
 void ShellSurface::Resize(int component) {
   TRACE_EVENT1("exo", "ShellSurface::Resize", "component", component);
 

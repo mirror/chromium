@@ -37,6 +37,8 @@ class Touch : public ui::EventHandler, public SurfaceObserver {
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
+  static gfx::Point GetLastTouchPressedLocationInRoot();
+
  private:
   // Returns the effective target for |event|.
   Surface* GetEffectiveTargetForEvent(ui::Event* event) const;
