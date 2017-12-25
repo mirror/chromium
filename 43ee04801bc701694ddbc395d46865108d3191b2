@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63252742_78288a9a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/script-tests/request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-25T00:11:29Z",
+      "side": 1,
+      "message": "Can this list be an list of RequestInits?\n\n[{mode: null},\n {mode: \u0027sameorigin\u0027},\n ...\n].foreach((init) \u003d\u003e assert_throws(TypeError(), () \u003d\u003e new Request(URL, init)));",
+      "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfde359_49bce149",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-25T00:11:29Z",
+      "side": 1,
+      "message": "We don\u0027t need this early-return.",
+      "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9e3519_ee893370",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-25T00:11:29Z",
+      "side": 1,
+      "message": "Can you add checks for the referrer policy (with tests)?",
+      "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
