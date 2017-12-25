@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "12fce5f5_f9a5e1b4",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T22:29:23Z",
+      "side": 1,
+      "message": "Actually, I\u0027m undoing this--the size of the structure is different in debug and optimized builds (and I think possibly between platforms) and it doesn\u0027t seem worth the #ifdef hassle to me.",
+      "parentUuid": "69363024_795a1da7",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01f56b95_46784c3e",
         "filename": "services/network/public/cpp/http_raw_request_response_info.h",
         "patchSetId": 4
