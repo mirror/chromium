@@ -472,7 +472,6 @@
     // https://crbug.com/523952 for testing disabling the feature.
     {
       name: "HTMLImportsStyleApplication",
-      status: "stable",
     },
     {
       name: "IDBObserver",
