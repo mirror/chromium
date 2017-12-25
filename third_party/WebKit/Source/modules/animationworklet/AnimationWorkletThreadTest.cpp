@@ -82,13 +82,13 @@ class AnimationWorkletThreadTest : public PageTestBase {
   }
 
   std::unique_ptr<AnimationWorkletThread> CreateAnimationWorkletThread() {
-    WorkerClients* clients = WorkerClients::Create();
+    Document* document = &GetDocument();
+    WorkerClients* clients = WorkerClients::Create(document);
     ProvideAnimationWorkletProxyClientTo(clients,
                                          new TestAnimationWorkletProxyClient());
 
     std::unique_ptr<AnimationWorkletThread> thread =
         AnimationWorkletThread::Create(nullptr, *reporting_proxy_);
-    Document* document = &GetDocument();
     thread->Start(
         std::make_unique<GlobalScopeCreationParams>(
             document->Url(), document->UserAgent(),
