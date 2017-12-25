@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "761863b4_723588df",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-25T04:48:05Z",
+      "side": 1,
+      "message": "How about InflightRequestTimeoutInfo?",
+      "range": {
+        "startLine": 540,
+        "startChar": 9,
+        "endLine": 540,
+        "endChar": 27
+      },
+      "revId": "f8f62f3d397dbc70098ab88e45804651a6572988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae0b67c_32eff099",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-25T04:48:05Z",
+      "side": 1,
+      "message": "There is an extra space.",
+      "range": {
+        "startLine": 555,
+        "startChar": 64,
+        "endLine": 555,
+        "endChar": 65
+      },
+      "revId": "f8f62f3d397dbc70098ab88e45804651a6572988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3d16ba_f802c88c",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-25T04:48:05Z",
+      "side": 1,
+      "message": "TimeOut vs. Timeout\n\nLooks like \"Timeout\" is dominant in this file.",
+      "revId": "f8f62f3d397dbc70098ab88e45804651a6572988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d1961c_aa96e1f4",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-25T04:48:05Z",
+      "side": 1,
+      "message": "inflight?",
+      "range": {
+        "startLine": 780,
+        "startChar": 8,
+        "endLine": 780,
+        "endChar": 15
+      },
+      "revId": "f8f62f3d397dbc70098ab88e45804651a6572988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
