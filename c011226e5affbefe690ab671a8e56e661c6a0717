@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3b15420_19c758dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-12-25T13:02:10Z",
+      "side": 1,
+      "message": "This CL enables NEON support in openH264 on ChromeOS (by rolling openH264, Sheng-hao added the support in upstream openH264 already) and turns on multi-threaded software encoding. We need these optimizations because the H264 software encoding on ChromeOS platforms is awful.\n\nSo the description here is pretty close to what you suggest. The \"want to\" part is a bit misleading though. :)",
+      "parentUuid": "dc88a34f_2c2f64e6",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d884e1_410481ba",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -64,6 +88,52 @@
         "startChar": 0,
         "endLine": 544,
         "endChar": 115
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ca3b5e_76c2a26f",
+        "filename": "third_party/openh264/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-12-25T13:02:10Z",
+      "side": 1,
+      "message": "If you want to play it safe, we can restrict these defines inside a\n\n  if (is_chromeos) { ... }\n\nsection. We\u0027re not sure about how turning on NEON would affect other boards, and we don\u0027t have a easy way to verify it on other boards either.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493b903a_822e1c2c",
+        "filename": "third_party/openh264/openh264_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-12-25T13:02:10Z",
+      "side": 1,
+      "message": "nit: the other paths do not have the trailing /",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 47
       },
       "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
