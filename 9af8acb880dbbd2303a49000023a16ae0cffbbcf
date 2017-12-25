@@ -69,6 +69,24 @@
       "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2260a72_58804b8b",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-25T21:29:55Z",
+      "side": 1,
+      "message": "Could QuotedPrintableEncode just handle this as well? We already have header-specific behavior, so it seems like it would be reasonable to encode the additional line wrapping logic there as well.",
+      "parentUuid": "c2471cb8_8dc4016e",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
