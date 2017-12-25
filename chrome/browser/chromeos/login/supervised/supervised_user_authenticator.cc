@@ -33,7 +33,7 @@ void TriggerResolve(SupervisedUserAuthenticator::AuthAttempt* attempt,
                     bool success,
                     cryptohome::MountError return_code) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  attempt->RecordCryptohomeStatus(success, return_code);
+  attempt->RecordCryptohomeStatus(return_code);
   resolver->Resolve();
 }
 
@@ -281,18 +281,15 @@ SupervisedUserAuthenticator::AuthAttempt::AuthAttempt(
       password(password),
       add_key(add_key_attempt),
       cryptohome_complete_(false),
-      cryptohome_outcome_(false),
       hash_obtained_(false),
       cryptohome_code_(cryptohome::MOUNT_ERROR_NONE) {}
 
 SupervisedUserAuthenticator::AuthAttempt::~AuthAttempt() {}
 
 void SupervisedUserAuthenticator::AuthAttempt::RecordCryptohomeStatus(
-    bool cryptohome_outcome,
     cryptohome::MountError cryptohome_code) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   cryptohome_complete_ = true;
-  cryptohome_outcome_ = cryptohome_outcome;
   cryptohome_code_ = cryptohome_code;
 }
 
@@ -310,7 +307,7 @@ bool SupervisedUserAuthenticator::AuthAttempt::cryptohome_complete() {
 
 bool SupervisedUserAuthenticator::AuthAttempt::cryptohome_outcome() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return cryptohome_outcome_;
+  return cryptohome_code() == cryptohome::MOUNT_ERROR_NONE;
 }
 
 cryptohome::MountError
