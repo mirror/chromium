@@ -26,8 +26,7 @@ class CHROMEOS_EXPORT TestAttemptState : public AuthAttemptState {
   void PresetOnlineLoginStatus(const AuthFailure& outcome);
 
   // Act as though an cryptohome login attempt completed already.
-  void PresetCryptohomeStatus(bool cryptohome_outcome,
-                              cryptohome::MountError cryptohome_code);
+  void PresetCryptohomeStatus(cryptohome::MountError cryptohome_code);
 
   // To allow state to be queried on the main thread during tests.
   bool online_complete() override;
