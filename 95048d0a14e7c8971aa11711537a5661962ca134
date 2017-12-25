@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b02a36_c55735b1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T01:19:03Z",
+      "side": 1,
+      "message": "Does inner_type.cpp_type_has_null_value work?",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c62cff9_9b793771",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T01:19:03Z",
+      "side": 1,
+      "message": "Thanks for adding this check :)",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
