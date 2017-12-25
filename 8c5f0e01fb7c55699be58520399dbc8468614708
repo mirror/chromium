@@ -2,6 +2,332 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b24501a_2765bc22",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit:\n\"Show the Google Pay logo in the Autofill credit card dropdown\"\n\nAlso, no period on this; it\u0027s the header",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5d6e90_91dc2c6a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit:\n\"If enabled, shows the Google Pay logo in the Autofill credit card dropdown.\"",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561be720_f143540f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit:\n\"Show a new Autofill settings string in the Autofill dropdown\"",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb72e968_a3c56428",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit:\n\"If enabled, shows a new Autofill settings string in the Autofill dropdown.\"",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9bbf4c_ee2dd287",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m making two experiment name change suggestions in this file.  I know it\u0027ll take a bit of changing since the names are everywhere, but I want to make sure they\u0027re as clear as possible since the names will come up when we try to launch them...",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91771d83_20c21575",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit: Change \"Downstream\" to \"Dropdown\", because this CL doesn\u0027t actually have anything to do with the syncing or unmasking parts of the Chrome Downstream project.  It\u0027s all relevant to the Autofill dropdown suggestions only.",
+      "range": {
+        "startLine": 197,
+        "startChar": 43,
+        "endLine": 197,
+        "endChar": 53
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca1f76b_e77ff36f",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit: s/Setting/Settings",
+      "range": {
+        "startLine": 220,
+        "startChar": 39,
+        "endLine": 220,
+        "endChar": 46
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf4ded2_c80b0db1",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "s/Autofill credit card downstream/the Autofill credit card dropdown",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3525eb7_b74f29d8",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "s/options/settings\nI assume this was changed a long time ago and no one changed the comment.  It would also explain why there are two different strings for credit card and non-credit card Autofill, even though they say the same thing.\n\nAlso, it might be nice to mention that the string is \u0027Autofill settings\u0027 if the experiment is enabled.",
+      "range": {
+        "startLine": 367,
+        "startChar": 33,
+        "endLine": 367,
+        "endChar": 40
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d7ab95_0ddab535",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Ah, so the current plan is to only show the logo if there are *no* local cards, eh?",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3a0dc7e_2005cf7f",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Please add to the comment explaining what |is_all_server_suggestions| means.  (Though I assume it means there are zero local suggestions, I don\u0027t know if that means there\u0027s also 1+ server suggestions.)",
+      "range": {
+        "startLine": 118,
+        "startChar": 55,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e98dc9a_ba81dad7",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "+ test for ShouldNotShowGooglePayIconIfSuggestionsContainLocalCards",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d07508_584f9a21",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "s/on/off",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 12
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488a3e44_2ae13d43",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Can use the same type of code as above; there\u0027s a function for Disable too:\n\nscoped_feature_list_.InitAndDisableFeature(\n      kAutofillCreditCardDownstreamGooglePayBranding);",
+      "range": {
+        "startLine": 765,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 80
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c72e24d_227ad68e",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "s/on/off",
+      "range": {
+        "startLine": 813,
+        "startChar": 10,
+        "endLine": 813,
+        "endChar": 12
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7057c1_4b6cd5c0",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Ditto, just use InitAndDisableFeature(~)",
+      "range": {
+        "startLine": 815,
+        "startChar": 40,
+        "endLine": 815,
+        "endChar": 0
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f157dec7_828da462",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 12
@@ -18,6 +344,252 @@
         "startChar": 2,
         "endLine": 1577,
         "endChar": 3
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad9cd4c_b8592ce1",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit:\n// Check if all the suggestions are server cards (come from Google Payments).",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00432b0_dd780278",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Add to the comment about what |is_all_server_cards| means",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1112a053_5f3b39cf",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Nit: Would prefer is_all_server_cards (plural to match is_all_server_suggestions)",
+      "range": {
+        "startLine": 409,
+        "startChar": 12,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb14f848_27dfc977",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Huh.  Is it actually better to make a pointer to the boolean, or just copy the boolean?",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bebbe00_da57ed37",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit: Move this function under the other OnSuggestionsReturned(~) to keep them in the same order as the .h file",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4986a414_94404fa3",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nits:\ns/comes/come\ns/Payment server/Google Payments",
+      "range": {
+        "startLine": 564,
+        "startChar": 50,
+        "endLine": 564,
+        "endChar": 76
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df44986e_faedf4df",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6103,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit: are true/is true\n(here and below)",
+      "range": {
+        "startLine": 6103,
+        "startChar": 39,
+        "endLine": 6103,
+        "endChar": 42
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c11d75d_a7f2fe82",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6104,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nit: full and masked server cards on file\n\nthat, or masked_server should have an underscore to match full_server :)",
+      "range": {
+        "startLine": 6104,
+        "startChar": 3,
+        "endLine": 6104,
+        "endChar": 42
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3956f6a8_febc6fe5",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6123,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "nits:\ns/there is one/there is at least one\ns/one file/on file",
+      "range": {
+        "startLine": 6123,
+        "startChar": 76,
+        "endLine": 6123,
+        "endChar": 79
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0ad006_b53dafe4",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6129,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "Please add at least one server card to this test too.  I was going to suggest a third test with both of them, but I have a feeling Mathieu would just say to remove this test in that case. :)",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d8c011_6aee83a3",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "How about \"This string is deprecated in favor of IDS_AUTOFILL_SETTINGS_POPUP.\" to explain why it\u0027s deprecated?  Both here and in the other 3 places below.",
+      "range": {
+        "startLine": 135,
+        "startChar": 142,
+        "endLine": 135,
+        "endChar": 154
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2d999f_cc4a6dd6",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-25T04:24:52Z",
+      "side": 1,
+      "message": "If this is exactly the same, any reason we can\u0027t just use IDS_AUTOFILL_SETTINGS_POPUP and stop using the _CREDIT_CARD_OPTIONS_ ones altogether?",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 0
       },
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
