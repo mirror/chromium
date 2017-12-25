@@ -16,6 +16,24 @@
       "revId": "3fb5e89c4d8831ea12c1f08ebf9f504e88ddc5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5e5960_c53cbce7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-25T07:31:29Z",
+      "side": 1,
+      "message": "IIUC, the error was based on the linker to be used.\nWhy don\u0027t we check it, instead of the build settings?",
+      "parentUuid": "2fb91def_6c447325",
+      "revId": "3fb5e89c4d8831ea12c1f08ebf9f504e88ddc5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
