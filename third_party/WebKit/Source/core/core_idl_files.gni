@@ -494,6 +494,8 @@ core_dependency_idl_files =
                     "dom/ParentNode.idl",
                     "dom/events/EventListener.idl",
                     "events/NavigatorEvents.idl",
+                    "fetch/WindowFetch.idl",
+                    "fetch/WorkerFetch.idl",
                     "fileapi/URLFileAPI.idl",
                     "frame/NavigatorAutomationInformation.idl",
                     "frame/NavigatorConcurrentHardware.idl",
@@ -666,7 +668,12 @@ webcore_testing_idl_with_modules_dependency_files =
                   "abspath")
 
 webcore_testing_dependency_idl_files =
-    get_path_info([ "testing/OriginTrialsTestPartial.idl" ], "abspath")
+    get_path_info([
+                    "fetch/testing/InternalsFetch.idl",
+                    "fetch/testing/WorkerInternalsFetch.idl",
+                    "testing/OriginTrialsTestPartial.idl",
+                  ],
+                  "abspath")
 
 if (snake_case_source_files) {
   generated_webcore_testing_idl_files =
