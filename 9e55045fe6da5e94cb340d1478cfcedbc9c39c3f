@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e6f6032_3b979c3c",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T05:43:23Z",
+      "side": 1,
+      "message": "Done.\n\nNote I used a current_ prefix where necessary to disambiguate the object that is a part of the current iteration and the new one being constructed.",
+      "parentUuid": "4fa4ba87_61bd1116",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae0221f_911e799a",
         "filename": "chromeos/cryptohome/cryptohome_util.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b700383d_efbf4cba",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T05:43:23Z",
+      "side": 1,
+      "message": "Done.\n\nNote for below (CryptohomeErrorToMountError) this actually showed that we are not handling 13 cases explicitly. For these I\u0027ve put them at the bottom with a TODO (keeping the NOTREACHED() call) to split the error codes. These are named MountError codes, but they\u0027re used for more than just Mount...perhaps they should have different error spaces or map down to a canonical one.",
+      "parentUuid": "cae0221f_911e799a",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d17ef35_00a639bf",
         "filename": "chromeos/cryptohome/cryptohome_util.h",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "79645f07_9d73971d",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T05:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d17ef35_00a639bf",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f66adfb0_0efdef58",
         "filename": "chromeos/cryptohome/cryptohome_util.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c709fe_0aa82876",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T05:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f66adfb0_0efdef58",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
