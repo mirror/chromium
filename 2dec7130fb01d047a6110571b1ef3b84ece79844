@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd9b45d_708f5a7c",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-25T21:28:34Z",
+      "side": 1,
+      "message": "Is BindToCurrentLoop really needed here and below?",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1995fb3_9279f9a6",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-25T21:28:34Z",
+      "side": 1,
+      "message": "Nit: just unconditionally reset, it\u0027s simpler",
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c2143a_f2add00b",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-25T21:28:34Z",
+      "side": 1,
+      "message": "Nit: space before SendFrame()",
+      "range": {
+        "startLine": 76,
+        "startChar": 59,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39059be_97bc7b15",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-25T21:28:34Z",
+      "side": 1,
+      "message": "Nit: make these comments a bit more detailed\n\n// Consumes a frame of |size| from the associated Mojo data pipe.\nvoid ReadFrame(uint32_t size);\n\n// Something something about pushing the data out to the cast device.\nvoid TrySendFrame();",
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
