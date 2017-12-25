@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
@@ -152,7 +153,11 @@ FaviconHandler::FaviconHandler(
     FaviconService* service,
     Delegate* delegate,
     FaviconDriverObserver::NotificationIconType handler_type)
-    : handler_type_(handler_type),
+    : cancelable_task_tracker_for_page_url_(
+          base::MakeUnique<base::CancelableTaskTracker>()),
+      cancelable_task_tracker_for_candidates_(
+          base::MakeUnique<base::CancelableTaskTracker>()),
+      handler_type_(handler_type),
       got_favicon_from_history_(false),
       initial_history_result_expired_or_incomplete_(false),
       redownload_icons_(false),
@@ -188,8 +193,11 @@ favicon_base::IconTypeSet FaviconHandler::GetIconTypesFromHandlerType(
 }
 
 void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
-  cancelable_task_tracker_for_page_url_.TryCancelAll();
-  cancelable_task_tracker_for_candidates_.TryCancelAll();
+  // This cancels all tracked tasks.
+  cancelable_task_tracker_for_page_url_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
+  cancelable_task_tracker_for_candidates_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
 
   // We generally clear |page_urls_| and start clean unless there are obvious
   // reasons to think URLs share favicons: the navigation must be within the
@@ -226,7 +234,9 @@ void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
       last_page_url_, icon_types_, preferred_icon_size(),
       base::Bind(&FaviconHandler::OnFaviconDataForInitialURLFromFaviconService,
                  base::Unretained(this)),
-      &cancelable_task_tracker_for_page_url_);
+      cancelable_task_tracker_for_page_url_.get());
+
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 bool FaviconHandler::UpdateFaviconCandidate(
@@ -319,6 +329,11 @@ void FaviconHandler::NotifyFaviconUpdated(const GURL& icon_url,
   notification_icon_type_ = icon_type;
 }
 
+void FaviconHandler::MaybeNotifyFaviconLoadingCompleted() {
+  if (!HasPendingTasks())
+    delegate_->OnFaviconLoadingCompleted();
+}
+
 void FaviconHandler::OnUpdateCandidates(
     const GURL& page_url,
     const std::vector<FaviconURL>& candidates,
@@ -339,7 +354,8 @@ void FaviconHandler::OnUpdateCandidates(
   candidates_received_ = true;
   error_other_than_404_found_ = false;
   non_manifest_original_candidates_ = candidates;
-  cancelable_task_tracker_for_candidates_.TryCancelAll();
+  cancelable_task_tracker_for_candidates_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
   manifest_download_request_.Cancel();
   image_download_request_.Cancel();
   current_candidate_index_ = 0u;
@@ -366,6 +382,8 @@ void FaviconHandler::OnUpdateCandidates(
       /*icon_url=*/manifest_url_, favicon_base::IconType::kWebManifestIcon,
       base::Bind(&FaviconHandler::OnFaviconDataForManifestFromFaviconService,
                  base::Unretained(this)));
+
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 void FaviconHandler::OnFaviconDataForManifestFromFaviconService(
@@ -397,6 +415,14 @@ void FaviconHandler::OnFaviconDataForManifestFromFaviconService(
     delegate_->DownloadManifest(manifest_url_,
                                 manifest_download_request_.callback());
   }
+
+  // This method is a reply for a task tracked by CancelableTaskTracker. If we
+  // call MaybeNotifyFaviconLoadingCompleted() without resetting
+  // cancelable_task_tracker_for_candidates_ then HasTrackedTasks() would be
+  // true and observers wouldn't be notified.
+  cancelable_task_tracker_for_candidates_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 void FaviconHandler::OnDidDownloadManifest(
@@ -419,6 +445,8 @@ void FaviconHandler::OnDidDownloadManifest(
   manifest_url_ = GURL();
 
   OnGotFinalIconURLCandidates(non_manifest_original_candidates_);
+
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 void FaviconHandler::OnGotFinalIconURLCandidates(
@@ -556,6 +584,8 @@ void FaviconHandler::OnDidDownloadFavicon(
     current_candidate_index_ = candidates_.size();
     best_favicon_ = DownloadedFavicon();
   }
+
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 const std::vector<GURL> FaviconHandler::GetIconURLs() const {
@@ -565,11 +595,11 @@ const std::vector<GURL> FaviconHandler::GetIconURLs() const {
   return icon_urls;
 }
 
-bool FaviconHandler::HasPendingTasksForTest() {
+bool FaviconHandler::HasPendingTasks() {
   return !image_download_request_.IsCancelled() ||
          !manifest_download_request_.IsCancelled() ||
-         cancelable_task_tracker_for_page_url_.HasTrackedTasks() ||
-         cancelable_task_tracker_for_candidates_.HasTrackedTasks();
+         cancelable_task_tracker_for_page_url_->HasTrackedTasks() ||
+         cancelable_task_tracker_for_candidates_->HasTrackedTasks();
 }
 
 void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
@@ -610,6 +640,14 @@ void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
 
   if (candidates_received_)
     OnGotInitialHistoryDataAndIconURLCandidates();
+
+  // This method is a reply for a task tracked by CancelableTaskTracker. If we
+  // call MaybeNotifyFaviconLoadingCompleted() without resetting
+  // cancelable_task_tracker_for_page_url_ then HasTrackedTasks() would be true
+  // and observers wouldn't be notified.
+  cancelable_task_tracker_for_page_url_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 void FaviconHandler::DownloadCurrentCandidateOrAskFaviconService() {
@@ -637,7 +675,7 @@ void FaviconHandler::GetFaviconAndUpdateMappingsUnlessIncognito(
   // favicon given the favicon URL.
   if (delegate_->IsOffTheRecord()) {
     service_->GetFavicon(icon_url, icon_type, preferred_icon_size(), callback,
-                         &cancelable_task_tracker_for_candidates_);
+                         cancelable_task_tracker_for_candidates_.get());
   } else {
     // Ask the history service for the icon. This does two things:
     // 1. Attempts to fetch the favicon data from the database.
@@ -646,7 +684,7 @@ void FaviconHandler::GetFaviconAndUpdateMappingsUnlessIncognito(
     // This is asynchronous. The history service will call back when done.
     service_->UpdateFaviconMappingsAndFetch(
         page_urls_, icon_url, icon_type, preferred_icon_size(), callback,
-        &cancelable_task_tracker_for_candidates_);
+        cancelable_task_tracker_for_candidates_.get());
   }
 }
 
@@ -669,6 +707,13 @@ void FaviconHandler::OnFaviconData(const std::vector<
     ScheduleImageDownload(current_candidate()->icon_url,
                           current_candidate()->icon_type);
   }
+  // This method is a reply for a task tracked by CancelableTaskTracker. If we
+  // call MaybeNotifyFaviconLoadingCompleted() without resetting
+  // cancelable_task_tracker_for_candidates_ then HasTrackedTasks() would be
+  // true and observers wouldn't be notified.
+  cancelable_task_tracker_for_candidates_ =
+      base::MakeUnique<base::CancelableTaskTracker>();
+  MaybeNotifyFaviconLoadingCompleted();
 }
 
 void FaviconHandler::ScheduleImageDownload(const GURL& image_url,

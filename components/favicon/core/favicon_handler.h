@@ -126,6 +126,11 @@ class FaviconHandler {
     virtual void OnFaviconDeleted(
         const GURL& page_url,
         FaviconDriverObserver::NotificationIconType notification_icon_type) = 0;
+
+    // Notifies that a favicon handler stopped waiting for a download to
+    // complete or for data from the history database and there is no pending
+    // tasks left.
+    virtual void OnFaviconLoadingCompleted() = 0;
   };
 
   // |service| and |delegate| must not be nullptr and must outlive this class.
@@ -153,8 +158,8 @@ class FaviconHandler {
   const std::vector<GURL> GetIconURLs() const;
 
   // Returns whether the handler is waiting for a download to complete or for
-  // data from the FaviconService. Reserved for testing.
-  bool HasPendingTasksForTest();
+  // data from the FaviconService.
+  bool HasPendingTasks();
 
   // Get the maximal icon size in pixels for a handler of type |handler_type|.
   // |candidates_from_web_manifest| represents whether the icons are coming
@@ -275,6 +280,8 @@ class FaviconHandler {
                             favicon_base::IconType icon_type,
                             const gfx::Image& image);
 
+  void MaybeNotifyFaviconLoadingCompleted();
+
   // Return the current candidate if any.
   const FaviconCandidate* current_candidate() const {
     return current_candidate_index_ < candidates_.size()
@@ -290,11 +297,13 @@ class FaviconHandler {
 
   // Used for the GetFaviconForPageURL() request looking up the page URL,
   // triggered in FetchFavicon().
-  base::CancelableTaskTracker cancelable_task_tracker_for_page_url_;
+  std::unique_ptr<base::CancelableTaskTracker>
+      cancelable_task_tracker_for_page_url_;
 
   // Used for various FaviconService methods triggered while processing
   // candidates.
-  base::CancelableTaskTracker cancelable_task_tracker_for_candidates_;
+  std::unique_ptr<base::CancelableTaskTracker>
+      cancelable_task_tracker_for_candidates_;
 
   const FaviconDriverObserver::NotificationIconType handler_type_;
 

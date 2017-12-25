@@ -67,6 +67,10 @@ class FaviconDriverObserver {
                                 bool icon_url_changed,
                                 const gfx::Image& image) = 0;
 
+  // Called when all the favicon handlers finish fetching data. This means
+  // there are no more pending tasks in favicon handlers.
+  virtual void OnFaviconLoadingCompleted() {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(FaviconDriverObserver);
 };

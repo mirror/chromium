@@ -31,4 +31,10 @@ void FaviconDriver::NotifyFaviconUpdatedObservers(
   }
 }
 
+void FaviconDriver::NotifyFaviconLoadingCompletedObservers() {
+  for (FaviconDriverObserver& observer : observer_list_) {
+    observer.OnFaviconLoadingCompleted();
+  }
+}
+
 }  // namespace favicon
