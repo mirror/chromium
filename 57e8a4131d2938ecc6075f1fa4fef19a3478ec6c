@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7e498af4_ec8d1e8d",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-25T10:07:30Z",
+      "side": 1,
+      "message": "TotalSizeOfCommittedPages() returns bytes. We should rename the method and add a comment about it...",
+      "parentUuid": "becd43a1_768a7b85",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe836727_53b73d36",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 1
