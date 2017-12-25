@@ -303,6 +303,7 @@ int RowsPerCopy(size_t plane, VideoPixelFormat format, int width) {
 void CopyRowsToI420Buffer(int first_row,
                           int rows,
                           int bytes_per_row,
+                          size_t bit_depth,
                           const uint8_t* source,
                           int source_stride,
                           uint8_t* output,
@@ -315,9 +316,16 @@ void CopyRowsToI420Buffer(int first_row,
     DCHECK_LE(bytes_per_row, std::abs(dest_stride));
     DCHECK_LE(bytes_per_row, source_stride);
 
-    libyuv::CopyPlane(source + source_stride * first_row, source_stride,
-                      output + dest_stride * first_row, dest_stride,
-                      bytes_per_row, rows);
+    if (bit_depth == 8) {
+      libyuv::CopyPlane(source + source_stride * first_row, source_stride,
+                        output + dest_stride * first_row, dest_stride,
+                        bytes_per_row, rows);
+    } else {
+      libyuv::Convert16To8Plane(
+          (const uint16*)(source + source_stride * first_row),
+          source_stride / 2, output + dest_stride * first_row, dest_stride,
+          16384, bytes_per_row, rows);
+    }
   }
   done.Run();
 }
@@ -422,8 +430,10 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
   DCHECK(media_task_runner_->BelongsToCurrentThread());
   // Lazily initialize output_format_ since VideoFrameOutputFormat() has to be
   // called on the media_thread while this object might be instantiated on any.
-  if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED)
-    output_format_ = gpu_factories_->VideoFrameOutputFormat();
+  if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED) {
+    output_format_ =
+        gpu_factories_->VideoFrameOutputFormat(video_frame->BitDepth());
+  }
 
   if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED) {
     frame_ready_cb.Run(video_frame);
@@ -433,6 +443,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
     // Supported cases.
     case PIXEL_FORMAT_YV12:
     case PIXEL_FORMAT_I420:
+    case PIXEL_FORMAT_YUV420P10:
       break;
     // Unsupported cases.
     case PIXEL_FORMAT_I420A:
@@ -451,7 +462,6 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
     case PIXEL_FORMAT_YUV420P9:
     case PIXEL_FORMAT_YUV422P9:
     case PIXEL_FORMAT_YUV444P9:
-    case PIXEL_FORMAT_YUV420P10:
     case PIXEL_FORMAT_YUV422P10:
     case PIXEL_FORMAT_YUV444P10:
     case PIXEL_FORMAT_YUV420P12:
@@ -593,11 +603,12 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
           const int bytes_per_row = VideoFrame::RowBytes(
               i, VideoFormat(output_format_), coded_size.width());
           worker_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&CopyRowsToI420Buffer, row, rows_to_copy,
-                                    bytes_per_row, video_frame->visible_data(i),
-                                    video_frame->stride(i),
-                                    static_cast<uint8_t*>(buffer->memory(0)),
-                                    buffer->stride(0), barrier));
+              FROM_HERE,
+              base::Bind(&CopyRowsToI420Buffer, row, rows_to_copy,
+                         bytes_per_row, video_frame->BitDepth(),
+                         video_frame->visible_data(i), video_frame->stride(i),
+                         static_cast<uint8_t*>(buffer->memory(0)),
+                         buffer->stride(0), barrier));
           break;
         }
         case GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB:
