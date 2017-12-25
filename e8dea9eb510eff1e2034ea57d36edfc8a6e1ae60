@@ -34,6 +34,24 @@
       "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d9b0a1_5d2626bb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T17:23:36Z",
+      "side": 1,
+      "message": "Makes sense, thanks. We\u0027re going to be pushing back pretty hard on additional calls to UpdateSourceURL going forward. I guess this one sneaks through.\n\nWe\u0027ll need to figure out how to expose ukm::GetSourceIdForWebContentsDocument to content/ code. We will send you a patch to update your code to use this new method once it is available.",
+      "parentUuid": "8f8c02d1_ae7823e7",
+      "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
