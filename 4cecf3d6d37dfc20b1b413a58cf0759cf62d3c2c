@@ -22,6 +22,30 @@
       "revId": "4cecf3d6d37dfc20b1b413a58cf0759cf62d3c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba6d576_7dd86777",
+        "filename": "components/favicon/core/favicon_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187549
+      },
+      "writtenOn": "2017-12-25T10:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1d16522_b71a8092",
+      "range": {
+        "startLine": 35,
+        "startChar": 57,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "4cecf3d6d37dfc20b1b413a58cf0759cf62d3c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
