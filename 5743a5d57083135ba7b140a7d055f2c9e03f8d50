@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3fd96c_d7a52d10",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30da9208_59c886aa",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a216af3_5369e09f",
         "filename": "services/network/public/cpp/http_raw_request_response_info.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35980f30_d02b4c3e",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a216af3_5369e09f",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "69363024_795a1da7",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa7e8bd_4b0b432e",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f56b95_46784c3e",
         "filename": "services/network/public/cpp/http_raw_request_response_info.h",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "82823930_b01fa011",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "I\u0027ll mention it isn\u0027t present in HTTP/2; I think of QUIC as implied by that.",
+      "parentUuid": "01f56b95_46784c3e",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58d3eb19_d912a83f",
         "filename": "services/network/public/cpp/http_raw_request_response_info.h",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-24T21:42:36Z",
       "side": 1,
       "message": "Would it make sense to order these so that the Request field appear together, and the Response headers appear together?\n\nHeadersVector request_headers;\nstd::string request_headers_test;\n\nint32_t http_status_code;\nstd::string http_status_text;\nHeadersVector response_headers;\nstd::string response_headers_text;",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd56f30_b7da7c92",
+        "filename": "services/network/public/cpp/http_raw_request_response_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "I\u0027m not inclined to make too many gratuitous changes from the original, and I don\u0027t have strong feelings in this area.  If you care a lot, ping me again, but otherwise I\u0027m going to leave it.",
+      "parentUuid": "58d3eb19_d912a83f",
       "range": {
         "startLine": 33,
         "startChar": 36,
@@ -137,6 +257,30 @@
       "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eec2c4_554a44d3",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-25T20:43:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a98484_23b29ae9",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 0
+      },
+      "revId": "5743a5d57083135ba7b140a7d055f2c9e03f8d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
