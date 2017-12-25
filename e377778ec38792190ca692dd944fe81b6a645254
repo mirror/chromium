@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75d622e3_2ca34478",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96a081a0_892c7c4c",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9ee4a6_8e945dd7",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e377778ec38792190ca692dd944fe81b6a645254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1ebbad_a8189328",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b9ee4a6_8e945dd7",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6285813f_b65e118a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Done.\n\nThis is why I like code review :) simpler code.\n\nWhen I\u0027m focused on a certain task I sometimes don\u0027t even notice existing issues like these!",
+      "parentUuid": "209cc17d_cb9a9342",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab81ab49_132bdaf8",
         "filename": "chromeos/dbus/cryptohome_client.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "e377778ec38792190ca692dd944fe81b6a645254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefd6424_824ca89f",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Not relevant anymore, fell back on old parsing code in CryptohomeClient.",
+      "parentUuid": "ab81ab49_132bdaf8",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7ef2f55a_21abca71",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83454c92_6eeb8fb9",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff99e69_6f53d57d",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ba28edf6_6b923202",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff99e69_6f53d57d",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb59b31a_09bc9f20",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "e377778ec38792190ca692dd944fe81b6a645254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746dd455_208f3092",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-25T11:37:34Z",
+      "side": 1,
+      "message": "As per the other comment, I added accessors for individual fields but am still storing the requests (not visible to callers)\n\nI couldn\u0027t come up with a better name for these stored requests which are not actually directly visible to callers. As it is sort of an implementation detail of the fake, I have left-as-is to describe what is being stored. If you have a better name for the request fields please let me know.\n\nSimilarly, for certain names the extra verbosity does not seem useful (e.g. the minimal migration for MigrateToDircrypto) so I\u0027ve kept some of the accessor names from patchset 4.",
+      "parentUuid": "cb59b31a_09bc9f20",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
