@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb91def_6c447325",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T05:01:09Z",
+      "side": 1,
+      "message": "I would imagine the link error the previous CL caused isn\u0027t specific to the official build? I\u0027m not sure but checking is_asan is more reliable?",
+      "revId": "3fb5e89c4d8831ea12c1f08ebf9f504e88ddc5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
