@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81be169a_e4b19934",
+        "filename": "cc/test/pixel_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-25T14:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9f668d_cda0e28a",
+      "revId": "50e00b0fc0961549ef37c14619b270059e9d216d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d06771_b508101f",
         "filename": "cc/test/render_pass_test_utils.cc",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-22T20:52:50Z",
       "side": 1,
       "message": "nit: Can you bind a nop lambda here i.e. base::BindRepeating([](const vector\u003cviz::ReturnedResource\u003e\u0026){}) and remove CollectResources? It wasn\u0027t clear to me that CollectResources does nothing given that we provide \u0026returned_to_child as a parameter.",
+      "range": {
+        "startLine": 468,
+        "startChar": 27,
+        "endLine": 468,
+        "endChar": 43
+      },
+      "revId": "50e00b0fc0961549ef37c14619b270059e9d216d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875f3005_550d874c",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-25T14:28:56Z",
+      "side": 1,
+      "message": "Lambda is done.\n\nCollectResources need to collect unused resources when DeclareUsedResourcesFromChild or DestroyChild being called, then child can call ReceiveReturnsFromParent with the collected resource. Otherwise, can be empty. In our case, SoftwareRendererTest will automatically call DestroyChildInternal, so no need to collect resources.",
+      "parentUuid": "63d06771_b508101f",
       "range": {
         "startLine": 468,
         "startChar": 27,
