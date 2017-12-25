@@ -34,6 +34,24 @@
       "revId": "3fb5e89c4d8831ea12c1f08ebf9f504e88ddc5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06924da_9af1b2aa",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-12-25T08:23:25Z",
+      "side": 1,
+      "message": "I just checked switching is_official_build flag caused the linker error.\n\nTo know exact flag causing the issue, I compared the flag w/wo is_official_build, and found that appearance of /GL option caused the error.\ne.g. https://chromium.googlesource.com/chromium/src/+/bf39d455c09afa1da8eee86e14331d729d655c42/build/config/compiler/BUILD.gn#1697\n\nI guess, link.exe cannot make binary smaller than its limit from V8GeneratedCoreBindings with /LTCG implied by /GL option.\nhttps://docs.microsoft.com/en-us/cpp/build/reference/gl-whole-program-optimization\nhttps://docs.microsoft.com/en-us/cpp/build/reference/ltcg-link-time-code-generation\n\nAdded few comments to explain this.",
+      "parentUuid": "5d5e5960_c53cbce7",
+      "revId": "3fb5e89c4d8831ea12c1f08ebf9f504e88ddc5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
