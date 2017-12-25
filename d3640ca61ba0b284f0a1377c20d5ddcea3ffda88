@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f51de381_a5577a60",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T18:18:38Z",
+      "side": 1,
+      "message": "Ah, ok, i see now that if the source\u0027s URL isn\u0027t in the url_whitelist to begin with, we discard it. so my earlier concern about unsent_sources containing non-whitelisted sources isn\u0027t valid - unsent_sources now only contains whitelisted URLs.\n\nCould we add a UMA counter here to keep track of how often we drop a source because it doesn\u0027t match the whitelist? This will help us to debug if some teams find that some of their sources are missing.",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45656cca_464070fa",
         "filename": "components/ukm/ukm_recorder_impl.cc",
         "patchSetId": 3
@@ -13,6 +30,75 @@
       "writtenOn": "2017-12-24T15:59:39Z",
       "side": 1,
       "message": "Looking at this more, I think unsent_sources contains sources that we aren\u0027t sure should be sent yet (might not be whitelisted, and might be associated with non-whitelisted entries), so i don\u0027t think we want to compute carryover_urls_whitelist_ based on the contents of unsent_sources.\n\nA couple options:\n1.  we only send sources that match a URL from the current set of whitelisted sources, accepting that if whitelisted source A is sent before non-whitelisted source B with the same URL, non-whitelisted source B\u0027s URL won\u0027t be sent.\n2. we retain URLs of whitelisted sources for a brief period of time, to mitigate the drawbacks to (1).\n\nIn practice web pages can be open for a very long time, so hanging on to URLs of whitelisted sources indefinitely seems like it isn\u0027t a realistic option memory-wise if we want to make any guarantees about always sending URLs that were known to be associated with whitelisted sources at some time in the past.\n\nSo my inclination is to do (1), which is simple, and creates incentive for UKM implementers to migrate to navigation-based source ids if they don\u0027t want their URLs to be dropped. It was hard for me to follow the current logic as I think we\u0027re just now getting to a point where the complexity becomes difficult to reason about, so I think keeping the code simpler has significant benefits.\n\nA third option would be to enumerate the committed URLs of all currently active WebContents and use those, plus the URLs from whitelisted sources, as our list of allowed URLs. This should mitigate most of the issues with lost sources (though not perfect). But IIRC enumerating tabs / webcontents is sadly more complex than it needs to be (might require a different codepath for Android, IIRC, with TabStripModel in one case and something else on Android last I checked), though maybe it has become less complex since I last looked into it.\n\nLet\u0027s revisit this after the holiday and meet with Alexei and Rob once they are back, to figure out which approach we\u0027re happiest with, given that the various approaches all have tradeoffs.",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2249fa6b_e66def91",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T18:18:38Z",
+      "side": 1,
+      "message": "sorry, i missed that we now only insert into unsent sources if the source is in the url_whitelist. so please ignore my previous comment.",
+      "parentUuid": "45656cca_464070fa",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b992b255_b06d8cd9",
+        "filename": "components/ukm/ukm_recorder_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T18:18:38Z",
+      "side": 1,
+      "message": "optional: since URLs can be large and take up memory, and since all of the sources associated with URLs in carryover_urls_whitelist_ are retained in sources_, could we instead use a std::unordered_set\u003cSourceId\u003e previously_whitelisted_source_ids_ here, to reduce memory consumption? We could then change AppendWhitelistedUrls to build a set of URLs for the sources in sources_ that are either whitelisted, or are in previously_whitelisted_source_ids_.",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a577197c_31366ea2",
+        "filename": "components/ukm/ukm_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T18:18:38Z",
+      "side": 1,
+      "message": "it looks like this test doesn\u0027t have coverage for the logic associated with carryover_urls_whitelist_. could we add a new test that adds coverage for URLs that get added there?",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7931d81_d4faf86d",
+        "filename": "components/ukm/ukm_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-25T18:18:38Z",
+      "side": 1,
+      "message": "could we add a comment here noting that this is expected to be retained because it\u0027s an origin match, which is explicitly allowed in AppendWhitelistedUrls?",
       "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
