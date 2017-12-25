@@ -70,6 +70,24 @@
       "revId": "3d0d97bb2b885558c4386d80701e1d0dcc570aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6c6698_368d07a2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-25T07:59:38Z",
+      "side": 1,
+      "message": "Moved these code into ThreadedMessagingProxyBase::InitializeWorkerThread() that only in-process threaded workers/worklets go through.",
+      "parentUuid": "1467df8d_96f603b7",
+      "revId": "3d0d97bb2b885558c4386d80701e1d0dcc570aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
