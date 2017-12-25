@@ -6860,7 +6860,6 @@ crbug.com/714962 http/tests/devtools/elements/styles-1/edit-value-url-with-color
 crbug.com/714962 http/tests/devtools/elements/styles-2/force-pseudo-state.js [ Crash Pass ]
 crbug.com/714962 http/tests/devtools/elements/styles-2/paste-property.js [ Crash Pass ]
 crbug.com/714962 http/tests/devtools/elements/styles-2/pseudo-elements.js [ Crash ]
-crbug.com/591099 http/tests/devtools/elements/styles-3/style-rule-from-imported-stylesheet.js [ Crash Pass ]
 crbug.com/714962 http/tests/devtools/elements/styles-3/styles-add-blank-property.js [ Crash ]
 crbug.com/714962 http/tests/devtools/elements/styles-3/styles-add-invalid-property.js [ Crash ]
 crbug.com/714962 http/tests/devtools/elements/styles-3/styles-add-new-rule-colon.js [ Crash ]
