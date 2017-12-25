@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6acce458_5ea7d1a2",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "113ded48_87ccc2bc",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab25009c_469dfd55",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3e4e1d_20b2edbd",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab25009c_469dfd55",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "65b3bae0_05a0fb3c",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34cb5fed_cd0fcaab",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b51636c_eb9c46d9",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-25T01:20:08Z",
       "side": 1,
       "message": "c.f. Oilpan uses WTF::Partitions::TotalSizeOfCommittedPages().\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/heap/Heap.cpp?sq\u003dpackage:chromium\u0026dr\u0026l\u003d117",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becd43a1_768a7b85",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Using TotalSizeOfCommittedPages() looks lightweight. What the unit of TotalSizeOfCommittedPages()? Is it page or bytes? If it is page, what the size of a page? Is it always 4096?",
+      "parentUuid": "4b51636c_eb9c46d9",
       "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8fb82592_abbdcf13",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe836727_53b73d36",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6dc6e90_354cc4f9",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d35e349a_06e77701",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6dc6e90_354cc4f9",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9cc739_6b446856",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-25T01:20:08Z",
       "side": 1,
       "message": "This code makes sense.\n\nWhere were we starting ScopedPagePauser before this CL? I guess we need to remove that code.",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2427e6cb_86055cad",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-25T04:43:59Z",
+      "side": 1,
+      "message": "Before this CL ScopedPagePauser was created in the constructor of this class.\n\nBefore:\nclass OomInterventionImpl {\nprivate:\n  ScopedPagePauser pauser_;\n};\n\nAfter:\nclass OomInterventionImpl {\nprivate:\n  std::unique_ptr\u003cScopedPagePauser\u003e pauser_;\n};",
+      "parentUuid": "cf9cc739_6b446856",
       "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
