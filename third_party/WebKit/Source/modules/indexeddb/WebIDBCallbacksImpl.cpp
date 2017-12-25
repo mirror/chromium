@@ -101,15 +101,18 @@ void WebIDBCallbacksImpl::OnSuccess(
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBCursor* cursor,
-                                    const WebIDBKey& key,
-                                    const WebIDBKey& primary_key,
-                                    const WebIDBValue& value) {
+                                    WebIDBKey key,
+                                    WebIDBKey primary_key,
+                                    WebIDBValue value) {
   if (!request_)
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(base::WrapUnique(cursor), key, primary_key,
-                           IDBValue::Create(value, request_->GetIsolate()));
+  std::unique_ptr<IDBValue> idb_value = std::move(value).TakeIdbValue();
+  idb_value->SetIsolate(request_->GetIsolate());
+  request_->HandleResponse(
+      base::WrapUnique(cursor), std::move(key).TakeIdbKey(),
+      std::move(primary_key).TakeIdbKey(), std::move(idb_value));
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBDatabase* backend,
@@ -127,30 +130,36 @@ void WebIDBCallbacksImpl::OnSuccess(WebIDBDatabase* backend,
   }
 }
 
-void WebIDBCallbacksImpl::OnSuccess(const WebIDBKey& key) {
+void WebIDBCallbacksImpl::OnSuccess(WebIDBKey key) {
   if (!request_)
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(key);
+  request_->HandleResponse(std::move(key).TakeIdbKey());
 }
 
-void WebIDBCallbacksImpl::OnSuccess(const WebIDBValue& value) {
+void WebIDBCallbacksImpl::OnSuccess(WebIDBValue value) {
   if (!request_)
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(IDBValue::Create(value, request_->GetIsolate()));
+  std::unique_ptr<IDBValue> idb_value = std::move(value).TakeIdbValue();
+  idb_value->SetIsolate(request_->GetIsolate());
+  request_->HandleResponse(std::move(idb_value));
 }
 
-void WebIDBCallbacksImpl::OnSuccess(const WebVector<WebIDBValue>& values) {
+void WebIDBCallbacksImpl::OnSuccess(WebVector<WebIDBValue> values) {
   if (!request_)
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  Vector<std::unique_ptr<IDBValue>> idb_values(values.size());
-  for (size_t i = 0; i < values.size(); ++i)
-    idb_values[i] = IDBValue::Create(values[i], request_->GetIsolate());
+  Vector<std::unique_ptr<IDBValue>> idb_values;
+  idb_values.ReserveInitialCapacity(values.size());
+  for (WebIDBValue& value : values) {
+    std::unique_ptr<IDBValue> idb_value = std::move(value).TakeIdbValue();
+    idb_value->SetIsolate(request_->GetIsolate());
+    idb_values.emplace_back(std::move(idb_value));
+  }
   request_->HandleResponse(std::move(idb_values));
 }
 
@@ -170,15 +179,18 @@ void WebIDBCallbacksImpl::OnSuccess() {
   request_->HandleResponse();
 }
 
-void WebIDBCallbacksImpl::OnSuccess(const WebIDBKey& key,
-                                    const WebIDBKey& primary_key,
-                                    const WebIDBValue& value) {
+void WebIDBCallbacksImpl::OnSuccess(WebIDBKey key,
+                                    WebIDBKey primary_key,
+                                    WebIDBValue value) {
   if (!request_)
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(key, primary_key,
-                           IDBValue::Create(value, request_->GetIsolate()));
+  std::unique_ptr<IDBValue> idb_value = std::move(value).TakeIdbValue();
+  idb_value->SetIsolate(request_->GetIsolate());
+  request_->HandleResponse(std::move(key).TakeIdbKey(),
+                           std::move(primary_key).TakeIdbKey(),
+                           std::move(idb_value));
 }
 
 void WebIDBCallbacksImpl::OnBlocked(long long old_version) {
