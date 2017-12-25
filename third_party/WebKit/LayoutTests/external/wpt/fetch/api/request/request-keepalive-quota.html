@@ -17,7 +17,7 @@
             // We want to ensure that our keepalive requests hang slightly before completing so we can validate
             // the effects of a rolling quota. To do this we will utilize trickle.py with a 1s delay. This should
             // prevent any of the Fetch's from finishing in this window.
-            const trickleURL = '../resources/trickle.py?count=1&ms=';
+            const trickleURL = '../resources/delay.py&ms=';
             const noDelay = 0;
             const standardDelay = 1000;
             function wait(ms) {
@@ -63,11 +63,11 @@
 
             // Ensure only the correct amount of Quota becomes available when a fetch completes.
             promise_test(function(test) {
-                // Create a fetch that uses all but 1 Byte of the Quota and runs for 2x as long as the other requests.
-                const first = fetchKeepAliveRequest(standardDelay * 2, expectedQuota - 1);
+                // Create a fetch that uses all but 1 Byte of the Quota.
+                const first = fetchKeepAliveRequest(standardDelay, expectedQuota - 1);
 
                 // Now create a single Byte request that will complete quicker.
-                const second = fetchKeepAliveRequest(standardDelay, 1 /* bodySize */).then(() => {
+                const second = fetchKeepAliveRequest(noDelay, 1 /* bodySize */).then(() => {
                     // We shouldn't be able to create a 2 Byte request right now as only 1 Byte should have freed up.
                     return promise_rejects(test, TypeError(), fetchKeepAliveRequest(noDelay, 2 /* bodySize */));
                 }).then(() => {
