@@ -22,6 +22,8 @@ const int kSwapImagesAnimationDurationMs = 200;
 // animation as a ratio of |kSwapImagesAnimationDurationMs|.
 const float kFadeOutRatio = 0.5f;
 
+const float kDisabledButtonRatio = 0.5f;
+
 // The colors and alpha values used for the button background hovered and
 // pressed states.
 // TODO(tdanderson|estade): Request these colors from ThemeProvider.
@@ -175,11 +177,15 @@ void FrameCaptionButton::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 int FrameCaptionButton::GetAlphaForIcon(int base_alpha) const {
+  if (!enabled())
+    return base_alpha * kDisabledButtonRatio;
+
   if (paint_as_active_)
     return base_alpha;
 
   // Paint icons as active when they are hovered over or pressed.
   double inactive_alpha = kInactiveFrameButtonIconAlphaRatio;
+
   if (hover_animation().is_animating()) {
     inactive_alpha =
         hover_animation().CurrentValueBetween(inactive_alpha, 1.0f);
