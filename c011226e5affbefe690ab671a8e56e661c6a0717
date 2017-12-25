@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc88a34f_2c2f64e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-25T11:34:50Z",
+      "side": 1,
+      "message": "This a generic description of the whole endeavour you\u0027re\npursuing, but it doesn\u0027t describe what you\u0027re doing _in\nthis CL_, which is what you should do. Start describing\nwhat you do, then why you do it. Then, if you want, leave\nthis paragraph for the context of the casual reader. E.g.\n\n\"This CL enables blabla by doing XYZ. This can be enabled\nnow because foo foo. This CL is in the context of enabling\n...\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d884e1_410481ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-25T11:34:50Z",
+      "side": 1,
+      "message": "Please make a chromium bug with the appropriate Component\nand description.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f1f5c5_06360e68",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-25T11:34:50Z",
+      "side": 1,
+      "message": "It\u0027s customary to separate the roll from the other \nparts of the CL. You don\u0027t need a crbug to roll \nagainst, but it\u0027d be good to send it against the \nsame bug you use for your current activities, so it\nleaves a trace of what you did to get from A to B.",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 115
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
