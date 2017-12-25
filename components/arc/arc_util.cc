@@ -141,7 +141,6 @@ bool IsRobotAccountMode() {
   return user_manager::UserManager::IsInitialized() &&
          (user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp() ||
           user_manager::UserManager::Get()->IsLoggedInAsPublicAccount());
-}
 
 bool IsArcAllowedForUser(const user_manager::User* user) {
   if (!user) {
@@ -162,6 +161,14 @@ bool IsArcAllowedForUser(const user_manager::User* user) {
       user->GetType() != user_manager::USER_TYPE_PUBLIC_ACCOUNT) {
     VLOG(1) << "Users without GAIA or AD accounts, or not ARC kiosk apps are "
                "not supported in ARC.";
+    return false;
+  }
+
+  // Do not allow for ephemeral data user, except public sessions. b/26402681
+  if (user->GetType() != user_manager::USER_TYPE_PUBLIC_ACCOUNT &&
+      user_manager::UserManager::Get()->IsUserCryptohomeDataEphemeral(
+          user->GetAccountId())) {
+    VLOG(1) << "Users with ephemeral data are not supported in ARC.";
     return false;
   }
 

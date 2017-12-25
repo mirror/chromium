@@ -218,8 +218,8 @@ TEST_F(ArcUtilTest, IsArcAllowedForUser) {
   ASSERT_TRUE(fake_user_manager->IsUserCryptohomeDataEphemeral(
       ephemeral_user->GetAccountId()));
 
-  // Ephemeral user is also allowed for ARC.
-  EXPECT_TRUE(IsArcAllowedForUser(ephemeral_user));
+  // Ephemeral user is not allowed for ARC.
+  EXPECT_FALSE(IsArcAllowedForUser(ephemeral_user));
 }
 
 TEST_F(ArcUtilTest, ArcStartModeDefault) {
