@@ -324,7 +324,7 @@ scoped_refptr<ShapeResult> ShapingLineBreaker::ShapeLine(
           break;
         // Doesn't fit after the reshape. Try previous break opportunity, or
         // overflow if there were none.
-        bool is_previous_break_opportunity_hyphenated;
+        bool is_previous_break_opportunity_hyphenated = false;
         unsigned previous_break_opportunity =
             PreviousBreakOpportunity(break_opportunity - 1, start,
                                      &is_previous_break_opportunity_hyphenated);
