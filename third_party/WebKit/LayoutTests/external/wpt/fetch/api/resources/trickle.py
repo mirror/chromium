@@ -6,7 +6,9 @@ def main(request, response):
     time.sleep(delay)
     response.headers.set("Content-type", "text/plain")
     response.write_status_headers()
+    response.writer.flush()
     time.sleep(delay);
     for i in xrange(count):
         response.writer.write_content("TEST_TRICKLE\n")
+        response.writer.flush()
         time.sleep(delay)
