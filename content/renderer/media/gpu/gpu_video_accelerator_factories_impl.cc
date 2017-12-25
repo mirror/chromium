@@ -299,10 +299,13 @@ unsigned GpuVideoAcceleratorFactoriesImpl::ImageTextureTarget(
 }
 
 media::GpuVideoAcceleratorFactories::OutputFormat
-GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat() {
+GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (CheckContextLost())
     return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
+  if (bit_depth > 8 && capabilities.texture_rg)
+    return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
+
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
   auto capabilities = context_provider_->ContextCapabilities();
   if (capabilities.image_ycbcr_420v &&
