@@ -282,7 +282,7 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
           return i;
         break;
       case BreakSpaceType::kBeforeSpace:
-        if (ch == kSpaceCharacter)
+        if (ch == kSpaceCharacter && last_ch != kSpaceCharacter)
           return i;
         if (is_space)
           continue;
