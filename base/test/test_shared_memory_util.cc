@@ -1,0 +1,117 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "base/test/test_shared_memory_util.h"
+
+#include <gtest/gtest.h>
+
+#include <stddef.h>
+#include <stdint.h>
+
+#include "base/logging.h"
+#include "build/build_config.h"
+
+#if defined(OS_POSIX) && !defined(OS_NACL)
+#include <errno.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#endif
+
+#if defined(OS_FUCHSIA)
+#include <zircon/process.h>
+#include <zircon/rights.h>
+#include <zircon/syscalls.h>
+#endif
+
+#if defined(OS_MACOSX) && !defined(OS_IOS)
+#include <mach/mach_vm.h>
+#endif
+
+namespace base {
+namespace testing {
+
+#if !defined(OS_NACL)
+
+static const size_t kDataSize = 1024;
+
+// Common routine used with Posix file descriptors.
+#if defined(OS_POSIX)
+static bool CheckReadOnlySharedMemoryFdPosix(int fd) {
+  // Verify that the handle does not allow writable mappings. To do that, try
+  // to perform a direct mmap() attempt from its file descriptor.
+  // Note that the error on Android is EPERM, unlike other platforms where
+  // it will be EACCES.
+  errno = 0;
+  void* address =
+      mmap(nullptr, kDataSize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+  const bool success = (address != nullptr) && (address != MAP_FAILED);
+#if defined(OS_ANDROID)
+  const int kExpectedErrno = EPERM;
+#else
+  const int kExpectedErrno = EACCES;
+#endif
+  if (success) {
+    LOG(ERROR) << "mmap() should have failed!";
+    munmap(address, kDataSize);  // Cleanup.
+    return false;
+  }
+  if (errno != kExpectedErrno) {
+    LOG(ERROR) << "mmap() expected " << kExpectedErrno << " but returned "
+               << errno << ": " << strerror(errno);
+    return false;
+  }
+  return true;
+}
+#endif  // OS_POSIX && !OS_NACL
+
+#if defined(OS_FUCHSIA)
+// Fuchsia specific implementation.
+bool CheckReadOnlySharedMemoryHandle(SharedMemoryHandle handle) {
+  const uint32_t flags = ZX_VM_FLAGS_PERM_READ | ZX_VM_FLAGS_PERM_WRITE;
+  uintptr_t addr;
+  const zx_handle_t root = zx_vmar_root_self();
+  const zx_status_t status =
+      zx_vmar_map(root, 0, handle.GetHandle(), 0U, kDataSize, flags, &addr);
+  if (status == ZX_OK) {
+    LOG(ERROR) << "zx_vmar_map() should have failed!";
+    zx_vmar_unmap(root, addr, kDtaSize);
+    return false;
+  }
+  if (status != ZX_ERR_ACCESS_DENIED) {
+    LOG(ERROR) << "zx_vmar_map() returned " << status
+               << "(ZX_ERR_ACCESS_DENIED, i.e. " << ZX_ERR_ACCESS_DENIED
+               << " expected)\n";
+    return false;
+  }
+  return true;
+}
+#elif defined(OS_MACOSX) && !defined(OS_IOS)
+// For OSX, the code has to deal with both POSIX and MACH handles.
+bool CheckReadOnlySharedMemoryHandle(SharedMemoryHandle handle) {
+  if (handle.type_ == SharedMemoryHandle::POSIX)
+    return CheckReadOnlySharedMemoryFdPosix(handle.file_descriptor_.fd);
+
+  mach_vm_address_t memory;
+  const kern_return_t kr = mach_vm_map(
+      mach_task_self(), &memory, kDataSize, 0, VM_FLAGS_ANYWHERE,
+      handle.memory_object_, 0, FALSE, VM_PROT_READ | VM_PROT_WRITE,
+      VM_PROT_READ | VM_PROT_WRITE | VM_PROT_IS_MASK, VM_INHERIT_NONE);
+  if (kr == KERN_SUCCESS) {
+    LOG(ERROR) << "mach_vm_map() should have failed!";
+    mach_vm_deallocate(mach_task_self(), memory, kDataSize);  // Cleanup.
+    return false;
+  }
+  return true;
+}
+#else
+bool CheckReadOnlySharedMemoryHandle(SharedMemoryHandle handle) {
+  return CheckReadOnlySharedMemoryFdPosix(handle.GetHandle());
+}
+#endif
+
+#endif  // !OS_NACL
+
+}  // namespace testing
+}  // namespace base
