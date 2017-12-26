@@ -202,14 +202,7 @@ TEST(V8ScriptValueSerializerForModulesTest, DecodeRTCCertificate) {
   EXPECT_EQ(kEcdsaCertificate, pem.Certificate());
 }
 
-// TODO(https://crbug.com/795627): This test is crashing on the Cast Audio Linux
-// bot.
-#if defined(OS_LINUX)
-TEST(V8ScriptValueSerializerForModulesTest,
-     DISABLED_DecodeInvalidRTCCertificate) {
-#else
 TEST(V8ScriptValueSerializerForModulesTest, DecodeInvalidRTCCertificate) {
-#endif
   V8TestingScope scope;
 
   // This is valid, except that "private" is not a valid private key PEM and
