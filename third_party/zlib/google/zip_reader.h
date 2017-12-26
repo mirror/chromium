@@ -16,6 +16,7 @@
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 
 #if defined(USE_SYSTEM_MINIZIP)
@@ -62,12 +63,12 @@ class WriterDelegate {
 class ZipReader {
  public:
   // A callback that is called when the operation is successful.
-  typedef base::Closure SuccessCallback;
+  typedef base::OnceClosure SuccessCallback;
   // A callback that is called when the operation fails.
-  typedef base::Closure FailureCallback;
+  typedef base::OnceClosure FailureCallback;
   // A callback that is called periodically during the operation with the number
   // of bytes that have been processed so far.
-  typedef base::Callback<void(int64_t)> ProgressCallback;
+  typedef base::RepeatingCallback<void(int64_t)> ProgressCallback;
 
   // This class represents information of an entry (file or directory) in
   // a zip file.
@@ -182,10 +183,11 @@ class ZipReader {
   // called on failure.  progress_callback will be called at least once.
   // Callbacks will be posted to the current MessageLoop in-order.
   void ExtractCurrentEntryToFilePathAsync(
+      scoped_refptr<base::SequencedTaskRunner> task_runner,
       const base::FilePath& output_file_path,
-      const SuccessCallback& success_callback,
-      const FailureCallback& failure_callback,
-      const ProgressCallback& progress_callback);
+      SuccessCallback success_callback,
+      FailureCallback failure_callback,
+      ProgressCallback progress_callback);
 
   // Extracts the current entry to the given output directory path using
   // ExtractCurrentEntryToFilePath(). Sub directories are created as needed
@@ -239,10 +241,11 @@ class ZipReader {
 
   // Extracts a chunk of the file to the target.  Will post a task for the next
   // chunk and success/failure/progress callbacks as necessary.
-  void ExtractChunk(base::File target_file,
-                    const SuccessCallback& success_callback,
-                    const FailureCallback& failure_callback,
-                    const ProgressCallback& progress_callback,
+  void ExtractChunk(scoped_refptr<base::SequencedTaskRunner> task_runner,
+                    base::File target_file,
+                    SuccessCallback success_callback,
+                    FailureCallback failure_callback,
+                    ProgressCallback progress_callback,
                     const int64_t offset);
 
   unzFile zip_file_;

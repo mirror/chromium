@@ -360,34 +360,35 @@ bool ZipReader::ExtractCurrentEntryToFilePath(
 }
 
 void ZipReader::ExtractCurrentEntryToFilePathAsync(
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::FilePath& output_file_path,
-    const SuccessCallback& success_callback,
-    const FailureCallback& failure_callback,
-    const ProgressCallback& progress_callback) {
+    SuccessCallback success_callback,
+    FailureCallback failure_callback,
+    ProgressCallback progress_callback) {
   DCHECK(zip_file_);
   DCHECK(current_entry_info_.get());
 
   // If this is a directory, just create it and return.
   if (current_entry_info()->is_directory()) {
     if (base::CreateDirectory(output_file_path)) {
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, success_callback);
+      task_runner->PostTask(FROM_HERE, std::move(success_callback));
     } else {
       DVLOG(1) << "Unzip failed: unable to create directory.";
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+      task_runner->PostTask(FROM_HERE, std::move(failure_callback));
     }
     return;
   }
 
   if (unzOpenCurrentFile(zip_file_) != UNZ_OK) {
     DVLOG(1) << "Unzip failed: unable to open current zip entry.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    task_runner->PostTask(FROM_HERE, std::move(failure_callback));
     return;
   }
 
   base::FilePath output_dir_path = output_file_path.DirName();
   if (!base::CreateDirectory(output_dir_path)) {
     DVLOG(1) << "Unzip failed: unable to create containing directory.";
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    task_runner->PostTask(FROM_HERE, std::move(failure_callback));
     return;
   }
 
@@ -397,15 +398,16 @@ void ZipReader::ExtractCurrentEntryToFilePathAsync(
   if (!output_file.IsValid()) {
     DVLOG(1) << "Unzip failed: unable to create platform file at "
              << output_file_path.value();
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, failure_callback);
+    task_runner->PostTask(FROM_HERE, std::move(failure_callback));
     return;
   }
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
-                 Passed(std::move(output_file)), success_callback,
-                 failure_callback, progress_callback, 0 /* initial offset */));
+      base::BindOnce(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
+                     task_runner, Passed(std::move(output_file)),
+                     std::move(success_callback), std::move(failure_callback),
+                     std::move(progress_callback), 0 /* initial offset */));
 }
 
 bool ZipReader::ExtractCurrentEntryIntoDirectory(
@@ -494,11 +496,13 @@ void ZipReader::Reset() {
   current_entry_info_.reset();
 }
 
-void ZipReader::ExtractChunk(base::File output_file,
-                             const SuccessCallback& success_callback,
-                             const FailureCallback& failure_callback,
-                             const ProgressCallback& progress_callback,
-                             const int64_t offset) {
+void ZipReader::ExtractChunk(
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
+    base::File output_file,
+    SuccessCallback success_callback,
+    FailureCallback failure_callback,
+    ProgressCallback progress_callback,
+    const int64_t offset) {
   char buffer[internal::kZipBufSize];
 
   const int num_bytes_read = unzReadCurrentFile(zip_file_,
@@ -507,15 +511,15 @@ void ZipReader::ExtractChunk(base::File output_file,
 
   if (num_bytes_read == 0) {
     unzCloseCurrentFile(zip_file_);
-    success_callback.Run();
+    std::move(success_callback).Run();
   } else if (num_bytes_read < 0) {
     DVLOG(1) << "Unzip failed: error while reading zipfile "
              << "(" << num_bytes_read << ")";
-    failure_callback.Run();
+    std::move(failure_callback).Run();
   } else {
     if (num_bytes_read != output_file.Write(offset, buffer, num_bytes_read)) {
       DVLOG(1) << "Unzip failed: unable to write all bytes to target.";
-      failure_callback.Run();
+      std::move(failure_callback).Run();
       return;
     }
 
@@ -523,11 +527,12 @@ void ZipReader::ExtractChunk(base::File output_file,
 
     progress_callback.Run(current_progress);
 
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    task_runner->PostTask(
         FROM_HERE,
-        base::Bind(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
-                   Passed(std::move(output_file)), success_callback,
-                   failure_callback, progress_callback, current_progress));
+        base::BindOnce(&ZipReader::ExtractChunk, weak_ptr_factory_.GetWeakPtr(),
+                       task_runner, Passed(std::move(output_file)),
+                       std::move(success_callback), std::move(failure_callback),
+                       std::move(progress_callback), current_progress));
   }
 }
 
