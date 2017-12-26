@@ -20,6 +20,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/trace_event/trace_event.h"
 #include "mojo/public/cpp/bindings/associated_group.h"
 #include "mojo/public/cpp/bindings/associated_group_controller.h"
 #include "mojo/public/cpp/bindings/connector.h"
@@ -76,19 +77,23 @@ class ChannelAssociatedGroupController
 
   void Pause() {
     DCHECK(!paused_);
+    TRACE_EVENT0("ipc", "MojoBootstrapImpl::Pause");
     paused_ = true;
   }
 
   void Unpause() {
     DCHECK(paused_);
+    TRACE_EVENT0("ipc", "MojoBootstrapImpl::Unpause");
     paused_ = false;
   }
 
   void FlushOutgoingMessages() {
+    TRACE_EVENT0("ipc", "MojoBootstrapImpl::FlushOutgoingMessages");
     std::vector<mojo::Message> outgoing_messages;
     std::swap(outgoing_messages, outgoing_messages_);
-    for (auto& message : outgoing_messages)
+    for (auto& message : outgoing_messages) {
       SendMessage(&message);
+    }
   }
 
   void CreateChannelEndpoints(mojom::ChannelAssociatedPtr* sender,

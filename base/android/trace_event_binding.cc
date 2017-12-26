@@ -81,19 +81,31 @@ static void JNI_TraceEvent_StopATrace(JNIEnv* env,
   base::trace_event::TraceLog::GetInstance()->StopATrace();
 }
 
+static void AddInstantEvent(int scope,
+                            JNIEnv* env,
+                            const JavaParamRef<jstring>& jname,
+                            const JavaParamRef<jstring>& jarg) {
+  TraceEventDataConverter converter(env, jname, jarg);
+  if (converter.arg()) {
+    TRACE_EVENT_COPY_INSTANT1(kJavaCategory, converter.name(), scope,
+                              converter.arg_name(), converter.arg());
+  } else {
+    TRACE_EVENT_COPY_INSTANT0(kJavaCategory, converter.name(), scope);
+  }
+}
+
 static void JNI_TraceEvent_Instant(JNIEnv* env,
                                    const JavaParamRef<jclass>& clazz,
                                    const JavaParamRef<jstring>& jname,
                                    const JavaParamRef<jstring>& jarg) {
-  TraceEventDataConverter converter(env, jname, jarg);
-  if (converter.arg()) {
-    TRACE_EVENT_COPY_INSTANT1(kJavaCategory, converter.name(),
-                              TRACE_EVENT_SCOPE_THREAD,
-                              converter.arg_name(), converter.arg());
-  } else {
-    TRACE_EVENT_COPY_INSTANT0(kJavaCategory, converter.name(),
-                              TRACE_EVENT_SCOPE_THREAD);
-  }
+  AddInstantEvent(TRACE_EVENT_SCOPE_THREAD, env, jname, jarg);
+}
+
+static void JNI_TraceEvent_ProcessInstant(JNIEnv* env,
+                                          const JavaParamRef<jclass>& clazz,
+                                          const JavaParamRef<jstring>& jname,
+                                          const JavaParamRef<jstring>& jarg) {
+  AddInstantEvent(TRACE_EVENT_SCOPE_PROCESS, env, jname, jarg);
 }
 
 static void JNI_TraceEvent_Begin(JNIEnv* env,

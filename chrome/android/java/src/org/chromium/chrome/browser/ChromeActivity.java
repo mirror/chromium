@@ -13,18 +13,24 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.IInterface;
+import android.os.Parcel;
+import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +42,7 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener;
+import android.widget.FrameLayout;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -76,7 +83,8 @@ import org.chromium.chrome.browser.dom_distiller.DistilledPagePrefsView;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.download.DownloadUtils;
-import org.chromium.chrome.browser.download.items.OfflineContentAggregatorNotificationBridgeUiFactory;
+import org.chromium.chrome.browser.download.items
+        .OfflineContentAggregatorNotificationBridgeUiFactory;
 import org.chromium.chrome.browser.firstrun.ForcedSigninProcessor;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.gsa.ContextReporter;
@@ -159,7 +167,13 @@ import org.chromium.ui.widget.Toast;
 import org.chromium.webapk.lib.client.WebApkNavigationClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
+import java.io.FileDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -477,6 +491,157 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // non-content displaying things such as the OSK.
         mInsetObserverView = InsetObserverView.create(this);
         rootView.addView(mInsetObserverView, 0);
+
+        spyOnViewHierarchy();
+        spyOnGlobalWindowSession();
+    }
+
+    private void spyOnViewHierarchy() {
+        ViewGroup spyLayout = new FrameLayout(this) {
+            @Override
+            protected void onAttachedToWindow() {
+                TraceEvent.begin("ViewHierarchy:dispatchAttachedToWindow");
+                super.onAttachedToWindow();
+            }
+
+            @Override
+            public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                TraceEvent.begin("ViewHierarchy:measure");
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                String details = String.format((Locale)null, "width: {%s} -> %d, height: {%s} -> %d",
+                        MeasureSpec.toString(widthMeasureSpec), getMeasuredWidth(),
+                        MeasureSpec.toString(heightMeasureSpec), getMeasuredHeight());
+                TraceEvent.end("ViewHierarchy:measure", details);
+            }
+
+            @Override
+            protected void onLayout(boolean changed, int l, int t, int r, int b) {
+                TraceEvent.begin("ViewHierarchy:layout");
+                super.onLayout(changed, l, t, r, b);
+                String details = String.format((Locale)null, "changed: %b, rect: {%d, %d, %d, %d}",
+                        changed, l, t, r, b);
+                TraceEvent.end("ViewHierarchy:layout", details);
+            }
+
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                TraceEvent.begin("ViewHierarchy:draw");
+                super.dispatchDraw(canvas);
+                TraceEvent.end("ViewHierarchy:draw");
+            }
+        };
+        ViewGroup spyLayout2 = new FrameLayout(this) {
+            @Override
+            protected void onAttachedToWindow() {
+                super.onAttachedToWindow();
+                TraceEvent.end("ViewHierarchy:dispatchAttachedToWindow");
+            }
+        };
+        ViewGroup topViewGroup = (ViewGroup)getWindow().getDecorView().getRootView();
+        while (topViewGroup.getChildCount() != 0) {
+            View view = topViewGroup.getChildAt(0);
+            topViewGroup.removeViewAt(0);
+            spyLayout.addView(view);
+        }
+        topViewGroup.addView(spyLayout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        topViewGroup.addView(spyLayout2, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+    private void spyOnBinderProxy(final String proxyTag, Object proxy) {
+        try {
+            Field remoteField = proxy.getClass().getDeclaredField("mRemote");
+            remoteField.setAccessible(true);
+            final IBinder proxyBinder = (IBinder)remoteField.get(proxy);
+            if (proxyBinder == null) {
+                return;
+            }
+
+            Class<?> stubClass = proxy.getClass().getEnclosingClass();
+            final SparseArray<String> codeNames = new SparseArray<>();
+            for (Field field: stubClass.getDeclaredFields()) {
+                if (Modifier.isStatic(field.getModifiers()) && field.getType().equals(Integer.TYPE)) {
+                    field.setAccessible(true);
+                    int code = (Integer)field.get(null);
+                    codeNames.put(code, field.getName());
+                }
+            }
+
+            IBinder spyBinder = new IBinder() {
+                @Override
+                public String getInterfaceDescriptor() throws RemoteException {
+                    return proxyBinder.getInterfaceDescriptor();
+                }
+
+                @Override
+                public boolean pingBinder() {
+                    return proxyBinder.pingBinder();
+                }
+
+                @Override
+                public boolean isBinderAlive() {
+                    return proxyBinder.isBinderAlive();
+                }
+
+                @Override
+                public IInterface queryLocalInterface(String descriptor) {
+                    return proxyBinder.queryLocalInterface(descriptor);
+                }
+
+                @Override
+                public void dump(FileDescriptor fileDescriptor, String[] strings) throws RemoteException {
+                    proxyBinder.dump(fileDescriptor, strings);
+                }
+
+                @Override
+                public void dumpAsync(FileDescriptor fileDescriptor, String[] strings) throws RemoteException {
+                    proxyBinder.dumpAsync(fileDescriptor, strings);
+                }
+
+                @Override
+                public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+                    String codeName = codeNames.get(code);
+                    if (codeName == null) {
+                        codeName = String.format((Locale)null, "#%d", code);
+                    }
+                    try (TraceEvent te = TraceEvent.scoped(proxyTag + ":" + codeName)) {
+                        return proxyBinder.transact(code, data, reply, flags);
+                    }
+                }
+
+                @Override
+                public void linkToDeath(DeathRecipient deathRecipient, int flags) throws RemoteException {
+                    proxyBinder.linkToDeath(deathRecipient, flags);
+                }
+
+                @Override
+                public boolean unlinkToDeath(DeathRecipient deathRecipient, int flags) {
+                    return proxyBinder.unlinkToDeath(deathRecipient, flags);
+                }
+            };
+            remoteField.set(proxy, spyBinder);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void spyOnGlobalWindowSession() {
+        try {
+            Class<?> classWindowManagerGlobal = Class.forName("android.view.WindowManagerGlobal");
+            Method getWindowSessionMethod = classWindowManagerGlobal.getDeclaredMethod("getWindowSession");
+            getWindowSessionMethod.setAccessible(true);
+            Object windowSession = getWindowSessionMethod.invoke(null);
+            spyOnBinderProxy("IWindowSession", windowSession);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
