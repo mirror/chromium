@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c6d4c90_983d99ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-26T07:43:33Z",
+      "side": 1,
+      "message": "s/ v4l2_device://",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "e7713e54bb02b54bbd0f9c5f633fe9d823eee45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597aa954_f3a0d210",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-26T07:43:33Z",
+      "side": 1,
+      "message": "I\u0027d personally keep VLOGF(2) here.",
+      "revId": "e7713e54bb02b54bbd0f9c5f633fe9d823eee45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
