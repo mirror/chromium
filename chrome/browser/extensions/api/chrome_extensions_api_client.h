@@ -32,6 +32,7 @@ class ChromeExtensionsAPIClient : public ExtensionsAPIClient {
       override;
   bool ShouldHideResponseHeader(const GURL& url,
                                 const std::string& header_name) const override;
+  bool ShouldHideRequestFromBrowser(const GURL& url) const override;
   AppViewGuestDelegate* CreateAppViewGuestDelegate() const override;
   ExtensionOptionsGuestDelegate* CreateExtensionOptionsGuestDelegate(
       ExtensionOptionsGuest* guest) const override;
