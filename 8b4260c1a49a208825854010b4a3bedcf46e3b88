@@ -22,6 +22,30 @@
       "revId": "8b4260c1a49a208825854010b4a3bedcf46e3b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3e5a8a_5366fd31",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5127,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-26T23:34:39Z",
+      "side": 0,
+      "message": "No, I added this for the new fullscreen implementation here: crrev.com/c/826266.  It probably should have been behind the feature list check to begin with...",
+      "parentUuid": "19593263_5a4b0403",
+      "range": {
+        "startLine": 5127,
+        "startChar": 53,
+        "endLine": 5127,
+        "endChar": 0
+      },
+      "revId": "8b4260c1a49a208825854010b4a3bedcf46e3b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
