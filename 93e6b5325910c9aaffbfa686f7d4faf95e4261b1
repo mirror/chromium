@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "999ed75b_5246253a",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6cd822_5b0de5a1",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a057020_91ae7816",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467a6c4f_7b4d106a",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a057020_91ae7816",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "998e1aa5_db326244",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe45939_2ab1522d",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ba9db66_32d7e9b2",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-12-26T05:42:42Z",
       "side": 1,
       "message": "Instead of using weak pointers, can we just use a strong pointer? The task is guaranteed to get called in a finite time period, so it\u0027s fine to use a strong pointer.",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53421cf_09401570",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "Yeah, and I noticed I can just call Check() here.",
+      "parentUuid": "8ba9db66_32d7e9b2",
       "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "4e4542d1_dcda5ef9",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "|workload_caclulator_| is an indirection for testing (i.e. OomInterventionImplTest.DetectedAndDeclined).\n\nIt\u0027s a callback (not a function pointer) because we want to mock it (i.e. OomInterventionImplTest::MockMemoryWorkloadCalculator()).",
+      "parentUuid": "2189d4f3_39979184",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3db20583_d8435226",
         "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-12-26T05:07:38Z",
       "side": 1,
       "message": "It\u0027s not clear to me why we would rely on the renderer to notify us of a timed out situation. Why does the renderer side track this rather than the browser?\n\n(Maybe it would help to clarify what \u0027timed out\u0027 means in this context as well: I guess it\u0027s after StartDetection() has been called and the Check callback doesn\u0027t run for 60 seconds?)",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb51e80_3e4d4241",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-26T07:58:23Z",
+      "side": 1,
+      "message": "Added comments to clarify why these are defined.",
+      "parentUuid": "3db20583_d8435226",
       "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
