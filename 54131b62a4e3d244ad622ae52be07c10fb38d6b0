@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e48b821_dcb7c383",
+        "filename": "media/gpu/v4l2/generic_v4l2_device.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-26T03:45:48Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should make this a VLOG(2), it should be useful.",
+      "revId": "54131b62a4e3d244ad622ae52be07c10fb38d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb41be1c_ba2f5308",
         "filename": "media/gpu/v4l2/v4l2_device.cc",
         "patchSetId": 6
@@ -13,6 +30,24 @@
       "writtenOn": "2017-12-19T03:26:09Z",
       "side": 1,
       "message": "I haven\u0027t find this line is reached out. However, from considering the message, it is possibly reached out? Should be VLOGF(1), not LOG(FATAL)?",
+      "revId": "54131b62a4e3d244ad622ae52be07c10fb38d6b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2c1ff6_6eac9c4f",
+        "filename": "media/gpu/v4l2/v4l2_device.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-26T03:45:48Z",
+      "side": 1,
+      "message": "We should be able to always convert from Chromium formats to V4L2 formats, but it\u0027s possible for a V4L2 device to advertise a format that does not have a Chromium equivalent (or DRM equivalent). So I\u0027d suggest DVLOG(1) here, as well as l.69 and l.184, but to keep LOG(FATAL) for l.90 and l.114.",
+      "parentUuid": "cb41be1c_ba2f5308",
       "revId": "54131b62a4e3d244ad622ae52be07c10fb38d6b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
