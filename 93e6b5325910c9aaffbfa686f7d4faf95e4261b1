@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6cd822_5b0de5a1",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T05:07:38Z",
+      "side": 1,
+      "message": "constexpr WTF::TimeDelta OomInterventionImpl::kTimeout \u003d WTF::TimeDelta::FromSeconds(60);",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a057020_91ae7816",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T05:07:38Z",
+      "side": 1,
+      "message": "Nit: std::move() if passing by value",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe45939_2ab1522d",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T05:07:38Z",
+      "side": 1,
+      "message": "Nit: Omit this TimeTicks, TimeTicks + TimeDelta gives a TimeTicks already.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db20583_d8435226",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T05:07:38Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why we would rely on the renderer to notify us of a timed out situation. Why does the renderer side track this rather than the browser?\n\n(Maybe it would help to clarify what \u0027timed out\u0027 means in this context as well: I guess it\u0027s after StartDetection() has been called and the Check callback doesn\u0027t run for 60 seconds?)",
+      "revId": "93e6b5325910c9aaffbfa686f7d4faf95e4261b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
