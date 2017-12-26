@@ -128,6 +128,30 @@
       "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f89e88_d6b4f0fe",
+        "filename": "ui/file_manager/externs/volume_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-26T03:42:25Z",
+      "side": 1,
+      "message": "How about adding\n\u0027dependencies\u0027: [\n  \u0027\u003c(DEPTH)/third_party/closure_compiler/externs/compiled_resources2.gyp:file_manager_private\u0027,\n],\nto the volume_info target in ui/file_manager/externs/compiled_resources2.gyp?\n\nIf it works, I\u0027d like to avoid adding the extern for all targets. I\u0027d like to keep it explicit that which target depends on fileManagerPrivate and which target doesn\u0027t.\n(The modification above can\u0027t be auto generated though...)",
+      "parentUuid": "474fd636_5071493f",
+      "range": {
+        "startLine": 83,
+        "startChar": 60,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
