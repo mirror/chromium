@@ -22,6 +22,30 @@
       "revId": "4f980fab2921a1afc6879dea1ece930a8de4d092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7832ecd_ff14a8f3",
+        "filename": "third_party/WebKit/Source/core/exported/WebSurroundingText.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-26T22:56:04Z",
+      "side": 1,
+      "message": "\u003e Should this be IsNull() or IsEmpty()? Following the intent of the original code, it seems like it should be IsNull() -- but I don\u0027t know if this would be \"more correct\".\n\nThis has to be IsEmpty() since text_content_ is a WebString.\n\nHowever, it might be better to change WebSurroundingText::IsNull() to IsEmpty(), since \"empty text\" sounds more intuitive than \"null text\".\n\n\u003e \n\u003e Both before and after this CL, if we called InitializeFromCurrentSelection() twice, and there\u0027s no range the second time, we don\u0027t reset the internal fields. So maybe the right thing to do here is make the initialization INSIDE_BLINK only, and have a WebLocalFrame getter that returns this? WDYT?\n\nGood catch! It is indeed a bad design to expose the initialization function.\n\nHow about simply hiding InitializeFromCurrentSelection() as private, and changing WebSurroundingText::ctor to take (WebLocalFrame*, size_t), so that we don\u0027t complicate the WebLocalFrame class?",
+      "parentUuid": "72b9c1c6_214a80b8",
+      "range": {
+        "startLine": 141,
+        "startChar": 23,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "4f980fab2921a1afc6879dea1ece930a8de4d092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
