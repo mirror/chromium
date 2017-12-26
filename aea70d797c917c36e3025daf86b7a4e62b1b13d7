@@ -16,6 +16,24 @@
       "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e628f8_3867aae7",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-26T22:14:01Z",
+      "side": 1,
+      "message": "I can\u0027t tell what\u0027s wrong in the unit test you gave with just a glance. One thing that might be wrong is that, this line \"GetDocument().body()-\u003eAppendChild(script)\" may be triggering the \u0027DOMNodeInserted\u0027 handler, causing unexpected behavior. Not sure if that\u0027s the root cause.\n\nHowever, the test case I gave in crbug comment might be further minimized: Get the exact DOM, style and selection before running \u0027insertText\u0027, and then run \u0027insertText\u0027 on it.\n\nIn this way, we don\u0027t need to mess with event handlers or unrelated commands like \u0027selectAll\u0027.",
+      "parentUuid": "883360ff_da1caf00",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
