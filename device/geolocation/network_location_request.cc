@@ -105,7 +105,7 @@ void AddWifiData(const WifiData& wifi_data,
                  base::DictionaryValue* request);
 }  // namespace
 
-int NetworkLocationRequest::url_fetcher_id_for_tests = 0;
+int NetworkLocationRequest::url_fetcher_id_for_tests = 1000;
 
 NetworkLocationRequest::NetworkLocationRequest(
     scoped_refptr<net::URLRequestContextGetter> context,
@@ -152,6 +152,11 @@ bool NetworkLocationRequest::MakeRequest(
   url_fetcher_ =
       net::URLFetcher::Create(url_fetcher_id_for_tests, request_url,
                               net::URLFetcher::POST, this, traffic_annotation);
+  if (url_context_.get()) {
+    LOG(ERROR) << "we do have url context";
+  } else {
+    LOG(ERROR) << "we don't have url context";
+  }
   url_fetcher_->SetRequestContext(url_context_.get());
   std::string upload_data;
   FormUploadData(wifi_data, wifi_timestamp, &upload_data);
@@ -162,6 +167,7 @@ bool NetworkLocationRequest::MakeRequest(
                              net::LOAD_DO_NOT_SEND_AUTH_DATA);
 
   request_start_time_ = base::TimeTicks::Now();
+  LOG(ERROR) << "starting the url fetcher";
   url_fetcher_->Start();
   return true;
 }
@@ -169,6 +175,7 @@ bool NetworkLocationRequest::MakeRequest(
 void NetworkLocationRequest::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK_EQ(url_fetcher_.get(), source);
 
+  LOG(ERROR) << "got response in network location request";
   net::URLRequestStatus status = source->GetStatus();
   int response_code = source->GetResponseCode();
   RecordUmaResponseCode(response_code);

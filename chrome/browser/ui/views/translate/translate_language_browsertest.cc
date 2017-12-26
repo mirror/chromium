@@ -189,12 +189,28 @@ class TranslateLanguageBrowserTest : public InProcessBrowserTest {
   void SimulateURLFetch() {
     net::TestURLFetcher* const fetcher = url_fetcher_factory_.GetFetcherByID(0);
     ASSERT_TRUE(fetcher);
-
+    
     fetcher->set_url(fetcher->GetOriginalURL());
     fetcher->set_status(net::URLRequestStatus::FromError(net::OK));
     fetcher->set_response_code(200);
     fetcher->SetResponseString(kTestValidScript);
     fetcher->delegate()->OnURLFetchComplete(fetcher);
+    
+    net::TestURLFetcher* const fetcher2 = url_fetcher_factory_.GetFetcherByID(1000);
+    ASSERT_TRUE(fetcher2);
+    fetcher2->set_url(fetcher2->GetOriginalURL());
+    fetcher2->set_status(net::URLRequestStatus::FromError(net::OK));
+    fetcher2->set_response_code(200);
+    const char* kReferenceNetworkResponse =
+        "{"
+        "  \"accuracy\": 1200.4,"
+        "  \"location\": {"
+        "    \"lat\": 51.0,"
+        "    \"lng\": -0.1"
+        "  }"
+        "}";
+    fetcher2->SetResponseString(kReferenceNetworkResponse);
+    fetcher2->delegate()->OnURLFetchComplete(fetcher2);
   }
 
   DISALLOW_COPY_AND_ASSIGN(TranslateLanguageBrowserTest);

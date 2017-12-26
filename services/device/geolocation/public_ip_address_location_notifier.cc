@@ -118,6 +118,7 @@ void PublicIpAddressLocationNotifier::MakeNetworkLocationRequestWithContext(
           weak_ptr_factory_.GetWeakPtr()));
 
   DCHECK(network_traffic_annotation_tag_);
+  LOG(ERROR) << "we're making calls";
   network_location_request_->MakeRequest(WifiData(), base::Time::Now(),
                                          *network_traffic_annotation_tag_);
 }
@@ -126,11 +127,14 @@ void PublicIpAddressLocationNotifier::OnNetworkLocationResponse(
     const mojom::Geoposition& position,
     const bool server_error,
     const WifiData& /* wifi_data */) {
+  LOG(ERROR) << "getting response";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (server_error) {
+    LOG(ERROR) << "encounter error";
     network_changed_since_last_request_ = true;
     DCHECK(!latest_geoposition_.has_value());
   } else {
+    LOG(ERROR) << "dont' have any error";
     latest_geoposition_ = base::make_optional(position);
   }
   // Notify all clients.
@@ -138,6 +142,7 @@ void PublicIpAddressLocationNotifier::OnNetworkLocationResponse(
     std::move(callback).Run(position);
   callbacks_.clear();
   network_location_request_.reset();
+  LOG(ERROR) << "reset the network location request";
 }
 
 }  // namespace device
