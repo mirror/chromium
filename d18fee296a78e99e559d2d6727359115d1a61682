@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ced43e62_5d5a5e12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-26T00:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41c54937_e01c2de8",
+      "revId": "d18fee296a78e99e559d2d6727359115d1a61682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5ab5c4_367ebaf2",
         "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-22T17:53:53Z",
       "side": 1,
       "message": "I am now noticing that (unless I\u0027m missing something) these tests are asserting that the DSF affects the has-enough-text-to-autosize threshold.  That seems wrong - surely if I load the same content on two devices, which have the same screen size in DIPs but different DSF, I should not see one of them autosized and the other not autosized.\n\nThis already existed before your change but perhaps you could add a TODO comment explaining that the behavior expected by these tests (specifically the split between ClusterHasNotEnoughTextToAutosizeForZoomDSF and ClusterHasEnoughTextToAutosizeForZoomDSF) is questionable.",
+      "range": {
+        "startLine": 999,
+        "startChar": 26,
+        "endLine": 999,
+        "endChar": 66
+      },
+      "revId": "d18fee296a78e99e559d2d6727359115d1a61682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9661e4_48a2c06c",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-26T00:37:00Z",
+      "side": 1,
+      "message": "You are right. Now I understand it. Thank you for letting me know it. I added a comment.",
+      "parentUuid": "0b5ab5c4_367ebaf2",
       "range": {
         "startLine": 999,
         "startChar": 26,
