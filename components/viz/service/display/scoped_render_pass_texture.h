@@ -21,16 +21,14 @@ class ContextProvider;
 // for these resources.
 class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
  public:
-  ScopedRenderPassTexture();
   ScopedRenderPassTexture(ContextProvider* context_provider,
-                          const gfx::Size& size,
                           ResourceFormat format,
-                          const gfx::ColorSpace& color_space,
-                          bool mipmap);
+                          const gfx::ColorSpace& color_space);
   ~ScopedRenderPassTexture();
 
-  ScopedRenderPassTexture(ScopedRenderPassTexture&& other);
-  ScopedRenderPassTexture& operator=(ScopedRenderPassTexture&& other);
+  void Allocate(const gfx::Size& size, bool mipmap);
+  void Free();
+  void BindForSampling();
 
   GLuint id() const { return gl_id_; }
   const gfx::Size& size() const { return size_; }
@@ -38,9 +36,12 @@ class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
   const gfx::ColorSpace& color_space() const { return color_space_; }
 
  private:
-  void Free();
+  enum MipmapState { INVALID, GENERATE, VALID };
+
+  void CreateTexture();
 
   ContextProvider* context_provider_ = nullptr;
+  ResourceFormat format_;
   // The GL texture id.
   GLuint gl_id_ = 0;
   // Size of the resource in pixels.
@@ -51,6 +52,16 @@ class VIZ_SERVICE_EXPORT ScopedRenderPassTexture {
   // TODO(xing.xu): Remove this and set the color space when we draw the
   // RenderPassDrawQuad.
   gfx::ColorSpace color_space_;
+  // When false, the resource backing hasn't been allocated yet.
+  bool allocated_ = false;
+  // The current min filter for texture-backed resources.
+  GLenum min_filter_ = GL_LINEAR;
+  // A hint for texture-backed resources about how the resource will be used,
+  // that dictates how it should be allocated/used.
+  ResourceTextureHint hint_ = ResourceTextureHint::kFramebuffer;
+  MipmapState mipmap_state_ = INVALID;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedRenderPassTexture);
 };
 
 }  // namespace viz

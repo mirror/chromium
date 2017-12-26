@@ -13,79 +13,66 @@
 
 namespace viz {
 
-ScopedRenderPassTexture::ScopedRenderPassTexture() = default;
-
 ScopedRenderPassTexture::ScopedRenderPassTexture(
     ContextProvider* context_provider,
-    const gfx::Size& size,
     ResourceFormat format,
-    const gfx::ColorSpace& color_space,
-    bool mipmap)
+    const gfx::ColorSpace& color_space)
     : context_provider_(context_provider),
-      size_(size),
-      mipmap_(mipmap),
+      format_(format),
       color_space_(color_space) {
   DCHECK(context_provider_);
-  gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
-  const gpu::Capabilities& caps = context_provider_->ContextCapabilities();
-  gl->GenTextures(1, &gl_id_);
-
-  gl->BindTexture(GL_TEXTURE_2D, gl_id_);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-  // This texture will be bound as a framebuffer, so optimize for that.
-  if (caps.texture_usage) {
-    gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_USAGE_ANGLE,
-                      GL_FRAMEBUFFER_ATTACHMENT_ANGLE);
-  }
-
-  if (caps.texture_storage) {
-    GLint levels = 1;
-    if (caps.texture_npot && mipmap_)
-      levels += base::bits::Log2Floor(std::max(size_.width(), size_.height()));
-
-    gl->TexStorage2DEXT(GL_TEXTURE_2D, levels, TextureStorageFormat(format),
-                        size_.width(), size_.height());
-  } else {
-    gl->TexImage2D(GL_TEXTURE_2D, 0, GLInternalFormat(format), size_.width(),
-                   size_.height(), 0, GLDataFormat(format), GLDataType(format),
-                   nullptr);
-  }
 }
 
 ScopedRenderPassTexture::~ScopedRenderPassTexture() {
   Free();
 }
 
-ScopedRenderPassTexture::ScopedRenderPassTexture(
-    ScopedRenderPassTexture&& other) {
-  context_provider_ = other.context_provider_;
-  size_ = other.size_;
-  mipmap_ = other.mipmap_;
-  color_space_ = other.color_space_;
-  gl_id_ = other.gl_id_;
+void ScopedRenderPassTexture::CreateTexture() {
+  if (gl_id_)
+    return;
 
-  // When being moved, other will no longer hold this gl_id_.
-  other.gl_id_ = 0;
+  gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
+  const gpu::Capabilities& caps = context_provider_->ContextCapabilities();
+  gl->GenTextures(1, &gl_id_);
+  DCHECK(gl_id_);
+
+  // Create and set texture properties.
+  gl->BindTexture(GL_TEXTURE_2D, gl_id_);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  if (caps.texture_usage) {
+    gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_USAGE_ANGLE,
+                      GL_FRAMEBUFFER_ATTACHMENT_ANGLE);
+  }
 }
 
-ScopedRenderPassTexture& ScopedRenderPassTexture::operator=(
-    ScopedRenderPassTexture&& other) {
-  if (this != &other) {
-    Free();
-    context_provider_ = other.context_provider_;
-    size_ = other.size_;
-    mipmap_ = other.mipmap_;
-    color_space_ = other.color_space_;
-    gl_id_ = other.gl_id_;
+void ScopedRenderPassTexture::Allocate(const gfx::Size& size, bool mipmap) {
+  gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
+  const gpu::Capabilities& caps = context_provider_->ContextCapabilities();
 
-    // When being moved, other will no longer hold this gl_id_.
-    other.gl_id_ = 0;
+  if (allocated_)
+    return;
+  if (!gl_id_)
+    CreateTexture();
+  size_ = size;
+  allocated_ = true;
+  mipmap_ = mipmap;
+  gl->BindTexture(GL_TEXTURE_2D, gl_id_);
+
+  if (caps.texture_storage) {
+    GLint levels = 1;
+    if (caps.texture_npot && mipmap_) {
+      levels += base::bits::Log2Floor(std::max(size_.width(), size_.height()));
+    }
+    gl->TexStorage2DEXT(GL_TEXTURE_2D, levels, TextureStorageFormat(format_),
+                        size_.width(), size_.height());
+  } else {
+    gl->TexImage2D(GL_TEXTURE_2D, 0, GLInternalFormat(format_), size_.width(),
+                   size_.height(), 0, GLDataFormat(format_),
+                   GLDataType(format_), nullptr);
   }
-  return *this;
 }
 
 void ScopedRenderPassTexture::Free() {
@@ -94,6 +81,30 @@ void ScopedRenderPassTexture::Free() {
   gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
   gl->DeleteTextures(1, &gl_id_);
   gl_id_ = 0;
+}
+
+void ScopedRenderPassTexture::BindForSampling() {
+  gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
+  const gpu::Capabilities& caps = context_provider_->ContextCapabilities();
+
+  gl->BindTexture(GL_TEXTURE_2D, gl_id_);
+  GLenum min_filter = GL_LINEAR;
+  switch (mipmap_state_) {
+    case INVALID:
+      break;
+    case GENERATE:
+      DCHECK(caps.texture_npot);
+      gl->GenerateMipmap(GL_TEXTURE_2D);
+      mipmap_state_ = VALID;
+    // fall-through
+    case VALID:
+      min_filter = GL_LINEAR_MIPMAP_LINEAR;
+      break;
+  }
+  if (min_filter != min_filter_) {
+    gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
+    min_filter_ = min_filter;
+  }
 }
 
 }  // namespace viz
