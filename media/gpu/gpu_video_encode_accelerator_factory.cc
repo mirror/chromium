@@ -84,10 +84,11 @@ std::vector<VEAFactoryFunction> GetVEAFactoryFunctions(
   // if applicable.
   std::vector<VEAFactoryFunction> vea_factory_functions;
 #if BUILDFLAG(USE_V4L2_CODEC)
-  vea_factory_functions.push_back(&CreateV4L2VEA);
+  if (!gpu_preferences.disable_accelerated_video_encode)
+    vea_factory_functions.push_back(&CreateV4L2VEA);
 #endif
 #if BUILDFLAG(USE_VAAPI)
-  if (!gpu_preferences.disable_vaapi_accelerated_video_encode)
+  if (!gpu_preferences.disable_accelerated_video_encode)
     vea_factory_functions.push_back(&CreateVaapiVEA);
 #endif
 #if defined(OS_ANDROID) && BUILDFLAG(ENABLE_WEBRTC)

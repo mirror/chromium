@@ -54,8 +54,8 @@ struct GPU_EXPORT GpuPreferences {
   // Starts the GPU sandbox before creating a GL context.
   bool gpu_sandbox_start_early = false;
 
-  // Disables VA-API accelerated video encode. ChromeOS only.
-  bool disable_vaapi_accelerated_video_encode = false;
+  // Disables accelerated video encode. ChromeOS only.
+  bool disable_accelerated_video_encode = false;
 
   // Disables HW encode acceleration for WebRTC.
   bool disable_web_rtc_hw_encoding = false;
