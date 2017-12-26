@@ -418,9 +418,9 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
       return kSelectorFailsAllSiblings;
 
     case CSSSelector::kShadowPseudo: {
-      if (!is_ua_rule_ &&
-          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow &&
-          mode_ == kQueryingRules) {
+      DCHECK((!is_ua_rule_ && mode_ == kQueryingRules) ||
+             context.selector->GetPseudoType() != CSSSelector::kPseudoShadow);
+      if (context.selector->GetPseudoType() == CSSSelector::kPseudoShadow) {
         UseCounter::Count(context.element->GetDocument(),
                           WebFeature::kPseudoShadowInStaticProfile);
       }
@@ -439,15 +439,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     }
 
     case CSSSelector::kShadowDeep: {
-      if (!is_ua_rule_) {
-        if (mode_ == kQueryingRules) {
-          UseCounter::Count(context.element->GetDocument(),
-                            WebFeature::kDeepCombinatorInStaticProfile);
-        } else {
-          Deprecation::CountDeprecation(context.element->GetDocument(),
-                                        WebFeature::kCSSDeepCombinator);
-        }
-      }
+      DCHECK(!is_ua_rule_);
+      DCHECK(mode_ == kQueryingRules);
+      UseCounter::Count(context.element->GetDocument(),
+                        WebFeature::kDeepCombinatorInStaticProfile);
       if (ShadowRoot* root = context.element->ContainingShadowRoot()) {
         if (root->GetType() == ShadowRootType::kUserAgent)
           return kSelectorFailsCompletely;
