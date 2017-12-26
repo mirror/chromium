@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c764ea42_e67dbb96",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-26T15:57:16Z",
+      "side": 1,
+      "message": "Nit: The available initializer should have a full comment.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7fd362e_834a0d94",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-26T15:57:16Z",
+      "side": 1,
+      "message": "We\u0027re guaranteed to be build targeting iOS10 now, so this can be cleaned up.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d54ac61_ef60822e",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-26T15:57:16Z",
+      "side": 1,
+      "message": "Can this just be nil instead of an empty dictionary?",
+      "range": {
+        "startLine": 45,
+        "startChar": 47,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b6040b_a8140fd8",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-26T15:57:16Z",
+      "side": 1,
+      "message": "I don\u0027t see this file in the CL?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
