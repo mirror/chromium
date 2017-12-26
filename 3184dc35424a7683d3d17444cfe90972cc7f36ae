@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa863a35_acb38d04",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-26T21:04:38Z",
+      "side": 1,
+      "message": "nit: s/:/./",
+      "range": {
+        "startLine": 485,
+        "startChar": 28,
+        "endLine": 485,
+        "endChar": 29
+      },
+      "revId": "3184dc35424a7683d3d17444cfe90972cc7f36ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbc3efc_b8213c5c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-26T21:04:38Z",
+      "side": 1,
+      "message": "I didn\u0027t try very hard in test case minimization when adding the crbug comment.\n\nHave you tried running \u0027insertUnorderedList\u0027 with the exact DOM, style and selection at this line?",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "3184dc35424a7683d3d17444cfe90972cc7f36ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
