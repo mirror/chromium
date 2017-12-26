@@ -63,6 +63,7 @@ V8ScriptValueSerializer::V8ScriptValueSerializer(
       serializer_(script_state_->GetIsolate(), this),
       transferables_(options.transferables),
       blob_info_array_(options.blob_info),
+      bundle_array_(options.bundles),
       wasm_policy_(options.wasm_policy),
       for_storage_(options.for_storage == SerializedScriptValue::kForStorage) {}
 
@@ -96,6 +97,10 @@ scoped_refptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
     return nullptr;
   }
   DCHECK(wrote_value);
+
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_opened_) << "Serialization completed without EndBundle() call";
+#endif  // DCHECK_IS_ON()
 
   // Finalize the transfer (e.g. neutering array buffers).
   FinalizeTransfer(exception_state);
@@ -595,6 +600,109 @@ void* V8ScriptValueSerializer::ReallocateBufferMemory(void* old_buffer,
 
 void V8ScriptValueSerializer::FreeBufferMemory(void* buffer) {
   return WTF::Partitions::BufferFree(buffer);
+}
+
+bool V8ScriptValueSerializer::StartBundle(
+    uint32_t bundle_type,
+    v8::MemorySpan<const uint8_t> version) {
+  if (!bundle_array_ || !blob_info_array_)
+    return false;
+
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_opened_) << "StartBundle() called twice without EndBundle()";
+  bundle_opened_ = true;
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  bundle_array_->emplace_back();
+  SerializedScriptValue::Bundle& bundle = bundle_array_->back();
+  bundle.type = bundle_type;
+  bundle.version.ReserveInitialCapacity(version.size());
+  bundle.version.Append(version.data(), version.size());
+
+  return true;
+}
+
+bool V8ScriptValueSerializer::StartItem(
+    uint64_t item_id,
+    size_t item_size,
+    v8::ValueSerializer::VersionPredicate predicate) {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_opened_) << "StartItem() called without StartBundle()";
+  DCHECK(!bundle_item_opened_) << "StartItem() called twice without EndItem()";
+  DCHECK(!bundle_item_ids_.Contains(item_id))
+      << "StartItem() called with the same item_id twice";
+  bundle_item_opened_ = true;
+  bundle_item_ids_.insert(item_id);
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  SerializedScriptValue::Bundle& bundle = bundle_array_->back();
+  bundle.items.emplace_back();
+  SerializedScriptValue::Bundle::Item& item = bundle.items.at(item_id);
+  item.id = item_id;
+  item.predicate = predicate;
+  item.data.ReserveInitialCapacity(item_size);
+  return true;
+}
+
+v8::MemorySpan<uint8_t> V8ScriptValueSerializer::NextItemBuffer(
+    size_t min_size) {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_opened_) << "NextItemBuffer() called without StartItem()";
+  DCHECK(!bundle_item_buffer_locked_)
+      << "NextItemBuffer() called twice without ReleaseItemBuffer()";
+  bundle_item_buffer_locked_ = true;
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  SerializedScriptValue::Bundle& bundle = bundle_array_->back();
+  SerializedScriptValue::Bundle::Item& item = bundle.items.back();
+  return v8::MemorySpan<uint8_t>(reinterpret_cast<uint8_t*>(item.data.data()),
+                                 item.data.size());
+}
+
+void V8ScriptValueSerializer::ReleaseItemBuffer() {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_buffer_locked_)
+      << "ReleaseItemBuffer() called without NextItemBuffer()";
+  bundle_item_buffer_locked_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
+void V8ScriptValueSerializer::EndItem() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_buffer_locked_)
+      << "EndItem() called before ReleaseItemBuffer()";
+  DCHECK(bundle_item_opened_) << "EndItem() called without StartItem()";
+  bundle_item_opened_ = false;
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  DCHECK(blob_info_array_);
+  SerializedScriptValue::Bundle& bundle = bundle_array_->back();
+  SerializedScriptValue::Bundle::Item& item = bundle.items.back();
+  item.blob_index = blob_info_array_->size();
+  size_t item_size = item.data.size();
+  std::unique_ptr<BlobData> blob_data = BlobData::Create();
+  blob_data->SetContentType(String("application/vnd.blink-idb-value-wrapper"));
+  blob_data->AppendBytes(item.data.data(), item_size);
+  scoped_refptr<BlobDataHandle> blob_data_handle =
+      BlobDataHandle::Create(std::move(blob_data), item_size);
+  blob_info_array_->emplace_back(blob_data_handle, blob_data_handle->GetType(),
+                                 item_size);
+  serialized_script_value_->BlobDataHandles().Set(blob_data_handle->Uuid(),
+                                                  blob_data_handle);
+}
+
+bool V8ScriptValueSerializer::EndBundle() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_opened_) << "EndBundle() called before EndItem()";
+  DCHECK(bundle_opened_) << "EndBundle() called without StartBundle()";
+  bundle_opened_ = false;
+  bundle_item_ids_.clear();
+#endif  // DCHECK_IS_ON()
+  return true;
 }
 
 }  // namespace blink

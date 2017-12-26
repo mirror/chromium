@@ -36,7 +36,8 @@ class SharedBuffer;
 //    This may be necessary when extracting the primary key and/or index keys
 //    for the serialized value.
 // 2) Wrapping - DoneCloning() transitions the instance to an internal
-//    reprensetation optimized for wrapping via WrapIfBiggerThan().
+//    reprensetation optimized for wrapping via SerializeBundles() and
+//    WrapIfBiggerThan().
 // 3) Reading results - After any desired wrapping is performed, the Take*()
 //    methods yield the serialized value components passed to the backing store.
 //    To avoid unnecessary copies, the Take*() methods move out parts of the
@@ -47,6 +48,8 @@ class SharedBuffer;
 //     auto wrapper = new IDBValueWrapper();
 //     wrapper.Clone(...);  // Structured clone used to extract keys.
 //     wrapper.DoneCloning();
+//     wrapper.WrapIfBiggerThan(kWrapThreshold);
+//     wrapper.SerializeBundles();
 //     wrapper.WrapIfBiggerThan(kWrapThreshold);
 //     wrapper.TakeWireBytes();
 //     wrapper.TakeBlobDataHandles();
@@ -66,10 +69,41 @@ class SharedBuffer;
 // while the large byte array in the SSV output is handled by the Blob storage
 // system.
 //
+// The serialization of some JavaScript objects (currently WASM modules) results
+// in a Bundle, a collection of data buffers (items) with special requirements.
+// Only a subset of the items are needed for deserialization, and the subset
+// is dynamically determined at loading time, depending on the versions of
+// Chrome used to read and write the data. Items are serialized as individual
+// Blobs attached with to the value sent to the backing store, together with
+// metadata that identifies the Blobs and is used to determine if they will be
+// used during deserialization.
+//
 // In summary:
 // "normal" v8::Value -> SSV -> IDBValue (stores SSV output) -> LevelDB
 // "large" v8::Value -> SSV -> IDBValue (stores SSV output) ->
 //     Blob (stores SSV output) + IDBValue (stores Blob reference) -> LevelDB
+//
+// "normal" v8::Value with WASM module -> SSV ->
+//     Blobs for WASM bundle + IDBValue (stores bundle metadata + SSV output) ->
+//     LevelDB
+// "large" v8::Value with WASM module -> SSV ->
+//     Blobs for WASM bundle + IDBValue (stores bundle metadata + SSV output) ->
+//     Blobs for WASM bundle + Blob (stores SSV output) +
+//         IDBValue (stores bundle metadata and Blob reference) ->
+//     LevelDB
+// "normal" v8::Value with many WASM modules -> SSV ->
+//     Blobs for WASM bundles + IDBValue (bundle metadata + SSV output) ->
+//     Blobs for WASM bundles + Blob (stores bundle metadata + SSV output) +
+//         IDBValue (stores Blob reference) ->
+//     LevelDB
+// "large" v8::Value with many WASM modules -> SSV ->
+//     Blobs for WASM bundle + IDBValue (stores bundle metadata + SSV output) ->
+//     Blobs for WASM bundle + Blob (stores SSV output) +
+//         IDBValue (stores bundle metadata and Blob reference) ->
+//     Blobs for WASM bundle + Blob (stores SSV output) +
+//         Blob (stores bundle metadata and reference to previous Blob)
+//         IDBValue (stores reference to last Blob) ->
+//     LevelDB
 //
 // Full picture that accounts for Blob attachments:
 // "normal" v8::Value -> SSV (byte array, Blob attachments) ->
@@ -121,6 +155,17 @@ class MODULES_EXPORT IDBValueWrapper {
   // This method must be called before the Take*() methods are called.
   bool WrapIfBiggerThan(unsigned max_bytes);
 
+  // Serializes the SSV's bundle information into the SSV wire bytes.
+  //
+  // DoneCloning() must be called before this method. This method should be
+  // called before the Extract*() methods are called.
+  //
+  // The serialized bundle information is prepended to the wire bytes, so the
+  // running time is proportional to the number of items in all the bundles and
+  // to the SSV's wire bytes. WrapIfBiggerThan() should be called before this
+  // method to set an upper bound for the impact of the SSV's wire bytes.
+  void SerializeBundles();
+
   // Obtains the byte array for the serialized value.
   //
   // This method must be called at most once, and must be called after
@@ -133,7 +178,8 @@ class MODULES_EXPORT IDBValueWrapper {
   // DoneCloning().
   Vector<scoped_refptr<BlobDataHandle>> TakeBlobDataHandles() {
 #if DCHECK_IS_ON()
-    DCHECK(done_cloning_) << __func__ << " called before DoneCloning()";
+    DCHECK(serialized_bundles_)
+        << __func__ << " called before SerializeBundles()";
     DCHECK(owns_blob_handles_) << __func__ << " called twice";
     owns_blob_handles_ = false;
 #endif  // DCHECK_IS_ON()
@@ -147,7 +193,8 @@ class MODULES_EXPORT IDBValueWrapper {
   // DoneCloning().
   inline Vector<WebBlobInfo> TakeBlobInfo() {
 #if DCHECK_IS_ON()
-    DCHECK(done_cloning_) << __func__ << " called before DoneCloning()";
+    DCHECK(serialized_bundles_)
+        << __func__ << " called before SerializeBundles()";
     DCHECK(owns_blob_info_) << __func__ << " called twice";
     owns_blob_info_ = false;
 #endif  // DCHECK_IS_ON()
@@ -173,9 +220,17 @@ class MODULES_EXPORT IDBValueWrapper {
   static void WriteVarInt(unsigned value, Vector<char>& output);
   static void WriteBytes(const Vector<uint8_t>& bytes, Vector<char>& output);
 
+  static void WriteBundleItem(const SerializedScriptValue::Bundle::Item&,
+                              const Vector<WebBlobInfo>&,
+                              Vector<char>& output);
+  static void WriteBundle(const SerializedScriptValue::Bundle&,
+                          const Vector<WebBlobInfo>&,
+                          Vector<char>& output);
+
  private:
   // V8 value serialization state.
   scoped_refptr<SerializedScriptValue> serialized_value_;
+  SerializedScriptValue::BundleArray bundles_;
   Vector<scoped_refptr<BlobDataHandle>> blob_handles_;
   Vector<WebBlobInfo> blob_info_;
 
@@ -193,6 +248,7 @@ class MODULES_EXPORT IDBValueWrapper {
   // Accounting for lifecycle stages.
   bool had_exception_ = false;
   bool done_cloning_ = false;
+  bool serialized_bundles_ = false;
   bool owns_blob_handles_ = true;
   bool owns_blob_info_ = true;
   bool owns_wire_bytes_ = true;

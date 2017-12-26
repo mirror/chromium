@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBKeyPath.h"
@@ -70,6 +71,7 @@ class MODULES_EXPORT IDBValue final {
            Vector<scoped_refptr<BlobDataHandle>>,
            Vector<WebBlobInfo>,
            const IDBKey*,
+           // Vector<SerializedScriptValue::Bundle>,
            const IDBKeyPath&);
 
   // Keep this private to prevent new refs because we manually bookkeep the
