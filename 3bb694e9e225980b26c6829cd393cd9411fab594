@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1dccd2d_d58b75d1",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/undetectable-document-all.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-26T06:34:51Z",
+      "side": 1,
+      "message": "nit: s/length+1/length + 1/",
+      "range": {
+        "startLine": 78,
+        "startChar": 32,
+        "endLine": 78,
+        "endChar": 40
+      },
+      "revId": "3bb694e9e225980b26c6829cd393cd9411fab594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb7b60_05fb8d64",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/undetectable-document-all.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-26T06:34:51Z",
+      "side": 1,
+      "message": "nit: It\u0027s better to use |id| rather than 0-th \u003cp\u003e tag.\nLet\u0027s give |element| an unique id, say element.id \u003d \u0027change_all_length\u0027, and use it.",
+      "revId": "3bb694e9e225980b26c6829cd393cd9411fab594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
