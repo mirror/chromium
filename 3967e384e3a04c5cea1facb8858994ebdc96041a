@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "5dd9f49d_768c9219",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-26T04:40:23Z",
+      "side": 1,
+      "message": "As per my understanding, even I feel we can make it per frame as the webRTC session will not be alive across frames.",
+      "parentUuid": "580dc705_037e6f12",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852d3147_4978033f",
         "filename": "content/common/media/media_stream_track_metrics_host_messages.h",
         "patchSetId": 2
