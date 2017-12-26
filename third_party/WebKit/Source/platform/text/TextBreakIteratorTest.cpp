@@ -98,7 +98,7 @@ TEST_P(BreakTypeTest, EmptyDefaultConstructor) {
 TEST_F(TextBreakIteratorTest, Basic) {
   SetTestString("a b  c");
   MatchLineBreaks(LineBreakType::kNormal, {1, 3, 4, 6});
-  MatchLineBreaks(LineBreakType::kNormal, {1, 3, 4, 6},
+  MatchLineBreaks(LineBreakType::kNormal, {1, 3, 6},
                   BreakSpaceType::kBeforeSpace);
   MatchLineBreaks(LineBreakType::kNormal, {2, 5, 6}, BreakSpaceType::kAfter);
 }
@@ -162,7 +162,7 @@ TEST_F(TextBreakIteratorTest, ChineseSpaces) {
   MatchLineBreaks(LineBreakType::kBreakCharacter,
                   {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
   MatchLineBreaks(LineBreakType::kKeepAll, {1, 2, 4, 5, 7, 8, 10});
-  MatchLineBreaks(LineBreakType::kNormal, {1, 2, 4, 5, 7, 8, 10},
+  MatchLineBreaks(LineBreakType::kNormal, {1, 4, 7, 10},
                   BreakSpaceType::kBeforeSpace);
   MatchLineBreaks(LineBreakType::kNormal, {3, 6, 9, 10},
                   BreakSpaceType::kAfter);
