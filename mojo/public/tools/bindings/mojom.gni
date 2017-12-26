@@ -1,5 +1,4 @@
-# Copyright 2014 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
+# Copyright 2014 The Chromium Authors. All rights reserved.# Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
 import("//build/config/jumbo.gni")
@@ -63,6 +62,8 @@ mojom_generator_sources = [
   "$mojom_generator_root/pylib/mojom/parse/parser.py",
   "$mojom_generator_script",
 ]
+
+mojom_parsing_script = "$mojom_generator_root/mojom_bindings_generator.py"
 
 if (enable_scrambled_message_ids) {
   declare_args() {
@@ -316,6 +317,45 @@ template("mojom") {
     }
   }
 
+  if (defined(invoker.sources)) {
+    print("invoker sources are...")
+    print(invoker.sources)
+    print("all deps are...")
+    print(all_deps)
+    parser_target_name = "${target_name}__parsed"
+    parser_shared_outputs = [ "{{source_gen_dir}}/{{source_name_part}}.p" ]
+    action_foreach(parser_target_name) {
+      script = mojom_parsing_script
+      sources = invoker.sources
+      outputs = parser_shared_outputs
+      args = [
+        "parse",
+        "{{source}}",
+        "-o",
+        rebase_path(root_gen_dir, root_build_dir),
+        "-d",
+        rebase_path("//", root_build_dir),
+      ]
+    }
+  }
+
+  parsed_mojoms_target_name = "${target_name}_parsed_mojoms"
+  jumbo_source_set(parsed_mojoms_target_name) {
+    deps = []
+    if (defined(invoker.sources)) {
+      sources = process_file_template(invoker.sources, parser_shared_outputs)
+      deps += [ ":$parser_target_name" ]
+    }
+    public_deps = []
+    foreach(d, all_deps) {
+      # Resolve the name, so that a target //mojo/something becomes
+      # //mojo/something:something and we can append shared_cpp_sources_suffix
+      # to get the cpp dependency name.
+      full_name = get_label_info("$d", "label_no_toolchain")
+      public_deps += [ "${full_name}_parsed_mojoms" ]
+    }
+  }
+
   # Generate code that is shared by different variants.
   if (defined(invoker.sources)) {
     common_generator_args = [
@@ -416,6 +456,7 @@ template("mojom") {
       inputs = mojom_generator_sources
       sources = invoker.sources
       deps = [
+        ":$parsed_mojoms_target_name",
         "//mojo/public/tools/bindings:precompile_templates",
       ]
       outputs = generator_shared_cpp_outputs
@@ -641,6 +682,7 @@ template("mojom") {
         inputs = mojom_generator_sources
         sources = invoker.sources
         deps = [
+          ":$parsed_mojoms_target_name",
           ":$type_mappings_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
@@ -955,6 +997,7 @@ template("mojom") {
           sources += invoker.sources
         }
         deps = [
+          ":$parsed_mojoms_target_name",
           "//mojo/public/tools/bindings:precompile_templates",
         ]
         outputs = generator_js_outputs
