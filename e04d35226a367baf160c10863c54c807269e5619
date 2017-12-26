@@ -46,6 +46,30 @@
       "revId": "e04d35226a367baf160c10863c54c807269e5619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa146f4_16f04e1e",
+        "filename": "content/renderer/media_recorder/h264_encoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-12-26T09:39:17Z",
+      "side": 0,
+      "message": "Restrict the change to ChromeOS.",
+      "parentUuid": "2f953257_d90e88da",
+      "range": {
+        "startLine": 148,
+        "startChar": 38,
+        "endLine": 148,
+        "endChar": 62
+      },
+      "revId": "e04d35226a367baf160c10863c54c807269e5619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
