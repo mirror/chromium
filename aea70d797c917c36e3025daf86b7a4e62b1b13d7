@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883360ff_da1caf00",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-26T19:35:12Z",
+      "side": 1,
+      "message": "While making this test case as a unit test, \nselectionchange event is not getting fired.\nI saw that events are getting registered, and even on DOMNodeInserted even, selection is getting \nchanged which enques the selectionchange event, but insertText command does not gets execute.\n\n\nBelow is the one example I tried. Other than the below case I tried few other ways but unsuccesful.\n \nTEST_F(InsertTextCommandTest, No) {\n  GetDocument().setDesignMode(\"on\");\n  GetDocument().GetSettings()-\u003eSetScriptEnabled(true);\n  SetBodyContent(\"\u003cobject\u003ex\u003c/object\u003e\");\n  Element* script \u003d GetDocument().createElement(\"script\");\n  script-\u003eSetInnerHTMLFromString(\n  \t\t\" function DOMNodeInserted() {\"\n  \t\t\"  document.execCommand(\u0027selectAll\u0027);\"\n  \t\t\"}\"\n\t  \t\"function selectionchange() {\"\n\t  \t\"  document.execCommand(\u0027InsertText\u0027);\"\n\t  \t\"}\"\n\t  \t\"document.addEventListener(\u0027selectionchange\u0027, selectionchange);\"\n        \t\"document.addEventListener(\u0027DOMNodeInserted\u0027, DOMNodeInserted);\");\n  GetDocument().body()-\u003eAppendChild(script);\n  GetDocument().View()-\u003eUpdateAllLifecyclePhases();\n  GetDocument().documentElement()-\u003eReplaceChild(\n  GetDocument().documentElement()-\u003eparentNode()-\u003efirstChild()-\u003ecloneNode(true, ASSERT_NO_EXCEPTION), GetDocument().body());\n  //GetDocument().View()-\u003eUpdateAllLifecyclePhases();\n  EXPECT_EQ(\n      \"a\",\n     GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));\n}\n\nCould you suggest if I am  missing any thing ?",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
