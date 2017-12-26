@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a31b9aa_113f2ad2",
+        "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "I suggest extracting this to a helper function (say, GetTaskRunner(script_state)).\n\nThen we can write GetTaskRunner(script_state) directly in the call to Decrypt() below (and for all the other functions).",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009ea6e8_361044ab",
+        "filename": "third_party/WebKit/Source/modules/crypto/SubtleCrypto.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "See comment above.\nIf we don\u0027t extract to a helper function, then should probably change this to std::move(task_runner)",
+      "range": {
+        "startLine": 242,
+        "startChar": 41,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895fe7bb_d162edf0",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "In terms of documentation, can we clarify that this isn\u0027t the task runner that actually performs the WebCrypto work - it is merely a task runner for posting results back from the WebCrtypo task runner to the Blink thread that initiated the call and holds the Promise?",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087550fc_e169c4ce",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "It seems a bit odd to have a new enum just for these tasks.\nI don\u0027t know much about TaskType, so will defer to its OWNERs.\n(I would have expected re-use of an existing value).",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344b1aaf_cff4b83b",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "Please update this to read:\n\n\"from the |result_task_runner| TaskRunner.\"",
+      "range": {
+        "startLine": 153,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 42
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a9e8ed_f3a0338b",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "Please update this to read:\n\n\"same thread (result_task_runner)\"",
+      "range": {
+        "startLine": 164,
+        "startChar": 66,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f6a582_1b9a0ac3",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "Please update this to read:\n\n\"thread (result_task_runner).\"",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a7b79a_51adf160",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "Can you change this type to scoped_refptr\u003cbase::TaskRunner\u003e (here and throughout), since from the perspective of this code it doesn\u0027t matter that it is a single thread task runner?",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633dac66_24f8ddf0",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "Can we rename |task_runner| to |result_task_runner|, or alternately |origin_task_runner|? (here and throughout)\n\n(With the name |task_runner| sounds like it would be the task runner that performs the actual cryptographic operation, however that is not the case).",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06693016_3738f214",
+        "filename": "third_party/WebKit/public/platform/WebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-26T21:39:12Z",
+      "side": 1,
+      "message": "A different design would be to internalize the TaskRunner as a part of WebCryptoResult.\n\nIn other words, leave the API as it was (no new TaskRunner parameter), but add a TaskRunner parameter into WebCryptoResult. That seems like a good place to put it, since the threading dependency is only for calling WebCryptoResult. It would also make it clear that this is not a TaskRunner for doing the cryptography.\n\nWhat do you think?\n\nI am OK wth either approach, but interested what your thoughts are on this.\nThanks!",
+      "revId": "8e1c622d4d77224e4a9cc0e95120aed8385093d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
