@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d7ff39_11e2a682",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-26T10:08:33Z",
+      "side": 1,
+      "message": "This will make that virtual keyboard shows up when text field is activated while spoken feedback is on.",
+      "revId": "f84b652fcb4cf0eb56dae402bdd55f3fbd0d2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
