@@ -9,6 +9,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "core/frame/Settings.h"
 
 namespace blink {
 
@@ -47,5 +48,43 @@ TEST_F(InsertListCommandTest, ShouldCleanlyRemoveSpuriousTextNode) {
   EXPECT_TRUE(command->Apply())
       << "The insert ordered list command should have succeeded";
   EXPECT_EQ("<ol><li>d</li></ol>", GetDocument().body()->InnerHTMLAsString());
+}
+
+// Refer https://crbug.com/794356
+TEST_F(InsertListCommandTest, UnlistifyParagraphCrashOnRemoveStyle) {
+  GetDocument().setDesignMode("on");
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  SetBodyContent(
+      "<style>"
+      "  textArea {"
+      "  float:left; visibility:visible; "
+      "  }"
+      "</style>"
+      "<dl>"
+      "<textarea></textarea>"
+      "</dl>");
+  Element* script = GetDocument().createElement("script");
+  script->SetInnerHTMLFromString(
+      "function handler() {"
+      "  document.execCommand('selectAll');"
+      "  document.execCommand('insertUnorderedList');"
+      "}"
+      "document.addEventListener('DOMNodeRemoved', handler);"
+      "document.querySelector('style').remove();");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(
+      "<dl><ul>"
+      "<textarea></textarea>"
+      "</ul></dl>"
+      "<script>"
+      "function handler() {"
+      "  document.execCommand('selectAll');"
+      "  document.execCommand('insertUnorderedList');"
+      "}"
+      "document.addEventListener('DOMNodeRemoved', handler);"
+      "document.querySelector('style').remove();"
+      "</script>",
+      GetDocument().body()->InnerHTMLAsString());
 }
 }
