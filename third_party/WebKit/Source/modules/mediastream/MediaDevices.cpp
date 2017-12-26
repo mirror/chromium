@@ -75,7 +75,8 @@ MediaDevices::MediaDevices(ExecutionContext* context)
                         this,
                         &MediaDevices::DispatchScheduledEvent,
                         context->GetTaskRunner(TaskType::kMediaElementEvent))
-                  : nullptr) {}
+                  : nullptr),
+      binding_(this) {}
 
 MediaDevices::~MediaDevices() {}
 
@@ -140,14 +141,6 @@ ScriptPromise MediaDevices::getUserMedia(ScriptState* script_state,
   return promise;
 }
 
-void MediaDevices::DidChangeMediaDevices() {
-  Document* document = ToDocument(GetExecutionContext());
-  DCHECK(document);
-
-  if (RuntimeEnabledFeatures::OnDeviceChangeEnabled())
-    ScheduleDispatchEvent(Event::Create(EventTypeNames::devicechange));
-}
-
 const AtomicString& MediaDevices::InterfaceName() const {
   return EventTargetNames::MediaDevices;
 }
@@ -204,6 +197,20 @@ void MediaDevices::Unpause() {
   dispatch_scheduled_event_runner_->Unpause();
 }
 
+void MediaDevices::OnDevicesChanged(
+    MediaDeviceType type,
+    uint32_t subscription_id,
+    Vector<mojom::blink::MediaDeviceInfoPtr> device_infos) {
+  Document* document = ToDocument(GetExecutionContext());
+  DCHECK(document);
+
+  if (RuntimeEnabledFeatures::OnDeviceChangeEnabled())
+    ScheduleDispatchEvent(Event::Create(EventTypeNames::devicechange));
+
+  if (device_change_test_callback_)
+    std::move(device_change_test_callback_).Run();
+}
+
 void MediaDevices::ScheduleDispatchEvent(Event* event) {
   scheduled_events_.push_back(event);
   DCHECK(dispatch_scheduled_event_runner_);
@@ -222,11 +229,16 @@ void MediaDevices::StartObserving() {
   if (observing_ || stopped_)
     return;
 
-  UserMediaController* user_media = GetUserMediaController();
-  if (!user_media)
+  Document* document = ToDocument(GetExecutionContext());
+  if (!document || !document->GetFrame())
     return;
 
-  user_media->SetMediaDeviceChangeObserver(this);
+  DCHECK(!binding_.is_bound());
+
+  mojom::blink::MediaDevicesListenerPtr listener;
+  binding_.Bind(mojo::MakeRequest(&listener));
+  GetDispatcherHost(document->GetFrame())
+      ->SetMediaDevicesListener(std::move(listener));
   observing_ = true;
 }
 
@@ -234,20 +246,8 @@ void MediaDevices::StopObserving() {
   if (!observing_)
     return;
 
-  UserMediaController* user_media = GetUserMediaController();
-  if (!user_media)
-    return;
-
-  user_media->SetMediaDeviceChangeObserver(nullptr);
+  binding_.Close();
   observing_ = false;
-}
-
-UserMediaController* MediaDevices::GetUserMediaController() {
-  Document* document = ToDocument(GetExecutionContext());
-  if (!document)
-    return nullptr;
-
-  return UserMediaController::From(document->GetFrame());
 }
 
 void MediaDevices::Dispose() {

@@ -208,6 +208,21 @@ void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
     device_change_subscribers_[type].erase(it);
 }
 
+void MediaDevicesManager::SubscribeDeviceChangeNotifications(
+    uint32_t subscription_id,
+    DeviceChangeCallback device_change_cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  device_change_callbacks_[subscription_id] = std::move(device_change_cb);
+}
+
+void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
+    uint32_t subscription_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  auto it = device_change_callbacks_.find(subscription_id);
+  DCHECK(it != device_change_callbacks_.end());
+  device_change_callbacks_.erase(it);
+}
+
 void MediaDevicesManager::SetCachePolicy(MediaDeviceType type,
                                          CachePolicy policy) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -502,9 +517,11 @@ void MediaDevicesManager::NotifyDeviceChangeSubscribers(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 
-  for (auto* subscriber : device_change_subscribers_[type]) {
+  for (auto* subscriber : device_change_subscribers_[type])
     subscriber->OnDevicesChanged(type, snapshot);
-  }
+
+  for (auto& callback : device_change_callbacks_)
+    callback.second.Run(type, snapshot);
 }
 
 }  // namespace content
