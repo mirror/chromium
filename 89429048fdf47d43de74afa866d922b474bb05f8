@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dcd102d_6b739c45",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/serialization/V8ScriptValueSerializerForModulesTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-26T17:21:10Z",
+      "side": 1,
+      "message": "This could be a check of BUILDFLAG(ENABLE_WEBRTC), at the cost of a dependency on the build flag header in media/. Since Blink otherwise checks this at runtime, that\u0027s what I\u0027ve done here.",
+      "revId": "89429048fdf47d43de74afa866d922b474bb05f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
