@@ -14073,6 +14073,50 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DBus.AsyncMethodCallSuccess" enum="BooleanSuccess">
+  <owner>satorux@chromium.org</owner>
+  <summary>Whether an asynchronous D-Bus method call is successful.</summary>
+</histogram>
+
+<histogram name="DBus.AsyncMethodCallTime" units="microseconds">
+  <owner>satorux@chromium.org</owner>
+  <summary>The time spent for an asynchronous D-Bus method call.</summary>
+</histogram>
+
+<histogram name="DBus.ExportedMethodHandleSuccess" enum="BooleanSuccess">
+  <owner>satorux@chromium.org</owner>
+  <summary>
+    Whether a call to a D-Bus exported method is handled successfully.
+  </summary>
+</histogram>
+
+<histogram name="DBus.ExportedMethodHandleTime" units="microseconds">
+  <owner>satorux@chromium.org</owner>
+  <summary>
+    The time spent for handling a call to a D-Bus exported method.
+  </summary>
+</histogram>
+
+<histogram name="DBus.SignalHandleTime" units="microseconds">
+  <owner>satorux@chromium.org</owner>
+  <summary>The time spent for handling a D-Bus signal.</summary>
+</histogram>
+
+<histogram name="DBus.SignalSendTime" units="microseconds">
+  <owner>satorux@chromium.org</owner>
+  <summary>The time spent for sending a D-Bus signal.</summary>
+</histogram>
+
+<histogram name="DBus.SyncMethodCallSuccess" enum="BooleanSuccess">
+  <owner>satorux@chromium.org</owner>
+  <summary>Whether a synchronous D-Bus method call is successful.</summary>
+</histogram>
+
+<histogram name="DBus.SyncMethodCallTime" units="microseconds">
+  <owner>satorux@chromium.org</owner>
+  <summary>The time spent for a synchronous D-Bus method call.</summary>
+</histogram>
+
 <histogram name="DefaultBrowser.ActivateSettings.ErrorHresult" enum="Hresult">
   <owner>pmonette@chromium.org</owner>
   <owner>grt@chromium.org</owner>
