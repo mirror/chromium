@@ -167,7 +167,7 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisableWebRtcHWDecoding,
     ::switches::kDisableWebRtcHWEncoding,
 #endif
-    ::switches::kDisableVaapiAcceleratedVideoEncode,
+    ::switches::kDisableAcceleratedVideoEncode,
     ::switches::kOzonePlatform,
     ash::switches::kAshEnableTabletMode,
     ash::switches::kAshForceEnableStylusTools,

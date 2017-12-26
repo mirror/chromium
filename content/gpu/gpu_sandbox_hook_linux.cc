@@ -250,8 +250,11 @@ bool LoadAmdGpuLibraries() {
   return true;
 }
 
-void LoadV4L2Libraries() {
-  if (UseLibV4L2()) {
+void LoadV4L2Libraries(
+    const service_manager::SandboxSeccompBPF::Options& options) {
+  if ((options.accelerated_video_encode_enabled ||
+       options.accelerated_video_decode_enabled) &&
+      UseLibV4L2()) {
     dlopen("/usr/lib/libv4l2.so", dlopen_flag);
 
     // This is a device-specific encoder plugin.
@@ -264,7 +267,7 @@ void LoadStandardLibraries(
   if (IsArchitectureX86_64() || IsArchitectureI386()) {
     // Accelerated video dlopen()'s some shared objects
     // inside the sandbox, so preload them now.
-    if (options.vaapi_accelerated_video_encode_enabled ||
+    if (options.accelerated_video_encode_enabled ||
         options.accelerated_video_decode_enabled) {
       if (IsLibVAVersion2()) {
         if (IsArchitectureX86_64()) {
@@ -308,7 +311,7 @@ bool LoadLibrariesForGpu(
     const service_manager::SandboxSeccompBPF::Options& options) {
   if (IsChromeOS()) {
     if (UseV4L2Codec())
-      LoadV4L2Libraries();
+      LoadV4L2Libraries(options);
     if (IsArchitectureArm()) {
       LoadArmGpuLibraries();
       return true;
