@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dee8fc5_ffa918a8",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-12-26T05:17:32Z",
+      "side": 1,
+      "message": "nit: explicit isn\u0027t needed for a constructor with two parameters.",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "2464df6c98a299a5763a14da2d5317868585c629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0ddc7b_52e19a99",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-12-26T05:17:32Z",
+      "side": 1,
+      "message": "how about making them enums to make the code easier to read and extend?\n\nenum FakeSessionManagerOptions {\n  NONE \u003d 0,\n  EMIT_OBSERVERS \u003d 1 \u003c\u003c 0,\n  USE_HOST_POLICY \u003d 1 \u003c\u003c 1,\n}\n\n\nnew FakeSessionManagerClient(EMIT_OBSERVERS | USE_HOST_POLICY)",
+      "range": {
+        "startLine": 788,
+        "startChar": 55,
+        "endLine": 788,
+        "endChar": 61
+      },
+      "revId": "2464df6c98a299a5763a14da2d5317868585c629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
