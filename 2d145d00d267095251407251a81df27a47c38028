@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37bc62fe_8fa91eab",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCSessionDescriptionRequestImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-26T11:03:43Z",
+      "side": 1,
+      "message": "I guess that there should be an RTCPeerConnection object to which the RTCPeerRequests are associated. Is it possible to trace the RTCPeerRequests from RTCPeerConnection?\\",
+      "revId": "2d145d00d267095251407251a81df27a47c38028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
