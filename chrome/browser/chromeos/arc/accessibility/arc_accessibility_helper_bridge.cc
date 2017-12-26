@@ -27,6 +27,7 @@
 namespace {
 
 constexpr int32_t kNoTaskId = -1;
+constexpr int32_t kInvalidTreeId = -1;
 
 exo::Surface* GetArcSurface(const aura::Window* window) {
   if (!window)
@@ -137,14 +138,6 @@ class ArcAccessibilityHelperBridgeFactory
 
 }  // namespace
 
-ArcAccessibilityHelperBridge::CountedAXTree::CountedAXTree(
-    AXTreeSourceArc* ax_tree)
-    : count(1U) {
-  tree.reset(ax_tree);
-}
-
-ArcAccessibilityHelperBridge::CountedAXTree::~CountedAXTree() {}
-
 // static
 ArcAccessibilityHelperBridge*
 ArcAccessibilityHelperBridge::GetForBrowserContext(
@@ -245,18 +238,34 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
   if (filter_type == arc::mojom::AccessibilityFilterType::ALL ||
       filter_type ==
           arc::mojom::AccessibilityFilterType::WHITELISTED_PACKAGE_NAME) {
+    // ARC_NOTIFICATION_REMOVED doesn't have node data.
+    if (event_data->event_type ==
+        arc::mojom::AccessibilityEventType::ARC_NOTIFICATION_REMOVED) {
+      const std::string& notification_key =
+          event_data->notification_key.value();
+      notification_key_to_tree_.erase(notification_key);
+      UpdateTreeIdOfNotificationSurface(notification_key, kInvalidTreeId);
+      return;
+    }
+
     if (event_data->node_data.empty())
       return;
 
     AXTreeSourceArc* tree_source = nullptr;
     bool is_notification_event = event_data->notification_key.has_value();
     if (is_notification_event) {
-      std::string notification_key = event_data->notification_key.value();
-      bool increment_counter =
-          event_data->event_type ==
-          arc::mojom::AccessibilityEventType::WINDOW_STATE_CHANGED;
-      tree_source =
-          GetOrCreateFromNotificationKey(notification_key, increment_counter);
+      const std::string& notification_key =
+          event_data->notification_key.value();
+      tree_source = GetOrCreateFromNotificationKey(notification_key);
+
+      if (event_data->event_type ==
+          arc::mojom::AccessibilityEventType::WINDOW_STATE_CHANGED) {
+        auto it = backward_compat_notification_keys_.find(notification_key);
+        if (it == backward_compat_notification_keys_.end())
+          backward_compat_notification_keys_[notification_key] = 1;
+        else
+          backward_compat_notification_keys_[notification_key]++;
+      }
     } else {
       if (event_data->task_id == kNoTaskId)
         return;
@@ -278,26 +287,16 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
 
     tree_source->NotifyAccessibilityEvent(event_data.get());
 
-    auto* surface_manager = ArcNotificationSurfaceManager::Get();
-    if (surface_manager && is_notification_event &&
-        event_data->event_type ==
-            arc::mojom::AccessibilityEventType::WINDOW_STATE_CHANGED) {
-      std::string notification_key = event_data->notification_key.value();
-      ArcNotificationSurface* surface =
-          surface_manager->GetArcSurface(notification_key);
-
-      ui::AXTreeData tree_data;
-      if (surface && tree_source->GetTreeData(&tree_data)) {
-        surface->SetAXTreeId(tree_data.tree_id);
-
-        // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the
-        // notification updated. Before AXTreeId is set, its AXNodeData is
-        // populated as a button.
-        if (surface->IsAttached()) {
-          surface->GetAttachedHost()->NotifyAccessibilityEvent(
-              ui::AX_EVENT_CHILDREN_CHANGED, false);
-        }
-      }
+    ui::AXTreeData tree_data;
+    if (tree_source->GetTreeData(&tree_data) &&
+        (event_data->event_type ==
+             arc::mojom::AccessibilityEventType::ARC_NOTIFICATION_CREATED ||
+         (is_notification_event &&
+          event_data->event_type ==
+              arc::mojom::AccessibilityEventType::WINDOW_STATE_CHANGED))) {
+      CHECK(event_data->notification_key.has_value());
+      UpdateTreeIdOfNotificationSurface(event_data->notification_key.value(),
+                                        tree_data.tree_id);
     }
 
     return;
@@ -325,19 +324,36 @@ AXTreeSourceArc* ArcAccessibilityHelperBridge::GetOrCreateFromTaskId(
 }
 
 AXTreeSourceArc* ArcAccessibilityHelperBridge::GetOrCreateFromNotificationKey(
-    const std::string& notification_key,
-    bool increment_counter) {
+    const std::string& notification_key) {
   auto tree_it = notification_key_to_tree_.find(notification_key);
   if (tree_it == notification_key_to_tree_.end()) {
     notification_key_to_tree_[notification_key].reset(
-        new CountedAXTree(new AXTreeSourceArc(this)));
-    return notification_key_to_tree_[notification_key]->tree.get();
+        new AXTreeSourceArc(this));
   }
 
-  if (increment_counter)
-    tree_it->second->count++;
+  return notification_key_to_tree_[notification_key].get();
+}
 
-  return tree_it->second->tree.get();
+void ArcAccessibilityHelperBridge::UpdateTreeIdOfNotificationSurface(
+    const std::string& notification_key,
+    uint32_t tree_id) {
+  auto* surface_manager = ArcNotificationSurfaceManager::Get();
+  if (!surface_manager)
+    return;
+
+  ArcNotificationSurface* surface =
+      surface_manager->GetArcSurface(notification_key);
+  if (!surface)
+    return;
+
+  surface->SetAXTreeId(tree_id);
+
+  if (surface->IsAttached()) {
+    // Dispatch AX_EVENT_CHILDREN_CHANGED to force AXNodeData of the
+    // notification updated.
+    surface->GetAttachedHost()->NotifyAccessibilityEvent(
+        ui::AX_EVENT_CHILDREN_CHANGED, false);
+  }
 }
 
 AXTreeSourceArc* ArcAccessibilityHelperBridge::GetFromTreeId(
@@ -352,9 +368,9 @@ AXTreeSourceArc* ArcAccessibilityHelperBridge::GetFromTreeId(
   for (auto notification_it = notification_key_to_tree_.begin();
        notification_it != notification_key_to_tree_.end(); ++notification_it) {
     ui::AXTreeData tree_data;
-    notification_it->second->tree->GetTreeData(&tree_data);
+    notification_it->second->GetTreeData(&tree_data);
     if (tree_data.tree_id == tree_id)
-      return notification_it->second->tree.get();
+      return notification_it->second.get();
   }
 
   return nullptr;
@@ -477,13 +493,12 @@ void ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded(
     ArcNotificationSurface* surface) {
   const std::string& notification_key = surface->GetNotificationKey();
 
-  AXTreeSourceArc* tree = GetOrCreateFromNotificationKey(
-      notification_key, false /* increment_counter */);
-  if (!tree)
+  auto it = notification_key_to_tree_.find(notification_key);
+  if (it == notification_key_to_tree_.end())
     return;
 
   ui::AXTreeData tree_data;
-  if (!tree->GetTreeData(&tree_data))
+  if (!it->second->GetTreeData(&tree_data))
     return;
 
   surface->SetAXTreeId(tree_data.tree_id);
@@ -503,16 +518,19 @@ void ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded(
 void ArcAccessibilityHelperBridge::OnNotificationSurfaceRemoved(
     ArcNotificationSurface* surface) {
   const std::string& notification_key = surface->GetNotificationKey();
-  auto it = notification_key_to_tree_.find(notification_key);
-  if (it == notification_key_to_tree_.end())
+
+  auto it = backward_compat_notification_keys_.find(notification_key);
+  if (it == backward_compat_notification_keys_.end())
     return;
 
-  it->second->count--;
+  it->second--;
 
-  CHECK(it->second->count >= 0);
+  CHECK(it->second >= 0);
 
-  if (it->second->count == 0)
+  if (it->second == 0) {
     notification_key_to_tree_.erase(notification_key);
+    backward_compat_notification_keys_.erase(notification_key);
+  }
 }
 
 }  // namespace arc
