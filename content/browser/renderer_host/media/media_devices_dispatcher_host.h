@@ -58,10 +58,15 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
                                           uint32_t subscription_id) override;
   void UnsubscribeDeviceChangeNotifications(MediaDeviceType type,
                                             uint32_t subscription_id) override;
+  void SetMediaDevicesListener(
+      blink::mojom::MediaDevicesListenerPtr listener) override;
 
   // MediaDeviceChangeSubscriber implementation.
   void OnDevicesChanged(MediaDeviceType type,
                         const MediaDeviceInfoArray& device_infos) override;
+
+  void UnsubscribeDeviceChangeNotifications(uint32_t subscription_id);
+  void MediaDevicesListenerHadConnectionError(uint32_t subscription_id);
 
   void SetPermissionChecker(
       std::unique_ptr<MediaDevicesPermissionChecker> permission_checker);
@@ -187,6 +192,10 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
 
   // Callback used to obtain the current device ID salt and security origin.
   MediaDeviceSaltAndOriginCallback salt_and_origin_callback_;
+
+  class DeviceChangeSubscription;
+  uint32_t subscription_id_ = 0u;
+  std::map<uint32_t, std::unique_ptr<DeviceChangeSubscription>> subscriptions_;
 
   base::WeakPtrFactory<MediaDevicesDispatcherHost> weak_factory_;
 
