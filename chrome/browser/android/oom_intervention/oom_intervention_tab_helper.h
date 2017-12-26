@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/interventions/intervention_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/oom_intervention.mojom.h"
 
@@ -28,11 +29,16 @@ class OomInterventionTabHelper
     : public content::WebContentsObserver,
       public content::WebContentsUserData<OomInterventionTabHelper>,
       public OutOfMemoryReporter::Observer,
+      public blink::mojom::OomInterventionHost,
       public InterventionDelegate {
  public:
   static bool IsEnabled();
 
   ~OomInterventionTabHelper() override;
+
+  // blink::mojom::OomInterventionHost:
+  void NearOomDetectedOnRenderer() override;
+  void DetectionTimedOutOnRenderer() override;
 
   // InterventionDelegate:
   void AcceptIntervention() override;
@@ -87,6 +93,8 @@ class OomInterventionTabHelper
   };
 
   InterventionState intervention_state_ = InterventionState::NOT_TRIGGERED;
+
+  mojo::Binding<blink::mojom::OomInterventionHost> binding_;
 };
 
 #endif  // CHROME_BROWSER_ANDROID_OOM_INTERVENTION_OOM_INTERVENTION_TAB_HELPER_H_
