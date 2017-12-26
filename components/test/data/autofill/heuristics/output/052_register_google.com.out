@@ -5,7 +5,7 @@ EMAIL_ADDRESS | Email |  |  | FirstName_1-default
 UNKNOWN_TYPE | Passwd |  |  | FirstName_1-default
 UNKNOWN_TYPE | PasswdAgain | Re-enter password: |  | FirstName_1-default
 UNKNOWN_TYPE | PersistentCookie | Re-enter password: | yes | FirstName_1-default
-UNKNOWN_TYPE | smhck | Re-enter password: | 1 | FirstName_1-default
+UNKNOWN_TYPE | smhck | Stay signed in | 1 | FirstName_1-default
 UNKNOWN_TYPE | selection | Security question: | choosequestion | FirstName_1-default
 UNKNOWN_TYPE | ownquestion | Security question: |  | FirstName_1-default
 UNKNOWN_TYPE | IdentityAnswer | Answer: |  | FirstName_1-default
