@@ -45,6 +45,8 @@ enum AccessibilityEventType {
   WINDOWS_CHANGED,
   VIEW_CONTEXT_CLICKED,
   ASSIST_READING_CONTEXT,
+  ARC_NOTIFICATION_CREATED,  // Not a standard event
+  ARC_NOTIFICATION_REMOVED,  // Not a standard event
 };
 
 // Possible actions that can be performed on an AccessibilityNodeInfo.
