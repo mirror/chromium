@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b7722a3d_9eb87ed2",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-12-26T09:51:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f1f5c5_06360e68",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 115
+      },
+      "revId": "c011226e5affbefe690ab671a8e56e661c6a0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ca3b5e_76c2a26f",
         "filename": "third_party/openh264/BUILD.gn",
         "patchSetId": 4
