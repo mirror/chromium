@@ -290,7 +290,8 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   ResourceFormat BackbufferFormat() const;
 
   // A map from RenderPass id to the texture used to draw the RenderPass from.
-  base::flat_map<RenderPassId, ScopedRenderPassTexture> render_pass_textures_;
+  base::flat_map<RenderPassId, std::unique_ptr<ScopedRenderPassTexture>>
+      render_pass_textures_;
 
   using OverlayResourceLock =
       std::unique_ptr<cc::DisplayResourceProvider::ScopedReadLockGL>;

@@ -1103,12 +1103,14 @@ void GLRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad,
     params.bypass_quad_texture = &tile_resource;
     DrawRenderPassQuadInternal(&params);
   } else {
-    auto contents_texture_it = render_pass_textures_.find(quad->render_pass_id);
-    DCHECK(contents_texture_it->second.id());
+    ScopedRenderPassTexture* contents_texture =
+        render_pass_textures_[quad->render_pass_id].get();
+    DCHECK(contents_texture);
+    DCHECK(contents_texture->id());
     // See above comments about texture flipping.  When the input is a
     // render pass, it needs to an extra flip to be oriented correctly.
     params.flip_texture = true;
-    params.contents_texture = &contents_texture_it->second;
+    params.contents_texture = contents_texture;
     DrawRenderPassQuadInternal(&params);
   }
 
@@ -1379,7 +1381,8 @@ void GLRenderer::UpdateRPDQTexturesForSampling(
     // |params->filter_image| was populated.
     params->source_needs_flip = kBottomLeft_GrSurfaceOrigin == origin;
   } else if (params->contents_texture) {
-    gl_->BindTexture(GL_TEXTURE_2D, params->contents_texture->id());
+    // gl_->BindTexture(GL_TEXTURE_2D, params->contents_texture->id());
+    params->contents_texture->BindForSampling();
     params->contents_and_bypass_color_space =
         params->contents_texture->color_space();
     params->source_needs_flip = params->flip_texture;
@@ -2904,12 +2907,14 @@ void GLRenderer::BindFramebufferToOutputSurface() {
 }
 
 void GLRenderer::BindFramebufferToTexture(const RenderPassId render_pass_id) {
+  ScopedRenderPassTexture* texture =
+      render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
+  DCHECK(texture->id());
+  current_framebuffer_texture_ = nullptr;
   gl_->BindFramebuffer(GL_FRAMEBUFFER, offscreen_framebuffer_id_);
-
-  auto contents_texture_it = render_pass_textures_.find(render_pass_id);
-  current_framebuffer_texture_ = &contents_texture_it->second;
-  GLuint texture_id = current_framebuffer_texture_->id();
-  DCHECK(texture_id);
+  current_framebuffer_texture_ = texture;
+  GLuint texture_id = texture->id();
   gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
                             texture_id, 0);
   if (overdraw_feedback_) {
@@ -3307,16 +3312,18 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
     gfx::RectF* new_bounds) {
   // Don't carry over any GL state from previous RenderPass draw operations.
   ReinitializeGLState();
-  auto contents_texture_it =
-      render_pass_textures_.find(ca_layer_overlay->rpdq->render_pass_id);
-  DCHECK(contents_texture_it != render_pass_textures_.end());
+  ScopedRenderPassTexture* contents_texture =
+
+      render_pass_textures_[ca_layer_overlay->rpdq->render_pass_id].get();
+
+  DCHECK(contents_texture);
 
   // Configure parameters as if drawing to a framebuffer the size of the
   // screen.
   DrawRenderPassDrawQuadParams params;
   params.quad = ca_layer_overlay->rpdq;
   params.flip_texture = true;
-  params.contents_texture = &contents_texture_it->second;
+  params.contents_texture = contents_texture;
   params.quad_to_target_transform =
       params.quad->shared_quad_state->quad_to_target_transform;
   params.tex_coord_rect = params.quad->tex_coord_rect;
@@ -3610,13 +3617,14 @@ void GLRenderer::UpdateRenderPassTextures(
       continue;
     }
     const RenderPassRequirements& requirements = render_pass_it->second;
-    const ScopedRenderPassTexture& texture = pair.second;
+    ScopedRenderPassTexture* texture = pair.second.get();
+    DCHECK(texture);
     bool size_appropriate =
-        texture.size().width() >= requirements.size.width() &&
-        texture.size().height() >= requirements.size.height();
-    bool mipmap_appropriate = !requirements.mipmap || texture.mipmap();
-    if (!size_appropriate || !mipmap_appropriate)
-      passes_to_delete.push_back(pair.first);
+        texture->size().width() >= requirements.size.width() &&
+        texture->size().height() >= requirements.size.height();
+    bool mipmap_appropriate = !requirements.mipmap || texture->mipmap();
+    if (texture->id() && (!size_appropriate || !mipmap_appropriate))
+      texture->Free();
   }
   // Delete RenderPass textures from the previous frame that will not be used
   // again.
@@ -3640,28 +3648,34 @@ ResourceFormat GLRenderer::BackbufferFormat() const {
 void GLRenderer::AllocateRenderPassResourceIfNeeded(
     const RenderPassId& render_pass_id,
     const RenderPassRequirements& requirements) {
-  auto contents_texture_it = render_pass_textures_.find(render_pass_id);
-  if (contents_texture_it != render_pass_textures_.end())
+  auto& resource = render_pass_textures_[render_pass_id];
+  if (resource && resource->id())
     return;
+  if (!resource) {
+    resource = std::make_unique<ScopedRenderPassTexture>(
+        output_surface_->context_provider(), BackbufferFormat(),
+        current_frame()->current_render_pass->color_space);
+  }
 
-  ScopedRenderPassTexture contents_texture(
-      output_surface_->context_provider(), requirements.size,
-      BackbufferFormat(), current_frame()->current_render_pass->color_space,
-      requirements.mipmap);
-  render_pass_textures_[render_pass_id] = std::move(contents_texture);
+  resource->Allocate(requirements.size, requirements.mipmap);
 }
 
 bool GLRenderer::IsRenderPassResourceAllocated(
     const RenderPassId& render_pass_id) const {
   auto texture_it = render_pass_textures_.find(render_pass_id);
-  return texture_it != render_pass_textures_.end();
+  if (texture_it == render_pass_textures_.end())
+    return false;
+  ScopedRenderPassTexture* texture = texture_it->second.get();
+  DCHECK(texture);
+  return texture->id() != 0;
 }
 
 gfx::Size GLRenderer::GetRenderPassTextureSize(
     const RenderPassId& render_pass_id) {
-  auto texture_it = render_pass_textures_.find(render_pass_id);
-  DCHECK(texture_it != render_pass_textures_.end());
-  return texture_it->second.size();
+  ScopedRenderPassTexture* texture =
+      render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
+  return texture->size();
 }
 
 }  // namespace viz
