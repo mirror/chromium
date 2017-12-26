@@ -139,9 +139,14 @@ bool MediaEngagementPreloadedList::CheckOriginIsPresent(
 MediaEngagementPreloadedList::DafsaResult
 MediaEngagementPreloadedList::CheckStringIsPresent(
     const std::string& input) const {
-  return static_cast<MediaEngagementPreloadedList::DafsaResult>(
-      net::LookupStringInFixedSet(dafsa_.data(), dafsa_.size(), input.c_str(),
-                                  input.size()));
+  int type = net::kDafsaNotFound;
+  net::FixedSetIncrementalLookup lookup(dafsa_.data(), dafsa_.size());
+  for (char c : input) {
+    if (!lookup.Advance(c))
+      break;
+  }
+  type = lookup.GetResultForCurrentSequence();
+  return static_cast<MediaEngagementPreloadedList::DafsaResult>(type);
 }
 
 void MediaEngagementPreloadedList::RecordLoadResult(LoadResult result) {

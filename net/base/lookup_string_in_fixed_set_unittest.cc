@@ -51,7 +51,14 @@ class LookupStringInFixedSetTest : public testing::TestWithParam<Expectation> {
  protected:
   template <size_t N>
   int LookupInGraph(const unsigned char(&graph)[N], const char* key) {
-    return LookupStringInFixedSet(graph, N, key, strlen(key));
+    FixedSetIncrementalLookup lookup(&graph, N);
+    const char* key_end = key + strlen(key);
+    while (key != key_end) {
+      if (!lookup.Advance(*key))
+        return kDafsaNotFound;
+      key++;
+    }
+    return lookup.GetResultForCurrentSequence();
   }
 };
 

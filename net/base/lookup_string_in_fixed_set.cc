@@ -177,22 +177,4 @@ int FixedSetIncrementalLookup::GetResultForCurrentSequence() const {
   return value;
 }
 
-int LookupStringInFixedSet(const unsigned char* graph,
-                           size_t length,
-                           const char* key,
-                           size_t key_length) {
-  // Do an incremental lookup until either the end of the graph is reached, or
-  // until every character in |key| is consumed.
-  FixedSetIncrementalLookup lookup(graph, length);
-  const char* key_end = key + key_length;
-  while (key != key_end) {
-    if (!lookup.Advance(*key))
-      return kDafsaNotFound;
-    key++;
-  }
-  // The entire input was consumed without reaching the end of the graph. Return
-  // the result code (if present) for the current position, or kDafsaNotFound.
-  return lookup.GetResultForCurrentSequence();
-}
-
 }  // namespace net
