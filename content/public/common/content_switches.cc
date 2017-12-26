@@ -998,6 +998,10 @@ const char kDisablePanelFitting[]           = "disable-panel-fitting";
 // Disables VA-API accelerated video encode.
 const char kDisableVaapiAcceleratedVideoEncode[] =
     "disable-vaapi-accelerated-video-encode";
+
+// Disables V4l2 accelerated video encode.
+const char kDisableV4l2AcceleratedVideoEncode[] =
+    "disable-v4l2-accelerated-video-encode";
 #endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)

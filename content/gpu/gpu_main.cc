@@ -367,6 +367,8 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
       !gpu_prefs.disable_accelerated_video_decode;
 
 #if defined(OS_CHROMEOS)
+  sandbox_options.v4l2_accelerated_video_encode_enabled =
+      !gpu_prefs.disable_v4l2_accelerated_video_encode;
   sandbox_options.vaapi_accelerated_video_encode_enabled =
       !gpu_prefs.disable_vaapi_accelerated_video_encode;
 #endif

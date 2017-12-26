@@ -70,6 +70,7 @@ TEST(GpuPreferencesUtilTest, EncodeDecode) {
     GPU_PREFERENCES_FIELD(disable_gpu_watchdog, true)
     GPU_PREFERENCES_FIELD(gpu_sandbox_start_early, true)
     GPU_PREFERENCES_FIELD(disable_vaapi_accelerated_video_encode, true)
+    GPU_PREFERENCES_FIELD(disable_v4l2_accelerated_video_encode, true)
     GPU_PREFERENCES_FIELD(disable_web_rtc_hw_encoding, true)
     GPU_PREFERENCES_FIELD(enable_accelerated_vpx_decode,
                           GpuPreferences::VPX_VENDOR_AMD)

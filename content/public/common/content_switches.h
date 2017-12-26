@@ -278,6 +278,7 @@ CONTENT_EXPORT extern const char kEnableOSKOverscroll[];
 #if defined(OS_CHROMEOS)
 CONTENT_EXPORT extern const char kDisablePanelFitting[];
 CONTENT_EXPORT extern const char kDisableVaapiAcceleratedVideoEncode[];
+CONTENT_EXPORT extern const char kDisableV4l2AcceleratedVideoEncode[];
 #endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)

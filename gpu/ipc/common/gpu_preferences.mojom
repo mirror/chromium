@@ -23,6 +23,7 @@ struct GpuPreferences {
   bool gpu_sandbox_start_early;
 
   bool disable_vaapi_accelerated_video_encode;
+  bool disable_v4l2_accelerated_video_encode;
 
   bool disable_web_rtc_hw_encoding;
 
