@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e27d5fa_b0b629b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-26T09:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec7abf_e24f7dcd",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "2fc7f259cfa8403296808642e49244cbaf066d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b7e0f0_42a637e8",
         "filename": "ui/file_manager/file_manager/foreground/js/directory_contents.js",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-26T07:14:43Z",
       "side": 1,
       "message": "Can we shorten this as () \u003d\u003e this.cancelled_; ?\n(I guess you intentionally made it that way considering the analogy to function() syntax.)",
+      "range": {
+        "startLine": 214,
+        "startChar": 6,
+        "endLine": 215,
+        "endChar": 15
+      },
+      "revId": "2fc7f259cfa8403296808642e49244cbaf066d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d98a8b_836ff237",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_contents.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-26T09:27:00Z",
+      "side": 1,
+      "message": "Yes we can! Done.",
+      "parentUuid": "97b7e0f0_42a637e8",
       "range": {
         "startLine": 214,
         "startChar": 6,
