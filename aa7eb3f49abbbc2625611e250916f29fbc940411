@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "064a7ae4_a26d83ae",
+        "filename": "third_party/WebKit/LayoutTests/fast/block/float/avoid-floats-when-negative-margin-top-7.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T16:21:36Z",
+      "side": 1,
+      "message": "Please use testharness instead.",
+      "revId": "aa7eb3f49abbbc2625611e250916f29fbc940411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795179d1_e0f73a86",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T16:21:36Z",
+      "side": 1,
+      "message": "Isn\u0027t the bug that previous_block_flow isn\u0027t set to the right thing in the first place?",
+      "revId": "aa7eb3f49abbbc2625611e250916f29fbc940411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
