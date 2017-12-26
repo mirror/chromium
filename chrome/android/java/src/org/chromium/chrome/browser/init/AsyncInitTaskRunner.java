@@ -29,6 +29,7 @@ import java.util.concurrent.Executor;
 public abstract class AsyncInitTaskRunner {
     private boolean mFetchingVariations;
     private boolean mLibraryLoaded;
+    private boolean mAllocateChildConnection;
 
     private LoadTask mLoadTask;
     private FetchSeedTask mFetchSeedTask;
@@ -135,9 +136,8 @@ public abstract class AsyncInitTaskRunner {
             });
         }
 
-        if (allocateChildConnection) {
-            ChildProcessLauncherHelper.warmUp(ContextUtils.getApplicationContext());
-        }
+        mAllocateChildConnection = allocateChildConnection;
+
         mLoadTask = new LoadTask();
         mLoadTask.executeOnExecutor(getExecutor());
     }
@@ -152,6 +152,9 @@ public abstract class AsyncInitTaskRunner {
         }
 
         if (mLibraryLoaded && !mFetchingVariations) {
+            if (mAllocateChildConnection) {
+                ChildProcessLauncherHelper.warmUp(ContextUtils.getApplicationContext());
+            }
             onSuccess();
         }
     }

@@ -136,13 +136,13 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         // the framework. If this operation gets blocked because other long running I/O are running,
         // we delay onCreate(), onStart() and first draw consequently.
 
-        setContentView();
-        if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onSetContentView();
-
         if (!mStartupDelayed) {
             // Kick off long running IO tasks that can be done in parallel.
             mNativeInitializationController.startBackgroundTasks(shouldAllocateChildConnection());
         }
+
+        setContentView();
+        if (mLaunchBehindWorkaround != null) mLaunchBehindWorkaround.onSetContentView();
     }
 
     /** Controls the parameter of {@link NativeInitializationController#startBackgroundTasks()}.*/
