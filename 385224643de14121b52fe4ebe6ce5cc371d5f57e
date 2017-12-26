@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c12454a9_40833a3c",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-26T15:59:56Z",
+      "side": 1,
+      "message": "Fixed, thank you.",
+      "parentUuid": "ef547c7d_891a800e",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 50
+      },
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38a4319_4674bb4e",
         "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "efd9a526_a282cffe",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-26T15:59:56Z",
+      "side": 1,
+      "message": "Renamed the property and updated the documentation. Is it better now?",
+      "parentUuid": "c38a4319_4674bb4e",
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f896768e_c4c47df6",
         "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a957b2_91fc9d44",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-26T15:59:56Z",
+      "side": 1,
+      "message": "Copy-n-paste error, thank you for catching.",
+      "parentUuid": "f896768e_c4c47df6",
+      "revId": "385224643de14121b52fe4ebe6ce5cc371d5f57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
