@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567ebf3f_fff6f45a",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-26T04:34:47Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 28
+      },
+      "revId": "b46a73fc2f8b2d99c6dd4fa974d0ae9ff9b4de3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
