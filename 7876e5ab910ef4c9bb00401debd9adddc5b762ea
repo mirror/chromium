@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b59f0f34_c24f32d1",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Can we just do\n\n   if (base::FeatureList::IsEnabled()) {\n     // returns for various experimental states\n   }\n\n   // Fallback case\n\nto avoid rechecking feature_enabled and having |parameter| lingering around for code that doesn\u0027t care about it?",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00914893_060433c0",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "field_edit_downgraded_security_level",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f5f76e_f42c65b2",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Presumably, we will want to have this flag set in the future so the DevTools can distinguish what triggered the state change?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dedd811_69c951d8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Worthwhile to explain how a reader can get the current experimental state breakdown in the wild? Or will anyone interested in this question already know?",
+      "range": {
+        "startLine": 27359,
+        "startChar": 0,
+        "endLine": 27359,
+        "endChar": 23
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

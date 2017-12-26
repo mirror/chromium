@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f1f8c27b_f5c47e9e",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Oh, interesting. Yes, in the past I used this histogram just to watch the rollout of our Finch experiment. \n\nI wouldn\u0027t\u0027ve expected LoginCustomFlags to track the value of the experimental state, only the value of any user-supplied overrides.",
+      "parentUuid": "75021031_c4250d96",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c932e56_f9b47396",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "(see above)",
       "parentUuid": "4c932e56_f9b47396",
+      "range": {
+        "startLine": 32,
+        "startChar": 27,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34422f0d_c70214ce",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa1ff26a_ffef7984",
       "range": {
         "startLine": 32,
         "startChar": 27,
@@ -472,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "45bcae35_f671cfd7",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "984c03b4_38efb723",
+      "range": {
+        "startLine": 728,
+        "startChar": 58,
+        "endLine": 728,
+        "endChar": 76
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3183616_f51a8abf",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -507,6 +579,30 @@
       "side": 1,
       "message": "No, I put it here to make sure that we\u0027re not checking a leftover old value in the next block, e.g.\n\n  SecurityInfo security_info;\n  ...\n  helper.GetSecurityInfo(\u0026security_info);\n  EXPECT_EQ(HTTP_SHOW_WARNING, security_info.security_level);\n  helper.set_insecure_field_edit(true);\n  // imagine GetSecurityInfo has a bug that neglects to set security_level\n  helper.GetSecurityInfo(\u0026security_info);\n  EXPECT_EQ(HTTP_SHOW_WARNING, security_info.security_level);\n  // bug isn\u0027t caught because we\u0027re checking the security_level set previously\n\nAdded a comment on the next block.",
       "parentUuid": "a3183616_f51a8abf",
+      "range": {
+        "startLine": 741,
+        "startChar": 0,
+        "endLine": 741,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c914d8_21da4429",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e3a592e_79e1be89",
       "range": {
         "startLine": 741,
         "startChar": 0,
@@ -566,6 +662,30 @@
     },
     {
       "key": {
+        "uuid": "c2af0626_75ce3fce",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f646a9a_7e59d5b9",
+      "range": {
+        "startLine": 751,
+        "startChar": 1,
+        "endLine": 751,
+        "endChar": 3
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b392225_2813638a",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -601,6 +721,30 @@
       "side": 1,
       "message": "Done, see above",
       "parentUuid": "7b392225_2813638a",
+      "range": {
+        "startLine": 755,
+        "startChar": 61,
+        "endLine": 755,
+        "endChar": 74
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cda2494_eb428c10",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8d762d9_631395d9",
       "range": {
         "startLine": 755,
         "startChar": 61,
@@ -660,6 +804,30 @@
     },
     {
       "key": {
+        "uuid": "7aa47a4f_06207217",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f1468e9_50d7dfb5",
+      "range": {
+        "startLine": 769,
+        "startChar": 0,
+        "endLine": 769,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a43e88c7_cea8a0e1",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -695,6 +863,30 @@
       "side": 1,
       "message": "see above",
       "parentUuid": "a43e88c7_cea8a0e1",
+      "range": {
+        "startLine": 792,
+        "startChar": 56,
+        "endLine": 793,
+        "endChar": 11
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae18357_3f5c7b10",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3a948da_d272f15c",
       "range": {
         "startLine": 792,
         "startChar": 56,
@@ -754,6 +946,30 @@
     },
     {
       "key": {
+        "uuid": "d669b4ba_565d8f9e",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92d4aaf7_8f9e7b35",
+      "range": {
+        "startLine": 806,
+        "startChar": 0,
+        "endLine": 806,
+        "endChar": 31
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fe2068_0283eb53",
         "filename": "components/security_state/core/security_state_unittest.cc",
         "patchSetId": 5
@@ -783,6 +999,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "b4fe2068_0283eb53",
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33110fcd_214ccb78",
+        "filename": "components/security_state/core/security_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed8244b1_835c704e",
       "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -836,6 +1070,30 @@
     },
     {
       "key": {
+        "uuid": "d779170f_40537e4a",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5bc2ccd_29ae3fa9",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51e258b9_62c8f271",
         "filename": "ios/chrome/browser/about_flags.mm",
         "patchSetId": 5
@@ -871,6 +1129,30 @@
       "side": 1,
       "message": "oops, yes, rebase mishap",
       "parentUuid": "51e258b9_62c8f271",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdff0705_e616a362",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fcbf98c3_5d436d80",
       "range": {
         "startLine": 137,
         "startChar": 4,
@@ -965,6 +1247,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f0b02775_b8d519a0",
+      "range": {
+        "startLine": 27359,
+        "startChar": 24,
+        "endLine": 27359,
+        "endChar": 34
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b19dc9bf_728ece50",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-26T17:09:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88606627_3b2d5cdc",
       "range": {
         "startLine": 27359,
         "startChar": 24,
