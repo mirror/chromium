@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a2bfa1a_67eb3105",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-26T05:54:43Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why we need a new event.\nCould you explain why we can\u0027t check whether it is caused by long tap here?",
+      "range": {
+        "startLine": 287,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "6a191837dd0b28f3cc0a79e3b7fb90bca0b8b77a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
