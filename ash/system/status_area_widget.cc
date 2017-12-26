@@ -129,6 +129,13 @@ void StatusAreaWidget::UpdateAfterLoginStatusChange(LoginStatus login_status) {
     overview_button_tray_->UpdateAfterLoginStatusChange(login_status);
 }
 
+TrayBackgroundView* StatusAreaWidget::GetSystemTrayAnchor() const {
+  if (overview_button_tray_->visible())
+    return overview_button_tray_;
+  else
+    return system_tray_;
+}
+
 bool StatusAreaWidget::ShouldShowShelf() const {
   // The system tray bubble may or may not want to force the shelf to be
   // visible.
@@ -183,9 +190,7 @@ void StatusAreaWidget::AddSystemTray() {
 }
 
 void StatusAreaWidget::AddWebNotificationTray() {
-  DCHECK(system_tray_);
-  web_notification_tray_ =
-      new WebNotificationTray(shelf_, GetNativeWindow(), system_tray_);
+  web_notification_tray_ = new WebNotificationTray(shelf_, GetNativeWindow());
   status_area_widget_delegate_->AddTray(web_notification_tray_);
 }
 
