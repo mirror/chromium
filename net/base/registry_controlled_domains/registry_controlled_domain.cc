@@ -107,8 +107,15 @@ size_t GetRegistryLengthImpl(base::StringPiece host,
   while (1) {
     const char* domain_str = host.data() + curr_start;
     size_t domain_length = host_check_len - curr_start;
-    int type = LookupStringInFixedSet(g_graph, g_graph_length, domain_str,
-                                      domain_length);
+    int type = kDafsaNotFound;
+    FixedSetIncrementalLookup lookup(g_graph, g_graph_length);
+    const char* domain_end = domain_str + domain_length;
+    while (domain_str != domain_end) {
+      if (!lookup.Advance(*domain_end))
+        break;
+      domain_str++;
+    }
+    type = lookup.GetResultForCurrentSequence();
     bool do_check = type != kDafsaNotFound &&
                     (!(type & kDafsaPrivateRule) ||
                      private_filter == INCLUDE_PRIVATE_REGISTRIES);

@@ -30,12 +30,6 @@ enum {
 // |graph| and |length| parameters.  The return value is kDafsaNotFound,
 // kDafsaFound, or a bitmap consisting of one or more of kDafsaExceptionRule,
 // kDafsaWildcardRule and kDafsaPrivateRule ORed together.
-//
-// TODO(nick): Replace this with FixedSetIncrementalLookup everywhere.
-NET_EXPORT int LookupStringInFixedSet(const unsigned char* graph,
-                                      size_t length,
-                                      const char* key,
-                                      size_t key_length);
 
 // FixedSetIncrementalLookup provides efficient membership and prefix queries
 // against a fixed set of strings. The set of strings must be known at compile
