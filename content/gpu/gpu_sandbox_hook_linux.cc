@@ -250,8 +250,9 @@ bool LoadAmdGpuLibraries() {
   return true;
 }
 
-void LoadV4L2Libraries() {
-  if (UseLibV4L2()) {
+void LoadV4L2Libraries(
+    const service_manager::SandboxSeccompBPF::Options& options) {
+  if (options.v4l2_accelerated_video_encode_enabled && UseLibV4L2()) {
     dlopen("/usr/lib/libv4l2.so", dlopen_flag);
 
     // This is a device-specific encoder plugin.
@@ -308,7 +309,7 @@ bool LoadLibrariesForGpu(
     const service_manager::SandboxSeccompBPF::Options& options) {
   if (IsChromeOS()) {
     if (UseV4L2Codec())
-      LoadV4L2Libraries();
+      LoadV4L2Libraries(options);
     if (IsArchitectureArm()) {
       LoadArmGpuLibraries();
       return true;

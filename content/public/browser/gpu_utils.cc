@@ -57,6 +57,8 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
   gpu_preferences.disable_accelerated_video_decode =
       command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode);
 #if defined(OS_CHROMEOS)
+  gpu_preferences.disable_v4l2_accelerated_video_encode =
+      command_line->HasSwitch(switches::kDisableV4l2AcceleratedVideoEncode);
   gpu_preferences.disable_vaapi_accelerated_video_encode =
       command_line->HasSwitch(switches::kDisableVaapiAcceleratedVideoEncode);
 #endif
