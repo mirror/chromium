@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0d6ffa_e2980946",
+        "filename": "chrome/common/sandbox_status_android.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-26T23:45:41Z",
+      "side": 1,
+      "message": "Perhaps SandboxStatusExtension is fine here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "cdc3b040ec9f3a7fa32d41d5447f5285f8825403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bd08ec_a25d61dd",
+        "filename": "chrome/common/sandbox_status_android.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-26T23:45:41Z",
+      "side": 1,
+      "message": "More specifically:\n\nSent when navigating to chrome://sandbox on Android to add a JavaScript function querying the current sandbox status.",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "cdc3b040ec9f3a7fa32d41d5447f5285f8825403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edc404d_7ebe399c",
+        "filename": "chrome/common/sandbox_status_android.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-26T23:45:41Z",
+      "side": 1,
+      "message": "Nit:\n\nTODO(crbug.com/676224): expose this interface on Android only once EnabledIf attribute is supported.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "cdc3b040ec9f3a7fa32d41d5447f5285f8825403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa0ea7b_f6357c31",
+        "filename": "chrome/renderer/sandbox_status_extension_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-26T23:45:41Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "cdc3b040ec9f3a7fa32d41d5447f5285f8825403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899ee6c3_849ec5e0",
+        "filename": "chrome/renderer/sandbox_status_extension_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-26T23:45:41Z",
+      "side": 1,
+      "message": "Does this work if this is a mojo::AssociatedBinding rather than a Set? I have the feeling that WebUI is never created for subframes, so we should only ever have one binding at a time.",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "cdc3b040ec9f3a7fa32d41d5447f5285f8825403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
