@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b6c5a91_fbae1f53",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T20:16:52Z",
+      "side": 1,
+      "message": "Consider just using a WTF::Timer.",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242c78b1_9d335bea",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T20:16:52Z",
+      "side": 1,
+      "message": "To me, the terminology is a bit confusing. I guess that the renderer itself isn\u0027t near OOM, but rather that it\u0027s consuming a lot of memory -- and one that we suspect the intervention would help with.\n\nSo maybe this could be called OnHighMemoryUsage() to indicate that.",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f702e8b_fca79c52",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-26T20:16:52Z",
+      "side": 1,
+      "message": "To me, timeout makes it sound like something is not responding. But from the updated comments, it seems like this actually means that the detection window passed without the renderer detecting a high-memory situation. So maybe this can be renamed or reworded to make that clear that this isn\u0027t a timeout. Going along with OnHighMemoryUsage(), maybe OnDetectionWindowElapsedWithoutHighMemoryUsage()... though it\u0027s kind of wordy.\n\n(To be nitpicky, I think this method isn\u0027t strictly necessary: the browser could just post one task for 60 seconds, and if no high memory usage signal has been received, it can just reset the intervention state. I think that might be slightly preferable, but I don\u0027t have a strong opinion.)",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
