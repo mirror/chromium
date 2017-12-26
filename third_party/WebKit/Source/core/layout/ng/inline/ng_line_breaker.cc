@@ -48,6 +48,14 @@ NGLineBreaker::NGLineBreaker(
   }
 }
 
+inline NGInlineItemResult* NGLineBreaker::AddItem(
+    const NGInlineItem& item,
+    NGInlineItemResults* item_results) {
+  item_results->push_back(
+      NGInlineItemResult(&item, item_index_, offset_, item.EndOffset()));
+  return &item_results->back();
+}
+
 // @return if this is the "first formatted line".
 // https://www.w3.org/TR/CSS22/selector.html#first-formatted-line
 bool NGLineBreaker::IsFirstFormattedLine() const {
@@ -105,12 +113,6 @@ bool NGLineBreaker::NextLine(const NGLayoutOpportunity& opportunity,
   BreakLine(line_info);
   line_info->SetEndOffset(offset_);
 
-  // TODO(kojii): When editing, or caret is enabled, trailing spaces at wrap
-  // point should not be removed. For other cases, we can a) remove, b) leave
-  // characters without glyphs, or c) leave both characters and glyphs without
-  // measuring. Need to decide which one works the best.
-  SkipCollapsibleWhitespaces();
-
   if (line_info->Results().IsEmpty())
     return false;
 
@@ -151,15 +153,15 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     }
 
     if (state == LineBreakState::kBreakAfterTrailings) {
+      if (HandleTrailingSpaces(item_results))
+        continue;
       line_info->SetIsLastLine(false);
       return;
     }
     if (state == LineBreakState::kIsBreakable && !line_.CanFit())
       return HandleOverflow(line_info);
 
-    item_results->push_back(
-        NGInlineItemResult(&item, item_index_, offset_, item.EndOffset()));
-    NGInlineItemResult* item_result = &item_results->back();
+    NGInlineItemResult* item_result = AddItem(item, item_results);
     if (item.Type() == NGInlineItem::kText) {
       state = HandleText(line_info, item, item_result);
 #if DCHECK_IS_ON()
@@ -655,6 +657,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleCloseTag(
 // are no break opportunities in item_results.back().
 void NGLineBreaker::HandleOverflow(NGLineInfo* line_info) {
   HandleOverflow(line_info, line_.AvailableWidth(), false);
+  HandleTrailingSpaces(&line_info->Results());
 }
 
 void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
@@ -818,9 +821,7 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
         break_iterator_.SetBreakType(LineBreakType::kKeepAll);
         break;
     }
-    break_iterator_.SetBreakSpace(style.BreakOnlyAfterWhiteSpace()
-                                      ? BreakSpaceType::kAfter
-                                      : BreakSpaceType::kBeforeSpace);
+    break_iterator_.SetBreakSpace(BreakSpaceType::kBeforeSpace);
 
     enable_soft_hyphen_ = style.GetHyphens() != Hyphens::kNone;
     hyphenation_ = style.GetHyphenation();
@@ -840,6 +841,45 @@ void NGLineBreaker::MoveToNextOf(const NGInlineItemResult& item_result) {
   DCHECK(item_result.item);
   if (offset_ == item_result.item->EndOffset())
     item_index_++;
+}
+
+bool NGLineBreaker::HandleTrailingSpaces(NGInlineItemResults* item_results) {
+  const Vector<NGInlineItem>& items = node_.Items();
+  if (item_index_ >= items.size())
+    return false;
+  const NGInlineItem& item = items[item_index_];
+  if (item.Type() != NGInlineItem::kText)
+    return false;
+  const String& text = node_.Text();
+  if (text[offset_] != kSpaceCharacter)
+    return false;
+
+  DCHECK_LT(offset_, item.EndOffset());
+  DCHECK(item.Style());
+  const ComputedStyle& style = *item.Style();
+  if (style.CollapseWhiteSpace()) {
+    // Skip one whitespace. Collapsible spaces are collapsed to single space in
+    // NGInlineItemBuilder, so this removes all collapsible spaces.
+    offset_++;
+    if (offset_ == item.EndOffset())
+      item_index_++;
+    return true;
+  }
+
+  unsigned end = offset_ + 1;
+  for (; end <= item.EndOffset() && text[end] == kSpaceCharacter; end++) {
+  }
+  if (style.BreakOnlyAfterWhiteSpace()) {
+    NGInlineItemResult* item_result = AddItem(item, item_results);
+    item_result->end_offset = end;
+    // TODO: We can probably avoid re-shaping?
+    item_result->shape_result =
+        shaper_.Shape(&style.GetFont(), style.Direction(), offset_, end);
+  }
+  offset_ = end;
+  if (offset_ == item.EndOffset())
+    item_index_++;
+  return true;
 }
 
 void NGLineBreaker::SkipCollapsibleWhitespaces() {

@@ -90,6 +90,7 @@ class CORE_EXPORT NGLineBreaker {
   void BreakLine(NGLineInfo*);
 
   void PrepareNextLine(const NGLayoutOpportunity&, NGLineInfo*);
+  NGInlineItemResult* AddItem(const NGInlineItem&, NGInlineItemResults*);
 
   void UpdatePosition(const NGInlineItemResults&);
   void ComputeLineLocation(NGLineInfo*) const;
@@ -138,6 +139,7 @@ class CORE_EXPORT NGLineBreaker {
   void MoveToNextOf(const NGInlineItem&);
   void MoveToNextOf(const NGInlineItemResult&);
   void SkipCollapsibleWhitespaces();
+  bool HandleTrailingSpaces(NGInlineItemResults*);
 
   bool IsFirstFormattedLine() const;
   void ComputeBaseDirection();
