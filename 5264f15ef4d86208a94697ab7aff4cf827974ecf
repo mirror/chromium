@@ -33,6 +33,108 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f16478_ab2cbc02",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "I think it would be more readable without the comments.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c39971_6a0ab04d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "Only used by DCHECK. Protect by relevant #iffery?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0117b893_f4c2f1a7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "\"it\u0027s\"",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35440078_cfd89ca0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "It\u0027s",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e03f9b5_2e49f980",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "Please document this parameter.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da2d6fe_19d4b3e4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-26T17:58:44Z",
+      "side": 1,
+      "message": "Does it really pay off to use ref-pointers here? NGExclusion is a very simple object.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
