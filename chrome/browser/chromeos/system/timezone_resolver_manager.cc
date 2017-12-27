@@ -4,6 +4,8 @@
 
 #include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 
+#include <algorithm>
+
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "chrome/browser/browser_process.h"
@@ -189,6 +191,20 @@ void TimeZoneResolverManager::UpdateTimezoneResolver() {
     resolver->Start();
   else
     resolver->Stop();
+
+  // Observers must be notified whenever UpdateTimezoneResolver() is called.
+  // This allows observers to listen for all relevant prefs updates.
+  for (Observer* observer : observers_)
+    observer->OnTimeZoneResolverUpdated();
+}
+
+void TimeZoneResolverManager::AddObserver(Observer* observer) {
+  observers_.push_back(observer);
+}
+
+void TimeZoneResolverManager::RemoveObserver(Observer* observer) {
+  observers_.erase(std::remove(observers_.begin(), observers_.end(), observer),
+                   observers_.end());
 }
 
 bool TimeZoneResolverManager::ShouldApplyResolvedTimezone() {
@@ -293,6 +309,11 @@ TimeZoneResolverManager::GetEffectiveUserTimeZoneResolveMethod(
   return user_prefs->GetBoolean(prefs::kResolveTimezoneByGeolocation)
              ? TimeZoneResolveMethod::IP_ONLY
              : TimeZoneResolveMethod::DISABLED;
+}
+
+// static
+bool TimeZoneResolverManager::IsTimeZoneResolvePolicyControlled() {
+  return GetServiceConfigurationFromPolicy() != UNSPECIFIED;
 }
 
 }  // namespace system
