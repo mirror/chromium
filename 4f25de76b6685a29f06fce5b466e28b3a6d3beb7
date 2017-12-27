@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13038de8_351ea204",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T19:31:34Z",
+      "side": 0,
+      "message": "Are these still necessary for running stack.py?",
+      "revId": "4f25de76b6685a29f06fce5b466e28b3a6d3beb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
