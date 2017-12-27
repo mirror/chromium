@@ -727,6 +727,9 @@ __gCrWeb['common'] = __gCrWeb.common;
     changeEvent.initEvent(type, bubbles, cancelable);
     // Some frameworks will use the data field to update their cache value.
     changeEvent.data = element.value;
+    // React framework is not updated by the generated events, except if they
+    // have a simulated flag.
+    changeEvent.simulated = true;
 
     element.dispatchEvent(changeEvent);
   };
