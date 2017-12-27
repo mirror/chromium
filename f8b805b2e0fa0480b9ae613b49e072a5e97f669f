@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db2782a_98807a25",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13222,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-27T21:58:30Z",
+      "side": 1,
+      "message": "nit: Add that the histogram is recorded only if the dump is processed in ~5 seconds.",
+      "range": {
+        "startLine": 13221,
+        "startChar": 4,
+        "endLine": 13222,
+        "endChar": 26
+      },
+      "revId": "f8b805b2e0fa0480b9ae613b49e072a5e97f669f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
