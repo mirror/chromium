@@ -16,7 +16,18 @@ namespace ui {
 // some platforms want to negate it, so we want to ensure the range is below the
 // signed int max.) This can be used when the id has to be unique across
 // multiple frames, since node ids are only unique within one tree.
-int32_t AX_EXPORT GetNextAXPlatformNodeUniqueId();
+
+class AXUniqueId {
+ public:
+  AXUniqueId();
+
+  int32_t Get() const { return id_; }
+
+ private:
+  int32_t GetNextAXUniqueId() const;
+
+  int32_t id_;
+};
 
 }  // namespace ui
 
