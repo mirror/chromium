@@ -6,12 +6,11 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
-import types
 
 import json5_generator
 import template_expander
 
-from collections import defaultdict, namedtuple
+from collections import namedtuple
 from make_css_property_base import CSSPropertyWriter
 
 
@@ -56,6 +55,10 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             self._outputs[class_data.classname + '.h'] = (
                 self.generate_property_h_builder(
                     class_data.classname, property_))
+            if 'should_implement_apply_functions_in_cpp' in property_:
+                self._outputs[class_data.classname + '.cpp'] = (
+                    self.generate_property_cpp_builder(
+                        class_data.classname, property_))
         for property_ in self.css_properties.aliases:
             if ('shorthands' in output_dir and property_['longhands']) or \
                ('longhands' in output_dir and not property_['longhands']):
@@ -77,31 +80,32 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
             }
         return generate_property_h
 
+    def generate_property_cpp_builder(self, property_classname, property_):
+        @template_expander.use_jinja(
+            'core/css/properties/templates/CSSPropertySubclass.cpp.tmpl')
+        def generate_property_cpp():
+            return {
+                'input_files': self._input_files,
+                'property_classname': property_classname,
+                'property': property_,
+            }
+        return generate_property_cpp
+
     def calculate_apply_functions_to_declare(self, property_):
-        # Functions should only be declared on the property classes if they are
-        # implemented.
-        property_['should_declare_apply_functions'] = \
-            property_['is_property'] \
-            and not property_['longhands'] \
-            and not property_['direction_aware_options'] \
-            and not property_['builder_skip']
         if property_['custom_apply_functions_all']:
             property_name = property_['upper_camel_name']
-            if (property_name in
-                    ['Clip', 'ColumnCount', 'ColumnWidth', 'ZIndex']):
+            if (property_name in ['Clip', 'ColumnCount', 'ColumnWidth', 'ZIndex']):
                 property_['custom_apply'] = "auto"
                 property_['custom_apply_args'] = {'auto_identity': 'CSSValueAuto'}
-            if property_name == 'ColumnGap':
+            elif property_name == 'ColumnGap':
                 property_['custom_apply'] = "auto"
                 property_['custom_apply_args'] = {
                     'auto_getter': 'HasNormalColumnGap',
                     'auto_setter': 'SetHasNormalColumnGap',
                     'auto_identity': 'CSSValueNormal'}
-            if (property_name in
-                    ['BorderImageOutset', 'BorderImageRepeat',
-                     'BorderImageSlice', 'BorderImageWidth',
-                     'WebkitMaskBoxImageOutset', 'WebkitMaskBoxImageRepeat',
-                     'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
+            elif (property_name in [
+                    'BorderImageOutset', 'BorderImageRepeat', 'BorderImageSlice', 'BorderImageWidth', 'WebkitMaskBoxImageOutset',
+                    'WebkitMaskBoxImageRepeat', 'WebkitMaskBoxImageSlice', 'WebkitMaskBoxImageWidth']):
                 property_['custom_apply'] = 'border_image'
                 is_mask_box = 'WebkitMaskBox' in property_name
                 getter = 'MaskBoxImage' if is_mask_box else 'BorderImage'
@@ -112,47 +116,72 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                     'getter': getter,
                     'setter': 'Set' + getter
                 }
+            elif (property_name in [
+                    'BackgroundAttachment', 'BackgroundBlendMode', 'BackgroundClip', 'BackgroundImage', 'BackgroundOrigin',
+                    'BackgroundPositionX', 'BackgroundPositionY', 'BackgroundRepeatX', 'BackgroundRepeatY', 'BackgroundSize',
+                    'MaskSourceType', 'WebkitMaskClip', 'WebkitMaskComposite', 'WebkitMaskImage', 'WebkitMaskOrigin',
+                    'WebkitMaskPositionX', 'WebkitMaskPositionY', 'WebkitMaskRepeatX', 'WebkitMaskRepeatY', 'WebkitMaskSize']):
+                fill_type = property_name if property_name == 'MaskSourceType' else property_name[len('Background'):]
+                property_['custom_apply'] = 'fill_layer'
+                property_['should_implement_apply_functions_in_cpp'] = True
+                property_['custom_apply_args'] = {
+                    'layer_type': 'Background' if 'Background' in property_name else 'Mask',
+                    'fill_type': fill_type,
+                    'fill_type_getter': 'Get' + fill_type if fill_type == "Image" else fill_type
+                }
         property_['should_implement_apply_functions'] = (
-            property_['should_declare_apply_functions'] and
+            property_['is_property'] and
+            not property_['longhands'] and
+            not property_['direction_aware_options'] and
+            not property_['builder_skip'] and
             (not (property_['custom_apply_functions_initial'] and
                   property_['custom_apply_functions_inherit'] and
                   property_['custom_apply_functions_value']) or
-             'custom_apply' in property_.keys()))
+             'custom_apply' in property_))
 
     def populate_includes(self, property_):
-        includes = []
+        h_includes = []
+        apply_includes = []
         if property_['alias_for']:
-            includes.append("core/css/properties/CSSUnresolvedProperty.h")
+            h_includes.append("core/css/properties/CSSUnresolvedProperty.h")
         else:
-            includes.append("core/css/properties/" + property_['namespace_group'] + ".h")
+            h_includes.append("core/css/properties/" + property_['namespace_group'] + ".h")
             if property_['direction_aware_options']:
-                includes.append("core/StylePropertyShorthand.h")
+                h_includes.append("core/StylePropertyShorthand.h")
             if property_['runtime_flag']:
-                includes.append("platform/runtime_enabled_features.h")
+                h_includes.append("platform/runtime_enabled_features.h")
             if property_['should_implement_apply_functions']:
-                includes.append("core/css/resolver/StyleResolverState.h")
+                apply_includes.append("core/css/resolver/StyleResolverState.h")
                 if property_['converter'] == "CSSPrimitiveValue":
-                    includes.append("core/css/CSSPrimitiveValue.h")
-                    includes.append("core/css/CSSPrimitiveValueMappings.h")
+                    apply_includes.append("core/css/CSSPrimitiveValue.h")
+                    apply_includes.append("core/css/CSSPrimitiveValueMappings.h")
                 elif property_['converter'] == "CSSIdentifierValue":
-                    includes.append("core/css/CSSIdentifierValue.h")
+                    apply_includes.append("core/css/CSSIdentifierValue.h")
                 elif property_['converter']:
-                    includes.append("core/css/CSSPrimitiveValueMappings.h")
-                    includes.append("core/css/resolver/StyleBuilderConverter.h")
+                    apply_includes.append("core/css/CSSPrimitiveValueMappings.h")
+                    apply_includes.append("core/css/resolver/StyleBuilderConverter.h")
                 if property_['font']:
-                    includes.append("core/css/resolver/FontBuilder.h")
+                    apply_includes.append("core/css/resolver/FontBuilder.h")
                 elif property_['svg']:
-                    includes.append("core/css/CSSPrimitiveValueMappings.h")
-                    includes.append("core/style/ComputedStyle.h")
-                    includes.append("core/style/SVGComputedStyle.h")
+                    apply_includes.append("core/css/CSSPrimitiveValueMappings.h")
+                    apply_includes.append("core/style/ComputedStyle.h")
+                    apply_includes.append("core/style/SVGComputedStyle.h")
                 else:
-                    includes.append("core/style/ComputedStyle.h")
-                if (property_.get('custom_apply_args') and
-                        property_.get('custom_apply_args').get('modifier_type')
+                    apply_includes.append("core/style/ComputedStyle.h")
+                if ('custom_apply_args' in property_ and
+                        property_['custom_apply_args'].get('modifier_type')
                         in ['Width', 'Slice', 'Outset']):
-                    includes.append("core/css/properties/StyleBuildingUtils.h")
-        includes.sort()
-        property_['includes'] = includes
+                    apply_includes.append("core/css/properties/StyleBuildingUtils.h")
+                if property_.get('custom_apply') == "fill_layer":
+                    apply_includes.append("core/css/CSSValueList.h")
+        if 'should_implement_apply_functions_in_cpp' in property_:
+            apply_includes.sort()
+            property_['cpp_includes'] = apply_includes
+        else:
+            h_includes.extend(apply_includes)
+            property_['cpp_includes'] = []
+        h_includes.sort()
+        property_['h_includes'] = h_includes
 
 if __name__ == '__main__':
     json5_generator.Maker(CSSPropertyHeadersWriter).main()
