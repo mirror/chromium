@@ -56,6 +56,7 @@ HTTP2_EXPORT_PRIVATE Http2String HpackEntryTypeToString(HpackEntryType v);
 HTTP2_EXPORT_PRIVATE std::ostream& operator<<(std::ostream& out,
                                               HpackEntryType v);
 
+const size_t kFirstDynamicTableIndex = 62;
 }  // namespace net
 
 #endif  // NET_HTTP2_HPACK_HTTP2_HPACK_CONSTANTS_H_
