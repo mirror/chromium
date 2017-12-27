@@ -1213,8 +1213,6 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   // GpuMemoryBuffer and GLImage, if one is going to be used.
   GLuint image_id = 0;
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer;
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
-      Platform::Current()->GetGpuMemoryBufferManager();
   if (ShouldUseChromiumImage()) {
     gfx::BufferFormat buffer_format;
     GLenum gl_format = GL_NONE;
@@ -1231,6 +1229,8 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
         buffer_format = gfx::BufferFormat::BGRX_8888;
       gl_format = GL_RGB;
     }
+    auto gpu_memory_buffer_manager =
+        Platform::Current()->GetGpuMemoryBufferManager();
     gpu_memory_buffer = gpu_memory_buffer_manager->CreateGpuMemoryBuffer(
         gfx::Size(size), buffer_format, gfx::BufferUsage::SCANOUT,
         gpu::kNullSurfaceHandle);
