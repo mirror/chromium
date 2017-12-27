@@ -51,6 +51,7 @@ class PrimaryAccountAccessTokenFetcher : public SigninManagerBase::Observer,
 
   void WaitForRefreshToken();
   void StartAccessTokenRequest();
+  void HandleStartAccessTokenRequest();
 
   // SigninManagerBase::Observer implementation.
   void GoogleSigninSucceeded(const std::string& account_id,

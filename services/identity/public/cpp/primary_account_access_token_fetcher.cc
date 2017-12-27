@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 
 namespace identity {
 
@@ -69,6 +70,17 @@ void PrimaryAccountAccessTokenFetcher::WaitForRefreshToken() {
 }
 
 void PrimaryAccountAccessTokenFetcher::StartAccessTokenRequest() {
+  // Fire off the request asynchronously to mimic the asynchronous flow that
+  // will occur when this request is going through the Identity Service.
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &PrimaryAccountAccessTokenFetcher::HandleStartAccessTokenRequest,
+          base::Unretained(this)));
+}
+
+// TODO(blundell): Rename this method.
+void PrimaryAccountAccessTokenFetcher::HandleStartAccessTokenRequest() {
   // Note: We might get here even in cases where we know that there's no refresh
   // token. We're requesting an access token anyway, so that the token service
   // will generate an appropriate error code that we can return to the client.
