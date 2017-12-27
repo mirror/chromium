@@ -35,6 +35,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/animation/ink_drop_impl.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
@@ -46,6 +47,7 @@ namespace {
 
 LoginMetricsRecorder::LockScreenUserClickTarget GetUserClickTarget(
     int button_id) {
+  // TODO(agawronska): Add metrics for login screen only buttons.
   switch (button_id) {
     case LoginShelfView::kShutdown:
       return LoginMetricsRecorder::LockScreenUserClickTarget::kShutDownButton;
@@ -74,24 +76,29 @@ class LoginShelfButton : public views::LabelButton {
  public:
   LoginShelfButton(views::ButtonListener* listener,
                    const base::string16& text,
-                   const gfx::ImageSkia& image)
+                   const gfx::ImageSkia& image,
+                   bool is_label_visible)
       : LabelButton(listener, text) {
     SetAccessibleName(text);
-    SetImage(views::Button::STATE_NORMAL, image);
-    SetFocusBehavior(FocusBehavior::ALWAYS);
-    SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-        kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF()));
-    SetInkDropMode(views::InkDropHostView::InkDropMode::ON);
-    set_ink_drop_base_color(kShelfInkDropBaseColor);
-    set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
-    SetTextSubpixelRenderingEnabled(false);
+    if (!is_label_visible)
+      SetText(base::EmptyString16());
 
+    SetImage(views::Button::STATE_NORMAL, image);
     SetImageLabelSpacing(kImageLabelSpacingDp);
+
+    SetTextSubpixelRenderingEnabled(false);
     SetTextColor(views::Button::STATE_NORMAL, kButtonColor);
     SetTextColor(views::Button::STATE_HOVERED, kButtonColor);
     SetTextColor(views::Button::STATE_PRESSED, kButtonColor);
     label()->SetFontList(views::Label::GetDefaultFontList().Derive(
         1, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL));
+
+    SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
+    SetFocusPainter(views::Painter::CreateSolidFocusPainter(
+        kFocusBorderColor, kFocusBorderThickness, gfx::InsetsF()));
+    SetInkDropMode(views::InkDropHostView::InkDropMode::ON);
+    set_ink_drop_base_color(kShelfInkDropBaseColor);
+    set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
   }
 
   ~LoginShelfButton() override = default;
@@ -130,10 +137,11 @@ LoginShelfView::LoginShelfView(
       std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal));
 
   auto add_button = [this](ButtonId id, int text_resource_id,
-                           const gfx::VectorIcon& icon) {
+                           const gfx::VectorIcon& icon,
+                           bool is_label_visible = true) {
     const base::string16 text = l10n_util::GetStringUTF16(text_resource_id);
     gfx::ImageSkia image = CreateVectorIcon(icon, kButtonColor);
-    LoginShelfButton* button = new LoginShelfButton(this, text, image);
+    auto* button = new LoginShelfButton(this, text, image, is_label_visible);
     button->set_id(id);
     AddChildView(button);
   };
@@ -143,6 +151,11 @@ LoginShelfView::LoginShelfView(
   add_button(kSignOut, IDS_ASH_SHELF_SIGN_OUT_BUTTON, kShelfSignOutButtonIcon);
   add_button(kCloseNote, IDS_ASH_SHELF_UNLOCK_BUTTON, kShelfUnlockButtonIcon);
   add_button(kCancel, IDS_ASH_SHELF_CANCEL_BUTTON, kShelfCancelButtonIcon);
+  add_button(kBrowseAsGuest, IDS_ASH_BROWSE_AS_GUEST_BUTTON,
+             kShelfBrowseAsGuestButtonIcon);
+  add_button(kAddUser, IDS_ASH_ADD_USER_BUTTON, kShelfAddPersonButtonIcon);
+  add_button(kMoreSettings, IDS_ASH_MORE_OPTIONS_BUTTON,
+             kShelfMoreSettingsButtonIcon, false);
 
   // Adds observers for states that affect the visiblity of different buttons.
   tray_action_observer_.Add(Shell::Get()->tray_action());
@@ -219,6 +232,15 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
     case kCancel:
       Shell::Get()->login_screen_controller()->CancelAddUser();
       break;
+    case kBrowseAsGuest:
+      NOTIMPLEMENTED();
+      break;
+    case kAddUser:
+      NOTIMPLEMENTED();
+      break;
+    case kMoreSettings:
+      NOTIMPLEMENTED();
+      break;
   }
 }
 
@@ -273,6 +295,14 @@ void LoginShelfView::UpdateUi() {
                    is_lock_screen_note_in_foreground);
   GetViewByID(kCancel)->SetVisible(session_state ==
                                    SessionState::LOGIN_SECONDARY);
+  // TODO(agawronska): Implement full list of conditions for buttons visibility.
+  GetViewByID(kBrowseAsGuest)
+      ->SetVisible(session_state == SessionState::LOGIN_PRIMARY);
+  GetViewByID(kAddUser)->SetVisible(session_state ==
+                                    SessionState::LOGIN_PRIMARY);
+  GetViewByID(kMoreSettings)
+      ->SetVisible(session_state == SessionState::LOGIN_PRIMARY);
+
   Layout();
 }
 
