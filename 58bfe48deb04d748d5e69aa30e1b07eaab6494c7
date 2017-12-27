@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff48cad6_e340e475",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-27T00:37:16Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t realize that.\nI re-created bookmark_path_cache.mm and move all the cachePath stuff into it.",
+      "parentUuid": "048883d1_3eac6bee",
+      "range": {
+        "startLine": 219,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "58bfe48deb04d748d5e69aa30e1b07eaab6494c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a298b805_63d26997",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "58bfe48deb04d748d5e69aa30e1b07eaab6494c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe4d7e3_3e876bdd",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-27T00:37:16Z",
+      "side": 1,
+      "message": "Done.  Test is much simpler now.",
+      "parentUuid": "a298b805_63d26997",
+      "range": {
+        "startLine": 222,
+        "startChar": 54,
+        "endLine": 222,
+        "endChar": 67
+      },
+      "revId": "58bfe48deb04d748d5e69aa30e1b07eaab6494c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
