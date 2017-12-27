@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f703ea7c_e94ef828",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T23:08:31Z",
+      "side": 1,
+      "message": "If you don\u0027t have a bug to refer to, you can just remove this line.",
+      "revId": "60053e0aada95247fd342d4b72f97d2500532f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
