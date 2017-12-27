@@ -12,6 +12,8 @@
 #include "base/run_loop.h"
 #include "services/data_decoder/xml_parser.h"
 
+#include "third_party/libxml/chromium/libxml_utils.h"
+
 namespace {
 
 void OnParseXml(base::Closure quit_loop,
@@ -20,7 +22,12 @@ void OnParseXml(base::Closure quit_loop,
   std::move(quit_loop).Run();
 }
 
+// Error handler to ignore spamy messages from libxml.
+void ignore(void* ctx, const char* msg, ...) {}
+
 }  // namespace
+
+static ScopedXmlErrorFunc scoped_xml_error_func(nullptr, &ignore);
 
 // Entry point for LibFuzzer.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
