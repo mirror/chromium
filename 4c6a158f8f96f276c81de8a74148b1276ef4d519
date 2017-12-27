@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2643b93e_df94e6ba",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-27T22:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4560128_ad10cbd7",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 159,
+        "endChar": 71
+      },
+      "revId": "4c6a158f8f96f276c81de8a74148b1276ef4d519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f3d637_09ecbf91",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f51887a6_70d363ac",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-27T22:50:17Z",
+      "side": 1,
+      "message": "This is only showing the static value, so it does not update when user clicks on the \"ignore blacklist\" button.",
+      "parentUuid": "37f3d637_09ecbf91",
+      "range": {
+        "startLine": 235,
+        "startChar": 1,
+        "endLine": 236,
+        "endChar": 77
+      },
+      "revId": "4c6a158f8f96f276c81de8a74148b1276ef4d519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c88aa1_aa31f2f3",
         "filename": "components/previews/content/previews_io_data.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-27T21:20:13Z",
       "side": 1,
       "message": "A question, not related to this CL though:\n\nIt seems that PreviewsIOData::SetIgnorePreviewsBlacklistDecision is called only by PreviewsUIService. In that case, why does this method need to call back PreviewsUIService?",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 60
+      },
+      "revId": "4c6a158f8f96f276c81de8a74148b1276ef4d519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01d3e50_0acb0cc1",
+        "filename": "components/previews/content/previews_io_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-27T22:50:17Z",
+      "side": 1,
+      "message": "Because PreviewsUIService has to send signals to notify PreviewsLogger that blacklist decisions are ignored/not_ignored. And PreviewsIOData cannot communicate with Logger directly.",
+      "parentUuid": "b5c88aa1_aa31f2f3",
       "range": {
         "startLine": 199,
         "startChar": 2,
