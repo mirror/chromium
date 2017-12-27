@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0e3397_ef2e7dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T00:34:55Z",
+      "side": 1,
+      "message": "Please add details to the commit message.\n\n* Which files/classes are being renamed?\n\nIn particular this change only renames files, however not the names of types or variables.\n\nIt is OK to sequence this change across several patches, however please document that intent in the COMMIT_MSG, otherwise this patch looks incomplete.\n\nThanks!",
+      "revId": "138e52ab3efcec77a6aa023b970c468a17f70496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e200de85_a14a662a",
+        "filename": "ash/content/screen_orientation_delegate_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T00:34:55Z",
+      "side": 1,
+      "message": "Please remove these files from the non-net files from this patch.\n\nThese files are not relevant to the proposed refactor, and seem to have been included only because a newline was added to the files in question. (Presumably some tooling ran added this).",
+      "revId": "138e52ab3efcec77a6aa023b970c468a17f70496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38592bf_f1e7a0af",
+        "filename": "content/browser/frame_host/mixed_content_navigation_throttle_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T00:34:55Z",
+      "side": 1,
+      "message": "Please remove this change (it is good, however not relevant to this refactor).\nHere and throughout this patch.",
+      "revId": "138e52ab3efcec77a6aa023b970c468a17f70496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2d43ca_22e99ae9",
+        "filename": "net/proxy/dhcp_proxy_script_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T00:34:55Z",
+      "side": 1,
+      "message": "As commented in the COMMIT message, doing the file rename and class rename as separate changelists is fine by me, so long as we agree that the final state is that both filenames and classnames use the same nomenclature.\n\nFor instance here, the class would be renamed to DhcpPacFileFetcher to match the file rename.",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 40
+      },
+      "revId": "138e52ab3efcec77a6aa023b970c468a17f70496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8697aef_ba5eec55",
+        "filename": "net/proxy/pac_file_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T00:34:55Z",
+      "side": 1,
+      "message": "When renaming files, please also rename the header guard (here and throughout).",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "138e52ab3efcec77a6aa023b970c468a17f70496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
