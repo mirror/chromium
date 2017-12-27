@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1636c92_7e3c4c66",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:20:47Z",
+      "side": 1,
+      "message": "Can we move |logger| variable inside if condition?",
+      "range": {
+        "startLine": 492,
+        "startChar": 53,
+        "endLine": 492,
+        "endChar": 59
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19be0d0_a9c86748",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:20:47Z",
+      "side": 1,
+      "message": "nit: Can we use std::make_unique here? But do we even need to use std::unique_ptr here? Can we just create a stack object?",
+      "range": {
+        "startLine": 495,
+        "startChar": 12,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae56a823_a6c4b486",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:20:47Z",
+      "side": 1,
+      "message": "Optional nit: \n\nif (CanProvisionalManagerSave())\n  OnLoginSuccessful();",
+      "range": {
+        "startLine": 502,
+        "startChar": 4,
+        "endLine": 502,
+        "endChar": 10
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

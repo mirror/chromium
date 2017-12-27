@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "776c477d_4707436a",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:20:47Z",
+      "side": 1,
+      "message": "I don\u0027t think that iOS can guarantee thread switching under 1/64 seconds. As for suggestion: can we change MockLogManager to FakeLogManager and implement LogSavePasswordProgress by changing the state of Fake object? This way the test can can use WaitUntilConditionOrTimeout to wait until state change.",
+      "parentUuid": "0fe5f23d_a99b78ac",
+      "range": {
+        "startLine": 1574,
+        "startChar": 19,
+        "endLine": 1574,
+        "endChar": 42
+      },
+      "revId": "4af99a06a9a816d89590577261d2514828203814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb3bf0dd_c852aa19",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 8
