@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f36c1f_62495361",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "nit: have a break here within the if block, then just raise this Exception outside the scope of the for loop. That way, if we don\u0027t find a package version and there\u0027s no newline, we raise an exception rather than silently returning None.",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da86dbd_b8b69b58",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "nit: move this and _ReplaceVersionInFile down closer to ChangeVersionInGNI.",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d13de60_ce29ee19",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "nit: rephrase the second sentence to something like \"Must capture at least two groups the second of which must be the version.",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b75f289_cb023a69",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "Hrm, _CheckSameVersionInFile and _ReplaceVersionInFile both wind up iterating over the entire file path \u0026 regex matching on each line. Can we restructure the two of them to only wind up doing that once?",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7382b214_64ebd74f",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "nit: \u0027cipd_%s.yaml\u0027 % package",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7152b38e_fac0e921",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T20:34:12Z",
+      "side": 1,
+      "message": "nit: use double quotes for strings that contain single quotes rather than escaping the contained single quotes.",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
