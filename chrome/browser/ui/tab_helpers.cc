@@ -145,6 +145,10 @@
 #include "chrome/browser/printing/printing_init.h"
 #endif
 
+#if defined(TOOLKIT_VIEWS)
+#include "chrome/browser/history/nav_tree_web_contents_observer.h"
+#endif
+
 using content::WebContents;
 
 namespace {
@@ -222,6 +226,10 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   history::WebContentsTopSitesObserver::CreateForWebContents(
       web_contents, TopSitesFactory::GetForProfile(profile).get());
   HistoryTabHelper::CreateForWebContents(web_contents);
+#if defined(TOOLKIT_VIEWS)
+  if (NavTreeWebContentsObserver::IsEnabled())
+    NavTreeWebContentsObserver::CreateForWebContents(web_contents);
+#endif
   InfoBarService::CreateForWebContents(web_contents);
   InstallableManager::CreateForWebContents(web_contents);
   metrics::RendererUptimeWebContentsObserver::CreateForWebContents(
