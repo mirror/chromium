@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9827562_816e498b",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "But we will have to put the function definition in a #if !defined(OS_NACL) block anyway, otherwise the compiler will complain about an unused function. So I don\u0027t think this will change anything here. Can you clarify if I\u0027m wrong?",
+      "parentUuid": "96f8c502_bc0a6229",
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59773de6_e01770dd",
         "filename": "base/metrics/field_trial_unittest.cc",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-22T18:29:37Z",
       "side": 1,
       "message": "Please comment why only these OSes.\n\nLooking naively at the code, I would think it\u0027d function on all platforms.",
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee08b32_7426b704",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "I moved the relevant functionality to another source file (base/test/test_shared_memory_util.h), and added some comments in the implementation describing what you said.",
+      "parentUuid": "59773de6_e01770dd",
       "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "110610f2_dbc683e1",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09746b7_5e308c5e",
+      "range": {
+        "startLine": 1415,
+        "startChar": 47,
+        "endLine": 1415,
+        "endChar": 50
+      },
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c30e9ac_414c7e1f",
         "filename": "base/metrics/field_trial_unittest.cc",
         "patchSetId": 24
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "38cdfc6d_246c7d54",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c30e9ac_414c7e1f",
+      "range": {
+        "startLine": 1421,
+        "startChar": 2,
+        "endLine": 1421,
+        "endChar": 6
+      },
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f50795a_afad0142",
         "filename": "base/metrics/field_trial_unittest.cc",
         "patchSetId": 24
@@ -102,6 +186,30 @@
       "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b2f9a1_fa855c9d",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f50795a_afad0142",
+      "range": {
+        "startLine": 1422,
+        "startChar": 74,
+        "endLine": 1422,
+        "endChar": 75
+      },
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +280,24 @@
       "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3492c368_fa68fed0",
+        "filename": "base/metrics/field_trial_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1428,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-27T16:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7403323_9256349e",
+      "revId": "0b29d00ac4ff946209e928786bab00c861ca7ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
