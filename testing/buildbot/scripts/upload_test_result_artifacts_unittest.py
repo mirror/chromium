@@ -58,7 +58,7 @@ class UploadTestResultArtifactsTest(unittest.TestCase):
 
   def _loadTest(self, json_data, upload):
     return UTRA.upload_artifacts(
-        json_data, '/tmp', upload)
+        json_data, '/tmp', upload, 'test-bucket')
 
 
   def loadTestEndToEndSimple(self):
@@ -138,7 +138,7 @@ class UploadTestResultArtifactsTest(unittest.TestCase):
         }
     }
     with self.assertRaises(ValueError):
-      UTRA.upload_artifacts(data, '/tmp', True)
+      UTRA.upload_artifacts(data, '/tmp', True, 'test-bucket')
 
   @mock.patch('upload_test_result_artifacts.get_file_digest')
   @mock.patch('upload_test_result_artifacts.tempfile.mkdtemp')
@@ -159,7 +159,8 @@ class UploadTestResultArtifactsTest(unittest.TestCase):
           }
         }
     }
-    self.assertEqual(UTRA.upload_artifacts(data, '/tmp', True), data)
+    self.assertEqual(UTRA.upload_artifacts(
+        data, '/tmp', True, 'test-bucket'), data)
     mkd_patch.assert_called_once_with(prefix='upload_test_artifacts')
     digest_patch.assert_not_called()
     copy_patch.assert_not_called()
@@ -191,7 +192,7 @@ class UploadTestResultArtifactsTest(unittest.TestCase):
           }
         }
     }
-    self.assertEqual(UTRA.upload_artifacts(data, '/tmp', True), {
+    self.assertEqual(UTRA.upload_artifacts(data, '/tmp', True, 'test-bucket'), {
         'artifact_type_info': {
             'log': 'text/plain'
         },
@@ -250,7 +251,7 @@ class UploadTestResultArtifactsTest(unittest.TestCase):
           },
         }
     }
-    self.assertEqual(UTRA.upload_artifacts(data, '/tmp', True), {
+    self.assertEqual(UTRA.upload_artifacts(data, '/tmp', True, 'test-bucket'), {
         'artifact_type_info': {
             'log': 'text/plain',
             'screenshot': 'image/png',
