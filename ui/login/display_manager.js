@@ -291,8 +291,9 @@ cr.define('cr.ui.login', function() {
      * The header bar should be hidden when views-based shelf is shown.
      */
     get showingViewsBasedShelf() {
-      return loadTimeData.valueExists('showMdLogin') &&
-          loadTimeData.getString('showMdLogin') == 'on' &&
+      // TODO(agawronska): Expand conditions to cover login and OOBE screens.
+      return loadTimeData.valueExists('showViewsLogin') &&
+          loadTimeData.getString('showViewsLogin') == 'on' &&
           (this.displayType_ == DISPLAY_TYPE.LOCK ||
            this.displayType_ == DISPLAY_TYPE.USER_ADDING);
     },
