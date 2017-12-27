@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8caec5f_572a381d",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-27T18:27:32Z",
+      "side": 1,
+      "message": "Additional newline here.",
+      "revId": "d9fcc91af84fc46e23ff9a80856af0c6fc137471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60059935_8b40ea54",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-27T18:27:32Z",
+      "side": 1,
+      "message": "Maybe we could merge this one with LoginShelfButton? Just use views::Button and add image and text as child view when applicable.",
+      "revId": "d9fcc91af84fc46e23ff9a80856af0c6fc137471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
