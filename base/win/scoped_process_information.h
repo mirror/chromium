@@ -5,7 +5,7 @@
 #ifndef BASE_WIN_SCOPED_PROCESS_INFORMATION_H_
 #define BASE_WIN_SCOPED_PROCESS_INFORMATION_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/base_export.h"
 #include "base/macros.h"
