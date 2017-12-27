@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "294ae7dc_7e5c6e8a",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-27T11:20:39Z",
+      "side": 1,
+      "message": "Are you sure that both of these collections not empty? Isn\u0027t it better to use DCHECK somewhere?",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f9ff1b_f98caf33",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-27T11:20:39Z",
+      "side": 1,
+      "message": "Why do you need to call reserve here? |field_data_value| is not modified anywhere later. Did you mean token.reserver()?",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02006014_9ddc71bf",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-27T11:20:39Z",
+      "side": 1,
+      "message": "Nit: You can call this variable usernames. Usually it doesn\u0027t make sense to add container name into variable name.",
+      "range": {
+        "startLine": 305,
+        "startChar": 47,
+        "endLine": 305,
+        "endChar": 60
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cae93de_db364d34",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-27T11:20:39Z",
+      "side": 1,
+      "message": "Optional nit: you can remove else.",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 10
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
