@@ -5,7 +5,7 @@
 #include "base/files/file_path_watcher.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <aclapi.h>
 #elif defined(OS_POSIX)
 #include <sys/stat.h>

@@ -24,7 +24,7 @@
 // Force a reference to p_thread_callback_dllmain_typical_entry to prevent whole
 // program optimization from discarding the variables.
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/compiler_specific.h"
 #include "base/win/win_util.h"

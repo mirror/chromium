@@ -5,7 +5,7 @@
 #ifndef UI_BASE_WIN_OPEN_FILE_NAME_WIN_H_
 #define UI_BASE_WIN_OPEN_FILE_NAME_WIN_H_
 
-#include <Windows.h>
+#include "base/win/windows_full.h"
 #include <Commdlg.h>
 
 #include <tuple>

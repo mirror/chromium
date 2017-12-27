@@ -4,7 +4,7 @@
 
 #include "ui/base/win/osk_display_manager.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <shellapi.h>
 #include <shlobj.h>
 #include <shobjidl.h>  // Must be before propkey.
@@ -144,7 +144,7 @@ bool OnScreenKeyboardDetector::DismissKeyboard() {
     keyboard_detect_requested_ = false;
     keyboard_dismiss_retry_count_ = 0;
     HandleKeyboardHidden();
-    PostMessage(osk, WM_SYSCOMMAND, SC_CLOSE, 0);
+    PostMessageW(osk, WM_SYSCOMMAND, SC_CLOSE, 0);
     return true;
   } else if (keyboard_detect_requested_) {
     if (keyboard_dismiss_retry_count_ < kDismissKeyboardMaxRetries) {

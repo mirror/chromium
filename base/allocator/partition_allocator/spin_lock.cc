@@ -5,7 +5,7 @@
 #include "base/allocator/partition_allocator/spin_lock.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #elif defined(OS_POSIX)
 #include <sched.h>
 #endif

@@ -5,7 +5,7 @@
 #include "base/profiler/native_stack_sampler.h"
 
 #include <objbase.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stddef.h>
 #include <winternl.h>
 

@@ -22,7 +22,7 @@
 #ifndef BASE_WIN_WIN_UTIL_H_
 #define BASE_WIN_WIN_UTIL_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stdint.h>
 
 #include <string>

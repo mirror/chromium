@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <malloc.h>
 #include <new.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 namespace base {
 namespace allocator {

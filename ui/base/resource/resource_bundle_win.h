@@ -7,7 +7,7 @@
 
 #include "build/build_config.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "ui/base/ui_base_export.h"
 

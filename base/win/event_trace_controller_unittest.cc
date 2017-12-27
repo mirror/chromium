@@ -4,6 +4,9 @@
 //
 // Unit tests for event trace controller.
 
+// Include this before any Windows header files.
+#include "base/win/windows_full.h"
+
 #include <objbase.h>
 #include <initguid.h>
 

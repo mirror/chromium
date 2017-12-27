@@ -4,7 +4,7 @@
 
 #include "base/process/kill.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <io.h>
 #include <stdint.h>
 

@@ -20,7 +20,7 @@
 #ifndef BASE_WIN_EVENT_TRACE_CONTROLLER_H_
 #define BASE_WIN_EVENT_TRACE_CONTROLLER_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <wmistr.h>
 #include <evntrace.h>
 #include <stddef.h>

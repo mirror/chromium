@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <process.h>
 #endif
 

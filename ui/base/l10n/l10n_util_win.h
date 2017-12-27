@@ -5,7 +5,7 @@
 #ifndef UI_BASE_L10N_L10N_UTIL_WIN_H_
 #define UI_BASE_L10N_L10N_UTIL_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <string>
 #include <vector>
 

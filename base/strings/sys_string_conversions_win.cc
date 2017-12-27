@@ -4,7 +4,7 @@
 
 #include "base/strings/sys_string_conversions.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stdint.h>
 
 #include "base/strings/string_piece.h"

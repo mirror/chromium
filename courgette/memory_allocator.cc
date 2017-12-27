@@ -14,6 +14,8 @@
 
 #if defined(OS_WIN)
 
+#include "base/win/windows_full.h"
+
 namespace {
 
 // The file is created in the %TEMP% folder.

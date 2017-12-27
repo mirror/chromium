@@ -2487,7 +2487,7 @@ void HWNDMessageHandler::OnWindowPosChanging(WINDOWPOS* window_pos) {
     // It's possible that if Aero snap is being entered then the window size
     // won't actually change. Post a message to ensure swaps will be re-enabled
     // in that case.
-    PostMessage(hwnd(), WM_WINDOWSIZINGFINISHED, ++current_window_size_message_,
+    PostMessageW(hwnd(), WM_WINDOWSIZINGFINISHED, ++current_window_size_message_,
                 0);
     // Copying the old bits can sometimes cause a flash of black when
     // resizing. See https://crbug.com/739724

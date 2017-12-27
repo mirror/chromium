@@ -10,7 +10,7 @@
 #ifndef BASE_WIN_WRAPPED_WINDOW_PROC_H_
 #define BASE_WIN_WRAPPED_WINDOW_PROC_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/base_export.h"
 #include "base/strings/string16.h"

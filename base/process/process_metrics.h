@@ -33,6 +33,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
+#include "base/win/windows_full.h"
 #endif
 
 namespace base {

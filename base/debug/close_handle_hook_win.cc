@@ -4,7 +4,7 @@
 
 #include "base/debug/close_handle_hook_win.h"
 
-#include <Windows.h>
+#include "base/win/windows_full.h"
 #include <psapi.h>
 #include <stddef.h>
 

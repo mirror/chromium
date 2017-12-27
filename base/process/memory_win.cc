@@ -5,9 +5,9 @@
 #include "base/process/memory.h"
 
 #include <new.h>
+#include "base/win/windows_full.h"
 #include <psapi.h>
 #include <stddef.h>
-#include <windows.h>
 
 // malloc_unchecked is required to implement UncheckedMalloc properly.
 // It's provided by allocator_shim_win.cc but since that's not always present,

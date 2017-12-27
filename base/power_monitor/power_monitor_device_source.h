@@ -12,7 +12,7 @@
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif  // !OS_WIN
 
 #if defined(OS_IOS)

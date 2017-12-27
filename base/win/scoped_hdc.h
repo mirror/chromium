@@ -5,7 +5,7 @@
 #ifndef BASE_WIN_SCOPED_HDC_H_
 #define BASE_WIN_SCOPED_HDC_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/debug/gdi_debug_util_win.h"
 #include "base/logging.h"

@@ -4,7 +4,7 @@
 
 #include "base/rand_util.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stddef.h>
 #include <stdint.h>
 

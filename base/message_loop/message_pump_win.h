@@ -5,7 +5,7 @@
 #ifndef BASE_MESSAGE_LOOP_MESSAGE_PUMP_WIN_H_
 #define BASE_MESSAGE_LOOP_MESSAGE_PUMP_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <list>
 #include <memory>

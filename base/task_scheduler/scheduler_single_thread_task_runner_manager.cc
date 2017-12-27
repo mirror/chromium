@@ -25,7 +25,7 @@
 #include "base/time/time.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/win/scoped_com_initializer.h"
 #endif  // defined(OS_WIN)

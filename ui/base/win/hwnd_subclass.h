@@ -5,7 +5,7 @@
 #ifndef UI_BASE_WIN_HWND_SUBCLASS_H_
 #define UI_BASE_WIN_HWND_SUBCLASS_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <memory>
 #include <vector>

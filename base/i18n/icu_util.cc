@@ -5,7 +5,7 @@
 #include "base/i18n/icu_util.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 #include <string>

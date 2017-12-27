@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #if defined(OS_WIN)
+#include "base/win/windows_full.h"
 #include "winbase.h"
 #elif defined(OS_POSIX)
 #include <sys/mman.h>

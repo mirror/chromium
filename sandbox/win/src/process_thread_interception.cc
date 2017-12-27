@@ -305,7 +305,7 @@ BOOL WINAPI TargetCreateProcessW(CreateProcessWFunction orig_CreateProcessW,
     const wchar_t* cur_dir = nullptr;
 
     wchar_t this_current_directory[MAX_PATH];
-    DWORD result = ::GetCurrentDirectory(MAX_PATH, this_current_directory);
+    DWORD result = ::GetCurrentDirectoryW(MAX_PATH, this_current_directory);
     if (0 != result && result < MAX_PATH)
       cur_dir = this_current_directory;
 
@@ -401,7 +401,7 @@ BOOL WINAPI TargetCreateProcessA(CreateProcessAFunction orig_CreateProcessA,
     const wchar_t* cur_dir = nullptr;
 
     wchar_t target_current_directory[MAX_PATH];
-    DWORD result = ::GetCurrentDirectory(MAX_PATH, target_current_directory);
+    DWORD result = ::GetCurrentDirectoryW(MAX_PATH, target_current_directory);
     if (0 != result && result < MAX_PATH)
       cur_dir = target_current_directory;
 

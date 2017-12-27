@@ -12,7 +12,7 @@
 
 #if defined(OS_WIN)
 #include <io.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 typedef HANDLE FileHandle;
 typedef HANDLE MutexHandle;
 // Windows warns on using write().  It prefers _write().
@@ -188,7 +188,7 @@ uint64_t TickCount() {
 
 void DeleteFilePath(const PathString& log_name) {
 #if defined(OS_WIN)
-  DeleteFile(log_name.c_str());
+  DeleteFileW(log_name.c_str());
 #elif defined(OS_NACL)
   // Do nothing; unlink() isn't supported on NaCl.
 #else
@@ -325,7 +325,7 @@ bool InitializeLogFileHandle() {
       // try the current directory
       wchar_t system_buffer[MAX_PATH];
       system_buffer[0] = 0;
-      DWORD len = ::GetCurrentDirectory(arraysize(system_buffer),
+      DWORD len = ::GetCurrentDirectoryW(arraysize(system_buffer),
                                         system_buffer);
       if (len == 0 || len > arraysize(system_buffer))
         return false;

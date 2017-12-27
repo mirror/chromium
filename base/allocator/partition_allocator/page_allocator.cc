@@ -56,7 +56,7 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
 
 #elif defined(OS_WIN)
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 namespace base {
 

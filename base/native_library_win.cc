@@ -4,7 +4,7 @@
 
 #include "base/native_library.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"

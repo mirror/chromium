@@ -22,7 +22,7 @@
 #endif
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #elif defined(OS_MACOSX)
 #include <CoreFoundation/CoreFoundation.h>
 #endif

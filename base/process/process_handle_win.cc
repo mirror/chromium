@@ -4,7 +4,7 @@
 
 #include "base/process/process_handle.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <tlhelp32.h>
 
 #include "base/win/scoped_handle.h"

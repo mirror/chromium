@@ -5,7 +5,7 @@
 #ifndef BASE_WIN_SCOPED_BSTR_H_
 #define BASE_WIN_SCOPED_BSTR_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <oleauto.h>
 #include <stddef.h>
 

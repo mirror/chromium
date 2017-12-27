@@ -33,7 +33,7 @@
 
 #include "base/time/time.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <mmsystem.h>
 #include <stdint.h>
 

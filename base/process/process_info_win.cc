@@ -4,7 +4,7 @@
 
 #include "base/process/process_info.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"

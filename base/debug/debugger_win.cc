@@ -5,7 +5,7 @@
 #include "base/debug/debugger.h"
 
 #include <stdlib.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 namespace base {
 namespace debug {

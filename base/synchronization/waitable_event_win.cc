@@ -4,7 +4,7 @@
 
 #include "base/synchronization/waitable_event.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stddef.h>
 
 #include <algorithm>

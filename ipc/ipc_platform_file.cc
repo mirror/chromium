@@ -11,6 +11,10 @@
 #include "base/posix/eintr_wrapper.h"
 #endif
 
+#if defined(OS_WIN)
+#include "base/win/windows_full.h"
+#endif
+
 namespace IPC {
 
 #if defined(OS_WIN)

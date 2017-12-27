@@ -26,7 +26,7 @@
 
 #if defined(OS_WIN)
 #include <excpt.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif  // OS_WIN
 
 #if defined(OS_FUCHSIA)

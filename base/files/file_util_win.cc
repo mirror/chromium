@@ -4,7 +4,7 @@
 
 #include "base/files/file_util.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <io.h>
 #include <psapi.h>
 #include <shellapi.h>
@@ -65,7 +65,7 @@ bool DeleteFileRecursive(const FilePath& path,
       if (recursive && (!DeleteFileRecursive(current, pattern, true) ||
                         !RemoveDirectory(current.value().c_str())))
         success = false;
-    } else if (!::DeleteFile(current.value().c_str())) {
+    } else if (!::DeleteFileW(current.value().c_str())) {
       success = false;
     }
   }
@@ -99,7 +99,7 @@ bool DoCopyFile(const FilePath& from_path,
   // bits, which is usually not what we want. We can't do much about the
   // SECURITY_DESCRIPTOR but at least remove the read only bit.
   const wchar_t* dest = to_path.value().c_str();
-  if (!::CopyFile(from_path.value().c_str(), dest, fail_if_exists)) {
+  if (!::CopyFileW(from_path.value().c_str(), dest, fail_if_exists)) {
     // Copy failed.
     return false;
   }
@@ -184,7 +184,7 @@ bool DoCopyDirectory(const FilePath& from_path,
 
     if (from_is_dir) {
       if (!DirectoryExists(target_path) &&
-          !::CreateDirectory(target_path.value().c_str(), NULL)) {
+          !::CreateDirectoryW(target_path.value().c_str(), NULL)) {
         DLOG(ERROR) << "CopyDirectory() couldn't create directory: "
                     << target_path.value().c_str();
         success = false;
@@ -240,7 +240,7 @@ bool DeleteFile(const FilePath& path, bool recursive) {
   }
   // Directories are handled differently if they're recursive.
   if (!(attr & FILE_ATTRIBUTE_DIRECTORY))
-    return !!::DeleteFile(path.value().c_str());
+    return !!::DeleteFileW(path.value().c_str());
   // Handle a simple, single file delete.
   if (!recursive || DeleteFileRecursive(path, L"*", true))
     return !!RemoveDirectory(path.value().c_str());
@@ -451,7 +451,7 @@ bool CreateTemporaryDirInDir(const FilePath& base_dir,
         IntToString16(RandInt(0, std::numeric_limits<int16_t>::max())));
 
     path_to_create = base_dir.Append(new_dir_name);
-    if (::CreateDirectory(path_to_create.value().c_str(), NULL)) {
+    if (::CreateDirectoryW(path_to_create.value().c_str(), NULL)) {
       *new_dir = path_to_create;
       return true;
     }
@@ -512,7 +512,7 @@ bool CreateDirectoryAndGetError(const FilePath& full_path,
     return false;
   }
 
-  if (!::CreateDirectory(full_path_str, NULL)) {
+  if (!::CreateDirectoryW(full_path_str, NULL)) {
     DWORD error_code = ::GetLastError();
     if (error_code == ERROR_ALREADY_EXISTS && DirectoryExists(full_path)) {
       // This error code ERROR_ALREADY_EXISTS doesn't indicate whether we
@@ -780,7 +780,7 @@ bool GetCurrentDirectory(FilePath* dir) {
 
   wchar_t system_buffer[MAX_PATH];
   system_buffer[0] = 0;
-  DWORD len = ::GetCurrentDirectory(MAX_PATH, system_buffer);
+  DWORD len = ::GetCurrentDirectoryW(MAX_PATH, system_buffer);
   if (len == 0 || len > MAX_PATH)
     return false;
   // TODO(evanm): the old behavior of this function was to always strip the

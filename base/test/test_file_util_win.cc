@@ -8,7 +8,7 @@
 #include <shlwapi.h>
 #include <stddef.h>
 #include <wchar.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <memory>
 #include <vector>
