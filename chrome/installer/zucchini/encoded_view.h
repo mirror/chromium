@@ -15,13 +15,26 @@
 
 namespace zucchini {
 
+// Zucchini-gen performs semantics-aware matching:
+// - Same-typed reference target in "old" and "new" can be associated.
+//   Associated targets are assigned an identifier called "label" (for
+//   unassociated targets, label = 0).
+// - EncodedView maps each offset in "old" and "new" images to an "projected
+//   value", which can be:
+//   - Raw byte value (0-255) for non-references.
+//   - Reference "projected value" (> 256) that depends on target {type, label}
+//     at each reference's location (byte 0).
+//   - Reference padding value (256) at the body of each reference (byte 1+).
+// - The projected values for "old" and "new" are used to build the equivalence
+//   map.
+
 constexpr size_t kReferencePaddingProjection = 256;
 constexpr size_t kBaseReferenceProjection = 257;
 
-// A Range (providing a begin and end iterator) that adapts ImageIndex to make
+// A Range (providing a begin and end iterators) that adapts ImageIndex to make
 // image data appear as an Encoded Image, that is encoded data under a higher
 // level of abstraction than raw bytes. In particular:
-// - First byte of each reference becomes a projection of its type and Label.
+// - First byte of each reference become a projection of its type and Label.
 // - Subsequent bytes of each reference becomes |kReferencePaddingProjection|.
 // - Non-reference raw bytes remain as raw bytes.
 class EncodedView {
