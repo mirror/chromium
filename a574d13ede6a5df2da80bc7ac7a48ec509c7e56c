@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276f71cd_00b2fb8b",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T15:17:54Z",
+      "side": 1,
+      "message": "for consistency, could you rename this to FakeUpdateEnglineClient ?",
+      "range": {
+        "startLine": 541,
+        "startChar": 6,
+        "endLine": 541,
+        "endChar": 32
+      },
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a41c78_1a26c1cf",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T15:17:54Z",
+      "side": 1,
+      "message": "(I know you move this from the existing code, but...) as you\u0027re here, could you remove \"if (observer)\" check for consistency with other AddObserver impl in chromeos/dbus?\nYou should be able to do it simply because all the caller pass non-null pointer (moreover \"this\").",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2d4ccc_f6bd9bf2",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T15:17:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887f193e_c810630f",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T15:17:54Z",
+      "side": 1,
+      "message": "Could you keep DISALLOW_COPY_AND_ASSIGN() here?",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
