@@ -7,11 +7,13 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
+#include "chrome/browser/devtools/url_constants.h"
 #include "chrome/browser/extensions/api/chrome_device_permissions_prompt.h"
 #include "chrome/browser/extensions/api/declarative_content/chrome_content_rules_registry.h"
 #include "chrome/browser/extensions/api/declarative_content/default_content_predicate_evaluators.h"
@@ -33,6 +35,7 @@
 #include "chrome/browser/guest_view/web_view/chrome_web_view_guest_delegate.h"
 #include "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.h"
 #include "chrome/browser/ui/pdf/chrome_pdf_web_contents_helper_client.h"
+#include "chrome/common/chrome_switches.h"
 #include "components/pdf/browser/pdf_web_contents_helper.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "content/public/browser/browser_context.h"
@@ -101,6 +104,29 @@ bool ChromeExtensionsAPIClient::ShouldHideResponseHeader(
       (url.host_piece() == GaiaUrls::GetInstance()->gaia_url().host_piece()) &&
       (base::CompareCaseInsensitiveASCII(header_name,
                                          signin::kDiceResponseHeader) == 0));
+}
+
+bool ChromeExtensionsAPIClient::ShouldHideRequestFromBrowser(
+    const GURL& url) const {
+  if (url.host_piece() == kRemoteFrontendDomain) {
+    return true;
+  }
+
+  const base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
+  if (cmd_line->HasSwitch(switches::kCustomDevtoolsFrontend)) {
+    GURL custom_frontend_url =
+        GURL(cmd_line->GetSwitchValueASCII(switches::kCustomDevtoolsFrontend));
+    if (custom_frontend_url.is_valid() &&
+        custom_frontend_url.scheme_piece() == url.scheme_piece() &&
+        custom_frontend_url.host_piece() == url.host_piece() &&
+        custom_frontend_url.EffectiveIntPort() == url.EffectiveIntPort() &&
+        base::StartsWith(url.path_piece(), custom_frontend_url.path_piece(),
+                         base::CompareCase::SENSITIVE)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 AppViewGuestDelegate* ChromeExtensionsAPIClient::CreateAppViewGuestDelegate()

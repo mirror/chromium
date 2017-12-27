@@ -71,6 +71,8 @@ std::string GetMimeTypeForPath(const std::string& path) {
 // requests. Three types of requests could be handled based on the URL path:
 // 1. /bundled/: bundled DevTools frontend is served.
 // 2. /remote/: remote DevTools frontend is served from App Engine.
+// 3. /custom/: custom DevTools frontend is served from the server as specified
+//    by the --custom-devtools-frontend flag.
 class DevToolsDataSource : public content::URLDataSource,
                            public net::URLFetcherDelegate {
  public:
