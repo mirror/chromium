@@ -2980,10 +2980,7 @@ IntSize WebViewImpl::ContentsSize() const {
 
 WebSize WebViewImpl::ContentsPreferredMinimumSize() {
   if (MainFrameImpl()) {
-    MainFrameImpl()
-        ->GetFrame()
-        ->View()
-        ->UpdateLifecycleToCompositingCleanPlusScrolling();
+    MainFrameImpl()->GetFrame()->View()->UpdateLifecycleToPrePaintClean();
   }
 
   Document* document = page_->MainFrame()->IsLocalFrame()
@@ -3270,10 +3267,7 @@ void WebViewImpl::SetBaseBackgroundColorOverride(WebColor color) {
   if (MainFrameImpl()) {
     // Force lifecycle update to ensure we're good to call
     // LocalFrameView::setBaseBackgroundColor().
-    MainFrameImpl()
-        ->GetFrame()
-        ->View()
-        ->UpdateLifecycleToCompositingCleanPlusScrolling();
+    MainFrameImpl()->GetFrame()->View()->UpdateLifecycleToPrePaintClean();
   }
   UpdateBaseBackgroundColor();
 }
@@ -3286,10 +3280,7 @@ void WebViewImpl::ClearBaseBackgroundColorOverride() {
   if (MainFrameImpl()) {
     // Force lifecycle update to ensure we're good to call
     // LocalFrameView::setBaseBackgroundColor().
-    MainFrameImpl()
-        ->GetFrame()
-        ->View()
-        ->UpdateLifecycleToCompositingCleanPlusScrolling();
+    MainFrameImpl()->GetFrame()->View()->UpdateLifecycleToPrePaintClean();
   }
   UpdateBaseBackgroundColor();
 }
@@ -3443,9 +3434,7 @@ void WebViewImpl::SetPageOverlayColor(WebColor color) {
       MainFrameImpl(), std::make_unique<ColorOverlay>(color));
 
   // Run compositing update before calling updatePageOverlays.
-  MainFrameImpl()
-      ->GetFrameView()
-      ->UpdateLifecycleToCompositingCleanPlusScrolling();
+  MainFrameImpl()->GetFrameView()->UpdateLifecycleToPrePaintClean();
 
   UpdatePageOverlays();
 }

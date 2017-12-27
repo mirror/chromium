@@ -139,7 +139,7 @@ TEST_P(PaintInvalidationTest, InvisibleTransformUnderFixedOnScroll) {
   GetDocument().domWindow()->scrollTo(0, 100);
   transform.setAttribute(HTMLNames::styleAttr,
                          "transform: translate(20px, 30px)");
-  GetDocument().View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  GetDocument().View()->UpdateLifecycleToPrePaintClean();
 
   EXPECT_TRUE(fixed_layer.SubtreeIsInvisible());
   // We skip invisible layers when setting non-composited fixed-position
@@ -160,11 +160,11 @@ TEST_P(PaintInvalidationTest, InvisibleTransformUnderFixedOnScroll) {
   transform.setAttribute(
       HTMLNames::styleAttr,
       "visibility: visible; transform: translate(20px, 30px)");
-  GetDocument().View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  GetDocument().View()->UpdateLifecycleToPrePaintClean();
   EXPECT_FALSE(fixed_layer.SubtreeIsInvisible());
   GetDocument().View()->UpdateAllLifecyclePhases();
   fixed.setAttribute(HTMLNames::styleAttr, "top: 50px");
-  GetDocument().View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  GetDocument().View()->UpdateLifecycleToPrePaintClean();
   EXPECT_TRUE(fixed_object.MayNeedPaintInvalidation());
   EXPECT_FALSE(fixed_layer.SubtreeIsInvisible());
   GetDocument().View()->UpdateAllLifecyclePhasesExceptPaint();
