@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "72832cf0_cbb7a0c4",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-27T15:51:20Z",
+      "side": 1,
+      "message": "it\u0027s fine to do mock.failed.request here for now. I was thinking we can also do it in URLLoaderInterceptor, as this is used by other tests. https://chromium-review.googlesource.com/c/chromium/src/+/823222/3/content/public/test/url_loader_interceptor.cc#55 was what I had done in a patch that\u0027s not ready to land yet in case you agree",
+      "revId": "fc494194a51232688544760123506dd7e0589938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c9d542_236fe974",
+        "filename": "chrome/browser/net/errorpage_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-27T15:51:20Z",
+      "side": 1,
+      "message": "why not just convert the callsites that use this to use embedded test server?",
+      "revId": "fc494194a51232688544760123506dd7e0589938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41819c4d_a8b4209b",
         "filename": "content/public/renderer/render_frame.h",
         "patchSetId": 4
@@ -13,6 +47,23 @@
       "writtenOn": "2017-12-25T02:35:45Z",
       "side": 1,
       "message": "I suspect we can remove this one now?  All other usage of ChildURLLoaderFactoryGetter seems to be in content.",
+      "revId": "fc494194a51232688544760123506dd7e0589938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af19756_c908eeac",
+        "filename": "content/public/renderer/render_frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-27T15:51:20Z",
+      "side": 1,
+      "message": "nit: Returns",
       "revId": "fc494194a51232688544760123506dd7e0589938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
