@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "216d6931_e53bedea",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-27T10:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbab9d71_bdc8bf01",
+      "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80432844_8e0620da",
         "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3aca48_29296bc3",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-27T10:18:14Z",
+      "side": 1,
+      "message": "Hmm, yeah, initially I thought this should check if /deep/ sneaks in UA\nstyle sheets, but will be rejected at CSS parser level, so it won\u0027t reach\nhere anyway.",
+      "parentUuid": "80432844_8e0620da",
+      "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
