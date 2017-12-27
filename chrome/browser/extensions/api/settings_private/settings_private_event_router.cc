@@ -103,6 +103,11 @@ void SettingsPrivateEventRouter::StartOrStopListeningForPrefsChanges() {
         cros_settings_subscription_map_.insert(
             make_pair(pref_name, std::move(subscription)));
 #endif
+      } else if (prefs_util_->generated_prefs().IsGenerated(pref_name)) {
+        prefs_util_->generated_prefs().AddPrefObserver(
+            pref_name, base::BindRepeating(
+                           &SettingsPrivateEventRouter::OnPreferenceChanged,
+                           weak_ptr_factory_.GetWeakPtr()));
       } else {
         FindRegistrarForPref(it.first)
             ->Add(pref_name,

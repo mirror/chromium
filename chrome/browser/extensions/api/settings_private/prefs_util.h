@@ -11,6 +11,8 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/api/settings_private/generated_prefs.h"
+#include "chrome/browser/extensions/api/settings_private/prefs_util_enums.h"
 #include "chrome/common/extensions/api/settings_private.h"
 
 class PrefService;
@@ -22,15 +24,6 @@ class Extension;
 class PrefsUtil {
 
  public:
-  // Success or error statuses from calling SetPref.
-  enum SetPrefResult {
-    SUCCESS,
-    PREF_NOT_MODIFIABLE,
-    PREF_NOT_FOUND,
-    PREF_TYPE_MISMATCH,
-    PREF_TYPE_UNSUPPORTED
-  };
-
   // TODO(dbeam): why is the key a std::string rather than const char*?
   using TypedPrefMap = std::map<std::string, api::settings_private::PrefType>;
 
@@ -73,6 +66,8 @@ class PrefsUtil {
   // Returns whether or not the given pref is a CrOS-specific setting.
   virtual bool IsCrosSetting(const std::string& pref_name);
 
+  GeneratedPrefs& generated_prefs() { return generated_prefs_; }
+
  protected:
   // Returns whether |pref_name| corresponds to a pref whose type is URL.
   bool IsPrefTypeURL(const std::string& pref_name);
@@ -113,6 +108,8 @@ class PrefsUtil {
       const api::settings_private::PrefObject& pref_object);
 
   Profile* profile_;  // weak
+
+  GeneratedPrefs generated_prefs_;
 };
 
 }  // namespace extensions

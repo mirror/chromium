@@ -54,8 +54,8 @@ std::unique_ptr<base::Value> SettingsPrivateDelegate::GetAllPrefs() {
   return std::move(prefs);
 }
 
-PrefsUtil::SetPrefResult SettingsPrivateDelegate::SetPref(
-    const std::string& pref_name, const base::Value* value) {
+SetPrefResult SettingsPrivateDelegate::SetPref(const std::string& pref_name,
+                                               const base::Value* value) {
   return prefs_util_->SetPref(pref_name, value);
 }
 
@@ -66,11 +66,10 @@ std::unique_ptr<base::Value> SettingsPrivateDelegate::GetDefaultZoom() {
   return value;
 }
 
-PrefsUtil::SetPrefResult SettingsPrivateDelegate::SetDefaultZoom(
-    double zoom) {
+SetPrefResult SettingsPrivateDelegate::SetDefaultZoom(double zoom) {
   double zoom_factor = content::ZoomFactorToZoomLevel(zoom);
   profile_->GetZoomLevelPrefs()->SetDefaultZoomLevelPref(zoom_factor);
-  return PrefsUtil::SetPrefResult::SUCCESS;
+  return SetPrefResult::SUCCESS;
 }
 
 }  // namespace extensions

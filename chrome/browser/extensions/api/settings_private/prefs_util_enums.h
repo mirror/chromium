@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_EXTENSIONS_API_SETTINGS_PRIVATE_PREFS_UTIL_ENUMS_H_
+#define CHROME_BROWSER_EXTENSIONS_API_SETTINGS_PRIVATE_PREFS_UTIL_ENUMS_H_
+
+namespace extensions {
+
+// Success or error statuses from calling PrefsUtil::SetPref.
+enum SetPrefResult {
+  SUCCESS,
+  PREF_NOT_MODIFIABLE,
+  PREF_NOT_FOUND,
+  PREF_TYPE_MISMATCH,
+  PREF_TYPE_UNSUPPORTED
+};
+
+}  // namespace extensions
+
+#endif  // CHROME_BROWSER_EXTENSIONS_API_SETTINGS_PRIVATE_PREFS_UTIL_ENUMS_H_
