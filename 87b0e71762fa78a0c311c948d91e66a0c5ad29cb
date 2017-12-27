@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aab8c362_90c54383",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-27T10:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b107e1_7d128880",
+      "range": {
+        "startLine": 13,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff66f3f_35b5b487",
         "filename": "content/renderer/media/webrtc/rtc_rtp_sender.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72870442_df3888c5",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-27T10:58:25Z",
+      "side": 1,
+      "message": "Not intentional, I\u0027ll make this move, WebBlah should be light-weight copyable but might as well when deferring to another operation.",
+      "parentUuid": "eff66f3f_35b5b487",
+      "range": {
+        "startLine": 255,
+        "startChar": 26,
+        "endLine": 255,
+        "endChar": 36
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d61ccd21_a4be4bd3",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-27T10:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "badd78b2_9d64a96e",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5189c8_6d1879e7",
         "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0fa27fae_41be0ee5",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-27T10:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b5189c8_6d1879e7",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 2
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e954bf_7bd02eec",
         "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31231aea_c12ecb41",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-27T10:58:25Z",
+      "side": 1,
+      "message": "I\u0027m thinking the effects of the operation, that it succeeds and the track is set, is already covered by another test. Isolating this test to only cover the behavior \"nothing happens before Run()-ing the operation\".",
+      "parentUuid": "68e954bf_7bd02eec",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
