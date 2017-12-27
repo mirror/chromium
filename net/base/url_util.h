@@ -144,6 +144,8 @@ NET_EXPORT bool IsHostnameNonUnique(const std::string& hostname);
 
 // Returns true if |host| is one of the local hostnames
 // (e.g. "localhost") or IP addresses (IPv4 127.0.0.0/8 or IPv6 ::1).
+// "[::1]" is not detected as a local hostname, so make sure that the host does
+// not contain brackets, e.g. using GURL::HostNoBrackets.
 //
 // Note that this function does not check for IP addresses other than
 // the above, although other IP addresses may point to the local
