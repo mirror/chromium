@@ -69,6 +69,24 @@
       "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8321fd6_27c6ec8f",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-27T10:26:24Z",
+      "side": 1,
+      "message": "Also, if it\u0027s not rejected as parse time, the kQueryingRules check below will still fail.",
+      "parentUuid": "3c3aca48_29296bc3",
+      "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
