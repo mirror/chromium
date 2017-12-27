@@ -179,10 +179,14 @@ unpacker.Compressor.prototype.archiveFileEntry = function() {
  * @private
  */
 unpacker.Compressor.prototype.getArchiveFile_ = function() {
-  var compressor = this;
   var suggestedName = compressor.archiveName_;
 
-  var saveZipFileInParentDir = function(rootEntry) {
+  var errorHandler = (error) => {
+    console.error(error);
+    this.onError_(this.compressorId_);
+  };
+
+  var saveZipFile = function(rootEntry) {
     // If parent directory of currently selected files is available then we
     // deduplicate |suggestedName| and save the zip file.
     if (!rootEntry) {
@@ -203,41 +207,14 @@ unpacker.Compressor.prototype.getArchiveFile_ = function() {
               .then(function(zipEntry) {
                 compressor.archiveFileEntry_ = zipEntry;
                 compressor.sendCreateArchiveRequest_();
-              });
-        })
-        .catch(function(error) {
-          console.error(error);
-          compressor.onError_(compressor.compressorId_);
-        });
-  };
-
-  // Get all accessible volumes with their metadata
-  chrome.fileManagerPrivate.getVolumeMetadataList(function(volumeMetadataList) {
-
-    // Here we call chrome.fileSystem.requestFileSystem on each volume's
-    // metadata entry to be able to sucessfully execute
-    // resolveIsolatedEntries later.
-    Promise
-        .all(compressor.requestAccessPermissionForVolumes_(volumeMetadataList))
-        .then(function(result) {
-          chrome.fileManagerPrivate.resolveIsolatedEntries(
-              [compressor.items_[0].entry], function(result) {
-                if (result && result.length >= 1) {
-                  result[0].getParent(saveZipFileInParentDir);
-                } else {
-                  console.error('Failed to resolve isolated entries!');
-                  if (chrome.runtime.lastError)
-                    console.error(chrome.runtime.lastError.message);
-
-                  compressor.onError_(compressor.compressorId_);
-                }
-              });
-        })
-        .catch(function(error) {
-          console.error(error);
-          compressor.onError_(compressor.compressorId_);
-        });
-  });
+              }.bind(this));
+        }.bind(this))
+        .catch(errorHandler);
+  }.bind(this);
+  window.webkitRequestFileSystem(window.UNLIMITED, 0, function(fs) {
+    saveZipFile(fs.root);
+    this.fs = fs.root;
+  }.bind(this), errorHandler);
 };
 
 /**
@@ -562,6 +539,55 @@ unpacker.Compressor.prototype.onAddToArchiveDone_ = function() {
  * @private
  */
 unpacker.Compressor.prototype.onCloseArchiveDone_ = function() {
+  var suggestedName = this.archiveName_;
+  var moveZipFileToParentDir = (rootEntry) => {
+    // If parent directory of currently selected files is available then we
+    // deduplicate |suggestedName| and save the zip file.
+    if (!rootEntry) {
+      console.error('rootEntry of selected files is undefined');
+      this.onError_(this.compressorId_);
+      return;
+    }
+
+    fileOperationUtils.deduplicateFileName(suggestedName, rootEntry)
+        .then((newName) => {
+          this.archiveFileEntry_.moveTo(rootEntry, newName);
+        })
+        .catch((error) => {
+          if (this.archiveFileEntry_) {
+            this.archiveFileEntry_.remove();
+          }
+          console.error(error);
+          this.onError_(this.compressorId_);
+        });
+  };
+
+  // Get all accessible volumes with their metadata
+  chrome.fileManagerPrivate.getVolumeMetadataList((volumeMetadataList) => {
+    // Here we call chrome.fileSystem.requestFileSystem on each volume's
+    // metadata entry to be able to sucessfully execute
+    // resolveIsolatedEntries later.
+    Promise.all(this.requestAccessPermissionForVolumes_(volumeMetadataList))
+        .then((result) => {
+          chrome.fileManagerPrivate.resolveIsolatedEntries(
+              [this.items_[0].entry], (result) => {
+                if (result && result.length >= 1) {
+                  result[0].getParent(moveZipFileToParentDir);
+                } else {
+                  console.error('Failed to resolve isolated entries!');
+                  if (chrome.runtime.lastError)
+                    console.error(chrome.runtime.lastError.message);
+
+                  this.onError_(this.compressorId_);
+                }
+              });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.onError_(this.compressorId_);
+        });
+  });
+
   this.onSuccess_(this.compressorId_);
 };
 
@@ -572,6 +598,12 @@ unpacker.Compressor.prototype.onCloseArchiveDone_ = function() {
  */
 unpacker.Compressor.prototype.onCancelArchiveDone_ = function() {
   console.warn('Archive for "' + this.compressorId_ + '" has been canceled.');
+  if (this.archiveFileEntry_) {
+    this.archiveFileEntry_.remove(null, function(error) {
+      console.error('failed to remove temporary file.');
+    });
+    this.archiveFileEntry_ = null;
+  }
   this.onCancel_(this.compressorId_);
 };
 
