@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be23c2a_8d25a6af",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "I think high-level explanations are needed. Proposal (please edit):\n\n// Zucchini-gen performs semantics-aware matching:\n// - Same-typed reference target in \"old\" and \"new\" can be matched into pairs. Targets in each pair are assigned an identifier called \"label\" (for unmatched targets, label \u003d 0).\n// - EncodedView maps each offset in \"old\" and \"new\" images to an \"encoded value\", which can be:\n//   - Raw byte value (0-255) for non-references.\n//   - Reference \"projection value\" (\u003e 256) that encodes target {type, label} at each reference\u0027s location (byte 0).\n//   - Reference padding value (256) at the body of each reference (byte 1+).\n// - The encoded values for \"old\" and \"new\" are used to build the equivalence map.",
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66300a33_833b7572",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: iterators",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411fdfd4_2563848b",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: become",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bdfb22_17cf57fc",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: I think Encode() is a more appropriate name. I suppose \"Project\" was chosen because 2D data becomes 1D scalar, but I\u0027d think \"Project\" also implies data loss. Though this change will also require updating comments all over: (\"project\", \"projection\") --\u003e (\"encode\", \"encoding\"). If you really want to keep  \"Project\" though I\u0027m fine with that.",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 23
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509ac234_f96fb1d4",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: each?",
+      "range": {
+        "startLine": 31,
+        "startChar": 41,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a243db_04d88ef7",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "This is likely covered by the above statements?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52079b3_7a0c6467",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "Redundant?",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bc600f_757b9887",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: require",
+      "range": {
+        "startLine": 75,
+        "startChar": 57,
+        "endLine": 75,
+        "endChar": 65
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffeedfb_fb408c44",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "f",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9b0dcc_83032c2c",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: offset",
+      "range": {
+        "startLine": 57,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 43
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d0bfc4_6dacd1e8",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "(Repeating previous comment) Would it be appropriate to make this inherit from ReferenceTypeTraits?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6a06f1_b3f9771d",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "NIT: Swap these two to follow order of underlying variables.\n\nAlso, if these are exposed only for testing, add comment (like in target_pool.h)?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3870a0f_d16b2de3",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "// For simplicity, |target_pool_| has no type info (not needed here).",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f733e4a0_ff78ba97",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-27T16:24:39Z",
+      "side": 1,
+      "message": "If operator\u003d() is also unavailable, may as well replace this with:\n\n#include \"base/macros.h\"\n\n...\n\nDISALLOW_COPY_AND_ASSIGN(TargetPool);\n\n?",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
