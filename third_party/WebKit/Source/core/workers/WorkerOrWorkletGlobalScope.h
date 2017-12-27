@@ -60,9 +60,6 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public EventTargetWithInlineData,
   // SecurityContext
   void DidUpdateSecurityOrigin() final {}
 
-  // Evaluates the given main script as a classic script (as opposed to a module
-  // script).
-  // https://html.spec.whatwg.org/multipage/webappapis.html#classic-script
   virtual void EvaluateClassicScript(
       const KURL& script_url,
       String source_code,
