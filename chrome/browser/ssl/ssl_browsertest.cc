@@ -84,8 +84,8 @@
 #include "components/security_interstitials/content/security_interstitial_controller_client.h"
 #include "components/security_interstitials/core/controller_client.h"
 #include "components/security_interstitials/core/metrics_helper.h"
+#include "components/security_state/core/features.h"
 #include "components/security_state/core/security_state.h"
-#include "components/security_state/core/switches.h"
 #include "components/ssl_config/ssl_config_prefs.h"
 #include "components/ssl_errors/error_classification.h"
 #include "components/strings/grit/components_strings.h"
@@ -1934,10 +1934,11 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, TestWSSInvalidCert) {
 // Ensure that non-standard origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, MarkFileAsNonSecure) {
-  base::test::ScopedCommandLine scoped_command_line;
-  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-      security_state::switches::kMarkHttpAs,
-      security_state::switches::kMarkHttpAsDangerous);
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::kMarkHttpAsParameterDangerous}});
 
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1956,10 +1957,11 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, MarkFileAsNonSecure) {
 // Ensure that about-protocol origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, MarkAboutAsNonSecure) {
-  base::test::ScopedCommandLine scoped_command_line;
-  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-      security_state::switches::kMarkHttpAs,
-      security_state::switches::kMarkHttpAsDangerous);
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::kMarkHttpAsParameterDangerous}});
 
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
@@ -1994,10 +1996,11 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, MarkDataAsNonSecure) {
 // Ensure that HTTP-protocol origins are marked as Dangerous when the
 // MarkNonSecureAs Dangerous flag is enabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, MarkHTTPAsDangerous) {
-  base::test::ScopedCommandLine scoped_command_line;
-  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-      security_state::switches::kMarkHttpAs,
-      security_state::switches::kMarkHttpAsDangerous);
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::kMarkHttpAsParameterDangerous}});
 
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -2019,10 +2022,11 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, MarkHTTPAsDangerous) {
 // Ensure that blob-protocol origins are marked as neutral when the
 // MarkNonSecureAs Dangerous flag is enabled.
 IN_PROC_BROWSER_TEST_P(SSLUITest, MarkBlobAsNonSecure) {
-  base::test::ScopedCommandLine scoped_command_line;
-  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
-      security_state::switches::kMarkHttpAs,
-      security_state::switches::kMarkHttpAsDangerous);
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      security_state::features::kMarkHttpAsFeature,
+      {{security_state::features::kMarkHttpAsFeatureParameterName,
+        security_state::features::kMarkHttpAsParameterDangerous}});
 
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
