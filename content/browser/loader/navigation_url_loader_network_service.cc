@@ -233,11 +233,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         base::Unretained(service_worker_navigation_handle_core),
         base::Unretained(appcache_handle_core));
 
+    ResourceRequest resource_request;
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         std::move(create_url_loader),
         std::vector<std::unique_ptr<content::URLLoaderThrottle>>(),
         /* routing_id = */ -1,
-        ResourceRequest(),  // not used
+        &resource_request,
         /* client = */ this, kNavigationUrlLoaderTrafficAnnotation,
         base::ThreadTaskRunnerHandle::Get());
   }
@@ -274,7 +275,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
           0 /* routing_id */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
-          *resource_request_, this, kNavigationUrlLoaderTrafficAnnotation,
+          resource_request_.get(), this, kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
       return;
     }
@@ -341,7 +342,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           std::move(start_loader_callback),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
-          frame_tree_node_id_, *resource_request_, this,
+          frame_tree_node_id_, resource_request_.get(), this,
           kNavigationUrlLoaderTrafficAnnotation,
           base::ThreadTaskRunnerHandle::Get());
 
@@ -416,8 +417,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         factory,
         GetContentClient()->browser()->CreateURLLoaderThrottles(
             web_contents_getter_),
-        frame_tree_node_id_, 0 /* request_id? */, options, *resource_request_,
-        this, kNavigationUrlLoaderTrafficAnnotation,
+        frame_tree_node_id_, 0 /* request_id? */, options,
+        resource_request_.get(), this, kNavigationUrlLoaderTrafficAnnotation,
         base::ThreadTaskRunnerHandle::Get());
   }
 

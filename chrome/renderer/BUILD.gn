@@ -85,6 +85,8 @@ static_library("renderer") {
     "prerender/prerender_extra_data.h",
     "prerender/prerender_helper.cc",
     "prerender/prerender_helper.h",
+    "prerender/prerender_url_loader_throttle.cc",
+    "prerender/prerender_url_loader_throttle.h",
     "prerender/prerenderer_client.cc",
     "prerender/prerenderer_client.h",
     "sandbox_status_extension_android.cc",

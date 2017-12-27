@@ -19,7 +19,7 @@ void URLLoaderThrottle::DetachFromCurrentSequence() {
   NOTREACHED();
 }
 
-void URLLoaderThrottle::WillStartRequest(const ResourceRequest& request,
+void URLLoaderThrottle::WillStartRequest(ResourceRequest* request,
                                          bool* defer) {}
 
 void URLLoaderThrottle::WillRedirectRequest(

@@ -447,7 +447,7 @@ int ResourceDispatcher::StartAsync(
   std::unique_ptr<ThrottlingURLLoader> url_loader =
       ThrottlingURLLoader::CreateLoaderAndStart(
           url_loader_factory, std::move(throttles), routing_id, request_id,
-          options, *request, client.get(), traffic_annotation,
+          options, request.get(), client.get(), traffic_annotation,
           std::move(task_runner));
   pending_requests_[request_id]->url_loader = std::move(url_loader);
   pending_requests_[request_id]->url_loader_client = std::move(client);

@@ -483,7 +483,6 @@ IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, Prefetch302Redirect) {
 // Checks that the load flags are set correctly for all resources in a 301
 // redirect chain.
 IN_PROC_BROWSER_TEST_P(NoStatePrefetchBrowserTest, Prefetch301LoadFlags) {
-  // TODO(jam): override frame URLLoaderFactory.
   std::string redirect_path =
       "/server-redirect/?" + net::EscapeQueryParamValue(kPrefetchPage, false);
   GURL redirect_url = src_server()->GetURL(redirect_path);

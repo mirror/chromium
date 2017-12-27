@@ -59,6 +59,7 @@
 #include "chrome/renderer/plugins/plugin_uma.h"
 #include "chrome/renderer/prerender/prerender_dispatcher.h"
 #include "chrome/renderer/prerender/prerender_helper.h"
+#include "chrome/renderer/prerender/prerender_url_loader_throttle.h"
 #include "chrome/renderer/prerender/prerenderer_client.h"
 #include "chrome/renderer/safe_browsing/phishing_classifier_delegate.h"
 #include "chrome/renderer/tts_dispatcher.h"
@@ -1310,6 +1311,15 @@ bool ChromeContentRendererClient::WillSendRequest(
     throttles->push_back(
         base::MakeUnique<safe_browsing::RendererURLLoaderThrottle>(
             safe_browsing_.get(), render_frame_id));
+
+
+
+// TODO JAM CHECK THAT needt his check, insetad of only full prerender
+    if (prerender::PrerenderHelper::IsPrerendering(render_frame)) {
+      throttles->push_back(
+          base::MakeUnique<prerender::PrerendererURLLoaderThrottle>(
+              render_frame_id));
+    }
   }
 
 // Check whether the request should be allowed. If not allowed, we reset the
