@@ -16,6 +16,24 @@
       "revId": "8f5089f507a816aefb3dcfa94ff4e7102856cd29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9db242d_7c1bd385",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-27T20:48:03Z",
+      "side": 1,
+      "message": "I think that would require that we somehow reset this Optional variable when there is no probe in flight or when the probe finishes, which seems unnecessary?",
+      "parentUuid": "1328927c_6bea5130",
+      "revId": "8f5089f507a816aefb3dcfa94ff4e7102856cd29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
