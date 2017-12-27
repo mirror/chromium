@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/views/intent_picker_bubble_view.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
@@ -21,6 +23,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/animation/ink_drop_host_view.h"
+#include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/button/image_button.h"
@@ -28,6 +31,7 @@
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
+#include "ui/views/painter.h"
 #include "ui/views/window/dialog_client_view.h"
 
 namespace {
@@ -75,8 +79,10 @@ class IntentPickerLabelButton : public views::LabelButton {
                     base::UTF8ToUTF16(base::StringPiece(activity_name))),
         package_name_(package_name) {
     SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    SetFocusBehavior(FocusBehavior::ALWAYS);
     SetMinSize(gfx::Size(kMaxWidth, kRowHeight));
     SetInkDropMode(InkDropMode::ON);
+    SetFocusPainter(nullptr);
     if (!icon->IsEmpty())
       SetImage(views::ImageButton::STATE_NORMAL, *icon->ToImageSkia());
     SetBorder(views::CreateEmptyBorder(8, 16, 8, 0));
@@ -96,6 +102,14 @@ class IntentPickerLabelButton : public views::LabelButton {
 
   views::InkDropState GetTargetInkDropState() {
     return GetInkDrop()->GetTargetInkDropState();
+  }
+
+  // LabelButton:
+  std::unique_ptr<views::InkDrop> CreateInkDrop() override {
+    std::unique_ptr<views::InkDropImpl> ink_drop =
+        CreateDefaultFloodFillInkDropImpl();
+    ink_drop->SetShowHighlightOnFocus(true);
+    return std::move(ink_drop);
   }
 
  private:
@@ -149,10 +163,8 @@ views::Widget* IntentPickerBubbleView::ShowBubble(
   views::Widget* widget =
       views::BubbleDialogDelegateView::CreateBubble(intent_picker_bubble_);
   intent_picker_bubble_->GetDialogClientView()->Layout();
-  intent_picker_bubble_->SetFocusBehavior(View::FocusBehavior::ALWAYS);
-  intent_picker_bubble_->GetIntentPickerLabelButtonAt(0)->MarkAsSelected(
-      nullptr);
   widget->Show();
+  intent_picker_bubble_->GetIntentPickerLabelButtonAt(0)->RequestFocus();
   return widget;
 }
 
@@ -239,6 +251,7 @@ void IntentPickerBubbleView::Init() {
     app_info_.erase(app_info_.begin() + to_erase);
 
   scroll_view_ = new views::ScrollView();
+  scroll_view_->SetFocusBehavior(FocusBehavior::NEVER);
   scroll_view_->SetBackgroundColor(SK_ColorWHITE);
   scroll_view_->SetContents(scrollable_view);
   // This part gives the scroll a fixed width and height. The height depends on
@@ -328,7 +341,6 @@ void IntentPickerBubbleView::OnWidgetDestroying(views::Widget* widget) {
 void IntentPickerBubbleView::ButtonPressed(views::Button* sender,
                                            const ui::Event& event) {
   SetSelectedAppIndex(sender->tag(), &event);
-  RequestFocus();
 }
 
 void IntentPickerBubbleView::ArrowButtonPressed(int index) {
@@ -407,10 +419,12 @@ void IntentPickerBubbleView::SetSelectedAppIndex(int index,
                                                  const ui::Event* event) {
   // The selected app must be a value in the range [0, app_info_.size()-1].
   DCHECK_LT(static_cast<size_t>(index), app_info_.size());
+  if (static_cast<size_t>(index) == selected_app_tag_)
+    return;
 
   GetIntentPickerLabelButtonAt(selected_app_tag_)->MarkAsUnselected(nullptr);
   selected_app_tag_ = index;
-  GetIntentPickerLabelButtonAt(selected_app_tag_)->MarkAsSelected(event);
+  GetIntentPickerLabelButtonAt(selected_app_tag_)->RequestFocus();
 }
 
 size_t IntentPickerBubbleView::CalculateNextAppIndex(int delta) {
