@@ -167,7 +167,7 @@ id<GREYAction> ScrollDown() {
       performAction:grey_tap()];
   [[EarlGrey selectElementWithMatcher:AccountConsistencySetupSigninButton()]
       performAction:grey_tap()];
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+  //  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 }
 
 + (void)confirmSigninConfirmationDialog {
@@ -177,6 +177,7 @@ id<GREYAction> ScrollDown() {
   // Cannot directly scroll on |kSignInConfirmationCollectionViewId| because it
   // is a MDC collection view, not a UICollectionView, so itself is not
   // scrollable.
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
   id<GREYMatcher> signinUICollectionViewMatcher = grey_allOf(
       grey_ancestor(grey_accessibilityID(kSigninConfirmationCollectionViewId)),
       grey_kindOfClass([UICollectionView class]), nil);
