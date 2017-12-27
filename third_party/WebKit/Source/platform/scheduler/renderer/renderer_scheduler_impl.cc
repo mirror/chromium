@@ -7,6 +7,7 @@
 #include <memory>
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
+#include "base/environment.h"
 #include "base/logging.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram.h"
@@ -127,6 +128,7 @@ RendererSchedulerImpl::RendererSchedulerImpl(
               MainThreadTaskQueue::QueueType::kIdle))),
       idle_canceled_delayed_task_sweeper_(&helper_,
                                           idle_helper_.IdleTaskRunner()),
+      is_headless_(base::Environment::Create()->HasVar("CHROME_HEADLESS")),
       render_widget_scheduler_signals_(this),
       control_task_queue_(helper_.ControlMainThreadTaskQueue()),
       compositor_task_queue_(
@@ -1351,9 +1353,9 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   if (main_thread_only().pause_timers_for_webview) {
     new_policy.timer_queue_policy().is_paused = true;
   }
-
   if (main_thread_only().renderer_backgrounded &&
-      RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled()) {
+      RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled() &&
+      !is_headless_) {
     new_policy.timer_queue_policy().is_throttled = true;
   }
 
