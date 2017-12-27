@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72b0dbc_4547ca67",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_subclasses.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-27T23:22:50Z",
+      "side": 1,
+      "message": "Should probably rename this now that it\u0027s no longer just a header writer now?",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55743da_d9d9c34f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_subclasses.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-27T23:22:50Z",
+      "side": 1,
+      "message": "nits: Feel free to ignore, kinda pedantic. I think this function could be simplified alot if we just used `yield` instead of appending to a list e.g.\n\n    if property_[\u0027runtime_flag\u0027]:\n        yield \"platform/runtime_enabled_features.h\"\n\n    if property_[\u0027converter\u0027] \u003d\u003d \"CSSPrimitiveValue\":\n        yield from [\"core/css/CSSPrimitiveValue.h\", \"core/css/CSSPrimitiveValueMappings.h\"]\n\nor something. But you\u0027ll need to split this function into h_includes and cpp_includes. For extra icing, we don\u0027t need to stuff \u0027h_includes\u0027 and \u0027cpp_includes\u0027 into property_, they can be extra variables passed to the templates. This way, you won\u0027t have h_includes polluting the .cpp file and vice versa.",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fc8a20_9fc0e9b3",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-27T23:22:50Z",
+      "side": 1,
+      "message": "Do you need to rename these to *Custom.cpp too?",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
