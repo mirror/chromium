@@ -54,6 +54,7 @@ AutoConnectHandler::AutoConnectHandler()
       client_certs_resolved_(false),
       applied_autoconnect_policy_(false),
       connect_to_best_services_after_scan_(false),
+      request_best_connection_triggered_by_policy_(false),
       weak_ptr_factory_(this) {
 }
 
@@ -137,6 +138,7 @@ void AutoConnectHandler::PoliciesApplied(const std::string& userhash) {
   DCHECK(managed_networks);
   if (!managed_networks->empty()) {
     NET_LOG_DEBUG("RequestBestConnection", "Policy applied");
+    request_best_connection_triggered_by_policy_ = true;
     RequestBestConnection();
   } else {
     CheckBestConnection();
@@ -164,10 +166,24 @@ void AutoConnectHandler::ResolveRequestCompleted(
   if (network_properties_changed) {
     NET_LOG_DEBUG("RequestBestConnection",
                   "Client certificate patterns resolved");
+    request_best_connection_triggered_by_policy_ = true;
     RequestBestConnection();
   } else {
     CheckBestConnection();
   }
+}
+
+void AutoConnectHandler::AddObserver(Observer* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void AutoConnectHandler::RemoveObserver(Observer* observer) {
+  observer_list_.RemoveObserver(observer);
+}
+
+void AutoConnectHandler::NotifyAutoConnectedToNetwork() {
+  for (auto& observer : observer_list_)
+    observer.OnAutoConnectedToNetwork();
 }
 
 void AutoConnectHandler::RequestBestConnection() {
@@ -273,13 +289,20 @@ void AutoConnectHandler::DisconnectFromUnmanagedSharedWiFiNetworks() {
   }
 }
 
-void AutoConnectHandler::CallShillConnectToBestServices() const {
+void AutoConnectHandler::CallShillConnectToBestServices() {
   NET_LOG_EVENT("ConnectToBestServices", "");
+
+  // If ConnectToBestServices() is being invoked as a result of a policy being
+  // applied, notify observers that an auto-connection occurred.
+  base::Closure callback = request_best_connection_triggered_by_policy_ ?
+      base::Bind(&AutoConnectHandler::NotifyAutoConnectedToNetwork,
+                 weak_ptr_factory_.GetWeakPtr()) :
+      base::Bind(&base::DoNothing);
+
   DBusThreadManager::Get()->GetShillManagerClient()->ConnectToBestServices(
-      base::Bind(&base::DoNothing),
-      base::Bind(&network_handler::ShillErrorCallbackFunction,
-                 "ConnectToBestServices Failed",
-                 "", network_handler::ErrorCallback()));
+      callback, base::Bind(&network_handler::ShillErrorCallbackFunction,
+                           "ConnectToBestServices Failed", "",
+                           network_handler::ErrorCallback()));
 }
 
 }  // namespace chromeos
