@@ -18,11 +18,18 @@
 
 namespace chromeos {
 
+enum FakeSessionManagerOptions {
+  NONE = 0,
+  EMIT_OBSERVERS = 1 << 0,
+  USE_HOST_POLICY = 1 << 1,
+};
+
 // A fake implementation of session_manager. Accepts policy blobs to be set and
 // returns them unmodified.
 class FakeSessionManagerClient : public SessionManagerClient {
  public:
   FakeSessionManagerClient();
+  explicit FakeSessionManagerClient(FakeSessionManagerOptions options);
   ~FakeSessionManagerClient() override;
 
   // SessionManagerClient overrides
@@ -176,6 +183,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   int request_lock_screen_call_count_;
   int notify_lock_screen_shown_call_count_;
   int notify_lock_screen_dismissed_call_count_;
+  bool screen_is_locked_;
 
   bool arc_available_;
   base::TimeTicks arc_start_time_;
@@ -183,6 +191,11 @@ class FakeSessionManagerClient : public SessionManagerClient {
   bool low_disk_ = false;
   // Pseudo running container id. If not running, empty.
   std::string container_instance_id_;
+
+  StubDelegate* delegate_;
+
+  // Options for FakeSessionManagerClient
+  FakeSessionManagerOptions options_;
 
   base::WeakPtrFactory<FakeSessionManagerClient> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(FakeSessionManagerClient);
