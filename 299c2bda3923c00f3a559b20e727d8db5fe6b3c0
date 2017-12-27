@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f3646b8_a7c50bcf",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2293,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-12-27T21:20:48Z",
+      "side": 1,
+      "message": "Could you elaborate what recycle means?\nWhat error occurs when it\u0027s a class member and set up in SetUp or the class constructor ?",
+      "range": {
+        "startLine": 2293,
+        "startChar": 22,
+        "endLine": 2293,
+        "endChar": 55
+      },
+      "revId": "299c2bda3923c00f3a559b20e727d8db5fe6b3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc33f2c_4405581d",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2340,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-12-27T21:20:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be called from TearDown ?",
+      "range": {
+        "startLine": 2340,
+        "startChar": 14,
+        "endLine": 2340,
+        "endChar": 20
+      },
+      "revId": "299c2bda3923c00f3a559b20e727d8db5fe6b3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
