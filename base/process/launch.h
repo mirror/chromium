@@ -24,7 +24,7 @@
 #if defined(OS_POSIX)
 #include "base/posix/file_descriptor_shuffle.h"
 #elif defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 #if defined(OS_FUCHSIA)

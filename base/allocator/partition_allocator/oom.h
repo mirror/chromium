@@ -8,7 +8,7 @@
 #include "base/logging.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 // Do not want trivial entry points just calling OOM_CRASH() to be

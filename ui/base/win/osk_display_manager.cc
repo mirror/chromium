@@ -144,7 +144,7 @@ bool OnScreenKeyboardDetector::DismissKeyboard() {
     keyboard_detect_requested_ = false;
     keyboard_dismiss_retry_count_ = 0;
     HandleKeyboardHidden();
-    PostMessage(osk, WM_SYSCOMMAND, SC_CLOSE, 0);
+    PostMessageW(osk, WM_SYSCOMMAND, SC_CLOSE, 0);
     return true;
   } else if (keyboard_detect_requested_) {
     if (keyboard_dismiss_retry_count_ < kDismissKeyboardMaxRetries) {

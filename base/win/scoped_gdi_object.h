@@ -5,7 +5,7 @@
 #ifndef BASE_WIN_SCOPED_GDI_OBJECT_H_
 #define BASE_WIN_SCOPED_GDI_OBJECT_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/scoped_generic.h"
 

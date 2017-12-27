@@ -8,7 +8,7 @@
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #elif defined(USE_X11)
 typedef union _XEvent XEvent;
 #elif defined(OS_MACOSX)
