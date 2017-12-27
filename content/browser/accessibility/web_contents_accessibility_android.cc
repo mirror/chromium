@@ -568,7 +568,7 @@ jint WebContentsAccessibilityAndroid::GetRootId(
     auto* root =
         static_cast<BrowserAccessibilityAndroid*>(root_manager_->GetRoot());
     if (root)
-      return static_cast<jint>(root->unique_id());
+      return static_cast<jint>(root->GetUniqueId());
   }
   return -1;
 }
@@ -645,13 +645,13 @@ jboolean WebContentsAccessibilityAndroid::PopulateAccessibilityNodeInfo(
     auto* android_node =
         static_cast<BrowserAccessibilityAndroid*>(node->PlatformGetParent());
     Java_WebContentsAccessibility_setAccessibilityNodeInfoParent(
-        env, obj, info, android_node->unique_id());
+        env, obj, info, android_node->GetUniqueId());
   }
   for (unsigned i = 0; i < node->PlatformChildCount(); ++i) {
     auto* android_node =
         static_cast<BrowserAccessibilityAndroid*>(node->PlatformGetChild(i));
     Java_WebContentsAccessibility_addAccessibilityNodeInfoChild(
-        env, obj, info, android_node->unique_id());
+        env, obj, info, android_node->GetUniqueId());
   }
   Java_WebContentsAccessibility_setAccessibilityNodeInfoBooleanAttributes(
       env, obj, info, unique_id, node->IsCheckable(), node->IsChecked(),
@@ -946,7 +946,7 @@ jint WebContentsAccessibilityAndroid::FindElementType(
 
   auto* android_node =
       static_cast<BrowserAccessibilityAndroid*>(tree_search.GetMatchAtIndex(0));
-  int32_t element_id = android_node->unique_id();
+  int32_t element_id = android_node->GetUniqueId();
 
   // Navigate forwards to the autofill popup's proxy node if focus is currently
   // on the element hosting the autofill popup. Once within the popup, a back
@@ -959,7 +959,7 @@ jint WebContentsAccessibilityAndroid::FindElementType(
     g_element_after_element_hosting_autofill_popup_unique_id = element_id;
     auto* android_node =
         static_cast<BrowserAccessibilityAndroid*>(g_autofill_popup_proxy_node);
-    return android_node->unique_id();
+    return android_node->GetUniqueId();
   }
 
   return element_id;
@@ -1078,7 +1078,7 @@ void WebContentsAccessibilityAndroid::OnAutofillPopupDisplayed(
 
   auto* android_node = static_cast<BrowserAccessibilityAndroid*>(current_focus);
 
-  g_element_hosting_autofill_popup_unique_id = android_node->unique_id();
+  g_element_hosting_autofill_popup_unique_id = android_node->GetUniqueId();
 }
 
 void WebContentsAccessibilityAndroid::OnAutofillPopupDismissed(
@@ -1109,7 +1109,7 @@ jboolean WebContentsAccessibilityAndroid::IsAutofillPopupNode(
   auto* android_node =
       static_cast<BrowserAccessibilityAndroid*>(g_autofill_popup_proxy_node);
 
-  return g_autofill_popup_proxy_node && android_node->unique_id() == unique_id;
+  return g_autofill_popup_proxy_node && android_node->GetIDs() == unique_id;
 }
 
 bool WebContentsAccessibilityAndroid::Scroll(JNIEnv* env,

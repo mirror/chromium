@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/views/view.h"
 #include "ui/views/views_export.h"
 
 namespace views {
