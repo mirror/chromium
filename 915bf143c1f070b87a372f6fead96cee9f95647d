@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "459e6a3b_3e6265ee",
+        "filename": "chrome/browser/extensions/api/chrome_extensions_api_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-27T17:55:26Z",
+      "side": 1,
+      "message": "nit: I\u0027d put this code to devtools_ui.cc instead and call it from here. Then all the code handling our custom scheme is in a single place.",
+      "revId": "915bf143c1f070b87a372f6fead96cee9f95647d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
