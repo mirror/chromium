@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7348fb12_fdc21353",
+        "filename": "third_party/WebKit/Source/modules/fetch/Request.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-12-27T08:43:59Z",
+      "side": 1,
+      "message": "1:1 matching between an empty host and the cannot-be-a-base-URL flag is not immediately clear from the spec, but I guess that predates this CL.",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 26
+      },
+      "revId": "850d6cf79892db5182583aad254330f5bcc12842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
