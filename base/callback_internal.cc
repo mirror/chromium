@@ -6,6 +6,8 @@
 
 #include "base/logging.h"
 
+#include "base/trace_event/memory_usage_estimator.h"
+
 namespace base {
 namespace internal {
 
@@ -60,6 +62,10 @@ void CallbackBase::Reset() {
 bool CallbackBase::IsCancelled() const {
   DCHECK(bind_state_);
   return bind_state_->IsCancelled();
+}
+
+size_t CallbackBase::EstimateMemoryUsage() const {
+  return base::trace_event::EstimateMemoryUsage(bind_state_);
 }
 
 bool CallbackBase::EqualsInternal(const CallbackBase& other) const {

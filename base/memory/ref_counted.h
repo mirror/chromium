@@ -26,6 +26,10 @@ class BASE_EXPORT RefCountedBase {
  public:
   bool HasOneRef() const { return ref_count_ == 1; }
 
+  int RefCount() const { return ref_count_; }
+
+  size_t EstimateMemoryUsage() const { return 0; }
+
  protected:
   explicit RefCountedBase(StartRefCountFromZeroTag) {
 #if DCHECK_IS_ON()
@@ -146,6 +150,10 @@ class BASE_EXPORT RefCountedBase {
 class BASE_EXPORT RefCountedThreadSafeBase {
  public:
   bool HasOneRef() const;
+
+  int RefCount() const { return ref_count_.SubtleRefCountForDebug(); }
+
+  size_t EstimateMemoryUsage() const { return 0; }
 
  protected:
   explicit RefCountedThreadSafeBase(StartRefCountFromZeroTag) {}

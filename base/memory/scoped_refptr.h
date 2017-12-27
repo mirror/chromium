@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 template <class T>
 class scoped_refptr;
@@ -238,6 +239,14 @@ class scoped_refptr {
   template <typename U>
   bool operator<(const scoped_refptr<U>& rhs) const {
     return ptr_ < rhs.get();
+  }
+
+  size_t EstimateMemoryUsage() const {
+    auto use_count = ptr_->RefCount();
+    if (use_count == 0)
+      return 0;
+    return (base::trace_event::EstimateMemoryUsage(*ptr_) + (use_count - 1)) /
+           use_count;
   }
 
  protected:

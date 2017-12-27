@@ -78,6 +78,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 namespace base {
 
@@ -119,6 +120,10 @@ class BASE_EXPORT WeakReference {
 
   bool is_valid() const;
 
+  size_t EstimateMemoryUsage() const {
+    return base::trace_event::EstimateMemoryUsage(flag_);
+  }
+
  private:
   scoped_refptr<const Flag> flag_;
 };
@@ -153,6 +158,10 @@ class BASE_EXPORT WeakPtrBase {
   WeakPtrBase(WeakPtrBase&& other) = default;
   WeakPtrBase& operator=(const WeakPtrBase& other) = default;
   WeakPtrBase& operator=(WeakPtrBase&& other) = default;
+
+  size_t EstimateMemoryUsage() const {
+    return base::trace_event::EstimateMemoryUsage(ref_);
+  }
 
  protected:
   WeakPtrBase(const WeakReference& ref, uintptr_t ptr);
