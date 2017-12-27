@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f842544c_5eaa9ccd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/TimelineOverviewPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-12-27T19:30:42Z",
+      "side": 1,
+      "message": "This will break the performance page.",
+      "revId": "5c88b3a57678bed5a00ca922ad8cb7f1143dd5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
