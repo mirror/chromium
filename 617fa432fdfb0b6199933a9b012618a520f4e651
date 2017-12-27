@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "acdcf78d_58a2daf1",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-27T21:30:40Z",
+      "side": 1,
+      "message": "nit: this is unneeded, since operator[] will automatically default-construct a value if it\u0027s not present, making L267 initialize it to 1 if it\u0027s absent.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 12
+      },
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6d70d20_94c395b9",
         "filename": "components/arc/common/accessibility_helper.mojom",
         "patchSetId": 3
