@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6d70d20_94c395b9",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-12-27T20:00:16Z",
+      "side": 1,
+      "message": "What does this mean? It would be useful to add more context here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
