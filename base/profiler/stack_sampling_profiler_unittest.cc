@@ -35,7 +35,7 @@
 #if defined(OS_WIN)
 #include <intrin.h>
 #include <malloc.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 #else
 #include <alloca.h>
 #endif

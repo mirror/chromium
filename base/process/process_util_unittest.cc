@@ -53,7 +53,7 @@
 #include <unistd.h>
 #endif
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 #if defined(OS_MACOSX)
 #include <mach/vm_param.h>

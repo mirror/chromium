@@ -4,7 +4,7 @@
 
 #include "ui/base/win/lock_state.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 namespace ui {
 

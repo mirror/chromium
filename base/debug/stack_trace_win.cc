@@ -4,7 +4,7 @@
 
 #include "base/debug/stack_trace.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <dbghelp.h>
 #include <stddef.h>
 

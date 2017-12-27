@@ -2,9 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <KnownFolders.h>
-#include <shlobj.h>
 
 #include "base/base_paths.h"
 #include "base/environment.h"

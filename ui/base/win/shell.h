@@ -5,7 +5,7 @@
 #ifndef UI_BASE_WIN_SHELL_H_
 #define UI_BASE_WIN_SHELL_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/strings/string16.h"
 #include "ui/base/ui_base_export.h"

@@ -16,7 +16,7 @@
 #include "ui/strings/grit/ui_strings.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 #if !defined(OS_WIN) && (defined(USE_AURA) || defined(OS_MACOSX))

@@ -4,7 +4,7 @@
 
 #include "base/profiler/win32_stack_frame_unwinder.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <utility>
 

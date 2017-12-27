@@ -4,7 +4,7 @@
 
 #include "base/file_version_info_win.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stddef.h>
 
 #include "base/files/file_path.h"

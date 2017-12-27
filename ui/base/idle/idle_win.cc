@@ -5,7 +5,7 @@
 #include "ui/base/idle/idle.h"
 
 #include <limits.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "ui/base/win/lock_state.h"
 

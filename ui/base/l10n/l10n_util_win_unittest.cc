@@ -4,7 +4,7 @@
 
 #include "ui/base/l10n/l10n_util_win.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/command_line.h"
 #include "base/win/win_util.h"

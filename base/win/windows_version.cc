@@ -4,7 +4,7 @@
 
 #include "base/win/windows_version.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <memory>
 

@@ -4,7 +4,7 @@
 
 #include "base/win/com_init_util.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <winternl.h>
 
 namespace base {

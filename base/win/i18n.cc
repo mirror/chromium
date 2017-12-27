@@ -4,7 +4,7 @@
 
 #include "base/win/i18n.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/logging.h"
 #include "base/macros.h"

@@ -7,7 +7,7 @@
 #include <fcntl.h>
 #include <io.h>
 #include <shellapi.h>
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <userenv.h>
 #include <psapi.h>
 

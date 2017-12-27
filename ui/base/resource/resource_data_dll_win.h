@@ -5,7 +5,7 @@
 #ifndef UI_BASE_RESOURCE_RESOURCE_DATA_DLL_WIN_H_
 #define UI_BASE_RESOURCE_RESOURCE_DATA_DLL_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stdint.h>
 
 #include "base/compiler_specific.h"

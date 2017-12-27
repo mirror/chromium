@@ -12,7 +12,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include "base/win/windows_version.h"
 // VersionHelpers.h must be included after windows.h.
 #include <VersionHelpers.h>

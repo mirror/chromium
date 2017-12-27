@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
+#include "base/win/windows_full.h"
 #include <VersionHelpers.h>
 #endif
 

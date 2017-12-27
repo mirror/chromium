@@ -4,7 +4,7 @@
 
 #include "base/threading/thread_local_storage.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/logging.h"
 

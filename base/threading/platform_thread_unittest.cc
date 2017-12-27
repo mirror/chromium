@@ -14,7 +14,7 @@
 #if defined(OS_POSIX)
 #include "base/threading/platform_thread_internal_posix.h"
 #elif defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 namespace base {

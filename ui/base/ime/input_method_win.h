@@ -5,7 +5,7 @@
 #ifndef UI_BASE_IME_INPUT_METHOD_WIN_H_
 #define UI_BASE_IME_INPUT_METHOD_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <string>
 

@@ -22,7 +22,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #elif defined(OS_MACOSX)
 #include <malloc/malloc.h>
 #include "base/allocator/allocator_interception_mac.h"

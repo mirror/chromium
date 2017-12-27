@@ -36,7 +36,7 @@
 #include "testing/platform_test.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <shellapi.h>
 #include <shlobj.h>
 #include <tchar.h>

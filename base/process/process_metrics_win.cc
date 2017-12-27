@@ -4,7 +4,7 @@
 
 #include "base/process/process_metrics.h"
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <psapi.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -18,7 +18,7 @@
 #include "base/sys_info.h"
 
 #if defined(OS_WIN)
-#include <windows.h>
+#include "base/win/windows_full.h"
 #endif
 
 namespace base {

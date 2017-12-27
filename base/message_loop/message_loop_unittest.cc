@@ -1858,12 +1858,12 @@ void PostMultipleTasks() {
 static const int kSignalMsg = WM_USER + 2;
 
 void PostWindowsMessage(HWND message_hwnd) {
-  PostMessage(message_hwnd, kSignalMsg, 0, 2);
+  PostMessageW(message_hwnd, kSignalMsg, 0, 2);
 }
 
 void EndTest(bool* did_run, HWND hwnd) {
   *did_run = true;
-  PostMessage(hwnd, WM_CLOSE, 0, 0);
+  PostMessageW(hwnd, WM_CLOSE, 0, 0);
 }
 
 int kMyMessageFilterCode = 0x5002;
@@ -1928,7 +1928,7 @@ TEST(MessageLoopTest, AlwaysHaveUserMessageWhenNesting) {
                                    HWND_MESSAGE, 0, instance, 0);
   ASSERT_TRUE(message_hwnd) << GetLastError();
 
-  ASSERT_TRUE(PostMessage(message_hwnd, kSignalMsg, 0, 1));
+  ASSERT_TRUE(PostMessageW(message_hwnd, kSignalMsg, 0, 1));
 
   RunLoop().Run();
 
