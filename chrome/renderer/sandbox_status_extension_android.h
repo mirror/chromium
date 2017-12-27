@@ -10,7 +10,9 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/values.h"
+#include "chrome/common/sandbox_status_extension_android.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "v8/include/v8.h"
 
 namespace gin {
@@ -22,14 +24,14 @@ class Arguments;
 // SandboxInternalsUI sends an IPC mesage blessing this RenderFrame.
 class SandboxStatusExtension
     : public base::RefCountedThreadSafe<SandboxStatusExtension>,
-      public content::RenderFrameObserver {
+      public content::RenderFrameObserver,
+      public chrome::mojom::SandboxStatusExtension {
  public:
   // Creates a new SandboxStatusExtension for the |frame|.
   static void Create(content::RenderFrame* frame);
 
   // content::RenderFrameObserver:
   void OnDestruct() override;
-  bool OnMessageReceived(const IPC::Message& message) override;
   void DidClearWindowObject() override;
 
  protected:
@@ -39,8 +41,11 @@ class SandboxStatusExtension
  private:
   explicit SandboxStatusExtension(content::RenderFrame* frame);
 
-  // IPC message handler.
-  void OnAddSandboxStatusExtension();
+  // chrome::mojom::SandboxStatusExtension
+  void AddSandboxStatusExtension() override;
+
+  void OnSandboxStatusExtensionRequest(
+      chrome::mojom::SandboxStatusExtensionAssociatedRequest request);
 
   // Installs the JavaScript function into the scripting context, if
   // should_install_ is true.
@@ -61,6 +66,8 @@ class SandboxStatusExtension
 
   // Set to true by OnAddSandboxStatusExtension().
   bool should_install_ = false;
+
+  mojo::AssociatedBinding<chrome::mojom::SandboxStatusExtension> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(SandboxStatusExtension);
 };
