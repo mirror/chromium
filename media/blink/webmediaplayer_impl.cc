@@ -41,6 +41,7 @@
 #include "media/base/text_renderer.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
+#include "media/blink/resource_scheduler_metrics.h"
 #include "media/blink/texttrack_impl.h"
 #include "media/blink/video_decode_stats_reporter.h"
 #include "media/blink/watch_time_reporter.h"
@@ -249,6 +250,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   DCHECK(client_);
   DCHECK(delegate_);
 
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerCreated(this, client_);
+
   if (surface_layer_for_video_enabled_)
     bridge_ = params->create_bridge_callback().Run(this);
 
@@ -258,6 +261,20 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
                               base::Unretained(compositor_.get()),
                               bridge_->GetFrameSinkId()));
   }
+
+  // Notify the compositor that we'd like to be notified when the first frame is
+  // drawn.  Setting the callback with Unretained is safe, because we post
+  // destruction of the compositor there as well.  The callback might happen
+  // after we're destroyed, but that's okay.
+  vfc_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &VideoFrameCompositor::SetFirstFrameCallback,
+          base::Unretained(compositor_.get()),
+          BindToCurrentLoop(base::BindOnce(
+              &ResourceSchedulerMetrics::OnFirstFrameDrawn,
+              base::Unretained(ResourceSchedulerMetrics::GetInstance()),
+              this))));
 
   // If we're supposed to force video overlays, then make sure that they're
   // enabled all the time.
@@ -301,6 +318,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
 WebMediaPlayerImpl::~WebMediaPlayerImpl() {
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerDestroyed(this);
 
   if (set_cdm_result_) {
     DVLOG(2) << "Resolve pending SetCdm() when media player is destroyed.";
@@ -560,6 +579,8 @@ void WebMediaPlayerImpl::Play() {
   // User initiated play unlocks background video playback.
   if (blink::WebUserGestureIndicator::IsProcessingUserGesture(frame_))
     video_locked_when_paused_when_hidden_ = false;
+
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerPlayed(this);
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   if (IsRemote()) {
