@@ -184,7 +184,8 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       canceled_by_devtools_(false),
       previews_state_(previews_state),
       body_(body),
-      initiated_in_secure_context_(initiated_in_secure_context) {}
+      initiated_in_secure_context_(initiated_in_secure_context),
+      blocked_cross_site_document_(false) {}
 
 ResourceRequestInfoImpl::~ResourceRequestInfoImpl() {
 }
