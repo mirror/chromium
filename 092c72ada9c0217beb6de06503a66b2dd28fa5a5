@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e048ed5a_4259ffa4",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-27T15:58:29Z",
+      "side": 1,
+      "message": "I think you can use a regular string instead of a regexp since:\n1. all special characters are quoted,\n2. you check the pattern in the whole file.\n\nI would do the following:\n\n  ARC_COMPILE_GUARD \u003d \u0027\u0027\u0027\\\n  #if !defined(__has_feature) || !__has_feature(objc_arc)\n  #error \"This file requires ARC support.\"\n  #endif\n  \u0027\u0027\u0027\n\nThen the check would become:\n\n  with open(f.AbsoluteLocalPath()) as srcfile:\n    if ARC_COMPILE_GUARD not in srcfile.read():\n       files_without_headers.append(f.LocalPath())",
+      "revId": "092c72ada9c0217beb6de06503a66b2dd28fa5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff3b72e_952b8c99",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-27T15:58:29Z",
+      "side": 1,
+      "message": "Can you add a unittest to PRESUBMIT_test.py?",
+      "revId": "092c72ada9c0217beb6de06503a66b2dd28fa5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51529750_16d7a6d0",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-27T15:58:29Z",
+      "side": 1,
+      "message": "I think we can also check the .m files:\n\n  _, ext \u003d os.path.splitext(f.LocalPath())\n  if ext not in (\u0027.m\u0027, \u0027.mm\u0027):\n    continue",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "092c72ada9c0217beb6de06503a66b2dd28fa5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f750db9_95b6186c",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-27T15:58:29Z",
+      "side": 1,
+      "message": "Please re-use the constant above:\n\n  error_message \u003d \u0027\\n\u0027.join([\n    \u0027Found new Objective-C implementation file%(plural)s without compile \u0027\n    \u0027guard%(plural)s. Please use the following compile guard:\u0027,\n    ARC_COMPILE_GUARD,\n    \u0027\u0027,\n  ] + files_without_headers + [\u0027\u0027]) % {\u0027plural\u0027: plural_suffix}",
+      "revId": "092c72ada9c0217beb6de06503a66b2dd28fa5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
