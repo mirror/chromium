@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e879e5b4_26a1ac85",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be23c2a_8d25a6af",
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66300a33_833b7572",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 26
@@ -39,6 +57,30 @@
       "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e87f725_a56fd930",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66300a33_833b7572",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "af8b834b_bc5f0939",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411fdfd4_2563848b",
+      "range": {
+        "startLine": 27,
+        "startChar": 40,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45bdfb22_17cf57fc",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 26
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-27T16:24:39Z",
       "side": 1,
       "message": "NIT: I think Encode() is a more appropriate name. I suppose \"Project\" was chosen because 2D data becomes 1D scalar, but I\u0027d think \"Project\" also implies data loss. Though this change will also require updating comments all over: (\"project\", \"projection\") --\u003e (\"encode\", \"encoding\"). If you really want to keep  \"Project\" though I\u0027m fine with that.",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 23
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366dac94_0d9bde1b",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "I prefer Projection to Encoding because:\n- Encode() suggest there is a Decode() operation, which is not the case. In fact, Project() does not need to be a reversible operation.\n- Different implementations of Projection() with data loss are valid, and might bring benefits (reduced memory usage, simplifies suffix array construction).\n\nMore formally, for a valid Projection implementation proj(x) with x a token:\nx \u003d y implies proj(x) \u003d proj(y)\nproj(x) \u003d proj(y) implies x \u003d y with high probability",
+      "parentUuid": "45bdfb22_17cf57fc",
       "range": {
         "startLine": 126,
         "startChar": 13,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "80dca3ec_15fe92c1",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509ac234_f96fb1d4",
+      "range": {
+        "startLine": 31,
+        "startChar": 41,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9a243db_04d88ef7",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 26
@@ -131,6 +245,30 @@
       "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed74494_06b40385",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a243db_04d88ef7",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "ac9343f7_07a28451",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Also, marking is removed in this CL.",
+      "parentUuid": "d52079b3_7a0c6467",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82bc600f_757b9887",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 26
@@ -177,6 +339,30 @@
       "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7d7ffa_824e1c06",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82bc600f_757b9887",
+      "range": {
+        "startLine": 75,
+        "startChar": 57,
+        "endLine": 75,
+        "endChar": 65
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "a7b0a89c_c617981b",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ffeedfb_fb408c44",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af9b0dcc_83032c2c",
         "filename": "chrome/installer/zucchini/reference_set.cc",
         "patchSetId": 26
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "6e1ed533_37d9b79e",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af9b0dcc_83032c2c",
+      "range": {
+        "startLine": 57,
+        "startChar": 42,
+        "endLine": 57,
+        "endChar": 43
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4d0bfc4_6dacd1e8",
         "filename": "chrome/installer/zucchini/reference_set.h",
         "patchSetId": 26
@@ -237,6 +471,30 @@
       "writtenOn": "2017-12-27T16:24:39Z",
       "side": 1,
       "message": "(Repeating previous comment) Would it be appropriate to make this inherit from ReferenceTypeTraits?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2520ead8_f9be3c1e",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Sorry, I skip this comment in original patch.\nI think it\u0027s simpler to stick with composition, since Inheritance would be used as an implementation detail here.",
+      "parentUuid": "d4d0bfc4_6dacd1e8",
       "range": {
         "startLine": 19,
         "startChar": 6,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "72e4d5a3_effc4587",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done\nThey are used in normal cases as well, especially target_pool().",
+      "parentUuid": "7a6a06f1_b3f9771d",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3870a0f_d16b2de3",
         "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
         "patchSetId": 26
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "91e6dc6e_674d4d97",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3870a0f_d16b2de3",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f733e4a0_ff78ba97",
         "filename": "chrome/installer/zucchini/target_pool.h",
         "patchSetId": 26
@@ -306,6 +612,30 @@
       "writtenOn": "2017-12-27T16:24:39Z",
       "side": 1,
       "message": "If operator\u003d() is also unavailable, may as well replace this with:\n\n#include \"base/macros.h\"\n\n...\n\nDISALLOW_COPY_AND_ASSIGN(TargetPool);\n\n?",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cb6d9a_9db553a0",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T20:07:04Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN would delete move constructor, which is used, though.\nThis is a common pattern (used also in ImageIndex and ReferenceSet) to get default move constructor and deleted copy constructor and assignments.\nI\u0027m changing the order of constructor to be consistent.",
+      "parentUuid": "f733e4a0_ff78ba97",
       "range": {
         "startLine": 26,
         "startChar": 1,
