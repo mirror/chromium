@@ -32,6 +32,12 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   void SetState(app_list::AppListModel::State state) override;
   void HighlightItemInstalledFromUI(const std::string& id) override;
   void SetSearchEngineIsGoogle(bool is_google) override;
+  void SetSearchTabletAndClamshellAccessibleName(
+      const base::string16& tablet_accessible_name,
+      const base::string16& clamshell_accessible_name) override;
+  void SetSearchHintText(const base::string16& hint_text) override;
+  void SetSearchSpeechRecognitionButton(
+      app_list::SpeechRecognitionState state) override;
 
   // Methods for item querying.
   ChromeAppListItem* FindItem(const std::string& id) override;

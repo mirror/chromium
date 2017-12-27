@@ -208,7 +208,7 @@ void AppListViewDelegate::SetUpSearchUI() {
                                         false);
 
   search_resource_manager_.reset(new app_list::SearchResourceManager(
-      profile_, search_model_->search_box(), speech_ui_.get()));
+      profile_, model_updater_, speech_ui_.get()));
 
   search_controller_ = CreateSearchController(profile_, model_updater_,
                                               search_model_, controller_);
@@ -377,7 +377,7 @@ void AppListViewDelegate::OnTemplateURLServiceChanged() {
       default_provider->GetEngineType(
           template_url_service->search_terms_data()) == SEARCH_ENGINE_GOOGLE;
 
-  search_model_->SetSearchEngineIsGoogle(is_google);
+  model_updater_->SetSearchEngineIsGoogle(is_google);
 
   app_list::StartPageService* start_page_service =
       app_list::StartPageService::Get(profile_);

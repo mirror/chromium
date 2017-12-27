@@ -11,6 +11,8 @@
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_model.h"
+#include "base/strings/string16.h"
+#include "ui/app_list/speech_ui_model_observer.h"
 
 class ChromeAppListItem;
 
@@ -45,6 +47,12 @@ class AppListModelUpdater {
   virtual void HighlightItemInstalledFromUI(const std::string& id) {}
   // For SearchModel:
   virtual void SetSearchEngineIsGoogle(bool is_google) {}
+  virtual void SetSearchTabletAndClamshellAccessibleName(
+      const base::string16& tablet_accessible_name,
+      const base::string16& clamshell_accessible_name) {}
+  virtual void SetSearchHintText(const base::string16& hint_text) {}
+  virtual void SetSearchSpeechRecognitionButton(
+      app_list::SpeechRecognitionState state) {}
 
   // For AppListModel:
   virtual ChromeAppListItem* FindItem(const std::string& id) = 0;
