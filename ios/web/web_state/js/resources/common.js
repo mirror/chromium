@@ -264,6 +264,30 @@ __gCrWeb['common'] = __gCrWeb.common;
   }
 
   /**
+   * Change the internal react value of the element.
+   *
+   * The input event will only update the internal react value if the current
+   * wrapperState value and the element value are different.
+   */
+  function setInputElementReactValue_(value, input) {
+    var reactInternalInstanceProperties =
+        Object.getOwnPropertyNames(input).filter(
+            function(n) {return n.startsWith('__reactInternalInstance');});
+    if (reactInternalInstanceProperties.length != 1) {
+      return;
+    }
+    var name = reactInternalInstanceProperties[0];
+    var reactInstance = input[name];
+    if (!reactInstance ||
+        !reactInstance['_wrapperState'] ||
+        !reactInstance['_wrapperState']['valueTracker'] ||
+        !reactInstance['_wrapperState']['valueTracker']['setValue']) {
+      return;
+    }
+    reactInstance._wrapperState.valueTracker.setValue(value+' ');
+ }
+
+  /**
    * Sets the value of an input and dispatches a change event if
    * |shouldSendChangeEvent|.
    *
@@ -310,6 +334,7 @@ __gCrWeb['common'] = __gCrWeb.common;
       // sending events.
       setInputElementAngularValue_(value, input);
     }
+    setInputElementReactValue_(value, input);
     if (changed && shouldSendChangeEvent) {
       __gCrWeb.common.notifyElementValueChanged(input);
     }
