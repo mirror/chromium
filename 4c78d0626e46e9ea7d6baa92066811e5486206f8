@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d71a0b1_2d9f83e1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-27T18:31:32Z",
+      "side": 1,
+      "message": "Let\u0027s introduce a named variable for match[3], e.g. |components|.",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccd5870_881c896a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-27T18:31:32Z",
+      "side": 1,
+      "message": "What\u0027s the difference between legacy and new here? Should we remove % and whatnot from legacy?",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc882a4c_2bc807fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-27T18:31:32Z",
+      "side": 1,
+      "message": "Same question here - there has been no deg/grad/turn/etc before.",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48cc21e_03e23719",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-27T18:31:32Z",
+      "side": 1,
+      "message": "Let\u0027s move this replace(/%/) to _parseSatLightNumeric.",
+      "range": {
+        "startLine": 142,
+        "startChar": 45,
+        "endLine": 142,
+        "endChar": 71
+      },
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
