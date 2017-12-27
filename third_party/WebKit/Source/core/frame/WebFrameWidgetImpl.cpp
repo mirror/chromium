@@ -332,7 +332,7 @@ void WebFrameWidgetImpl::SetBaseBackgroundColorOverride(WebColor color) {
   base_background_color_override_ = color;
   // Force lifecycle update to ensure we're good to call
   // LocalFrameView::setBaseBackgroundColor().
-  local_root_->GetFrameView()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  local_root_->GetFrameView()->UpdateLifecycleToPrePaintClean();
   UpdateBaseBackgroundColor();
 }
 
@@ -343,7 +343,7 @@ void WebFrameWidgetImpl::ClearBaseBackgroundColorOverride() {
   base_background_color_override_enabled_ = false;
   // Force lifecycle update to ensure we're good to call
   // LocalFrameView::setBaseBackgroundColor().
-  local_root_->GetFrameView()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  local_root_->GetFrameView()->UpdateLifecycleToPrePaintClean();
   UpdateBaseBackgroundColor();
 }
 

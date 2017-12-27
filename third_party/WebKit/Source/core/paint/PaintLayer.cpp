@@ -2176,9 +2176,10 @@ PaintLayer* PaintLayer::HitTestLayer(
         PaintLayer::kDoNotUseGeometryMapper,
         kExcludeOverlayScrollbarSizeForHitTesting);
   } else {
-    CollectFragments(layer_fragments, root_layer, hit_test_rect,
-                     clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
-                     kExcludeOverlayScrollbarSizeForHitTesting);
+    CollectFragmentsForPaint(layer_fragments, root_layer, hit_test_rect,
+                             clip_rects_cache_slot,
+                             PaintLayer::kUseGeometryMapper,
+                             kExcludeOverlayScrollbarSizeForHitTesting);
   }
 
   if (scrollable_area_ && scrollable_area_->HitTestResizerInFragments(
@@ -2290,42 +2291,18 @@ PaintLayer* PaintLayer::HitTestTransformedLayerInFragments(
     double* z_offset,
     ClipRectsCacheSlot clip_rects_cache_slot) {
   PaintLayerFragments enclosing_pagination_fragments;
-  LayoutPoint offset_of_pagination_layer_from_root;
+
   // FIXME: We're missing a sub-pixel offset here crbug.com/348728
-  LayoutRect transformed_extent = TransparencyClipBox(
-      this, EnclosingPaginationLayer(), kHitTestingTransparencyClipBox,
-      PaintLayer::kRootOfTransparencyClipBox, LayoutSize());
-  EnclosingPaginationLayer()->CollectFragments(
+  EnclosingPaginationLayer()->CollectFragmentsForPaint(
       enclosing_pagination_fragments, root_layer, hit_test_rect,
-      clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
-      kExcludeOverlayScrollbarSizeForHitTesting, kRespectOverflowClip,
-      &offset_of_pagination_layer_from_root, LayoutSize(), &transformed_extent);
+      clip_rects_cache_slot, PaintLayer::kUseGeometryMapper,
+      kExcludeOverlayScrollbarSizeForHitTesting, kRespectOverflowClip, nullptr,
+      LayoutSize());
 
-  for (int i = enclosing_pagination_fragments.size() - 1; i >= 0; --i) {
-    const PaintLayerFragment& fragment = enclosing_pagination_fragments.at(i);
-
+  for (const auto& fragment : enclosing_pagination_fragments) {
     // Apply the page/column clip for this fragment, as well as any clips
     // established by layers in between us and the enclosing pagination layer.
     LayoutRect clip_rect = fragment.background_rect.Rect();
-
-    // Now compute the clips within a given fragment
-    if (Parent() != EnclosingPaginationLayer()) {
-      EnclosingPaginationLayer()->ConvertToLayerCoords(
-          root_layer, offset_of_pagination_layer_from_root);
-
-      ClipRect parent_clip_rect;
-      Clipper(PaintLayer::kDoNotUseGeometryMapper)
-          .CalculateBackgroundClipRect(
-              ClipRectsContext(EnclosingPaginationLayer(),
-                               clip_rects_cache_slot,
-                               kExcludeOverlayScrollbarSizeForHitTesting),
-              parent_clip_rect);
-
-      parent_clip_rect.MoveBy(fragment.pagination_offset +
-                              offset_of_pagination_layer_from_root);
-      clip_rect.Intersect(parent_clip_rect.Rect());
-    }
-
     if (!hit_test_location.Intersects(clip_rect))
       continue;
 
