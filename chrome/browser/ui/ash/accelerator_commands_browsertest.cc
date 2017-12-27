@@ -234,7 +234,7 @@ class AcceleratorCommandsPlatformAppFullscreenBrowserTest
     if (initial_show_state_ == ui::SHOW_STATE_MAXIMIZED)
       return app_window->GetBaseWindow()->IsMaximized();
     else
-      return ui::BaseWindow::IsRestored(*app_window->GetBaseWindow());
+      return ui::BaseWindow::IsWindowRestored(*app_window->GetBaseWindow());
   }
 
  private:

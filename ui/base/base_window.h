@@ -33,7 +33,7 @@ class UI_BASE_EXPORT BaseWindow {
 
   // Returns true if the window is fully restored (not Fullscreen, Maximized,
   // Minimized).
-  static bool IsRestored(const BaseWindow& window);
+  static bool IsWindowRestored(const BaseWindow& window);
 
   // Return a platform dependent identifier for this window.
   virtual gfx::NativeWindow GetNativeWindow() const = 0;
