@@ -14,7 +14,7 @@
 
 namespace zucchini {
 
-class EquivalenceMap;
+class SimilarityMap;
 
 // Computes and stores affinity between old and new targets for a single target
 // pool. This is only used during patch generation.
@@ -27,7 +27,7 @@ class TargetsAffinity {
   // described by |equivalence_map|, and updates internal state for retrieval of
   // affinity scores. Both |old_targets| and |new_targets| are targets in the
   // same pool and are sorted in ascending order.
-  void InferFromSimilarities(const EquivalenceMap& equivalence_map,
+  void InferFromSimilarities(const SimilarityMap& equivalence_map,
                              const std::vector<offset_t>& old_targets,
                              const std::vector<offset_t>& new_targets);
 
