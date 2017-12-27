@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/network/cookie_manager.h"
+#include "services/network/public/cpp/cookie_manager.h"
 
 #include <algorithm>
 
@@ -34,7 +34,7 @@
 //      * CompareCanonicalCookies: Comparison function to make it easy to
 //        sort cookie list responses from the network::mojom::CookieManager.
 
-namespace content {
+namespace network {
 
 // Wraps a network::mojom::CookieManager in synchronous, blocking calls to make
 // it easier to test.
@@ -186,7 +186,7 @@ class CookieManagerTest : public testing::Test {
 
   base::MessageLoopForIO message_loop_;
   net::CookieMonster cookie_monster_;
-  std::unique_ptr<content::CookieManager> cookie_service_;
+  std::unique_ptr<CookieManager> cookie_service_;
   network::mojom::CookieManagerPtr cookie_service_ptr_;
   std::unique_ptr<SynchronousCookieManager> service_wrapper_;
 
@@ -1621,4 +1621,4 @@ TEST_F(CookieManagerTest, CloningAndClientDestructVisible) {
   EXPECT_EQ(1u, service()->GetClientsBoundForTesting());
 }
 
-}  // namespace content
+}  // namespace network
