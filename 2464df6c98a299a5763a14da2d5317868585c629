@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53996ab6_18d60d32",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T10:24:55Z",
+      "side": 1,
+      "message": "After introducing the enum options. it gets into one parameter.\n\nMark as Resolved.",
+      "parentUuid": "7dee8fc5_ffa918a8",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "2464df6c98a299a5763a14da2d5317868585c629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b0ddc7b_52e19a99",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2464df6c98a299a5763a14da2d5317868585c629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff69b2bb_e46ae535",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T10:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b0ddc7b_52e19a99",
+      "range": {
+        "startLine": 788,
+        "startChar": 55,
+        "endLine": 788,
+        "endChar": 61
+      },
+      "revId": "2464df6c98a299a5763a14da2d5317868585c629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
