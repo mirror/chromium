@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "a36a12c1_0570d8d5",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-27T10:40:31Z",
+      "side": 1,
+      "message": "Oh, it make sense to not use underscore then. Fixed.",
+      "parentUuid": "dc6837e9_20aa4091",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75bd87c_f73c3b7c",
         "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.h",
         "patchSetId": 2
