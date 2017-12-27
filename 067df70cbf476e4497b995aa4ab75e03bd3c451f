@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2dc4ea6_2f997073",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T03:35:00Z",
+      "side": 1,
+      "message": "Could we also test that HW video encode is not used for standard scenarios (such as apprtc loopback) with this flag enabled, and that HW encode is used when running without this flag please?",
+      "revId": "067df70cbf476e4497b995aa4ab75e03bd3c451f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3ef99e_3a394011",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T03:35:00Z",
+      "side": 1,
+      "message": "Should we check for the flag here as well?",
+      "revId": "067df70cbf476e4497b995aa4ab75e03bd3c451f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1917bd2_03150dd1",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T03:35:00Z",
+      "side": 1,
+      "message": "Should we check for options.accelerated_video_encode_enabled here ?",
+      "revId": "067df70cbf476e4497b995aa4ab75e03bd3c451f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c49145_4b5c4fc1",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T03:35:00Z",
+      "side": 1,
+      "message": "Would it be useful to extract this into a function IsAcceleratedVideoEnabled(Options\u0026) and use it here and in other locations when we check this?",
+      "revId": "067df70cbf476e4497b995aa4ab75e03bd3c451f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
