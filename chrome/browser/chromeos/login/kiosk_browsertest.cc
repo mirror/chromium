@@ -76,6 +76,8 @@
 #include "google_apis/gaia/gaia_switches.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "media/audio/mock_audio_manager.h"
+#include "media/audio/sounds/audio_stream_handler.h"
+#include "media/audio/sounds/sounds_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/aura/window.h"
@@ -2284,6 +2286,82 @@ IN_PROC_BROWSER_TEST_F(KioskEnterpriseTest, PrivateStore) {
   EXPECT_EQ(extensions::Manifest::EXTERNAL_POLICY, GetInstalledAppLocation());
 }
 
+class KioskVirtualKeyboardTestSoundsManagerTestImpl;
+// Fake sounds manager.
+// It has to be out of the test class as
+//  - the test itself will call SoundsManager::Shutdown() after the test is
+//  done, so we can't recycle the resource before that.
+//  - static doesn't work well with virtual thunk of
+//  KioskVirtualKeyboardTest::SetUp();
+// DO NOT MODIFY this pointer outside of
+// KioskVirtualKeyboardTestSoundsManagerTestImpl.
+KioskVirtualKeyboardTestSoundsManagerTestImpl* fake_sounds_manager = nullptr;
+
+// A custom SoundsManagerTestImpl implements Initialize and Play only.
+// The different with media::SoundsManagerImpl is AudioStreamHandler is
+// only initialized upon Play is called, so the most recent AudioManager
+// instance could be used, so that  we can't use MockAudioManager to play
+// bundled sounds.
+// It's not a nested class under KioskVirtualKeyboardTest because forward
+// declaration of a nested class is not possible.
+class KioskVirtualKeyboardTestSoundsManagerTestImpl
+    : public media::SoundsManager {
+ public:
+  bool Initialize(SoundKey key, const base::StringPiece& data) override {
+    sound_data_[key] = data;
+    return true;
+  }
+  bool Play(SoundKey key) override {
+    if (sound_data_.find(key) == sound_data_.end()) {
+      LOG(WARNING) << "Playing non-existent key = " << key;
+      return false;
+    }
+    std::unique_ptr<media::AudioStreamHandler> handler =
+        base::MakeUnique<media::AudioStreamHandler>(sound_data_[key]);
+    if (!handler->IsInitialized()) {
+      LOG(WARNING) << "Can't initialize AudioStreamHandler for key = " << key;
+      return false;
+    }
+    return handler->Play();
+  }
+  bool Stop(SoundKey key) override {
+    CHECK(false);
+    return false;
+  }
+  base::TimeDelta GetDuration(SoundKey key) override {
+    CHECK(false);
+    return base::TimeDelta();
+  }
+
+  ~KioskVirtualKeyboardTestSoundsManagerTestImpl() override {
+    fake_sounds_manager = nullptr;
+  }
+
+  static void Delete() {
+    if (fake_sounds_manager) {
+      delete fake_sounds_manager;
+    }
+  }
+
+  static void Create() {
+    if (!fake_sounds_manager) {
+      fake_sounds_manager = new KioskVirtualKeyboardTestSoundsManagerTestImpl();
+      // Simply SoundManager::Shutdown() and then SoundManager::Create() after
+      // MockAudioManager is initialized won't work as no one is calling
+      // SoundManager::Initialize() anymore so the SoundManager won't have any
+      // sound to play. We have to create a test-purpose SoundManager before
+      // that in order to have bundled SoundKey included.
+      media::SoundsManager::InitializeForTesting(fake_sounds_manager);
+    }
+  }
+
+ private:
+  KioskVirtualKeyboardTestSoundsManagerTestImpl() {}
+  std::map<SoundKey, base::StringPiece> sound_data_;
+
+  DISALLOW_COPY_AND_ASSIGN(KioskVirtualKeyboardTestSoundsManagerTestImpl);
+};
+
 // Specialized test fixture for testing kiosk mode where virtual keyboard is
 // enabled.
 class KioskVirtualKeyboardTest : public KioskTest {
@@ -2292,7 +2370,11 @@ class KioskVirtualKeyboardTest : public KioskTest {
   ~KioskVirtualKeyboardTest() override = default;
 
  protected:
-  // KioskTest overrides:
+  // KioskVirtualKeyboardTest overrides:
+  void SetUp() override {
+    KioskVirtualKeyboardTestSoundsManagerTestImpl::Create();
+    KioskTest::SetUp();
+  }
   void SetUpCommandLine(base::CommandLine* command_line) override {
     KioskTest::SetUpCommandLine(command_line);
     command_line->AppendSwitchASCII(
