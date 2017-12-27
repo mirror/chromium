@@ -671,6 +671,10 @@ mojom("mojo_bindings") {
     "resource_usage_reporter.mojom",
   ]
 
+  if (is_android) {
+    sources += [ "sandbox_status_extension_android.mojom" ]
+  }
+
   if (is_win) {
     sources += [ "conflicts/module_event_sink_win.mojom" ]
   }
