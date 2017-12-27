@@ -92,8 +92,10 @@ int ChromeMainDelegateAndroid::RunProcess(
     // Also only record the start time the first time round, since this is the
     // start time of the application, and will be same for all requests.
     if (!browser_runner_.get()) {
-      base::Time time = chrome::android::GetMainEntryPointTime();
-      startup_metric_utils::RecordMainEntryPointTime(time);
+      startup_metric_utils::RecordMainEntryPointTimeWallClock(
+          chrome::android::GetMainEntryPointTimeWallClock());
+      startup_metric_utils::RecordMainEntryPointTimeTicks(
+          chrome::android::GetMainEntryPointTimeTicks());
       browser_runner_.reset(content::BrowserMainRunner::Create());
     }
     return browser_runner_->Initialize(main_function_params);

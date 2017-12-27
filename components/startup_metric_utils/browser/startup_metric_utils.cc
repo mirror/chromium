@@ -47,6 +47,9 @@ base::LazyInstance<base::TimeTicks>::Leaky g_process_creation_ticks =
 base::LazyInstance<base::TimeTicks>::Leaky g_browser_main_entry_point_ticks =
     LAZY_INSTANCE_INITIALIZER;
 
+base::LazyInstance<base::TimeTicks>::Leaky
+    g_browser_main_entry_point_ticks_unadjusted = LAZY_INSTANCE_INITIALIZER;
+
 base::LazyInstance<base::TimeTicks>::Leaky g_renderer_main_entry_point_ticks =
     LAZY_INSTANCE_INITIALIZER;
 
@@ -548,10 +551,16 @@ void RecordStartupProcessCreationTime(base::Time time) {
   DCHECK(!g_process_creation_ticks.Get().is_null());
 }
 
-void RecordMainEntryPointTime(base::Time time) {
+void RecordMainEntryPointTimeWallClock(base::Time time) {
   DCHECK(g_browser_main_entry_point_ticks.Get().is_null());
   g_browser_main_entry_point_ticks.Get() = StartupTimeToTimeTicks(time);
   DCHECK(!g_browser_main_entry_point_ticks.Get().is_null());
+}
+
+void RecordMainEntryPointTimeTicks(base::TimeTicks ticks) {
+  DCHECK(g_browser_main_entry_point_ticks_unadjusted.Get().is_null());
+  g_browser_main_entry_point_ticks_unadjusted.Get() = ticks;
+  DCHECK(!g_browser_main_entry_point_ticks_unadjusted.Get().is_null());
 }
 
 void RecordExeMainEntryPointTicks(base::TimeTicks ticks) {
@@ -601,6 +610,10 @@ void RecordBrowserMainMessageLoopStart(base::TimeTicks ticks,
         UMA_HISTOGRAM_LONG_TIMES,
         "Startup.BrowserMessageLoopStartTimeFromMainEntry2",
         g_browser_main_entry_point_ticks.Get(), ticks);
+    UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE_AND_SAME_VERSION_COUNT(
+        UMA_HISTOGRAM_LONG_TIMES,
+        "Startup.BrowserMessageLoopStartTimeFromMainEntry3",
+        g_browser_main_entry_point_ticks_unadjusted.Get(), ticks);
   }
 
   AddStartupEventsForTelemetry();

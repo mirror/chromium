@@ -84142,6 +84142,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry2" units="ms">
+  <obsolete>
+    Deprecated 2018-01 in favor of
+    Startup.BrowserMessageLoopStartTimeFromMainEntry3.
+  </obsolete>
+  <owner>fdoray@chromium.org</owner>
+  <owner>gab@chromium.org</owner>
+  <summary>
+    Time from main entry to the start of the main thread's message loop.
+  </summary>
+</histogram>
+
+<histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry3" units="ms">
   <owner>fdoray@chromium.org</owner>
   <owner>gab@chromium.org</owner>
   <summary>
@@ -109282,6 +109294,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Startup.BrowserMessageLoopStartTime"/>
   <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry"/>
   <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry2"/>
+  <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry3"/>
   <affected-histogram name="Startup.BrowserOpenTabs"/>
   <affected-histogram name="Startup.BrowserWindowDisplay"/>
   <affected-histogram name="Startup.FirstWebContents.MainFrameLoad2"/>
@@ -110087,6 +110100,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="Startup.BrowserMessageLoopStartTimeFromMainEntry.FirstRun2"/>
   <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry2"/>
+  <affected-histogram name="Startup.BrowserMessageLoopStartTimeFromMainEntry3"/>
   <affected-histogram name="Startup.BrowserOpenTabs"/>
   <affected-histogram name="Startup.BrowserWindow.FirstPaint"/>
   <affected-histogram name="Startup.BrowserWindow.FirstPaint.CompositingEnded"/>

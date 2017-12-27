@@ -18,11 +18,17 @@ class PrefService;
 namespace chrome {
 namespace android {
 
-base::Time GetMainEntryPointTime() {
+base::Time GetMainEntryPointTimeWallClock() {
   JNIEnv* env = base::android::AttachCurrentThread();
   int64_t startTimeUnixMs = Java_UmaUtils_getMainEntryPointWallTime(env);
   return base::Time::UnixEpoch() +
          base::TimeDelta::FromMilliseconds(startTimeUnixMs);
+}
+
+base::TimeTicks GetMainEntryPointTimeTicks() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return base::TimeTicks::FromInternalValue(
+      Java_UmaUtils_getMainEntryPointTicks(env));
 }
 
 static jboolean JNI_UmaUtils_IsClientInMetricsReportingSample(
