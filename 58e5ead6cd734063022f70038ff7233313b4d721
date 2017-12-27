@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7688867_9ba3ebd3",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-27T19:07:02Z",
+      "side": 1,
+      "message": "Note that using this pattern, you don\u0027t need the mock wrapper. You can just EXPECT_CALL() and the default action can return the value. However, that you didn\u0027t use this is evidence that it\u0027s not an obvious pattern anyway.",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 11
+      },
+      "revId": "58e5ead6cd734063022f70038ff7233313b4d721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
