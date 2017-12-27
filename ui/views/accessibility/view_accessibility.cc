@@ -5,6 +5,7 @@
 #include "ui/views/accessibility/view_accessibility.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/ui_features.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -39,14 +40,20 @@ std::unique_ptr<ViewAccessibility> ViewAccessibility::Create(View* view) {
 }
 #endif
 
-ViewAccessibility::ViewAccessibility(View* view) : owner_view_(view) {}
+ViewAccessibility::ViewAccessibility(View* view)
+    : owner_view_(view), unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {}
 
 ViewAccessibility::~ViewAccessibility() {}
+
+int32_t ViewAccessibility::GetUniqueId() const {
+  return unique_id_;
+}
 
 void ViewAccessibility::GetAccessibleNodeData(ui::AXNodeData* data) const {
   // Views may misbehave if their widget is closed; return an unknown role
   // rather than possibly crashing.
   if (!owner_view_->GetWidget() || owner_view_->GetWidget()->IsClosed()) {
+    data->role = ui::AX_ROLE_UNKNOWN;
     data->role = ui::AX_ROLE_UNKNOWN;
     data->AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
     return;

@@ -10,6 +10,7 @@
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/aura_window_properties.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/window.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
@@ -20,7 +21,8 @@ namespace views {
 AXWindowObjWrapper::AXWindowObjWrapper(aura::Window* window)
     : window_(window),
       is_alert_(false),
-      is_root_window_(window->IsRootWindow()) {
+      is_root_window_(window->IsRootWindow()),
+      unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {
   window->AddObserver(this);
 
   if (is_root_window_)
@@ -57,7 +59,7 @@ void AXWindowObjWrapper::GetChildren(
 }
 
 void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
-  out_node_data->id = GetID();
+  out_node_data->id = GetUniqueId();
   ui::AXRole role = window_->GetProperty(ui::kAXRoleOverride);
   if (role != ui::AX_ROLE_NONE)
     out_node_data->role = role;
@@ -92,8 +94,8 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   }
 }
 
-int32_t AXWindowObjWrapper::GetID() {
-  return AXAuraObjCache::GetInstance()->GetID(window_);
+int32_t AXWindowObjWrapper::GetUniqueId() const {
+  return unique_id_;
 }
 
 void AXWindowObjWrapper::OnWindowDestroyed(aura::Window* window) {
