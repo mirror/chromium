@@ -139,6 +139,7 @@ interface VRPresentationProvider {
 
   // TODO(https://crbug.com/676224): Support preprocessing of mojom files, since
   // this is Windows only.
+  [EnableIf=OS_WINDOWS]
   SubmitFrameWithTextureHandle(int16 frameId, handle texture);
   UpdateLayerBounds(int16 frame_id, gfx.mojom.RectF left_bounds,
                     gfx.mojom.RectF right_bounds, gfx.mojom.Size source_size);
