@@ -785,34 +785,21 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       base_url,
       base_url,
-      "u0",
+      "un0",
       "test_user",
-      "p0",
+      "pw0",
       "test_password",
       YES,
       @"un0=test_user;pw0=test_password;"
-    },
-    // Multiple forms match (including one in iframe): they should all be
-    // autofilled.
-    {
-      base_url,
-      base_url,
-      "u4",
-      "test_user",
-      "p4",
-      "test_password",
-      YES,
-      @"un4=test_user;pw4=test_password;un5=test_user;pw5=test_password;"
-      "un7=test_user;pw7=test_password;"
     },
     // The form matches despite a different action: the only difference
     // is a query and reference.
     {
       base_url,
       base_url,
-      "u1",
+      "un1",
       "test_user",
-      "p1",
+      "pw1",
       "test_password",
       YES,
       @"un1=test_user;pw1=test_password;"
@@ -821,9 +808,9 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       "http://someotherfakedomain.com",
       base_url,
-      "u0",
+      "un0",
       "test_user",
-      "p0",
+      "pw0",
       "test_password",
       NO,
       @""
@@ -832,9 +819,9 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       base_url,
       "http://someotherfakedomain.com",
-      "u0",
+      "un0",
       "test_user",
-      "p0",
+      "pw0",
       "test_password",
       NO,
       @""
@@ -843,9 +830,9 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       base_url,
       base_url,
-      "u0",
+      "un0",
       "test_user",
-      "p1",
+      "pw1",
       "test_password",
       NO,
       @""
@@ -855,9 +842,9 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       base_url,
       base_url,
-      "u3",
+      "un3",
       "test_user",
-      "p3",
+      "pw3",
       "test_password",
       YES,
       @"un3=test_user;pw3=test_password;"
@@ -866,9 +853,9 @@ TEST_F(PasswordControllerTest, FillPasswordForm) {
     {
       base_url,
       base_url,
-      "u6'",
+      "un6'",
       "test_user",
-      "p6'",
+      "pw6'",
       "test_password",
       YES,
       @"un6'=test_user;pw6'=test_password;"
@@ -975,8 +962,8 @@ BOOL PasswordControllerTest::BasicFormFill(NSString* html) {
   LoadHtml(html);
   const std::string base_url = BaseUrl();
   PasswordFormFillData form_data;
-  SetPasswordFormFillData(form_data, base_url, base_url, "u0", "test_user",
-                          "p0", "test_password", nullptr, nullptr, false);
+  SetPasswordFormFillData(form_data, base_url, base_url, "un0", "test_user",
+                          "pw0", "test_password", nullptr, nullptr, false);
   __block BOOL block_was_called = NO;
   __block BOOL return_value = NO;
   [passwordController_ fillPasswordForm:form_data
@@ -1084,7 +1071,7 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
   // we can test with an initially-empty username field. Testing with a
   // username field that contains input is performed by a specific test below.
   PasswordFormFillData form_data;
-  SetPasswordFormFillData(form_data, base_url, base_url, "u'", "user0", "p'",
+  SetPasswordFormFillData(form_data, base_url, base_url, "un", "user0", "pw",
                           "password0", "abc", "def", true);
   form_data.name = base::ASCIIToUTF16(FormName(0));
 
@@ -1255,7 +1242,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     __block BOOL block_was_called = NO;
     [passwordController_
         retrieveSuggestionsForForm:form_name
-                             field:username_element
+                         fieldName:username_element
+                   fieldIdentifier:username_element
                          fieldType:@"text"
                               type:@"focus"
                         typedValue:@"abc"
@@ -1282,7 +1270,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     };
     [passwordController_
         didSelectSuggestion:suggestion
-                   forField:@"u"
+                  fieldName:@"u"
+            fieldIdentifier:@"u"
                        form:base::SysUTF8ToNSString(FormName(0))
           completionHandler:completion];
     EXPECT_TRUE(

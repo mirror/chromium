@@ -4,16 +4,41 @@
 
 #import "components/autofill/ios/browser/js_autofill_manager.h"
 
+#include "base/command_line.h"
 #include "base/format_macros.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/sys_string_conversions.h"
+#include "components/autofill/ios/browser/autofill_switches.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
 @implementation JsAutofillManager
+
+- (void)inject {
+  [super inject];
+  // Default value in milliseconds.
+  int delay = 50;
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(
+          autofill::switches::kAutofillDelayBetweenFields)) {
+    std::string delayString = command_line->GetSwitchValueASCII(
+        autofill::switches::kAutofillDelayBetweenFields);
+    int commandLineDelay = 0;
+    if (base::StringToInt(delayString, &commandLineDelay)) {
+      delay = commandLineDelay;
+    }
+  }
+
+  NSString* setDelayJS =
+      [NSString stringWithFormat:@"__gCrWeb.autofill.setDelay(%d);", delay];
+  [self executeJavaScript:setDelayJS completionHandler:nil];
+}
 
 - (void)fetchFormsWithMinimumRequiredFieldsCount:(NSUInteger)requiredFieldsCount
                                completionHandler:
@@ -46,16 +71,17 @@
 }
 
 - (void)fillForm:(NSString*)dataString
-    forceFillFieldName:(NSString*)forceFillFieldName
-     completionHandler:(ProceduralBlock)completionHandler {
+    forceFillFieldIdentifier:(NSString*)forceFillFieldIdentifier
+           completionHandler:(ProceduralBlock)completionHandler {
   DCHECK(completionHandler);
-  std::string fieldName =
-      forceFillFieldName
-          ? base::GetQuotedJSONString([forceFillFieldName UTF8String])
+  std::string fieldIdentifier =
+      forceFillFieldIdentifier
+          ? base::GetQuotedJSONString(
+                base::SysNSStringToUTF8(forceFillFieldIdentifier))
           : "null";
   NSString* fillFormJS =
       [NSString stringWithFormat:@"__gCrWeb.autofill.fillForm(%@, %s);",
-                                 dataString, fieldName.c_str()];
+                                 dataString, fieldIdentifier.c_str()];
   [self executeJavaScript:fillFormJS completionHandler:^(id, NSError*) {
     completionHandler();
   }];
