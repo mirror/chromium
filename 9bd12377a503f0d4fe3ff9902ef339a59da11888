@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad92620c_5d58a302",
+        "filename": "chrome/browser/media/router/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-27T19:16:08Z",
+      "side": 1,
+      "message": "This is still not ideal, because desktop builds with enable_extensions \u003d false won\u0027t have a MediaRouter implementation, and it would be somewhat pointless to include the above files in the build. The simplest thing I am doing in this patch is to move the local_presentation_manager and related files out of android builds to reduce the footprint. But let me know if you have thoughts on further improvements.",
+      "revId": "9bd12377a503f0d4fe3ff9902ef339a59da11888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
