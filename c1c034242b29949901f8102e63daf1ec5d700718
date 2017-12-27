@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbab9d71_bdc8bf01",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-27T08:05:51Z",
+      "side": 1,
+      "message": "Does a is_ua_rule_ check make sense in connection with kQueryingRules? I\u0027d expect this to read:\n\nDCHECK(mode_ \u003d\u003d kQueryingRules || context.selector-\u003eGetPseudoType() !\u003d CSSSelector::kPseudoShadow);",
+      "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80432844_8e0620da",
+        "filename": "third_party/WebKit/Source/core/css/SelectorChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-27T08:05:51Z",
+      "side": 1,
+      "message": "I don\u0027t think the is_ua_rule_ check adds anything here.",
+      "revId": "c1c034242b29949901f8102e63daf1ec5d700718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
