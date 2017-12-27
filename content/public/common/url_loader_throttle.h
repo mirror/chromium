@@ -62,7 +62,7 @@ class CONTENT_EXPORT URLLoaderThrottle {
   virtual void DetachFromCurrentSequence();
 
   // Called before the resource request is started.
-  virtual void WillStartRequest(const ResourceRequest& request, bool* defer);
+  virtual void WillStartRequest(ResourceRequest* request, bool* defer);
 
   // Called when the request was redirected.  |redirect_info| contains the
   // redirect responses's HTTP status code and some information about the new

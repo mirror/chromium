@@ -677,8 +677,8 @@ void ChromeResourceDispatcherHostDelegate::AppendStandardResourceThrottles(
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
   if (info->GetVisibilityState() ==
       blink::mojom::PageVisibilityState::kPrerender) {
-    throttles->push_back(
-        base::MakeUnique<prerender::PrerenderResourceThrottle>(request));
+    //throttles->push_back(
+      //  base::MakeUnique<prerender::PrerenderResourceThrottle>(request));
   }
 
   std::unique_ptr<PredictorResourceThrottle> predictor_throttle =

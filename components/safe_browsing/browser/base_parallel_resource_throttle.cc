@@ -124,7 +124,7 @@ void BaseParallelResourceThrottle::WillStartRequest(bool* defer) {
   resource_request.url = request_->url();
   resource_request.method = request_->method();
 
-  url_loader_throttle_holder_->throttle()->WillStartRequest(resource_request,
+  url_loader_throttle_holder_->throttle()->WillStartRequest(&resource_request,
                                                             defer);
   DCHECK(!*defer);
   throttle_in_band_ = false;
