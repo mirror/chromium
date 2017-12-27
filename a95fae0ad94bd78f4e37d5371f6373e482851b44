@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "bee04f7b_0debfa94",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Can we name this external_app_launcher_coordinator? Being consistent with existing terminology is quite useful.",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a084a46_22ce69c9",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Can we add tests for this class?",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c764ea42_e67dbb96",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
         "patchSetId": 10
@@ -18,6 +58,29 @@
         "startChar": 3,
         "endLine": 17,
         "endChar": 15
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ca8018_1362ac79",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Should we use nullable annotations?",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 60
       },
       "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -64,6 +127,109 @@
         "startChar": 47,
         "endLine": 45,
         "endChar": 48
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0694d9d_d3b29a61",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "nit: |#pragma mark - Private methods|\n\nSame comment for |#pragma mark-- ExternalAppPresenter|",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb13108c_06e9b788",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "s/url/URL\n\nSame comment for other places.",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb9c891_2369cbe9",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Can we rename this method to avoid \u003cDo Foo\u003eThen\u003cDo Bar\u003e naming pattern?",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383b3e02_6a8633d5",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Can we name this file external_app_launcher_util to be consistent with existing terminology? Sorry, I missed this when reviewed the initial commit of this file.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf61727e_ab6ea1ce",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-27T18:08:04Z",
+      "side": 1,
+      "message": "Please document weak ownership in the comments.",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 31
       },
       "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
