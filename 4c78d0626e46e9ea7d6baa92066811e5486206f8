@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "51a7d499_75e3c5a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-27T18:49:49Z",
+      "side": 1,
+      "message": "I was defining legacy as \"comma required\" syntax and new as \"comma optional\". The spec introduces this with \"For legacy reasons, rgb() also supports an alternate syntax that separates all of its arguments with commas\", so that was the best way I could think of to organize it. I wish we could merge the two together, but since it\u0027s either all commas or all whitespace and a backslash, I couldn\u0027t think of a good way to organize that in a single regex.",
+      "parentUuid": "fccd5870_881c896a",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc882a4c_2bc807fc",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
