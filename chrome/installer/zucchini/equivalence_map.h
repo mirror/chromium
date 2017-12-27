@@ -16,9 +16,9 @@
 
 namespace zucchini {
 
-constexpr double kMismatchFatal = -std::numeric_limits<double>::infinity();
-
 class EncodedView;
+class ImageIndex;
+class EquivalenceSource;
 
 // Returns a similarity score between content in |old_image_index| and
 // |new_image_index| at offsets |src| and |dst|, respectively.
@@ -74,19 +74,18 @@ EquivalenceCandidate VisitEquivalenceSeed(
     offset_t dst,
     double min_similarity);
 
-// Container of equivalences between |old_image_index| and |new_image_index|,
-// sorted by |Equivalence::dst_offset|, only used during patch generation.
-class EquivalenceMap {
+// Container of equivalences between |old_image| and |new_image|, sorted by
+// |Equivalence::dst_offset|, only used during patch generation.
+class SimilarityMap {
  public:
   using const_iterator = std::vector<EquivalenceCandidate>::const_iterator;
 
-  EquivalenceMap();
+  SimilarityMap();
   // Initializes the object with |equivalences|.
-  explicit EquivalenceMap(
-      const std::vector<EquivalenceCandidate>& equivalences);
-  EquivalenceMap(EquivalenceMap&&);
-  EquivalenceMap(const EquivalenceMap&) = delete;
-  ~EquivalenceMap();
+  explicit SimilarityMap(std::vector<EquivalenceCandidate>&& candidates);
+  SimilarityMap(SimilarityMap&&);
+  SimilarityMap(const SimilarityMap&) = delete;
+  ~SimilarityMap();
 
   // Finds relevant equivalences between |old_view| and |new_view|, using
   // suffix array |old_sa| computed from |old_view| and using
@@ -104,10 +103,6 @@ class EquivalenceMap {
   size_t size() const { return candidates_.size(); }
   const_iterator begin() const { return candidates_.begin(); }
   const_iterator end() const { return candidates_.end(); }
-
-  // Returns a vector containing equivalences sorted by
-  // |Equivalence::src_offset|.
-  std::vector<Equivalence> MakeForwardEquivalences() const;
 
  private:
   // Discovers equivalence candidates between |old_view| and |new_view| and
@@ -129,6 +124,54 @@ class EquivalenceMap {
              double min_similarity);
 
   std::vector<EquivalenceCandidate> candidates_;
+};
+
+class EquivalenceMap {
+ public:
+  using const_iterator = std::vector<Equivalence>::const_iterator;
+
+  explicit EquivalenceMap(EquivalenceSource&& equivalences);
+  explicit EquivalenceMap(const SimilarityMap&);
+  ~EquivalenceMap();
+
+  size_t size() const { return equivalences_.size(); }
+  const_iterator begin() const { return equivalences_.begin(); }
+  const_iterator end() const { return equivalences_.end(); }
+
+  void ProjectOffsets(std::vector<offset_t>* offsets) const {
+    auto current_equivalence = begin();
+    for (auto& src : *offsets) {
+      while (current_equivalence != end() &&
+             current_equivalence->src_end() <= src)
+        ++current_equivalence;
+
+      if (current_equivalence != end() &&
+          current_equivalence->src_offset <= src) {
+        src = src - current_equivalence->src_offset +
+              current_equivalence->dst_offset;
+      } else {
+        src = offset_t(-1);
+      }
+    }
+    offsets->erase(std::remove(offsets->begin(), offsets->end(), -1),
+                   offsets->end());
+  }
+
+  offset_t ProjectOffset(offset_t offset) const {
+    auto pos = std::upper_bound(
+        equivalences_.begin(), equivalences_.end(), offset,
+        [](offset_t a, const Equivalence& b) { return a < b.src_offset; });
+    if (pos != equivalences_.begin())
+      --pos;
+    return offset - pos->src_offset + pos->dst_offset;
+  }
+
+ private:
+  // Sorts candidates by their offset in new image.
+  void SortBySource();
+  void Prune();
+
+  std::vector<Equivalence> equivalences_;
 };
 
 }  // namespace zucchini

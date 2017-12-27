@@ -14,47 +14,27 @@
 
 namespace zucchini {
 
-class Disassembler;
 class EquivalenceMap;
+class SimilarityMap;
 class ImageIndex;
 class PatchElementWriter;
 class ReferenceDeltaSink;
 class ReferenceSet;
-class UnorderedLabelManager;
+class TargetPool;
 
-// Creates an ImageIndex and initializes it with references from |disasm|.
-// Returns nullopt on error.
-base::Optional<ImageIndex> MakeImageIndex(Disassembler* disasm);
-
-// Projects targets in |old_targets| to a list of new targets using
-// |equivalences|. Targets that cannot be projected have offset assigned as
-// |kUnusedIndex|. Returns the list of new targets in a new vector.
-// |old_targets| must be sorted in ascending order and |equivalence| must be
-// sorted in ascending order of |Equivalence::src_offset|.
-std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
-    const std::vector<offset_t>& old_targets,
-    const std::vector<Equivalence>& equivalences);
-
-// Extracts all targets not present in |new_label_manager| of references in
-// |new_references| whose location is found in an equivalence of |equivalences|,
-// and returns these targets in a new vector.
-
-// Extract references in |new_references| that have the following properties:
-// - The location is found in |equivalences| (dst).
-// - The target (key) is absent in |new_label_manager|.
-// The targets of the extract references are returned in a new vector.
+// Extract all targets in |new_targets| with no associated target in
+// |projected_old_targets| and returns these targets in a new vector.
 std::vector<offset_t> FindExtraTargets(
-    const ReferenceSet& new_references,
-    const UnorderedLabelManager& new_label_manager,
-    const EquivalenceMap& equivalence_map);
+    const std::vector<offset_t>& projected_old_targets,
+    const std::vector<offset_t>& new_targets);
 
-// Creates an EquivalenceMap from "old" image to "new" image and returns the
-// result. The params |*_image_index|:
+// Creates an SimilarityMap from "old" image to "new" image and returns the
+// result. |*_image_index|:
 // - Provide "old" and "new" raw image data and references.
 // - Mediate Label matching, which links references between "old" and "new", and
 //   guides EquivalenceMap construction.
-EquivalenceMap CreateEquivalenceMap(const ImageIndex& old_image_index,
-                                    const ImageIndex& new_image_index);
+SimilarityMap CreateSimilarityMap(const ImageIndex& old_image_index,
+                                  const ImageIndex& new_image_index);
 
 // Writes equivalences from |equivalence_map|, and extra data from |new_image|
 // found in gaps between equivalences to |patch_writer|.
@@ -74,10 +54,11 @@ bool GenerateRawDelta(ConstBufferView old_image,
 // Writes reference delta between references from |old_refs| and from
 // |new_refs| to |patch_writer|. |new_label_manager| contains projected
 // labels from old to new image for references pool associated with |new_refs|
-bool GenerateReferencesDelta(const ReferenceSet& old_refs,
-                             const ReferenceSet& new_refs,
-                             const UnorderedLabelManager& new_label_manager,
+bool GenerateReferencesDelta(const ReferenceSet& src_refs,
+                             const ReferenceSet& dst_refs,
+                             const TargetPool& projected_target_pool,
                              const EquivalenceMap& equivalence_map,
+                             const SimilarityMap& similarity_map,
                              ReferenceDeltaSink* reference_delta_sink);
 
 // Writes |extra_targets| associated with |pool_tag| to |patch_writer|.

@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/encoded_view.h"
+#include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/suffix_array.h"
 
 namespace zucchini {
@@ -185,21 +186,20 @@ EquivalenceCandidate VisitEquivalenceSeed(
                                    min_similarity);
 }
 
-/******** EquivalenceMap ********/
+/******** SimilarityMap ********/
 
-EquivalenceMap::EquivalenceMap() = default;
+SimilarityMap::SimilarityMap() = default;
 
-EquivalenceMap::EquivalenceMap(
-    const std::vector<EquivalenceCandidate>& equivalences)
+SimilarityMap::SimilarityMap(std::vector<EquivalenceCandidate>&& equivalences)
     : candidates_(equivalences) {
   SortByDestination();
 }
 
-EquivalenceMap::EquivalenceMap(EquivalenceMap&&) = default;
+SimilarityMap::SimilarityMap(SimilarityMap&&) = default;
 
-EquivalenceMap::~EquivalenceMap() = default;
+SimilarityMap::~SimilarityMap() = default;
 
-void EquivalenceMap::Build(
+void SimilarityMap::Build(
     const std::vector<offset_t>& old_sa,
     const EncodedView& old_view,
     const EncodedView& new_view,
@@ -224,18 +224,7 @@ void EquivalenceMap::Build(
             << new_view.size() - coverage << " / " << new_view.size();
 }
 
-std::vector<Equivalence> EquivalenceMap::MakeForwardEquivalences() const {
-  std::vector<Equivalence> equivalences(size());
-  std::transform(begin(), end(), equivalences.begin(),
-                 [](const EquivalenceCandidate& c) { return c.eq; });
-  std::sort(equivalences.begin(), equivalences.end(),
-            [](const Equivalence& a, const Equivalence& b) {
-              return a.src_offset < b.src_offset;
-            });
-  return equivalences;
-}
-
-void EquivalenceMap::CreateCandidates(
+void SimilarityMap::CreateCandidates(
     const std::vector<offset_t>& old_sa,
     const EncodedView& old_view,
     const EncodedView& new_view,
@@ -292,18 +281,17 @@ void EquivalenceMap::CreateCandidates(
   }
 }
 
-void EquivalenceMap::SortByDestination() {
+void SimilarityMap::SortByDestination() {
   std::sort(candidates_.begin(), candidates_.end(),
             [](const EquivalenceCandidate& a, const EquivalenceCandidate& b) {
               return a.eq.dst_offset < b.eq.dst_offset;
             });
 }
 
-void EquivalenceMap::Prune(
-    const EncodedView& old_view,
-    const EncodedView& new_view,
-    const std::vector<TargetsAffinity>& target_affinities,
-    double min_similarity) {
+void SimilarityMap::Prune(const EncodedView& old_view,
+                          const EncodedView& new_view,
+                          const std::vector<TargetsAffinity>& target_affinities,
+                          double min_similarity) {
   for (auto current = candidates_.begin(); current != candidates_.end();
        ++current) {
     if (current->similarity < min_similarity)
@@ -350,6 +338,64 @@ void EquivalenceMap::Prune(
                        return candidate.similarity < min_similarity;
                      }),
       candidates_.end());
+}
+
+EquivalenceMap::EquivalenceMap(EquivalenceSource&& equivalences) {
+  for (auto e = equivalences.GetNext(); e; e = equivalences.GetNext()) {
+    equivalences_.push_back(*e);
+  }
+  SortBySource();
+  Prune();
+}
+
+EquivalenceMap::EquivalenceMap(const SimilarityMap& similarity_map)
+    : equivalences_(similarity_map.size()) {
+  std::transform(similarity_map.begin(), similarity_map.end(),
+                 equivalences_.begin(),
+                 [](const EquivalenceCandidate& c) { return c.eq; });
+  SortBySource();
+  Prune();
+}
+
+EquivalenceMap::~EquivalenceMap() = default;
+
+void EquivalenceMap::SortBySource() {
+  std::sort(equivalences_.begin(), equivalences_.end(),
+            [](const Equivalence& a, const Equivalence& b) {
+              return a.src_offset < b.src_offset;
+            });
+}
+
+void EquivalenceMap::Prune() {
+  for (auto current = equivalences_.begin(); current != equivalences_.end();
+       ++current) {
+    // Look ahead to resolve overlaps, until a better candidate is found.
+    for (auto next = current + 1; next != equivalences_.end(); ++next) {
+      DCHECK_GE(next->src_offset, current->src_offset);
+      if (next->src_offset >= current->src_end())
+        break;  // No more overlap.
+
+      offset_t delta = current->src_end() - next->src_offset;
+
+      // |next| is better, so |current| shrinks.
+      if (current->length < next->length) {
+        current->length -= delta;
+        break;
+      }
+    }
+
+    // Shrinks all overlapping candidates following and worse than |current|.
+    for (auto next = current + 1; next != equivalences_.end(); ++next) {
+      if (next->src_offset >= current->src_end())
+        break;  // No more overlap.
+
+      offset_t delta = current->src_end() - next->src_offset;
+      next->length = next->length > delta ? next->length - delta : 0;
+      next->src_offset += delta;
+      next->dst_offset += delta;
+      DCHECK_EQ(next->src_offset, current->src_end());
+    }
+  }
 }
 
 }  // namespace zucchini
