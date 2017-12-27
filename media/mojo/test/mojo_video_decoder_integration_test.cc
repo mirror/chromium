@@ -97,7 +97,14 @@ class MockVideoDecoder : public VideoDecoder {
 
   // Mock helpers.
   MOCK_METHOD1(DoInitialize, void(const InitCB&));
-  MOCK_METHOD0(GetReleaseMailboxCB, VideoFrame::ReleaseMailboxCB());
+  VideoFrame::ReleaseMailboxCB GetReleaseMailboxCB() {
+    DidGetReleaseMailboxCB();
+    return std::move(release_mailbox_cb);
+  }
+
+  MOCK_METHOD0(DidGetReleaseMailboxCB, void());
+
+  VideoFrame::ReleaseMailboxCB release_mailbox_cb;
 
   // Returns an output frame immediately.
   // TODO(sandersd): Extend to support tests of MojoVideoFrame frames.
@@ -209,8 +216,8 @@ class MojoVideoDecoderIntegrationTest : public ::testing::Test {
     DecodeStatus result = DecodeStatus::DECODE_ERROR;
 
     if (!buffer->end_of_stream()) {
-      EXPECT_CALL(*decoder_, GetReleaseMailboxCB())
-          .WillOnce(Return(release_cb));
+      decoder_->release_mailbox_cb = std::move(release_cb);
+      EXPECT_CALL(*decoder_, DidGetReleaseMailboxCB());
     }
     EXPECT_CALL(*decoder_, Decode(_, _));
 
@@ -333,12 +340,10 @@ TEST_F(MojoVideoDecoderIntegrationTest, ReleaseAfterShutdown) {
 TEST_F(MojoVideoDecoderIntegrationTest, ResetDuringDecode) {
   ASSERT_TRUE(Initialize());
 
-  VideoFrame::ReleaseMailboxCB release_cb = VideoFrame::ReleaseMailboxCB();
   StrictMock<base::MockCallback<VideoDecoder::DecodeCB>> decode_cb;
   StrictMock<base::MockCallback<base::Closure>> reset_cb;
 
-  EXPECT_CALL(*decoder_, GetReleaseMailboxCB())
-      .WillRepeatedly(Return(release_cb));
+  EXPECT_CALL(*decoder_, DidGetReleaseMailboxCB());
   EXPECT_CALL(output_cb_, Run(_)).Times(kMaxDecodeRequests);
   EXPECT_CALL(*decoder_, Decode(_, _)).Times(kMaxDecodeRequests);
   EXPECT_CALL(*decoder_, Reset(_)).Times(1);
@@ -367,8 +372,7 @@ TEST_F(MojoVideoDecoderIntegrationTest, ResetDuringDecode_ChunkedWrite) {
   StrictMock<base::MockCallback<VideoDecoder::DecodeCB>> decode_cb;
   StrictMock<base::MockCallback<base::Closure>> reset_cb;
 
-  EXPECT_CALL(*decoder_, GetReleaseMailboxCB())
-      .WillRepeatedly(Return(release_cb));
+  EXPECT_CALL(*decoder_, DidGetReleaseMailboxCB());
   EXPECT_CALL(output_cb_, Run(_)).Times(kMaxDecodeRequests);
   EXPECT_CALL(*decoder_, Decode(_, _)).Times(kMaxDecodeRequests);
   EXPECT_CALL(*decoder_, Reset(_)).Times(1);
