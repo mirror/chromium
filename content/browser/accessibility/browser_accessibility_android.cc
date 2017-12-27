@@ -76,14 +76,13 @@ BrowserAccessibilityAndroid* BrowserAccessibilityAndroid::GetFromUniqueId(
   return nullptr;
 }
 
-BrowserAccessibilityAndroid::BrowserAccessibilityAndroid()
-    : unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {
-  g_unique_id_map.Get()[unique_id_] = this;
+BrowserAccessibilityAndroid::BrowserAccessibilityAndroid() {
+  g_unique_id_map.Get()[GetUniqueId()] = this;
 }
 
 BrowserAccessibilityAndroid::~BrowserAccessibilityAndroid() {
-  if (unique_id_)
-    g_unique_id_map.Get().erase(unique_id_);
+  if (GetUniqueId())
+    g_unique_id_map.Get().erase(GetUniqueId());
 }
 
 bool BrowserAccessibilityAndroid::IsNative() const {

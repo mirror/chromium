@@ -6,14 +6,17 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/accessibility/ax_aura_obj_wrapper.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
 namespace views {
 
-AXWidgetObjWrapper::AXWidgetObjWrapper(Widget* widget) : widget_(widget) {
+AXWidgetObjWrapper::AXWidgetObjWrapper(Widget* widget)
+    : widget_(widget), unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {
   widget->AddObserver(this);
   widget->AddRemovalsObserver(this);
 }
@@ -42,7 +45,7 @@ void AXWidgetObjWrapper::GetChildren(
 }
 
 void AXWidgetObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
-  out_node_data->id = GetID();
+  out_node_data->id = GetUniqueId();
   out_node_data->role = widget_->widget_delegate()->GetAccessibleWindowRole();
   out_node_data->AddStringAttribute(
       ui::AX_ATTR_NAME,
@@ -52,8 +55,8 @@ void AXWidgetObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   out_node_data->state = 0;
 }
 
-int32_t AXWidgetObjWrapper::GetID() {
-  return AXAuraObjCache::GetInstance()->GetID(widget_);
+int32_t AXWidgetObjWrapper::GetUniqueId() const {
+  return unique_id_;
 }
 
 void AXWidgetObjWrapper::OnWidgetDestroying(Widget* widget) {
