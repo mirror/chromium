@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "92f81d4f_8659245a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "Other classes here make their internal `using` bits private (e.g. ValueCppType in IDLRecord), it\u0027d be good to do the same here.",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6e0262_8e4f2b5b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "Is this covering a case that the usual `using CppType \u003d typename NativeValueTraits\u003cT\u003e::ImplType` doesn\u0027t?",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25731c7b_b426e0ce",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "Can we have just ImplType like the other classes? Having only IDLNullable have a ResultType member looks confusing.",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4657c7_8a122fc0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "What if you add this to IDLBase so that all IDL types have a NullValue() implementation? I think it makes sense from a semantic point of view.",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e2bb29_61d69df5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/NativeValueTraitsImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "To me, doing this here rather than in IDLTypes.h looks inconsistent, especially since IDLNullable does it there. In terms of semantics, I think it makes more sense to have a function whose purpose is to return what corresponds to a null value for a given type along with ImplType.",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3b02a36_c55735b1",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
         "patchSetId": 7
@@ -13,6 +98,24 @@
       "writtenOn": "2017-12-25T01:19:03Z",
       "side": 1,
       "message": "Does inner_type.cpp_type_has_null_value work?",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc31925_1f0f125c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-27T18:22:27Z",
+      "side": 1,
+      "message": "Or inner_type.is_explicit_nullable.",
+      "parentUuid": "d3b02a36_c55735b1",
       "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
