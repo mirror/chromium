@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce7bea6_d1a373cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-12-27T22:47:10Z",
+      "side": 1,
+      "message": "NIT: NORMAL_BEHAVIOR",
+      "range": {
+        "startLine": 41,
+        "startChar": 68,
+        "endLine": 41,
+        "endChar": 84
+      },
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9472f36_36522804",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-12-27T22:47:10Z",
+      "side": 1,
+      "message": "Is this ever exercised, or just here to not throw an error? If the latter, I would advise not being so lenient and maybe rename a method to be webapp specific. Though I\u0027ll leave it to you in the end.",
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30796fd_b3fb4c26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-12-27T22:47:10Z",
+      "side": 1,
+      "message": "Given that as far as I understand applyPolicyForNavigationToUrl is the preferred interface for interacting with WebappScopePolicy regarding CCT behavior, can we restrict the visibility of openOffScopeNavsInCct?",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "4b3d348e22d0e33a5963c11b46e29e7403d64d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
