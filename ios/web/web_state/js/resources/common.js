@@ -654,10 +654,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     // Some frameworks will use the data field to update their cache value.
     changeEvent.data = element.value;
 
-    // A timer is used to avoid reentering JavaScript evaluation.
-    window.setTimeout(function() {
-      element.dispatchEvent(changeEvent);
-    }, 0);
+    element.dispatchEvent(changeEvent);
   };
 
   /**
