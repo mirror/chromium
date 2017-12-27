@@ -12,6 +12,8 @@
 #include "base/run_loop.h"
 #include "services/data_decoder/xml_parser.h"
 
+#include "third_party/libxml/parser.h"
+
 namespace {
 
 void OnParseXml(base::Closure quit_loop,
@@ -20,10 +22,14 @@ void OnParseXml(base::Closure quit_loop,
   std::move(quit_loop).Run();
 }
 
+// Error handler to ignore spamy messages from libxml.
+void ignore(void* ctx, const char* msg, ...) {}
+
 }  // namespace
 
 // Entry point for LibFuzzer.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+  xmlSetGenericErrorFunc(NULL, &ignore);
   const char* data_ptr = reinterpret_cast<const char*>(data);
 
   data_decoder::XmlParser xml_parser_impl(/*service_ref=*/nullptr);
