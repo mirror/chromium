@@ -287,7 +287,7 @@ WebFrame* WebFrame::TraverseNext() const {
 WebFrame* WebFrame::FromFrameOwnerElement(const WebNode& web_node) {
   Node* node = web_node;
 
-  if (!node->IsFrameOwnerElement())
+  if (!node || !node->IsFrameOwnerElement())
     return nullptr;
   return FromFrame(ToHTMLFrameOwnerElement(node)->ContentFrame());
 }
