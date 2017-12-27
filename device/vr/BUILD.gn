@@ -219,6 +219,11 @@ mojom_component("mojo_bindings") {
   output_prefix = "device_vr_mojo_bindings"
   macro_prefix = "DEVICE_VR_MOJO_BINDINGS"
 
+  enabled_flags = []
+  if (is_win) {
+    enabled_flags += [ "OS_WINDOWS" ]
+  }
+
   sources = [
     "vr_service.mojom",
   ]
