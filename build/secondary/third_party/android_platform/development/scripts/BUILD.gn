@@ -14,7 +14,7 @@ group("stack_py") {
   data = sources
 
   data += [
-    "${android_tool_prefix}addr2line",
+    "//third_party/llvm-build/Release+Asserts/bin/llvm-symbolizer",
     "${android_tool_prefix}objdump",
     "${android_tool_prefix}c++filt",
   ]
