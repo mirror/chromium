@@ -30,6 +30,7 @@
 #include "content/renderer/render_view_impl.h"
 #include "content/renderer/render_widget.h"
 #include "ipc/ipc_message_macros.h"
+#include "printing/features/features.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/common/frame_policy.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -720,5 +721,13 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
   ResendResizeParams();
 }
 #endif
+
+void RenderFrameProxy::Print(const blink::WebRect& rect, uint64_t content_id) {
+#if BUILDFLAG(ENABLE_PRINTING)
+  Send(new FrameHostMsg_PrintSubframe(
+      routing_id_, gfx::Rect(rect.x, rect.y, rect.width, rect.height),
+      content_id));
+#endif
+}
 
 }  // namespace content
