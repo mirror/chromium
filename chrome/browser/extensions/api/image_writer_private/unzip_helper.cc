@@ -31,15 +31,6 @@ UnzipHelper::~UnzipHelper() {}
 
 void UnzipHelper::Unzip(const base::FilePath& image_path,
                         const base::FilePath& temp_dir_path) {
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-      base::CreateSingleThreadTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
-  task_runner->PostTask(FROM_HERE, base::Bind(&UnzipHelper::UnzipImpl, this,
-                                              image_path, temp_dir_path));
-}
-
-void UnzipHelper::UnzipImpl(const base::FilePath& image_path,
-                            const base::FilePath& temp_dir_path) {
   if (!zip_reader_->Open(image_path) || !zip_reader_->AdvanceToNextEntry() ||
       !zip_reader_->OpenCurrentEntryInZip()) {
     OnError(error::kUnzipGenericError);
@@ -65,8 +56,9 @@ void UnzipHelper::UnzipImpl(const base::FilePath& image_path,
   OnOpenSuccess(out_image_path);
 
   zip_reader_->ExtractCurrentEntryToFilePathAsync(
-      out_image_path, base::Bind(&UnzipHelper::OnComplete, this),
-      base::Bind(&UnzipHelper::OnError, this, error::kUnzipGenericError),
+      owner_task_runner_, out_image_path,
+      base::BindOnce(&UnzipHelper::OnComplete, this),
+      base::BindOnce(&UnzipHelper::OnError, this, error::kUnzipGenericError),
       base::Bind(&UnzipHelper::OnProgress, this, entry_info->original_size()));
 }
 

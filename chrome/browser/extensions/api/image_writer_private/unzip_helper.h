@@ -21,12 +21,6 @@ namespace extensions {
 namespace image_writer {
 
 // A helper to provide Unzip operation.
-// Currently ZipReader requires SingleThreadTaskRunner, this class is
-// responsible for running ZipReader on a SingleThreadTaskRunner. Unzip
-// should be called from sequences (|owner_task_runner_|) and all the
-// callbacks of this class is called on that task runner.
-// TODO(satorux/lazyboy): Make ZipReader Sequence friendly and remove
-// SingleThreadTaskRunner from this class. https://crbug.com/752702.
 class UnzipHelper : public base::RefCountedThreadSafe<UnzipHelper> {
  public:
   explicit UnzipHelper(
@@ -43,8 +37,6 @@ class UnzipHelper : public base::RefCountedThreadSafe<UnzipHelper> {
   friend class base::RefCountedThreadSafe<UnzipHelper>;
   ~UnzipHelper();
 
-  void UnzipImpl(const base::FilePath& image_path,
-                 const base::FilePath& temp_dir);
   void OnError(const std::string& error);
   void OnOpenSuccess(const base::FilePath& image_path);
   void OnComplete();

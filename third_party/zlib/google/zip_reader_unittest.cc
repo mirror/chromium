@@ -22,6 +22,7 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/time/time.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -68,21 +69,24 @@ class FileWrapper {
 // Assumes that progress callbacks will be executed in-order.
 class MockUnzipListener : public base::SupportsWeakPtr<MockUnzipListener> {
  public:
-  MockUnzipListener()
+  MockUnzipListener(base::RunLoop* run_loop)
       : success_calls_(0),
         failure_calls_(0),
         progress_calls_(0),
-        current_progress_(0) {
+        current_progress_(0),
+        run_loop_(run_loop) {
   }
 
   // Success callback for async functions.
   void OnUnzipSuccess() {
     success_calls_++;
+    run_loop_->Quit();
   }
 
   // Failure callback for async functions.
   void OnUnzipFailure() {
     failure_calls_++;
+    run_loop_->Quit();
   }
 
   // Progress callback for async functions.
@@ -103,6 +107,7 @@ class MockUnzipListener : public base::SupportsWeakPtr<MockUnzipListener> {
   int progress_calls_;
 
   int64_t current_progress_;
+  base::RunLoop* run_loop_;
 };
 
 class MockWriterDelegate : public zip::WriterDelegate {
@@ -481,27 +486,29 @@ TEST_F(ZipReaderTest, OpenFromString) {
 
 // Verifies that the asynchronous extraction to a file works.
 TEST_F(ZipReaderTest, ExtractToFileAsync_RegularFile) {
-  MockUnzipListener listener;
+  base::RunLoop run_loop;
+  MockUnzipListener listener(&run_loop);
 
   ZipReader reader;
   base::FilePath target_file = test_dir_.AppendASCII("quux.txt");
   base::FilePath target_path(FILE_PATH_LITERAL("foo/bar/quux.txt"));
   ASSERT_TRUE(reader.Open(test_zip_file_));
   ASSERT_TRUE(reader.LocateAndOpenEntry(target_path));
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(base::MayBlock());
   reader.ExtractCurrentEntryToFilePathAsync(
-      target_file,
-      base::Bind(&MockUnzipListener::OnUnzipSuccess,
-                 listener.AsWeakPtr()),
-      base::Bind(&MockUnzipListener::OnUnzipFailure,
-                 listener.AsWeakPtr()),
-      base::Bind(&MockUnzipListener::OnUnzipProgress,
-                 listener.AsWeakPtr()));
+      task_runner, target_file,
+      base::BindOnce(&MockUnzipListener::OnUnzipSuccess, listener.AsWeakPtr()),
+      base::BindOnce(&MockUnzipListener::OnUnzipFailure, listener.AsWeakPtr()),
+      base::BindRepeating(&MockUnzipListener::OnUnzipProgress,
+                          listener.AsWeakPtr()));
 
   EXPECT_EQ(0, listener.success_calls());
   EXPECT_EQ(0, listener.failure_calls());
   EXPECT_EQ(0, listener.progress_calls());
 
-  base::RunLoop().RunUntilIdle();
+  // Block until either OnUnzipProgress() or OnUnzipFailure() is called.
+  run_loop.Run();
 
   EXPECT_EQ(1, listener.success_calls());
   EXPECT_EQ(0, listener.failure_calls());
@@ -521,7 +528,8 @@ TEST_F(ZipReaderTest, ExtractToFileAsync_RegularFile) {
 
 // Verifies that the asynchronous extraction to a file works.
 TEST_F(ZipReaderTest, ExtractToFileAsync_Directory) {
-  MockUnzipListener listener;
+  base::RunLoop run_loop;
+  MockUnzipListener listener(&run_loop);
 
   ZipReader reader;
   base::FilePath target_file = test_dir_.AppendASCII("foo");
@@ -529,19 +537,18 @@ TEST_F(ZipReaderTest, ExtractToFileAsync_Directory) {
   ASSERT_TRUE(reader.Open(test_zip_file_));
   ASSERT_TRUE(reader.LocateAndOpenEntry(target_path));
   reader.ExtractCurrentEntryToFilePathAsync(
-      target_file,
-      base::Bind(&MockUnzipListener::OnUnzipSuccess,
-                 listener.AsWeakPtr()),
-      base::Bind(&MockUnzipListener::OnUnzipFailure,
-                 listener.AsWeakPtr()),
-      base::Bind(&MockUnzipListener::OnUnzipProgress,
-                 listener.AsWeakPtr()));
+      base::CreateSequencedTaskRunnerWithTraits(base::MayBlock()), target_file,
+      base::BindOnce(&MockUnzipListener::OnUnzipSuccess, listener.AsWeakPtr()),
+      base::BindOnce(&MockUnzipListener::OnUnzipFailure, listener.AsWeakPtr()),
+      base::BindRepeating(&MockUnzipListener::OnUnzipProgress,
+                          listener.AsWeakPtr()));
 
   EXPECT_EQ(0, listener.success_calls());
   EXPECT_EQ(0, listener.failure_calls());
   EXPECT_EQ(0, listener.progress_calls());
 
-  base::RunLoop().RunUntilIdle();
+  // Block until either OnUnzipProgress() or OnUnzipFailure() is called.
+  run_loop.Run();
 
   EXPECT_EQ(1, listener.success_calls());
   EXPECT_EQ(0, listener.failure_calls());
