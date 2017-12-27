@@ -54,16 +54,16 @@ class SelectToSpeakEventRewriter : public ui::EventRewriter {
       std::unique_ptr<ui::Event>* new_event) override;
 
   enum State {
-    // Neither the Search key nor the mouse button are down.
+    // The search key is not down. No other keys or mouse events are captured.
     INACTIVE,
 
-    // The Search key is down but the mouse button is not.
+    // The Search key is down but the mouse button and 'S' key are not.
     SEARCH_DOWN,
 
     // The user held down Search and clicked the mouse button. We're capturing
-    // all events from now on until either Search or the mouse button is
+    // all mouse events from now on until either Search or the mouse button is
     // released.
-    CAPTURING,
+    CAPTURING_MOUSE,
 
     // The mouse was released, but Search is still held down. If the user
     // clicks again, we'll go back to the state CAPTURING. This is different
@@ -75,7 +75,22 @@ class SelectToSpeakEventRewriter : public ui::EventRewriter {
     // The Search key was released while the mouse was still down, cancelling
     // the Select-to-Speak event. Stay in this mode until the mouse button
     // is released, too.
-    WAIT_FOR_MOUSE_RELEASE
+    WAIT_FOR_MOUSE_RELEASE,
+
+    // The user held down Search and clicked the S button. We're waiting for
+    // the event where the S key is released or the search key is released.
+    CAPTURING_S,
+
+    // The user held down Search and clicked and released the S button. We
+    // will wait for the Search key to be released too. This is different
+    // than SEARCH_DOWN because we know the user used the S key, so when
+    // Search is released we will capture that event to not trigger opening
+    // the Search UI.
+    S_RELEASED,
+
+    // The Search key was released while the S key was still down. Stay in this
+    // mode until the S key is released too.
+    WAIT_FOR_S_RELEASE
   };
 
   State state_ = INACTIVE;
