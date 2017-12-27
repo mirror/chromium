@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce3e0317_10fccc28",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "unfortunately, browser_tests still depends on FakeSessionManagerClient via chain browser_tests -\u003e chromeos:test_support -\u003e chromeos:test_support_without_gmock",
+      "parentUuid": "9f009def_af8c7087",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2101f5f_e55b7aaf",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a9d0104b_624b92f5",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2101f5f_e55b7aaf",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9b4e63_36f73ab4",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26c1063_640a2c24",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9b4e63_36f73ab4",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "36ce3931_bbba7cf1",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1490ef1f_c2e5bac1",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9db1d40_0cdde66f",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90fa45c_c35dff82",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9db1d40_0cdde66f",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "4d76d5b2_86d84a6c",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a13a0325_639c9062",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4ee5ae_e0d24cbe",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904172f2_33a90869",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4ee5ae_e0d24cbe",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "463ae3e2_f050c89b",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30939345_32cdcd84",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5f2732_9072038f",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -158,6 +308,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b88b18_3e5ccf74",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5f2732_9072038f",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "243dd521_af5e182a",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5059f8_3eb89969",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c610ac85_52dcd752",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
@@ -192,6 +378,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78ab1ba_d726af13",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "CHECK is the original implementation in the stub. I would like to keep the behavior unchanged.",
+      "parentUuid": "c610ac85_52dcd752",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "435419f8_60a5a9df",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc023135_8ff345fd",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012ca16d_64adc81b",
         "filename": "chromeos/dbus/fake_session_manager_client.h",
         "patchSetId": 4
@@ -223,6 +445,24 @@
       "writtenOn": "2017-12-27T14:10:24Z",
       "side": 1,
       "message": "Could you add TODO to notify observers always, so that this can be removed?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc3efed_56f5c624",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "How do I find the right assignee for the TODO?\n\n\nEMIT_OBSERVERS only fail one browser tests KioskVirtualKeyboardTest.RestrictFeatures on\n[197545:197545:1227/163909.842781:FATAL:audio_manager_base.cc(316)] Check failed: GetTaskRunner()-\u003eBelongsToCurrentThread(). \n\n\nI did some digging, it fails in the following code path:\nvisibleN8chromeos21LoginDisplayHostWebUIE (which is chromeos::LoginDisplayHostWebUI:EmitLoginPromptVisible) --\u003e  TryToPlayStartupSound()",
+      "parentUuid": "012ca16d_64adc81b",
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -243,6 +483,24 @@
       "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3775243e_2ea23c57",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc86d453_da50ab25",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
