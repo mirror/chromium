@@ -16,6 +16,57 @@
       "revId": "4f25de76b6685a29f06fce5b466e28b3a6d3beb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200e4eff_169681c4",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T19:49:58Z",
+      "side": 0,
+      "message": "Similar to addr2line, you\u0027re removing both call sites of CallCppFilt within the stack script. (cygprofile is still calling it, but w/ it no longer being necessary here, we should just move CallCppFilt over into that script in a separate CL.)\n\nGiven that stack.py no longer calls cppfilt, it shouldn\u0027t be necessary as a runtime dependency in gn.",
+      "revId": "4f25de76b6685a29f06fce5b466e28b3a6d3beb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce043a25_af234ecc",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T19:49:58Z",
+      "side": 0,
+      "message": "addr2line had two call sites in this script: here and below. You\u0027re removing both in this CL, so addr2line should no longer be a runtime dependency of the script \u0026 can thus be removed from stack_py\u0027s data field in gn.",
+      "revId": "4f25de76b6685a29f06fce5b466e28b3a6d3beb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7063c9a4_2b7fb61a",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T19:49:58Z",
+      "side": 0,
+      "message": "Same thing goes for objdump. This is the lone call site of objdump in stack.py. Removing it means the script no longer needs the objdump binary to execute, so we should be able to remove it from gn.",
+      "revId": "4f25de76b6685a29f06fce5b466e28b3a6d3beb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
