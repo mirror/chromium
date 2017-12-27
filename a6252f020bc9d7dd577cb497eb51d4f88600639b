@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f009def_af8c7087",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Now, can these be removed?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2101f5f_e55b7aaf",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "We often avoid using \"const char*\" directly. How about using \"const std::string\u0026\" or StringPiece?",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9b4e63_36f73ab4",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "nit/optional: I personally recommend to avoid casting from unsigned to signed.\nE.g.,\nif (path.empty() || !base::CreateDirectory(...)) {\n  LOG(ERROR) ...;\n  return;\n}\nint result \u003d base::WriteFile(...);\nif (result \u003d\u003d -1 || static_cast\u003csize_t\u003e(result) !\u003d data.size())\n  LOG(ERROR) ...;",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1490ef1f_c2e5bac1",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Could you elide the braces for one-line-ish for- (and if-, while-) stmts?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9db1d40_0cdde66f",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13a0325_639c9062",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Could you PostTask() to be a bit more compatible with the real impl?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4ee5ae_e0d24cbe",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30939345_32cdcd84",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "IIUC, because there is no guarantee that this completes before the |callback| is called via PostTaskWithTraitsAndReply called later in this way, it may be difficult to debug in some rare cases. Could you invoke |callback| after this is completed, e.g. by merging this and StoreFile for PostTaskWithTraitsAndReply below?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5f2732_9072038f",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5059f8_3eb89969",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c610ac85_52dcd752",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Can DCHECK work?\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc023135_8ff345fd",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Can this be moved to FakeSessionManagerClient?\nSpecifically, \"chromeos::NONE\" looks somewhat too generic to me for this purpose.\n\noptional: because this is bit flags rather than actual enum,\nhow about declaring this as unsigned?\n\nclass FakeSessionManagerClient ... {\n public:\n  enum Options : uint32_t {\n    NONE \u003d 0,\n    ...",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012ca16d_64adc81b",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "Could you add TODO to notify observers always, so that this can be removed?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc86d453_da50ab25",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T14:10:24Z",
+      "side": 1,
+      "message": "This stores bitwise or, so could you change the type to uint32_t with comment?",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
