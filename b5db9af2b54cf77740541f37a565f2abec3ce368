@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c46b277_c7e3a2fc",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T13:35:06Z",
+      "side": 1,
+      "message": "Can this be removed now?\nOr, if it is difficult, could you add TODO to remove this?",
+      "revId": "b5db9af2b54cf77740541f37a565f2abec3ce368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7664929_73881565",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-27T13:35:06Z",
+      "side": 1,
+      "message": "const base::Optional\u003cBaseReply\u003e\u0026 reply ?",
+      "revId": "b5db9af2b54cf77740541f37a565f2abec3ce368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
