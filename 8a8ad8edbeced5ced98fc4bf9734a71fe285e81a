@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a914364_d37f32d3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-27T13:33:12Z",
+      "side": 1,
+      "message": "\u003e Are you sure that both of these collections not empty? Isn\u0027t it better to use DCHECK somewhere?\n\nThere was a DCHECK for all_control_elements in |GetUsernameFieldBasedOnHtmlAttributes|, I\u0027ve moved it here.",
+      "parentUuid": "294ae7dc_7e5c6e8a",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f9ff1b_f98caf33",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba1e2af_9dc5db1c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-27T13:33:12Z",
+      "side": 1,
+      "message": "\u003e Why do you need to call reserve here? |field_data_value| is not modified anywhere later. Did you mean token.reserver()?\n\nIt is modified in line 112. A token is appended to |field_data_value|.",
+      "parentUuid": "46f9ff1b_f98caf33",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "828ebc46_c8a5ca50",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-27T13:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02006014_9ddc71bf",
+      "range": {
+        "startLine": 305,
+        "startChar": 47,
+        "endLine": 305,
+        "endChar": 60
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cae93de_db364d34",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9471357_a5270735",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-27T13:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cae93de_db364d34",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 10
+      },
+      "revId": "8a8ad8edbeced5ced98fc4bf9734a71fe285e81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
