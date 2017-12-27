@@ -59,7 +59,7 @@ IndirectReference ReferenceSet::at(offset_t offset) const {
                          return offset < ref.location;
                        });
 
-  DCHECK(pos != references_.begin());
+  DCHECK(pos != references_.begin());  // Iterators.
   --pos;
   DCHECK_LT(offset, pos->location + width());
   return *pos;
