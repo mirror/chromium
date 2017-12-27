@@ -44,6 +44,34 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
          item_result.needs_box_when_empty;
 }
 
+struct NGLineAlignInfo {
+  explicit NGLineAlignInfo(const NGLineInfo&);
+  NGLineAlignInfo() = delete;
+
+  LayoutUnit space_to_align;
+  unsigned end_index;
+  unsigned end_offset;
+};
+
+NGLineAlignInfo::NGLineAlignInfo(const NGLineInfo& line_info) {
+  const NGInlineItemResults& item_results = line_info.Results();
+  end_index = item_results.size();
+  end_offset = 0;
+  LayoutUnit width = line_info.Width();
+  for (; end_index; end_index--) {
+    const NGInlineItemResult& item_result = item_results[end_index - 1];
+    if (!item_result.is_trailing_spaces) {
+      end_offset = item_result.end_offset;
+      break;
+    }
+  }
+
+  LayoutUnit available_width = line_info.AvailableWidth();
+  if (IsRtl(line_info.BaseDirection()))
+    available_width += line_info.TextIndent();
+  space_to_align = available_width - width;
+}
+
 }  // namespace
 
 NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
@@ -218,10 +246,11 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
 
   // Other 'text-align' values than 'justify' move line boxes as a whole, but
   // indivisual items do not change their relative position to the line box.
-  if (text_align != ETextAlign::kJustify) {
-    ApplyTextAlign(*line_info, text_align, &line_bfc_offset.line_offset,
-                   inline_size);
-  }
+  if (text_align != ETextAlign::kJustify)
+    line_bfc_offset.line_offset += ApplyTextAlign(*line_info, text_align);
+
+  if (IsLtr(line_info->BaseDirection()))
+    line_bfc_offset.line_offset += line_info->TextIndent();
 
   if (list_marker_index.has_value()) {
     NGListLayoutAlgorithm::SetListMarkerPosition(
@@ -383,33 +412,35 @@ void NGInlineLayoutAlgorithm::PlaceListMarker(const NGInlineItem& item,
 // Justify the line. This changes the size of items by adding spacing.
 // Returns false if justification failed and should fall back to start-aligned.
 bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
-  LayoutUnit inline_size;
-  LayoutUnit available_width = line_info->AvailableWidth();
-  if (line_info->LineEndShapeResult())
-    available_width -= line_info->LineEndShapeResult()->SnappedWidth();
-  LayoutUnit expansion = available_width - line_info->Width();
-  if (expansion <= 0)
+  NGLineAlignInfo align(*line_info);
+  if (align.space_to_align <= 0)
     return false;  // no expansion is needed.
 
   // Construct the line text to compute spacing for.
   String line_text =
-      Node().Text(line_info->StartOffset(), line_info->EndOffset()).ToString();
+      Node().Text(line_info->StartOffset(), align.end_offset).ToString();
+  LOG(INFO) << line_text
+            << Node().Text(align.end_offset, Node().Text().length()).ToString();
 
+#if 0
   // Append a hyphen if the last word is hyphenated. The hyphen is in
   // |ShapeResult|, but not in text. |ShapeResultSpacing| needs the text that
   // matches to the |ShapeResult|.
   const NGInlineItemResult& last_item_result = line_info->Results().back();
   if (last_item_result.text_end_effect == NGTextEndEffect::kHyphen)
     line_text.append(last_item_result.item->Style()->HyphenString());
+#endif
 
   // Compute the spacing to justify.
   ShapeResultSpacing<String> spacing(line_text);
-  spacing.SetExpansion(expansion, line_info->BaseDirection(),
+  spacing.SetExpansion(align.space_to_align, line_info->BaseDirection(),
                        line_info->LineStyle().GetTextJustify());
   if (!spacing.HasExpansion())
     return false;  // no expansion opportunities exist.
 
-  for (NGInlineItemResult& item_result : line_info->Results()) {
+  NGInlineItemResults& item_results = line_info->Results();
+  for (unsigned i = 0; i < align.end_index; i++) {
+    NGInlineItemResult& item_result = item_results[i];
     if (item_result.shape_result) {
       // Mutate the existing shape result if only used here, if not create a
       // copy.
@@ -435,42 +466,41 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
   return true;
 }
 
-void NGInlineLayoutAlgorithm::ApplyTextAlign(const NGLineInfo& line_info,
-                                             ETextAlign text_align,
-                                             LayoutUnit* line_left,
-                                             LayoutUnit inline_size) {
+// Apply the 'text-align' property and returns the amount to shift in the inline
+// direction.
+LayoutUnit NGInlineLayoutAlgorithm::ApplyTextAlign(const NGLineInfo& line_info,
+                                                   ETextAlign text_align) {
   bool is_base_ltr = IsLtr(line_info.BaseDirection());
-  LayoutUnit available_width = line_info.AvailableWidth();
   while (true) {
     switch (text_align) {
       case ETextAlign::kLeft:
-      case ETextAlign::kWebkitLeft:
+      case ETextAlign::kWebkitLeft: {
         // The direction of the block should determine what happens with wide
         // lines. In particular with RTL blocks, wide lines should still spill
         // out to the left.
-        if (!is_base_ltr && inline_size > available_width)
-          *line_left -= inline_size - available_width;
-        return;
+        if (is_base_ltr)
+          return LayoutUnit();
+        NGLineAlignInfo align(line_info);
+        return align.space_to_align.ClampPositiveToZero();
+      }
       case ETextAlign::kRight:
-      case ETextAlign::kWebkitRight:
+      case ETextAlign::kWebkitRight: {
         // Wide lines spill out of the block based off direction.
         // So even if text-align is right, if direction is LTR, wide lines
         // should overflow out of the right side of the block.
-        if (inline_size < available_width || !is_base_ltr)
-          *line_left += available_width - inline_size;
-        return;
+        NGLineAlignInfo align(line_info);
+        if (align.space_to_align > 0 || !is_base_ltr)
+          return align.space_to_align;
+        return LayoutUnit();
+      }
       case ETextAlign::kCenter:
-      case ETextAlign::kWebkitCenter:
-        if (is_base_ltr) {
-          *line_left +=
-              std::max((available_width - inline_size) / 2, LayoutUnit());
-        } else if (inline_size <= available_width) {
-          *line_left += (available_width - inline_size) / 2;
-        } else {
-          // In RTL, wide lines should spill out to the left, same as kRight.
-          *line_left += available_width - inline_size;
-        }
-        return;
+      case ETextAlign::kWebkitCenter: {
+        NGLineAlignInfo align(line_info);
+        if (is_base_ltr || align.space_to_align > 0)
+          return (align.space_to_align / 2).ClampNegativeToZero();
+        // In RTL, wide lines should spill out to the left, same as kRight.
+        return align.space_to_align;
+      }
       case ETextAlign::kStart:
         text_align = is_base_ltr ? ETextAlign::kLeft : ETextAlign::kRight;
         continue;
@@ -480,10 +510,10 @@ void NGInlineLayoutAlgorithm::ApplyTextAlign(const NGLineInfo& line_info,
       case ETextAlign::kJustify:
         // Justification is applied in earlier phase, see PlaceItems().
         NOTREACHED();
-        return;
+        return LayoutUnit();
     }
     NOTREACHED();
-    return;
+    return LayoutUnit();
   }
 }
 
