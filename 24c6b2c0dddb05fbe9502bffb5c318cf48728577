@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dae4082_52274cfe",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Should we be removing pixel_format and buffer_size from PictureBufferFormat if we are not sending them anymore?\n\nOr perhaps we should keep them and still provide them to client to allow negotiation?\nPerhaps being able to send a vector of supported formats (possibly even in order of preference) would be useful? We may e.g. support overlays for some formats and prefer them, but the client could choose if it could provide that format or not, depending on the client/use case?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70deac4b_429cae92",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Could we still support RGBA formats as well if clients needed to use them?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a575d1ac_0d88a8a8",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "With the removal of output_pixel_format_, this method does not need to access any GAVDA members anymore as far as I can see. Perhaps we should make it out-of-class and static local to this .cc?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0536b125_c5fb52f7",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Perhaps also num_planes !\u003d 0 to handle error returns from NumPlanes()?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538dda63_b57dfeb1",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Please update documentation.",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abd4e95_53c3ddc5",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Is it fine to remove ARM-only check given the above TODO and issue? From the above, we needed to revert NV12 import due to issues?",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 43
+      },
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4eb8a58_f5704166",
+        "filename": "media/gpu/v4l2/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Could we instead store the formats enumerated in SetupFormats(), and try to match them here perhaps? Since we\u0027d only be able to support one format, perhaps we could set output_format_fourcc_ to the format of the first ImportBufferForPicture(), and then only keep checking against it for further imports?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e7cb76_84848a32",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Could we use enumerated formats instead (please see the comment in V4L2SVDA), also taking into account image processor (possibly negotiating from here)?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d97ce3d_a4232330",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "I think this would make GetBufferFormatForImportMode() obsolete and we could remove it.\n\nHowever, if we chose to keep sending the supported formats in ProvidePictureBuffers (which I think could be useful), could we use it for that instead?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e60d5c_0112f2f6",
+        "filename": "media/video/video_decode_accelerator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-27T00:38:52Z",
+      "side": 1,
+      "message": "Imports |gpu_memory_buffer_handle|, pointing to a buffer in |pixel_format|, as backing memory for picture buffer associated with |picture_buffer_id|.\n\nCould we define how this relates to pixel_format in ProvidePictureBuffers() (as well as Config::supported_output_formats) please?\n\nMy current feeling is that, given that ProvidePictureBuffers() allows only one format and not a vector, we could either make it use a vector, or pass only the most preferred format to PPB(), while providing the full vector in Config::supported_output_formats?\n\nAlso, what should happen if pixel_format differed for subsequent calls to ImportBufferForPicture()? Perhaps we could leave it to be implementation dependent/up to each particular VDA whether it supports multiple formats in one session?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
