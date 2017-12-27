@@ -2102,7 +2102,7 @@ TEST_P(CompositedLayerMappingTest, StickyPositionMainThreadOffset) {
 
   sticky_layer->SetNeedsCompositingInputsUpdate();
   EXPECT_TRUE(sticky_layer->NeedsCompositingInputsUpdate());
-  GetDocument().View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+  GetDocument().View()->UpdateLifecycleToPrePaintClean();
   EXPECT_FALSE(sticky_layer->NeedsCompositingInputsUpdate());
 }
 
