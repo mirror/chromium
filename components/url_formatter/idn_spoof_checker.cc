@@ -43,9 +43,12 @@ bool LookupMatchInTopDomains(base::StringPiece skeleton) {
 
   while (labels.size() > 1) {
     std::string partial_skeleton = base::JoinString(labels, ".");
-    if (net::LookupStringInFixedSet(
-            g_graph, g_graph_length, partial_skeleton.data(),
-            partial_skeleton.length()) != net::kDafsaNotFound)
+    net::FixedSetIncrementalLookup lookup(g_graph, g_graph_length);
+    for (char c : partial_skeleton) {
+      if (!lookup.Advance(c))
+        break;
+    }
+    if (lookup.GetResultForCurrentSequence() != net::kDafsaNotFound)
       return true;
     labels.erase(labels.begin());
   }
