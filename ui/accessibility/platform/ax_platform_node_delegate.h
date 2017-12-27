@@ -96,6 +96,8 @@ class AX_EXPORT AXPlatformNodeDelegate {
   virtual std::set<int32_t> GetReverseRelations(AXIntListAttribute attr,
                                                 int32_t dst_id) = 0;
 
+  virtual int32_t GetUniqueId() const = 0;
+
   //
   // Events.
   //

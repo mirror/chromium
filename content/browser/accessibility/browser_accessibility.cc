@@ -17,6 +17,7 @@
 #include "content/common/accessibility_messages.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -30,7 +31,9 @@ BrowserAccessibility* BrowserAccessibility::Create() {
 #endif
 
 BrowserAccessibility::BrowserAccessibility()
-    : manager_(nullptr), node_(nullptr) {}
+    : manager_(nullptr),
+      node_(nullptr),
+      unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {}
 
 BrowserAccessibility::~BrowserAccessibility() {
 }
@@ -866,6 +869,13 @@ std::set<int32_t> BrowserAccessibility::GetReverseRelations(
     int32_t dst_id) {
   DCHECK(manager_);
   return manager_->ax_tree()->GetReverseRelations(attr, dst_id);
+}
+
+int32_t BrowserAccessibility::GetUniqueId() const {
+  // This is not the same as GetData().id which comes from Blink, because
+  // those ids are only unique within the Blink process. We need one that is
+  // unique for the browser process.
+  return unique_id_;
 }
 
 gfx::NativeViewAccessible BrowserAccessibility::GetNativeViewAccessible() {

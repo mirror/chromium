@@ -49,6 +49,8 @@ class VIEWS_EXPORT ViewAccessibility {
   virtual gfx::NativeViewAccessible GetNativeObject();
   virtual void NotifyAccessibilityEvent(ui::AXEvent event_type) {}
 
+  virtual int32_t GetUniqueId() const;
+
  protected:
   explicit ViewAccessibility(View* view);
 
@@ -57,6 +59,8 @@ class VIEWS_EXPORT ViewAccessibility {
  private:
   // Weak. Owns this.
   View* const owner_view_;
+
+  const int32_t unique_id_;
 
   // Contains data set explicitly via SetRole, SetName, etc. that overrides
   // anything provided by GetAccessibleNodeData().

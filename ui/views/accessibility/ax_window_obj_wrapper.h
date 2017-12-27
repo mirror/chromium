@@ -34,7 +34,7 @@ class AXWindowObjWrapper : public AXAuraObjWrapper,
   AXAuraObjWrapper* GetParent() override;
   void GetChildren(std::vector<AXAuraObjWrapper*>* out_children) override;
   void Serialize(ui::AXNodeData* out_node_data) override;
-  int32_t GetID() override;
+  int32_t GetUniqueId() const final;
 
   // WindowObserver overrides.
   void OnWindowDestroyed(aura::Window* window) override;
@@ -54,6 +54,8 @@ class AXWindowObjWrapper : public AXAuraObjWrapper,
   bool is_alert_;
 
   bool is_root_window_;
+
+  const int32_t unique_id_;
 
   DISALLOW_COPY_AND_ASSIGN(AXWindowObjWrapper);
 };

@@ -733,6 +733,7 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessibleChildAndParent) {
   LONG button_unique_id;
   ComPtr<IAccessible2> button_iaccessible2 = ToIAccessible2(button_iaccessible);
   button_iaccessible2->get_uniqueID(&button_unique_id);
+  LOG(ERROR) << "Button unique id " << button_unique_id;
   ASSERT_LT(button_unique_id, 0);
   {
     ComPtr<IDispatch> result;
