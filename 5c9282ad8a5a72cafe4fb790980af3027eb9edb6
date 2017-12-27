@@ -105,6 +105,24 @@
       "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d56b1c8_e9b359b0",
+        "filename": "ui/login/display_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-27T21:13:48Z",
+      "side": 1,
+      "message": "Actually, to show views based shelf during OOBE this method is needed, but the list of conditions needs to be extended. I will not remove the code here and keep this cl as a refactor only. I will get back to this issues separately.",
+      "parentUuid": "858e12a3_96ec4a74",
+      "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
