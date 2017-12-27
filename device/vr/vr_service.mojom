@@ -152,3 +152,4 @@ interface VRDisplayClient {
   OnActivate(VRDisplayEventReason reason) => (bool will_not_present);
   OnDeactivate(VRDisplayEventReason reason);
 };
+
