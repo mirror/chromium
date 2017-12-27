@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1328927c_6bea5130",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T19:11:34Z",
+      "side": 1,
+      "message": "Maybe an optional as the storage mechanism then?",
+      "revId": "8f5089f507a816aefb3dcfa94ff4e7102856cd29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
