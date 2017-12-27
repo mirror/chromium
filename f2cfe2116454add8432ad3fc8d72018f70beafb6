@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2b83bb_36d2b3e3",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-27T21:48:43Z",
+      "side": 1,
+      "message": "Side note: Is the TODO on line 1433 of r521188 incorrect?  (It said we could remove these checks after hosted apps are refactored.)  No implications for this CL, but if so, we could remove that TODO when we land the new tests on trunk.",
+      "revId": "f2cfe2116454add8432ad3fc8d72018f70beafb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
