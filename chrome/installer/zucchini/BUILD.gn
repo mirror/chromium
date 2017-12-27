@@ -39,8 +39,6 @@ static_library("zucchini_lib") {
     "image_utils.h",
     "io_utils.cc",
     "io_utils.h",
-    "label_manager.cc",
-    "label_manager.h",
     "patch_reader.cc",
     "patch_reader.h",
     "patch_utils.h",
@@ -140,11 +138,9 @@ test("zucchini_unittests") {
     "crc32_unittest.cc",
     "element_detection_unittest.cc",
     "encoded_view_unittest.cc",
-    "equivalence_map_unittest.cc",
     "image_index_unittest.cc",
     "image_utils_unittest.cc",
     "io_utils_unittest.cc",
-    "label_manager_unittest.cc",
     "mapped_file_unittest.cc",
     "patch_read_write_unittest.cc",
     "patch_utils_unittest.cc",
@@ -162,8 +158,6 @@ test("zucchini_unittests") {
     "test_utils.cc",
     "test_utils.h",
     "typed_value_unittest.cc",
-    "zucchini_apply_unittest.cc",
-    "zucchini_gen_unittest.cc",
   ]
 
   deps = [

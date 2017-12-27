@@ -24,7 +24,7 @@ TEST(TargetsAffinityTest, AffinityBetween) {
   TargetsAffinity targets_affinity;
 
   auto test_affinity = [&targets_affinity](
-                           const EquivalenceMap& equivalence_map,
+                           const SimilarityMap& equivalence_map,
                            const std::vector<offset_t>& old_targets,
                            const std::vector<offset_t>& new_targets) {
     targets_affinity.InferFromSimilarities(equivalence_map, old_targets,
@@ -38,38 +38,38 @@ TEST(TargetsAffinityTest, AffinityBetween) {
     return affinities;
   };
 
-  EXPECT_EQ(AffinityVector({}), test_affinity(EquivalenceMap(), {}, {}));
+  EXPECT_EQ(AffinityVector({}), test_affinity(SimilarityMap(), {}, {}));
   EXPECT_EQ(AffinityVector({}),
-            test_affinity(EquivalenceMap({{{0, 0, 8}, 1.0}}), {}, {}));
+            test_affinity(SimilarityMap({{{0, 0, 8}, 1.0}}), {}, {}));
 
   EXPECT_EQ(AffinityVector({{0.0, 0.0}, {0.0, 0.0}}),
-            test_affinity(EquivalenceMap(), {0, 10}, {0, 5}));
+            test_affinity(SimilarityMap(), {0, 10}, {0, 5}));
 
   EXPECT_EQ(AffinityVector({{1.0, -1.0}, {-1.0, 0.0}}),
-            test_affinity(EquivalenceMap({{{0, 0, 1}, 1.0}}), {0, 10}, {0, 5}));
+            test_affinity(SimilarityMap({{{0, 0, 1}, 1.0}}), {0, 10}, {0, 5}));
 
   EXPECT_EQ(AffinityVector({{1.0, -1.0}, {-1.0, 0.0}}),
-            test_affinity(EquivalenceMap({{{0, 0, 2}, 1.0}}), {1, 10}, {1, 5}));
+            test_affinity(SimilarityMap({{{0, 0, 2}, 1.0}}), {1, 10}, {1, 5}));
 
   EXPECT_EQ(AffinityVector({{0.0, 0.0}, {0.0, 0.0}}),
-            test_affinity(EquivalenceMap({{{0, 1, 2}, 1.0}}), {1, 10}, {1, 5}));
+            test_affinity(SimilarityMap({{{0, 1, 2}, 1.0}}), {1, 10}, {1, 5}));
 
   EXPECT_EQ(AffinityVector({{1.0, -1.0}, {-1.0, 0.0}}),
-            test_affinity(EquivalenceMap({{{0, 1, 2}, 1.0}}), {0, 10}, {1, 5}));
+            test_affinity(SimilarityMap({{{0, 1, 2}, 1.0}}), {0, 10}, {1, 5}));
 
   EXPECT_EQ(AffinityVector({{2.0, -2.0}, {-2.0, 0.0}}),
-            test_affinity(EquivalenceMap({{{0, 0, 1}, 2.0}}), {0, 10}, {0, 5}));
+            test_affinity(SimilarityMap({{{0, 0, 1}, 2.0}}), {0, 10}, {0, 5}));
 
   EXPECT_EQ(
       AffinityVector({{1.0, -1.0}, {-1.0, 1.0}, {-1.0, -1.0}}),
-      test_affinity(EquivalenceMap({{{0, 0, 6}, 1.0}}), {0, 5, 10}, {0, 5}));
+      test_affinity(SimilarityMap({{{0, 0, 6}, 1.0}}), {0, 5, 10}, {0, 5}));
 
   EXPECT_EQ(AffinityVector({{-2.0, 2.0}, {1.0, -2.0}, {-1.0, -2.0}}),
-            test_affinity(EquivalenceMap({{{5, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
+            test_affinity(SimilarityMap({{{5, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
                           {0, 5, 10}, {0, 5}));
 
   EXPECT_EQ(AffinityVector({{-2.0, 2.0}, {0.0, -2.0}, {0.0, -2.0}}),
-            test_affinity(EquivalenceMap({{{0, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
+            test_affinity(SimilarityMap({{{0, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
                           {0, 5, 10}, {0, 5}));
 }
 
@@ -80,7 +80,7 @@ TEST(TargetsAffinityTest, AssignLabels) {
   TargetsAffinity targets_affinity;
 
   auto test_labels_assignment =
-      [&targets_affinity](const EquivalenceMap& equivalence_map,
+      [&targets_affinity](const SimilarityMap& equivalence_map,
                           const std::vector<offset_t>& old_targets,
                           const std::vector<offset_t>& new_targets,
                           double min_affinity,
@@ -97,34 +97,34 @@ TEST(TargetsAffinityTest, AssignLabels) {
         return bound;
       };
 
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap(), {}, {}, 1.0, {}, {}));
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap({{{0, 0, 8}, 1.0}}), {},
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap(), {}, {}, 1.0, {}, {}));
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap({{{0, 0, 8}, 1.0}}), {},
                                        {}, 1.0, {}, {}));
 
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap(), {0, 10}, {0, 5}, 1.0,
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap(), {0, 10}, {0, 5}, 1.0,
                                        {0, 0}, {0, 0}));
 
-  EXPECT_EQ(2U, test_labels_assignment(EquivalenceMap({{{0, 0, 1}, 1.0}}),
+  EXPECT_EQ(2U, test_labels_assignment(SimilarityMap({{{0, 0, 1}, 1.0}}),
                                        {0, 10}, {0, 5}, 1.0, {1, 0}, {1, 0}));
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap({{{0, 0, 1}, 0.99}}),
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap({{{0, 0, 1}, 0.99}}),
                                        {0, 10}, {0, 5}, 1.0, {0, 0}, {0, 0}));
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap({{{0, 0, 1}, 1.0}}),
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap({{{0, 0, 1}, 1.0}}),
                                        {0, 10}, {0, 5}, 1.01, {0, 0}, {0, 0}));
-  EXPECT_EQ(1U, test_labels_assignment(EquivalenceMap({{{0, 0, 1}, 1.0}}),
+  EXPECT_EQ(1U, test_labels_assignment(SimilarityMap({{{0, 0, 1}, 1.0}}),
                                        {0, 10}, {0, 5}, 15.0, {0, 0}, {0, 0}));
-  EXPECT_EQ(2U, test_labels_assignment(EquivalenceMap({{{0, 0, 1}, 15.0}}),
+  EXPECT_EQ(2U, test_labels_assignment(SimilarityMap({{{0, 0, 1}, 15.0}}),
                                        {0, 10}, {0, 5}, 15.0, {1, 0}, {1, 0}));
 
-  EXPECT_EQ(2U, test_labels_assignment(EquivalenceMap({{{0, 1, 2}, 1.0}}),
+  EXPECT_EQ(2U, test_labels_assignment(SimilarityMap({{{0, 1, 2}, 1.0}}),
                                        {0, 10}, {1, 5}, 1.0, {1, 0}, {1, 0}));
   EXPECT_EQ(
-      3U, test_labels_assignment(EquivalenceMap({{{0, 0, 6}, 1.0}}), {0, 5, 10},
+      3U, test_labels_assignment(SimilarityMap({{{0, 0, 6}, 1.0}}), {0, 5, 10},
                                  {0, 5}, 1.0, {1, 2, 0}, {1, 2}));
   EXPECT_EQ(3U, test_labels_assignment(
-                    EquivalenceMap({{{5, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
+                    SimilarityMap({{{5, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
                     {0, 5, 10}, {0, 5}, 1.0, {1, 2, 0}, {2, 1}));
   EXPECT_EQ(2U, test_labels_assignment(
-                    EquivalenceMap({{{0, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
+                    SimilarityMap({{{0, 0, 2}, 1.0}, {{0, 5, 2}, 2.0}}),
                     {0, 5, 10}, {0, 5}, 1.0, {1, 0, 0}, {0, 1}));
 }
 
