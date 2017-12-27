@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef1b7dc_63cbbeae",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-27T16:23:28Z",
+      "side": 1,
+      "message": "Bring these tests in TargetPool",
+      "revId": "41d7b1bd92cda850b8447201eed40b2b29e5e70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
