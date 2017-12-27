@@ -14,45 +14,27 @@
 
 namespace zucchini {
 
-class Disassembler;
 class EquivalenceMap;
+class SimilarityMap;
 class ImageIndex;
-class OrderedLabelManager;
 class PatchElementWriter;
+class ReferenceDeltaSink;
+class ReferenceSet;
+class TargetPool;
 
-// Creates an ImageIndex and initializes it with references from |disasm|.
-// Returns nullopt on error.
-base::Optional<ImageIndex> MakeImageIndex(Disassembler* disasm);
-
-// Projects targets in |old_targets| to a list of new targets using
-// |equivalences|. Targets that cannot be projected have offset assigned as
-// |kUnusedIndex|. Returns the list of new targets in a new vector.
-// |old_targets| must be sorted in ascending order and |equivalence| must be
-// sorted in ascending order of |Equivalence::src_offset|.
-std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
-    const std::vector<offset_t>& old_targets,
-    const std::vector<Equivalence>& equivalences);
-
-// Extracts all unmarked targets of references in |new_references| whose
-// location is found in an equivalence of |equivalences|, and returns these
-// targets in a new vector. |new_references| must be sorted in ascending order.
+// Extract all targets in |new_targets| with no associated target in
+// |projected_old_targets| and returns these targets in a new vector.
 std::vector<offset_t> FindExtraTargets(
-    const std::vector<Reference>& new_references,
-    const EquivalenceMap& equivalences);
+    const std::vector<offset_t>& projected_old_targets,
+    const std::vector<offset_t>& new_targets);
 
-// Creates an EquivalenceMap from "old" image to "new" image and returns the
-// result. The params |*_image_index|:
+// Creates an SimilarityMap from "old" image to "new" image and returns the
+// result. |*_image_index|:
 // - Provide "old" and "new" raw image data and references.
 // - Mediate Label matching, which links references between "old" and "new", and
 //   guides EquivalenceMap construction.
-// |*_image_index| is assumed to hold targets as *unmarked* offsets. These are
-// also temporarily modified during Label matching -- that's why they're passed
-// by pointer. Meanwhile, |old_label_manager| contains labels for
-// |old_image_index|.
-EquivalenceMap CreateEquivalenceMap(
-    const std::vector<OrderedLabelManager>& old_label_managers,
-    ImageIndex* old_image_index,
-    ImageIndex* new_image_index);
+SimilarityMap CreateSimilarityMap(const ImageIndex& old_image_index,
+                                  const ImageIndex& new_image_index);
 
 // Writes equivalences from |equivalence_map|, and extra data from |new_image|
 // found in gaps between equivalences to |patch_writer|.
@@ -69,11 +51,14 @@ bool GenerateRawDelta(ConstBufferView old_image,
                       const ImageIndex& new_image_index,
                       PatchElementWriter* patch_writer);
 
-// Writes reference delta between references from |old_index| and from
-// |new_index| to |patch_writer|.
-bool GenerateReferencesDelta(const ImageIndex& old_index,
-                             const ImageIndex& new_index,
+// Writes reference delta between references from |old_refs| and from
+// |new_refs| to |patch_writer|. |new_label_manager| contains projected
+// labels from old to new image for references pool associated with |new_refs|
+bool GenerateReferencesDelta(const ReferenceSet& src_refs,
+                             const ReferenceSet& dst_refs,
+                             const TargetPool& projected_target_pool,
                              const EquivalenceMap& equivalence_map,
+                             const SimilarityMap& similarity_map,
                              ReferenceDeltaSink* reference_delta_sink);
 
 // Writes |extra_targets| associated with |pool_tag| to |patch_writer|.

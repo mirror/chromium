@@ -20,7 +20,7 @@ TargetsAffinity::TargetsAffinity() = default;
 TargetsAffinity::~TargetsAffinity() = default;
 
 void TargetsAffinity::InferFromSimilarities(
-    const EquivalenceMap& equivalences,
+    const SimilarityMap& equivalences,
     const std::vector<offset_t>& old_targets,
     const std::vector<offset_t>& new_targets) {
   forward_association_.assign(old_targets.size(), {});
