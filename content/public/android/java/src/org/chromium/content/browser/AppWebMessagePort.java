@@ -5,15 +5,20 @@
 package org.chromium.content.browser;
 
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.blink.mojom.SerializedBlob;
+import org.chromium.blink.mojom.TransferableMessage;
 import org.chromium.content_public.browser.MessagePort;
-
-import java.util.Arrays;
+import org.chromium.mojo.bindings.Connector;
+import org.chromium.mojo.bindings.Message;
+import org.chromium.mojo.bindings.MessageReceiver;
+import org.chromium.mojo.system.Core;
+import org.chromium.mojo.system.MessagePipeHandle;
+import org.chromium.mojo.system.Pair;
+import org.chromium.mojo.system.impl.CoreImpl;
 
 /**
  * Represents the MessageChannel MessagePort object. Inspired from
@@ -66,66 +71,66 @@ import java.util.Arrays;
  * to debug, racy corner cases while receiving/sending data.
  */
 @JNINamespace("content")
-public class AppWebMessagePort implements MessagePort {
+public class AppWebMessagePort implements MessagePort, MessageReceiver {
     private static final String TAG = "AppWebMessagePort";
-    private static final long UNINITIALIZED_PORT_NATIVE_PTR = 0;
 
-    // The |what| value for handleMessage.
-    private static final int MESSAGES_AVAILABLE = 1;
-
-    // Implements the handler to handle messageport messages received from web.
-    // These messages are received on IO thread and normally handled in main
-    // thread however, alternatively application can pass a handler to execute them.
-    private static class MessageHandler extends Handler {
-        public MessageHandler(Looper looper) {
-            super(looper);
-        }
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == MESSAGES_AVAILABLE) {
-                AppWebMessagePort port = (AppWebMessagePort) msg.obj;
-                port.dispatchReceivedMessages();
-                return;
-            }
-            throw new IllegalStateException("undefined message");
-        }
-    }
-    // The default message handler
-    private static final MessageHandler sDefaultHandler =
-            new MessageHandler(Looper.getMainLooper());
-
-    private long mNativeAppWebMessagePort = UNINITIALIZED_PORT_NATIVE_PTR;
     private MessageCallback mMessageCallback;
     private boolean mClosed;
     private boolean mTransferred;
     private boolean mStarted;
-    private MessageHandler mHandler;
-    private final Object mLock = new Object();
+
+    private Core mMojoCore;
+    private Connector mConnector;
 
     // Called to create an entangled pair of ports.
     public static AppWebMessagePort[] createPair() {
         AppWebMessagePort[] ports =
             new AppWebMessagePort[] { new AppWebMessagePort(), new AppWebMessagePort() };
-        nativeInitializeAppWebMessagePortPair(ports);
+        Pair<MessagePipeHandle, MessagePipeHandle> handles =
+                CoreImpl.getInstance().createMessagePipe(new MessagePipeHandle.CreateOptions());
+        ports[0].setMessagePipeHandle(handles.first);
+        ports[1].setMessagePipeHandle(handles.second);
         return ports;
+    }
+
+    private void setMessagePipeHandle(MessagePipeHandle messagePipeHandle) {
+        mMojoCore = messagePipeHandle.getCore();
+        mConnector = new Connector(messagePipeHandle);
+        mConnector.setIncomingMessageReceiver(this);
+    }
+
+    @Override
+    public boolean accept(Message mojoMessage) {
+        TransferableMessage msg = TransferableMessage.deserialize(mojoMessage);
+        String message = nativeDecodeStringMessage(msg.message.encodedMessage);
+        AppWebMessagePort[] ports = new AppWebMessagePort[msg.ports.length];
+        for (int i = 0; i < ports.length; ++i) {
+            ports[i] = new AppWebMessagePort();
+            ports[i].setMessagePipeHandle(msg.ports[i]);
+        }
+        if (mMessageCallback == null) {
+            Log.w(TAG, "No handler set for port, dropping message " + message);
+            return true;
+        }
+        mMessageCallback.onMessage(message, ports);
+        return true;
     }
 
     @Override
     public boolean isReady() {
-        return mNativeAppWebMessagePort != UNINITIALIZED_PORT_NATIVE_PTR;
+        return mConnector != null;
     }
 
-    @CalledByNative
-    private void setNativeAppWebMessagePort(long nativeAppWebMessagePort) {
-        mNativeAppWebMessagePort = nativeAppWebMessagePort;
-    }
-
-    @CalledByNative
-    private long releaseNativePortForTransfer() {
+    private MessagePipeHandle passHandle() {
         mTransferred = true;
-        long port = mNativeAppWebMessagePort;
-        mNativeAppWebMessagePort = UNINITIALIZED_PORT_NATIVE_PTR;
-        return port;
+        MessagePipeHandle handle = mConnector.passHandle();
+        mConnector = null;
+        return handle;
+    }
+
+    @CalledByNative
+    private int releaseNativeHandle() {
+        return passHandle().releaseNativeHandle();
     }
 
     @Override
@@ -135,18 +140,8 @@ public class AppWebMessagePort implements MessagePort {
         }
         if (mClosed) return;
         mClosed = true;
-        // Synchronize with dispatchReceivedMessages to ensure that the native
-        // port is not closed too soon, but avoid holding mLock while calling
-        // nativeCloseMessagePort as that could result in a dead-lock (racing
-        // with onMessagesAvailable).
-        long port = UNINITIALIZED_PORT_NATIVE_PTR;
-        synchronized (mLock) {
-            port = mNativeAppWebMessagePort;
-            mNativeAppWebMessagePort = UNINITIALIZED_PORT_NATIVE_PTR;
-        }
-        if (port != UNINITIALIZED_PORT_NATIVE_PTR) {
-            nativeCloseMessagePort(port);
-        }
+        mConnector.close();
+        mConnector = null;
     }
 
     @Override
@@ -171,48 +166,8 @@ public class AppWebMessagePort implements MessagePort {
             throw new IllegalStateException("Port is already closed or transferred");
         }
         mStarted = true;
-        synchronized (mLock) {
-            mMessageCallback = messageCallback;
-            if (handler != null) {
-                mHandler = new MessageHandler(handler.getLooper());
-            }
-        }
-        nativeStartReceivingMessages(mNativeAppWebMessagePort);
-    }
-
-    // Called on a background thread.
-    @CalledByNative
-    private void onMessagesAvailable() {
-        synchronized (mLock) {
-            Handler handler = mHandler != null ? mHandler : sDefaultHandler;
-            Message msg = handler.obtainMessage(MESSAGES_AVAILABLE, this);
-            handler.sendMessage(msg);
-        }
-    }
-
-    // This method is called by nativeDispatchNextMessage while mLock is held.
-    @CalledByNative
-    private void onReceivedMessage(String message, AppWebMessagePort[] ports) {
-        if (mMessageCallback == null) {
-            Log.w(TAG, "No handler set for port [" + mNativeAppWebMessagePort
-                    + "], dropping message " + message);
-            return;
-        }
-        mMessageCallback.onMessage(message, ports);
-    }
-
-    // This method may be called on either the UI thread or a background thread.
-    private void dispatchReceivedMessages() {
-        // Dispatch all of the available messages unless interrupted by close().
-        // NOTE: nativeDispatchNextMessage returns true and calls onReceivedMessage
-        // if a message is available else it returns false.
-        while (true) {
-            synchronized (mLock) {
-                if (!(isReady() && nativeDispatchNextMessage(mNativeAppWebMessagePort))) {
-                    break;
-                }
-            }
-        }
+        mConnector.start();
+        mMessageCallback = messageCallback;
     }
 
     @Override
@@ -220,7 +175,7 @@ public class AppWebMessagePort implements MessagePort {
         if (isClosed() || isTransferred()) {
             throw new IllegalStateException("Port is already closed or transferred");
         }
-        AppWebMessagePort[] ports = null;
+        MessagePipeHandle[] ports = new MessagePipeHandle[sentPorts == null ? 0 : sentPorts.length];
         if (sentPorts != null) {
             for (MessagePort port : sentPorts) {
                 if (port.equals(this)) {
@@ -233,17 +188,19 @@ public class AppWebMessagePort implements MessagePort {
                     throw new IllegalStateException("Port is already started");
                 }
             }
-            ports = Arrays.copyOf(sentPorts, sentPorts.length, AppWebMessagePort[].class);
+            for (int i = 0; i < sentPorts.length; ++i)
+                ports[i] = ((AppWebMessagePort) sentPorts[i]).passHandle();
         }
         mStarted = true;
-        nativePostMessage(mNativeAppWebMessagePort, message, ports);
+        mConnector.start();
+
+        TransferableMessage msg = new TransferableMessage();
+        msg.message.encodedMessage = nativeEncodeStringMessage(message);
+        msg.message.blobs = new SerializedBlob[0];
+        msg.ports = ports;
+        mConnector.accept(msg.serialize(mMojoCore));
     }
 
-    private static native void nativeInitializeAppWebMessagePortPair(AppWebMessagePort[] ports);
-
-    private native void nativeCloseMessagePort(long nativeAppWebMessagePort);
-    private native void nativePostMessage(long nativeAppWebMessagePort, String message,
-                                          AppWebMessagePort[] ports);
-    private native boolean nativeDispatchNextMessage(long nativeAppWebMessagePort);
-    private native void nativeStartReceivingMessages(long nativeAppWebMessagePort);
+    private static native String nativeDecodeStringMessage(byte[] encodedData);
+    private static native byte[] nativeEncodeStringMessage(String message);
 }
