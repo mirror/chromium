@@ -17,7 +17,6 @@ namespace zucchini {
 class Disassembler;
 class EquivalenceMap;
 class ImageIndex;
-class OrderedLabelManager;
 class PatchElementWriter;
 class ReferenceDeltaSink;
 class ReferenceSet;
@@ -36,6 +35,10 @@ std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
     const std::vector<offset_t>& old_targets,
     const std::vector<Equivalence>& equivalences);
 
+// Extracts all targets not present in |new_label_manager| of references in
+// |new_references| whose location is found in an equivalence of |equivalences|,
+// and returns these targets in a new vector.
+
 // Extract references in |new_references| that have the following properties:
 // - The location is found in |equivalences| (dst).
 // - The target (key) is absent in |new_label_manager|.
@@ -50,14 +53,8 @@ std::vector<offset_t> FindExtraTargets(
 // - Provide "old" and "new" raw image data and references.
 // - Mediate Label matching, which links references between "old" and "new", and
 //   guides EquivalenceMap construction.
-// |*_image_index| is assumed to hold targets as *unmarked* offsets. These are
-// also temporarily modified during Label matching -- that's why they're passed
-// by pointer. Meanwhile, |old_label_manager| contains labels for
-// |old_image_index|.
-EquivalenceMap CreateEquivalenceMap(
-    const std::vector<OrderedLabelManager>& old_label_managers,
-    ImageIndex* old_image_index,
-    ImageIndex* new_image_index);
+EquivalenceMap CreateEquivalenceMap(const ImageIndex& old_image_index,
+                                    const ImageIndex& new_image_index);
 
 // Writes equivalences from |equivalence_map|, and extra data from |new_image|
 // found in gaps between equivalences to |patch_writer|.

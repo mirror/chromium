@@ -47,34 +47,4 @@ offset_t TargetPool::KeyForOffset(offset_t offset) const {
   return static_cast<offset_t>(pos - targets_.begin());
 }
 
-void TargetPool::LabelTargets(const BaseLabelManager& label_manager) {
-  for (auto& target : targets_)
-    target = label_manager.MarkedIndexFromOffset(target);
-  label_bound_ = label_manager.size();
-}
-
-void TargetPool::UnlabelTargets(const BaseLabelManager& label_manager) {
-  for (auto& target : targets_) {
-    target = label_manager.OffsetFromMarkedIndex(target);
-    DCHECK(!IsMarked(target));  // Expected to be represented as offset.
-  }
-  label_bound_ = 0;
-}
-
-void TargetPool::LabelAssociatedTargets(
-    const BaseLabelManager& label_manager,
-    const BaseLabelManager& reference_label_manager) {
-  // Convert to marked indexes.
-  for (auto& target : targets_) {
-    // Represent Label as marked index iff the index is also in
-    // |reference_label_manager|.
-    DCHECK(!IsMarked(target));  // Expected to be represented as offset.
-    offset_t index = label_manager.IndexOfOffset(target);
-    DCHECK_NE(kUnusedIndex, index);  // Target is expected to have a label.
-    if (reference_label_manager.IsIndexStored(index))
-      target = MarkIndex(index);
-  }
-  label_bound_ = label_manager.size();
-}
-
 }  // namespace zucchini
