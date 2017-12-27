@@ -90,14 +90,16 @@ class WebNotificationBubbleWrapper {
     init_params.min_width = width;
     init_params.max_width = width;
     init_params.max_height = bubble->max_height();
-    init_params.bg_color = SkColorSetRGB(0xe7, 0xe7, 0xe7);
     init_params.show_by_click = show_by_click;
 
     views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+    bubble_view->set_color(SK_ColorTRANSPARENT);
+    bubble_view->layer()->SetFillsBoundsOpaquely(false);
     bubble_view->set_anchor_view_insets(anchor_tray->GetBubbleAnchorInsets());
     bubble_wrapper_ = std::make_unique<TrayBubbleWrapper>(
         tray, bubble_view, false /* is_persistent */);
     bubble->InitializeContents(bubble_view);
+    bubble_view->layer()->parent()->SetMaskLayer(nullptr);
   }
 
   MessageCenterBubble* bubble() const { return bubble_.get(); }
