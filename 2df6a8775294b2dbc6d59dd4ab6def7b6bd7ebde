@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fffdfa5_92ca2907",
+        "filename": "tools/win/subtract_time.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-27T18:24:09Z",
+      "side": 1,
+      "message": "Comment should list the decimal part for the English time as well. That is:\n\n# Time looks like 15:19:30.32 or 15:19:30,32 depending on locale",
+      "revId": "2df6a8775294b2dbc6d59dd4ab6def7b6bd7ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
