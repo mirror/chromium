@@ -45,7 +45,8 @@ goog.require('__crWeb.message');
     var msg = {
       'command': 'form.activity',
       'formName': __gCrWeb.common.getFormIdentifier(evt.srcElement.form),
-      'fieldName': __gCrWeb.common.getFieldIdentifier(srcElement),
+      'fieldName': __gCrWeb.common.getFieldName(srcElement),
+      'fieldIdentifier': __gCrWeb.common.getFieldIdentifier(srcElement),
       'fieldType': fieldType,
       'type': evt.type,
       'value': value
