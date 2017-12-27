@@ -244,6 +244,7 @@ namespace system.display {
   callback SetDisplayUnitInfoCallback = void();
   callback SetDisplayLayoutCallback = void();
   callback NativeTouchCalibrationCallback = void(boolean success);
+  callback SetMixedModeCallback = void();
 
   interface Functions {
     // Requests the information for all attached display devices.
@@ -351,6 +352,23 @@ namespace system.display {
     // display.
     // |id|: The display's unique identifier.
     static void clearTouchCalibration(DOMString id);
+
+    // Turns on/off the mixed mode. The source display will be mirrored to the
+    // destination displays and all other connected displays will be in extended
+    // mode when the mode is on. All displays will go back to their default mode
+    // (either extended or unified desktop mode) when the mode is off. NOTE:
+    // This is only available to Chrome OS Kiosk apps and Web UI.
+    // |mixed|: True if the mixed mode should be turned on. The following two
+    //     parameters are ignored if this is False.
+    // |mirroringSourceId|: The id of the mirroring source display.
+    // |mirroringDestinationIds|: The Ids of the mirroring destination displays.
+    // |callback|: Empty function called when the function finishes. To find out
+    //     whether the function succeeded, $(ref:runtime.lastError) should be
+    //     queried.
+    static void setMixedMode(boolean mixed,
+                             DOMString mirroringSourceId,
+                             DOMString[] mirroringDestinationIds,
+                             optional SetMixedModeCallback callback);
   };
 
   interface Events {

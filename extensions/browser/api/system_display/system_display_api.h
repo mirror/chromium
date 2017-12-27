@@ -168,6 +168,16 @@ class SystemDisplayClearTouchCalibrationFunction
   ResponseAction Run() override;
 };
 
+class SystemDisplaySetMixedModeFunction : public SystemDisplayFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("system.display.setMixedMode",
+                             SYSTEM_DISPLAY_SETMIXEDMODE);
+
+ protected:
+  ~SystemDisplaySetMixedModeFunction() override {}
+  ResponseAction Run() override;
+};
+
 }  // namespace extensions
 
 #endif  // EXTENSIONS_BROWSER_API_SYSTEM_DISPLAY_SYSTEM_DISPLAY_API_H_

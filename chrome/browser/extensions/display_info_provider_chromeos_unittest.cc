@@ -1665,5 +1665,145 @@ TEST_F(DisplayInfoProviderChromeosTouchviewTest, GetTabletMode) {
   EXPECT_FALSE(result[1].is_tablet_mode);
 }
 
+class DisplayInfoProviderChromeosMultiMirroringTest
+    : public DisplayInfoProviderChromeosTest {
+ public:
+  DisplayInfoProviderChromeosMultiMirroringTest() = default;
+  ~DisplayInfoProviderChromeosMultiMirroringTest() override = default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableMultiMirroring);
+    DisplayInfoProviderChromeosTest::SetUp();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DisplayInfoProviderChromeosMultiMirroringTest);
+};
+
+TEST_F(DisplayInfoProviderChromeosMultiMirroringTest, SetMixedMode) {
+  {
+    // Mirroring source id in bad format error.
+    const std::string source_id = "bad_format_id";  // bad format
+    std::vector<std::string> destination_ids;
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    const std::string expected_error = base::StringPrintf(
+        DisplayInfoProviderChromeOS::kMixedModeSourceIdBadFormatError,
+        source_id.c_str());
+    EXPECT_EQ(expected_error, error);
+  }
+
+  {
+    // Mirroring destination id in bad format error.
+    const std::string source_id = "1000000";  // good format
+    std::vector<std::string> destination_ids;
+    const std::string destination_id = "bad_format_id";  // bad format
+    destination_ids.emplace_back(destination_id);
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    const std::string expected_error = base::StringPrintf(
+        DisplayInfoProviderChromeOS::kMixedModeDestinationIdBadFormatError,
+        destination_id.c_str());
+    EXPECT_EQ(expected_error, error);
+  }
+
+  {
+    // Single display error.
+    EXPECT_EQ(1U, display_manager()->num_connected_displays());
+    const std::string source_id =
+        base::Int64ToString(display::kInvalidDisplayId);
+    std::vector<std::string> destination_ids;
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    EXPECT_EQ(DisplayInfoProviderChromeOS::kMixedModeSingleDisplayError, error);
+  }
+
+  // Add more displays.
+  UpdateDisplay("200x200,600x600,700x700");
+  display::DisplayIdList id_list = display_manager()->GetCurrentDisplayIdList();
+  EXPECT_EQ(3U, id_list.size());
+
+  {
+    // Mirroring source id not found error.
+    const std::string source_id =
+        base::Int64ToString(display::kInvalidDisplayId);
+    std::vector<std::string> destination_ids;
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    std::string expected_error = base::StringPrintf(
+        DisplayInfoProviderChromeOS::kMixedModeSourceIdNotFoundError,
+        source_id.c_str());
+    EXPECT_EQ(expected_error, error);
+  }
+
+  {
+    // Mirroring destination ids empty error.
+    const std::string source_id = base::Int64ToString(id_list[0]);
+    std::vector<std::string> destination_ids;
+    const std::string destination_id =
+        base::Int64ToString(display::kInvalidDisplayId);
+    destination_ids.emplace_back(destination_id);
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    const std::string expected_error = base::StringPrintf(
+        DisplayInfoProviderChromeOS::kMixedModeDestinationIdNotFoundError,
+        destination_id.c_str());
+    EXPECT_EQ(expected_error, error);
+  }
+
+  {
+    // Duplicate display id error.
+    const std::string source_id = base::Int64ToString(id_list[0]);
+    std::vector<std::string> destination_ids;
+    const std::string destination_id = base::Int64ToString(id_list[0]);
+    destination_ids.emplace_back(destination_id);
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_FALSE(success);
+    const std::string expected_error = base::StringPrintf(
+        DisplayInfoProviderChromeOS::kMixedModeDuplicateIdError,
+        destination_id.c_str());
+    EXPECT_EQ(expected_error, error);
+  }
+
+  {
+    // Turn on mixed mode (mirroring from the first display to the second one).
+    const std::string source_id = base::Int64ToString(id_list[0]);
+    std::vector<std::string> destination_ids;
+    const std::string destination_id = base::Int64ToString(id_list[1]);
+    destination_ids.emplace_back(destination_id);
+    std::string error;
+    bool success = DisplayInfoProvider::Get()->SetMixedMode(
+        true, source_id, destination_ids, &error);
+    EXPECT_TRUE(success);
+    EXPECT_TRUE(error.empty());
+    EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+    EXPECT_EQ(id_list[0], display_manager()->mirroring_source_id());
+    const display::Displays software_mirroring_display_list =
+        display_manager()->software_mirroring_display_list();
+    EXPECT_EQ(1U, software_mirroring_display_list.size());
+    EXPECT_EQ(id_list[1], software_mirroring_display_list[0].id());
+
+    // Turn off mixed mode.
+    success = DisplayInfoProvider::Get()->SetMixedMode(false, source_id,
+                                                       destination_ids, &error);
+    EXPECT_TRUE(success);
+    EXPECT_TRUE(error.empty());
+    EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  }
+}
+
 }  // namespace
 }  // namespace extensions

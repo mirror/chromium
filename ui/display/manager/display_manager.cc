@@ -32,7 +32,6 @@
 #include "ui/display/display_observer.h"
 #include "ui/display/display_switches.h"
 #include "ui/display/manager/display_layout_store.h"
-#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/font_render_params.h"
@@ -411,6 +410,7 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
     display_id_list.insert(display_id_list.end(),
                            software_mirroring_display_id_list.begin(),
                            software_mirroring_display_id_list.end());
+    SortDisplayIdList(&display_id_list);
     return display_id_list;
   }
 
@@ -418,6 +418,7 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
     display_id_list.insert(display_id_list.end(),
                            hardware_mirroring_display_id_list_.begin(),
                            hardware_mirroring_display_id_list_.end());
+    SortDisplayIdList(&display_id_list);
     return display_id_list;
   }
 
@@ -891,8 +892,18 @@ void DisplayManager::UpdateDisplaysWith(
                                                              : EXTENDED;
   }
 
-  if (multi_display_mode_ != MIRRORING)
+  if (mixed_mode_param_) {
+    if (IsMixedModeParamValid(new_display_info_list)) {
+      // Mixed mode is requested. Set mirror mode here to mirror those displays
+      // specified in mixed mode parameters.
+      multi_display_mode_ = MIRRORING;
+    } else {
+      // Set default display mode if mixed mode parameters are invalid.
+      multi_display_mode_ = current_default_multi_display_mode_;
+    }
+  } else if (multi_display_mode_ != MIRRORING) {
     multi_display_mode_ = current_default_multi_display_mode_;
+  }
 
   UMA_HISTOGRAM_ENUMERATION("DisplayManager.MultiDisplayMode",
                             multi_display_mode_, MULTI_DISPLAY_MODE_LAST + 1);
@@ -1260,6 +1271,9 @@ void DisplayManager::SetMirrorMode(bool mirror) {
     return;
   }
 
+  // Clear mixed mode request.
+  mixed_mode_param_.reset();
+
 #if defined(OS_CHROMEOS)
   if (configure_displays_) {
     MultipleDisplayState new_state =
@@ -1271,6 +1285,53 @@ void DisplayManager::SetMirrorMode(bool mirror) {
 #endif
   multi_display_mode_ =
       mirror ? MIRRORING : current_default_multi_display_mode_;
+  ReconfigureDisplays();
+}
+
+bool DisplayManager::IsMixedModeParamValid(
+    const DisplayInfoList& display_info_list) {
+  if (!mixed_mode_param_)
+    return false;
+
+  if (mixed_mode_param_->mirroring_destination_ids.empty())
+    return false;
+
+  std::set<int64_t> display_id_set;
+  for (auto info : display_info_list)
+    display_id_set.emplace(info.id());
+
+  if (!display_id_set.count(mixed_mode_param_->mirroring_source_id))
+    return false;
+
+  for (auto id : mixed_mode_param_->mirroring_destination_ids) {
+    if (!display_id_set.count(id))
+      return false;
+  }
+  return true;
+}
+
+void DisplayManager::SetMixedMode(
+    bool mixed,
+    int64_t mirroring_source_id,
+    const DisplayIdList& mirroring_destination_ids) {
+  if (mixed) {
+    mixed_mode_param_.reset(
+        new MixedModeParam(mirroring_source_id, mirroring_destination_ids));
+  } else {
+    mixed_mode_param_.reset();
+  }
+
+#if defined(OS_CHROMEOS)
+  if (configure_displays_ && IsInHardwareMirrorMode()) {
+    // Only software mirroring is available for mixed mode, so turn off hardware
+    // mirroring if it is on.
+    delegate_->display_configurator()->SetDisplayMode(
+        MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED);
+    return;
+  }
+#endif
+
+  multi_display_mode_ = current_default_multi_display_mode_;
   ReconfigureDisplays();
 }
 
@@ -1546,8 +1607,12 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
         return;
       }
 
+      std::set<int64_t> destination_ids;
       int64_t source_id = kInvalidDisplayId;
-      if (Display::HasInternalDisplay()) {
+      if (mixed_mode_param_) {
+        // Use the source display specified in mixed mode parameters if set.
+        source_id = mixed_mode_param_->mirroring_source_id;
+      } else if (Display::HasInternalDisplay()) {
         // Use the internal display as mirroring source.
         source_id = Display::InternalDisplayId();
         auto iter =
@@ -1567,23 +1632,34 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
       }
       DCHECK(source_id != kInvalidDisplayId);
 
-      for (auto& info : *display_info_list) {
-        if (source_id == info.id())
-          continue;
-        info.SetOverscanInsets(gfx::Insets());
-        InsertAndUpdateDisplayInfo(info);
-        software_mirroring_display_list_.emplace_back(
-            CreateMirroringDisplayFromDisplayInfoById(info.id(), gfx::Point(),
-                                                      1.0f));
+      if (mixed_mode_param_) {
+        // Use the destination displays specified in mixed mode parameters if
+        // set.
+        for (auto id : mixed_mode_param_->mirroring_destination_ids)
+          destination_ids.insert(id);
+      } else {
+        for (auto& info : *display_info_list) {
+          if (source_id != info.id())
+            destination_ids.insert(info.id());
+        }
       }
 
-      // Remove all destination displays.
-      display_info_list->erase(
-          std::remove_if(display_info_list->begin(), display_info_list->end(),
-                         [source_id](const ManagedDisplayInfo& info) {
-                           return info.id() != source_id;
-                         }),
-          display_info_list->end());
+      for (auto iter = display_info_list->begin();
+           iter != display_info_list->end();) {
+        if (destination_ids.count(iter->id())) {
+          iter->SetOverscanInsets(gfx::Insets());
+          InsertAndUpdateDisplayInfo(*iter);
+          software_mirroring_display_list_.emplace_back(
+              CreateMirroringDisplayFromDisplayInfoById(iter->id(),
+                                                        gfx::Point(), 1.0f));
+
+          // Remove the destination display.
+          iter = display_info_list->erase(iter);
+        } else {
+          ++iter;
+        }
+      }
+
       mirroring_source_id_ = source_id;
       break;
     }

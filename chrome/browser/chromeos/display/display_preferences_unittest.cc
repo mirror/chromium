@@ -237,6 +237,28 @@ class DisplayPreferencesTest : public ash::AshTestBase {
       pref_data->GetList().emplace_back(base::Value(base::Int64ToString(id)));
   }
 
+  void StoreDisplayMixedModeParam(
+      const display::MixedModeParam* mixed_mode_param) {
+    DictionaryPrefUpdate update(local_state(), prefs::kDisplayMixedModeParam);
+    base::DictionaryValue* pref_data = update.Get();
+    pref_data->Clear();
+
+    if (!mixed_mode_param)
+      return;
+
+    pref_data->SetKey("mirroring_source_id",
+                      base::Value(base::Int64ToString(
+                          mixed_mode_param->mirroring_source_id)));
+
+    base::ListValue mirroring_destination_ids_value;
+    for (const auto& id : mixed_mode_param->mirroring_destination_ids) {
+      mirroring_destination_ids_value.GetList().emplace_back(
+          base::Value(base::Int64ToString(id)));
+    }
+    pref_data->SetKey("mirroring_destination_ids",
+                      std::move(mirroring_destination_ids_value));
+  }
+
   std::string GetRegisteredDisplayPlacementStr(
       const display::DisplayIdList& list) {
     return ash::Shell::Get()
@@ -1388,6 +1410,82 @@ TEST_F(MultiMirroringDisplayPreferencesTest, ExternalDisplayMirrorInfo) {
   pref_external_display_mirror_info =
       local_state()->GetList(prefs::kExternalDisplayMirrorInfo);
   EXPECT_EQ(0U, pref_external_display_mirror_info->GetSize());
+}
+
+TEST_F(MultiMirroringDisplayPreferencesTest, DisplayMixedMode) {
+  LoggedInAsUser();
+
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  constexpr int64_t first_display_id = 210000001;
+  constexpr int64_t second_display_id = 220000002;
+  std::vector<display::ManagedDisplayInfo> display_info_list;
+  display_info_list.push_back(display::CreateDisplayInfo(
+      internal_display_id, gfx::Rect(0, 0, 100, 100)));
+  display_info_list.push_back(
+      display::CreateDisplayInfo(first_display_id, gfx::Rect(1, 1, 500, 500)));
+  display_info_list.push_back(
+      display::CreateDisplayInfo(second_display_id, gfx::Rect(2, 2, 500, 500)));
+
+  // Store mixed mode parameters which specify mirroring from the internal
+  // display to the first external display.
+  display::DisplayIdList mirroring_destination_ids;
+  mirroring_destination_ids.emplace_back(first_display_id);
+  display::MixedModeParam mixed_mode_param(internal_display_id,
+                                           mirroring_destination_ids);
+  StoreDisplayMixedModeParam(&mixed_mode_param);
+  LoadDisplayPreferences(false);
+
+  // Connect both first and second external display. Mixed mode is restored.
+  display_manager()->OnNativeDisplaysChanged(display_info_list);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(internal_display_id, display_manager()->mirroring_source_id());
+  display::DisplayIdList destination_ids =
+      display_manager()->GetMirroringDestinationDisplayIdList();
+  EXPECT_EQ(1U, destination_ids.size());
+  EXPECT_EQ(first_display_id, destination_ids[0]);
+
+  // Check the preferences.
+  const base::DictionaryValue* pref_data =
+      local_state()->GetDictionary(prefs::kDisplayMixedModeParam);
+  EXPECT_EQ(base::Int64ToString(internal_display_id),
+            pref_data->FindKey("mirroring_source_id")->GetString());
+  const base::Value* destination_ids_value =
+      pref_data->FindKey("mirroring_destination_ids");
+  EXPECT_EQ(1U, destination_ids_value->GetList().size());
+  EXPECT_EQ(base::Int64ToString(first_display_id),
+            destination_ids_value->GetList()[0].GetString());
+
+  // Overwrite current mixed mode with a new configuration. (Mirror from the
+  // first external display to the second external display)
+  mirroring_destination_ids.clear();
+  mirroring_destination_ids.emplace_back(second_display_id);
+  display_manager()->SetMixedMode(true, first_display_id,
+                                  mirroring_destination_ids);
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+  EXPECT_EQ(first_display_id, display_manager()->mirroring_source_id());
+  destination_ids = display_manager()->GetMirroringDestinationDisplayIdList();
+  EXPECT_EQ(1U, destination_ids.size());
+  EXPECT_EQ(second_display_id, destination_ids[0]);
+
+  // Check the preferences.
+  pref_data = local_state()->GetDictionary(prefs::kDisplayMixedModeParam);
+  EXPECT_EQ(base::Int64ToString(first_display_id),
+            pref_data->FindKey("mirroring_source_id")->GetString());
+  destination_ids_value = pref_data->FindKey("mirroring_destination_ids");
+  EXPECT_EQ(1U, destination_ids_value->GetList().size());
+  EXPECT_EQ(base::Int64ToString(second_display_id),
+            destination_ids_value->GetList()[0].GetString());
+
+  // Turn off mixed mode.
+  display_manager()->SetMixedMode(false, display::kInvalidDisplayId,
+                                  display::DisplayIdList());
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+
+  // Check the preferences.
+  pref_data = local_state()->GetDictionary(prefs::kDisplayMixedModeParam);
+  EXPECT_TRUE(pref_data->empty());
 }
 
 }  // namespace chromeos

@@ -14285,6 +14285,7 @@ Called by update_net_error_codes.py.-->
   <int value="1207" label="AUTOTESTPRIVATE_GETPRINTERLIST"/>
   <int value="1208" label="DEVELOPERPRIVATE_GETEXTENSIONSIZE"/>
   <int value="1209" label="CRYPTOTOKENPRIVATE_ISAPPIDHASHINENTERPRISECONTEXT"/>
+  <int value="1210" label="SYSTEM_DISPLAY_SETMIXEDMODE"/>
 </enum>
 
 <enum name="ExtensionIconState">

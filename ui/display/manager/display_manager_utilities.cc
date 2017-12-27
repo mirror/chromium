@@ -281,4 +281,9 @@ int64_t GetDisplayIdWithoutOutputIndex(int64_t id) {
   return static_cast<int64_t>(kMask & id);
 }
 
+MixedModeParam::MixedModeParam(int64_t src_id, const DisplayIdList& dst_ids)
+    : mirroring_source_id(src_id), mirroring_destination_ids(dst_ids) {}
+
+MixedModeParam::~MixedModeParam() {}
+
 }  // namespace display
