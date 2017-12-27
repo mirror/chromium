@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a46fdd_f00f3ed3",
+        "filename": "testing/buildbot/scripts/upload_test_result_artifacts_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-27T18:06:29Z",
+      "side": 1,
+      "message": "super nit: Didn\u0027t notice this on the original review, but I\u0027d avoid aliasing this \u0026 separate it from the python stdlib imports above.",
+      "revId": "6e63ec8d53600aa07c6f2718f29e9f420c2fd396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
