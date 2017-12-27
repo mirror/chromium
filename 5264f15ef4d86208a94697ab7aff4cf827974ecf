@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "e4158219_95950e49",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "*exclusion?",
+      "range": {
+        "startLine": 164,
+        "startChar": 57,
+        "endLine": 164,
+        "endChar": 68
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68c39971_6a0ab04d",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -64,6 +87,108 @@
       "writtenOn": "2017-12-26T17:58:44Z",
       "side": 1,
       "message": "Only used by DCHECK. Protect by relevant #iffery?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d89e3a_55548567",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure (really! I\u0027m not sure. Maybe I\u0027m wrong...) if we need all the examples here, as long as we have unit tests discussing them. We obviously *do* want the explanatory comments, though.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d528636f_7c2c7a4b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "If shelf.block_offset really is the bottom of a float, shouldn\u0027t we require the exclusion block start to be LESS than that, for it to intersect?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb9484e_2db303db",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Just a slightly more limiting test than the one below. Maybe you could push this inside of it?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bef8d7a_56030388",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c263d9_e82bf10e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "(If !is_same_as_previous,) is there a possibility for i to decrement from 0 here?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba81487_1893542d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Maybe that suggests that |shelf| should no longer be in scope here?",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +212,41 @@
     },
     {
       "key": {
+        "uuid": "25cba452_f872f316",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Actually, the comment is about the opposite situation, compared to the if-condition below.\n\nTo match, the comment could say something like \"We only want to add the shelf if it\u0027s at a different block offset\".",
+      "parentUuid": "0117b893_f4c2f1a7",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4111c5be_191c6a60",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "That\u0027s essentially a no-op, since that\u0027s how the shelf is initialized. But maybe you still want to be explicit about this in the code.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35440078_cfd89ca0",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -98,6 +258,109 @@
       "writtenOn": "2017-12-26T17:58:44Z",
       "side": 1,
       "message": "It\u0027s",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da37082_9f74778a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "*effect",
+      "range": {
+        "startLine": 370,
+        "startChar": 18,
+        "endLine": 370,
+        "endChar": 24
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c11166_cd4cbda5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "*,* it pretend*s* that it \"fits\"?",
+      "range": {
+        "startLine": 395,
+        "startChar": 44,
+        "endLine": 395,
+        "endChar": 70
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33593645_d2881aa4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Not sure if this is foolproof, but I suppose it will improve when we address the TODO above?",
+      "range": {
+        "startLine": 397,
+        "startChar": 9,
+        "endLine": 397,
+        "endChar": 63
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f804f1_f1be11a6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "If shelf.block_offset is the bottom offset, I wonder why we use \"\u003c\u003d\" and not \"\u003c\" here.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444535a4_ef6ed879",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Is this really strictly related to floats? Just wondering about putting this under ng/floats/ . What about CSS shapes and exclusions?",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +384,40 @@
     },
     {
       "key": {
+        "uuid": "f9df65cf_85b93908",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Would this be a good place for elaborating on what \"solid\" means? I found some documentation in the .cc file, but this looks like a good place to me.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f7714a_07261171",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Is this the bottom offset of the float?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da2d6fe_19d4b3e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
         "patchSetId": 10
@@ -132,6 +429,108 @@
       "writtenOn": "2017-12-26T17:58:44Z",
       "side": 1,
       "message": "Does it really pay off to use ref-pointers here? NGExclusion is a very simple object.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f879bb91_a41710e5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Couldn\u0027t this be a function instead?\n\nAlso not sure if we want to take size. We\u0027re still testing the opportunities with start offset and end offset, so why not do the same when creating exclusions (or use size when testing opportunities)?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa5c7f8_e538ffa7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_layout_opportunity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "the -\u003e that ?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dcfe62_714993fe",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_layout_opportunity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "// something else ;)",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db590165_8d3681aa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "I think an \u0026\u0026 operator would beat std::tie() here, as far as readability is concerned.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2131f832_dbeaa10b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "How about not declaring this constructor at all? It won\u0027t be implicitly generated, since there is another explicit one.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73ca0e2_1f552119",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-27T00:01:22Z",
+      "side": 1,
+      "message": "Hmm.. almost starting to wonder if there should be convenience getters for these things in NGLayoutOpportunity.",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
