@@ -13198,7 +13198,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DataReductionProxy.Pingback.Attempted" enum="BooleanAttempted">
-  <owner>bengr@chromium.org</owner>
   <owner>ryansturm@chromium.org</owner>
   <summary>
     Counts the number of times that pageload metrics were queued to be attempted
@@ -13206,8 +13205,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DataReductionProxy.Pingback.CrashAction"
+    enum="DataReductionProxyPingbackCrashAction">
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    Counts various actions related to crash detection in the pingback client.
+    This is recorded only when a renderer crash occurs on a Data Reduction Proxy
+    page load.
+  </summary>
+</histogram>
+
+<histogram name="DataReductionProxy.Pingback.CrashProcessTime" units="ms">
+  <owner>ryansturm@chromium.org</owner>
+  <summary>
+    The time it takes for a crash to be analyzed by breakpad on Android when a
+    pingback is requested.
+  </summary>
+</histogram>
+
 <histogram name="DataReductionProxy.Pingback.Succeeded" enum="BooleanSuccess">
-  <owner>bengr@chromium.org</owner>
   <owner>ryansturm@chromium.org</owner>
   <summary>
     Counts the number of times that a batched pingback request succeeded or
