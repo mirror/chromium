@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80080639_689ef442",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-27T21:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faf416a5_75cd0abb",
+      "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91884eea_69195ffd",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-27T17:58:07Z",
       "side": 1,
       "message": "IIRC, media already has a VideoFrame struct that\u0027s already typemapped to the corresponding C++ type. Is there a reason we can\u0027t use that here?",
+      "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbb3cab_05ca29ae",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-27T21:27:56Z",
+      "side": 1,
+      "message": "I was actually going that route initially, but there are two reasons I didn\u0027t use it: 1) There is no way to \"deserialize\" the VideoFrame on the other end without the struct traits mapping its shared memory. I want to be able to just pass the handle without mapping the shmem in the browser process. 2) Downstream, this video frame is being injected into the Video Stack, and the interfaces there want a mojo shared buffer handle and the media.mojom.VideoFrameInfo struct. In other words, doing this here saves us from writing a bunch of code downstream to \"repackage\" everything.",
+      "parentUuid": "91884eea_69195ffd",
       "revId": "74b0f79b8a009a092695d4f40f4cea196bf8c7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
