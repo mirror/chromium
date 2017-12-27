@@ -48,6 +48,14 @@ NGLineBreaker::NGLineBreaker(
   }
 }
 
+inline NGInlineItemResult* NGLineBreaker::AddItem(
+    const NGInlineItem& item,
+    NGInlineItemResults* item_results) {
+  item_results->push_back(
+      NGInlineItemResult(&item, item_index_, offset_, item.EndOffset()));
+  return &item_results->back();
+}
+
 // @return if this is the "first formatted line".
 // https://www.w3.org/TR/CSS22/selector.html#first-formatted-line
 bool NGLineBreaker::IsFirstFormattedLine() const {
@@ -119,12 +127,6 @@ bool NGLineBreaker::NextLine(const NGLayoutOpportunity& opportunity,
   BreakLine(line_info);
   line_info->SetEndOffset(offset_);
 
-  // TODO(kojii): When editing, or caret is enabled, trailing spaces at wrap
-  // point should not be removed. For other cases, we can a) remove, b) leave
-  // characters without glyphs, or c) leave both characters and glyphs without
-  // measuring. Need to decide which one works the best.
-  SkipCollapsibleWhitespaces();
-
   if (line_info->Results().IsEmpty())
     return false;
 
@@ -152,8 +154,8 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
 #if DCHECK_IS_ON()
     if (!item_results->IsEmpty() && (state == LineBreakState::kIsBreakable ||
                                      state == LineBreakState::kNotBreakable)) {
-      DCHECK_EQ(item_results->back().prohibit_break_after,
-                state == LineBreakState::kNotBreakable);
+      DCHECK_EQ(item_results->back().can_break_after,
+                state == LineBreakState::kIsBreakable);
     }
 #endif
 
@@ -165,15 +167,15 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     }
 
     if (state == LineBreakState::kBreakAfterTrailings) {
+      if (HandleTrailingSpaces(item_results))
+        continue;
       line_info->SetIsLastLine(false);
       return;
     }
     if (state == LineBreakState::kIsBreakable && !line_.CanFit())
       return HandleOverflow(line_info);
 
-    item_results->push_back(
-        NGInlineItemResult(&item, item_index_, offset_, item.EndOffset()));
-    NGInlineItemResult* item_result = &item_results->back();
+    NGInlineItemResult* item_result = AddItem(item, item_results);
     if (item.Type() == NGInlineItem::kText) {
       state = HandleText(line_info, item, item_result);
 #if DCHECK_IS_ON()
@@ -196,15 +198,15 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     } else if (item.Length()) {
       // For other items with text (e.g., bidi controls), use their text to
       // determine the break opportunity.
-      item_result->prohibit_break_after =
-          !break_iterator_.IsBreakable(item_result->end_offset);
-      state = item_result->prohibit_break_after ? LineBreakState::kNotBreakable
-                                                : LineBreakState::kIsBreakable;
+      item_result->can_break_after =
+          break_iterator_.IsBreakable(item_result->end_offset);
+      state = item_result->can_break_after ? LineBreakState::kIsBreakable
+                                           : LineBreakState::kNotBreakable;
       MoveToNextOf(item);
     } else {
       if (item.Type() == NGInlineItem::kListMarker)
         line_.should_create_line_box = true;
-      item_result->prohibit_break_after = true;
+      DCHECK(!item_result->can_break_after);
       state = LineBreakState::kNotBreakable;
       MoveToNextOf(item);
     }
@@ -228,6 +230,7 @@ void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
   LayoutUnit bfc_line_offset = line_.line_left_bfc_offset;
   LayoutUnit available_width = line_.AvailableWidth();
 
+#if 0
   // Indenting should move the current position to compute the size of
   // tabulations. Since it is computed and stored in NGInlineItemResult,
   // adjust the positoin of the line box to simplify placing items.
@@ -238,6 +241,7 @@ void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
       bfc_line_offset += text_indent;
     available_width -= text_indent;
   }
+#endif
 
   // Negative margins can make the position negative, but the inline size is
   // always positive or 0.
@@ -255,10 +259,10 @@ bool NGLineBreaker::IsFirstBreakOpportunity(unsigned offset,
 NGLineBreaker::LineBreakState NGLineBreaker::ComputeIsBreakableAfter(
     NGInlineItemResult* item_result) const {
   if (auto_wrap_ && break_iterator_.IsBreakable(item_result->end_offset)) {
-    DCHECK(!item_result->prohibit_break_after);
+    item_result->can_break_after = true;
     return LineBreakState::kIsBreakable;
   }
-  item_result->prohibit_break_after = true;
+  DCHECK(!item_result->can_break_after);
   return LineBreakState::kNotBreakable;
 }
 
@@ -279,7 +283,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     LayoutUnit next_position = line_.position + item_result->inline_size;
     if (!auto_wrap_ || next_position <= available_width) {
       item_result->shape_result = item.TextShapeResult();
-      item_result->no_break_opportunities_inside = !auto_wrap_;
+      item_result->may_break_inside = auto_wrap_;
       line_.position = next_position;
       MoveToNextOf(item);
       return ComputeIsBreakableAfter(item_result);
@@ -292,13 +296,12 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     LayoutUnit next_position = line_.position + item_result->inline_size;
     bool is_overflow = next_position > available_width;
     line_.position = next_position;
-    item_result->no_break_opportunities_inside = is_overflow;
+    item_result->may_break_inside = !is_overflow;
     if (item_result->end_offset < item.EndOffset())
       offset_ = item_result->end_offset;
     else
       MoveToNextOf(item);
-    if (item_result->end_offset < item.EndOffset() ||
-        item_result->has_hanging_spaces) {
+    if (item_result->end_offset < item.EndOffset()) {
       // The break point found. If it fits, break this line after including
       // trailing objects (end margins etc.)
       if (!is_overflow)
@@ -311,8 +314,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     }
 
     DCHECK(is_overflow || item_result->start_offset != item.StartOffset());
-    return item_result->prohibit_break_after ? LineBreakState::kNotBreakable
-                                             : LineBreakState::kIsBreakable;
+    return item_result->can_break_after ? LineBreakState::kIsBreakable
+                                        : LineBreakState::kNotBreakable;
   }
 
   // Add the rest of the item if !auto_wrap.
@@ -321,8 +324,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
   DCHECK_NE(offset_, item.StartOffset());
   BreakText(item_result, item, LayoutUnit::Max(), line_info);
   DCHECK_EQ(item_result->end_offset, item.EndOffset());
-  item_result->no_break_opportunities_inside = true;
-  item_result->prohibit_break_after = true;
+  DCHECK(!item_result->may_break_inside);
+  item_result->can_break_after = false;
   line_.position += item_result->inline_size;
   MoveToNextOf(item);
   return LineBreakState::kNotBreakable;
@@ -351,35 +354,26 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
   scoped_refptr<ShapeResult> shape_result =
       breaker.ShapeLine(item_result->start_offset, available_width, &result);
   DCHECK_GT(shape_result->NumCharacters(), 0u);
-  if (result.has_hanging_spaces) {
-    item_result->has_hanging_spaces = true;
-    // Hanging spaces do not expand min-content. Handle them simliar to visual
-    // overflow. Some details are different, but it's the closest behavior.
-    item_result->inline_size = available_width;
-    DCHECK(!result.is_hyphenated);
-  } else {
+  item_result->inline_size = shape_result->SnappedWidth().ClampNegativeToZero();
+
+  // If overflow and no break opportunities exist, and if 'word-wrap:
+  // break-word', try to break at every grapheme cluster boundary.
+  if (item_result->inline_size > available_width && break_if_overflow_ &&
+      break_iterator_.BreakType() == LineBreakType::kNormal &&
+      IsFirstBreakOpportunity(result.break_offset, *line_info)) {
+    break_iterator_.SetBreakType(LineBreakType::kBreakCharacter);
+    BreakText(item_result, item, available_width, line_info);
+    break_iterator_.SetBreakType(LineBreakType::kNormal);
+    return;
+  }
+
+  if (result.is_hyphenated) {
+    AppendHyphen(*item.Style(), line_info);
     item_result->inline_size =
         shape_result->SnappedWidth().ClampNegativeToZero();
-
-    // If overflow and no break opportunities exist, and if 'word-wrap:
-    // break-word', try to break at every grapheme cluster boundary.
-    if (item_result->inline_size > available_width && break_if_overflow_ &&
-        break_iterator_.BreakType() == LineBreakType::kNormal &&
-        IsFirstBreakOpportunity(result.break_offset, *line_info)) {
-      break_iterator_.SetBreakType(LineBreakType::kBreakCharacter);
-      BreakText(item_result, item, available_width, line_info);
-      break_iterator_.SetBreakType(LineBreakType::kNormal);
-      return;
-    }
-
-    if (result.is_hyphenated) {
-      AppendHyphen(*item.Style(), line_info);
-      item_result->inline_size =
-          shape_result->SnappedWidth().ClampNegativeToZero();
-      // TODO(kojii): Implement when adding a hyphen caused overflow.
-      // crbug.com/714962: Should be removed when switched to NGPaint.
-      item_result->text_end_effect = NGTextEndEffect::kHyphen;
-    }
+    // TODO(kojii): Implement when adding a hyphen caused overflow.
+    // crbug.com/714962: Should be removed when switched to NGPaint.
+    item_result->text_end_effect = NGTextEndEffect::kHyphen;
   }
   item_result->end_offset = result.break_offset;
   item_result->shape_result = std::move(shape_result);
@@ -394,11 +388,11 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
   //   offset is the first break opportunity, either inside, at the end, or
   //   beyond the end.
   if (item_result->end_offset < item.EndOffset()) {
-    item_result->prohibit_break_after = false;
+    item_result->can_break_after = true;
   } else {
     DCHECK_EQ(item_result->end_offset, item.EndOffset());
-    item_result->prohibit_break_after =
-        !break_iterator_.IsBreakable(item_result->end_offset);
+    item_result->can_break_after =
+        break_iterator_.IsBreakable(item_result->end_offset);
   }
 }
 
@@ -410,6 +404,7 @@ void NGLineBreaker::AppendHyphen(const ComputedStyle& style,
   HarfBuzzShaper shaper(hyphen_string.Characters16(), hyphen_string.length());
   scoped_refptr<ShapeResult> hyphen_result =
       shaper.Shape(&style.GetFont(), direction);
+  line_.position += hyphen_result->SnappedWidth();
   line_info->SetLineEndShapeResult(std::move(hyphen_result), &style);
 }
 
@@ -435,15 +430,16 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
       line_.position += item_result->inline_size;
       MoveToNextOf(item);
       // TODO(kojii): Implement break around the tab character.
-      return LineBreakState::kIsBreakable;
+      return ComputeIsBreakableAfter(item_result);
     }
     case kZeroWidthSpaceCharacter:
       // <wbr> tag creates break opportunities regardless of auto_wrap.
       MoveToNextOf(item);
+      item_result->can_break_after = true;
       return LineBreakState::kIsBreakable;
   }
   NOTREACHED();
-  return LineBreakState::kIsBreakable;
+  return ComputeIsBreakableAfter(item_result);
 }
 
 NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
@@ -580,7 +576,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleFloat(
 
 void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
                                   NGInlineItemResult* item_result) {
-  item_result->prohibit_break_after = true;
+  DCHECK(!item_result->can_break_after);
 
   DCHECK(item.Style());
   const ComputedStyle& style = *item.Style();
@@ -646,7 +642,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleCloseTag(
   SetCurrentStyle(item.GetLayoutObject()->Parent()->StyleRef());
   MoveToNextOf(item);
 
-  // Prohibit break before a close tag by setting prohibit_break_after to the
+  // Prohibit break before a close tag by setting can_break_after to the
   // previous result.
   // TODO(kojii): There should be a result before close tag, but there are cases
   // that doesn't because of the way we handle trailing spaces. This needs to be
@@ -654,12 +650,12 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleCloseTag(
   if (item_results->size() >= 2) {
     NGInlineItemResult* last = &(*item_results)[item_results->size() - 2];
     if (was_auto_wrap == auto_wrap_) {
-      item_result->prohibit_break_after = last->prohibit_break_after;
-      last->prohibit_break_after = true;
-      return item_result->prohibit_break_after ? LineBreakState::kNotBreakable
-                                               : LineBreakState::kIsBreakable;
+      item_result->can_break_after = last->can_break_after;
+      last->can_break_after = false;
+      return item_result->can_break_after ? LineBreakState::kIsBreakable
+                                          : LineBreakState::kNotBreakable;
     }
-    last->prohibit_break_after = true;
+    last->can_break_after = false;
   }
   return ComputeIsBreakableAfter(item_result);
 }
@@ -669,6 +665,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleCloseTag(
 // are no break opportunities in item_results.back().
 void NGLineBreaker::HandleOverflow(NGLineInfo* line_info) {
   HandleOverflow(line_info, line_.AvailableWidth(), false);
+  HandleTrailingSpaces(&line_info->Results());
 }
 
 void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
@@ -686,7 +683,7 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
     NGInlineItemResult* item_result = &(*item_results)[--i];
 
     // Try to break after this item.
-    if (i < item_results->size() - 1 && !item_result->prohibit_break_after) {
+    if (i < item_results->size() - 1 && item_result->can_break_after) {
       if (width_to_rewind <= 0) {
         line_.position = available_width + width_to_rewind;
         return Rewind(line_info, i + 1);
@@ -700,7 +697,7 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
     DCHECK(item_result->item);
     const NGInlineItem& item = *item_result->item;
     if (item.Type() == NGInlineItem::kText && next_width_to_rewind < 0 &&
-        (!item_result->no_break_opportunities_inside || force_break_anywhere)) {
+        (item_result->may_break_inside || force_break_anywhere)) {
       // When the text fits but its right margin does not, the break point
       // must not be at the end.
       LayoutUnit item_available_width =
@@ -713,14 +710,17 @@ void NGLineBreaker::HandleOverflow(NGLineInfo* line_info,
       item_result->CheckConsistency();
 #endif
       if (item_result->inline_size <= item_available_width) {
-        DCHECK(item_result->end_offset < item.EndOffset() ||
-               (item_result->end_offset == item.EndOffset() &&
-                item_result->has_hanging_spaces));
-        DCHECK(!item_result->prohibit_break_after);
+        DCHECK(item_result->end_offset < item.EndOffset());
+        DCHECK(item_result->can_break_after);
         DCHECK_LE(i + 1, item_results->size());
         if (i + 1 == item_results->size()) {
           line_.position =
               available_width + next_width_to_rewind + item_result->inline_size;
+#if DCHECK_IS_ON()
+          LayoutUnit optimized_position = line_.position;
+          UpdatePosition(line_info->Results());
+          DCHECK_EQ(line_.position, optimized_position);
+#endif
         } else {
           Rewind(line_info, i + 1);
         }
@@ -805,6 +805,7 @@ void NGLineBreaker::TruncateOverflowingText(NGLineInfo* line_info) {
   // The ellipsis should appear at the logical end of the line.
   // This is stored seprately from other results so that it can be appended
   // after bidi reorder.
+  line_.position += shape_result->SnappedWidth();
   line_info->SetLineEndShapeResult(std::move(shape_result), style);
 }
 
@@ -832,9 +833,7 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
         break_iterator_.SetBreakType(LineBreakType::kKeepAll);
         break;
     }
-    break_iterator_.SetBreakSpace(style.BreakOnlyAfterWhiteSpace()
-                                      ? BreakSpaceType::kAfter
-                                      : BreakSpaceType::kBeforeSpace);
+    break_iterator_.SetBreakSpace(BreakSpaceType::kBeforeSpace);
 
     enable_soft_hyphen_ = style.GetHyphens() != Hyphens::kNone;
     hyphenation_ = style.GetHyphenation();
@@ -854,6 +853,48 @@ void NGLineBreaker::MoveToNextOf(const NGInlineItemResult& item_result) {
   DCHECK(item_result.item);
   if (offset_ == item_result.item->EndOffset())
     item_index_++;
+}
+
+bool NGLineBreaker::HandleTrailingSpaces(NGInlineItemResults* item_results) {
+  const Vector<NGInlineItem>& items = node_.Items();
+  if (item_index_ >= items.size())
+    return false;
+  const NGInlineItem& item = items[item_index_];
+  if (item.Type() != NGInlineItem::kText)
+    return false;
+  const String& text = node_.Text();
+  if (text[offset_] != kSpaceCharacter)
+    return false;
+
+  DCHECK_LT(offset_, item.EndOffset());
+  DCHECK(item.Style());
+  const ComputedStyle& style = *item.Style();
+  if (style.CollapseWhiteSpace()) {
+    // Skip one whitespace. Collapsible spaces are collapsed to single space in
+    // NGInlineItemBuilder, so this removes all collapsible spaces.
+    offset_++;
+    if (offset_ == item.EndOffset())
+      item_index_++;
+    return true;
+  }
+
+  unsigned end = offset_ + 1;
+  for (; end <= item.EndOffset() && text[end] == kSpaceCharacter; end++) {
+  }
+  if (style.BreakOnlyAfterWhiteSpace()) {
+    NGInlineItemResult* item_result = AddItem(item, item_results);
+    item_result->is_trailing_spaces = true;
+    item_result->end_offset = end;
+    // TODO: We can probably avoid re-shaping?
+    item_result->shape_result =
+        shaper_.Shape(&style.GetFont(), style.Direction(), offset_, end);
+    // Do not set |item_result->inline_size| because trailing spaces can
+    // overhang.
+  }
+  offset_ = end;
+  if (offset_ == item.EndOffset())
+    item_index_++;
+  return true;
 }
 
 void NGLineBreaker::SkipCollapsibleWhitespaces() {
