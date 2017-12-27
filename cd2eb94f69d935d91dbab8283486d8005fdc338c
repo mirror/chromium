@@ -313,6 +313,24 @@
     },
     {
       "key": {
+        "uuid": "a07f9bbe_7df9117c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/668315",
+      "parentUuid": "dc506115_ad6e7c11",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23116b7f_4a13cd0c",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -381,6 +399,30 @@
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71e493b_73c9c9fc",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e84a8dc_406da9da",
+      "range": {
+        "startLine": 1402,
+        "startChar": 15,
+        "endLine": 1402,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -573,6 +615,30 @@
     },
     {
       "key": {
+        "uuid": "9a42b35c_a496f397",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8adcfa_69d0ba9e",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 16
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261857bf_7384cf03",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -626,6 +692,24 @@
     },
     {
       "key": {
+        "uuid": "3fb646e8_2b5925e6",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "I think it gives more priority to child of candidate container. For example,\n\u003ca href\u003d\u0027#\u0027\u003efocused element\u003c/a\u003e\n\u003cdiv scrollable area\u003e   \u003c!-- first candidate in container --\u003e\n\u003cdiv scrollable area\u003e\n\u003ca id\u003d\u0027inside\u0027 href\u003d\u0027#\u0027\u003efar away from focused element\u003c/a\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003ca id\u003d\u0027outside\u0027 href\u003d\u0027#\u0027\u003esecond candidate in container\u003c/a\u003e\n\nIn above case, \u003ca id\u003d\u0027inside\u0027\u003e can be more closed with focused element than \u003ca id\u003d\u0027outside\u0027\u003e after scrolling.",
+      "parentUuid": "7ac32d5d_af542e38",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ebc7154_8c93a6f1",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -673,6 +757,24 @@
       "side": 1,
       "message": "\u003e Because AdvanceFocusDirectionallyInContainer()\ntraverses only under the container.\n\nAck. Ah, right, all the checked sub containers reside in the sub tree we just exited? :)\n\nMaybe rename prev_container to pruned_sub_tree?",
       "parentUuid": "c61b9bda_d6c04c1d",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e7d618_c1e26f07",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "Changed to pruned_sub_tree_root",
+      "parentUuid": "ed3ec097_671c9c22",
       "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

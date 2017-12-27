@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58a7f789_b3485d64",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "Comment was removed.\n\n\u003e This is not true because we always use the focused element\u0027s container\u0027s box, right?\n\nNo, We use container\u0027s box when focused element is offscreen.\n\nbool FocusController::AdvanceFocusDirectionally(WebFocusType type) {\n...\n  if (focused_element) {\n    if (!HasOffscreenRect(focused_element)) {\n      starting_rect \u003d NodeRectInAbsoluteCoordinates(focused_element,\n                                                    true /* ignore border */);\n...\n}",
+      "parentUuid": "4c6036a7_6cd524f5",
+      "range": {
+        "startLine": 1403,
+        "startChar": 0,
+        "endLine": 1405,
+        "endChar": 76
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df14ad06_ce0a7935",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bf19f764_cd947447",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "I choose latter :) Done",
+      "parentUuid": "df14ad06_ce0a7935",
+      "range": {
+        "startLine": 1406,
+        "startChar": 15,
+        "endLine": 1406,
+        "endChar": 25
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "029d3dd0_8d51e4a2",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cecd86_b4aeca1b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-27T12:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029d3dd0_8d51e4a2",
+      "range": {
+        "startLine": 1441,
+        "startChar": 0,
+        "endLine": 1447,
+        "endChar": 29
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
