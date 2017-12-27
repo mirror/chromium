@@ -3,12 +3,17 @@
 // found in the LICENSE file.
 package org.chromium.chrome.browser.webapps;
 
+import android.support.annotation.IntDef;
+
 import org.chromium.chrome.browser.util.UrlUtilities;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Defines which URLs are inside a web app scope as well as what to do when user navigates to them.
  */
-enum WebappScopePolicy {
+public enum WebappScopePolicy {
     LEGACY {
         @Override
         public boolean isUrlInScope(WebappInfo info, String url) {
@@ -36,6 +41,18 @@ enum WebappScopePolicy {
         }
     };
 
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({NavigationDirective.NORMAL_BEHAVIOR,
+            NavigationDirective.IGNORE_EXTERNAL_INTENT_REQUESTS, NavigationDirective.LAUNCH_CCT})
+    public @interface NavigationDirective {
+        // No special handling.
+        int NORMAL_BEHAVIOR = 0;
+        // The navigation should stay in the webapp. External intent handlers should be ignored.
+        int IGNORE_EXTERNAL_INTENT_REQUESTS = 1;
+        // The navigation should launch a CCT.
+        int LAUNCH_CCT = 2;
+    }
+
     /**
      * @return {@code true} if given {@code url} is in scope of a web app as defined by its
      *         {@code WebappInfo}, {@code false} otherwise.
@@ -47,4 +64,12 @@ enum WebappScopePolicy {
      *         {@code false} otherwise.
      */
     abstract boolean openOffScopeNavsInCct();
+
+    /** Applies the scope policy for navigation to {@link url}. */
+    public @NavigationDirective int applyPolicyForNavigationToUrl(WebappInfo info, String url) {
+        if (isUrlInScope(info, url)) return NavigationDirective.IGNORE_EXTERNAL_INTENT_REQUESTS;
+
+        return openOffScopeNavsInCct() ? NavigationDirective.LAUNCH_CCT
+                                       : NavigationDirective.NORMAL_BEHAVIOR;
+    }
 }

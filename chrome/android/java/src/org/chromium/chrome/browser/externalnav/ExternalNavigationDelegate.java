@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.webapps.WebappScopePolicy;
 
 import java.util.List;
 
@@ -36,10 +37,12 @@ interface ExternalNavigationDelegate {
     boolean isSpecializedHandlerAvailable(List<ResolveInfo> infos);
 
     /**
-     * Returns true if the current activity is a webapp and {@params url} lies within the scope of
-     * that webapp.
+     * If the current activity is a webapp, applies the webapp's scope policy and returns the
+     * result. Returns {@link WebappScopePolicy#NavigationDirective#REGULAR_BEHAVIOR} if the current
+     * activity is not a webapp.
      */
-    boolean isWithinCurrentWebappScope(String url);
+    @WebappScopePolicy.NavigationDirective
+    int applyWebappScopePolicyForUrl(String url);
 
     /**
      * Returns the number of specialized intent handlers in {@params infos}. Specialized intent
@@ -106,6 +109,13 @@ interface ExternalNavigationDelegate {
      * @param needsToCloseTab Whether this action should close the current tab.
      */
     void startFileIntent(Intent intent, String referrerUrl, Tab tab, boolean needsToCloseTab);
+
+    /**
+     * Launches a Chrome Custom Tab with the given URL.
+     * @param url
+     * @param launchInNewTask Whether the CCT should be launched in a new task.
+     */
+    void launchCctForUrl(String url, boolean launchInNewTask);
 
     /**
      * Clobber the current tab and try not to pass an intent when it should be handled by Chrome
