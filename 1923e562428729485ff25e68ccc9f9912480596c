@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9716565e_ea1cf248",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-27T20:26:37Z",
+      "side": 0,
+      "message": "If you can update this CL to just be to remove this code, I\u0027ll LGTM it. I\nagree that it\u0027s worth trying again.",
+      "revId": "1923e562428729485ff25e68ccc9f9912480596c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
