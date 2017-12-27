@@ -6,7 +6,7 @@
 
 namespace ui {
 
-bool BaseWindow::IsRestored(const BaseWindow& window) {
+bool BaseWindow::IsWindowRestored(const BaseWindow& window) {
   return !window.IsMaximized() &&
      !window.IsMinimized() &&
      !window.IsFullscreen();
