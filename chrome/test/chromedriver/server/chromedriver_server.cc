@@ -117,13 +117,7 @@ class HttpServer : public net::HttpServer::Delegate {
  private:
   void OnResponse(int connection_id,
                   std::unique_ptr<net::HttpServerResponseInfo> response) {
-    // Don't support keep-alive, since there's no way to detect if the
-    // client is HTTP/1.0. In such cases, the client may hang waiting for
-    // the connection to close (e.g., python 2.7 urllib).
-    response->AddHeader("Connection", "close");
     server_->SendResponse(connection_id, *response);
-    // Don't need to call server_->Close(), since SendResponse() will handle
-    // this for us.
   }
 
   HttpRequestHandlerFunc handle_request_func_;
