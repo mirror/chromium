@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/ios/wait_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
@@ -1540,4 +1541,36 @@ TEST_F(PasswordControllerTest, TouchendAsSubmissionIndicator) {
          "document.getElementById('submit_button').dispatchEvent(e);");
     testing::Mock::VerifyAndClearExpectations(&log_manager);
   }
+}
+
+// Tests that a touchend event from a button which contains in a password form
+// works as a submission indicator for this password form.
+TEST_F(PasswordControllerTest, SavingFromSameOriginIframe) {
+  // Use a mock LogManager to detect that OnInPageNavigation has been
+  // called. TODO(crbug.com/598672): this is a hack, we should modularize the
+  // code better to allow proper unit-testing.
+  MockLogManager log_manager;
+  EXPECT_CALL(*weak_client_, GetLogManager())
+      .WillRepeatedly(Return(&log_manager));
+  EXPECT_CALL(log_manager, IsLoggingActive()).WillRepeatedly(Return(true));
+  const char kExpectedMessage[] =
+      "Message: \"PasswordManager::OnInPageNavigation\"\n";
+  EXPECT_CALL(log_manager, LogSavePasswordProgress(kExpectedMessage));
+  EXPECT_CALL(log_manager,
+              LogSavePasswordProgress(testing::Ne(kExpectedMessage)))
+      .Times(testing::AnyNumber());
+
+  LoadHtml(@"<iframe id='frame1'></iframe>");
+  ExecuteJavaScript(
+      @"document.getElementById('frame1').contentDocument.body.innerHTML = "
+       "'<form id=\"form1\">"
+       "<input type=\"text\" name=\"text\" value=\"user1\" id=\"id2\">"
+       "<input type=\"password\" name=\"password\" value=\"pw1\" id=\"id2\">"
+       "<input type=\"submit\" id=\"submit_input\"/>"
+       "</form>'");
+  ExecuteJavaScript(
+      @"document.getElementById('frame1').contentDocument.getElementById('"
+      @"submit_input').click();");
+  base::test::ios::SpinRunLoopWithMinDelay(base::TimeDelta::FromSeconds(1));
+  testing::Mock::VerifyAndClearExpectations(&log_manager);
 }

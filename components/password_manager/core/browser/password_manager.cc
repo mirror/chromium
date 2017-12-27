@@ -486,6 +486,24 @@ void PasswordManager::OnPasswordFormSubmitted(
   pending_login_managers_.clear();
 }
 
+void PasswordManager::OnPasswordFormSubmittedNoChecks(
+    password_manager::PasswordManagerDriver* driver,
+    const autofill::PasswordForm& password_form) {
+  std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
+  if (password_manager_util::IsLoggingActive(client_)) {
+    logger.reset(
+        new BrowserSavePasswordProgressLogger(client_->GetLogManager()));
+    logger->LogMessage(Logger::STRING_ON_IN_PAGE_NAVIGATION);
+  }
+
+  ProvisionallySavePassword(password_form, driver);
+
+  if (!CanProvisionalManagerSave())
+    return;
+
+  OnLoginSuccessful();
+}
+
 void PasswordManager::OnPasswordFormForceSaveRequested(
     password_manager::PasswordManagerDriver* driver,
     const PasswordForm& password_form) {
@@ -785,19 +803,7 @@ void PasswordManager::OnPasswordFormsRendered(
 void PasswordManager::OnInPageNavigation(
     password_manager::PasswordManagerDriver* driver,
     const PasswordForm& password_form) {
-  std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
-  if (password_manager_util::IsLoggingActive(client_)) {
-    logger.reset(
-        new BrowserSavePasswordProgressLogger(client_->GetLogManager()));
-    logger->LogMessage(Logger::STRING_ON_IN_PAGE_NAVIGATION);
-  }
-
-  ProvisionallySavePassword(password_form, driver);
-
-  if (!CanProvisionalManagerSave())
-    return;
-
-  OnLoginSuccessful();
+  OnPasswordFormSubmittedNoChecks(driver, password_form);
 }
 
 void PasswordManager::OnLoginSuccessful() {
