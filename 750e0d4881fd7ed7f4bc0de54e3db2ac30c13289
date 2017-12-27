@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef07ae66_eb13bd56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1257236
+      },
+      "writtenOn": "2017-12-27T10:27:00Z",
+      "side": 1,
+      "message": "I make this patch without bug.",
+      "parentUuid": "2d5b621a_3966e96d",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "750e0d4881fd7ed7f4bc0de54e3db2ac30c13289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39f569b9_63e6c93d",
         "filename": "base/callback_internal.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-21T21:28:39Z",
       "side": 1,
       "message": "Looks like you are adding just a fake impl. Are you planning to calculate real memory usage of BindState later? I\u0027m afraid of the binary size growth if it\u0027s done in BindState.",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "750e0d4881fd7ed7f4bc0de54e3db2ac30c13289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230bdc1a_ca4e1d85",
+        "filename": "base/callback_internal.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1257236
+      },
+      "writtenOn": "2017-12-27T10:27:00Z",
+      "side": 1,
+      "message": "Could you please review implementation for scoped_refptr and correct me if I am wrong. I try to implement EstimateMemoryUsage(scoped_reftr ptr_) same way that EstimateMemoryUsage(shared_ptr ptr_).",
+      "parentUuid": "39f569b9_63e6c93d",
       "range": {
         "startLine": 66,
         "startChar": 9,
