@@ -222,6 +222,8 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
     ApplyTextAlign(*line_info, text_align, &line_bfc_offset.line_offset,
                    inline_size);
   }
+  if (IsLtr(line_info->BaseDirection()))
+    line_bfc_offset.line_offset += line_info->TextIndent();
 
   if (list_marker_index.has_value()) {
     NGListLayoutAlgorithm::SetListMarkerPosition(

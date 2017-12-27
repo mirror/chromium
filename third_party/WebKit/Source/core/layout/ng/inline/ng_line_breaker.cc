@@ -53,7 +53,21 @@ NGLineBreaker::NGLineBreaker(
 bool NGLineBreaker::IsFirstFormattedLine() const {
   if (item_index_ || offset_)
     return false;
-  return node_.GetLayoutBlockFlow()->CanContainFirstFormattedLine();
+
+  // TODO(kojii): In LayoutNG, leading OOF creates an anonymous block box,
+  // and that |CanContainFirstFormattedLine()| does not work.
+  // crbug.com/734554
+  // return node_.GetLayoutBlockFlow()->CanContainFirstFormattedLine();
+  LayoutObject* layout_object = node_.GetLayoutBlockFlow();
+  if (!layout_object->IsAnonymousBlock())
+    return true;
+  for (;;) {
+    layout_object = layout_object->PreviousSibling();
+    if (!layout_object)
+      return true;
+    if (!layout_object->IsFloatingOrOutOfFlowPositioned())
+      return false;
+  }
 }
 
 // Compute the base direction for bidi algorithm for this line.
@@ -214,6 +228,7 @@ void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
   LayoutUnit bfc_line_offset = line_.line_left_bfc_offset;
   LayoutUnit available_width = line_.AvailableWidth();
 
+#if 0
   // Indenting should move the current position to compute the size of
   // tabulations. Since it is computed and stored in NGInlineItemResult,
   // adjust the positoin of the line box to simplify placing items.
@@ -224,6 +239,7 @@ void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
       bfc_line_offset += text_indent;
     available_width -= text_indent;
   }
+#endif
 
   // Negative margins can make the position negative, but the inline size is
   // always positive or 0.
