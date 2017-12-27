@@ -1232,6 +1232,12 @@
     <message name="IDS_SETTINGS_TIME_ZONE_SUBPAGE_TITLE" desc="The title of the dialog that allows user to control different time zone settings.">
       Time zone
     </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_SET_AUTOMATICALLY" desc="The name for the radio button that turns automatic time zone detection on.">
+      Set automatically
+    </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_CHOOSE_FROM_LIST" desc="The name for the radio button that turns automatic time zone detection off, and allows user to select time zone from the list of all supported time zones.">
+      Choose from list
+    </message>
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_DISABLED" desc="Display name for the automatic time zone detection mode which disables automatic detection.">
       Automatic time zone detection is disabled
     </message>
@@ -1253,14 +1259,14 @@
     <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_MODE_SEND_ALL_INFO_DESCRIPTION" desc="Description for the automatic time zone detection mode which enables time zone detection sending list of visible WiFi and Cellular Access Point names to Google servers.">
       Use WiFi or cellular network to determine location
     </message>
-    <message name="IDS_SETTINGS_TIME_ZONE_DETECTION_SELECT_YOUR_TIME_ZONE" desc="Option name in the list of automatic time zone detection modes that turns automatic detection off, and suggests user to select time zone from the displayed drop-down list.">
-      Choose from list
-    </message>
     <message name="IDS_SETTINGS_TIME_ZONE" desc="Label for the picker which allows users to choose their time zone.">
       Time zone:
     </message>
     <message name="IDS_SETTINGS_TIME_ZONE_GEOLOCATION" desc="Label for the checkbox which enables setting the time zone automatically with the detected location of the device.">
       Set time zone automatically using your location
+    </message>
+    <message name="IDS_SETTINGS_SELECT_TIME_ZONE_RESOLVE_METHOD" desc="Label for the drop-down menu that allows user to select specific method to automatically resolve device time zone.">
+      Automatic time zone resolve method
     </message>
     <message name="IDS_SETTINGS_USE_24_HOUR_CLOCK" desc="Label for the checkbox which enables a 24-hour clock (as opposed to a 12-hour clock).">
       Use 24-hour clock
