@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a58b7dff_7b9450f1",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:42:04Z",
+      "side": 1,
+      "message": "There\u0027s a FakeUpdateEngineClient.\n\nPlan is to merge UpdateEngineClientFakeImpl into UpdateEngineClientStubImpl first (this CL),\nand then merge with FakeUpdateEngineClient later in next CL.",
+      "parentUuid": "276f71cd_00b2fb8b",
+      "range": {
+        "startLine": 541,
+        "startChar": 6,
+        "endLine": 541,
+        "endChar": 32
+      },
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a41c78_1a26c1cf",
         "filename": "chromeos/dbus/update_engine_client.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac612f44_0d737c82",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a41c78_1a26c1cf",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0059b16e_2f8787f0",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2d4ccc_f6bd9bf2",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "887f193e_c810630f",
         "filename": "chromeos/dbus/update_engine_client.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccdaeac_d31c03ff",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T15:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "887f193e_c810630f",
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
