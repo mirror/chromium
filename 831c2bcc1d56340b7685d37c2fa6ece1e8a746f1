@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfac19fe_6c5597c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "We can\u0027t slice UKM by all of the rich information we have at the server for the pingback, so not really.",
+      "parentUuid": "7e56702f_882ddc99",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2204daa_f2f24691",
         "filename": "components/crash/content/browser/crash_dump_manager_android.h",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "835a173c_a4c694ff",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2204daa_f2f24691",
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c1f95b_d740c78b",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4969d5a_3fcf4cc0",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8c1f95b_d740c78b",
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d57a6f57_6ea20086",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa420729_80040b9b",
+      "range": {
+        "startLine": 183,
+        "startChar": 22,
+        "endLine": 183,
+        "endChar": 36
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b672c599_58238d93",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 4
@@ -93,6 +177,30 @@
       "writtenOn": "2017-12-22T01:02:06Z",
       "side": 1,
       "message": "Is this not always same as:\nmetrics_request_.pageloads_size()?",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 34
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7850305f_056c4975",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Yes. I was trying to be stylistically consistent, but I\u0027ll go wit the simpler solution since you suggest it.",
+      "parentUuid": "b672c599_58238d93",
       "range": {
         "startLine": 321,
         "startChar": 4,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "3545c030_c1775693",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdfd613e_f2d25fac",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 323,
+        "endChar": 34
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2514574d_35c3a279",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
         "patchSetId": 4
@@ -148,6 +280,30 @@
       "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e597e94f_47d43c4f",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-27T18:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2514574d_35c3a279",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "831c2bcc1d56340b7685d37c2fa6ece1e8a746f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
