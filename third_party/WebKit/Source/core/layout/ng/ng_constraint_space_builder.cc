@@ -11,7 +11,9 @@ namespace blink {
 NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(
     const NGConstraintSpace& parent_space)
     : NGConstraintSpaceBuilder(parent_space.GetWritingMode(),
-                               parent_space.InitialContainingBlockSize()) {}
+                               parent_space.InitialContainingBlockSize()) {
+  parent_percentage_resolution_size_ = parent_space.PercentageResolutionSize();
+}
 
 NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(WritingMode writing_mode,
                                                    NGPhysicalSize icb_size)
