@@ -469,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "c27580bc_f99b90a0",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2017-12-27T20:17:02Z",
+      "side": 1,
+      "message": "Fixed the tests.\n\nand cced the test author oka@",
+      "parentUuid": "bbc3efed_56f5c624",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc86d453_da50ab25",
         "filename": "chromeos/dbus/fake_session_manager_client.h",
         "patchSetId": 4
