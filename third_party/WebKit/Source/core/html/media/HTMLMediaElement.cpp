@@ -1258,6 +1258,17 @@ void HTMLMediaElement::StartPlayerLoad() {
     return;
   }
 
+  // This causes compositing/video/video-reflection.html to fail due to a
+  // mismatch above the video element.  The original has a long horizontal line
+  // and two shorter vertical lines there, while the new one doesn't.  The new
+  // one looks correct to me.
+  {
+    bool should_report_root_bounds = true;
+    IntersectionGeometry geometry(nullptr, *this, Vector<Length>(),
+                                  should_report_root_bounds);
+    geometry.ComputeGeometry();
+  }
+
   if (GetLayoutObject())
     GetLayoutObject()->SetShouldDoFullPaintInvalidation();
   // Make sure if we create/re-create the WebMediaPlayer that we update our
