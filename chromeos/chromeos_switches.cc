@@ -500,9 +500,6 @@ const char kStubCrosSettings[] = "stub-cros-settings";
 // done by session manager.
 const char kSystemDevMode[] = "system-developer-mode";
 
-// Enables testing for auto update UI.
-const char kTestAutoUpdateUI[] = "test-auto-update-ui";
-
 // Determines which Google Privacy CA to use for attestation.
 const char kAttestationServer[] = "attestation-server";
 

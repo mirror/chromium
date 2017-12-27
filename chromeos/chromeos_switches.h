@@ -144,7 +144,6 @@ CHROMEOS_EXPORT extern const char kShowNonMdLogin[];
 CHROMEOS_EXPORT extern const char kSmsTestMessages[];
 CHROMEOS_EXPORT extern const char kStubCrosSettings[];
 CHROMEOS_EXPORT extern const char kSystemDevMode[];
-CHROMEOS_EXPORT extern const char kTestAutoUpdateUI[];
 CHROMEOS_EXPORT extern const char kAttestationServer[];
 CHROMEOS_EXPORT extern const char kWakeOnWifiPacket[];
 CHROMEOS_EXPORT extern const char kForceSystemCompositorMode[];
