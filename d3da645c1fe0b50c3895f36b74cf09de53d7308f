@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c620caed_84e8fa95",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "[optional] Add a TODO to remove this when required NSS \u003e\u003d 3.30.",
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088ef202_e28d81de",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "[optional] Can you add a comment along the lines of https://cs.chromium.org/chromium/src/net/cert/cert_verify_proc_nss.cc?q\u003dPROTECTED_MEMORY_SECTION\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d52",
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5afe22_936544d2",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "Should this be spelled p11-kit as in COMMIT_MSG?",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3399b51_efc05de6",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "it\u0027s",
+      "range": {
+        "startLine": 66,
+        "startChar": 47,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8d8a3b_ecf1989a",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "Can we use PK11_GetAllSlotsForCert()?",
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc18670_98bea9cc",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "This would be more readable as an early return.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1731fa_9326e28c",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-27T21:28:23Z",
+      "side": 1,
+      "message": "Should we be doing error handling?\n\nA return value of false is ambiguous with failure.",
+      "range": {
+        "startLine": 78,
+        "startChar": 37,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "d3da645c1fe0b50c3895f36b74cf09de53d7308f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
