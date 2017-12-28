@@ -52,7 +52,7 @@ static inline bool ShouldStopAtShadowRoot(Event& event,
                                           EventTarget& target) {
   if (shadow_root.IsV1()) {
     // In v1, an event is scoped by default unless event.composed flag is set.
-    return !event.composed() && target.ToNode() &&
+    return !shadow_root.IsUserAgent() && !event.composed() && target.ToNode() &&
            target.ToNode()->OwnerShadowHost() == shadow_root.host();
   }
   // Ignores event.composed() for v0.
