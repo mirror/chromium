@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6901ee63_262559f7",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-28T22:53:20Z",
+      "side": 1,
+      "message": "If I remember correctly, you can use this directly:\nbase::FilePath path_from_title(title);\n\nif this works, then maybe merge this line with the line below?",
+      "parentUuid": "e88dc7a6_751faf32",
+      "range": {
+        "startLine": 42,
+        "startChar": 51,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f025022_5af9cc92",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
         "patchSetId": 4
@@ -64,6 +88,29 @@
         "startChar": 17,
         "endLine": 46,
         "endChar": 30
+      },
+      "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dc8c32_d8f59f6c",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-28T22:53:20Z",
+      "side": 1,
+      "message": "As mentioned by Bruce, GUID is a good option if you don\u0027t care about the meaning of the file name. Otherwise, getting a unique path number should be the way to go. I remember that is how \"save-as\" works. File operations can be dangerous and we don\u0027t have full control over it sometimes (e.g., due to anti-virus software). I think adding an UMA here to monitor the time cost of the API call may be a safeguard.",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 31
       },
       "revId": "90cb420302a0b5b39fe3527fa5bc29b0c33540f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
