@@ -76,11 +76,12 @@ ScopedJavaLocalRef<jobject> PasswordUIViewAndroid::GetSavedPasswordEntry(
   if (!form) {
     return Java_PasswordUIView_createSavedPasswordEntry(
         env, ConvertUTF8ToJavaString(env, std::string()),
+        ConvertUTF8ToJavaString(env, std::string()),
         ConvertUTF16ToJavaString(env, base::string16()),
         ConvertUTF16ToJavaString(env, base::string16()));
   }
   return Java_PasswordUIView_createSavedPasswordEntry(
-      env,
+      env, ConvertUTF8ToJavaString(env, std::string()),
       ConvertUTF8ToJavaString(
           env, password_manager::GetShownOriginAndLinkUrl(*form).first),
       ConvertUTF16ToJavaString(env, form->username_value),
@@ -111,6 +112,20 @@ void PasswordUIViewAndroid::HandleRemoveSavedPasswordException(
     const JavaParamRef<jobject>&,
     int index) {
   password_manager_presenter_.RemovePasswordException(index);
+}
+
+void PasswordUIViewAndroid::HandleAddPasswordEntry(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>&,
+    const base::android::JavaParamRef<jstring>& site,
+    const base::android::JavaParamRef<jstring>& username,
+    const base::android::JavaParamRef<jstring>& password,
+    const base::android::JavaParamRef<jstring>& origin) {
+  password_manager_presenter_.AddPasswordEntry(
+      ConvertJavaStringToUTF8(env, site),
+      ConvertJavaStringToUTF8(env, username),
+      ConvertJavaStringToUTF8(env, password),
+      ConvertJavaStringToUTF8(env, origin));
 }
 
 ScopedJavaLocalRef<jstring> JNI_PasswordUIView_GetAccountDashboardURL(

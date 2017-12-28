@@ -441,6 +441,9 @@ CHAR-LIMIT guidelines:
       <message name="IDS_SAVED_PASSWORDS_NONE_TEXT" desc="Text when there are no saved passwords/exceptions.">
         Saved passwords will appear here.
       </message>
+       <message name="IDS_PASSWORD_ENTRY_EDITOR_ADD" desc='Name for the button for adding new password.'>
+        Add password
+      </message>
       <message name="IDS_PASSWORD_ENTRY_EDITOR_TITLE" desc='Title of the "edit a name/password" screen.'>
         Saved password
       </message>

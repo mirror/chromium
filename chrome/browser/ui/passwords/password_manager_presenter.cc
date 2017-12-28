@@ -17,6 +17,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
@@ -323,6 +324,22 @@ void PasswordManagerPresenter::RemoveLogin(const autofill::PasswordForm& form) {
   store->RemoveLogin(form);
 }
 
+void PasswordManagerPresenter::AddPasswordEntry(const std::string& site,
+                                                const std::string username,
+                                                const std::string& password,
+                                                const std::string& origin) {
+  PasswordStore* store = GetPasswordStore();
+  if (!store)
+    return;
+
+  autofill::PasswordForm form;
+  form.signon_realm = site;
+  form.username_value = base::UTF8ToUTF16(username);
+  form.password_value = base::UTF8ToUTF16(password);
+  form.origin = GURL(origin);
+  store->AddLogin(form);
+}
+
 PasswordManagerPresenter::ListPopulater::ListPopulater(
     PasswordManagerPresenter* page) : page_(page) {
 }
@@ -377,3 +394,7 @@ void PasswordManagerPresenter::PasswordExceptionListPopulater::
       password_manager::PasswordEntryType::BLACKLISTED);
   page_->SetPasswordExceptionList();
 }
+
+void AddPasswordEntry(const std::string& site,
+                      const std::string username,
+                      const std::string& password) {}
