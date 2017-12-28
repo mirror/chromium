@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "eebaad25_2f09f4ad",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "the user?",
+      "range": {
+        "startLine": 1704,
+        "startChar": 97,
+        "endLine": 1704,
+        "endChar": 102
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87aaed35_585d7555",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "can",
+      "range": {
+        "startLine": 1725,
+        "startChar": 217,
+        "endLine": 1725,
+        "endChar": 219
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "031612bd_d34268d5",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 3
@@ -31,6 +77,52 @@
       "side": 1,
       "message": "It might get inconsistent.",
       "parentUuid": "031612bd_d34268d5",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7bf635_4c392b8a",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "I\u0027d phrase this as \"label for\", but either is fine",
+      "range": {
+        "startLine": 1728,
+        "startChar": 67,
+        "endLine": 1728,
+        "endChar": 74
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390399dc_3ef6f460",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "How about just: \"user settings are\", or \"user\u0027s syncable settings are\"\n(I don\u0027t think listing the settings adds a lot of information here, especially when read out of context)\n\nSame for On/Off descriprions",
+      "range": {
+        "startLine": 1728,
+        "startChar": 122,
+        "endLine": 1728,
+        "endChar": 177
+      },
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -72,6 +164,86 @@
     },
     {
       "key": {
+        "uuid": "cea16ccd_2710764d",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "nit: I\u0027d either remove this or DCHECK",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41708d6a_2c10ab36",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 29,
+        "startChar": 16,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f803354_a4aa168b",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "can you add a comment describing the purpose of the screen?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44114d7_3da2e396",
+        "filename": "chrome/browser/chromeos/login/screens/sync_consent_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "nit:\nSyncConsentScreenView* const",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6776aa2_095e7af7",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 3
@@ -104,6 +276,29 @@
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c01ec51_b0f4e63a",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "optional: Could you use OnTermsOfServiceAccepted() instead?",
+      "range": {
+        "startLine": 570,
+        "startChar": 4,
+        "endLine": 570,
+        "endChar": 25
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -177,6 +372,23 @@
     },
     {
       "key": {
+        "uuid": "a086cec6_fda93028",
+        "filename": "chrome/browser/resources/chromeos/login/screen_sync_consent.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "nit: add licence header",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e82c8a18_9a2bfe3b",
         "filename": "chrome/browser/resources/chromeos/login/sync_consent.css",
         "patchSetId": 3
@@ -209,6 +421,29 @@
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4966c4e0_ab329c42",
+        "filename": "chrome/browser/resources/chromeos/login/sync_consent.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-28T01:25:03Z",
+      "side": 1,
+      "message": "in mocks, this is Chrome icon, not google icon",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
