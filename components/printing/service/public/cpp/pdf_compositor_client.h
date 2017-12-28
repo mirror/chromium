@@ -49,10 +49,11 @@ class PdfCompositorClient {
       mojom::PdfCompositor::CompositeToPdfCallback callback,
       scoped_refptr<base::SequencedTaskRunner> callback_task_runner);
 
- private:
+ protected:
   // Connect to the service.
   void Connect(service_manager::Connector* connector);
 
+ private:
   mojom::PdfCompositorPtr compositor_;
 
   DISALLOW_COPY_AND_ASSIGN(PdfCompositorClient);

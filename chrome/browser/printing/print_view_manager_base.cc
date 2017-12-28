@@ -332,8 +332,8 @@ void PrintViewManagerBase::OnDidPrintDocument(
   if (IsOopifEnabled() && !client->for_preview() &&
       !document->settings().is_modifiable()) {
     client->DoCompositeToPdf(
-        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
-                     render_frame_host->GetRoutingID()),
+        GenGlobalUniqueId(render_frame_host->GetProcess()->GetID(),
+                          render_frame_host->GetRoutingID()),
         mojom::kNonApplicablePageNum, content.metafile_data_handle,
         content.data_size, content.subframe_content_ids,
         base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,

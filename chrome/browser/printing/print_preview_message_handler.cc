@@ -30,8 +30,8 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
-#include "printing/common/pdf_metafile_utils.h"
 #include "printing/page_size_margins.h"
+#include "printing/pdf_metafile_skia.h"
 #include "printing/print_job_constants.h"
 #include "printing/print_settings.h"
 
@@ -145,8 +145,8 @@ void PrintPreviewMessageHandler::OnDidPreviewPage(
 
     // Use utility process to convert skia metafile to pdf.
     client->DoCompositeToPdf(
-        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
-                     render_frame_host->GetRoutingID()),
+        GenGlobalUniqueId(render_frame_host->GetProcess()->GetID(),
+                          render_frame_host->GetRoutingID()),
         params.page_number, content.metafile_data_handle, content.data_size,
         content.subframe_content_ids,
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfPageDone,
@@ -180,8 +180,8 @@ void PrintPreviewMessageHandler::OnMetafileReadyForPrinting(
     DCHECK(client);
 
     client->DoCompositeToPdf(
-        GenFrameGuid(render_frame_host->GetProcess()->GetID(),
-                     render_frame_host->GetRoutingID()),
+        GenGlobalUniqueId(render_frame_host->GetProcess()->GetID(),
+                          render_frame_host->GetRoutingID()),
         mojom::kNonApplicablePageNum, content.metafile_data_handle,
         content.data_size, content.subframe_content_ids,
         base::BindOnce(&PrintPreviewMessageHandler::OnCompositePdfDocumentDone,

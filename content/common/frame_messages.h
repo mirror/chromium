@@ -1633,6 +1633,11 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_ScrollRectToVisibleInParentFrame,
                     gfx::Rect /* rect_to_scroll */,
                     blink::WebRemoteScrollProperties /* properties */)
 
+// Ask the frame host to print an out-of-process subframe.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_PrintSubframe,
+                    gfx::Rect /* rect area of the frame content */,
+                    uint32_t /* content id */)
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
 // Message to show/hide a popup menu using native controls.
