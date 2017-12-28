@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c02779f7_4cfe5c48",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-28T04:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a6db966_8c23b184",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52198d44_1ba598d8",
         "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolver.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0668d122_f6db12f3",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-28T04:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52198d44_1ba598d8",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ad2c2489_d3d5e1ec",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolverTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-28T04:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0bcfdd_b8ad9e86",
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76de7bae_79eb01c5",
         "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolverTest.cpp",
         "patchSetId": 1
@@ -64,6 +118,30 @@
       "writtenOn": "2017-12-22T13:21:49Z",
       "side": 1,
       "message": "auto* (here and elsewhere in this file)\n\n\"Do not use auto to deduce a raw pointer\"\nhttps://chromium.googlesource.com/chromium/src/+/9c0e4f94f2cfc6f7782a2cc763105fde55beb603/styleguide/c%2B%2B/c%2B%2B-dos-and-donts.md#do-not-use-to-deduce-a-raw-pointer",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 6
+      },
+      "revId": "1144c1890e9e4d91525f27107180220a5588e0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede63917_149fac24",
+        "filename": "third_party/WebKit/Source/core/script/DynamicModuleResolverTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-28T04:42:39Z",
+      "side": 1,
+      "message": "Let me create a separate CL for this",
+      "parentUuid": "76de7bae_79eb01c5",
       "range": {
         "startLine": 186,
         "startChar": 2,
