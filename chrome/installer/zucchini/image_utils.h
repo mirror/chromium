@@ -53,7 +53,6 @@ constexpr PoolTag kNoPoolTag(0xFF);
 
 // Specification of references in an image file.
 struct ReferenceTypeTraits {
-  constexpr ReferenceTypeTraits() = default;
   constexpr ReferenceTypeTraits(offset_t width_in,
                                 TypeTag type_tag_in,
                                 PoolTag pool_tag_in)
@@ -61,11 +60,11 @@ struct ReferenceTypeTraits {
 
   // |width| specifies number of bytes covered by the reference's binary
   // encoding.
-  offset_t width = 0;
+  const offset_t width;
   // |type_tag| identifies the reference type being described.
-  TypeTag type_tag = kNoTypeTag;
+  const TypeTag type_tag;
   // |pool_tag| identifies the pool this type belongs to.
-  PoolTag pool_tag = kNoPoolTag;
+  const PoolTag pool_tag;
 };
 
 // There is no need to store |type| because references of the same type are
