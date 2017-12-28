@@ -84,7 +84,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebLayerTreeView.h"
@@ -320,10 +319,6 @@ WebDevToolsAgentImpl::WebDevToolsAgentImpl(
       layer_tree_id_(0) {
   DCHECK(IsMainThread());
   DCHECK(web_local_frame_impl_->GetFrame());
-  web_local_frame_impl_->GetFrame()
-      ->GetInterfaceRegistry()
-      ->AddAssociatedInterface(WTF::BindRepeating(
-          &WebDevToolsAgentImpl::BindRequest, WrapWeakPersistent(this)));
 }
 
 WebDevToolsAgentImpl::~WebDevToolsAgentImpl() {

@@ -208,6 +208,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Time.h"
+#include "public/platform/InterfaceRegistry.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebDoubleSize.h"
 #include "public/platform/WebFloatPoint.h"
@@ -1413,6 +1414,19 @@ WebPlugin* WebLocalFrameImpl::FocusedPluginIfInputMethodSupported() {
   return nullptr;
 }
 
+WebDevToolsAgentImpl* WebLocalFrameImpl::EnsureDevToolsAgentImpl() {
+  if (!dev_tools_agent_)
+    dev_tools_agent_ = WebDevToolsAgentImpl::Create(this);
+  return dev_tools_agent_;
+}
+
+void WebLocalFrameImpl::BindDevToolsAgentRequest(
+    mojom::blink::DevToolsAgentAssociatedRequest request) {
+  if (!dev_tools_agent_)
+    dev_tools_agent_ = WebDevToolsAgentImpl::Create(this);
+  dev_tools_agent_->BindRequest(std::move(request));
+}
+
 void WebLocalFrameImpl::DispatchBeforePrintEvent() {
 #if DCHECK_IS_ON()
   DCHECK(!is_in_printing_) << "DispatchAfterPrintEvent() should have been "
@@ -1755,8 +1769,11 @@ void WebLocalFrameImpl::InitializeCoreFrame(Page& page,
     frame_->GetDocument()->GetMutableSecurityOrigin()->GrantUniversalAccess();
   }
 
-  if (frame_->IsLocalRoot())
-    dev_tools_agent_ = WebDevToolsAgentImpl::Create(this);
+  if (frame_->IsLocalRoot()) {
+    frame_->GetInterfaceRegistry()->AddAssociatedInterface(
+        WTF::BindRepeating(&WebLocalFrameImpl::BindDevToolsAgentRequest,
+                           WrapWeakPersistent(this)));
+  }
 
   if (!owner) {
     // This trace event is needed to detect the main frame of the

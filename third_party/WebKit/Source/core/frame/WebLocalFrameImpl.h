@@ -44,6 +44,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
+#include "public/web/devtools_agent.mojom-blink.h"
 
 #include <memory>
 
@@ -369,6 +370,9 @@ class CORE_EXPORT WebLocalFrameImpl final
     return dev_tools_agent_.Get();
   }
 
+  // TODO(dgozman): remove this once DevTools for workers migrate to Mojo.
+  WebDevToolsAgentImpl* EnsureDevToolsAgentImpl();
+
   // When a Find operation ends, we want to set the selection to what was active
   // and set focus to the first focusable node we find (starting with the first
   // node in the matched range and going up the inheritance chain). If we find
@@ -452,6 +456,8 @@ class CORE_EXPORT WebLocalFrameImpl final
 
   // A helper for DispatchBeforePrintEvent() and DispatchAfterPrintEvent().
   void DispatchPrintEventRecursively(const AtomicString& event_type);
+
+  void BindDevToolsAgentRequest(mojom::blink::DevToolsAgentAssociatedRequest);
 
   Node* ContextMenuNodeInner() const;
 

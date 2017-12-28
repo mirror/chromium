@@ -69,6 +69,7 @@ class CORE_EXPORT WebDevToolsAgentImpl final
   ~WebDevToolsAgentImpl() override;
   virtual void Trace(blink::Visitor*);
 
+  void BindRequest(mojom::blink::DevToolsAgentAssociatedRequest);
   void WillBeDestroyed();
   void FlushProtocolNotifications();
   void PaintOverlay();
@@ -110,8 +111,6 @@ class CORE_EXPORT WebDevToolsAgentImpl final
  private:
   WebDevToolsAgentImpl(WebLocalFrameImpl*,
                        bool include_view_agents);
-
-  void BindRequest(mojom::blink::DevToolsAgentAssociatedRequest);
 
   // mojom::blink::DevToolsAgent implementation.
   void AttachDevToolsSession(
