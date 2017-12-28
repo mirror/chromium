@@ -27,6 +27,7 @@
 #include <limits>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/RawDataDocumentParser.h"
+#include "core/dom/ShadowRoot.h"
 #include "core/dom/events/EventListener.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/ContentSettingsClient.h"

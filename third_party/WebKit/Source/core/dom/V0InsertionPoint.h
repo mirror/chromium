@@ -34,10 +34,11 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSSelectorList.h"
 #include "core/dom/DistributedNodes.h"
-#include "core/dom/ShadowRoot.h"
 #include "core/html/HTMLElement.h"
 
 namespace blink {
+
+class ShadowRoot;
 
 class CORE_EXPORT V0InsertionPoint : public HTMLElement {
  public:
@@ -102,14 +103,14 @@ inline bool IsActiveV0InsertionPoint(const Node& node) {
   return node.IsV0InsertionPoint() && ToV0InsertionPoint(node).IsActive();
 }
 
-inline ElementShadow* ShadowWhereNodeCanBeDistributedForV0(const Node& node) {
+inline ShadowRoot* ShadowWhereNodeCanBeDistributedForV0(const Node& node) {
   Node* parent = node.parentNode();
   if (!parent)
     return nullptr;
   if (IsActiveV0InsertionPoint(*parent))
-    return node.OwnerShadowHost()->Shadow();
+    return node.OwnerShadowHost()->GetShadowRoot();
   if (parent->IsElementNode())
-    return ToElement(parent)->Shadow();
+    return ToElement(parent)->GetShadowRoot();
   return nullptr;
 }
 
