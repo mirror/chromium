@@ -837,7 +837,7 @@ content::WebContents* NativeAppWindowCocoa::WebContents() const {
 }
 
 void NativeAppWindowCocoa::UpdateRestoredBounds() {
-  if (IsRestored(*this))
+  if (IsWindowRestored(*this))
     restored_bounds_ = [window() frame];
 }
 
