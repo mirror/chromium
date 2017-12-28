@@ -16,6 +16,24 @@
       "revId": "2df6a8775294b2dbc6d59dd4ab6def7b6bd7ebde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce46966_681c7682",
+        "filename": "tools/win/subtract_time.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-28T09:54:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fffdfa5_92ca2907",
+      "revId": "2df6a8775294b2dbc6d59dd4ab6def7b6bd7ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
