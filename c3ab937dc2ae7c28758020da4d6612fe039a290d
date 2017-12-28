@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ccc0d9_ff5a6012",
+        "filename": "content/browser/loader/resource_request_info_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-28T06:54:47Z",
+      "side": 1,
+      "message": "Nit: mark this const",
+      "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055deb8c_7146d813",
+        "filename": "third_party/WebKit/public/platform/WebURLLoaderClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-28T06:54:47Z",
+      "side": 1,
+      "message": "I would weakly prefer if this was an enum for readability.\n\nIt may be also nice to document exactly what a \u0027blocked cross site document\u0027 is in the comments in this header.",
+      "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
