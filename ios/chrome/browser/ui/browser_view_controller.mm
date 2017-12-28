@@ -5123,6 +5123,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     infobars::InfoBarManager* infoBarManager =
         InfoBarManagerImpl::FromWebState(newTab.webState);
     _infoBarContainer->ChangeInfoBarManager(infoBarManager);
+
+    // Dismiss the language selector, if any; this is a no-op when there's
+    // no language selector presented.
+    [_languageSelectionCoordinator dismissLanguageSelector];
   }
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 
