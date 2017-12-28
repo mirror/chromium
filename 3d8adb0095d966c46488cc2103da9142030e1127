@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feab8028_a843e783",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/transformed-clip-before-second-column-expected.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-28T21:09:50Z",
+      "side": 1,
+      "message": "Is the bottom of the glyph expected to be clipped? If yes, please update the description (\"black rectangle\").",
+      "revId": "3d8adb0095d966c46488cc2103da9142030e1127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37849ba_707ec94f",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/transformed-clip-before-second-column.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-28T21:09:50Z",
+      "side": 1,
+      "message": "Are these blank lines needed?",
+      "revId": "3d8adb0095d966c46488cc2103da9142030e1127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
