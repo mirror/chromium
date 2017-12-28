@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "b3dd96f3_3743c0c8",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "x \u003d y \u003d\u003e f(x) \u003d f(y) is just basic property of a (mathematical) function; and proj(x) \u003d proj(j) implies x \u003d y with high probability is like a hash function.  Also, \"projection\" also implies idenpotency, i.e., proj(proj(x)) \u003d proj(x).\n\nAnyway, I don\u0027t feel that strongly about this; can leave this.",
+      "parentUuid": "366dac94_0d9bde1b",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 23
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "509ac234_f96fb1d4",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 26
@@ -507,6 +531,30 @@
     },
     {
       "key": {
+        "uuid": "b615973d_9d6a838f",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "Well, composition over inheritance is not a hard rule; the repeated accessors kinda point to that. But I don\u0027t feel that strongly about this, so ack.",
+      "parentUuid": "2520ead8_f9be3c1e",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6a06f1_b3f9771d",
         "filename": "chrome/installer/zucchini/reference_set.h",
         "patchSetId": 26
@@ -551,6 +599,30 @@
       "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d2f353_3d194c9a",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72e4d5a3_effc4587",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 63
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -645,6 +717,30 @@
       "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5f274e_97783b48",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88cb6d9a_9db553a0",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "63977ba9d0808f71e2ad281228ed6cada7668da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

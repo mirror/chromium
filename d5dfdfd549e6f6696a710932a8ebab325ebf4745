@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fca744e_71ffa433",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "Likely not needed for default. Same with declaration.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742cebb2_90745c2b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "Previously both values were passed to |equivalence_map.Build()|.\n\nNow |kLarge...| is passed to TargetsAffinity::AssignLabels() instead, but as variable |min_affinity|.  So maybe naming should be consistent?  Also, this is unsettling because:\n- If the semantics for |kLarge...| drastically changes from \"similarity\" to \"affinity\", is it a coincidence that 64.0 is used? Or maybe it should be tuned first? Or add TODO?\n- If the code paths turn out to compute the same thing (which  would be nice), why do we distinguish \"similarity\" from \"affinity\"?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 52
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b01defb_bcc634ca",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "W.r.t. this complex CL does both refactoring and changing results: This makes me nervous because patch size regressions are very hard to debug, and this makes undo very hard (especially when more code get added later)!  Alternatives:\n\n(A) Split CL into (1) big refactor-only (even with hacks with TODO) that produces identical results from before, (2) small algorithm change CL that changes result, so it can be undone easily.\n(B) Run large experiment to show that this improves result or does not change it.\n(C) That we take a \"leap of faith\" to move fast and maybe break things.\n\nI really prefer (A), even if it means adding hacks into the code (perhaps using |kLarge...| for i \u003d 0 and |kMin...| for i \u003d 1 do the trick?).  Then I can easily integrate it into Trunk and run on Android corpus.\n\nAlternative (B) is okay, but would need more experiment, with results posted in bug 760614.  But we don\u0027t have ensemble patching (my bad for moving too slow).  An approximation would be patching chrome.dll and chrome_child.dll across a few versions, for 32-bit and 64-bit, to compare \"before\" vs. \"after\", and also do raw patches on chrome.7z.\n\nIf you think (C) would be best, I can go with that.  But if regression is detected later then it might be necessary to manually revert this CL.",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ba7956_4cdc6b55",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "NIT: This is a pair, so maybe |old_pool_tag_and_targets|?",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccde4456_7f0b8f3d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T05:29:19Z",
+      "side": 1,
+      "message": "NIT: I think \"tag\" in the name improves readability.",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 18
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
