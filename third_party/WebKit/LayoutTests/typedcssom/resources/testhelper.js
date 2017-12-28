@@ -56,6 +56,12 @@ function assert_style_value_equals(a, b) {
     case 'CSSMatrixComponent':
       assert_matrix_approx_equals(a.matrix, b.matrix, 1e-6);
       break;
+    case 'CSSURLImageValue':
+      assert_equals(a.instrinsicWidth, b.instrinsicWidth);
+      assert_equals(a.instrinsicHeight, b.instrinsicHeight);
+      assert_equals(a.instrinsicRatio, b.instrinsicRatio);
+      assert_equals(a.url, b.url);
+      break;
     default:
       assert_equals(a, b);
       break;
@@ -86,3 +92,18 @@ const gValidUnits = [
   'turn', 's', 'ms', 'Hz', 'kHz',
   'dpi', 'dpcm', 'dppx', 'fr',
 ];
+
+// Creates a new element with background image set to |imageValue|
+// and returns a new Image element that can be used to attach
+// event listeners regarding the image.
+function loadImageResource(test, imageValue) {
+  // Set a CSSURLImageValue on an element so it can be loaded.
+  let target = newDivWithStyle('');
+  document.body.append(target);
+  target.attributeStyleMap.set('background-image', imageValue);
+
+  // add a new Image element to know if the image resource has been loaded
+  let image = new Image();
+  image.src = imageValue.url;
+  return image;
+}
