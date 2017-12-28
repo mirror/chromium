@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d9e1d8_4f6aed38",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "How about using the returned value of navigator.webkitTemporaryStorage.queryUsageAndQuota\n(assuming it\u0027s not guaranteed that the size is ignored)",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f376fe6_a04e4aa9",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "At this moment, we don\u0027t need this directory.\nLet\u0027s keep it simple until we need a dedicated directory.",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d763ff93_ee1d3e8e",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Could you use Promise chain to reduce the indentations?",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b417d01_2813603e",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Can\u0027t we just call DirectoryEntry.removeRecursively()?",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a0edab_d9e60aa2",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Add a comment about why it is done here.",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4966e5f3_a11afcf6",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this new function to the tail of this class (unless there is an reason to insert here.",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5b4c90_7fcbdb97",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s remove \u0027window.\u0027 to be consistent with setInterval etc...",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332bad42_848e20a1",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 12
+      },
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bddc23_5d3f3283",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Can we reset the progress when archiving is done (and copy is not done)?",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415d5756_e8219fb1",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Add annotation.",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908167cf_2c3fe6fb",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move these new private functions to the tail of this class (unless there is an reason to insert here.)",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404b0f60_4dcd54bc",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "nit: \u0027remove\u0027 for consistency?",
+      "range": {
+        "startLine": 553,
+        "startChar": 30,
+        "endLine": 553,
+        "endChar": 35
+      },
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1635b0_d851a049",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-28T12:30:40Z",
+      "side": 1,
+      "message": "Maybe we should arhiveFileEntry_?",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
