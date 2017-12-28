@@ -16,6 +16,24 @@
       "revId": "fd5fc7bce67a0c50d05e8bb1bc079c7477c0f552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191cb503_4949c12c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-28T21:47:06Z",
+      "side": 1,
+      "message": "In my mind I read it as \"if no values are saturated\", which translates\ninto !(values are saturated), so the way it is works for me.",
+      "parentUuid": "d9cd87c2_4cb43f2d",
+      "revId": "fd5fc7bce67a0c50d05e8bb1bc079c7477c0f552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
