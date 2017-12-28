@@ -22,6 +22,30 @@
       "revId": "d84e12313639c4a209e4b1b8a34b4974ab6ae30c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fdd40a_ec8e25a8",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-28T15:01:37Z",
+      "side": 1,
+      "message": "At least now you can see it\u0027s a public method and look at the header to see what it does.",
+      "parentUuid": "3ecc7c68_455b084a",
+      "range": {
+        "startLine": 1262,
+        "startChar": 8,
+        "endLine": 1262,
+        "endChar": 18
+      },
+      "revId": "d84e12313639c4a209e4b1b8a34b4974ab6ae30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
