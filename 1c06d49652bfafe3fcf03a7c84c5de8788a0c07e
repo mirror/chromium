@@ -22,6 +22,30 @@
       "revId": "1c06d49652bfafe3fcf03a7c84c5de8788a0c07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc4ed3e_ce610016",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-28T22:54:03Z",
+      "side": 1,
+      "message": "It would. I had changed these to ASSERT_TRUE to try to fix a separate issue.",
+      "parentUuid": "bc79127b_4097958f",
+      "range": {
+        "startLine": 593,
+        "startChar": 6,
+        "endLine": 593,
+        "endChar": 17
+      },
+      "revId": "1c06d49652bfafe3fcf03a7c84c5de8788a0c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
