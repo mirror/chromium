@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "08361ac9_54a504ab",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T03:33:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad3ab98f_c74d942d",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7bf635_4c392b8a",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 3
@@ -257,6 +275,24 @@
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbf23a2_992df6db",
+        "filename": "chrome/browser/chromeos/login/oobe_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T03:33:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29af5516_a16288da",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
