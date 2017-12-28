@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3861c8_5fa51128",
+        "filename": "third_party/WebKit/Source/core/frame/Location.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-28T07:24:44Z",
+      "side": 1,
+      "message": "The spec does not say that we should explicitly define toString operation.\n\nCould you add a TODO comment to fix the stringifier of Location?\n\n// TODO(yukishiino): Use [Unforgeable] stringifier instead of toString.",
+      "revId": "ed973e44cdb08e38c039fed25cb9cb3532311327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
