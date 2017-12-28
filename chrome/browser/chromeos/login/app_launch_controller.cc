@@ -495,6 +495,7 @@ void AppLaunchController::OnReadyToLaunch() {
 
 void AppLaunchController::OnLaunchSucceeded() {
   SYSLOG(INFO) << "Kiosk launch succeeded, wait for app window.";
+
   app_launch_splash_screen_view_->UpdateAppLaunchState(
       AppLaunchSplashScreenView::APP_LAUNCH_STATE_WAITING_APP_WINDOW);
 
