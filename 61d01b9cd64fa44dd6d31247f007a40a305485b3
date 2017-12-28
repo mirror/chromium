@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f616cc_a11e1d1a",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-12-28T15:47:52Z",
+      "side": 1,
+      "message": "Only thing that makes me unhappy is the name :-)\nSuggest \"Create and garbage collect many RTCPeerConnections\", to keep it short.",
+      "revId": "61d01b9cd64fa44dd6d31247f007a40a305485b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b2a89b_000ee95d",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-12-28T15:47:52Z",
+      "side": 1,
+      "message": "Tidiness nit: We now have 4 branches that do the same processing, and proof positive that it\u0027s possible for a programmer (me) to get this wrong. Should we encapsulate the set-and-throw into an utility function?\n\nNot required for this CL to land.",
+      "revId": "61d01b9cd64fa44dd6d31247f007a40a305485b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
