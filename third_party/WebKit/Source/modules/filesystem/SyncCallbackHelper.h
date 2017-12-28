@@ -148,6 +148,80 @@ typedef SyncCallbackHelper<FileSystemCallback,
                            DOMFileSystemSync>
     FileSystemSyncCallbackHelper;
 
+// Helper class to support DOMFileSystemSync implementation.
+template <typename SuccessCallback, typename CallbackArg>
+class FileSystemCallbacksSyncHelper final
+    : public GarbageCollected<
+          FileSystemCallbacksSyncHelper<SuccessCallback, CallbackArg>> {
+ public:
+  static FileSystemCallbacksSyncHelper* Create() {
+    return new FileSystemCallbacksSyncHelper();
+  }
+
+  void Trace(blink::Visitor* visitor) { visitor->Trace(result_); }
+
+  SuccessCallback* GetSuccessCallback() {
+    return new SuccessCallbackImpl(this);
+  }
+  ErrorCallbackBase* GetErrorCallback() { return new ErrorCallbackImpl(this); }
+
+  CallbackArg* GetResultOrThrow(ExceptionState& exception_state) {
+    if (error_code_ != FileError::ErrorCode::kOK) {
+      FileError::ThrowDOMException(exception_state, error_code_);
+      return nullptr;
+    }
+
+    DCHECK(result_);
+    return result_;
+  }
+
+ private:
+  class SuccessCallbackImpl final : public SuccessCallback {
+   public:
+    void Trace(blink::Visitor* visitor) override {
+      visitor->Trace(helper_);
+      SuccessCallback::Trace(visitor);
+    }
+    void OnSuccess(CallbackArg* arg) override { helper_->result_ = arg; }
+
+   private:
+    explicit SuccessCallbackImpl(FileSystemCallbacksSyncHelper* helper)
+        : helper_(helper) {}
+    Member<FileSystemCallbacksSyncHelper> helper_;
+
+    friend class FileSystemCallbacksSyncHelper;
+  };
+
+  class ErrorCallbackImpl final : public ErrorCallbackBase {
+   public:
+    void Trace(blink::Visitor* visitor) override {
+      visitor->Trace(helper_);
+      ErrorCallbackBase::Trace(visitor);
+    }
+    void Invoke(FileError::ErrorCode error_code) override {
+      helper_->error_code_ = error_code;
+    }
+
+   private:
+    explicit ErrorCallbackImpl(FileSystemCallbacksSyncHelper* helper)
+        : helper_(helper) {}
+    Member<FileSystemCallbacksSyncHelper> helper_;
+
+    friend class FileSystemCallbacksSyncHelper;
+  };
+
+  FileSystemCallbacksSyncHelper() = default;
+
+  Member<CallbackArg> result_;
+  FileError::ErrorCode error_code_ = FileError::ErrorCode::kOK;
+
+  friend class SuccessCallbackImpl;
+  friend class ErrorCallbackImpl;
+};
+
+using EntryCallbacksSyncHelper =
+    FileSystemCallbacksSyncHelper<EntryCallbacks::OnDidGetEntryCallback, Entry>;
+
 }  // namespace blink
 
 #endif  // SyncCallbackHelper_h
