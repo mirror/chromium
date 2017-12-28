@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6832c952_3f7bac13",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-28T13:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1636c92_7e3c4c66",
+      "range": {
+        "startLine": 492,
+        "startChar": 53,
+        "endLine": 492,
+        "endChar": 59
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19be0d0_a9c86748",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "81da465b_b47b057e",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-28T13:25:21Z",
+      "side": 1,
+      "message": "Sure we can. Thanks for noticing that!",
+      "parentUuid": "a19be0d0_a9c86748",
+      "range": {
+        "startLine": 495,
+        "startChar": 12,
+        "endLine": 495,
+        "endChar": 45
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae56a823_a6c4b486",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571bd3a9_b5169fc8",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-28T13:25:21Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "ae56a823_a6c4b486",
+      "range": {
+        "startLine": 502,
+        "startChar": 4,
+        "endLine": 502,
+        "endChar": 10
+      },
+      "revId": "19152a4e8250c32f4f5323456a6532d89f9c3718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
