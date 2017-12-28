@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d109b57_e4604f5b",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-28T19:58:40Z",
+      "side": 1,
+      "message": "Thanks for adding this!",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "fd75fa647da9e1d91ce399368b6111b9040cf011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce8c15a2_23bfcd1c",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-28T19:58:40Z",
+      "side": 1,
+      "message": "Thanks for adding this!",
+      "range": {
+        "startLine": 648,
+        "startChar": 14,
+        "endLine": 648,
+        "endChar": 18
+      },
+      "revId": "fd75fa647da9e1d91ce399368b6111b9040cf011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
