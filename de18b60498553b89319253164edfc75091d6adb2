@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e4ebb7d_445e034f",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-28T15:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65ba93c1_32fdbb11",
+      "revId": "de18b60498553b89319253164edfc75091d6adb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5a1c49f_aa897aea",
         "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "de18b60498553b89319253164edfc75091d6adb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4a9825_1f5aa1b1",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-28T15:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a1c49f_aa897aea",
+      "range": {
+        "startLine": 1571,
+        "startChar": 3,
+        "endLine": 1571,
+        "endChar": 0
+      },
+      "revId": "de18b60498553b89319253164edfc75091d6adb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
