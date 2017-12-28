@@ -168,8 +168,14 @@ int RenderWidgetInputHandler::GetWidgetRoutingIdAtPoint(
                                        point_in_pixel.x(), point_in_pixel.y()))
                                    .GetNode();
 
+  // TODO(crbug.com/797828): When the node is null the caller may
+  // need to do extra checks. Like maybe update the layout and then
+  // call the hit-testing API. Either way it might be better to have
+  // a DCHECK for the node rather than a null check here.
   blink::WebFrame* result_frame =
-      blink::WebFrame::FromFrameOwnerElement(result_node);
+      result_node.IsNull()
+          ? nullptr
+          : blink::WebFrame::FromFrameOwnerElement(result_node);
   if (!result_frame) {
     // This means that the node is not an iframe itself. So we just return the
     // the frame containing the node.
