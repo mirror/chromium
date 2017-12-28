@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "30c33cb4_fb7c9a1e",
+        "filename": "net/base/hash_value.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T22:12:03Z",
+      "side": 1,
+      "message": "Could be future-proofed with say:\n\nif (lhs.tag() !\u003d rhs.tag())\n  return lhs.tag() \u003c rhs.tag();",
+      "parentUuid": "57a26611_796eba10",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbcf85de_e317b57a",
         "filename": "net/base/hash_value.h",
         "patchSetId": 4
