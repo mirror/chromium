@@ -152,18 +152,23 @@ unpacker.Compressor.prototype.getArchiveName = function() {
  * Starts actual compressing process.
  * Creates an archive file and requests minizip to create an archive object.
  * @param {function(!unpacker.types.CompressorId)} onSuccess
- * @param {function(!unpacker.types.CompressorId)} onError
+ * @param {function(!unpacker.types.CompressorId)} onErrorCallbcack
  * @param {function(!unpacker.types.CompressorId, number)} onProgress
  * @param {function(!unpacker.types.CompressorId)} onCancel
  */
 unpacker.Compressor.prototype.compress = function(
-    onSuccess, onError, onProgress, onCancel) {
+    onSuccess, onErrorCallback, onProgress, onCancel) {
   this.onSuccess_ = onSuccess;
-  this.onError_ = onError;
+  this.onErrorCallback_ = onErrorCallback;
   this.onProgress_ = onProgress;
   this.onCancel_ = onCancel;
 
   this.getArchiveFile_();
+};
+
+unpacker.Compressor.prototype.onError_ = function() {
+  this.eraseTemporaryFile_();
+  this.onErrorCallback_(this.compressorId_);
 };
 
 /**
@@ -174,70 +179,62 @@ unpacker.Compressor.prototype.archiveFileEntry = function() {
   return this.archiveFileEntry_;
 };
 
+unpacker.Compressor.prototype.isQuotaExceedError_ = function(event) {
+  return true;
+};
+
 /**
  * Gets an archive file with write permission.
  * @private
  */
 unpacker.Compressor.prototype.getArchiveFile_ = function() {
-  var compressor = this;
-  var suggestedName = compressor.archiveName_;
+  var suggestedName = this.archiveName_;
 
-  var saveZipFileInParentDir = function(rootEntry) {
+  var saveZipFile = (rootEntry) => {
     // If parent directory of currently selected files is available then we
     // deduplicate |suggestedName| and save the zip file.
     if (!rootEntry) {
       console.error('rootEntry of selected files is undefined');
-      compressor.onError_(compressor.compressorId_);
+      this.onError_();
       return;
     }
-
-    fileOperationUtils.deduplicateFileName(suggestedName, rootEntry)
-        .then(function(newName) {
-          compressor.archiveName_ = newName;
-          // Create an archive file.
-          return (new Promise(function(resolve, reject) {
-                   rootEntry.getFile(
-                       newName, {create: true, exclusive: true}, resolve,
-                       reject);
-                 }))
-              .then(function(zipEntry) {
-                compressor.archiveFileEntry_ = zipEntry;
-                compressor.sendCreateArchiveRequest_();
+    rootEntry.getDirectory(
+        unpacker.app.LOCAL_WORK_DIRECTORY_PATH, {create: true},
+        (workDirectory) => {
+          fileOperationUtils.deduplicateFileName(suggestedName, workDirectory)
+              .then((newName) => {
+                this.archiveName_ = newName;
+                // Create an archive file.
+                return (new Promise(function(resolve, reject) {
+                         workDirectory.getFile(
+                             newName, {create: true, exclusive: true}, resolve,
+                             reject);
+                       }))
+                    .then((zipEntry) => {
+                      this.archiveFileEntry_ = zipEntry;
+                      this.sendCreateArchiveRequest_();
+                    });
+              })
+              .catch((error) => {
+                console.error(error);
+                this.onError_();
               });
-        })
-        .catch(function(error) {
-          console.error(error);
-          compressor.onError_(compressor.compressorId_);
+        },
+        (error) => {
+          console.error('failed to open work directory.');
+          this.onError_();
         });
   };
-
-  // Get all accessible volumes with their metadata
-  chrome.fileManagerPrivate.getVolumeMetadataList(function(volumeMetadataList) {
-
-    // Here we call chrome.fileSystem.requestFileSystem on each volume's
-    // metadata entry to be able to sucessfully execute
-    // resolveIsolatedEntries later.
-    Promise
-        .all(compressor.requestAccessPermissionForVolumes_(volumeMetadataList))
-        .then(function(result) {
-          chrome.fileManagerPrivate.resolveIsolatedEntries(
-              [compressor.items_[0].entry], function(result) {
-                if (result && result.length >= 1) {
-                  result[0].getParent(saveZipFileInParentDir);
-                } else {
-                  console.error('Failed to resolve isolated entries!');
-                  if (chrome.runtime.lastError)
-                    console.error(chrome.runtime.lastError.message);
-
-                  compressor.onError_(compressor.compressorId_);
-                }
-              });
-        })
-        .catch(function(error) {
-          console.error(error);
-          compressor.onError_(compressor.compressorId_);
-        });
-  });
+  window.webkitRequestFileSystem(
+      window.TEMPORARY, 16 * 1024 * 1024 * 1024,
+      (fs) => {
+        saveZipFile(fs.root);
+        this.fs = fs.root;
+      },
+      (domException) => {
+        console.error(domException);
+        this.onError_();
+      });
 };
 
 /**
@@ -292,7 +289,7 @@ unpacker.Compressor.prototype.getSingleMetadata_ = function(entry) {
       }.bind(this),
       function(error) {
         console.error('Failed to get metadata: ' + error.message + '.');
-        this.onError_(this.compressorId_);
+        this.onError_();
       }.bind(this));
 };
 
@@ -320,7 +317,7 @@ unpacker.Compressor.prototype.getDirectoryEntryMetadata_ = function(dir) {
         function(error) {
           console.error(
               'Failed to get directory entries: ' + error.message + '.');
-          this.onError_(this.compressorId_);
+          this.onError_();
         }.bind(this));
   }.bind(this);
 
@@ -439,7 +436,7 @@ unpacker.Compressor.prototype.onReadFileChunk_ = function(data) {
         // If the first argument(length) is negative, it means that an error
         // occurred in reading a chunk.
         this.sendReadFileChunkDone_(-1, buffer);
-        this.onError_(this.compressorId_);
+        this.onError_();
         return;
       }
 
@@ -447,7 +444,7 @@ unpacker.Compressor.prototype.onReadFileChunk_ = function(data) {
       this.sendReadFileChunkDone_(length, buffer);
     }.bind(this);
 
-    reader.onerror = function(event) {
+    reader.onerror = (event) => {
       console.error(
           'Failed to read file chunk. Name: ' + file.name +
           ', offset: ' + this.offset_ + ', length: ' + length + '.');
@@ -455,7 +452,7 @@ unpacker.Compressor.prototype.onReadFileChunk_ = function(data) {
       // If the first argument(length) is negative, it means that an error
       // occurred in reading a chunk.
       this.sendReadFileChunkDone_(-1, new ArrayBuffer(0));
-      this.onError_(this.compressorId_);
+      this.onError_();
     };
 
     reader.readAsArrayBuffer(file);
@@ -511,11 +508,10 @@ unpacker.Compressor.prototype.writeChunk_ = function(
         fileWriter.onerror = function(event) {
           console.error(
               'Failed to write chunk to ' + this.archiveFileEntry_ + '.');
-
           // If the first argument(length) is negative, it means that an error
           // occurred in writing a chunk.
           callback(-1 /* length */);
-          this.onError_(this.compressorId_);
+          this.onError_();
         }.bind(this);
 
         // Create a new Blob and append it to the archive file.
@@ -526,7 +522,7 @@ unpacker.Compressor.prototype.writeChunk_ = function(
       function(event) {
         console.error(
             'Failed to create writer for ' + this.archiveFileEntry_ + '.');
-        this.onError_(this.compressorId_);
+        this.onError_();
       }.bind(this));
 };
 
@@ -556,6 +552,72 @@ unpacker.Compressor.prototype.onAddToArchiveDone_ = function() {
   this.sendAddToArchiveRequest_();
 };
 
+unpacker.Compressor.prototype.eraseTemporaryFile_ = function() {
+  if (!this.archiveFileEntry_)
+    return;
+  this.archiveFileEntry_.remove(
+      function() {},
+      function(error) {
+        console.error('failed to remove temporary file.');
+      });
+};
+
+/**
+ * Moves the temporary file to actual destination folder.
+ */
+unpacker.Compressor.prototype.moveZipFileToActualDestination = function() {
+  var suggestedName = this.archiveName_;
+  var moveZipFileToParentDir = (rootEntry) => {
+    // If parent directory of currently selected files is available then we
+    // deduplicate |suggestedName| and save the zip file.
+    if (!rootEntry) {
+      console.error('rootEntry of selected files is undefined');
+      this.onError_();
+      return;
+    }
+
+    fileOperationUtils.deduplicateFileName(suggestedName, rootEntry)
+        .then((newName) => {
+          this.archiveFileEntry_.moveTo(
+              rootEntry, newName, function() {},
+              (error) => {
+                console.error('Failed to move the file to destination.');
+                this.onError_();
+              });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.onError_();
+        });
+  };
+
+  // Get all accessible volumes with their metadata
+  chrome.fileManagerPrivate.getVolumeMetadataList((volumeMetadataList) => {
+    // Here we call chrome.fileSystem.requestFileSystem on each volume's
+    // metadata entry to be able to sucessfully execute
+    // resolveIsolatedEntries later.
+    Promise.all(this.requestAccessPermissionForVolumes_(volumeMetadataList))
+        .then((result) => {
+          chrome.fileManagerPrivate.resolveIsolatedEntries(
+              [this.items_[0].entry], (result) => {
+                if (result && result.length >= 1) {
+                  result[0].getParent(moveZipFileToParentDir);
+                } else {
+                  console.error('Failed to resolve isolated entries!');
+                  if (chrome.runtime.lastError)
+                    console.error(chrome.runtime.lastError.message);
+
+                  this.onError_();
+                }
+              });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.onError_();
+        });
+  });
+};
+
 /**
  * A handler of close archive responses.
  * Receiving this response means the entire packing process has finished.
@@ -572,6 +634,10 @@ unpacker.Compressor.prototype.onCloseArchiveDone_ = function() {
  */
 unpacker.Compressor.prototype.onCancelArchiveDone_ = function() {
   console.warn('Archive for "' + this.compressorId_ + '" has been canceled.');
+  if (this.archiveFileEntry_) {
+    this.eraseTemporaryFile_();
+    this.archiveFileEntry_ = null;
+  }
   this.onCancel_(this.compressorId_);
 };
 
@@ -608,6 +674,7 @@ unpacker.Compressor.prototype.processMessage = function(data, operation) {
       break;
 
     case unpacker.request.Operation.CLOSE_ARCHIVE_DONE:
+      this.moveZipFileToActualDestination();
       this.sendReleaseCompressor();
       this.onCloseArchiveDone_();
       break;
@@ -623,13 +690,13 @@ unpacker.Compressor.prototype.processMessage = function(data, operation) {
           data[unpacker.request.Key.ERROR]);  // The error contains
                                               // the '.' at the end.
       this.sendReleaseCompressor();
-      this.onError_(this.compressorId_);
+      this.onError_();
       break;
 
     default:
       console.error('Invalid NaCl operation: ' + operation + '.');
       this.sendReleaseCompressor();
-      this.onError_(this.compressorId_);
+      this.onError_();
   }
 };
 
