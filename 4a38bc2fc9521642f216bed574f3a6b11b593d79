@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe7a79c5_cfff52be",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025540fb_3f846a90",
+      "range": {
+        "startLine": 226,
+        "startChar": 6,
+        "endLine": 226,
+        "endChar": 26
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188a6f45_2443c7ec",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 29
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T03:14:45Z",
       "side": 1,
       "message": "Broken sentence. This part is not necessary.",
+      "range": {
+        "startLine": 149,
+        "startChar": 76,
+        "endLine": 150,
+        "endChar": 40
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8673c491_ef11a931",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "\u003e Broken sentence. This part is not necessary.\n\nWhy? It describes what this method does.",
+      "parentUuid": "188a6f45_2443c7ec",
       "range": {
         "startLine": 149,
         "startChar": 76,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "211cfd6e_e71865eb",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "\u003e \u0027const\u0027 isn\u0027t applicable here. Also \u0027Can\u0027 is confusing because the method not only answers the question.\n\n\u003d\u003e RevealPasswords(), no const.",
+      "parentUuid": "f4eb93e4_7c278d7a",
+      "range": {
+        "startLine": 154,
+        "startChar": 7,
+        "endLine": 154,
+        "endChar": 34
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf380bf_c6c9d1f6",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
         "patchSetId": 29
@@ -91,6 +163,30 @@
       "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d656c9_7820b788",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcf380bf_c6c9d1f6",
+      "range": {
+        "startLine": 696,
+        "startChar": 37,
+        "endLine": 696,
+        "endChar": 41
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "50a46278_0dfc6339",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think it\u0027s necessary. We can call this method for stats.\n\nRemoved.",
+      "parentUuid": "5e6ee4cb_a2a1f317",
+      "range": {
+        "startLine": 704,
+        "startChar": 2,
+        "endLine": 704,
+        "endChar": 73
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c3a0dd_6220c1e3",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 29
@@ -137,6 +257,30 @@
       "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a636d890_e63eb0b0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c3a0dd_6220c1e3",
+      "range": {
+        "startLine": 341,
+        "startChar": 2,
+        "endLine": 341,
+        "endChar": 52
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "7d7a5594_9453cfe0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "\u003e You look at |passwords_data_| and check that |state_| is still pending save or pending update. If the state is INACTIVE then you can\u0027t bring the bubble up.\n\nDone.",
+      "parentUuid": "3dfaa0e3_5acf442c",
+      "range": {
+        "startLine": 643,
+        "startChar": 1,
+        "endLine": 643,
+        "endChar": 3
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a284f3d_f7cfbadb",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
         "patchSetId": 29
@@ -231,6 +399,30 @@
       "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a02eab8_ae9b090f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a284f3d_f7cfbadb",
+      "range": {
+        "startLine": 204,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "16e74cad_5785e171",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "\u003e Here you can retrieve ArePasswordsRevealedWhenBubbleIsOpened() value with WillOnce and write EXPECT_TRUE afterwards.\n\nI\u0027ve tried WillOnce+Assign and ACTION_Pk. They didn\u0027t work for me. I added new variable to the test controller |are_passwords_revealed_in_opened_bubble_|",
+      "parentUuid": "e3dc9df3_9a9477f3",
+      "range": {
+        "startLine": 1264,
+        "startChar": 2,
+        "endLine": 1264,
+        "endChar": 64
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2958637_db0141c8",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 29
@@ -277,6 +493,30 @@
       "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21572a09_bd6158ec",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2958637_db0141c8",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 39
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "dfb85d07_0d1350f4",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "710665da_c402fd24",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 10
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8aca5f6_1814f5bd",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 29
@@ -323,6 +587,30 @@
       "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb98f91f_665518b6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-28T17:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8aca5f6_1814f5bd",
+      "range": {
+        "startLine": 510,
+        "startChar": 28,
+        "endLine": 510,
+        "endChar": 52
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
