@@ -112,6 +112,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Returns true if the current user is a child account.
   bool IsUserChild() const;
 
+  // Returns true if the current user is a kiosk account.
+  bool IsUserKiosk() const;
+
   // Returns the type of the current user, or empty if there is no current user
   // logged in.
   base::Optional<user_manager::UserType> GetUserType() const;
@@ -123,6 +126,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Returns true if the current user has the profile newly created on the
   // device (i.e. first time login on the device).
   bool IsUserFirstLogin() const;
+
+  // Returns true if the user is currently active.
+  bool IsUserActive(const AccountId& account_id) const;
 
   // Locks the screen. The locking happens asynchronously.
   void LockScreen();
