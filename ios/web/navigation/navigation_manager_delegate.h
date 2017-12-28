@@ -29,9 +29,8 @@ class NavigationManagerDelegate {
   // navigation item.
   virtual void RecordPageStateInNavigationItem() = 0;
 
-  // Instructs the delegate to update HTML5 History state of the page using the
-  // current NavigationItem.
-  virtual void UpdateHtml5HistoryState() = 0;
+  // Informs the delegate that a same-document navigation occured.
+  virtual void OnSameDocumentNavigation() = 0;
 
   // Instructs the delegate to perform book keeping in preparation for a new
   // navigation using a different user agent type.

@@ -308,7 +308,7 @@ void LegacyNavigationManagerImpl::FinishGoToIndex(int index) {
                                                        andItem:to_item];
   if (same_document_navigation) {
     [session_controller_ goToItemAtIndex:index discardNonCommittedItems:YES];
-    delegate_->UpdateHtml5HistoryState();
+    delegate_->OnSameDocumentNavigation();
   } else {
     [session_controller_ discardNonCommittedItems];
     [session_controller_ setPendingItemIndex:index];

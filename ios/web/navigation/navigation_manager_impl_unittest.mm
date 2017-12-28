@@ -72,7 +72,7 @@ class MockNavigationManagerDelegate : public NavigationManagerDelegate {
 
   MOCK_METHOD0(ClearTransientContent, void());
   MOCK_METHOD0(RecordPageStateInNavigationItem, void());
-  MOCK_METHOD0(UpdateHtml5HistoryState, void());
+  MOCK_METHOD0(OnSameDocumentNavigation, void());
   MOCK_METHOD0(WillChangeUserAgentType, void());
   MOCK_METHOD0(LoadCurrentItem, void());
   MOCK_METHOD0(LoadIfNecessary, void());
@@ -2234,7 +2234,7 @@ TEST_P(NavigationManagerTest, GoToIndexDifferentDocument) {
       .Times(0);
 
   if (GetParam() == TEST_LEGACY_NAVIGATION_MANAGER) {
-    EXPECT_CALL(navigation_manager_delegate(), UpdateHtml5HistoryState())
+    EXPECT_CALL(navigation_manager_delegate(), OnSameDocumentNavigation())
         .Times(0);
     EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem());
   }
@@ -2277,7 +2277,7 @@ TEST_P(NavigationManagerTest, GoToIndexSameDocument) {
       .Times(0);
 
   if (GetParam() == TEST_LEGACY_NAVIGATION_MANAGER) {
-    EXPECT_CALL(navigation_manager_delegate(), UpdateHtml5HistoryState());
+    EXPECT_CALL(navigation_manager_delegate(), OnSameDocumentNavigation());
     EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem()).Times(0);
   }
 
