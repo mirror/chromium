@@ -106,8 +106,16 @@ void FaviconSource::StartDataRequest(
       }
     }
 
+    // |url| is an origin, and it may not have had a favicon associated with it.
+    // A trickier case is when |url| only has domain-scoped cookies, but
+    // visitors are redirected to HTTPS on visiting. Then |url| defaults to a
+    // HTTP scheme, but the favicon will be associated with the HTTPS URL and
+    // hence won't be found if we include the scheme in the lookup. Fall back to
+    // matching only the hostname in the favicon database to have the best
+    // chance of finding a favicon.
     favicon_service->GetRawFaviconForPageURL(
         url, {favicon_base::IconType::kFavicon}, desired_size_in_pixel,
+        /*fallback_to_host=*/true,
         base::Bind(&FaviconSource::OnFaviconDataAvailable,
                    base::Unretained(this),
                    IconRequest(callback, url, parsed.size_in_dip,

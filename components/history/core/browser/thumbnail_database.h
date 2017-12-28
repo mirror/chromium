@@ -184,17 +184,23 @@ class ThumbnailDatabase {
   // not NULL.
 
   // Returns true if there are icon mappings for the given page and icon types.
-  // The matched icon mappings are returned in the |mapping_data| parameter if
-  // it is not NULL.
+  // If |fallback_to_host| is true, the host of |page_url| will be used to
+  // search the favicon database if an exact match cannot be found. The matched
+  // icon mappings are returned in the |mapping_data| parameter if it is not
+  // NULL.
   bool GetIconMappingsForPageURL(
       const GURL& page_url,
       const favicon_base::IconTypeSet& required_icon_types,
+      bool fallback_to_host,
       std::vector<IconMapping>* mapping_data);
 
   // Returns true if there is any matched icon mapping for the given page.
-  // All matched icon mappings are returned in descent order of IconType if
-  // mapping_data is not NULL.
+  // If |fallback_to_host| is true, the host of |page_url| will be used to
+  // search the favicon database if an exact match cannot be found. All matched
+  // icon mappings are returned in descent order of IconType if mapping_data is
+  // not NULL.
   bool GetIconMappingsForPageURL(const GURL& page_url,
+                                 bool fallback_to_host,
                                  std::vector<IconMapping>* mapping_data);
 
   // Adds a mapping between the given page_url and icon_id.
@@ -263,6 +269,12 @@ class ThumbnailDatabase {
   FRIEND_TEST_ALL_PREFIXES(ThumbnailDatabaseTest, Version7);
   FRIEND_TEST_ALL_PREFIXES(ThumbnailDatabaseTest, Version8);
   FRIEND_TEST_ALL_PREFIXES(ThumbnailDatabaseTest, WildSchema);
+
+  bool GetIconMappingsForPageURLImpl(const sql::StatementID& statement_id,
+                                     const GURL& page_url,
+                                     const char* query,
+                                     const std::string& param,
+                                     std::vector<IconMapping>* mapping_data);
 
   // Open database on a given filename. If the file does not exist,
   // it is created.
