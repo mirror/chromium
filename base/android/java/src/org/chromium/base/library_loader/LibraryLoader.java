@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Process;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -362,7 +363,7 @@ public class LibraryLoader {
     // Invoke either Linker.loadLibrary(...) or System.loadLibrary(...), triggering
     // JNI_OnLoad in native code
     // TODO(crbug.com/635567): Fix this properly.
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "UnsafeDynamicallyLoadedCode"})
     private void loadAlreadyLocked(Context appContext) throws ProcessInitException {
         try (TraceEvent te = TraceEvent.scoped("LibraryLoader.loadAlreadyLocked")) {
             if (!mLoaded) {
@@ -413,7 +414,7 @@ public class LibraryLoader {
                     // Load libraries using the system linker.
                     for (String library : NativeLibraries.LIBRARIES) {
                         try {
-                            if (!Linker.isInZipFile()) {
+                            if (!Linker.isInZipFile() || Build.VERSION.SDK_INT < VERSION_CODES.M) {
                                 System.loadLibrary(library);
                             } else {
                                 // Load directly from the APK.
