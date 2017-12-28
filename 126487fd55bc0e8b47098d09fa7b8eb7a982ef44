@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d2a1583_da0f8e1c",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "You are right! That is a good catch for both edge cases, w/o newline.",
+      "parentUuid": "c3f36c1f_62495361",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da86dbd_b8b69b58",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cef5ee4_edc69fbf",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "Removed this method.",
+      "parentUuid": "0da86dbd_b8b69b58",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7ca7121_664deffa",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d13de60_ce29ee19",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b75f289_cb023a69",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79039da5_3ca4bd05",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "Got it! I would move the checking version logic to _ReplaceVersionInFile directly.",
+      "parentUuid": "0b75f289_cb023a69",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0b22ea80_c354954f",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7382b214_64ebd74f",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7152b38e_fac0e921",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e70b15_33708e2c",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-28T02:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7152b38e_fac0e921",
+      "revId": "126487fd55bc0e8b47098d09fa7b8eb7a982ef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
