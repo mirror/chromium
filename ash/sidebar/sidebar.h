@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/sidebar/sidebar_params.h"
+#include "ash/system/tray/system_tray_view.h"
 #include "base/macros.h"
 
 namespace ash {
@@ -30,6 +31,9 @@ class Sidebar {
   void Show(SidebarInitMode mode);
   void Hide();
   bool IsVisible() const;
+
+  void UpdateSystemTrayView(const std::vector<SystemTrayItem*>& items,
+                            SystemTrayView::SystemTrayType system_tray_type);
 
  private:
   // The widget of Sidebar, which has the views of Sidebar. Not owned by this,

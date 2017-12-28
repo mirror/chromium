@@ -376,7 +376,13 @@ bool SystemTray::ShouldShowShelf() const {
 }
 
 bool SystemTray::HasSystemBubble() const {
-  return system_bubble_.get() != NULL;
+  if (switches::IsSidebarEnabled())
+    return Shell::Get()
+        ->GetPrimaryRootWindowController()
+        ->sidebar()
+        ->IsVisible();
+  else
+    return system_bubble_.get() != NULL;
 }
 
 SystemTrayBubble* SystemTray::GetSystemBubble() {
@@ -445,6 +451,13 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
   SystemTrayView::SystemTrayType system_tray_type =
       detailed ? SystemTrayView::SYSTEM_TRAY_TYPE_DETAILED
                : SystemTrayView::SYSTEM_TRAY_TYPE_DEFAULT;
+  if (switches::IsSidebarEnabled()) {
+    Shell::Get()
+        ->GetPrimaryRootWindowController()
+        ->sidebar()
+        ->UpdateSystemTrayView(items, system_tray_type);
+    return;
+  }
 
   if (system_bubble_.get() && creation_type == BUBBLE_USE_EXISTING) {
     system_bubble_->bubble()->UpdateView(items, system_tray_type);
@@ -577,8 +590,8 @@ bool SystemTray::PerformAction(const ui::Event& event) {
   // If we're already showing a full system tray menu, either default or
   // detailed menu, hide it; otherwise, show it (and hide any popup that's
   // currently shown).
-  if (HasSystemBubble() && full_system_tray_menu_) {
-    system_bubble_->bubble()->Close();
+  if (HasSystemBubble() /* && full_system_tray_menu_*/) {
+    CloseBubble();
   } else {
     ShowBubble(event.IsMouseEvent() || event.IsGestureEvent());
     if (event.IsKeyEvent() || (event.flags() & ui::EF_TOUCH_ACCESSIBILITY))
@@ -588,13 +601,24 @@ bool SystemTray::PerformAction(const ui::Event& event) {
 }
 
 void SystemTray::CloseBubble() {
+  LOG(ERROR) << "SystemTray::CloseBubble()";
+  if (switches::IsSidebarEnabled()) {
+    Shell::Get()->GetPrimaryRootWindowController()->sidebar()->Hide();
+    return;
+  }
+
   if (!system_bubble_)
     return;
   system_bubble_->bubble()->Close();
 }
 
 void SystemTray::ShowBubble(bool show_by_click) {
-  ShowDefaultView(BUBBLE_CREATE_NEW, show_by_click);
+  LOG(ERROR) << "SystemTray::ShowBubble()";
+  if (switches::IsSidebarEnabled())
+    Shell::Get()->GetPrimaryRootWindowController()->sidebar()->Show(
+        SidebarInitMode::NORMAL);
+  else
+    ShowDefaultView(BUBBLE_CREATE_NEW, show_by_click);
 }
 
 views::TrayBubbleView* SystemTray::GetBubbleView() {

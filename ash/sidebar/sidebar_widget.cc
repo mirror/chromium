@@ -12,6 +12,8 @@
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/system/tray/system_tray.h"
+#include "ash/system/tray/system_tray_view.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/web_notification/web_notification_tray.h"
 #include "base/strings/utf_string_conversions.h"
@@ -84,12 +86,22 @@ class SidebarWidget::DelegateView : public views::WidgetDelegateView,
     message_center_view_->SetNotifications(
         message_center->GetVisibleNotifications());
 
+    system_tray_view_ = new SystemTrayView(
+        SystemTrayView::SystemTrayType::SYSTEM_TRAY_TYPE_DEFAULT,
+        Shell::Get()->GetPrimarySystemTray()->GetTrayItems());
+    system_tray_view_->CreateItemViews(
+        Shell::Get()->session_controller()->login_status());
+    system_tray_view_->SetBackground(
+        views::CreateSolidBackground(SK_ColorWHITE));
+    system_tray_view_->SetPaintToLayer();
+
     auto container_layout =
         std::make_unique<views::BoxLayout>(views::BoxLayout::kVertical);
     container_->SetPaintToLayer();
     container_->layer()->SetFillsBoundsOpaquely(false);
     container_->AddChildView(message_center_view_);
     container_layout->SetFlexForView(message_center_view_, 1);
+    container_->AddChildView(system_tray_view_);
     container_->SetLayoutManager(std::move(container_layout));
 
     AddChildView(background_);
@@ -102,20 +114,22 @@ class SidebarWidget::DelegateView : public views::WidgetDelegateView,
 
     background_->SetBoundsRect(GetLocalBounds());
     container_->SetBoundsRect(GetLocalBounds());
+    container_->Layout();
 
-    int message_center_height = height();
-    message_center_view_->SetBounds(0, 0, width(), message_center_height);
+    message_center_view_->SetMaxHeight(message_center_view_->height());
   }
 
   // Overridden from ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {}
 
-  ash::MessageCenterView* message_center_view() { return message_center_view_; }
+  MessageCenterView* message_center_view() { return message_center_view_; }
+  SystemTrayView* system_tray_view() { return system_tray_view_; }
 
  private:
   views::View* container_;
   views::View* background_;
-  ash::MessageCenterView* message_center_view_;
+  MessageCenterView* message_center_view_;
+  SystemTrayView* system_tray_view_;
 
   DISALLOW_COPY_AND_ASSIGN(DelegateView);
 };
@@ -173,6 +187,19 @@ void SidebarWidget::OnDisplayMetricsChanged(const display::Display& display,
     gfx::Rect display_bounds = shelf_->GetUserWorkAreaBounds();
     SetBounds(CalculateBounds(display_bounds));
   }
+}
+
+void SidebarWidget::UpdateSystemTrayView(
+    const std::vector<SystemTrayItem*>& items,
+    SystemTrayView::SystemTrayType system_tray_type) {
+  delegate_view_->system_tray_view()->DestroyItemViews();
+  delegate_view_->system_tray_view()->RemoveAllChildViews(true);
+  delegate_view_->system_tray_view()->set_items(items);
+  delegate_view_->system_tray_view()->set_system_tray_type(system_tray_type);
+  delegate_view_->system_tray_view()->CreateItemViews(
+      Shell::Get()->session_controller()->login_status());
+  delegate_view_->system_tray_view()->Layout();
+  delegate_view_->system_tray_view()->SchedulePaint();
 }
 
 }  // namespace ash

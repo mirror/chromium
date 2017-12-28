@@ -100,6 +100,10 @@ class EmptyNotificationView : public views::View {
         gfx::FontList().DeriveWithWeight(gfx::Font::Weight::MEDIUM));
     label->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     AddChildView(label);
+
+    if (switches::IsSidebarEnabled())
+      SetBackground(
+          views::CreateSolidBackground(MessageCenterView::kBackgroundColor));
   }
 
   // views::View:
@@ -336,7 +340,7 @@ void MessageCenterView::Layout() {
                               settings_height);
   }
   if (no_notifications_view_->visible())
-    no_notifications_view_->SetBounds(0, 0, width(), kEmptyViewHeight);
+    no_notifications_view_->SetBounds(0, 0, width(), height() - button_height);
   button_bar_->SetBounds(0, height() - button_height - settings_height, width(),
                          button_height);
   if (GetWidget())

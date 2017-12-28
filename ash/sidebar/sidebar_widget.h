@@ -6,6 +6,7 @@
 #define ASH_SIDEBAR_SIDEBAR_WIDGET_H_
 
 #include "ash/sidebar/sidebar_params.h"
+#include "ash/system/tray/system_tray_view.h"
 #include "ui/display/display_observer.h"
 #include "ui/views/widget/widget.h"
 
@@ -33,7 +34,8 @@ class SidebarWidget : public views::Widget, public display::DisplayObserver {
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t metrics) override;
 
-  void SetSystemTrayView(views::View* view);
+  void UpdateSystemTrayView(const std::vector<SystemTrayItem*>& items,
+                            SystemTrayView::SystemTrayType system_tray_type);
 
  private:
   class DelegateView;

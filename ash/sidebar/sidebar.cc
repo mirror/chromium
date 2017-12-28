@@ -50,4 +50,10 @@ bool Sidebar::IsVisible() const {
   return widget_ && widget_->IsVisible();
 }
 
+void Sidebar::UpdateSystemTrayView(
+    const std::vector<SystemTrayItem*>& items,
+    SystemTrayView::SystemTrayType system_tray_type) {
+  widget_->UpdateSystemTrayView(items, system_tray_type);
+}
+
 }  // namespace ash
