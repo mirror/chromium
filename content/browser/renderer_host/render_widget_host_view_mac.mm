@@ -1086,16 +1086,17 @@ void RenderWidgetHostViewMac::SetTooltipText(
   }
 }
 
-void RenderWidgetHostViewMac::UpdateScreenInfo(gfx::NativeView view) {
-  // Propagate the new size to the BrowserCompositor first, so it can update the
-  // size that will be returned by GetRequestedRendererSize before the RWHImpl
-  // requests it (which will happen in RWHVBase::UpdateScreenInfo).
-  browser_compositor_->WasResized();
-  RenderWidgetHostViewBase::UpdateScreenInfo(view);
-}
+void RenderWidgetHostViewMac::OnSynchronizedDisplayPropertiesChanged() {
+  if (!render_widget_host_)
+    return;
 
-gfx::Size RenderWidgetHostViewMac::GetRequestedRendererSize() const {
-  return browser_compositor_->DelegatedFrameHostDesiredSizeInDIP();
+  browser_compositor_->AllocateNewLocalSurfaceId();
+  browser_compositor_->WasResized();
+
+  if (render_widget_host_->auto_resize_enabled()) {
+    render_widget_host_->DidAllocateLocalSurfaceIdForAutoResize(
+        render_widget_host_->last_auto_resize_request_number());
+  }
 }
 
 bool RenderWidgetHostViewMac::SupportsSpeech() const {
