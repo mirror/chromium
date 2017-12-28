@@ -34,6 +34,24 @@
       "revId": "edc1708054e0d3d42ecdf824a7933bca394023e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb1daff_4763f77d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1910,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-28T16:47:00Z",
+      "side": 1,
+      "message": "LayoutBlockFlow* previous_block_flow \u003d\n      prev \u0026\u0026 prev-\u003eIsLayoutBlockFlow() ? ToLayoutBlockFlow(prev) : nullptr;\n\nI meant this piece of code (further up). Why not initialize it to PreviousBlockFlowInFormattingContext in the first place there?",
+      "parentUuid": "c4ef2764_8f8fa369",
+      "revId": "edc1708054e0d3d42ecdf824a7933bca394023e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
