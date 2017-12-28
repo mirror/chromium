@@ -3443,9 +3443,7 @@ void WebViewImpl::SetPageOverlayColor(WebColor color) {
       MainFrameImpl(), std::make_unique<ColorOverlay>(color));
 
   // Run compositing update before calling updatePageOverlays.
-  MainFrameImpl()
-      ->GetFrameView()
-      ->UpdateLifecycleToCompositingCleanPlusScrolling();
+  MainFrameImpl()->GetFrameView()->UpdateLifecycleToPrePaintClean();
 
   UpdatePageOverlays();
 }
