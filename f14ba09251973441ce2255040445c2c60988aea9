@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e762ef9e_a91699a5",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-28T19:29:32Z",
+      "side": 1,
+      "message": "It should; fixed implicitly w/ given the changes for your comment below.",
+      "parentUuid": "63a14a1a_3d1e3b6d",
+      "revId": "f14ba09251973441ce2255040445c2c60988aea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4071f438_e45eadd1",
         "filename": "testing/buildbot/test_suites.pyl",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f14ba09251973441ce2255040445c2c60988aea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c6ca92_faea198b",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-28T19:29:32Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027ll have an effect for actual gtests (as opposed to swarmed instrumentation tests, which pretend to be gtests), though it should be safe to add there.",
+      "parentUuid": "4071f438_e45eadd1",
+      "revId": "f14ba09251973441ce2255040445c2c60988aea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
