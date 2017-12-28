@@ -74,10 +74,8 @@ Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
   return style_value_vector;
 }
 
-String CSSStyleValue::toString(
-    const ExecutionContext* execution_context) const {
-  const CSSValue* result =
-      ToCSSValue(execution_context->GetSecureContextMode());
+String CSSStyleValue::toString() const {
+  const CSSValue* result = ToCSSValue();
   // TODO(meade): Remove this once all the number and length types are
   // rewritten.
   return result ? result->CssText() : "";

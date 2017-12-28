@@ -161,8 +161,7 @@ const DOMMatrix* CSSRotation::AsMatrix(ExceptionState& exception_state) const {
   return matrix;
 }
 
-const CSSFunctionValue* CSSRotation::ToCSSValue(
-    SecureContextMode secure_context_mode) const {
+const CSSFunctionValue* CSSRotation::ToCSSValue() const {
   CSSUnitValue* x = x_->to(CSSPrimitiveValue::UnitType::kNumber);
   CSSUnitValue* y = y_->to(CSSPrimitiveValue::UnitType::kNumber);
   CSSUnitValue* z = z_->to(CSSPrimitiveValue::UnitType::kNumber);
@@ -173,9 +172,9 @@ const CSSFunctionValue* CSSRotation::ToCSSValue(
   CSSFunctionValue* result =
       CSSFunctionValue::Create(is2D() ? CSSValueRotate : CSSValueRotate3d);
   if (!is2D()) {
-    result->Append(*x->ToCSSValue(secure_context_mode));
-    result->Append(*y->ToCSSValue(secure_context_mode));
-    result->Append(*z->ToCSSValue(secure_context_mode));
+    result->Append(*x->ToCSSValue());
+    result->Append(*y->ToCSSValue());
+    result->Append(*z->ToCSSValue());
   }
   result->Append(
       *CSSPrimitiveValue::Create(angle->value(), angle->GetInternalUnit()));
