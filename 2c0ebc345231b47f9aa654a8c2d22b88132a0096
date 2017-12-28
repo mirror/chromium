@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99b936ca_4cf33c78",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-28T21:05:25Z",
+      "side": 1,
+      "message": "Supervised user will be deprecated. I\u0027m not sure if we still need this button?",
+      "revId": "2c0ebc345231b47f9aa654a8c2d22b88132a0096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
