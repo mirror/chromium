@@ -16,6 +16,24 @@
       "revId": "0c887e0fb518168078df158e16e28feaa8624c6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bdaff8_739480f4",
+        "filename": "chrome/browser/media/router/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-28T22:17:56Z",
+      "side": 1,
+      "message": "unfortunately LocalPresentationManager is also used by ReceiverPSDImpl, which is compiled into Android. So on second thought, there\u0027s technically no reason why we can\u0027t have local presentations on Android. So I am moving the local presentation manager files back into the main target (we can figure out if we really want to exclude them from Android later)",
+      "parentUuid": "0adc929c_103dddd6",
+      "revId": "0c887e0fb518168078df158e16e28feaa8624c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
