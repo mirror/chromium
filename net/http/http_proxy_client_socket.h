@@ -32,7 +32,6 @@ class GrowableIOBuffer;
 class HttpStream;
 class HttpStreamParser;
 class IOBuffer;
-class ProxyDelegate;
 
 class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
  public:
@@ -47,7 +46,6 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
                         bool tunnel,
                         bool using_spdy,
                         NextProto negotiated_protocol,
-                        ProxyDelegate* proxy_delegate,
                         bool is_https_proxy);
 
   // On destruction Disconnect() is called.
@@ -165,9 +163,6 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   LoadTimingInfo redirect_load_timing_info_;
 
   const HostPortPair proxy_server_;
-
-  // This delegate must outlive this proxy client socket.
-  ProxyDelegate* proxy_delegate_;
 
   const NetLogWithSource net_log_;
 

@@ -30,7 +30,7 @@ TEST(HttpProxyClientSocketTest, Tag) {
   connection->SetSocket(std::unique_ptr<StreamSocket>(tagging_sock));
   HttpProxyClientSocket socket(std::move(connection), "", HostPortPair(),
                                HostPortPair(), nullptr, false, false,
-                               NextProto(), nullptr, false);
+                               NextProto(), false);
 
   EXPECT_EQ(tagging_sock->tag(), SocketTag());
 #if defined(OS_ANDROID)
