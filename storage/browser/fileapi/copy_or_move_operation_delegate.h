@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "storage/browser/fileapi/recursive_operation_delegate.h"
 
@@ -52,42 +53,69 @@ class CopyOrMoveOperationDelegate
         std::unique_ptr<FileStreamWriter> writer,
         FlushPolicy flush_policy,
         int buffer_size,
+        const StatusCallback& completion_callback,
         const FileSystemOperation::CopyFileProgressCallback&
             file_progress_callback,
         const base::TimeDelta& min_progress_callback_invocation_span);
     ~StreamCopyHelper();
 
-    void Run(const StatusCallback& callback);
+    void Run();
 
     // Requests cancelling. After the cancelling is done, |callback| passed to
     // Run will be called.
     void Cancel();
 
    private:
+    struct PendingWrite {
+      PendingWrite();
+      PendingWrite(const PendingWrite& other);
+      ~PendingWrite();
+
+      scoped_refptr<net::IOBufferWithSize> buffer;
+      int result;
+    };
+
+    // Returns an available buffer for reading, or nullptr if not available.
+    scoped_refptr<net::IOBufferWithSize> AcquireReadBuffer();
+
     // Reads the content from the |reader_|.
-    void Read(const StatusCallback& callback);
-    void DidRead(const StatusCallback& callback, int result);
+    void Read(scoped_refptr<net::IOBufferWithSize> buffer);
+    void DidRead(scoped_refptr<net::IOBufferWithSize> buffer, int result);
+
+    // Reads to the next available buffers. If not available, does nothing.
+    void MaybeReadIfAvailableBuffers();
+
+    // Handles the next pending write. If none, then does nothing.
+    void HandlePendingWrite();
 
     // Writes the content in |buffer| to |writer_|.
-    void Write(const StatusCallback& callback,
-               scoped_refptr<net::DrainableIOBuffer> buffer);
-    void DidWrite(const StatusCallback& callback,
-                  scoped_refptr<net::DrainableIOBuffer> buffer, int result);
+    void Write(scoped_refptr<net::DrainableIOBuffer> buffer);
+    void DidWriteChunk(scoped_refptr<net::DrainableIOBuffer> buffer,
+                       int result);
+    void DidWriteAllChunks();
 
     // Flushes the written content in |writer_|.
-    void Flush(const StatusCallback& callback, bool is_eof);
-    void DidFlush(const StatusCallback& callback, bool is_eof, int result);
+    void Flush(bool is_eof);
+    void DidFlush(bool is_eof, int result);
+
+    // Completes the operation. Can be called only once.
+    void Complete(base::File::Error result);
 
     std::unique_ptr<storage::FileStreamReader> reader_;
     std::unique_ptr<FileStreamWriter> writer_;
     const FlushPolicy flush_policy_;
+    StatusCallback completion_callback_;
     FileSystemOperation::CopyFileProgressCallback file_progress_callback_;
-    scoped_refptr<net::IOBufferWithSize> io_buffer_;
+    std::vector<scoped_refptr<net::IOBufferWithSize>> available_buffers_;
+    std::deque<PendingWrite> pending_writes_;
+    bool currently_reading_;
+    base::Optional<PendingWrite> current_write_;
     int64_t num_copied_bytes_;
     int64_t previous_flush_offset_;
     base::Time last_progress_callback_invocation_time_;
     base::TimeDelta min_progress_callback_invocation_span_;
     bool cancel_requested_;
+    bool completed_;
     base::WeakPtrFactory<StreamCopyHelper> weak_factory_;
     DISALLOW_COPY_AND_ASSIGN(StreamCopyHelper);
   };

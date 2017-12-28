@@ -31,6 +31,9 @@
 #include "storage/common/fileapi/file_system_mount_option.h"
 #include "storage/common/fileapi/file_system_util.h"
 
+#include "base/task_scheduler/post_task.h"
+#include "base/sequenced_task_runner.h"
+
 namespace chromeos {
 namespace {
 
@@ -434,7 +437,13 @@ FileSystemBackend::CreateFileStreamWriter(
     case storage::kFileSystemTypeNativeLocal:
       return std::unique_ptr<storage::FileStreamWriter>(
           storage::FileStreamWriter::CreateForLocalFile(
-              context->default_file_task_runner(), url.path(), offset,
+              //context->default_file_task_runner(),
+          base::CreateSequencedTaskRunnerWithTraits(
+               {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})
+               .get(),
+    
+              url.path(), offset,
               storage::FileStreamWriter::OPEN_EXISTING_FILE));
     case storage::kFileSystemTypeDeviceMediaAsFileStorage:
       return mtp_delegate_->CreateFileStreamWriter(url, offset, context);

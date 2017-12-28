@@ -28,7 +28,8 @@
 
 namespace storage {
 
-const int64_t kFlushIntervalInBytes = 10 << 20;  // 10MB.
+const int kStreamCopyBufferCount = 2;
+const int64_t kFlushIntervalInBytes = 100 << 20;  // 100MB.
 
 class CopyOrMoveOperationDelegate::CopyOrMoveImpl {
  public:
@@ -510,24 +511,18 @@ class StreamCopyOrMoveImpl
     copy_helper_.reset(new CopyOrMoveOperationDelegate::StreamCopyHelper(
         std::move(reader_), std::move(writer_),
         dest_url_.mount_option().flush_policy(), kReadBufferSize,
+        base::Bind(&StreamCopyOrMoveImpl::RunAfterStreamCopy,
+                   weak_factory_.GetWeakPtr(), callback, last_modified),
         file_progress_callback_,
         base::TimeDelta::FromMilliseconds(
             kMinProgressCallbackInvocationSpanInMilliseconds)));
-    copy_helper_->Run(
-        base::Bind(&StreamCopyOrMoveImpl::RunAfterStreamCopy,
-                   weak_factory_.GetWeakPtr(), callback, last_modified));
+    copy_helper_->Run();
   }
 
   void RunAfterStreamCopy(
       const CopyOrMoveOperationDelegate::StatusCallback& callback,
       const base::Time& last_modified,
       base::File::Error error) {
-    // Destruct StreamCopyHelper to close the destination file.
-    // This is important because some file system implementations update
-    // timestamps on file close and thus it should happen before we call
-    // TouchFile().
-    copy_helper_.reset();
-
     NotifyOnModifyFile(dest_url_);
     NotifyOnEndUpdate(dest_url_);
     if (cancel_requested_)
@@ -604,27 +599,39 @@ CopyOrMoveOperationDelegate::StreamCopyHelper::StreamCopyHelper(
     std::unique_ptr<FileStreamWriter> writer,
     storage::FlushPolicy flush_policy,
     int buffer_size,
+    const StatusCallback& completion_callback,
     const FileSystemOperation::CopyFileProgressCallback& file_progress_callback,
     const base::TimeDelta& min_progress_callback_invocation_span)
     : reader_(std::move(reader)),
       writer_(std::move(writer)),
       flush_policy_(flush_policy),
+      completion_callback_(completion_callback),
       file_progress_callback_(file_progress_callback),
-      io_buffer_(new net::IOBufferWithSize(buffer_size)),
+      currently_reading_(false),
       num_copied_bytes_(0),
       previous_flush_offset_(0),
       min_progress_callback_invocation_span_(
           min_progress_callback_invocation_span),
       cancel_requested_(false),
-      weak_factory_(this) {}
+      completed_(false),
+      weak_factory_(this) {
+  for (int i = 0; i < kStreamCopyBufferCount; ++i)
+    available_buffers_.push_back(new net::IOBufferWithSize(buffer_size));
+}
 
 CopyOrMoveOperationDelegate::StreamCopyHelper::~StreamCopyHelper() = default;
 
-void CopyOrMoveOperationDelegate::StreamCopyHelper::Run(
-    const StatusCallback& callback) {
+CopyOrMoveOperationDelegate::StreamCopyHelper::PendingWrite::PendingWrite() =
+    default;
+CopyOrMoveOperationDelegate::StreamCopyHelper::PendingWrite::PendingWrite(
+    const PendingWrite& other) = default;
+CopyOrMoveOperationDelegate::StreamCopyHelper::PendingWrite::~PendingWrite() =
+    default;
+
+void CopyOrMoveOperationDelegate::StreamCopyHelper::Run() {
   file_progress_callback_.Run(0);
   last_progress_callback_invocation_time_ = base::Time::Now();
-  Read(callback);
+  Read(AcquireReadBuffer());
 }
 
 void CopyOrMoveOperationDelegate::StreamCopyHelper::Cancel() {
@@ -632,63 +639,119 @@ void CopyOrMoveOperationDelegate::StreamCopyHelper::Cancel() {
 }
 
 void CopyOrMoveOperationDelegate::StreamCopyHelper::Read(
-    const StatusCallback& callback) {
-  int result = reader_->Read(
-      io_buffer_.get(), io_buffer_->size(),
-      base::Bind(&StreamCopyHelper::DidRead,
-                 weak_factory_.GetWeakPtr(), callback));
+    scoped_refptr<net::IOBufferWithSize> buffer) {
+  LOG(ERROR) << "mtomasz Read";
+  DCHECK(!currently_reading_);
+  DCHECK(!completed_);
+  currently_reading_ = true;
+  TRACE_EVENT_ASYNC_BEGIN0("StreamCopyHelper", "Read", this);
+  int result = reader_->Read(buffer.get(), buffer->size(),
+                             base::Bind(&StreamCopyHelper::DidRead,
+                                        weak_factory_.GetWeakPtr(), buffer));
   if (result != net::ERR_IO_PENDING)
-    DidRead(callback, result);
+    DidRead(buffer, result);
+}
+
+scoped_refptr<net::IOBufferWithSize>
+CopyOrMoveOperationDelegate::StreamCopyHelper::AcquireReadBuffer() {
+  if (available_buffers_.empty())
+    return nullptr;
+
+  scoped_refptr<net::IOBufferWithSize> buffer = available_buffers_.back();
+  available_buffers_.pop_back();
+  return buffer;
 }
 
 void CopyOrMoveOperationDelegate::StreamCopyHelper::DidRead(
-    const StatusCallback& callback, int result) {
+    scoped_refptr<net::IOBufferWithSize> buffer,
+    int result) {
+  LOG(ERROR) << "mtomasz DidRead";
+  TRACE_EVENT_ASYNC_END0("StreamCopyHelper", "Read", this);
+  DCHECK(currently_reading_);
+  currently_reading_ = false;
+
+  if (completed_)
+    return;
+
+  PendingWrite pending_write;
+  pending_write.buffer = buffer;
+  pending_write.result = result;
+  pending_writes_.push_back(pending_write);
+
+  // Not writing in progress, then kick off the writing.
+  if (!current_write_)
+    HandlePendingWrite();
+
+  // HandlePendingWrite() could have completed the operation. In such case,
+  // there is no need to read anything more.
+  // TODO(mtomasz): Move these checks to MaybeRead*, and rename to MaybeRead().
+  if (result > 0 && !completed_ && !currently_reading_)
+    MaybeReadIfAvailableBuffers();
+}
+
+void CopyOrMoveOperationDelegate::StreamCopyHelper::
+    MaybeReadIfAvailableBuffers() {
+  scoped_refptr<net::IOBufferWithSize> next_buffer = AcquireReadBuffer();
+  if (next_buffer)
+    Read(next_buffer);
+}
+
+void CopyOrMoveOperationDelegate::StreamCopyHelper::HandlePendingWrite() {
+  DCHECK(!current_write_);
+  if (pending_writes_.empty())
+    return;
+
+  current_write_ = pending_writes_.front();
+  pending_writes_.pop_front();
+
   if (cancel_requested_) {
-    callback.Run(base::File::FILE_ERROR_ABORT);
+    Complete(base::File::FILE_ERROR_ABORT);
     return;
   }
 
-  if (result < 0) {
-    callback.Run(NetErrorToFileError(result));
+  if (current_write_->result < 0) {
+    Complete(NetErrorToFileError(current_write_->result));
     return;
   }
 
-  if (result == 0) {
+  if (current_write_->result == 0) {
     // Here is the EOF.
     if (flush_policy_ == storage::FlushPolicy::FLUSH_ON_COMPLETION)
-      Flush(callback, true /* is_eof */);
+      Flush(true /* is_eof */);
     else
-      callback.Run(base::File::FILE_OK);
+      Complete(base::File::FILE_OK);
     return;
   }
 
-  Write(callback, new net::DrainableIOBuffer(io_buffer_.get(), result));
+  TRACE_EVENT_ASYNC_BEGIN0("StreamCopyHelper", "Write", this);
+  Write(new net::DrainableIOBuffer(current_write_->buffer.get(),
+                                   current_write_->result));
 }
 
 void CopyOrMoveOperationDelegate::StreamCopyHelper::Write(
-    const StatusCallback& callback,
     scoped_refptr<net::DrainableIOBuffer> buffer) {
   DCHECK_GT(buffer->BytesRemaining(), 0);
-
-  int result = writer_->Write(
-      buffer.get(), buffer->BytesRemaining(),
-      base::Bind(&StreamCopyHelper::DidWrite,
-                 weak_factory_.GetWeakPtr(), callback, buffer));
+  DCHECK(!completed_);
+  int result = writer_->Write(buffer.get(), buffer->BytesRemaining(),
+                              base::Bind(&StreamCopyHelper::DidWriteChunk,
+                                         weak_factory_.GetWeakPtr(), buffer));
   if (result != net::ERR_IO_PENDING)
-    DidWrite(callback, buffer, result);
+    DidWriteChunk(buffer, result);
 }
 
-void CopyOrMoveOperationDelegate::StreamCopyHelper::DidWrite(
-    const StatusCallback& callback,
+void CopyOrMoveOperationDelegate::StreamCopyHelper::DidWriteChunk(
     scoped_refptr<net::DrainableIOBuffer> buffer,
     int result) {
+  if (completed_)
+    return;
+
   if (cancel_requested_) {
-    callback.Run(base::File::FILE_ERROR_ABORT);
+    Complete(base::File::FILE_ERROR_ABORT);
     return;
   }
 
   if (result < 0) {
-    callback.Run(NetErrorToFileError(result));
+    Complete(NetErrorToFileError(result));
     return;
   }
 
@@ -704,39 +767,78 @@ void CopyOrMoveOperationDelegate::StreamCopyHelper::DidWrite(
   }
 
   if (buffer->BytesRemaining() > 0) {
-    Write(callback, buffer);
+    Write(buffer);
     return;
   }
 
   if (flush_policy_ == storage::FlushPolicy::FLUSH_ON_COMPLETION &&
       (num_copied_bytes_ - previous_flush_offset_) > kFlushIntervalInBytes) {
-    Flush(callback, false /* not is_eof */);
+    Flush(false /* not is_eof */);
   } else {
-    Read(callback);
+    DidWriteAllChunks();
   }
 }
 
-void CopyOrMoveOperationDelegate::StreamCopyHelper::Flush(
-    const StatusCallback& callback, bool is_eof) {
-  int result = writer_->Flush(
-      base::Bind(&StreamCopyHelper::DidFlush,
-                 weak_factory_.GetWeakPtr(), callback, is_eof));
-  if (result != net::ERR_IO_PENDING)
-    DidFlush(callback, is_eof, result);
+void CopyOrMoveOperationDelegate::StreamCopyHelper::DidWriteAllChunks() {
+  TRACE_EVENT_ASYNC_END0("StreamCopyHelper", "Write", this);
+  if (completed_)
+    return;
+
+  // No more to write from the buffer, so the entire writing operation for this
+  // buffer is finished. Return the buffer to the pool and handle other pending
+  // writes (if any).
+  available_buffers_.push_back(current_write_->buffer);
+  current_write_ = base::nullopt;
+
+  // Continue with the next pending write (if any).
+  HandlePendingWrite();
+
+  // If not currently reading, then kick of a read.
+  // HandlePendingWrite() could have completed the operation. In such case,
+  // there is no need to read anything more.
+  if (!currently_reading_ && !completed_)
+    MaybeReadIfAvailableBuffers();
 }
 
-void CopyOrMoveOperationDelegate::StreamCopyHelper::DidFlush(
-    const StatusCallback& callback, bool is_eof, int result) {
+void CopyOrMoveOperationDelegate::StreamCopyHelper::Flush(bool is_eof) {
+  int result = writer_->Flush(base::Bind(&StreamCopyHelper::DidFlush,
+                                         weak_factory_.GetWeakPtr(), is_eof));
+  if (result != net::ERR_IO_PENDING)
+    DidFlush(is_eof, result);
+}
+
+void CopyOrMoveOperationDelegate::StreamCopyHelper::DidFlush(bool is_eof,
+                                                             int result) {
+  if (completed_)
+    return;
+
   if (cancel_requested_) {
-    callback.Run(base::File::FILE_ERROR_ABORT);
+    Complete(base::File::FILE_ERROR_ABORT);
     return;
   }
 
   previous_flush_offset_ = num_copied_bytes_;
   if (is_eof)
-    callback.Run(NetErrorToFileError(result));
+    Complete(NetErrorToFileError(result));
   else
-    Read(callback);
+    DidWriteAllChunks();
+}
+
+void CopyOrMoveOperationDelegate::StreamCopyHelper::Complete(
+    base::File::Error result) {
+  DCHECK(!completed_);
+  completed_ = true;
+
+  // The completion callback deletes StreamCopyHelper, so call it
+  // asynchronously, to avoid ending up in a weird object state.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(completion_callback_, result));
+
+  // Close the writer to close the destination file.
+  // This is important because some file system implementations update
+  // timestamps on file close and thus it should happen as soon as the contents
+  // are fully written.
+  writer_.reset();
 }
 
 CopyOrMoveOperationDelegate::CopyOrMoveOperationDelegate(
@@ -904,6 +1006,7 @@ void CopyOrMoveOperationDelegate::OnCancel() {
     job.first->Cancel();
 }
 
+// TM: This is the completion callback, which is a member of another class.
 void CopyOrMoveOperationDelegate::DidCopyOrMoveFile(
     const FileSystemURL& src_url,
     const FileSystemURL& dest_url,
@@ -913,9 +1016,10 @@ void CopyOrMoveOperationDelegate::DidCopyOrMoveFile(
   running_copy_set_.erase(impl);
 
   if (!progress_callback_.is_null() && error != base::File::FILE_OK &&
-      error != base::File::FILE_ERROR_NOT_A_FILE)
+      error != base::File::FILE_ERROR_NOT_A_FILE) {
     progress_callback_.Run(FileSystemOperation::ERROR_COPY_ENTRY, src_url,
                            dest_url, 0);
+  }
 
   if (!progress_callback_.is_null() && error == base::File::FILE_OK) {
     progress_callback_.Run(

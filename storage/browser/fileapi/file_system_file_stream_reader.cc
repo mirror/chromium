@@ -14,6 +14,9 @@
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_operation_runner.h"
 
+#include "base/task_scheduler/post_task.h"
+#include "base/sequenced_task_runner.h"
+
 using storage::FileStreamReader;
 
 // TODO(kinuko): Remove this temporary namespace hack after we move both
@@ -129,7 +132,11 @@ void FileSystemFileStreamReader::DidCreateSnapshot(
 
   local_file_reader_.reset(
       FileStreamReader::CreateForLocalFile(
-          file_system_context_->default_file_task_runner(),
+base::CreateSequencedTaskRunnerWithTraits(
+               {base::MayBlock(), base::TaskPriority::BACKGROUND,
+                base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})
+               .get(),
+        //          file_system_context_->default_file_task_runner(),
           platform_path, initial_offset_, expected_modification_time_));
 
   callback.Run();
