@@ -188,27 +188,6 @@ void MediaDevicesManager::EnumerateDevices(
 }
 
 void MediaDevicesManager::SubscribeDeviceChangeNotifications(
-    MediaDeviceType type,
-    MediaDeviceChangeSubscriber* subscriber) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  auto it = std::find(device_change_subscribers_[type].begin(),
-                      device_change_subscribers_[type].end(), subscriber);
-  if (it == device_change_subscribers_[type].end())
-    device_change_subscribers_[type].push_back(subscriber);
-}
-
-void MediaDevicesManager::UnsubscribeDeviceChangeNotifications(
-    MediaDeviceType type,
-    MediaDeviceChangeSubscriber* subscriber) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  auto it = std::find(device_change_subscribers_[type].begin(),
-                      device_change_subscribers_[type].end(), subscriber);
-  if (it != device_change_subscribers_[type].end())
-    device_change_subscribers_[type].erase(it);
-}
-
-void MediaDevicesManager::SubscribeDeviceChangeNotifications(
     uint32_t subscription_id,
     DeviceChangeCallback device_change_cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -420,7 +399,7 @@ void MediaDevicesManager::UpdateSnapshot(
   DCHECK(IsValidMediaDeviceType(type));
 
   // Only cache the device list when the device list has been changed.
-  bool need_update_device_change_subscribers = false;
+  bool need_update_device_change = false;
   MediaDeviceInfoArray& old_snapshot = current_snapshot_[type];
 
   if (old_snapshot.size() != new_snapshot.size() ||
@@ -433,14 +412,14 @@ void MediaDevicesManager::UpdateSnapshot(
 
     // Do not notify device-change subscribers after the first enumeration
     // result, since it is not due to an actual device change.
-    need_update_device_change_subscribers =
+    need_update_device_change =
         has_seen_result_[type] &&
         (old_snapshot.size() != 0 || new_snapshot.size() != 0);
     current_snapshot_[type] = new_snapshot;
   }
 
-  if (need_update_device_change_subscribers)
-    NotifyDeviceChangeSubscribers(type, new_snapshot);
+  if (need_update_device_change)
+    RunDeviceChangeCallbacks(type, new_snapshot);
 }
 
 void MediaDevicesManager::ProcessRequests() {
@@ -511,14 +490,11 @@ void MediaDevicesManager::NotifyMediaStreamManager(
   media_stream_manager_->NotifyDevicesChanged(type, new_snapshot);
 }
 
-void MediaDevicesManager::NotifyDeviceChangeSubscribers(
+void MediaDevicesManager::RunDeviceChangeCallbacks(
     MediaDeviceType type,
     const MediaDeviceInfoArray& snapshot) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
-
-  for (auto* subscriber : device_change_subscribers_[type])
-    subscriber->OnDevicesChanged(type, snapshot);
 
   for (auto& callback : device_change_callbacks_)
     callback.second.Run(type, snapshot);

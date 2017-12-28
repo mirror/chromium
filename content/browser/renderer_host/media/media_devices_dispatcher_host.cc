@@ -130,7 +130,11 @@ class MediaDevicesDispatcherHost::DeviceChangeSubscription {
 
   void OnDevicesChanged(MediaDeviceType type,
                         const MediaDeviceInfoArray& device_infos) {
-    listener_->OnDevicesChanged(type, id_, device_infos);
+    host_->OnDevicesChanged(id_, type, device_infos);
+  }
+
+  const blink::mojom::MediaDevicesListenerPtr& listener() const {
+    return listener_;
   }
 
  private:
@@ -175,13 +179,7 @@ MediaDevicesDispatcherHost::~MediaDevicesDispatcherHost() {
   if (!media_stream_manager_->media_devices_manager())
     return;
 
-  for (size_t i = 0; i < NUM_MEDIA_DEVICE_TYPES; ++i) {
-    if (!device_change_subscriptions_[i].empty()) {
-      media_stream_manager_->media_devices_manager()
-          ->UnsubscribeDeviceChangeNotifications(
-              static_cast<MediaDeviceType>(i), this);
-    }
-  }
+  subscriptions_.clear();
 }
 
 void MediaDevicesDispatcherHost::EnumerateDevices(
@@ -251,47 +249,6 @@ void MediaDevicesDispatcherHost::GetAudioInputCapabilities(
                      base::Passed(&client_callback)));
 }
 
-void MediaDevicesDispatcherHost::SubscribeDeviceChangeNotifications(
-    MediaDeviceType type,
-    uint32_t subscription_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(IsValidMediaDeviceType(type));
-  auto it =
-      std::find(device_change_subscriptions_[type].begin(),
-                device_change_subscriptions_[type].end(), subscription_id);
-  if (it != device_change_subscriptions_[type].end()) {
-    bad_message::ReceivedBadMessage(
-        render_process_id_, bad_message::MDDH_INVALID_SUBSCRIPTION_REQUEST);
-    return;
-  }
-
-  if (device_change_subscriptions_[type].empty()) {
-    media_stream_manager_->media_devices_manager()
-        ->SubscribeDeviceChangeNotifications(type, this);
-  }
-
-  device_change_subscriptions_[type].push_back(subscription_id);
-}
-
-void MediaDevicesDispatcherHost::UnsubscribeDeviceChangeNotifications(
-    MediaDeviceType type,
-    uint32_t subscription_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(IsValidMediaDeviceType(type));
-  auto it =
-      std::find(device_change_subscriptions_[type].begin(),
-                device_change_subscriptions_[type].end(), subscription_id);
-  // Ignore invalid unsubscription requests.
-  if (it == device_change_subscriptions_[type].end())
-    return;
-
-  device_change_subscriptions_[type].erase(it);
-  if (device_change_subscriptions_[type].empty()) {
-    media_stream_manager_->media_devices_manager()
-        ->UnsubscribeDeviceChangeNotifications(type, this);
-  }
-}
-
 void MediaDevicesDispatcherHost::SetMediaDevicesListener(
     blink::mojom::MediaDevicesListenerPtr listener) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -324,52 +281,38 @@ void MediaDevicesDispatcherHost::MediaDevicesListenerHadConnectionError(
 }
 
 void MediaDevicesDispatcherHost::OnDevicesChanged(
+    uint32_t subscription_id,
     MediaDeviceType type,
     const MediaDeviceInfoArray& device_infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
-  std::vector<uint32_t> subscriptions = device_change_subscriptions_[type];
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&MediaDevicesDispatcherHost::NotifyDeviceChangeOnUIThread,
-                     weak_factory_.GetWeakPtr(), std::move(subscriptions), type,
-                     device_infos));
+
+  base::PostTaskAndReplyWithResult(
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI).get(), FROM_HERE,
+      base::BindOnce(salt_and_origin_callback_, render_process_id_,
+                     render_frame_id_),
+      base::BindOnce(
+          &MediaDevicesDispatcherHost::CheckPermissionForChangedDevice,
+          weak_factory_.GetWeakPtr(), subscription_id, type, device_infos));
 }
 
-void MediaDevicesDispatcherHost::NotifyDeviceChangeOnUIThread(
-    const std::vector<uint32_t>& subscriptions,
+void MediaDevicesDispatcherHost::NotifyDeviceChange(
+    uint32_t subscription_id,
     MediaDeviceType type,
-    const MediaDeviceInfoArray& device_infos) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    const MediaDeviceInfoArray& device_infos,
+    std::string device_id_salt,
+    const url::Origin& security_origin,
+    bool has_permission) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(IsValidMediaDeviceType(type));
 
-  blink::mojom::MediaDevicesListenerPtr media_devices_listener;
-  if (device_change_listener_) {
-    media_devices_listener = std::move(device_change_listener_);
-  } else {
-    RenderFrameHost* render_frame_host =
-        RenderFrameHost::FromID(render_process_id_, render_frame_id_);
-    if (!render_frame_host)
-      return;
+  auto it = subscriptions_.find(subscription_id);
+  DCHECK(it != subscriptions_.end());
 
-    render_frame_host->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&media_devices_listener));
-    if (!media_devices_listener)
-      return;
-  }
-
-  const auto& salt_and_origin =
-      salt_and_origin_callback_.Run(render_process_id_, render_frame_id_);
-  std::string group_id_salt = ComputeGroupIDSalt(salt_and_origin.first);
-  for (uint32_t subscription_id : subscriptions) {
-    bool has_permission = permission_checker_->CheckPermissionOnUIThread(
-        type, render_process_id_, render_frame_id_);
-    media_devices_listener->OnDevicesChanged(
-        type, subscription_id,
-        TranslateMediaDeviceInfoArray(has_permission, salt_and_origin.first,
-                                      group_id_salt, salt_and_origin.second,
-                                      device_infos));
-  }
+  it->second->listener()->OnDevicesChanged(
+      type, TranslateMediaDeviceInfoArray(has_permission, device_id_salt,
+                                          ComputeGroupIDSalt(device_id_salt),
+                                          security_origin, device_infos));
 }
 
 void MediaDevicesDispatcherHost::SetPermissionChecker(
@@ -379,10 +322,18 @@ void MediaDevicesDispatcherHost::SetPermissionChecker(
   permission_checker_ = std::move(permission_checker);
 }
 
-void MediaDevicesDispatcherHost::SetDeviceChangeListenerForTesting(
-    blink::mojom::MediaDevicesListenerPtr listener) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  device_change_listener_ = std::move(listener);
+void MediaDevicesDispatcherHost::CheckPermissionForChangedDevice(
+    uint32_t subscription_id,
+    MediaDeviceType type,
+    const MediaDeviceInfoArray& device_infos,
+    const std::pair<std::string, url::Origin>& salt_and_origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  permission_checker_->CheckPermission(
+      type, render_process_id_, render_frame_id_,
+      base::BindOnce(&MediaDevicesDispatcherHost::NotifyDeviceChange,
+                     weak_factory_.GetWeakPtr(), subscription_id, type,
+                     device_infos, salt_and_origin.first,
+                     salt_and_origin.second));
 }
 
 void MediaDevicesDispatcherHost::CheckPermissionsForEnumerateDevices(

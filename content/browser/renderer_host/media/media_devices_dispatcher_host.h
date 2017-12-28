@@ -26,8 +26,7 @@ namespace content {
 class MediaStreamManager;
 
 class CONTENT_EXPORT MediaDevicesDispatcherHost
-    : public blink::mojom::MediaDevicesDispatcherHost,
-      public MediaDeviceChangeSubscriber {
+    : public blink::mojom::MediaDevicesDispatcherHost {
  public:
   MediaDevicesDispatcherHost(int render_process_id,
                              int render_frame_id,
@@ -54,16 +53,12 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
       GetAvailableVideoInputDeviceFormatsCallback client_callback) override;
   void GetAudioInputCapabilities(
       GetAudioInputCapabilitiesCallback client_callback) override;
-  void SubscribeDeviceChangeNotifications(MediaDeviceType type,
-                                          uint32_t subscription_id) override;
-  void UnsubscribeDeviceChangeNotifications(MediaDeviceType type,
-                                            uint32_t subscription_id) override;
   void SetMediaDevicesListener(
       blink::mojom::MediaDevicesListenerPtr listener) override;
 
-  // MediaDeviceChangeSubscriber implementation.
-  void OnDevicesChanged(MediaDeviceType type,
-                        const MediaDeviceInfoArray& device_infos) override;
+  void OnDevicesChanged(uint32_t subscription_id,
+                        MediaDeviceType type,
+                        const MediaDeviceInfoArray& device_infos);
 
   void UnsubscribeDeviceChangeNotifications(uint32_t subscription_id);
   void MediaDevicesListenerHadConnectionError(uint32_t subscription_id);
@@ -71,17 +66,21 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
   void SetPermissionChecker(
       std::unique_ptr<MediaDevicesPermissionChecker> permission_checker);
 
-  void SetDeviceChangeListenerForTesting(
-      blink::mojom::MediaDevicesListenerPtr listener);
-
   void set_salt_and_origin_callback_for_testing(
       MediaDeviceSaltAndOriginCallback callback) {
     salt_and_origin_callback_ = std::move(callback);
   }
 
  private:
+  friend class MediaDevicesDispatcherHostTest;
   using GetVideoInputDeviceFormatsCallback =
       GetAllVideoInputDeviceFormatsCallback;
+
+  void CheckPermissionForChangedDevice(
+      uint32_t subscription_id,
+      MediaDeviceType type,
+      const MediaDeviceInfoArray& device_infos,
+      const std::pair<std::string, url::Origin>& salt_and_origin);
 
   void CheckPermissionsForEnumerateDevices(
       const MediaDevicesManager::BoolDeviceTypes& requested_types,
@@ -159,9 +158,12 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
   media::VideoCaptureFormats GetVideoInputFormats(const std::string& device_id,
                                                   bool try_in_use_first);
 
-  void NotifyDeviceChangeOnUIThread(const std::vector<uint32_t>& subscriptions,
-                                    MediaDeviceType type,
-                                    const MediaDeviceInfoArray& device_infos);
+  void NotifyDeviceChange(uint32_t subscription_id,
+                          MediaDeviceType type,
+                          const MediaDeviceInfoArray& device_infos,
+                          std::string device_id_salt,
+                          const url::Origin& security_origin,
+                          bool has_permission);
 
   std::string ComputeGroupIDSalt(const std::string& device_id_salt);
 
@@ -177,10 +179,6 @@ class CONTENT_EXPORT MediaDevicesDispatcherHost
   // The following fields can only be accessed on the IO thread.
   MediaStreamManager* media_stream_manager_;
   std::unique_ptr<MediaDevicesPermissionChecker> permission_checker_;
-  std::vector<uint32_t> device_change_subscriptions_[NUM_MEDIA_DEVICE_TYPES];
-
-  // This field can only be accessed on the UI thread.
-  blink::mojom::MediaDevicesListenerPtr device_change_listener_;
 
   struct AudioInputCapabilitiesRequest;
   // Queued requests for audio-input capabilities.
