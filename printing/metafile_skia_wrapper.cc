@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "printing/metafile_skia_wrapper.h"
+#include "printing/pdf_metafile_skia.h"
 #include "third_party/skia/include/core/SkMetaData.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -11,6 +12,7 @@ namespace printing {
 namespace {
 
 const char kMetafileKey[] = "CrMetafile";
+const char kOopIdsKey[] = "CrOopIds";
 
 }  // namespace
 
@@ -24,6 +26,7 @@ void MetafileSkiaWrapper::SetMetafileOnCanvas(cc::PaintCanvas* canvas,
 
   SkMetaData& meta = canvas->getMetaData();
   meta.setRefCnt(kMetafileKey, wrapper.get());
+  meta.setPtr(kOopIdsKey, &(metafile->GetSubframeContentIDs()));
 }
 
 // static
