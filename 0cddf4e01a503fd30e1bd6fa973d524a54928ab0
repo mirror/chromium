@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "cc9d99c9_ca26dd70",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-28T01:45:11Z",
+      "side": 1,
+      "message": "Added in key_system_support.cc",
+      "parentUuid": "8367efd5_de8c68f2",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d639739_f1a2f555",
         "filename": "chrome/renderer/media/chrome_key_systems.cc",
         "patchSetId": 1
@@ -336,6 +354,24 @@
       "side": 1,
       "message": "Thanks for checking!\n\nCan you also add a DCHECK to make sure the CDM is registered in the plugin info, to prevent regression?",
       "parentUuid": "e2cff1d8_3db0dec1",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "134b0849_bdd9fa50",
+        "filename": "content/browser/media/key_system_info_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-28T01:45:11Z",
+      "side": 1,
+      "message": "Done (but it means that the mojo ECK tests always need pepper registration, so tests modified as well).",
+      "parentUuid": "16423d04_ccd083c0",
       "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
