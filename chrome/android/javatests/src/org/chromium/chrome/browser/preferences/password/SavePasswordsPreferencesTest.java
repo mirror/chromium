@@ -306,7 +306,8 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuEnabled() throws Exception {
-        setPasswordSource(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        setPasswordSource(
+                new SavedPasswordEntry("id", "https://example.com", "test user", "password"));
 
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
 

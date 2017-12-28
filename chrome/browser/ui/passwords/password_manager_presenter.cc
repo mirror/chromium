@@ -17,6 +17,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
