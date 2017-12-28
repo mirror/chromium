@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad3ab98f_c74d942d",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "It might get inconsistent.",
+      "parentUuid": "031612bd_d34268d5",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01e94fbb_5be123ea",
         "filename": "chrome/browser/chromeos/login/oobe_screen.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-28T00:14:21Z",
       "side": 1,
       "message": "nit: Can we move this to the above long list? It seems the last several items are all \u0027special\u0027?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29af5516_a16288da",
+        "filename": "chrome/browser/chromeos/login/oobe_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "This protects UI from showing incorrect screen. This is true both for saved UI state, and for any matching enums that might go out of sync.",
+      "parentUuid": "01e94fbb_5be123ea",
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73bfb77c_86480974",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6776aa2_095e7af7",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd963be_6611d924",
         "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09e82a4_d5ce23bb",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd963be_6611d924",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e4921080_cd642ac1",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "This is a test-only code, so it should be OK.",
+      "parentUuid": "4f4c6eb7_b22296d3",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e82c8a18_9a2bfe3b",
         "filename": "chrome/browser/resources/chromeos/login/sync_consent.css",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc77c1c1_9fe7551b",
+        "filename": "chrome/browser/resources/chromeos/login/sync_consent.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-28T00:52:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82c8a18_9a2bfe3b",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
