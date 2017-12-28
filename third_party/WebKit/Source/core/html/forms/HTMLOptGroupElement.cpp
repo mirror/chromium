@@ -27,8 +27,8 @@
 
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html_names.h"
@@ -38,6 +38,24 @@
 namespace blink {
 
 using namespace HTMLNames;
+
+class OptGroupAssignmentFilter final : public AssignmentFilter {
+ public:
+  virtual ~OptGroupAssignmentFilter() {}
+
+  static OptGroupAssignmentFilter* Create() {
+    return new OptGroupAssignmentFilter();
+  }
+
+  bool CanAssign(const Node& node) const override {
+    return node.HasTagName(optionTag) || node.HasTagName(hrTag);
+  }
+
+  virtual void Trace(Visitor* visitor) { AssignmentFilter::Trace(visitor); }
+
+ private:
+  OptGroupAssignmentFilter() {}
+};
 
 inline HTMLOptGroupElement::HTMLOptGroupElement(Document& document)
     : HTMLElement(optgroupTag, document) {}
@@ -51,7 +69,7 @@ HTMLOptGroupElement::~HTMLOptGroupElement() {}
 
 HTMLOptGroupElement* HTMLOptGroupElement::Create(Document& document) {
   HTMLOptGroupElement* opt_group_element = new HTMLOptGroupElement(document);
-  opt_group_element->EnsureLegacyUserAgentShadowRootV0();
+  opt_group_element->EnsureUserAgentShadowRootV1();
   return opt_group_element;
 }
 
@@ -141,9 +159,9 @@ void HTMLOptGroupElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
   label->SetIdAttribute(ShadowElementNames::OptGroupLabel());
   root.AppendChild(label);
 
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot = HTMLSlotElement::CreateFilteredSlotForUserAgent(
+      GetDocument(), OptGroupAssignmentFilter::Create());
+  root.AppendChild(slot);
 }
 
 void HTMLOptGroupElement::UpdateGroupLabel() {
