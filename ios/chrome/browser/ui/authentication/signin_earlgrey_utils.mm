@@ -28,37 +28,55 @@ using chrome_test_util::SecondarySignInButton;
   [self checkSigninPromoVisibleWithMode:mode closeButton:YES];
 }
 
++ (id<GREYMatcher>)matcherForSufficientlyLowVisible {
+  MatchesBlock matches = ^BOOL(UIView* element) {
+    return ([GREYVisibilityChecker percentVisibleAreaOfElement:element] >= 0.2);
+  };
+  DescribeToBlock describe = ^void(id<GREYDescription> description) {
+    [description
+        appendText:[NSString
+                       stringWithFormat:@"matcherForSufficientlyVisible(>=%f)",
+                                        kElementSufficientlyVisiblePercentage]];
+  };
+  return [[GREYElementMatcherBlock alloc] initWithMatchesBlock:matches
+                                              descriptionBlock:describe];
+}
+
 + (void)checkSigninPromoVisibleWithMode:(SigninPromoViewMode)mode
                             closeButton:(BOOL)closeButton {
   [[EarlGrey
       selectElementWithMatcher:grey_allOf(
                                    grey_accessibilityID(kSigninPromoViewId),
-                                   grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_notNil()];
+                                   [self matcherForSufficientlyLowVisible],
+                                   nil)] assertWithMatcher:grey_notNil()];
   [[EarlGrey
-      selectElementWithMatcher:grey_allOf(PrimarySignInButton(),
-                                          grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_notNil()];
+      selectElementWithMatcher:grey_allOf(
+                                   PrimarySignInButton(),
+                                   [self matcherForSufficientlyLowVisible],
+                                   nil)] assertWithMatcher:grey_notNil()];
   switch (mode) {
     case SigninPromoViewModeColdState:
       [[EarlGrey
-          selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
-                                              grey_sufficientlyVisible(), nil)]
-          assertWithMatcher:grey_nil()];
+          selectElementWithMatcher:grey_allOf(
+                                       SecondarySignInButton(),
+                                       [self matcherForSufficientlyLowVisible],
+                                       nil)] assertWithMatcher:grey_nil()];
       break;
     case SigninPromoViewModeWarmState:
       [[EarlGrey
-          selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
-                                              grey_sufficientlyVisible(), nil)]
-          assertWithMatcher:grey_notNil()];
+          selectElementWithMatcher:grey_allOf(
+                                       SecondarySignInButton(),
+                                       [self matcherForSufficientlyLowVisible],
+                                       nil)] assertWithMatcher:grey_notNil()];
       break;
   }
   if (closeButton) {
     [[EarlGrey
-        selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                                kSigninPromoCloseButtonId),
-                                            grey_sufficientlyVisible(), nil)]
-        assertWithMatcher:grey_notNil()];
+        selectElementWithMatcher:grey_allOf(
+                                     grey_accessibilityID(
+                                         kSigninPromoCloseButtonId),
+                                     [self matcherForSufficientlyLowVisible],
+                                     nil)] assertWithMatcher:grey_notNil()];
   }
 }
 
