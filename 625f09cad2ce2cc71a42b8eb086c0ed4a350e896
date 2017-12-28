@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7722c00_78dee2ec",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: Pydoc should always has a blank line as the second line.",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b303eb_5f831533",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: use itervalues()",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f79b70e_bba97a93",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: save an extra list creation via:\nall_names.extend(n for n in names if n.startswith(\u0027_Z\u0027))",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2248204_0caa2735",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t seem like this needs to be a defaultdict?\n\nMight be simpler to have it modify the given dict?",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca93047_2a0955fc",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: use \"in name_to_list\" rather than iteritems()",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af43e400_9ae3f28e",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "same.",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c450a47c_13ebb4e4",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-28T21:39:35Z",
+      "side": 1,
+      "message": "nit: sorted() creates a new list, so remove one extra copy by removing list()",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
