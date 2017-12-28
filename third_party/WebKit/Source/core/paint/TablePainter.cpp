@@ -34,14 +34,28 @@ void TablePainter::PaintObject(const PaintInfo& paint_info,
   if (paint_phase != PaintPhase::kSelfOutlineOnly) {
     PaintInfo paint_info_for_descendants = paint_info.ForDescendants();
 
+    LayoutObject* header = nullptr;
     for (LayoutObject* child = layout_table_.FirstChild(); child;
          child = child->NextSibling()) {
-      if (child->IsBox() && !ToLayoutBox(child)->HasSelfPaintingLayer() &&
-          (child->IsTableSection() || child->IsTableCaption())) {
-        LayoutPoint child_point = layout_table_.FlipForWritingModeForChild(
-            ToLayoutBox(child), paint_offset);
-        child->Paint(paint_info_for_descendants, child_point);
+      if (!child->IsBox() || ToLayoutBox(child)->HasSelfPaintingLayer() ||
+          (!child->IsTableSection() && !child->IsTableCaption()))
+        continue;
+      // If we repeat the first table header across pages paint it last
+      // so that its background isn't obscured by any cell backgrounds
+      // in the subsequent table sections.
+      if (child->IsTableSection() && !header &&
+          ToLayoutTableSection(child)->IsRepeatingHeaderGroup()) {
+        header = child;
+        continue;
       }
+      LayoutPoint child_point = layout_table_.FlipForWritingModeForChild(
+          ToLayoutBox(child), paint_offset);
+      child->Paint(paint_info_for_descendants, child_point);
+    }
+    if (header) {
+      LayoutPoint child_point = layout_table_.FlipForWritingModeForChild(
+          ToLayoutBox(header), paint_offset);
+      header->Paint(paint_info_for_descendants, child_point);
     }
 
     if (layout_table_.HasCollapsedBorders() &&
