@@ -233,6 +233,24 @@
       "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10c6db7_489e7165",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-28T01:12:37Z",
+      "side": 1,
+      "message": "This is one of the areas where the blink and chrome style guides differ but let\u0027s leave that for another day.",
+      "parentUuid": "a2ad702a_c0fc990e",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
