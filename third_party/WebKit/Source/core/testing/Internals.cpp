@@ -779,7 +779,7 @@ ShadowRoot* Internals::youngerShadowRoot(Node* shadow,
     return nullptr;
   }
 
-  return ToShadowRoot(shadow)->YoungerShadowRoot();
+  return nullptr;
 }
 
 String Internals::shadowRootType(const Node* root,
