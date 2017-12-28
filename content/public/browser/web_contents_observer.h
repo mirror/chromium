@@ -486,6 +486,14 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  // Notifies to print an out-of-process subframe.
+  // |rect| is the rectangular area its content resides in its parent frame.
+  // |content_id| is the global unique id of the subframe's content.
+  // |dst_host| is the render frame host of this subframe.
+  virtual void PrintSubframe(const gfx::Rect& rect,
+                             uint64_t content_id,
+                             RenderFrameHost* dst_host) {}
+
   // IPC::Listener implementation.
   // DEPRECATED: Use (i.e. override) the other overload instead:
   //     virtual bool OnMessageReceived(const IPC::Message& message,
