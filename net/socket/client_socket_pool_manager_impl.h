@@ -71,10 +71,10 @@ class ClientSocketPoolManagerImpl : public ClientSocketPoolManager,
       const HostPortPair& socks_proxy) override;
 
   HttpProxyClientSocketPool* GetSocketPoolForHTTPProxy(
-      const HostPortPair& http_proxy) override;
+      const ProxyServer& http_proxy_server) override;
 
   SSLClientSocketPool* GetSocketPoolForSSLWithProxy(
-      const HostPortPair& proxy_server) override;
+      const ProxyServer& http_proxy_server) override;
 
   // Creates a Value summary of the state of the socket pools.
   std::unique_ptr<base::Value> SocketPoolInfoToValue() const override;

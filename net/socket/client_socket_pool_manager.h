@@ -35,6 +35,7 @@ class HttpProxyClientSocketPool;
 class HttpRequestHeaders;
 class NetLogWithSource;
 class ProxyInfo;
+class ProxyServer;
 class TransportClientSocketPool;
 class SOCKSClientSocketPool;
 class SSLClientSocketPool;
@@ -83,9 +84,9 @@ class NET_EXPORT_PRIVATE ClientSocketPoolManager {
   virtual SOCKSClientSocketPool* GetSocketPoolForSOCKSProxy(
       const HostPortPair& socks_proxy) = 0;
   virtual HttpProxyClientSocketPool* GetSocketPoolForHTTPProxy(
-      const HostPortPair& http_proxy) = 0;
+      const ProxyServer& http_proxy_server) = 0;
   virtual SSLClientSocketPool* GetSocketPoolForSSLWithProxy(
-      const HostPortPair& proxy_server) = 0;
+      const ProxyServer& http_proxy_server) = 0;
   // Creates a Value summary of the state of the socket pools.
   virtual std::unique_ptr<base::Value> SocketPoolInfoToValue() const = 0;
 
