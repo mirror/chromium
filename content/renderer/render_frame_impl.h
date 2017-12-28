@@ -492,11 +492,10 @@ class CONTENT_EXPORT RenderFrameImpl
   scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner(
       blink::TaskType task_type) override;
   int GetEnabledBindings() const override;
-  // Returns non-null.
-  // It is invalid to call this in an incomplete env where
-  // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
-  ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter() override;
   void SetAccessibilityModeForTest(ui::AXMode new_mode) override;
+
+  mojom::URLLoaderFactory* GetURLLoaderFactory(
+      const GURL& request_url) override;
 
   // blink::mojom::EngagementClient implementation:
   void SetEngagementLevel(const url::Origin& origin,
@@ -854,6 +853,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void ScrollFocusedEditableElementIntoRect(const gfx::Rect& rect);
   void DidChangeVisibleViewport();
 
+  // Returns non-null.
+  // It is invalid to call this in an incomplete env where
+  // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
+  // TODO(kinuko) We can remove this when network service is the only path.
+  ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter();
+
  protected:
   explicit RenderFrameImpl(CreateParams params);
 
@@ -1102,6 +1107,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // browser at navigation time. For any other frames (i.e. frames on the
   // initial about:blank Document), the bundle returned here is lazily cloned
   // from the parent or opener's own bundle.
+
   URLLoaderFactoryBundle& GetSubresourceLoaderFactories();
 
   // Update current main frame's encoding and send it to browser window.
