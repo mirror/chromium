@@ -117,7 +117,8 @@ const CGFloat kKernAmount = 0.2;
 }
 
 + (CGFloat)cellWidthForNode:(const bookmarks::BookmarkNode*)node
-                      image:(NSImage*)image {
+                      image:(NSImage*)image
+                     inView:(NSView*)view {
   NSString* title =
       [self cleanTitle:base::SysUTF16ToNSString(node->GetTitle())];
   CGFloat width = kIconLeadingPadding + [image size].width;
@@ -131,7 +132,7 @@ const CGFloat kKernAmount = 0.2;
   } else {
     width += kTrailingPadding;
   }
-  return width;
+  return width + [self insetInView:view] * 2;
 }
 
 - (id)initForNode:(const BookmarkNode*)node
@@ -392,11 +393,10 @@ const CGFloat kKernAmount = 0.2;
 
 - (NSRect)imageRectForBounds:(NSRect)theRect {
   NSRect imageRect = [super imageRectForBounds:theRect];
-  const CGFloat inset = [self insetInView:[self controlView]];
   imageRect.origin.y -= 1;
   imageRect.origin.x =
       cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
-          ? NSMaxX(theRect) - kIconLeadingPadding - NSWidth(imageRect) + inset
+          ? NSMaxX(theRect) - kIconLeadingPadding - NSWidth(imageRect)
           : kIconLeadingPadding;
   return imageRect;
 }

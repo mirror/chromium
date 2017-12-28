@@ -49,7 +49,8 @@ class BookmarkNode;
 // nodes). Used for laying out bookmark bar without creating
 // live cells.
 + (CGFloat)cellWidthForNode:(const bookmarks::BookmarkNode*)node
-                      image:(NSImage*)image;
+                      image:(NSImage*)image
+                     inView:(NSView*)view;
 
 // Create a button cell which draws with a theme.
 + (id)buttonCellForNode:(const bookmarks::BookmarkNode*)node

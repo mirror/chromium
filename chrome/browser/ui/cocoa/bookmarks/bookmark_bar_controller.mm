@@ -1977,7 +1977,8 @@ static BOOL ValueInRangeInclusive(CGFloat low, CGFloat value, CGFloat high) {
 - (CGFloat)widthOfButtonForNode:(const BookmarkNode*)node {
   // TODO(lgrey): Can we get this information without an actual image?
   NSImage* image = [self faviconForNode:node forADarkTheme:NO];
-  CGFloat width = [BookmarkButtonCell cellWidthForNode:node image:image];
+  CGFloat width =
+      [BookmarkButtonCell cellWidthForNode:node image:image inView:buttonView_];
   return std::min(width, bookmarks::kDefaultBookmarkWidth);
 }
 
