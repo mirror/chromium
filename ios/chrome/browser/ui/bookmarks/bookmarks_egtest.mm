@@ -1198,11 +1198,20 @@ id<GREYMatcher> ActionSheet(Action action) {
       checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
 }
 
+- (void)check1 {
+  [SigninEarlGreyUtils
+      checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
+}
+
+- (void)check2 {
+  [SigninEarlGreyUtils
+      checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
+}
+
 // Tests the tapping on the secondary button of sign-in promo view in a warm
 // state makes the sign-in sheet appear, and the promo still appears after
 // dismissing the sheet.
-// TODO(crbug.com/796618): Reenable this test.
-- (void)DISABLED_testSignInPromoWithWarmStateUsingSecondaryButton {
+- (void)testSignInPromoWithWarmStateUsingSecondaryButton {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitAndDisableFeature(kBookmarkNewGeneration);
 
@@ -1215,8 +1224,7 @@ id<GREYMatcher> ActionSheet(Action action) {
 
   // Check that sign-in promo view are visible.
   [BookmarksTestCase verifyPromoAlreadySeen:NO];
-  [SigninEarlGreyUtils
-      checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
+  [self check1];
 
   // Tap the secondary button.
   [[EarlGrey
@@ -1232,8 +1240,7 @@ id<GREYMatcher> ActionSheet(Action action) {
 
   // Check that the bookmarks UI reappeared and the cell is still here.
   [BookmarksTestCase verifyPromoAlreadySeen:NO];
-  [SigninEarlGreyUtils
-      checkSigninPromoVisibleWithMode:SigninPromoViewModeWarmState];
+  [self check2];
 }
 
 // Tests that the sign-in promo should not be shown after been shown 19 times.
