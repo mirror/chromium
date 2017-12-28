@@ -46,6 +46,30 @@
       "revId": "954702c549903dfc853d00ef06aaba76bd0be192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8818cc_cac16637",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-28T13:08:06Z",
+      "side": 1,
+      "message": "Done, added tests and a DCHECK that confirms |form| is the best match for the current username.\n\nTo my understanding, (1) should be covered by PasswordFormManager::UpdatePendingAndGetOldKey() which PasswordFormManager::Update() calls: https://cs.chromium.org/chromium/src/components/password_manager/core/browser/password_form_manager.cc?l\u003d1557-1561\u0026rcl\u003d9db55c277b223943a012896725c4018eab9493f2\n\n(2) Here we will store an extra credentials, which happens silently if the password is the same (see e.g. CredentialManagerBrowserTest::StoreSavesPSLMatchedCredential), or requires user interaction if the password differs (test added in this CL). According to this comment in PasswordFormManager::CreatePendingCredentials() this is expected behavior: https://cs.chromium.org/chromium/src/components/password_manager/core/browser/password_form_manager.cc?l\u003d1054-1062\u0026rcl\u003d9db55c277b223943a012896725c4018eab9493f2",
+      "parentUuid": "bf177973_31d2f107",
+      "range": {
+        "startLine": 247,
+        "startChar": 26,
+        "endLine": 247,
+        "endChar": 30
+      },
+      "revId": "954702c549903dfc853d00ef06aaba76bd0be192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
