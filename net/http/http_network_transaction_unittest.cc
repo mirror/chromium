@@ -729,7 +729,13 @@ template <>
 CaptureGroupNameHttpProxySocketPool::CaptureGroupNameSocketPool(
     HostResolver* /* host_resolver */,
     CertVerifier* /* cert_verifier */)
-    : HttpProxyClientSocketPool(0, 0, NULL, NULL, NULL, NULL) {}
+    : HttpProxyClientSocketPool(0,
+                                0,
+                                NULL,
+                                NULL,
+                                NULL,
+                                false /* is_secure_connection */,
+                                NULL) {}
 
 template <>
 CaptureGroupNameSSLSocketPool::CaptureGroupNameSocketPool(

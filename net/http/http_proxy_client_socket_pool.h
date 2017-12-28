@@ -157,6 +157,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketPool
                             TransportClientSocketPool* transport_pool,
                             SSLClientSocketPool* ssl_pool,
                             NetworkQualityProvider* network_quality_provider,
+                            bool is_secure_connection,
                             NetLog* net_log);
 
   ~HttpProxyClientSocketPool() override;
@@ -225,6 +226,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketPool
     HttpProxyConnectJobFactory(TransportClientSocketPool* transport_pool,
                                SSLClientSocketPool* ssl_pool,
                                NetworkQualityProvider* network_quality_provider,
+                               bool is_secure_connection,
                                NetLog* net_log);
 
     // ClientSocketPoolBase::ConnectJobFactory methods.
@@ -239,7 +241,9 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocketPool
     TransportClientSocketPool* const transport_pool_;
     SSLClientSocketPool* const ssl_pool_;
     NetworkQualityProvider* network_quality_provider_;
-    const int32_t transport_rtt_multiplier_;
+    const bool is_secure_connection_;
+    const int32_t ssl_http_rtt_multiplier_;
+    const int32_t non_ssl_http_rtt_multiplier_;
     const base::TimeDelta min_proxy_connection_timeout_;
     const base::TimeDelta max_proxy_connection_timeout_;
     NetLog* net_log_;

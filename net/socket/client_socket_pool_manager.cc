@@ -214,8 +214,8 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
     if (proxy_info.is_direct()) {
       ssl_pool = session->GetSSLSocketPool(socket_pool_type);
     } else {
-      ssl_pool = session->GetSocketPoolForSSLWithProxy(socket_pool_type,
-                                                       *proxy_host_port);
+      ssl_pool = session->GetSocketPoolForSSLWithProxy(
+          socket_pool_type, proxy_info.proxy_server());
     }
 
     if (num_preconnect_streams) {
@@ -231,8 +231,8 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
   // Finally, get the connection started.
 
   if (proxy_info.is_http() || proxy_info.is_https()) {
-    HttpProxyClientSocketPool* pool =
-        session->GetSocketPoolForHTTPProxy(socket_pool_type, *proxy_host_port);
+    HttpProxyClientSocketPool* pool = session->GetSocketPoolForHTTPProxy(
+        socket_pool_type, proxy_info.proxy_server());
     if (num_preconnect_streams) {
       RequestSocketsForPool(pool, connection_group, http_proxy_params,
                             num_preconnect_streams, net_log, motivation);
