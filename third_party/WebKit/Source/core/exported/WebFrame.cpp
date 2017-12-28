@@ -287,7 +287,11 @@ WebFrame* WebFrame::TraverseNext() const {
 WebFrame* WebFrame::FromFrameOwnerElement(const WebNode& web_node) {
   Node* node = web_node;
 
-  if (!node->IsFrameOwnerElement())
+  // TODO(crbug.com/797828): When the node is null the caller may
+  // need to do extra checks. Like maybe update the layout and then
+  // call the hit-testing API. Either way it might be better to have
+  // a DCHECK for the node rather than a null check here.
+  if (!node || !node->IsFrameOwnerElement())
     return nullptr;
   return FromFrame(ToHTMLFrameOwnerElement(node)->ContentFrame());
 }
