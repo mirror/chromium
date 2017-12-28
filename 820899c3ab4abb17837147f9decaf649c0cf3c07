@@ -152,6 +152,30 @@
       "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3e567b_9b9ad8d2",
+        "filename": "ui/file_manager/externs/volume_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-28T12:11:41Z",
+      "side": 1,
+      "message": "Yes, that would be ideal, but a comment in this file explicitly asks not to edit the file manually.\n\nMaybe we should remove the comment and start updating this file manually?",
+      "parentUuid": "65f89e88_d6b4f0fe",
+      "range": {
+        "startLine": 83,
+        "startChar": 60,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "820899c3ab4abb17837147f9decaf649c0cf3c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
