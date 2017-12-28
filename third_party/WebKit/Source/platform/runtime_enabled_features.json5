@@ -748,6 +748,7 @@
     {
       name: "OverlayScrollbars",
       settable_from_internals: true,
+      status: "stable",
     },
     {
       name: "PageLifecycle",

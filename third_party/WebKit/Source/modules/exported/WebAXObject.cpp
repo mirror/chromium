@@ -165,7 +165,7 @@ bool WebAXObject::UpdateLayoutAndCheckValidity() {
     Document* document = private_->GetDocument();
     if (!document || !document->View())
       return false;
-    document->View()->UpdateLifecycleToCompositingCleanPlusScrolling();
+    document->View()->UpdateLifecycleToPrePaintClean();
   }
 
   // Doing a layout can cause this object to be invalid, so check again.

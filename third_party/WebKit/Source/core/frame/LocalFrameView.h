@@ -317,10 +317,12 @@ class CORE_EXPORT LocalFrameView final
   // detached frame and need special handling of the frame.
   void UpdateLifecyclePhasesForPrinting();
 
-  // Computes the style, layout and compositing lifecycle stages if needed.
+  // Computes the style, layout, compositing and pre-paint lifecycle stages
+  // if needed.
   // After calling this method, all frames will be in a lifecycle
-  // state >= CompositingClean, and scrolling has been updated (unless
-  // throttling is allowed).
+  // state >= PrePaintClean
+  void UpdateLifecycleToPrePaintClean();
+
   void UpdateLifecycleToCompositingCleanPlusScrolling();
 
   // Computes the style, layout, and compositing inputs lifecycle stages if
@@ -1355,6 +1357,8 @@ class CORE_EXPORT LocalFrameView final
   UniqueObjectId unique_id_;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
+  FRIEND_TEST_ALL_PREFIXES(PaintInvalidationTest,
+                           InvisibleTransformUnderFixedOnScroll);
 };
 
 inline void LocalFrameView::IncrementVisuallyNonEmptyCharacterCount(

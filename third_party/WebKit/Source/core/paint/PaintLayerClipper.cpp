@@ -448,7 +448,6 @@ void PaintLayerClipper::CalculateBackgroundClipRectWithGeometryMapper(
     const FragmentData& fragment_data,
     ClipRect& output) const {
   DCHECK(use_geometry_mapper_);
-
   bool is_clipping_root = &layer_ == context.root_layer;
   if (is_clipping_root && !context.ShouldRespectRootLayerClip()) {
     output.SetRect(FloatClipRect());
@@ -487,9 +486,19 @@ void PaintLayerClipper::CalculateBackgroundClipRectWithGeometryMapper(
     output.SetRect(clipped_rect_in_root_layer_space);
   }
 
-  // TODO(chrishtr): generalize to multiple fragments.
   output.MoveBy(
       -context.root_layer->GetLayoutObject().FirstFragment().PaintOffset());
+
+  if (layer_ != *context.root_layer &&
+      context.overlay_scrollbar_clip_behavior ==
+          kExcludeOverlayScrollbarSizeForHitTesting &&
+      context.root_layer->GetLayoutBox() &&
+      context.root_layer->GetLayoutBox()->ShouldClipOverflow()) {
+    output.Intersect(context.root_layer->GetLayoutBox()->OverflowClipRect(
+        LayoutPoint(), kExcludeOverlayScrollbarSizeForHitTesting));
+  }
+
+  // TODO(chrishtr): generalize to multiple fragments.
   output.Move(context.sub_pixel_accumulation);
 }
 
