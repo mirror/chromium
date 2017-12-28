@@ -70,18 +70,18 @@ SOCKSClientSocketPool* MockClientSocketPoolManager::GetSocketPoolForSOCKSProxy(
 
 HttpProxyClientSocketPool*
 MockClientSocketPoolManager::GetSocketPoolForHTTPProxy(
-    const HostPortPair& http_proxy) {
+    const ProxyServer& http_proxy_server) {
   HTTPProxySocketPoolMap::const_iterator it =
-      http_proxy_socket_pools_.find(http_proxy);
+      http_proxy_socket_pools_.find(http_proxy_server.host_port_pair());
   if (it != http_proxy_socket_pools_.end())
     return it->second.get();
   return nullptr;
 }
 
 SSLClientSocketPool* MockClientSocketPoolManager::GetSocketPoolForSSLWithProxy(
-    const HostPortPair& proxy_server) {
+    const ProxyServer& http_proxy_server) {
   SSLSocketPoolMap::const_iterator it =
-      ssl_socket_pools_for_proxies_.find(proxy_server);
+      ssl_socket_pools_for_proxies_.find(http_proxy_server.host_port_pair());
   if (it != ssl_socket_pools_for_proxies_.end())
     return it->second.get();
   return nullptr;

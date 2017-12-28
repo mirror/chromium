@@ -59,6 +59,7 @@ class NetLog;
 class NetworkQualityProvider;
 class NetworkThrottleManager;
 class ProxyDelegate;
+class ProxyServer;
 class ProxyService;
 class QuicClock;
 class QuicCryptoClientStreamFactory;
@@ -265,10 +266,10 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
       const HostPortPair& socks_proxy);
   HttpProxyClientSocketPool* GetSocketPoolForHTTPProxy(
       SocketPoolType pool_type,
-      const HostPortPair& http_proxy);
+      const ProxyServer& http_proxy_server);
   SSLClientSocketPool* GetSocketPoolForSSLWithProxy(
       SocketPoolType pool_type,
-      const HostPortPair& proxy_server);
+      const ProxyServer& http_proxy_server);
 
   CertVerifier* cert_verifier() { return cert_verifier_; }
   ProxyService* proxy_service() { return proxy_service_; }

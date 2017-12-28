@@ -301,15 +301,16 @@ SOCKSClientSocketPool* HttpNetworkSession::GetSocketPoolForSOCKSProxy(
 
 HttpProxyClientSocketPool* HttpNetworkSession::GetSocketPoolForHTTPProxy(
     SocketPoolType pool_type,
-    const HostPortPair& http_proxy) {
-  return GetSocketPoolManager(pool_type)->GetSocketPoolForHTTPProxy(http_proxy);
+    const ProxyServer& http_proxy_server) {
+  return GetSocketPoolManager(pool_type)->GetSocketPoolForHTTPProxy(
+      http_proxy_server);
 }
 
 SSLClientSocketPool* HttpNetworkSession::GetSocketPoolForSSLWithProxy(
     SocketPoolType pool_type,
-    const HostPortPair& proxy_server) {
+    const ProxyServer& http_proxy_server) {
   return GetSocketPoolManager(pool_type)->GetSocketPoolForSSLWithProxy(
-      proxy_server);
+      http_proxy_server);
 }
 
 std::unique_ptr<base::Value> HttpNetworkSession::SocketPoolInfoToValue() const {

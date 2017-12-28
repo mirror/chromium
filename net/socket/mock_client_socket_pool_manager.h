@@ -37,9 +37,9 @@ class MockClientSocketPoolManager : public ClientSocketPoolManager {
   SOCKSClientSocketPool* GetSocketPoolForSOCKSProxy(
       const HostPortPair& socks_proxy) override;
   HttpProxyClientSocketPool* GetSocketPoolForHTTPProxy(
-      const HostPortPair& http_proxy) override;
+      const ProxyServer& http_proxy_server) override;
   SSLClientSocketPool* GetSocketPoolForSSLWithProxy(
-      const HostPortPair& proxy_server) override;
+      const ProxyServer& http_proxy_server) override;
   std::unique_ptr<base::Value> SocketPoolInfoToValue() const override;
   void DumpMemoryStats(
       base::trace_event::ProcessMemoryDump* pmd,
