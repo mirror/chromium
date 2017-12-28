@@ -16,6 +16,24 @@
       "revId": "0066f73c3e3cba1cd9d57337465d900d34eedb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6704bccb_1e505ac1",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-28T12:36:11Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/845620",
+      "parentUuid": "6772df24_a63122a6",
+      "revId": "0066f73c3e3cba1cd9d57337465d900d34eedb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
