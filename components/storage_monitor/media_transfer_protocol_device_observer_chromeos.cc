@@ -222,8 +222,14 @@ void MediaTransferProtocolDeviceObserverChromeOS::StorageChanged(
 }
 
 void MediaTransferProtocolDeviceObserverChromeOS::EnumerateStorages() {
+  mtp_manager_->GetStorages(base::BindOnce(
+        &MediaTransferProtocolDeviceObserverChromeOS::OnDidEnumerateStorages,
+        base::Unretained(this)));
+}
+
+void MediaTransferProtocolDeviceObserverChromeOS::OnDidEnumerateStorages(
+    std::vector<std::string> storages) {
   typedef std::vector<std::string> StorageList;
-  StorageList storages = mtp_manager_->GetStorages();
   for (StorageList::const_iterator storage_iter = storages.begin();
        storage_iter != storages.end(); ++storage_iter) {
     StorageChanged(true, *storage_iter);
