@@ -11,6 +11,7 @@
 #include "base/values.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_proxy_client_socket_pool.h"
+#include "net/proxy/proxy_server.h"
 #include "net/socket/socks_client_socket_pool.h"
 #include "net/socket/ssl_client_socket_pool.h"
 #include "net/socket/transport_client_socket_pool.h"
@@ -246,7 +247,9 @@ SOCKSClientSocketPool* ClientSocketPoolManagerImpl::GetSocketPoolForSOCKSProxy(
 
 HttpProxyClientSocketPool*
 ClientSocketPoolManagerImpl::GetSocketPoolForHTTPProxy(
-    const HostPortPair& http_proxy) {
+    const ProxyServer& http_proxy_server) {
+  const HostPortPair& http_proxy = http_proxy_server.host_port_pair();
+
   HTTPProxySocketPoolMap::const_iterator it =
       http_proxy_socket_pools_.find(http_proxy);
   if (it != http_proxy_socket_pools_.end()) {
@@ -299,17 +302,21 @@ ClientSocketPoolManagerImpl::GetSocketPoolForHTTPProxy(
 
   std::pair<HTTPProxySocketPoolMap::iterator, bool> ret =
       http_proxy_socket_pools_.insert(std::make_pair(
-          http_proxy, std::make_unique<HttpProxyClientSocketPool>(
-                          sockets_per_proxy_server, sockets_per_group,
-                          tcp_http_ret.first->second.get(),
-                          ssl_https_ret.first->second.get(),
-                          network_quality_provider_, net_log_)));
+          http_proxy,
+          std::make_unique<HttpProxyClientSocketPool>(
+              sockets_per_proxy_server, sockets_per_group,
+              tcp_http_ret.first->second.get(),
+              ssl_https_ret.first->second.get(), network_quality_provider_,
+              http_proxy_server.is_https() ||
+                  http_proxy_server.is_quic() /* is_secure_connection */,
+              net_log_)));
 
   return ret.first->second.get();
 }
 
 SSLClientSocketPool* ClientSocketPoolManagerImpl::GetSocketPoolForSSLWithProxy(
-    const HostPortPair& proxy_server) {
+    const ProxyServer& http_proxy_server) {
+  const HostPortPair& proxy_server = http_proxy_server.host_port_pair();
   SSLSocketPoolMap::const_iterator it =
       ssl_socket_pools_for_proxies_.find(proxy_server);
   if (it != ssl_socket_pools_for_proxies_.end())
@@ -329,7 +336,7 @@ SSLClientSocketPool* ClientSocketPoolManagerImpl::GetSocketPoolForSSLWithProxy(
               ssl_session_cache_shard_, socket_factory_,
               nullptr, /* no tcp pool, we always go through a proxy */
               GetSocketPoolForSOCKSProxy(proxy_server),
-              GetSocketPoolForHTTPProxy(proxy_server),
+              GetSocketPoolForHTTPProxy(http_proxy_server),
               ssl_config_service_.get(), net_log_)));
 
   return ret.first->second.get();
