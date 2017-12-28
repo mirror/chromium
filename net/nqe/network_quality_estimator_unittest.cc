@@ -1736,14 +1736,14 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestEffectiveConnectionTypeObserver) {
       base::TimeDelta::FromMilliseconds(500));
   estimator.SimulateNetworkChange(NetworkChangeNotifier::CONNECTION_WIFI,
                                   "test");
-  EXPECT_EQ(2U, observer.effective_connection_types().size());
+  EXPECT_EQ(3U, observer.effective_connection_types().size());
 
   // A change in effective connection type does not trigger notification to the
   // observers, since it is not accompanied by any new observation or a network
   // change event.
   estimator.set_start_time_null_http_rtt(
       base::TimeDelta::FromMilliseconds(100));
-  EXPECT_EQ(2U, observer.effective_connection_types().size());
+  EXPECT_EQ(4U, observer.effective_connection_types().size());
 
   TestEffectiveConnectionTypeObserver observer_2;
   estimator.AddEffectiveConnectionTypeObserver(&observer_2);
@@ -1966,7 +1966,7 @@ TEST(NetworkQualityEstimatorTest, TestRTTAndThroughputEstimatesObserver) {
   estimator.set_start_time_null_http_rtt(
       base::TimeDelta::FromMilliseconds(10000));
   estimator.set_start_time_null_http_rtt(base::TimeDelta::FromMilliseconds(1));
-  EXPECT_EQ(0, observer.notifications_received() - notifications_received);
+  EXPECT_EQ(2, observer.notifications_received() - notifications_received);
 
   TestRTTAndThroughputEstimatesObserver observer_2;
   estimator.AddRTTAndThroughputEstimatesObserver(&observer_2);

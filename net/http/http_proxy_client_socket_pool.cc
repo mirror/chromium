@@ -201,13 +201,13 @@ HttpProxyClientSocketPool::HttpProxyConnectJobFactory::
     : transport_pool_(transport_pool),
       ssl_pool_(ssl_pool),
       network_quality_provider_(network_quality_provider),
-      transport_rtt_multiplier_(GetInt32Param("transport_rtt_multiplier", 5)),
+      http_rtt_multiplier_(GetInt32Param("http_rtt_multiplier", 5)),
       min_proxy_connection_timeout_(base::TimeDelta::FromSeconds(
           GetInt32Param("min_proxy_connection_timeout_seconds", 8))),
       max_proxy_connection_timeout_(base::TimeDelta::FromSeconds(
           GetInt32Param("max_proxy_connection_timeout_seconds", 60))),
       net_log_(net_log) {
-  DCHECK_LT(0, transport_rtt_multiplier_);
+  DCHECK_LT(0, http_rtt_multiplier_);
   DCHECK_LE(base::TimeDelta(), min_proxy_connection_timeout_);
   DCHECK_LE(base::TimeDelta(), max_proxy_connection_timeout_);
   DCHECK_LE(min_proxy_connection_timeout_, max_proxy_connection_timeout_);
@@ -229,12 +229,11 @@ HttpProxyClientSocketPool::HttpProxyConnectJobFactory::ConnectionTimeout()
     const {
   if (IsInNetAdaptiveProxyConnectionTimeoutFieldTrial() &&
       network_quality_provider_) {
-    base::Optional<base::TimeDelta> transport_rtt_estimate =
-        network_quality_provider_->GetTransportRTT();
-    if (transport_rtt_estimate) {
+    base::Optional<base::TimeDelta> http_rtt_estimate =
+        network_quality_provider_->GetHttpRTT();
+    if (http_rtt_estimate) {
       base::TimeDelta timeout = base::TimeDelta::FromMilliseconds(
-          transport_rtt_multiplier_ *
-          transport_rtt_estimate.value().InMilliseconds());
+          http_rtt_multiplier_ * http_rtt_estimate.value().InMilliseconds());
       // Ensure that connection timeout is between
       // |min_proxy_connection_timeout_| and |max_proxy_connection_timeout_|.
       if (timeout < min_proxy_connection_timeout_)
