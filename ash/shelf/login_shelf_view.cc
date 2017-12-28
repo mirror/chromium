@@ -46,6 +46,7 @@ namespace {
 
 LoginMetricsRecorder::LockScreenUserClickTarget GetUserClickTarget(
     int button_id) {
+  // TODO(agawronska): Add metrics for login screen only buttons.
   switch (button_id) {
     case LoginShelfView::kShutdown:
       return LoginMetricsRecorder::LockScreenUserClickTarget::kShutDownButton;
@@ -143,6 +144,9 @@ LoginShelfView::LoginShelfView(
   add_button(kSignOut, IDS_ASH_SHELF_SIGN_OUT_BUTTON, kShelfSignOutButtonIcon);
   add_button(kCloseNote, IDS_ASH_SHELF_UNLOCK_BUTTON, kShelfUnlockButtonIcon);
   add_button(kCancel, IDS_ASH_SHELF_CANCEL_BUTTON, kShelfCancelButtonIcon);
+  add_button(kBrowseAsGuest, IDS_ASH_BROWSE_AS_GUEST_BUTTON,
+             kShelfBrowseAsGuestButtonIcon);
+  add_button(kAddUser, IDS_ASH_ADD_USER_BUTTON, kShelfAddPersonButtonIcon);
 
   // Adds observers for states that affect the visiblity of different buttons.
   tray_action_observer_.Add(Shell::Get()->tray_action());
@@ -219,6 +223,12 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
     case kCancel:
       Shell::Get()->login_screen_controller()->CancelAddUser();
       break;
+    case kBrowseAsGuest:
+      NOTIMPLEMENTED();
+      break;
+    case kAddUser:
+      NOTIMPLEMENTED();
+      break;
   }
 }
 
@@ -273,6 +283,11 @@ void LoginShelfView::UpdateUi() {
                    is_lock_screen_note_in_foreground);
   GetViewByID(kCancel)->SetVisible(session_state ==
                                    SessionState::LOGIN_SECONDARY);
+  // TODO(agawronska): Implement full list of conditions for buttons visibility.
+  GetViewByID(kBrowseAsGuest)
+      ->SetVisible(session_state == SessionState::LOGIN_PRIMARY);
+  GetViewByID(kAddUser)->SetVisible(session_state ==
+                                    SessionState::LOGIN_PRIMARY);
   Layout();
 }
 
