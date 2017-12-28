@@ -47,7 +47,8 @@ def MergeDumps(filenames):
     [int] Ordered list of reached offsets. Each offset only appears
     once in the output, in the order of the first dump that contains it.
   """
-  dumps = [[int(x.strip()) for x in open(filename)] for filename in filenames]
+  sorted_filenames = _SortedFilenames(filenames)
+  dumps = [[int(x.strip()) for x in open(f)] for f in sorted_filenames]
   seen_offsets = set()
   result = []
   for dump in dumps:
@@ -152,26 +153,25 @@ def SymbolNameToPrimary(symbol_infos):
 
 
 def MatchSymbolsInRegularBuild(reached_symbol_infos,
-                               regular_native_lib_filename):
+                               regular_lib_symbols):
   """Match a list of symbols to canonical ones on the regular build.
 
   Args:
     reached_symbol_infos: ([symbol_extractor.SymbolInfo]) Reached symbol
       in the instrumented build.
-    regular_native_lib_filename: (str) regular build filename.
+    regular_lib_symbols: ([symbol_extractor.SymbolInfo]) Symbols from
+      regular library.
 
   Returns:
     [symbol_extractor.SymbolInfo] list of matched canonical symbols.
   """
-  regular_build_symbol_infos = symbol_extractor.SymbolInfosFromBinary(
-      regular_native_lib_filename)
-  regular_build_symbol_names = set(s.name for s in regular_build_symbol_infos)
+  regular_build_symbol_names = set(s.name for s in regular_lib_symbols)
   reached_symbol_names = set(s.name for s in reached_symbol_infos)
   logging.info('Reached symbols = %d', len(reached_symbol_names))
   matched_names = reached_symbol_names.intersection(regular_build_symbol_names)
   logging.info('Matched symbols = %d', len(matched_names))
 
-  symbol_name_to_primary = SymbolNameToPrimary(regular_build_symbol_infos)
+  symbol_name_to_primary = SymbolNameToPrimary(regular_lib_symbols)
   matched_primary_symbols = []
   for symbol in reached_symbol_names:
     if symbol in matched_names:
@@ -180,20 +180,21 @@ def MatchSymbolsInRegularBuild(reached_symbol_infos,
 
 
 def GetReachedSymbolsFromDumpsAndMaybeWriteOffsets(
-    dump_filenames, native_lib_filename, output_filename):
+    dump_filenames, native_offset_to_symbol_info, output_filename):
   """Merges a list of dumps, returns reached symbols and maybe writes offsets.
 
   Args:
     dump_filenames: ([str]) List of dump filenames.
-    native_lib_filename: (str) Path to the native library.
+    native_offset_to_symbol_info: (str) As returned by GetOffsetToSymbolArray on
+        the native library.
     output_filename: (str or None) Offset output path, if not None.
 
   Returns:
     [symbol_extractor.SymbolInfo] Reached symbols.
   """
   offsets = MergeDumps(dump_filenames)
-  offset_to_symbol_info = GetOffsetToSymbolArray(native_lib_filename)
-  reached_symbols = GetReachedSymbolsFromDump(offsets, offset_to_symbol_info)
+  reached_symbols = GetReachedSymbolsFromDump(
+      offsets, native_offset_to_symbol_info)
   if output_filename:
     offsets = [s.offset for s in reached_symbols]
     with open(output_filename, 'w') as f:
@@ -224,18 +225,19 @@ def main():
   args = parser.parse_args()
   logging.info('Merging dumps')
   dumps = args.dumps.split(',')
-  sorted_dumps = _SortedFilenames(dumps)
 
   instrumented_native_lib = os.path.join(args.instrumented_build_dir,
-                                         'lib.unstripped', 'libchrome.so')
+                                         'lib.unstripped', 'libmonochrome.so')
   regular_native_lib = os.path.join(args.build_dir,
-                                    'lib.unstripped', 'libchrome.so')
+                                    'lib.unstripped', 'libmonochrome.so')
 
   reached_symbols = GetReachedSymbolsFromDumpsAndMaybeWriteOffsets(
-      sorted_dumps, instrumented_native_lib, args.offsets_output)
+      dumps, GetOffsetToSymbolArray(instrumented_native_lib),
+      args.offsets_output)
   logging.info('Reached Symbols = %d', len(reached_symbols))
-  matched_in_regular_build = MatchSymbolsInRegularBuild(reached_symbols,
-                                                        regular_native_lib)
+  matched_in_regular_build = MatchSymbolsInRegularBuild(
+      reached_symbols,
+      symbol_extractor.SymbolInfosFromBinary(regular_native_lib))
   total_size = sum(s.size for s in matched_in_regular_build)
   logging.info('Total reached size = %d', total_size)
 
