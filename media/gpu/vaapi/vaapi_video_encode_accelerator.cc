@@ -70,7 +70,7 @@ const int kCPBSizeScale = 0;  // cpb_size_scale for SPS HRD parameters.
 
 const int kDefaultQP = 26;
 // All Intel codecs can do at least 4.1.
-const int kDefaultLevelIDC = 41;
+const int kDefaultLevelIDC = 10;
 const int kChromaFormatIDC = 1;  // 4:2:0
 
 // Arbitrarily chosen bitrate window size for rate control, in ms.
@@ -373,7 +373,7 @@ bool VaapiVideoEncodeAccelerator::SubmitFrameParameters() {
   SPS_TO_SP(num_units_in_tick);
   SPS_TO_SP(time_scale);
 #undef SPS_TO_SP
-
+  LOG(ERROR) << "level_idc: " << (int)seq_param.level_idc;
   if (!vaapi_wrapper_->SubmitBuffer(VAEncSequenceParameterBufferType,
                                     sizeof(seq_param), &seq_param))
     return false;

@@ -1234,7 +1234,9 @@ bool VaapiWrapper::DownloadFromCodedBuffer(VABufferID buffer_id,
       DCHECK(buffer_segment->buf);
 
       if (buffer_segment->size > target_size) {
-        LOG(ERROR) << "Insufficient output buffer size";
+        LOG(ERROR) << "Insufficient output buffer size: "
+                   << "requested=" << buffer_segment->size
+                   << ", allocated=" << target_size;
         break;
       }
 
