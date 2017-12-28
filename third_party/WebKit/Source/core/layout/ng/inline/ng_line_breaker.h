@@ -90,6 +90,9 @@ class CORE_EXPORT NGLineBreaker {
   void BreakLine(NGLineInfo*);
 
   void PrepareNextLine(const NGLayoutOpportunity&, NGLineInfo*);
+  NGInlineItemResult* AddItem(const NGInlineItem&,
+                              unsigned end_offset,
+                              NGInlineItemResults*);
 
   void UpdatePosition(const NGInlineItemResults&);
   void ComputeLineLocation(NGLineInfo*) const;
@@ -112,7 +115,7 @@ class CORE_EXPORT NGLineBreaker {
                  const NGInlineItem&,
                  LayoutUnit available_width,
                  NGLineInfo*);
-  static void AppendHyphen(const ComputedStyle&, NGLineInfo*);
+  void AppendHyphen(const ComputedStyle&, NGLineInfo*);
 
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
   LineBreakState HandleAtomicInline(const NGInlineItem&,
@@ -133,11 +136,12 @@ class CORE_EXPORT NGLineBreaker {
 
   void SetCurrentStyle(const ComputedStyle&);
   bool IsFirstBreakOpportunity(unsigned, const NGLineInfo&) const;
+  static LineBreakState ToLineBreakState(const NGInlineItemResult&);
   LineBreakState ComputeIsBreakableAfter(NGInlineItemResult*) const;
 
   void MoveToNextOf(const NGInlineItem&);
   void MoveToNextOf(const NGInlineItemResult&);
-  void SkipCollapsibleWhitespaces();
+  bool HandleTrailingSpaces(NGLineInfo*);
 
   bool IsFirstFormattedLine() const;
   void ComputeBaseDirection();

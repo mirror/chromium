@@ -12,6 +12,8 @@
 #include "platform/fonts/shaping/ShapeResult.h"
 #include "platform/wtf/Allocator.h"
 
+#include <unicode/ubidi.h>
+
 namespace blink {
 
 class NGConstraintSpace;
@@ -60,6 +62,8 @@ struct CORE_EXPORT NGInlineItemResult {
   // by default.
   int expansion = 0;
 
+  UBiDiLevel bidi_level = 0;
+
   // Has start/end edge for open/close tags.
   bool has_edge = false;
 
@@ -68,15 +72,15 @@ struct CORE_EXPORT NGInlineItemResult {
 
   // Inside of this is not breakable. Set only for text items.
   // Used only during line breaking.
-  bool no_break_opportunities_inside = false;
+  bool may_break_inside = false;
 
   // Lines must not break after this. Set for all items.
   // Used only during line breaking.
-  bool prohibit_break_after = false;
+  bool can_break_after = false;
 
   // Has spaces that hangs beyond the end margin.
   // Set only for text items.
-  bool has_hanging_spaces = false;
+  bool is_trailing_spaces = false;
 
   // End effects for text items.
   // The effects are included in |shape_result|, but not in text content.
@@ -157,6 +161,9 @@ class CORE_EXPORT NGLineInfo {
 
   // ShapeResult to append to the line end. Used by 'text-overflow: ellipsis'.
   scoped_refptr<ShapeResult>& LineEndShapeResult() {
+    return line_end_shape_result_;
+  }
+  const scoped_refptr<ShapeResult>& LineEndShapeResult() const {
     return line_end_shape_result_;
   }
   scoped_refptr<const ComputedStyle>& LineEndStyle() { return line_end_style_; }
