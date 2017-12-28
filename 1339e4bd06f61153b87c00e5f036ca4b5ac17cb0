@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "205bce26_351953f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T08:58:39Z",
+      "side": 1,
+      "message": "The failing test does this:\n  sender.replaceTrack(tracks[1]);\n  pc.removeTrack(sender);\n\nAccording to spec, removeTrack() is sync and replaceTrack() is async, so the expected order of operations is:\n  Queue an operation to replace the track.\n  Completely remove sender.\n  Attempt to replace track but fail because it has been removed\n    (or when transceivers are supported: because the transceiver\u0027s direction has changed).\n\nThis exposes a limitation to our implementation, where all webrtc operations are synchronous on the webrtc signaling thread. JavaScript executes on the renderer thread and can either blockingly or unblockingly invoke on the webrtc signaling thread, yielding synchronous or asynchronous behavior.\n\nInvoking a \"sync\" operation after an \"async\" operation reveals that they do happen synchronously in-order on the webrtc signaling thread. We cannot wait for removeTrack() to complete without processing all queued tasks, including the replaceTrack() operation, which will succeed because it has not processed the removeTrack() operation yet.\n\nI filed https://crbug.com/webrtc/8692, I don\u0027t think this should block this CL.",
+      "revId": "1339e4bd06f61153b87c00e5f036ca4b5ac17cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
