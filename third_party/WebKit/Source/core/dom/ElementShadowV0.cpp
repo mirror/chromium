@@ -27,8 +27,8 @@
 #include "core/dom/ElementShadowV0.h"
 
 #include "core/dom/DistributedNodes.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
+#include "core/dom/ShadowRoot.h"
 #include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLShadowElement.h"
 #include "core/probe/CoreProbes.h"
@@ -123,17 +123,17 @@ inline void DistributionPool::DetachNonDistributedNodes() {
   }
 }
 
-ElementShadowV0* ElementShadowV0::Create(ElementShadow& element_shadow) {
-  return new ElementShadowV0(element_shadow);
+ElementShadowV0* ElementShadowV0::Create(ShadowRoot& shadow_root) {
+  return new ElementShadowV0(shadow_root);
 }
 
-ElementShadowV0::ElementShadowV0(ElementShadow& element_shadow)
-    : element_shadow_(&element_shadow), needs_select_feature_set_(false) {}
+ElementShadowV0::ElementShadowV0(ShadowRoot& shadow_root)
+    : shadow_root_(&shadow_root), needs_select_feature_set_(false) {}
 
 ElementShadowV0::~ElementShadowV0() {}
 
 inline ShadowRoot& ElementShadowV0::GetShadowRoot() const {
-  return element_shadow_->GetShadowRoot();
+  return *shadow_root_;
 }
 
 const V0InsertionPoint* ElementShadowV0::FinalDestinationInsertionPointFor(
@@ -155,22 +155,18 @@ ElementShadowV0::DestinationInsertionPointsFor(const Node* key) const {
 }
 
 void ElementShadowV0::Distribute() {
-  HeapVector<Member<HTMLShadowElement>, 32> shadow_insertion_points;
-  DistributionPool pool(element_shadow_->Host());
-
-  ShadowRoot& root = GetShadowRoot();
+  DistributionPool pool(shadow_root_->host());
   HTMLShadowElement* shadow_insertion_point = nullptr;
-  for (const auto& point : root.DescendantInsertionPoints()) {
+
+  for (const auto& point : GetShadowRoot().DescendantInsertionPoints()) {
     if (!point->IsActive())
       continue;
     if (auto* shadow = ToHTMLShadowElementOrNull(*point)) {
       DCHECK(!shadow_insertion_point);
       shadow_insertion_point = shadow;
-      shadow_insertion_points.push_back(shadow_insertion_point);
     } else {
       pool.DistributeTo(point, this);
-      if (ElementShadow* shadow =
-              ShadowWhereNodeCanBeDistributedForV0(*point)) {
+      if (ShadowRoot* shadow = ShadowWhereNodeCanBeDistributedForV0(*point)) {
         if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
               shadow->IsV1()))
           shadow->SetNeedsDistributionRecalc();
@@ -178,16 +174,13 @@ void ElementShadowV0::Distribute() {
     }
   }
 
-  for (size_t i = shadow_insertion_points.size(); i > 0; --i) {
-    HTMLShadowElement* shadow_insertion_point = shadow_insertion_points[i - 1];
-    ShadowRoot* root = shadow_insertion_point->ContainingShadowRoot();
-    DCHECK(root);
+  if (shadow_insertion_point) {
     pool.DistributeTo(shadow_insertion_point, this);
-    if (ElementShadow* shadow =
+    if (ShadowRoot* shadow =
             ShadowWhereNodeCanBeDistributedForV0(*shadow_insertion_point))
       shadow->SetNeedsDistributionRecalc();
   }
-  probe::didPerformElementShadowDistribution(&element_shadow_->Host());
+  probe::didPerformElementShadowDistribution(&shadow_root_->host());
 }
 
 void ElementShadowV0::DidDistributeNode(const Node* node,
@@ -214,7 +207,7 @@ void ElementShadowV0::CollectSelectFeatureSetFrom(const ShadowRoot& root) {
     return;
 
   for (Element& element : ElementTraversal::DescendantsOf(root)) {
-    if (ElementShadow* shadow = element.Shadow()) {
+    if (ShadowRoot* shadow = element.GetShadowRoot()) {
       if (!shadow->IsV1())
         select_features_.Add(shadow->V0().EnsureSelectFeatureSet());
     }
@@ -224,13 +217,13 @@ void ElementShadowV0::CollectSelectFeatureSetFrom(const ShadowRoot& root) {
 }
 
 void ElementShadowV0::WillAffectSelector() {
-  for (ElementShadow* shadow = element_shadow_; shadow;
-       shadow = shadow->ContainingShadow()) {
+  for (ShadowRoot* shadow = shadow_root_; shadow;
+       shadow = shadow->ContainingShadowRoot()) {
     if (shadow->IsV1() || shadow->V0().NeedsSelectFeatureSet())
       break;
     shadow->V0().SetNeedsSelectFeatureSet();
   }
-  element_shadow_->SetNeedsDistributionRecalc();
+  shadow_root_->SetNeedsDistributionRecalc();
 }
 
 void ElementShadowV0::ClearDistribution() {
@@ -238,7 +231,7 @@ void ElementShadowV0::ClearDistribution() {
 }
 
 void ElementShadowV0::Trace(blink::Visitor* visitor) {
-  visitor->Trace(element_shadow_);
+  visitor->Trace(shadow_root_);
   visitor->Trace(node_to_insertion_points_);
 }
 

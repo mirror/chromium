@@ -46,7 +46,6 @@
 #include "core/dom/DOMStringList.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementShadowV0.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/FlatTreeTraversal.h"

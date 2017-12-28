@@ -57,7 +57,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ElementDataCache.h"
 #include "core/dom/ElementRareData.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementShadowV0.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
@@ -1418,7 +1417,7 @@ static inline AtomicString MakeIdForStyleResolution(const AtomicString& value,
 DISABLE_CFI_PERF
 void Element::AttributeChanged(const AttributeModificationParams& params) {
   const QualifiedName& name = params.name;
-  if (ElementShadow* parent_element_shadow =
+  if (ShadowRoot* parent_element_shadow =
           ShadowWhereNodeCanBeDistributedForV0(*this)) {
     if (ShouldInvalidateDistributionWhenAttributeChanged(
             parent_element_shadow, name, params.new_value))
@@ -1550,14 +1549,14 @@ void Element::ClassAttributeChanged(const AtomicString& new_class_string) {
 }
 
 bool Element::ShouldInvalidateDistributionWhenAttributeChanged(
-    ElementShadow* element_shadow,
+    ShadowRoot* shadow_root,
     const QualifiedName& name,
     const AtomicString& new_value) {
-  DCHECK(element_shadow);
-  if (element_shadow->IsV1())
+  DCHECK(shadow_root);
+  if (shadow_root->IsV1())
     return false;
   const SelectRuleFeatureSet& feature_set =
-      element_shadow->V0().EnsureSelectFeatureSet();
+      shadow_root->V0().EnsureSelectFeatureSet();
 
   if (name == HTMLNames::idAttr) {
     AtomicString old_id = GetElementData()->IdForStyleResolution();
@@ -1875,7 +1874,7 @@ void Element::AttachLayoutTree(AttachContext& context) {
   CreateAndAttachPseudoElementIfNeeded(kPseudoIdBefore, children_context);
 
   // When a shadow root exists, it does the work of attaching the children.
-  if (ElementShadow* shadow = Shadow())
+  if (ShadowRoot* shadow = GetShadowRoot())
     shadow->Attach(children_context);
 
   ContainerNode::AttachLayoutTree(children_context);
@@ -1927,7 +1926,7 @@ void Element::DetachLayoutTree(const AttachContext& context) {
       element_animations->ClearBaseComputedStyle();
     }
 
-    if (ElementShadow* shadow = data->Shadow())
+    if (ShadowRoot* shadow = data->GetShadowRoot())
       shadow->Detach(context);
   }
 
@@ -2252,7 +2251,7 @@ void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
       child_attacher = &whitespace_attacher;
     }
     RebuildPseudoElementLayoutTree(kPseudoIdAfter, *child_attacher);
-    if (Shadow())
+    if (GetShadowRoot())
       RebuildShadowRootLayoutTree(*child_attacher);
     else
       RebuildChildrenLayoutTrees(*child_attacher);
@@ -2269,7 +2268,8 @@ void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
 
 void Element::RebuildShadowRootLayoutTree(
     WhitespaceAttacher& whitespace_attacher) {
-  DCHECK(Shadow());
+  // TODO(kochi): Is this check valid?
+  DCHECK(GetShadowRoot());
   if (ShadowRoot* root = GetShadowRoot())
     root->RebuildLayoutTree(whitespace_attacher);
   RebuildNonDistributedChildren();
@@ -2314,12 +2314,8 @@ void Element::RemoveCallbackSelectors() {
   UpdateCallbackSelectors(GetComputedStyle(), nullptr);
 }
 
-ElementShadow* Element::Shadow() const {
-  return HasRareData() ? GetElementRareData()->Shadow() : nullptr;
-}
-
-ElementShadow& Element::EnsureShadow() {
-  return EnsureElementRareData().EnsureShadow();
+ShadowRoot* Element::GetShadowRoot() const {
+  return HasRareData() ? GetElementRareData()->GetShadowRoot() : nullptr;
 }
 
 void Element::PseudoStateChanged(CSSSelector::PseudoType pseudo) {
@@ -2487,12 +2483,12 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
+  return AddShadowRoot(ShadowRootType::V0);
 }
 
 ShadowRoot& Element::CreateUserAgentShadowRoot() {
   DCHECK(!GetShadowRoot());
-  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+  return AddShadowRoot(ShadowRootType::kUserAgent);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
@@ -2503,7 +2499,7 @@ ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
       << type;
 
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV1);
-  ShadowRoot& shadow_root = EnsureShadow().AddShadowRoot(*this, type);
+  ShadowRoot& shadow_root = AddShadowRoot(type);
   shadow_root.SetDelegatesFocus(delegates_focus);
   return shadow_root;
 }
@@ -2543,8 +2539,7 @@ ShadowRoot* Element::UserAgentShadowRoot() const {
 ShadowRoot& Element::EnsureUserAgentShadowRoot() {
   if (ShadowRoot* shadow_root = UserAgentShadowRoot())
     return *shadow_root;
-  ShadowRoot& shadow_root =
-      EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
+  ShadowRoot& shadow_root = AddShadowRoot(ShadowRootType::kUserAgent);
   DidAddUserAgentShadowRoot(shadow_root);
   return shadow_root;
 }
@@ -2587,8 +2582,8 @@ void Element::ChildrenChanged(const ChildrenChange& change) {
         change.sibling_after_change);
 
   // TODO(hayato): Confirm that we can skip this if a shadow tree is v1.
-  if (ElementShadow* shadow = Shadow())
-    shadow->SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
+  if (ShadowRoot* root = GetShadowRoot())
+    root->SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
 }
 
 void Element::FinishParsingChildren() {
@@ -3213,6 +3208,35 @@ Node* Element::InsertAdjacent(const String& where,
                         "') is not one of 'beforeBegin', 'afterBegin', "
                         "'beforeEnd', or 'afterEnd'.");
   return nullptr;
+}
+
+// TODO(kochi): move somewhere more appropriate.
+ShadowRoot& Element::AddShadowRoot(ShadowRootType type) {
+  EventDispatchForbiddenScope assert_no_event_dispatch;
+  ScriptForbiddenScope forbid_script;
+
+  DCHECK(!GetShadowRoot());
+
+  ShadowRoot* shadow_root = ShadowRoot::Create(GetDocument(), type);
+  EnsureElementRareData().SetShadowRoot(shadow_root);
+
+  shadow_root->SetParentOrShadowHostNode(this);
+  shadow_root->SetParentTreeScope(GetTreeScope());
+  if (type == ShadowRootType::V0) {
+    shadow_root->SetNeedsDistributionRecalc();
+  } else {
+    for (Node& child : NodeTraversal::ChildrenOf(*this))
+      child.LazyReattachIfAttached();
+  }
+
+  shadow_root->InsertedInto(this);
+  SetChildNeedsStyleRecalc();
+  SetNeedsStyleRecalc(kSubtreeStyleChange, StyleChangeReasonForTracing::Create(
+                                               StyleChangeReason::kShadow));
+
+  probe::didPushShadowRoot(this, shadow_root);
+
+  return *shadow_root;
 }
 
 ElementIntersectionObserverData* Element::IntersectionObserverData() const {

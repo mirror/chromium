@@ -44,7 +44,6 @@
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/DocumentType.h"
 #include "core/dom/Element.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/Node.h"
 #include "core/dom/PseudoElement.h"
 #include "core/dom/ShadowRoot.h"
