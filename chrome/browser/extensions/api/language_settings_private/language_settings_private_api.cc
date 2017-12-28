@@ -336,6 +336,8 @@ LanguageSettingsPrivateMoveLanguageFunction::Run() {
 
   translate::TranslatePrefs::RearrangeSpecifier where =
       translate::TranslatePrefs::kNone;
+  // On Desktop we can only move languages by one position.
+  const int offset = 1;
   switch (move_type) {
     case language_settings_private::MOVE_TYPE_TOP:
       where = translate::TranslatePrefs::kTop;
@@ -354,7 +356,7 @@ LanguageSettingsPrivateMoveLanguageFunction::Run() {
       NOTREACHED();
   }
 
-  translate_prefs->RearrangeLanguage(language_code, where,
+  translate_prefs->RearrangeLanguage(language_code, where, offset,
                                      supported_language_codes);
 
   return RespondNow(NoArguments());
