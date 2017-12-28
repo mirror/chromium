@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/process/process.h"
 #include "base/time/time.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_recorder.h"
@@ -172,7 +173,9 @@ bool PdfMetafileSkia::FinishDocument() {
       break;
     case SkiaDocumentType::MSKP:
 #if defined(EXPERIMENTAL_SKIA)
-      SkSerialProcs procs;
+      SerializationContext ctx(base::Process::Current().Pid(),
+                               data_->subframe_content_ids);
+      SkSerialProcs procs = SerializationProcs(&ctx);
       doc = SkMakeMultiPictureDocument(&stream, &procs);
 #else
       doc = SkMakeMultiPictureDocument(&stream);
@@ -208,13 +211,15 @@ bool PdfMetafileSkia::FinishFrameContent() {
   sk_sp<SkPicture> pic = ToSkPicture(data_->pages_[0].content_,
                                      SkRect::MakeSize(data_->pages_[0].size_));
 #if defined(EXPERIMENTAL_SKIA)
-  SkSerialProcs procs;
+  SerializationContext ctx(base::Process::Current().Pid(),
+                           data_->subframe_content_ids);
+  SkSerialProcs procs = SerializationProcs(&ctx);
   pic->serialize(&stream, &procs);
 #else
   pic->serialize(&stream);
 #endif
+
   data_->pdf_data_ = stream.detachAsStream();
-  data_->subframe_content_ids.clear();
   return true;
 }
 
@@ -311,7 +316,7 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   return true;
 }
 
-std::vector<uint64_t> PdfMetafileSkia::GetSubframeContentIDs() const {
+std::vector<uint64_t>& PdfMetafileSkia::GetSubframeContentIDs() const {
   return data_->subframe_content_ids;
 }
 
@@ -327,6 +332,7 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     return metafile;
 
   metafile->data_->pages_.push_back(data_->pages_.back());
+  metafile->data_->subframe_content_ids = data_->subframe_content_ids;
 
   if (!metafile->FinishDocument())  // Generate PDF.
     metafile.reset();

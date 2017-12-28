@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -66,7 +67,7 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
   // subframe printing. It will just serialize the content into SkPicture
   // format and store it as final data.
   bool FinishFrameContent();
-  std::vector<uint64_t> GetSubframeContentIDs() const;
+  std::vector<uint64_t>& GetSubframeContentIDs() const;
 
   // Return a new metafile containing just the current page in draft mode.
   std::unique_ptr<PdfMetafileSkia> GetMetafileForCurrentPage(
