@@ -141,6 +141,24 @@
       "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51bbe7b4_487c090c",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-28T19:49:16Z",
+      "side": 1,
+      "message": "The IsNull on WebhitTestResult object does not apply here since as far as I see that is not what is null. If that was the case the crash would have happened earlier in GetWidgetRoutingIdAtPoint.\nhttps://cs.chromium.org/chromium/src/content/renderer/input/render_widget_input_handler.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d166\n\nBut your suggestion made me take another look at WebNode and I realized there is indeed an IsNull function on that as well which I missed before. I can use that in the content/renderer.\nHowever when result_node.IsNull() is true I\u0027m not sure how I can get the routing id there. Because the WebNode is null there is no document associated and GetDocument() function here \nhttps://cs.chromium.org/chromium/src/content/renderer/input/render_widget_input_handler.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d176\n\nand then that would crash. Do you have any suggestions on what to return when result_node.IsNull() is true in GetWidgetRoutingIdAtPoint?",
+      "parentUuid": "eaed41a2_7102f132",
+      "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
