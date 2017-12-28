@@ -54,6 +54,13 @@ unpacker.app = {
   DEFAULT_MODULE_TYPE: 'application/x-pnacl',
 
   /**
+   * The temporary work directory to write in-progress zip file in the
+   * extension's local filesystem.
+   * @const {string}
+   */
+  LOCAL_WORK_DIRECTORY_PATH: '/tmp',
+
+  /**
    * Multiple volumes can be opened at the same time.
    * @type {!Object<!unpacker.types.FileSystemId, !unpacker.Volume>}
    */
@@ -980,5 +987,38 @@ unpacker.app = {
    */
   onSuspend: function() {
     unpacker.app.saveState_(Object.keys(unpacker.app.volumes));
+  },
+
+  cleanWorkDirectory: function() {
+    window.webkitRequestFileSystem(window.TEMPORARY, 0, (fs) => {
+      fs.root.getDirectory(
+          unpacker.app.LOCAL_WORK_DIRECTORY_PATH, {create: true},
+          (directoryEntry) => {
+            const directoryReader = directoryEntry.createReader();
+            function scanAndRemoveEntries() {
+              directoryReader.readEntries(
+                  function(results) {
+                    if (results.length) {
+                      results.forEach(function(entry) {
+                        console.warn(
+                            'Found a temporary file. ',
+                            'Perhaps the extension had exited abnormally. ',
+                            entry);
+                        entry.remove(
+                            function() {},
+                            (error) => console.error(
+                                'Failed to remove the file: ', error));
+                      });
+                      scanAndRemoveEntries();
+                    }
+                  },
+                  (error) => console.error(
+                      'Failed to read entries in the work directory: ', error));
+            }
+            scanAndRemoveEntries();
+          },
+          (error) =>
+              console.error('Failed to read the work directory: ', error));
+    }, (domException) => console.error(domException));
   }
 };

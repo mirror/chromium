@@ -720,6 +720,9 @@
   <message name="IDS_FILE_BROWSER_ZIP_FILESYSTEM_ERROR" desc="File Manager error message.">
     Zipping failed. <ph name="ERROR_MESSAGE">$1<ex>An error occurred (code: ABORT)</ex></ph>
   </message>
+  <message name="IDS_FILE_BROWSER_ZIP_INSUFFICIENT_TEMPORARY_STORAGE_ERROR" desc="File Manager error message.">
+    Zipping failed. Archive file is too large. Try zipping fewer files.
+  </message>
   <message name="IDS_FILE_BROWSER_ZIP_UNEXPECTED_ERROR" desc="File Manager error message.">
     Zipping failed, unexpected error: $1
   </message>
