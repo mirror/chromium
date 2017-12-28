@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6402f8_daeaf531",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Nit: How about GetModifierKeyCode()?\nAlso please document.",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1427d0f9_f6196ad1",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "ShouldPaintKeyAsIcon()?",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcd6e40_5c135c24",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "If this list will be too long, maybe we can omit these cases, and just use default:",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88c6894_c42e83cf",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "It seems that if we were to cache anything, we actually should cache |shortcuts_info| not |action_to_accelerator_data_|.",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bc2604_08ef13c7",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "even if",
+      "range": {
+        "startLine": 126,
+        "startChar": 70,
+        "endLine": 126,
+        "endChar": 77
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb2e514_3ef6824b",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "info.replacement_types.emplace_back(\n    ShouldShowInIcon(accel_data.keycode)\n        ? keyboard_shortcut_viewer::KSVReplacementType::kIcon\n        : keyboard_shortcut_viewer::KSVReplacementType::kText);",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 9
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a041be3f_a60b65b2",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "How about:\n\nReplacement information were statically provided. This happens for the cases when ...",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720025ea_d17f873a",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Move this to header.",
+      "range": {
+        "startLine": 20,
+        "startChar": 45,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb363758_476aab35",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Two issues here:\n- What about actions with multiple accelerator data, here you simply overwrite.\n   - In the other test you are using a vector as the value which seems correct.\n\n- If this is something needed for both tests, then please create a text fixture and do this in the Setup() step or constructor.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acd6d84_65a7823c",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "modifiers [plural]",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ad4b26_c65a0bcd",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Can you please use range-for?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1baab286_16faad7e",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "ASSERT_TRUE()?\n\nThere\u0027s no point in continuing the test if this fails.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3247db1_02b143b4",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Range-for.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22df33d_668e2220",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "ASSERT_TRUE()?",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb05154_d791f327",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "Two things:\n- Functions() before fields_.\n- Why did you make this a member function instead of file-local in cc? Does it need to access any member variable?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a406d69_81c472f9",
+        "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "why do we need this define? Where is it used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9b73db_b3a1863e",
+        "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-28T20:07:55Z",
+      "side": 1,
+      "message": "I thin ash needs to depend on this target as well, see the failures in the trybots.\n\nI recommend running gn gen --check before uploading the CL to make sure this issue is resolved.",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
