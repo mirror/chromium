@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8d9676_3a5aabd8",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-28T09:49:03Z",
+      "side": 1,
+      "message": "nit: indentation is weird, list items are at the same indentation level as the parameter of the first MockFile, making it hard to read, I would suggest re-indenting to the following (same for other cases below)\n\n  mock_input.files \u003d [\n      PRESUBMIT_test_mocks.MockFile(\u0027ios/path/foo.mm\u0027, text),\n      PRESUBMIT_test_mocks.MockFile(\u0027ios/path/foo.m\u0027, text),\n  ]",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "7089189b7390acaf02a5d5882ddd74bb45e84874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aab486_e2162c0a",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-28T09:49:03Z",
+      "side": 1,
+      "message": "Why \"text.split(\"\\n\")\" here and not just \"text\"?",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "7089189b7390acaf02a5d5882ddd74bb45e84874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874e6095_5b4bfdc4",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-28T09:49:03Z",
+      "side": 1,
+      "message": "nit: remove extra space",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "7089189b7390acaf02a5d5882ddd74bb45e84874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
