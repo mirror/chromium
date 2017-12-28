@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d59877d8_96cdf3e5",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-28T18:18:41Z",
+      "side": 1,
+      "message": "If both functions are always called consecutively, they could be merged into one function with 2 arguments.",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 491,
+        "endChar": 78
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6558cc42_12355efe",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-28T18:18:41Z",
+      "side": 1,
+      "message": "This returns milliseconds https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java#140 and base::TimeTicks::FromInternalValue() expects microseconds https://cs.chromium.org/chromium/src/base/time/time.h?l\u003d425\u0026rcl\u003d4f7cfdfbeb75981159796514c1105d2a03605a5e .\n\nAlso, are you sure that both base::TimeTicks::Now() and Java_UmaUtils_getMainEntryPointTicks() use the same source of time? They must if you want to subtract this value from the main MessageLoop start time (obtained from base::TimeTicks::Now()) here https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/components/startup_metric_utils/browser/startup_metric_utils.cc#613",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae58944_bc21c22c",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-28T18:18:41Z",
+      "side": 1,
+      "message": "Can just be \nbase::TimeTicks g_browser_main_entry_point_ticks_unadjusted;\n\nSince base::TimeTicks now has a constexpr default constructor, this won\u0027t generate a static initializer.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 76
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059537aa_829fc9e6",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-28T18:18:41Z",
+      "side": 1,
+      "message": "Since this variable will stay and |g_browser_main_entry_point_ticks| will be removed in a future CL, I would change the names:\n\ng_browser_main_entry_point_ticks_unadjusted -\u003e g_browser_main_entry_point_ticks\ng_browser_main_entry_point_ticks -\u003e g_browser_main_entry_point_ticks_computed_from_time",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153a6518_9061845d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84147,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-28T18:18:41Z",
+      "side": 1,
+      "message": "which doesn\u0027t involve a conversion from Time to TimeTicks.",
+      "range": {
+        "startLine": 84147,
+        "startChar": 53,
+        "endLine": 84147,
+        "endChar": 54
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
