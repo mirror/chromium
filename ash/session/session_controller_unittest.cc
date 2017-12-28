@@ -416,6 +416,16 @@ TEST_F(SessionControllerTest, IsUserChild) {
   EXPECT_TRUE(controller()->IsUserSupervised());
 }
 
+TEST_F(SessionControllerTest, IsUserKiosk) {
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_KIOSK_APP;
+  controller()->UpdateUserSession(std::move(session));
+
+  EXPECT_TRUE(controller()->IsUserKiosk());
+}
+
 using SessionControllerPrefsTest = NoSessionAshTestBase;
 
 // Verifies that ShellObserver is notified for PrefService changes.
@@ -542,6 +552,37 @@ TEST_F(SessionControllerTest, IsUserFirstLogin) {
   session->user_info->is_new_profile = true;
   controller()->UpdateUserSession(std::move(session));
   EXPECT_TRUE(controller()->IsUserFirstLogin());
+}
+
+TEST_F(SessionControllerTest, IsActiveUser) {
+  controller()->ClearUserSessionsForTest();
+  AccountId user1 = AccountId::FromUserEmail("user1@test.com");
+  AccountId user2 = AccountId::FromUserEmail("user2@test.com");
+
+  // Adds the first user and verifies the user is active.
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  session->user_info->account_id = user1;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->IsUserActive(user1));
+
+  // Adds the second user and verifies the user is not active.
+  session = mojom::UserSession::New();
+  session->session_id = 2u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  session->user_info->account_id = user2;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_FALSE(controller()->IsUserActive(user2));
+  EXPECT_TRUE(controller()->IsUserActive(user1));
+
+  // Simulates user switching by changing the order of session_ids. Verifies the
+  // second user becomes active.
+  controller()->SetUserSessionOrder({2u, 1u});
+  EXPECT_TRUE(controller()->IsUserActive(user2));
+  EXPECT_FALSE(controller()->IsUserActive(user1));
 }
 
 class CanSwitchUserTest : public AshTestBase {
