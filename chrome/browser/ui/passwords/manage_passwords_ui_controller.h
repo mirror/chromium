@@ -128,6 +128,8 @@ class ManagePasswordsUIController
   void NavigateToPasswordManagerSettingsPage() override;
   void NavigateToChromeSignIn() override;
   void OnDialogHidden() override;
+  bool AuthenticateUser() override;
+  bool ArePasswordsRevealedWhenBubbleIsOpened() const override;
 
  protected:
   explicit ManagePasswordsUIController(
@@ -155,6 +157,9 @@ class ManagePasswordsUIController
 
   // Check if |web_contents()| is attached to some Browser. Mocked in tests.
   virtual bool HasBrowserWindow() const;
+
+  // Shows an authentication dialog and returns true if auth is successful.
+  virtual bool ShowAuthenticationDialog();
 
   // Overwrites the client for |passwords_data_|.
   void set_client(password_manager::PasswordManagerClient* client) {
@@ -192,6 +197,14 @@ class ManagePasswordsUIController
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
 
+  // Requests authentication and reopens the bubble if the controller still
+  // exists and is in a pending state.
+  void RequestAuthenticationAndReopensBubble();
+
+  // Re-opens the bubble. The password in the reopened bubble will be revealed
+  // if the authentication was successful.
+  void ReopensBubbleAfterAuth(bool auth_is_successful);
+
   // Timeout in seconds for the manual fallback for saving.
   static int save_fallback_timeout_in_seconds_;
 
@@ -208,6 +221,9 @@ class ManagePasswordsUIController
   // popup will be shown or the user saved/updated the password with the
   // fallback).
   base::OneShotTimer save_fallback_timer_;
+
+  // True iff bubble should pop up with revealed password value.
+  bool are_passwords_revealed_when_next_bubble_is_opened_;
 
   // The bubbles of different types can pop up unpredictably superseding each
   // other. However, closing the bubble may affect the state of
