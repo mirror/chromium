@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e4aefc8d_a56de271",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-12-28T15:26:00Z",
+      "side": 1,
+      "message": "Do you mean that this should be a static method in TreeScopeStyleSheetCollection that is called with additional parameters from both places?",
+      "parentUuid": "e037b19c_aafa9a67",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dd6bfc2_894704d5",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 1
@@ -100,6 +118,24 @@
       "side": 1,
       "message": "Why isnt this in ScopedStyleResolver in that case?",
       "parentUuid": "120c9154_010a913f",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa438c15_3deea631",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-12-28T15:26:00Z",
+      "side": 1,
+      "message": "This is not exactly the same code: in ScopedStyleResolver::AppendActiveStyleSheets we collect the media query results for the newly appended author sheets in a separate vector when new sheets are appended, whereas here we collect the media query results for each user sheet, directly from the sheet, each time this method is called. This is because there\u0027s no append-only optimization for user sheets.\n\nHaving said this, we might be able to share some code, but I wonder if it\u0027s worth it.",
+      "parentUuid": "1640d9ed_46049eb6",
       "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
