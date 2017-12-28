@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2810152_d692e252",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:51:17Z",
+      "side": 1,
+      "message": "This looks fishy: Now there are many redundant refs() calls, and each performs a binary search!",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 56
+      },
+      "revId": "d5dfdfd549e6f6696a710932a8ebab325ebf4745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fca744e_71ffa433",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 32
