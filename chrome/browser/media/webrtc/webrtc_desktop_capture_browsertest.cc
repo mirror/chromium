@@ -66,7 +66,7 @@ class WebRtcDesktopCaptureBrowserTest : public WebRtcTestBase {
 
 // TODO(crbug.com/796889): Enable on Mac when thread check crash is fixed.
 // TODO(sprang): Figure out why test times out on Win 10 and ChromeOS.
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#if (defined(OS_LINUX) && !defined(OS_CHROMEOS)) || defined(OS_WIN)
 #define MAYBE_RunsScreenshareFromOneTabToAnother \
   RunsScreenshareFromOneTabToAnother
 #else
