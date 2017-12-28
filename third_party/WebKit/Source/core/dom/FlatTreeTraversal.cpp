@@ -33,22 +33,16 @@
 
 namespace blink {
 
-static inline ElementShadow* ShadowFor(const Node& node) {
-  return node.IsElementNode() ? ToElement(node).Shadow() : nullptr;
-}
-
 static inline bool CanBeDistributedToV0InsertionPoint(const Node& node) {
   return node.IsInV0ShadowTree() || node.IsChildOfV0ShadowHost();
 }
 
 Node* FlatTreeTraversal::TraverseChild(const Node& node,
                                        TraversalDirection direction) {
-  ElementShadow* shadow = ShadowFor(node);
-  if (shadow) {
-    ShadowRoot& shadow_root = shadow->GetShadowRoot();
+  if (ShadowRoot* shadow_root = node.GetShadowRoot()) {
     return ResolveDistributionStartingAt(direction == kTraversalDirectionForward
-                                             ? shadow_root.firstChild()
-                                             : shadow_root.lastChild(),
+                                             ? shadow_root->firstChild()
+                                             : shadow_root->lastChild(),
                                          direction);
   }
   return ResolveDistributionStartingAt(direction == kTraversalDirectionForward

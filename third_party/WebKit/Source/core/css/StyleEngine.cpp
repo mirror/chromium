@@ -1017,9 +1017,8 @@ void StyleEngine::ScheduleInvalidationsForRuleSets(
       InvalidateSlottedElements(ToHTMLSlotElement(*element));
 
     if (invalidation_scope == kInvalidateAllScopes) {
-      if (ElementShadow* shadow = element->Shadow()) {
-        ShadowRoot& shadow_root = shadow->GetShadowRoot();
-        ScheduleInvalidationsForRuleSets(shadow_root, rule_sets,
+      if (ShadowRoot* root = element->GetShadowRoot()) {
+        ScheduleInvalidationsForRuleSets(*root, rule_sets,
                                          kInvalidateAllScopes);
       }
     }
