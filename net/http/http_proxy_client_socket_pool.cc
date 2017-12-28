@@ -197,17 +197,22 @@ HttpProxyClientSocketPool::HttpProxyConnectJobFactory::
     HttpProxyConnectJobFactory(TransportClientSocketPool* transport_pool,
                                SSLClientSocketPool* ssl_pool,
                                NetworkQualityProvider* network_quality_provider,
+                               bool is_secure_connection,
                                NetLog* net_log)
     : transport_pool_(transport_pool),
       ssl_pool_(ssl_pool),
       network_quality_provider_(network_quality_provider),
-      transport_rtt_multiplier_(GetInt32Param("transport_rtt_multiplier", 5)),
+      is_secure_connection_(is_secure_connection),
+      ssl_http_rtt_multiplier_(GetInt32Param("ssl_http_rtt_multiplier", 5)),
+      non_ssl_http_rtt_multiplier_(
+          GetInt32Param("non_ssl_http_rtt_multiplier", 5)),
       min_proxy_connection_timeout_(base::TimeDelta::FromSeconds(
           GetInt32Param("min_proxy_connection_timeout_seconds", 8))),
       max_proxy_connection_timeout_(base::TimeDelta::FromSeconds(
           GetInt32Param("max_proxy_connection_timeout_seconds", 60))),
       net_log_(net_log) {
-  DCHECK_LT(0, transport_rtt_multiplier_);
+  DCHECK_LT(0, ssl_http_rtt_multiplier_);
+  DCHECK_LT(0, non_ssl_http_rtt_multiplier_);
   DCHECK_LE(base::TimeDelta(), min_proxy_connection_timeout_);
   DCHECK_LE(base::TimeDelta(), max_proxy_connection_timeout_);
   DCHECK_LE(min_proxy_connection_timeout_, max_proxy_connection_timeout_);
@@ -229,12 +234,13 @@ HttpProxyClientSocketPool::HttpProxyConnectJobFactory::ConnectionTimeout()
     const {
   if (IsInNetAdaptiveProxyConnectionTimeoutFieldTrial() &&
       network_quality_provider_) {
-    base::Optional<base::TimeDelta> transport_rtt_estimate =
-        network_quality_provider_->GetTransportRTT();
-    if (transport_rtt_estimate) {
+    base::Optional<base::TimeDelta> http_rtt_estimate =
+        network_quality_provider_->GetHttpRTT();
+    if (http_rtt_estimate) {
+      int32_t multiplier = is_secure_connection_ ? ssl_http_rtt_multiplier_
+                                                 : non_ssl_http_rtt_multiplier_;
       base::TimeDelta timeout = base::TimeDelta::FromMilliseconds(
-          transport_rtt_multiplier_ *
-          transport_rtt_estimate.value().InMilliseconds());
+          multiplier * http_rtt_estimate.value().InMilliseconds());
       // Ensure that connection timeout is between
       // |min_proxy_connection_timeout_| and |max_proxy_connection_timeout_|.
       if (timeout < min_proxy_connection_timeout_)
@@ -266,6 +272,7 @@ HttpProxyClientSocketPool::HttpProxyClientSocketPool(
     TransportClientSocketPool* transport_pool,
     SSLClientSocketPool* ssl_pool,
     NetworkQualityProvider* network_quality_provider,
+    bool is_secure_connection,
     NetLog* net_log)
     : transport_pool_(transport_pool),
       ssl_pool_(ssl_pool),
@@ -277,6 +284,7 @@ HttpProxyClientSocketPool::HttpProxyClientSocketPool(
             new HttpProxyConnectJobFactory(transport_pool,
                                            ssl_pool,
                                            network_quality_provider,
+                                           is_secure_connection,
                                            net_log)) {
   // We should always have a |transport_pool_| except in unit tests.
   if (transport_pool_)

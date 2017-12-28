@@ -130,6 +130,7 @@ class SSLClientSocketPoolTest : public testing::Test {
                                 &transport_socket_pool_,
                                 NULL,
                                 NULL,
+                                false /* is_secure_connection */,
                                 NULL) {
     scoped_refptr<SSLConfigService> ssl_config_service(
         new SSLConfigServiceDefaults);
