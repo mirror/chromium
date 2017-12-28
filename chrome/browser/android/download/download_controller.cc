@@ -96,8 +96,9 @@ void CreateContextMenuDownload(
       content::DownloadUrlParameters::CreateForWebContentsMainFrame(
           web_contents, url, NO_TRAFFIC_ANNOTATION_YET));
   content::Referrer referrer = content::Referrer::SanitizeForRequest(
-      url,
-      content::Referrer(referring_url.GetAsReferrer(), params.referrer_policy));
+      url, content::Referrer(referring_url.GetAsReferrer(),
+                             content::Referrer::ReferrerPolicyForUrlRequest(
+                                 params.referrer_policy)));
   dl_params->set_referrer(referrer);
   if (is_link)
     dl_params->set_referrer_encoding(params.frame_charset);

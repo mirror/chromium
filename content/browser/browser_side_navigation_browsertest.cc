@@ -286,7 +286,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, SanitizeReferrer) {
   const GURL kInsecureUrl(embedded_test_server()->GetURL("/title1.html"));
   const Referrer kSecureReferrer(
       GURL("https://secure-url.com"),
-      blink::kWebReferrerPolicyNoReferrerWhenDowngrade);
+      net::URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE);
   ShellNetworkDelegate::SetCancelURLRequestWithPolicyViolatingReferrerHeader(
       true);
 

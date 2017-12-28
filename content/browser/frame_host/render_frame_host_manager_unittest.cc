@@ -939,11 +939,11 @@ TEST_F(RenderFrameHostManagerTest, Navigate) {
 
   // 2) Navigate to next site. -------------------------
   const GURL kUrl2("http://www.google.com/foo");
-  NavigationEntryImpl entry2(nullptr /* instance */, kUrl2,
-                             Referrer(kUrl1, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             true /* is_renderer_init */);
+  NavigationEntryImpl entry2(
+      nullptr /* instance */, kUrl2,
+      Referrer(kUrl1, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      true /* is_renderer_init */);
   host = NavigateToEntry(manager, entry2);
 
   // The RenderFrameHost created in Init will be reused.
@@ -961,11 +961,11 @@ TEST_F(RenderFrameHostManagerTest, Navigate) {
 
   // 3) Cross-site navigate to next site. --------------
   const GURL kUrl3("http://webkit.org/");
-  NavigationEntryImpl entry3(nullptr /* instance */, kUrl3,
-                             Referrer(kUrl2, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entry3(
+      nullptr /* instance */, kUrl3,
+      Referrer(kUrl2, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   host = NavigateToEntry(manager, entry3);
 
   // A new RenderFrameHost should be created.
@@ -1535,11 +1535,11 @@ TEST_F(RenderFrameHostManagerTest, NoSwapOnGuestNavigations) {
   // 2) Navigate to a different domain. -------------------------
   // Guests stay in the same process on navigation.
   const GURL kUrl2("http://www.chromium.org");
-  NavigationEntryImpl entry2(nullptr /* instance */, kUrl2,
-                             Referrer(kUrl1, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             true /* is_renderer_init */);
+  NavigationEntryImpl entry2(
+      nullptr /* instance */, kUrl2,
+      Referrer(kUrl1, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      true /* is_renderer_init */);
   host = NavigateToEntry(manager, entry2);
 
   // The RenderFrameHost created in Init will be reused.
@@ -1886,11 +1886,11 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation, DetachPendingChild) {
   EXPECT_TRUE(host1->GetSiteInstance()->HasSite());
 
   // 2) Cross-site navigate both frames to next site.
-  NavigationEntryImpl entryB(nullptr /* instance */, kUrlB,
-                             Referrer(kUrlA, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entryB(
+      nullptr /* instance */, kUrlB,
+      Referrer(kUrlA, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   host1 = NavigateToEntry(iframe1, entryB);
   RenderFrameHostImpl* host2 = NavigateToEntry(iframe2, entryB);
 
@@ -1999,11 +1999,11 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
       FrameOwnerProperties());
   RenderFrameHostManager* iframe =
       contents()->GetFrameTree()->root()->child_at(0)->render_manager();
-  NavigationEntryImpl entry(nullptr /* instance */, kUrl2,
-                            Referrer(kUrl1, blink::kWebReferrerPolicyDefault),
-                            base::string16() /* title */,
-                            ui::PAGE_TRANSITION_LINK,
-                            false /* is_renderer_init */);
+  NavigationEntryImpl entry(
+      nullptr /* instance */, kUrl2,
+      Referrer(kUrl1, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   RenderFrameHostImpl* cross_site = NavigateToEntry(iframe, entry);
   iframe->DidNavigateFrame(cross_site, true);
 
@@ -2317,11 +2317,11 @@ TEST_F(RenderFrameHostManagerTest, PageFocusPropagatesToSubframeProcesses) {
   RenderFrameHostManager* child3 = root->child_at(2)->render_manager();
 
   // Navigate first two subframes to B.
-  NavigationEntryImpl entryB(nullptr /* instance */, kUrlB,
-                             Referrer(kUrlA, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entryB(
+      nullptr /* instance */, kUrlB,
+      Referrer(kUrlA, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   TestRenderFrameHost* host1 =
       static_cast<TestRenderFrameHost*>(NavigateToEntry(child1, entryB));
   TestRenderFrameHost* host2 =
@@ -2330,11 +2330,11 @@ TEST_F(RenderFrameHostManagerTest, PageFocusPropagatesToSubframeProcesses) {
   child2->DidNavigateFrame(host2, true);
 
   // Navigate the third subframe to C.
-  NavigationEntryImpl entryC(nullptr /* instance */, kUrlC,
-                             Referrer(kUrlA, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entryC(
+      nullptr /* instance */, kUrlC,
+      Referrer(kUrlA, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   TestRenderFrameHost* host3 =
       static_cast<TestRenderFrameHost*>(NavigateToEntry(child3, entryC));
   child3->DidNavigateFrame(host3, true);
@@ -2408,11 +2408,11 @@ TEST_F(RenderFrameHostManagerTest,
   RenderFrameHostManager* child = root->child_at(0)->render_manager();
 
   // Navigate subframe to B.
-  NavigationEntryImpl entryB(nullptr /* instance */, kUrlB,
-                             Referrer(kUrlA, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entryB(
+      nullptr /* instance */, kUrlB,
+      Referrer(kUrlA, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   TestRenderFrameHost* hostB =
       static_cast<TestRenderFrameHost*>(NavigateToEntry(child, entryB));
   child->DidNavigateFrame(hostB, true);
@@ -2422,11 +2422,11 @@ TEST_F(RenderFrameHostManagerTest,
   EXPECT_TRUE(main_test_rfh()->GetView()->HasFocus());
 
   // Navigate the subframe to C.
-  NavigationEntryImpl entryC(nullptr /* instance */, kUrlC,
-                             Referrer(kUrlA, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entryC(
+      nullptr /* instance */, kUrlC,
+      Referrer(kUrlA, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   TestRenderFrameHost* hostC =
       static_cast<TestRenderFrameHost*>(NavigateToEntry(child, entryC));
   child->DidNavigateFrame(hostC, true);
@@ -2952,11 +2952,11 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   RenderFrameHostManager* child = root->child_at(0)->render_manager();
 
   // Navigate subframe to kUrl2.
-  NavigationEntryImpl entry1(nullptr /* instance */, kUrl2,
-                             Referrer(kUrl1, blink::kWebReferrerPolicyDefault),
-                             base::string16() /* title */,
-                             ui::PAGE_TRANSITION_LINK,
-                             false /* is_renderer_init */);
+  NavigationEntryImpl entry1(
+      nullptr /* instance */, kUrl2,
+      Referrer(kUrl1, Referrer::GetDefaultReferrerPolicy()),
+      base::string16() /* title */, ui::PAGE_TRANSITION_LINK,
+      false /* is_renderer_init */);
   TestRenderFrameHost* child_host =
       static_cast<TestRenderFrameHost*>(NavigateToEntry(child, entry1));
   child->DidNavigateFrame(child_host, true);

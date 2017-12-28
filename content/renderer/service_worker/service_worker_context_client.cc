@@ -245,7 +245,8 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
   }
   web_request->SetReferrer(
       blink::WebString::FromUTF8(request.referrer.url.spec()),
-      request.referrer.policy);
+      Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+          request.referrer.policy));
   web_request->SetMode(request.mode);
   web_request->SetIsMainResourceLoad(request.is_main_resource_load);
   web_request->SetCredentialsMode(request.credentials_mode);

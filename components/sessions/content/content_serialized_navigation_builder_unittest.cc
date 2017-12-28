@@ -56,7 +56,8 @@ std::unique_ptr<content::NavigationEntry> MakeNavigationEntryForTest() {
       content::NavigationEntry::Create());
   navigation_entry->SetReferrer(content::Referrer(
       test_data::kReferrerURL,
-      static_cast<blink::WebReferrerPolicy>(test_data::kReferrerPolicy)));
+      content::Referrer::ReferrerPolicyForUrlRequest(
+          static_cast<blink::WebReferrerPolicy>(test_data::kReferrerPolicy))));
   navigation_entry->SetVirtualURL(test_data::kVirtualURL);
   navigation_entry->SetTitle(test_data::kTitle);
   navigation_entry->SetPageState(

@@ -19,9 +19,7 @@ struct CONTENT_EXPORT
     return r.url;
   }
 
-  static ::blink::WebReferrerPolicy policy(const content::Referrer& r) {
-    return r.policy;
-  }
+  static ::blink::WebReferrerPolicy policy(const content::Referrer& r);
 
   static bool Read(::blink::mojom::ReferrerDataView data,
                    content::Referrer* out);

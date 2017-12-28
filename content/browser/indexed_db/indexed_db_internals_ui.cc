@@ -308,7 +308,7 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
                                                            traffic_annotation));
   const GURL referrer(web_contents->GetLastCommittedURL());
   dl_params->set_referrer(content::Referrer::SanitizeForRequest(
-      url, content::Referrer(referrer, blink::kWebReferrerPolicyDefault)));
+      url, Referrer(referrer, Referrer::GetDefaultReferrerPolicy())));
 
   // This is how to watch for the download to finish: first wait for it
   // to start, then attach a DownloadItem::Observer to observe the

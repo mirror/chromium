@@ -9,10 +9,22 @@
 namespace mojo {
 
 // static
+::blink::WebReferrerPolicy
+StructTraits<::blink::mojom::ReferrerDataView, content::Referrer>::policy(
+    const content::Referrer& r) {
+  return content::Referrer::NetReferrerPolicyToBlinkReferrerPolicy(r.policy);
+}
+
+// static
 bool StructTraits<::blink::mojom::ReferrerDataView, content::Referrer>::Read(
     ::blink::mojom::ReferrerDataView data,
     content::Referrer* out) {
-  return data.ReadUrl(&out->url) && data.ReadPolicy(&out->policy);
+  blink::WebReferrerPolicy policy;
+  if (!data.ReadUrl(&out->url) || !data.ReadPolicy(&policy))
+    return false;
+
+  out->policy = content::Referrer::ReferrerPolicyForUrlRequest(policy);
+  return true;
 }
 
 }  // namespace mojo
