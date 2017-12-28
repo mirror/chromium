@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488324be_8c91b99f",
+        "filename": "android_webview/browser/aw_ssl_host_state_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T21:23:06Z",
+      "side": 1,
+      "message": "Why change the type from |const_iterator| to |const const_iterator\u0026| ?\nfind() returns a value not a reference, so this doesn\u0027t improve things AFAICT.",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a7239a_5f2f90c0",
+        "filename": "content/public/network/ignore_errors_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T21:23:06Z",
+      "side": 1,
+      "message": "optional: more readable if use operator\u003e",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f63d638_90451dff",
+        "filename": "net/base/hash_value.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T21:23:06Z",
+      "side": 1,
+      "message": "The tag check (both here and in operator\u003d\u003d) seem like the sort of thing that someone will fail to update if/when a new tag is ever added.\n\nWhy not just use a generic implementation that compares the hashes as data, irrespective of tag?\n\nreturn std::lexicographical_compare(\n    lhs.data(), lhs.data() + lhs.size(),\n    rhs.data(), rhs.data() + rhs.size());",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcf85de_e317b57a",
+        "filename": "net/base/hash_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T21:23:06Z",
+      "side": 1,
+      "message": "Consider extracting this to a helper function or member function.\nFor instance:\n\nint Compare(const XXX\u0026a, const XXX\u0026b) {\n  return memcmp(...);\n}\n\n(... each and every instance of memcmp I see when reading code scares me and makes me read it carefully)",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97ff0ee_df6430de",
+        "filename": "net/base/hash_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T21:23:06Z",
+      "side": 1,
+      "message": "Why not make these member functions?",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
