@@ -3481,6 +3481,11 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kSysInternals)},
 #endif  // defined(OS_CHROMEOS)
 
+    {"enable-regional-locales-as-display-ui",
+     flag_descriptions::kRegionalLocalesAsDisplayUIName,
+     flag_descriptions::kRegionalLocalesAsDisplayUIDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kRegionalLocalesAsDisplayUI)},
+
     {"enable-module-scripts-dynamic-import",
      flag_descriptions::kModuleScriptsDynamicImportName,
      flag_descriptions::kModuleScriptsDynamicImportDescription, kOsAll,
