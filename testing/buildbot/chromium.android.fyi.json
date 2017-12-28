@@ -3407,6 +3407,7 @@
     "gtest_tests": [
       {
         "args": [
+          "--gs-results-bucket=chromium-result-details",
           "--recover-devices"
         ],
         "merge": {
@@ -3449,6 +3450,7 @@
       },
       {
         "args": [
+          "--gs-results-bucket=chromium-result-details",
           "--recover-devices"
         ],
         "merge": {
@@ -4057,6 +4059,7 @@
       },
       {
         "args": [
+          "--gs-results-bucket=chromium-result-details",
           "--recover-devices"
         ],
         "merge": {
@@ -4169,6 +4172,7 @@
       },
       {
         "args": [
+          "--gs-results-bucket=chromium-result-details",
           "--recover-devices"
         ],
         "merge": {
@@ -4931,6 +4935,7 @@
       },
       {
         "args": [
+          "--gs-results-bucket=chromium-result-details",
           "--recover-devices"
         ],
         "merge": {

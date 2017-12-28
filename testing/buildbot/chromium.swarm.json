@@ -17,6 +17,9 @@
         "test": "base_unittests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -45,6 +48,9 @@
         "test": "content_browsertests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -132,6 +138,9 @@
         "test": "content_browsertests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -188,6 +197,9 @@
         "test": "unit_tests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
