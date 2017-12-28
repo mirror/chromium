@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cf11087d_7ce34aa1",
+        "filename": "chromeos/dbus/update_engine_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-28T12:02:59Z",
+      "side": 1,
+      "message": "Thank you for the explanation. The plan sounds good to me!",
+      "parentUuid": "a58b7dff_7b9450f1",
+      "range": {
+        "startLine": 541,
+        "startChar": 6,
+        "endLine": 541,
+        "endChar": 32
+      },
+      "revId": "a574d13ede6a5df2da80bc7ac7a48ec509c7e56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a41c78_1a26c1cf",
         "filename": "chromeos/dbus/update_engine_client.cc",
         "patchSetId": 2
