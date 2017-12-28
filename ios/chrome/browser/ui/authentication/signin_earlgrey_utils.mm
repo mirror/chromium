@@ -22,10 +22,86 @@
 using chrome_test_util::PrimarySignInButton;
 using chrome_test_util::SecondarySignInButton;
 
+@interface GREYVisibilityChecker : NSObject
+
+/**
+ *  @return @c YES if no part of the @c element is visible to the user.
+ */
++ (BOOL)isNotVisible:(id)element;
+
+/**
+ *  @return The percentage ([0,1] inclusive) of the area visible on the screen
+ * compared to @c element's accessibility frame.
+ */
++ (CGFloat)percentVisibleAreaOfElement:(id)element;
+
+/**
+ *  @return @c YES if at least 10 (@c kMinimumPointsVisibleForInteraction)
+ * points are visible @b and the activation point of the given element is also
+ * visible, @c NO otherwise.
+ */
++ (BOOL)isVisibleForInteraction:(id)element;
+
+/**
+ *  @return A visible point where a user can tap to interact with specified @c
+ * element, or
+ *          @c GREYCGPointNull if there's no such point.
+ *  @remark The returned point is relative to @c element's bound.
+ */
++ (CGPoint)visibleInteractionPointForElement:(id)element;
+
+/**
+ *  @return The smallest rectangle enclosing the entire visible area of @c
+ * element in screen coordinates. If no part of the element is visible,
+ * CGRectZero will be returned. The returned rect is always in points.
+ */
++ (CGRect)rectEnclosingVisibleAreaOfElement:(id)element;
+
+/**
+ *   @return The last known original image used by the visibility checker.
+ *
+ *   @remark This is available only for internal testing purposes.
+ */
++ (UIImage*)grey_lastActualBeforeImage;
+/**
+ *   @return The last known actual color shifted image used by visibility
+ * checker.
+ *
+ *   @remark This is available only for internal testing purposes.
+ */
++ (UIImage*)grey_lastActualAfterImage;
+/**
+ *   @return The last known actual color shifted image used by visibility
+ * checker.
+ *
+ *   @remark This is available only for internal testing purposes.
+ */
++ (UIImage*)grey_lastExpectedAfterImage;
+
+@end
+
 @implementation SigninEarlGreyUtils
 
 + (void)checkSigninPromoVisibleWithMode:(SigninPromoViewMode)mode {
   [self checkSigninPromoVisibleWithMode:mode closeButton:YES];
+}
+
++ (id<GREYMatcher>)matcherForSufficientlyLowVisible {
+  float kElementSufficientlyVisiblePercentage = 0.2;
+  MatchesBlock matches = ^BOOL(UIView* element) {
+    CGFloat visibility =
+        [GREYVisibilityChecker percentVisibleAreaOfElement:element];
+    NSLog(@"====> %@ %f", element, visibility);
+    return (visibility >= kElementSufficientlyVisiblePercentage);
+  };
+  DescribeToBlock describe = ^void(id<GREYDescription> description) {
+    [description
+        appendText:[NSString
+                       stringWithFormat:@"matcherForSufficientlyVisible(>=%f)",
+                                        kElementSufficientlyVisiblePercentage]];
+  };
+  return [[GREYElementMatcherBlock alloc] initWithMatchesBlock:matches
+                                              descriptionBlock:describe];
 }
 
 + (void)checkSigninPromoVisibleWithMode:(SigninPromoViewMode)mode
@@ -33,32 +109,36 @@ using chrome_test_util::SecondarySignInButton;
   [[EarlGrey
       selectElementWithMatcher:grey_allOf(
                                    grey_accessibilityID(kSigninPromoViewId),
-                                   grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_notNil()];
+                                   [self matcherForSufficientlyLowVisible],
+                                   nil)] assertWithMatcher:grey_notNil()];
   [[EarlGrey
-      selectElementWithMatcher:grey_allOf(PrimarySignInButton(),
-                                          grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_notNil()];
+      selectElementWithMatcher:grey_allOf(
+                                   PrimarySignInButton(),
+                                   [self matcherForSufficientlyLowVisible],
+                                   nil)] assertWithMatcher:grey_notNil()];
   switch (mode) {
     case SigninPromoViewModeColdState:
       [[EarlGrey
-          selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
-                                              grey_sufficientlyVisible(), nil)]
-          assertWithMatcher:grey_nil()];
+          selectElementWithMatcher:grey_allOf(
+                                       SecondarySignInButton(),
+                                       [self matcherForSufficientlyLowVisible],
+                                       nil)] assertWithMatcher:grey_nil()];
       break;
     case SigninPromoViewModeWarmState:
       [[EarlGrey
-          selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
-                                              grey_sufficientlyVisible(), nil)]
-          assertWithMatcher:grey_notNil()];
+          selectElementWithMatcher:grey_allOf(
+                                       SecondarySignInButton(),
+                                       [self matcherForSufficientlyLowVisible],
+                                       nil)] assertWithMatcher:grey_notNil()];
       break;
   }
   if (closeButton) {
     [[EarlGrey
-        selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                                kSigninPromoCloseButtonId),
-                                            grey_sufficientlyVisible(), nil)]
-        assertWithMatcher:grey_notNil()];
+        selectElementWithMatcher:grey_allOf(
+                                     grey_accessibilityID(
+                                         kSigninPromoCloseButtonId),
+                                     [self matcherForSufficientlyLowVisible],
+                                     nil)] assertWithMatcher:grey_notNil()];
   }
 }
 
