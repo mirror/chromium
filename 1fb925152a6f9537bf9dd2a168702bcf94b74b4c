@@ -1,0 +1,365 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81d4af37_ba5a2d0f",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "EncodedView::~EncodedView() \u003d default;",
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea684afd_c49af08f",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "and for",
+      "range": {
+        "startLine": 20,
+        "startChar": 67,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31a37af_8b3075ea",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 22,
+        "startChar": 63,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03dc6b44_fb29e0f6",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "NIT: bytes",
+      "range": {
+        "startLine": 27,
+        "startChar": 68,
+        "endLine": 27,
+        "endChar": 72
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf2444f_f5e09013",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "To reduce diff in https://chromium-review.googlesource.com/c/chromium/src/+/630558/32/chrome/installer/zucchini/encoded_view.h\n\nmay as well also add \n\n~EncodedView();",
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1168ef_6b09c113",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(EncodedView);",
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed65a52d_9b567ff7",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "NIT: |old_image_index| and |new_image_index| (also change .h)?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 54
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1687de5_eafb535f",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "old_ref_set ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82925623_43bde8f5",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "old_ref_set ?",
+      "range": {
+        "startLine": 50,
+        "startChar": 36,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ea5e51_934853ee",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "|disassembler| to agree with .h file?  (Meanwhile I\u0027m okay with abbreviation |disasm| actually, but I\u0027ll leave that to you -- notice that it\u0027s also in the unit test).",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db89990_0f0d94bf",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "// Iterators.",
+      "range": {
+        "startLine": 64,
+        "startChar": 44,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f8feb9_9ba6a870",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "(Optional since this will go anyway).\n\nCan move to .cc file and forward-declare:\n\nclass BaseLabelManager;",
+      "range": {
+        "startLine": 13,
+        "startChar": 36,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ec9507_27a5828d",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "NIT: Lower case?",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9102d5_904a1e5d",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "// The three functions below are transition hacks that mark targets, which will disappear.",
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e59ce35_6c3d7205",
+        "filename": "chrome/installer/zucchini/target_pool_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "#include \"chrome/installer/zucchini/label_manager.h\"",
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d555cb_e068dfc0",
+        "filename": "chrome/installer/zucchini/target_pool_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "\u00270\u0027 is redundant?",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5134a5_fc70c3ec",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-28T07:31:36Z",
+      "side": 1,
+      "message": "NIT: {} for multi-line if\u0027s.",
+      "range": {
+        "startLine": 99,
+        "startChar": 52,
+        "endLine": 99,
+        "endChar": 53
+      },
+      "revId": "1fb925152a6f9537bf9dd2a168702bcf94b74b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
