@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a14a1a_3d1e3b6d",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-28T16:49:18Z",
+      "side": 1,
+      "message": "Should this version of webview_instrumentation_test_apk get the --gs-results-bucket argument too? Same question for any other stragglers that might be in this file.",
+      "revId": "f14ba09251973441ce2255040445c2c60988aea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4071f438_e45eadd1",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-28T16:49:18Z",
+      "side": 1,
+      "message": "Is the --gs-results-bucket argument now something that could be automatically added by generate_buildbot_json.py, instead of manually specified for certain tests on Android? That would reduce duplication and the possibility of errors. I don\u0027t know the criteria for tests that would receive the argument vs. those which wouldn\u0027t, though.",
+      "revId": "f14ba09251973441ce2255040445c2c60988aea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
