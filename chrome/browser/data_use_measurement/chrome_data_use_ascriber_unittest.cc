@@ -43,6 +43,9 @@ class MockPageLoadObserver
                void(data_use_measurement::DataUse* data_use));
   MOCK_METHOD1(OnPageLoadConcluded,
                void(data_use_measurement::DataUse* data_use));
+  MOCK_METHOD2(OnNetworkBytesUpdate,
+               void(const net::URLRequest& request,
+                    data_use_measurement::DataUse* data_use));
 };
 
 }  // namespace
