@@ -205,7 +205,7 @@ scoped_refptr<VideoFrame> VideoFrame::CreateZeroInitializedFrame(
 scoped_refptr<VideoFrame> VideoFrame::WrapNativeTextures(
     VideoPixelFormat format,
     const gpu::MailboxHolder (&mailbox_holders)[kMaxPlanes],
-    const ReleaseMailboxCB& mailbox_holder_release_cb,
+    ReleaseMailboxCB mailbox_holder_release_cb,
     const gfx::Size& coded_size,
     const gfx::Rect& visible_rect,
     const gfx::Size& natural_size,
@@ -226,7 +226,8 @@ scoped_refptr<VideoFrame> VideoFrame::WrapNativeTextures(
   }
 
   return new VideoFrame(format, storage, coded_size, visible_rect, natural_size,
-                        mailbox_holders, mailbox_holder_release_cb, timestamp);
+                        mailbox_holders, std::move(mailbox_holder_release_cb),
+                        timestamp);
 }
 
 // static
@@ -789,11 +790,10 @@ CVPixelBufferRef VideoFrame::CvPixelBuffer() const {
 }
 #endif
 
-void VideoFrame::SetReleaseMailboxCB(
-    const ReleaseMailboxCB& release_mailbox_cb) {
+void VideoFrame::SetReleaseMailboxCB(ReleaseMailboxCB release_mailbox_cb) {
   DCHECK(!release_mailbox_cb.is_null());
   DCHECK(mailbox_holders_release_cb_.is_null());
-  mailbox_holders_release_cb_ = release_mailbox_cb;
+  mailbox_holders_release_cb_ = std::move(release_mailbox_cb);
 }
 
 bool VideoFrame::HasReleaseMailboxCB() const {
@@ -1046,8 +1046,8 @@ VideoFrame::VideoFrame(VideoPixelFormat format,
                        const gfx::Size& coded_size,
                        const gfx::Rect& visible_rect,
                        const gfx::Size& natural_size,
-                       const gpu::MailboxHolder(&mailbox_holders)[kMaxPlanes],
-                       const ReleaseMailboxCB& mailbox_holder_release_cb,
+                       const gpu::MailboxHolder (&mailbox_holders)[kMaxPlanes],
+                       ReleaseMailboxCB mailbox_holder_release_cb,
                        base::TimeDelta timestamp)
     : VideoFrame(format,
                  storage_type,
@@ -1056,7 +1056,7 @@ VideoFrame::VideoFrame(VideoPixelFormat format,
                  natural_size,
                  timestamp) {
   memcpy(&mailbox_holders_, mailbox_holders, sizeof(mailbox_holders_));
-  mailbox_holders_release_cb_ = mailbox_holder_release_cb;
+  mailbox_holders_release_cb_ = std::move(mailbox_holder_release_cb);
 }
 
 // static
