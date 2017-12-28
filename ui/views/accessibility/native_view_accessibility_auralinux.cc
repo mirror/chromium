@@ -60,6 +60,10 @@ class AuraLinuxApplication
     return platform_node_->GetNativeViewAccessible();
   }
 
+  int32_t GetUniqueId() const override {
+    return -1;  // No ID -- nothing can be related to the application.
+  }
+
   // WidgetObserver:
 
   void OnWidgetDestroying(Widget* widget) override {
