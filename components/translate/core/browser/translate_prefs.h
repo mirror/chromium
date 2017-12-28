@@ -122,9 +122,9 @@ class TranslatePrefs {
     kNone,
     // Move the language to the very top of the list.
     kTop,
-    // Move the language up by one position.
+    // Move the language up towards the front of the list.
     kUp,
-    // Move the language down by one position.
+    // Move the language down towards the back of the list.
     kDown
   };
 
@@ -166,12 +166,14 @@ class TranslatePrefs {
 
   // Rearranges the given language inside the language list.
   // The target position is specified as a RearrangeSpecifier.
+  // |offset| is ignored unless the RearrangeSpecifier is kUp or kDown.
   // The param |enabled_languages| is a list of languages that are enabled in
   // the current UI. This is required because the full language list contains
   // some languages that might not be enabled in the current UI and we need to
   // skip those languages while rearranging the list.
   void RearrangeLanguage(const std::string& language,
                          RearrangeSpecifier where,
+                         const int offset,
                          const std::vector<std::string>& enabled_languages);
 
   // Returns the list of TranslateLanguageInfo for all languages that are
