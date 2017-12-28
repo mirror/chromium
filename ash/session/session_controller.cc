@@ -186,6 +186,14 @@ bool SessionController::IsUserChild() const {
   return active_user_type == user_manager::USER_TYPE_CHILD;
 }
 
+bool SessionController::IsUserKiosk() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  return active_user_type == user_manager::USER_TYPE_KIOSK_APP;
+}
+
 base::Optional<user_manager::UserType> SessionController::GetUserType() const {
   if (!IsActiveUserSessionStarted())
     return base::nullopt;
@@ -205,6 +213,13 @@ bool SessionController::IsUserFirstLogin() const {
     return false;
 
   return GetUserSession(0)->user_info->is_new_profile;
+}
+
+bool SessionController::IsUserActive(const AccountId& account_id) const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  return GetUserSession(0)->user_info->account_id == account_id;
 }
 
 void SessionController::LockScreen() {

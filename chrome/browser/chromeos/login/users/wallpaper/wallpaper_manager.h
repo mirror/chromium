@@ -101,21 +101,8 @@ class WallpaperManager : public wm::ActivationChangeObserver,
   // wallpaper of logged in user.
   void EnsureLoggedInUserWallpaperLoaded();
 
-  // Called when the policy-set wallpaper has been fetched.  Initiates decoding
-  // of the JPEG |data| with a callback to SetPolicyControlledWallpaper().
-  void OnPolicyFetched(const std::string& policy,
-                       const AccountId& account_id,
-                       std::unique_ptr<std::string> data);
-
   // A wrapper of |WallpaperController::IsPolicyControlled|.
   bool IsPolicyControlled(const AccountId& account_id) const;
-
-  // Called when a wallpaper policy has been set for |account_id|.  Blocks user
-  // from changing the wallpaper.
-  void OnPolicySet(const std::string& policy, const AccountId& account_id);
-
-  // Called when the wallpaper policy has been cleared for |account_id|.
-  void OnPolicyCleared(const std::string& policy, const AccountId& account_id);
 
   // Opens the wallpaper picker window.
   void OpenWallpaperPicker();
@@ -173,12 +160,6 @@ class WallpaperManager : public wm::ActivationChangeObserver,
 
   // Returns wallpaper subdirectory name for current resolution.
   const char* GetCustomWallpaperSubdirForCurrentResolution();
-
-  // Set wallpaper to |user_image| controlled by policy.  (Takes a UserImage
-  // because that's the callback interface provided by UserImageLoader.)
-  void SetPolicyControlledWallpaper(
-      const AccountId& account_id,
-      std::unique_ptr<user_manager::UserImage> user_image);
 
   // This is called when the device wallpaper policy changes.
   void OnDeviceWallpaperPolicyChanged();
