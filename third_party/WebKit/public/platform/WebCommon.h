@@ -59,7 +59,7 @@
 #endif  // defined(WIN32)
 
 #else  // defined(COMPONENT_BUILD)
-#define BLINK_EXPORT
+#define BLINK_EXPORT __attribute__((visibility("default")))
 #define BLINK_PLATFORM_EXPORT
 #endif  // defined(COMPONENT_BUILD)
 
