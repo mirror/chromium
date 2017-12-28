@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c80f7b2_7330f20f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T18:31:23Z",
+      "side": 1,
+      "message": "Nice :)",
+      "revId": "0b2e3d0f206463e684c530f420e5cd9840b5b808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4a394a2_810b9c37",
+        "filename": "third_party/openh264/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T18:31:23Z",
+      "side": 1,
+      "message": "Are there non-ChromeOS NEON-devices that we are unnecessary excluding from these benefits?",
+      "revId": "0b2e3d0f206463e684c530f420e5cd9840b5b808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
