@@ -26,6 +26,34 @@ CSSPositionValue* CSSPositionValue::Create(CSSNumericValue* x,
   return new CSSPositionValue(x, y);
 }
 
+CSSPositionValue* CSSPositionValue::FromCSSValue(const CSSValue& css_value) {
+  if (!css_value.IsValueList()) {
+    return nullptr;
+  }
+  const CSSValueList* value_list = ToCSSValueList(stretch_);
+  if (value_list->length() != 2) {
+    return nullptr;
+  }
+
+  CSSNumericValue* x =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
+  CSSNumericValue* y =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(1)));
+
+  if (!IsValidCoordinate(x)) {
+    exception_state.ThrowTypeError(
+        "Must pass length or percentage to x in CSSPositionValue");
+    return nullptr;
+  }
+  if (!IsValidCoordinate(y)) {
+    exception_state.ThrowTypeError(
+        "Must pass length or percentage to y in CSSPositionValue");
+    return nullptr;
+  }
+
+  return CSSPositionValue(x, y);
+}
+
 void CSSPositionValue::setX(CSSNumericValue* x,
                             ExceptionState& exception_state) {
   if (!IsValidCoordinate(x)) {

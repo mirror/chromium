@@ -31,6 +31,8 @@ CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
   switch (property_id) {
     case CSSPropertyTransform:
       return CSSTransformValue::FromCSSValue(value);
+    case CSSPropertyObjectPosition:
+      return CSSPositionValue::FromCSSValue(value);
     default:
       // TODO(meade): Implement other properties.
       break;
