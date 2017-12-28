@@ -22,7 +22,8 @@ class GlobalShortcutListenerOzone : public GlobalShortcutListener {
   // GlobalShortcutListener implementation.
   void StartListening() override;
   void StopListening() override;
-  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
+  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator,
+                               AcceleratorScope scope) override;
   void UnregisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
 
   // Whether this object is listening for global shortcuts.

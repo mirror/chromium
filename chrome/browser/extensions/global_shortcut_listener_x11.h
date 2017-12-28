@@ -33,7 +33,8 @@ class GlobalShortcutListenerX11 : public GlobalShortcutListener,
   // GlobalShortcutListener implementation.
   void StartListening() override;
   void StopListening() override;
-  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
+  bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator,
+                               AcceleratorScope scope) override;
   void UnregisterAcceleratorImpl(const ui::Accelerator& accelerator) override;
 
   // Invoked when a global shortcut is pressed.

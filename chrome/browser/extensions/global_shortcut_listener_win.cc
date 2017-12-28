@@ -70,7 +70,12 @@ void GlobalShortcutListenerWin::OnWndProc(HWND hwnd,
 }
 
 bool GlobalShortcutListenerWin::RegisterAcceleratorImpl(
-    const ui::Accelerator& accelerator) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope) {
+  if (scope != AcceleratorScope::kGlobal) {
+    return false;
+  }
+
   DCHECK(hotkey_ids_.find(accelerator) == hotkey_ids_.end());
 
   int modifiers = 0;

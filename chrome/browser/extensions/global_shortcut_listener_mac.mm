@@ -110,18 +110,21 @@ bool GlobalShortcutListenerMac::OnMediaKeyEvent(int media_key_code) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   ui::KeyboardCode key_code = MediaKeyCodeToKeyboardCode(media_key_code);
   // Create an accelerator corresponding to the keyCode.
-  ui::Accelerator accelerator(key_code, 0);
-  // Look for a match with a bound hot_key.
-  if (accelerator_ids_.find(accelerator) != accelerator_ids_.end()) {
-    // If matched, callback to the event handling system.
-    NotifyKeyPressed(accelerator);
-    return true;
+  const bool only_global_scope = ![NSApp isActive];
+  const ui::Accelerator accelerator(key_code, 0);
+  auto find_iterator = accelerator_ids_.find(accelerator);
+  if (find_iterator == accelerator_ids_.end() ||
+      (only_global_scope &&
+       find_iterator->second.scope != AcceleratorScope::kGlobal)) {
+    return false;
   }
-  return false;
+  NotifyKeyPressed(accelerator);
+  return true;
 }
 
 bool GlobalShortcutListenerMac::RegisterAcceleratorImpl(
-    const ui::Accelerator& accelerator) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   DCHECK(accelerator_ids_.find(accelerator) == accelerator_ids_.end());
 
@@ -142,7 +145,8 @@ bool GlobalShortcutListenerMac::RegisterAcceleratorImpl(
 
   // Store the hotkey-ID mappings we will need for lookup later.
   id_accelerators_[hot_key_id_] = accelerator;
-  accelerator_ids_[accelerator] = hot_key_id_;
+  const KeyInfo key_info = {hot_key_id_, scope};
+  accelerator_ids_.emplace(accelerator, std::move(key_info));
   ++hot_key_id_;
   return true;
 }
@@ -157,8 +161,8 @@ void GlobalShortcutListenerMac::UnregisterAcceleratorImpl(
     UnregisterHotKey(accelerator);
 
   // Remove hot_key from the mappings.
-  KeyId key_id = accelerator_ids_[accelerator];
-  id_accelerators_.erase(key_id);
+  KeyInfo key_info = accelerator_ids_[accelerator];
+  id_accelerators_.erase(key_info.key_id);
   accelerator_ids_.erase(accelerator);
 
   if (Command::IsMediaKey(accelerator)) {
@@ -209,13 +213,13 @@ void GlobalShortcutListenerMac::UnregisterHotKey(
   // Ensure this accelerator is already registered.
   DCHECK(accelerator_ids_.find(accelerator) != accelerator_ids_.end());
   // Get the ref corresponding to this accelerator.
-  KeyId key_id = accelerator_ids_[accelerator];
-  EventHotKeyRef ref = id_hot_key_refs_[key_id];
+  const KeyInfo key_info = accelerator_ids_[accelerator];
+  EventHotKeyRef ref = id_hot_key_refs_[key_info.key_id];
   // Unregister the event hot key.
   UnregisterEventHotKey(ref);
 
   // Remove the event from the mapping.
-  id_hot_key_refs_.erase(key_id);
+  id_hot_key_refs_.erase(key_info.key_id);
 }
 
 void GlobalShortcutListenerMac::StartWatchingMediaKeys() {

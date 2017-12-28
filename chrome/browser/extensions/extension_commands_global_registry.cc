@@ -71,10 +71,8 @@ void ExtensionCommandsGlobalRegistry::AddExtensionKeybindings(
   // Add all the active global keybindings, if any.
   extensions::CommandMap commands;
   if (!command_service->GetNamedCommands(
-          extension->id(),
-          extensions::CommandService::ACTIVE,
-          extensions::CommandService::GLOBAL,
-          &commands))
+          extension->id(), extensions::CommandService::ACTIVE,
+          extensions::CommandService::ANY_SCOPE, &commands))
     return;
 
   extensions::CommandMap::const_iterator iter = commands.begin();
@@ -82,10 +80,12 @@ void ExtensionCommandsGlobalRegistry::AddExtensionKeybindings(
     if (!command_name.empty() && (iter->second.command_name() != command_name))
       continue;
     const ui::Accelerator& accelerator = iter->second.accelerator();
-
     if (!IsAcceleratorRegistered(accelerator)) {
       if (!GlobalShortcutListener::GetInstance()->RegisterAccelerator(
-              accelerator, this))
+              accelerator,
+              iter->second.global() ? AcceleratorScope::kGlobal
+                                    : AcceleratorScope::kChrome,
+              this))
         continue;
     }
 

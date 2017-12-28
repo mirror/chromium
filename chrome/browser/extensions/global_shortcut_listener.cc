@@ -6,11 +6,28 @@
 
 #include "base/logging.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/base/accelerators/accelerator.h"
 
 using content::BrowserThread;
 
 namespace extensions {
+
+bool operator<(const AcceleratorWithScope& lhs,
+               const AcceleratorWithScope& rhs) {
+  if (lhs.scope == AcceleratorScope::kSearch ||
+      rhs.scope == AcceleratorScope::kSearch)
+    return lhs.accelerator < rhs.accelerator;
+  return std::tie(lhs.accelerator, lhs.scope) <
+         std::tie(rhs.accelerator, rhs.scope);
+}
+
+bool operator==(const AcceleratorWithScope& lhs,
+                const AcceleratorWithScope& rhs) {
+  if (lhs.scope == AcceleratorScope::kSearch ||
+      rhs.scope == AcceleratorScope::kSearch)
+    return lhs.accelerator == rhs.accelerator;
+  return std::tie(lhs.accelerator, lhs.scope) ==
+         std::tie(rhs.accelerator, rhs.scope);
+}
 
 GlobalShortcutListener::GlobalShortcutListener()
     : shortcut_handling_suspended_(false) {
@@ -23,18 +40,22 @@ GlobalShortcutListener::~GlobalShortcutListener() {
 }
 
 bool GlobalShortcutListener::RegisterAccelerator(
-    const ui::Accelerator& accelerator, Observer* observer) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope,
+    Observer* observer) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
   if (IsShortcutHandlingSuspended())
     return false;
 
-  AcceleratorMap::const_iterator it = accelerator_map_.find(accelerator);
+  const AcceleratorWithScope accelerator_with_scope = {accelerator, scope};
+  AcceleratorMap::const_iterator it =
+      accelerator_map_.find(accelerator_with_scope);
   if (it != accelerator_map_.end()) {
     // The accelerator has been registered.
     return false;
   }
 
-  if (!RegisterAcceleratorImpl(accelerator)) {
+  if (!RegisterAcceleratorImpl(accelerator, scope)) {
     // If the platform-specific registration fails, mostly likely the shortcut
     // has been registered by other native applications.
     return false;
@@ -43,7 +64,7 @@ bool GlobalShortcutListener::RegisterAccelerator(
   if (accelerator_map_.empty())
     StartListening();
 
-  accelerator_map_[accelerator] = observer;
+  accelerator_map_[accelerator_with_scope] = observer;
   return true;
 }
 
@@ -53,7 +74,9 @@ void GlobalShortcutListener::UnregisterAccelerator(
   if (IsShortcutHandlingSuspended())
     return;
 
-  AcceleratorMap::iterator it = accelerator_map_.find(accelerator);
+  const AcceleratorWithScope accelerator_with_scope = {
+      accelerator, AcceleratorScope::kSearch};
+  AcceleratorMap::iterator it = accelerator_map_.find(accelerator_with_scope);
   // We should never get asked to unregister something that we didn't register.
   DCHECK(it != accelerator_map_.end());
   // The caller should call this function with the right observer.
@@ -74,7 +97,7 @@ void GlobalShortcutListener::UnregisterAccelerators(Observer* observer) {
   while (it != accelerator_map_.end()) {
     if (it->second == observer) {
       AcceleratorMap::iterator to_remove = it++;
-      UnregisterAccelerator(to_remove->first, observer);
+      UnregisterAccelerator(to_remove->first.accelerator, observer);
     } else {
       ++it;
     }
@@ -96,9 +119,9 @@ void GlobalShortcutListener::SetShortcutHandlingSuspended(bool suspended) {
     // user from setting the shortcut. Therefore we must unregister while
     // handling is suspended and register when handling resumes.
     if (shortcut_handling_suspended_)
-      UnregisterAcceleratorImpl(it->first);
+      UnregisterAcceleratorImpl(it->first.accelerator);
     else
-      RegisterAcceleratorImpl(it->first);
+      RegisterAcceleratorImpl(it->first.accelerator, it->first.scope);
   }
 }
 
@@ -108,7 +131,9 @@ bool GlobalShortcutListener::IsShortcutHandlingSuspended() const {
 
 void GlobalShortcutListener::NotifyKeyPressed(
     const ui::Accelerator& accelerator) {
-  AcceleratorMap::iterator iter = accelerator_map_.find(accelerator);
+  const AcceleratorWithScope accelerator_with_scope = {
+      accelerator, AcceleratorScope::kSearch};
+  AcceleratorMap::iterator iter = accelerator_map_.find(accelerator_with_scope);
   if (iter == accelerator_map_.end()) {
     // This should never occur, because if it does, we have failed to unregister
     // or failed to clean up the map after unregistering the shortcut.

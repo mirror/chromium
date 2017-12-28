@@ -8,13 +8,28 @@
 #include <map>
 
 #include "base/macros.h"
+#include "ui/base/accelerators/accelerator.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
-namespace ui {
-class Accelerator;
-}
-
 namespace extensions {
+
+enum class AcceleratorScope {
+  kGlobal,  // Accelerator works if any application in foreground
+  kChrome,  // Accelerator works only when current application in foreground
+  kSearch,  // Utility value you need to search for AcceleratorWithScope by
+            // ui::Accelerator
+};
+
+struct AcceleratorWithScope {
+  ui::Accelerator accelerator;
+  AcceleratorScope scope;
+};
+
+bool operator<(const AcceleratorWithScope& lhs,
+               const AcceleratorWithScope& rhs);
+
+bool operator==(const AcceleratorWithScope& lhs,
+                const AcceleratorWithScope& rhs);
 
 // Platform-neutral implementation of a class that keeps track of observers and
 // monitors keystrokes. It relays messages to the appropriate observer when a
@@ -40,6 +55,7 @@ class GlobalShortcutListener {
   // registered by another application on all platforms. This is a per-platform
   // consideration.
   bool RegisterAccelerator(const ui::Accelerator& accelerator,
+                           AcceleratorScope scope,
                            Observer* observer);
 
   // Stop listening for the given |accelerator|, does nothing if shortcut
@@ -79,13 +95,14 @@ class GlobalShortcutListener {
   // did not complete successfully.
   virtual void StartListening() = 0;
   virtual void StopListening() = 0;
-  virtual bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator) = 0;
+  virtual bool RegisterAcceleratorImpl(const ui::Accelerator& accelerator,
+                                       AcceleratorScope scope) = 0;
   virtual void UnregisterAcceleratorImpl(
       const ui::Accelerator& accelerator) = 0;
 
   // The map of accelerators that have been successfully registered as global
   // shortcuts and their observer.
-  typedef std::map<ui::Accelerator, Observer*> AcceleratorMap;
+  typedef std::map<AcceleratorWithScope, Observer*> AcceleratorMap;
   AcceleratorMap accelerator_map_;
 
   // Keeps track of whether shortcut handling is currently suspended.

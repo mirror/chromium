@@ -100,7 +100,12 @@ uint32_t GlobalShortcutListenerX11::DispatchEvent(
 }
 
 bool GlobalShortcutListenerX11::RegisterAcceleratorImpl(
-    const ui::Accelerator& accelerator) {
+    const ui::Accelerator& accelerator,
+    AcceleratorScope scope) {
+  if (scope != AcceleratorScope::kGlobal) {
+    return false;
+  }
+
   DCHECK(registered_hot_keys_.find(accelerator) == registered_hot_keys_.end());
 
   int modifiers = GetNativeModifiers(accelerator);
