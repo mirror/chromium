@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "031612bd_d34268d5",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "nit: Can the first part just share \u0027IDS_LOGIN_SYNC_CONSENT_SCREEN_CHROME_SYNC_DESCRIPTION\u0027?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e94fbb_5be123ea",
+        "filename": "chrome/browser/chromeos/login/oobe_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "nit: Can we move this to the above long list? It seems the last several items are all \u0027special\u0027?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6776aa2_095e7af7",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "Do these comments and the method name \u0027ShowTermsOfServiceScreen\u0027 need some changes?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd963be_6611d924",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "super nit: Can we combine these two early returns?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4c6eb7_b22296d3",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "Will this warning appear in many places?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82c8a18_9a2bfe3b",
+        "filename": "chrome/browser/resources/chromeos/login/sync_consent.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-28T00:14:21Z",
+      "side": 1,
+      "message": "Can #settingsLink be replaced with sync-status-line?",
+      "revId": "fc6882919129bd2764a8eb0d0439ce9a07c05ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
