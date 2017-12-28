@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1f5a11_93cf426f",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-28T19:17:17Z",
+      "side": 1,
+      "message": "This also set the accessible name to empty string. Maybe we can call SetAccessibleName after this.",
+      "revId": "3c6d67d0e2ce278c27e21052d1d4be322be855b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd747b1_69cf95d8",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-28T19:17:17Z",
+      "side": 1,
+      "message": "Notice we changed the ordering of the settings here. Is there a reason for the change? Or we could just use the original grouping.",
+      "revId": "3c6d67d0e2ce278c27e21052d1d4be322be855b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3828e1_4e64896c",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-28T19:17:17Z",
+      "side": 1,
+      "message": "save as above.",
+      "revId": "3c6d67d0e2ce278c27e21052d1d4be322be855b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
