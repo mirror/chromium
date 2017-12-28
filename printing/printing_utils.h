@@ -33,6 +33,8 @@ PRINTING_EXPORT base::string16 FormatDocumentTitleWithOwnerAndLength(
 
 PRINTING_EXPORT uint64_t GenFrameGuid(int process_id, int frame_id);
 
+PRINTING_EXPORT uint64_t GenContentGuid(int process_id, uint32_t content_id);
+
 PRINTING_EXPORT std::vector<uint64_t> ConvertToGlobalUniqueIds(
     int process_id,
     const std::vector<uint32_t>& ids);
