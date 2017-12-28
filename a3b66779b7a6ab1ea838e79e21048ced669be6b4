@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "7fa8adef_ef11894d",
+        "filename": "net/base/hash_value.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-28T21:46:48Z",
+      "side": 1,
+      "message": "Oh! If you meant something like HASH_VALUE_SHA384, then the compiler will yell about those cases being unhandled in the switch - that\u0027s why I was explicitly removing the default case, so that it would do so :)",
+      "parentUuid": "b74a2dfc_2f56b0b1",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbcf85de_e317b57a",
         "filename": "net/base/hash_value.h",
         "patchSetId": 4
