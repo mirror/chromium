@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cda35c78_88254796",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59f0f34_c24f32d1",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00914893_060433c0",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "562a6208_e0c6596a",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00914893_060433c0",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8987d325_d16fba13",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "Yeah, I think we\u0027ll want to either set this flag or a different one (to make it easy for devtools to distinguish the default state from the experimental state?) but was too lazy to figure out which in this CL, so we can do it in a follow-up.",
+      "parentUuid": "f5f5f76e_f42c65b2",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de60e32_38308c4b",
         "filename": "ios/chrome/browser/about_flags.mm",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2782b2e3_dcd03206",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de60e32_38308c4b",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 54
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dedd811_69c951d8",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fd88de_c397591b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 27359,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dedd811_69c951d8",
+      "range": {
+        "startLine": 27359,
+        "startChar": 0,
+        "endLine": 27359,
+        "endChar": 23
+      },
+      "revId": "7876e5ab910ef4c9bb00401debd9adddc5b762ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c91c1cc3_f7f45be5",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-28T01:33:21Z",
+      "side": 1,
+      "message": "I think that\u0027s true about LoginCustomFlags, but you can filter any histogram by experimental state to see # of users in the experiment.",
+      "parentUuid": "f1f8c27b_f5c47e9e",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "19df1d9e43a4b89aa03dd072bc9f57eb8541e59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c932e56_f9b47396",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 5
