@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829bd61e_fce84b87",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-28T00:50:20Z",
+      "side": 1,
+      "message": "maybe add a comment here indicating if the languages[a] is not in the enabled language list, we do an additional move.",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d95c63_ac48e38f",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-28T00:50:20Z",
+      "side": 1,
+      "message": "I wonder what does this bracket do?",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac645a7_df0cbfa0",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-28T00:50:20Z",
+      "side": 1,
+      "message": "since you have the two statements above, is a \u003e\u003d 0 \u0026\u0026 b \u003c\u003d length necessary?",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35abf919_1d0233f7",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-28T00:50:20Z",
+      "side": 1,
+      "message": "will the offset change in future? what the difference between RearrangeLanguage(\"en\", kTop, -1, \"\") and RearrangeLanguage(\"en\", kTop, 1, \"\") semantically mean?",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
