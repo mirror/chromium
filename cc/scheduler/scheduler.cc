@@ -481,8 +481,8 @@ void Scheduler::SendBeginFrameAck(const viz::BeginFrameArgs& args,
     did_submit = state_machine_.did_submit_in_last_frame();
 
   if (!did_submit) {
-    DCHECK(!inside_scheduled_action_);
-    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+    //DCHECK(!inside_scheduled_action_);
+    //base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
     client_->DidNotProduceFrame(
         viz::BeginFrameAck(args.source_id, args.sequence_number, did_submit));
   }
@@ -600,8 +600,8 @@ void Scheduler::OnBeginImplFrameDeadline() {
 }
 
 void Scheduler::DrawIfPossible() {
-  DCHECK(!inside_scheduled_action_);
-  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+  //DCHECK(!inside_scheduled_action_);
+  //base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
   bool drawing_with_new_active_tree =
       state_machine_.active_tree_needs_first_draw() &&
       !state_machine_.previous_pending_tree_was_impl_side();
@@ -618,8 +618,8 @@ void Scheduler::DrawIfPossible() {
 }
 
 void Scheduler::DrawForced() {
-  DCHECK(!inside_scheduled_action_);
-  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+  //DCHECK(!inside_scheduled_action_);
+  //base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
   bool drawing_with_new_active_tree =
       state_machine_.active_tree_needs_first_draw() &&
       !state_machine_.previous_pending_tree_was_impl_side();
