@@ -560,6 +560,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                          const url::Origin& origin,
                                          const GURL& resource_url) override;
   void ViewSource(RenderFrameHostImpl* frame) override;
+  void PrintSubframe(const gfx::Rect& rect,
+                     uint64_t content_id,
+                     RenderFrameHost* target_rfh) override;
 #if defined(OS_ANDROID)
   base::android::ScopedJavaLocalRef<jobject> GetJavaRenderFrameHostDelegate()
       override;
