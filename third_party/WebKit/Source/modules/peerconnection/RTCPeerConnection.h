@@ -208,6 +208,7 @@ class MODULES_EXPORT RTCPeerConnection final
   const AtomicString& InterfaceName() const override;
   ExecutionContext* GetExecutionContext() const override;
 
+  bool IsPaused() const { return is_paused_; }
   // PausableObject
   void Pause() override;
   void Unpause() override;
@@ -298,6 +299,7 @@ class MODULES_EXPORT RTCPeerConnection final
 
   void RecordRapporMetrics();
 
+  bool is_paused_;
   SignalingState signaling_state_;
   ICEGatheringState ice_gathering_state_;
   ICEConnectionState ice_connection_state_;

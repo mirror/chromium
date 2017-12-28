@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 #include <set>
+#include <sstream>
 #include <utility>
 
 #include "base/memory/ptr_util.h"
@@ -113,6 +114,52 @@
 namespace blink {
 
 namespace {
+
+class RTCPeerConnectionRegistry : public GarbageCollectedFinalized<RTCPeerConnectionRegistry> {
+ public:
+  RTCPeerConnectionRegistry() {}
+  virtual ~RTCPeerConnectionRegistry() {}
+
+  void Register(RTCPeerConnection* pc, String origin) {
+    pc_origins_.insert(pc, origin);
+  }
+
+  std::string GetReport() {
+    std::stringstream ss;
+    ss << std::boolalpha;
+    size_t i = 1;
+    for (const auto& pc_origin : pc_origins_) {
+      const auto& pc = pc_origin.key;
+      const auto& origin = pc_origin.value;
+      ss << "[ PC #" << i << "\n"
+         << "  origin: " << origin.Utf8().data() << "\n"
+         << "  isClosed: " << pc->IsClosed() << "\n"
+         << "  hasPendingActivity: " << pc->HasPendingActivity() << "\n"
+         << "  isPaused: " << pc->IsPaused() << "\n"
+         << "  iceGatheringState: " << pc->iceGatheringState().Utf8().data() << "\n"
+         << "  iceConnectionState: " << pc->iceConnectionState().Utf8().data() << "\n"
+         << "  localStreams: " << pc->getLocalStreams().size() << "\n"
+         << "  remoteStreams: " << pc->getRemoteStreams().size() << " ]\n";
+      ++i;
+    }
+    return ss.str();
+  }
+
+  virtual void Trace(blink::Visitor* visitor) {
+    visitor->Trace(pc_origins_);
+  }
+
+ private:
+  HeapHashMap<WeakMember<RTCPeerConnection>, String> pc_origins_;
+};
+
+RTCPeerConnectionRegistry* pc_registry_ = nullptr;
+
+RTCPeerConnectionRegistry* PcRegistry() {
+  if (!pc_registry_)
+    pc_registry_ = new RTCPeerConnectionRegistry();
+  return pc_registry_;
+}
 
 const char kSignalingStateClosedMessage[] =
     "The RTCPeerConnection's signalingState is 'closed'.";
@@ -492,6 +539,7 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
                                      WebMediaConstraints constraints,
                                      ExceptionState& exception_state)
     : PausableObject(context),
+      is_paused_(false),
       signaling_state_(kSignalingStateStable),
       ice_gathering_state_(kICEGatheringStateNew),
       ice_connection_state_(kICEConnectionStateNew),
@@ -506,14 +554,18 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
       closed_(false),
       has_data_channels_(false) {
   Document* document = ToDocument(GetExecutionContext());
+  PcRegistry()->Register(this, document->Url());
 
   // If we fail, set |m_closed| and |m_stopped| to true, to avoid hitting the
   // assert in the destructor.
 
   if (InstanceCounters::CounterValue(
           InstanceCounters::kRTCPeerConnectionCounter) >= kMaxPeerConnections) {
-    exception_state.ThrowDOMException(kUnknownError,
-                                      "Cannot create so many PeerConnections");
+    std::string message = "Cannot create so many PeerConnections";
+    message += "\n\n=== REPORT ===\n";
+    message += PcRegistry()->GetReport();
+    message += "==============";
+    exception_state.ThrowDOMException(kUnknownError, message.c_str());
     return;
   }
   InstanceCounters::IncrementCounter(
@@ -1652,10 +1704,12 @@ ExecutionContext* RTCPeerConnection::GetExecutionContext() const {
 }
 
 void RTCPeerConnection::Pause() {
+  is_paused_ = true;
   dispatch_scheduled_event_runner_->Pause();
 }
 
 void RTCPeerConnection::Unpause() {
+  is_paused_ = false;
   dispatch_scheduled_event_runner_->Unpause();
 }
 
