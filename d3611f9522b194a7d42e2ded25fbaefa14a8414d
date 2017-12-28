@@ -16,6 +16,24 @@
       "revId": "d3611f9522b194a7d42e2ded25fbaefa14a8414d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654d6dd2_16fce99a",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-28T21:22:01Z",
+      "side": 1,
+      "message": "\u0027retry_with_reserve\u0027 is a little cryptic. I was trying to avoid a very long name like \u0027retry_with_reserve_on_oom\u0027.\n\nI noticed the boolean can be computed inside the function, so I decided to rework this.\n\nI changed the name of the helper fn to TryAllocPages, and renamed the boolean \u0027is_oom\u0027 to indicate why we release the reserved memory and retry. Another possible name is \u0027last_chance\u0027. WDYT?",
+      "parentUuid": "64465ec8_a2029eee",
+      "revId": "d3611f9522b194a7d42e2ded25fbaefa14a8414d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

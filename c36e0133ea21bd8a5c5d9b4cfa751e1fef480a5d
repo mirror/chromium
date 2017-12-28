@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4db735a_f62656b3",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-28T21:22:01Z",
+      "side": 0,
+      "message": "This confused me at first, as align-1 is usually added for aligning. However, we know here that ret is not aligned, so adding \u0027align\u0027 does work. I added a comment to make this clearer.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 72
+      },
+      "revId": "c36e0133ea21bd8a5c5d9b4cfa751e1fef480a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50fb601_c8b78150",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-28T21:22:01Z",
+      "side": 0,
+      "message": "This seems unlikely to generate a successful base address. I propose giving up and letting the OS (Windows) choose here.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 57
+      },
+      "revId": "c36e0133ea21bd8a5c5d9b4cfa751e1fef480a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e624a28_939b19fe",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-28T21:22:01Z",
+      "side": 0,
+      "message": "Comment doesn\u0027t match code - we randomize on all POSIX systems.",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 26
+      },
+      "revId": "c36e0133ea21bd8a5c5d9b4cfa751e1fef480a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
