@@ -170,7 +170,7 @@ int32_t PepperPDFHost::OnHostMsgSaveAs(
   GURL url = instance->GetPluginURL();
   content::Referrer referrer;
   referrer.url = url;
-  referrer.policy = blink::kWebReferrerPolicyDefault;
+  referrer.policy = content::Referrer::GetDefaultReferrerPolicy();
   referrer = content::Referrer::SanitizeForRequest(url, referrer);
 
   mojom::PdfService* service = GetRemotePdfService();

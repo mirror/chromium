@@ -148,7 +148,9 @@ void WriteNavigationEntryToPickle(uint32_t state_version,
 
   const content::Referrer& referrer = entry.GetReferrer();
   pickle->WriteString(referrer.url.spec());
-  pickle->WriteInt(static_cast<int>(referrer.policy));
+  pickle->WriteInt(static_cast<int>(
+      content::Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+          referrer.policy)));
 
   pickle->WriteString16(entry.GetTitle());
   pickle->WriteString(entry.GetPageState().ToEncodedData());
@@ -214,7 +216,8 @@ bool RestoreNavigationEntryFromPickle(uint32_t state_version,
       return false;
 
     referrer.url = GURL(referrer_url);
-    referrer.policy = static_cast<blink::WebReferrerPolicy>(policy);
+    referrer.policy = content::Referrer::ReferrerPolicyForUrlRequest(
+        static_cast<blink::WebReferrerPolicy>(policy));
     entry->SetReferrer(referrer);
   }
 
