@@ -54,6 +54,41 @@
     },
     {
       "key": {
+        "uuid": "438b8a27_3971b812",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-28T17:18:56Z",
+      "side": 1,
+      "message": "I see, thanks for explanation.\n\nPerhaps, we can alternatively split by commas, and then either split by spaces (if there is a single chunk after splitting by commas) or remove all spaces.\n\nAlso, I don\u0027t understand why we need the first non-capturing group, and the one around \"a\" value after \"-?\" part.",
+      "parentUuid": "51a7d499_75e3c5a1",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfd1460_2fd2ddda",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-28T17:18:56Z",
+      "side": 1,
+      "message": "Same question about the first non-capturing group here.\nAlso, this seems to be missing \\s* at the end. Add a test case as well?",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc882a4c_2bc807fc",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
