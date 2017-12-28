@@ -123,6 +123,24 @@
       "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eaed41a2_7102f132",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-28T02:07:40Z",
+      "side": 1,
+      "message": "I was referring to using WebhitTestResult::IsNull(), before calling GetNode().",
+      "parentUuid": "5c33410c_b90cf592",
+      "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
