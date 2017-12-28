@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e45a588_bf47efe2",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2842a85f_5fc7cb95",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faf9c66b_5f0ece2c",
         "filename": "content/browser/accessibility/browser_accessibility.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "846803592d0da9f9951ea9818433a18eda112744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa80219_8a64bd1c",
+        "filename": "content/browser/accessibility/browser_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Renamed to GetUniqueId(), and made it protected (it needs to be accessed from BrowserAccessibilityAndroid).",
+      "parentUuid": "faf9c66b_5f0ece2c",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "715efa7b_07a6d627",
+        "filename": "content/browser/accessibility/browser_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c25d52e_9febaab0",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d79d5c0_cb587195",
         "filename": "content/browser/accessibility/browser_accessibility_android.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "846803592d0da9f9951ea9818433a18eda112744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96b0b1b_237ff67a",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3d79d5c0_cb587195",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "73a69ad8_b3833fb5",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba4b23b_c4d3e0a3",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12eb9308_e4ba3414",
         "filename": "ui/views/accessibility/native_view_accessibility.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4ac38e86_778d678b",
+        "filename": "ui/views/accessibility/native_view_accessibility.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12eb9308_e4ba3414",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24370247_6ca6258e",
         "filename": "ui/views/accessibility/native_view_accessibility_auralinux.cc",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "846803592d0da9f9951ea9818433a18eda112744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69754f8_5a93271e",
+        "filename": "ui/views/accessibility/native_view_accessibility_auralinux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "It inherits this as a pure virtual so it must be implemented. There is no base class implementation of this method. However, it will now get an ID via AXUniqueId.",
+      "parentUuid": "24370247_6ca6258e",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +278,24 @@
       "revId": "846803592d0da9f9951ea9818433a18eda112744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782abbcf_062ef8dc",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-28T19:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b57e77a_153fd9e3",
+      "revId": "846803592d0da9f9951ea9818433a18eda112744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
