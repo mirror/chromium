@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae6a9ebf_4fff95c1",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-12-28T01:08:50Z",
+      "side": 1,
+      "message": "It\u0027s mentioned in the function comment in the header file.\nI\u0027ll add a note above this switch.",
+      "parentUuid": "829bd61e_fce84b87",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d95c63_ac48e38f",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f8e910_c5171570",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-12-28T01:08:50Z",
+      "side": 1,
+      "message": "It\u0027s required in a switch statement because of scoping. In this case, I\u0027m declaring variable prev.",
+      "parentUuid": "01d95c63_ac48e38f",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4c47030_50c70c6f",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-12-28T01:08:50Z",
+      "side": 1,
+      "message": "Good catch! Yes, I\u0027ve removed it.",
+      "parentUuid": "eac645a7_df0cbfa0",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35abf919_1d0233f7",
         "filename": "components/translate/core/browser/translate_prefs.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a805d56b_44de97df",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-12-28T01:08:50Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve made it explicit that offset can only be positive for now (in case of \"move up\" or \"move down\").",
+      "parentUuid": "35abf919_1d0233f7",
+      "revId": "e237355b6725836e2eca6a5ed4f60ce5ffd5fe8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
