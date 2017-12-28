@@ -16,6 +16,24 @@
       "revId": "c766a1336181992e6152d2d65dde917b2eef3ba1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db407ae_e8ec5467",
+        "filename": "third_party/WebKit/LayoutTests/fast/js/toString-dontEnum.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-28T09:04:14Z",
+      "side": 0,
+      "message": "Yes, this test is not rquired after this patch because this test is only for \"NOT enumerable toString function\", So it will print \"FAIL: the toString function is enumerable for Location and should not be.\" in toString-dontEnum-expected.txt with this patch.\n\nAlso, in file location-stringifier.html, same test is covered  as below which was failed and now passed with this patch.\nconst prop1 \u003d Object.getOwnPropertyDescriptor(location, \"toString\"),\n        prop2 \u003d Object.getOwnPropertyDescriptor(location, \"href\")\n  assert_true(prop1.enumerable)",
+      "parentUuid": "b56d0221_58a21382",
+      "revId": "c766a1336181992e6152d2d65dde917b2eef3ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

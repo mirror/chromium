@@ -16,6 +16,24 @@
       "revId": "ed973e44cdb08e38c039fed25cb9cb3532311327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9457fa9d_dc79059f",
+        "filename": "third_party/WebKit/Source/core/frame/Location.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-28T09:04:14Z",
+      "side": 1,
+      "message": "Thanks. Added this TODO comment, I shall try to fix this in follow-up patch.",
+      "parentUuid": "fb3861c8_5fa51128",
+      "revId": "ed973e44cdb08e38c039fed25cb9cb3532311327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
