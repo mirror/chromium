@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e0b3612_360567e7",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-28T04:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b6c5a91_fbae1f53",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "242c78b1_9d335bea",
         "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5101682a_9feaceae",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-28T04:00:28Z",
+      "side": 1,
+      "message": "Done.\n\nAlso I added a parameter |intervention_triggered| as the browser needs to know it to decide it should show UI.",
+      "parentUuid": "242c78b1_9d335bea",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f702e8b_fca79c52",
         "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-26T20:16:52Z",
       "side": 1,
       "message": "To me, timeout makes it sound like something is not responding. But from the updated comments, it seems like this actually means that the detection window passed without the renderer detecting a high-memory situation. So maybe this can be renamed or reworded to make that clear that this isn\u0027t a timeout. Going along with OnHighMemoryUsage(), maybe OnDetectionWindowElapsedWithoutHighMemoryUsage()... though it\u0027s kind of wordy.\n\n(To be nitpicky, I think this method isn\u0027t strictly necessary: the browser could just post one task for 60 seconds, and if no high memory usage signal has been received, it can just reset the intervention state. I think that might be slightly preferable, but I don\u0027t have a strong opinion.)",
+      "revId": "296854e746ba42614a87f7120cf98be890e53142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b2b732_f36c1fd2",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-28T04:00:28Z",
+      "side": 1,
+      "message": "Posting a task in the browser seems preferable. Done. Thanks for the suggestion.",
+      "parentUuid": "4f702e8b_fca79c52",
       "revId": "296854e746ba42614a87f7120cf98be890e53142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
