@@ -606,49 +606,60 @@ void KioskAppManager::RemoveObserver(KioskAppManagerObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-extensions::ExternalLoader* KioskAppManager::CreateExternalLoader() {
-  if (external_loader_created_) {
-    NOTREACHED();
-    return nullptr;
-  }
-  external_loader_created_ = true;
-  KioskAppExternalLoader* loader = new KioskAppExternalLoader();
-  external_loader_ = loader->AsWeakPtr();
+void KioskAppManager::SetPrimaryAppReady(const std::string& id) {
+  primary_app_id_ = id;
 
-  return loader;
+  if (primary_app_ready_handler_)
+    primary_app_ready_handler_.Run();
 }
 
-extensions::ExternalLoader*
-KioskAppManager::CreateSecondaryAppExternalLoader() {
-  if (secondary_app_external_loader_created_) {
-    NOTREACHED();
-    return nullptr;
-  }
-  secondary_app_external_loader_created_ = true;
-  KioskAppExternalLoader* secondary_loader = new KioskAppExternalLoader();
-  secondary_app_external_loader_ = secondary_loader->AsWeakPtr();
+void KioskAppManager::SetSecondaryAppsReady(
+    const std::vector<std::string>& ids) {
+  secondary_app_ids_ = ids;
 
-  return secondary_loader;
+  if (secondary_apps_ready_handler_)
+    secondary_apps_ready_handler_.Run();
 }
 
-void KioskAppManager::InstallFromCache(const std::string& id) {
+void KioskAppManager::SetPrimaryAppReadyHandler(
+    base::RepeatingClosure handler) {
+  CHECK(handler.is_null() || primary_app_ready_handler_.is_null());
+
+  primary_app_ready_handler_ = std::move(handler);
+}
+
+void KioskAppManager::SetSecondaryAppsReadyHandler(
+    base::RepeatingClosure handler) {
+  CHECK(handler.is_null() || secondary_apps_ready_handler_.is_null());
+
+  secondary_apps_ready_handler_ = std::move(handler);
+}
+
+std::unique_ptr<base::DictionaryValue> KioskAppManager::GetPrimaryAppPrefs() {
+  if (!primary_app_id_.has_value())
+    return nullptr;
+
+  const std::string& id = primary_app_id_.value();
+  auto prefs = std::make_unique<base::DictionaryValue>();
+
   const base::DictionaryValue* extension = nullptr;
   if (external_cache_->cached_extensions()->GetDictionary(id, &extension)) {
-    std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
-    prefs->Set(id, extension->CreateDeepCopy());
-    external_loader_->SetCurrentAppExtensions(std::move(prefs));
+    prefs->SetKey(id, extension->Clone());
   } else {
     LOG(ERROR) << "Can't find app in the cached externsions"
                << " id = " << id;
   }
+  return prefs;
 }
 
-void KioskAppManager::InstallSecondaryApps(
-    const std::vector<std::string>& ids) {
-  std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
-  for (const std::string& id : ids) {
-    std::unique_ptr<base::DictionaryValue> extension_entry(
-        new base::DictionaryValue);
+std::unique_ptr<base::DictionaryValue>
+KioskAppManager::GetSecondaryAppsPrefs() {
+  if (!secondary_app_ids_.has_value())
+    return nullptr;
+
+  auto prefs = std::make_unique<base::DictionaryValue>();
+  for (const std::string& id : secondary_app_ids_.value()) {
+    auto extension_entry = std::make_unique<base::DictionaryValue>();
     extension_entry->SetKey(
         extensions::ExternalProviderImpl::kExternalUpdateUrl,
         base::Value(extension_urls::GetWebstoreUpdateUrl().spec()));
@@ -656,7 +667,7 @@ void KioskAppManager::InstallSecondaryApps(
         extensions::ExternalProviderImpl::kIsFromWebstore, true);
     prefs->Set(id, std::move(extension_entry));
   }
-  secondary_app_external_loader_->SetCurrentAppExtensions(std::move(prefs));
+  return prefs;
 }
 
 void KioskAppManager::UpdateExternalCache() {
@@ -727,10 +738,7 @@ bool KioskAppManager::IsPlatformCompliantWithApp(
   return IsPlatformCompliant(info->required_platform_version);
 }
 
-KioskAppManager::KioskAppManager()
-    : ownership_established_(false),
-      external_loader_created_(false),
-      secondary_app_external_loader_created_(false) {
+KioskAppManager::KioskAppManager() {
   base::FilePath cache_dir;
   GetCrxCacheDir(&cache_dir);
   external_cache_.reset(
@@ -769,6 +777,8 @@ void KioskAppManager::CleanUp() {
   apps_.clear();
   usb_stick_updater_.reset();
   external_cache_.reset();
+  primary_app_id_.reset();
+  secondary_app_ids_.reset();
 }
 
 const KioskAppData* KioskAppManager::GetAppData(
@@ -870,9 +880,9 @@ void KioskAppManager::ClearRemovedApps(
 
 void KioskAppManager::UpdateExternalCachePrefs() {
   // Request external_cache_ to download new apps and update the existing apps.
-  std::unique_ptr<base::DictionaryValue> prefs(new base::DictionaryValue);
+  auto prefs = std::make_unique<base::DictionaryValue>();
   for (size_t i = 0; i < apps_.size(); ++i) {
-    std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue);
+    auto entry = std::make_unique<base::DictionaryValue>();
 
     if (apps_[i]->update_url().is_valid()) {
       entry->SetString(extensions::ExternalProviderImpl::kExternalUpdateUrl,

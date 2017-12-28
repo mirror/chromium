@@ -6,26 +6,75 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 
 namespace chromeos {
 
-KioskAppExternalLoader::KioskAppExternalLoader() {
-}
+KioskAppExternalLoader::KioskAppExternalLoader(AppClass app_class)
+    : app_class_(app_class) {}
 
 KioskAppExternalLoader::~KioskAppExternalLoader() {
-}
-
-void KioskAppExternalLoader::SetCurrentAppExtensions(
-    std::unique_ptr<base::DictionaryValue> prefs) {
-  prefs_ = std::move(prefs);
-  StartLoading();
+  if (state_ != State::INITIAL) {
+    switch (app_class_) {
+      case AppClass::PRIMARY:
+        KioskAppManager::Get()->SetPrimaryAppReadyHandler(
+            base::RepeatingClosure());
+        break;
+      case AppClass::SECONDARY:
+        KioskAppManager::Get()->SetSecondaryAppsReadyHandler(
+            base::RepeatingClosure());
+        break;
+    }
+  }
 }
 
 void KioskAppExternalLoader::StartLoading() {
-  if (prefs_)
-    LoadFinished(std::move(prefs_));
+  if (state_ != State::INITIAL)
+    return;
+
+  state_ = State::LOADING;
+
+  base::RepeatingClosure handler =
+      base::BindRepeating(&KioskAppExternalLoader::SendPrefsIfAvailable,
+                          weak_ptr_factory_.GetWeakPtr());
+  switch (app_class_) {
+    case AppClass::PRIMARY:
+      KioskAppManager::Get()->SetPrimaryAppReadyHandler(std::move(handler));
+      break;
+    case AppClass::SECONDARY:
+      KioskAppManager::Get()->SetSecondaryAppsReadyHandler(std::move(handler));
+      break;
+  }
+
+  SendPrefsIfAvailable();
+}
+
+std::unique_ptr<base::DictionaryValue> KioskAppExternalLoader::GetAppsPrefs() {
+  switch (app_class_) {
+    case AppClass::PRIMARY:
+      return KioskAppManager::Get()->GetPrimaryAppPrefs();
+    case AppClass::SECONDARY:
+      return KioskAppManager::Get()->GetSecondaryAppsPrefs();
+  }
+  return nullptr;
+}
+
+void KioskAppExternalLoader::SendPrefsIfAvailable() {
+  std::unique_ptr<base::DictionaryValue> prefs = GetAppsPrefs();
+  if (!prefs)
+    return;
+
+  const bool initial_load = state_ == State::LOADING;
+  state_ = State::LOADED;
+
+  if (initial_load) {
+    LoadFinished(std::move(prefs));
+  } else {
+    OnUpdated(std::move(prefs));
+  }
 }
 
 }  // namespace chromeos

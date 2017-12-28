@@ -14,6 +14,7 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_data_delegate.h"
 #include "chrome/browser/chromeos/extensions/external_cache.h"
@@ -32,14 +33,13 @@ class CommandLine;
 
 namespace extensions {
 class Extension;
-class ExternalLoader;
 }
 
 namespace chromeos {
 
 class AppSession;
+class ExternalCache;
 class KioskAppData;
-class KioskAppExternalLoader;
 class KioskAppManagerObserver;
 class KioskExternalUpdater;
 class OwnerSettingsServiceChromeOS;
@@ -187,19 +187,13 @@ class KioskAppManager : public KioskAppDataDelegate,
   void AddObserver(KioskAppManagerObserver* observer);
   void RemoveObserver(KioskAppManagerObserver* observer);
 
-  // Creates extensions::ExternalLoader for installing the primary kiosk app
-  // during its first time launch.
-  extensions::ExternalLoader* CreateExternalLoader();
+  void SetPrimaryAppReady(const std::string& id);
+  void SetPrimaryAppReadyHandler(base::RepeatingClosure handler);
+  std::unique_ptr<base::DictionaryValue> GetPrimaryAppPrefs();
 
-  // Creates extensions::ExternalLoader for installing secondary kiosk apps
-  // before launching the primary app for the first time.
-  extensions::ExternalLoader* CreateSecondaryAppExternalLoader();
-
-  // Installs kiosk app with |id| from cache.
-  void InstallFromCache(const std::string& id);
-
-  // Installs the secondary apps listed in |ids|.
-  void InstallSecondaryApps(const std::vector<std::string>& ids);
+  void SetSecondaryAppsReady(const std::vector<std::string>& ids);
+  void SetSecondaryAppsReadyHandler(base::RepeatingClosure handler);
+  std::unique_ptr<base::DictionaryValue> GetSecondaryAppsPrefs();
 
   void UpdateExternalCache();
 
@@ -244,10 +238,6 @@ class KioskAppManager : public KioskAppDataDelegate,
                      const std::string& required_platform_version);
 
   AppSession* app_session() { return app_session_.get(); }
-  bool external_loader_created() const { return external_loader_created_; }
-  bool secondary_app_external_loader_created() const {
-    return secondary_app_external_loader_created_;
-  }
 
  private:
   friend struct base::LazyInstanceTraitsBase<KioskAppManager>;
@@ -288,7 +278,7 @@ class KioskAppManager : public KioskAppDataDelegate,
   void OnKioskAppDataChanged(const std::string& app_id) override;
   void OnKioskAppDataLoadFailure(const std::string& app_id) override;
 
-  // ExternalCache::Delegate:
+  // ExternalCacheDelegate:
   void OnExtensionListsUpdated(const base::DictionaryValue* prefs) override;
   void OnExtensionLoadedInCache(const std::string& id) override;
   void OnExtensionDownloadFailed(
@@ -330,7 +320,7 @@ class KioskAppManager : public KioskAppDataDelegate,
                                     base::CommandLine* switches);
 
   // True if machine ownership is already established.
-  bool ownership_established_;
+  bool ownership_established_ = false;
   std::vector<std::unique_ptr<KioskAppData>> apps_;
   std::string auto_launch_app_id_;
   std::string currently_auto_launched_with_zero_delay_app_;
@@ -345,13 +335,11 @@ class KioskAppManager : public KioskAppDataDelegate,
 
   std::unique_ptr<KioskExternalUpdater> usb_stick_updater_;
 
-  // The extension external loader for deploying primary app.
-  bool external_loader_created_;
-  base::WeakPtr<KioskAppExternalLoader> external_loader_;
+  base::RepeatingClosure primary_app_ready_handler_;
+  base::RepeatingClosure secondary_apps_ready_handler_;
 
-  // The extension external loader for deploying secondary apps.
-  bool secondary_app_external_loader_created_;
-  base::WeakPtr<KioskAppExternalLoader> secondary_app_external_loader_;
+  base::Optional<std::string> primary_app_id_;
+  base::Optional<std::vector<std::string>> secondary_app_ids_;
 
   std::unique_ptr<AppSession> app_session_;
 
