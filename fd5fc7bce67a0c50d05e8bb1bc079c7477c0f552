@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9cd87c2_4cb43f2d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T20:53:07Z",
+      "side": 1,
+      "message": "I personally would find this easier to read as if (!left-\u003eMightBeSatured() \u0026\u0026 !right-\u003eMightBeSaturated() \u0026\u0026 ...), but up to you",
+      "revId": "fd5fc7bce67a0c50d05e8bb1bc079c7477c0f552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
