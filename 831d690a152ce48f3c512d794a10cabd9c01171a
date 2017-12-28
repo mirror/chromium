@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "7a564b49_d5fb36da",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-28T13:26:56Z",
+      "side": 1,
+      "message": "I thought removeRecursively is deprecated and unrecommended. Should I look at a different document?\nhttps://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/removeRecursively",
+      "parentUuid": "2b417d01_2813603e",
+      "revId": "831d690a152ce48f3c512d794a10cabd9c01171a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a0edab_d9e60aa2",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/background.js",
         "patchSetId": 10
