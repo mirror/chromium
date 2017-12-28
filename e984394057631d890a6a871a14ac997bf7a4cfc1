@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2badf44e_b502d36b",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/overflow/overflow-changed-on-child-of-squashed-layer-expected.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-28T20:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7aeedfd_26117c97",
+      "revId": "e984394057631d890a6a871a14ac997bf7a4cfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29bfdb20_15959583",
         "filename": "third_party/WebKit/LayoutTests/paint/invalidation/overflow/overflow-changed-on-child-of-squashed-layer.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e984394057631d890a6a871a14ac997bf7a4cfc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bc6f52_131906d7",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/overflow/overflow-changed-on-child-of-squashed-layer.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-28T20:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29bfdb20_15959583",
+      "revId": "e984394057631d890a6a871a14ac997bf7a4cfc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
