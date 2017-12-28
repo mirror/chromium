@@ -217,7 +217,7 @@ void OpenWindowOnUI(
   OpenURLParams params(
       url,
       Referrer::SanitizeForRequest(
-          url, Referrer(script_url, blink::kWebReferrerPolicyDefault)),
+          url, Referrer(script_url, Referrer::GetDefaultReferrerPolicy())),
       disposition, ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
       true /* is_renderer_initiated */);
 
@@ -251,7 +251,7 @@ void NavigateClientOnUI(const GURL& url,
   OpenURLParams params(
       url,
       Referrer::SanitizeForRequest(
-          url, Referrer(script_url, blink::kWebReferrerPolicyDefault)),
+          url, Referrer(script_url, Referrer::GetDefaultReferrerPolicy())),
       frame_tree_node_id, WindowOpenDisposition::CURRENT_TAB, transition,
       true /* is_renderer_initiated */);
   web_contents->OpenURL(params);

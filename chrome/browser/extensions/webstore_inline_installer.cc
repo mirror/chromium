@@ -271,7 +271,7 @@ bool WebstoreInlineInstaller::CheckInlineInstallPermitted(
         content::Referrer::SanitizeForRequest(
             GURL(redirect_url),
             content::Referrer(web_contents()->GetURL(),
-                              blink::kWebReferrerPolicyDefault)),
+                              content::Referrer::GetDefaultReferrerPolicy())),
         WindowOpenDisposition::NEW_FOREGROUND_TAB,
         ui::PAGE_TRANSITION_AUTO_BOOKMARK, false));
     *error = kInlineInstallSupportedError;

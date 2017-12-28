@@ -504,7 +504,8 @@ void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(
             GURL() /* client_side_redirect_url */);
     CommonNavigationParams common_params;
     common_params.url = url;
-    common_params.referrer = Referrer(GURL(), blink::kWebReferrerPolicyDefault);
+    common_params.referrer =
+        Referrer(GURL(), content::Referrer::GetDefaultReferrerPolicy());
     common_params.transition = ui::PAGE_TRANSITION_LINK;
     common_params.navigation_type = FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT;
     common_params.has_user_gesture = has_user_gesture;
@@ -610,7 +611,8 @@ void TestRenderFrameHost::SimulateWillStartRequest(
   if (!navigation_handle() || IsBrowserSideNavigationEnabled())
     return;
   navigation_handle()->CallWillStartRequestForTesting(
-      false /* is_post */, Referrer(GURL(), blink::kWebReferrerPolicyDefault),
+      false /* is_post */,
+      Referrer(GURL(), Referrer::GetDefaultReferrerPolicy()),
       true /* user_gesture */, transition, false /* is_external_protocol */);
 }
 
