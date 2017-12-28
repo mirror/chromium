@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cb13267_36f38acd",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-28T04:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c46b277_c7e3a2fc",
+      "revId": "b5db9af2b54cf77740541f37a565f2abec3ce368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7664929_73881565",
         "filename": "chromeos/cryptohome/cryptohome_util.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "b5db9af2b54cf77740541f37a565f2abec3ce368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4872764_4b8ee214",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-28T04:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7664929_73881565",
+      "revId": "b5db9af2b54cf77740541f37a565f2abec3ce368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
