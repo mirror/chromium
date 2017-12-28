@@ -8,6 +8,7 @@
 #include "base/time/time.h"
 #include "components/sessions/core/serialized_navigation_entry.h"
 #include "components/sync/base/time.h"
+#include "net/url_request/url_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -18,7 +19,7 @@ namespace test_data {
 const int kIndex = 3;
 const int kUniqueID = 50;
 const GURL kReferrerURL = GURL("http://www.referrer.com");
-const int kReferrerPolicy = 0;
+const int kReferrerPolicy = net::URLRequest::NEVER_CLEAR_REFERRER;
 const GURL kVirtualURL= GURL("http://www.virtual-url.com");
 const base::string16 kTitle = base::ASCIIToUTF16("title");
 const std::string kEncodedPageState = "page state";

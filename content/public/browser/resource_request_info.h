@@ -11,7 +11,7 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/resource_type.h"
-#include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
+#include "net/url_request/url_request.h"
 #include "ui/base/page_transition_types.h"
 
 namespace net {
@@ -136,7 +136,7 @@ class ResourceRequestInfo {
   virtual int GetProcessType() const = 0;
 
   // Returns the associated referrer policy.
-  virtual blink::WebReferrerPolicy GetReferrerPolicy() const = 0;
+  virtual net::URLRequest::ReferrerPolicy GetReferrerPolicy() const = 0;
 
   // Returns whether the frame that initiated this request is used for
   // prerendering.

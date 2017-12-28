@@ -721,8 +721,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
   // URLRequest class to set these fields. whereas we use ResourceRequest here.
   new_request->request_initiator = request_info->begin_params->initiator_origin;
   new_request->referrer = request_info->common_params.referrer.url;
-  new_request->referrer_policy = Referrer::ReferrerPolicyForUrlRequest(
-      request_info->common_params.referrer.policy);
+  new_request->referrer_policy = request_info->common_params.referrer.policy;
   new_request->headers.AddHeadersFromString(
       request_info->begin_params->headers);
 

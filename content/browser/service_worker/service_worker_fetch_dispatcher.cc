@@ -727,8 +727,7 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
           ? original_request->initiator()
           : url::Origin::Create(original_request->url());
   request.referrer = GURL(original_request->referrer());
-  request.referrer_policy =
-      Referrer::ReferrerPolicyForUrlRequest(original_info->GetReferrerPolicy());
+  request.referrer_policy = original_info->GetReferrerPolicy();
   request.is_prerendering = original_info->IsPrerendering();
   request.load_flags = original_request->load_flags();
   // Set to SUB_RESOURCE because we shouldn't trigger NavigationResourceThrottle

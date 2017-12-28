@@ -635,9 +635,11 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
   } kTestCases[] = {
       {content::Referrer(), ui::PAGE_TRANSITION_LINK,
        ActivationDecision::ACTIVATED},
-      {content::Referrer(GURL(kUrlA), blink::kWebReferrerPolicyDefault),
+      {content::Referrer(GURL(kUrlA),
+                         content::Referrer::GetDefaultReferrerPolicy()),
        ui::PAGE_TRANSITION_LINK, ActivationDecision::ACTIVATED},
-      {content::Referrer(GURL(kURL), blink::kWebReferrerPolicyDefault),
+      {content::Referrer(GURL(kURL),
+                         content::Referrer::GetDefaultReferrerPolicy()),
        ui::PAGE_TRANSITION_LINK, ActivationDecision::URL_WHITELISTED},
       {content::Referrer(), ui::PAGE_TRANSITION_RELOAD,
        ActivationDecision::URL_WHITELISTED}};
