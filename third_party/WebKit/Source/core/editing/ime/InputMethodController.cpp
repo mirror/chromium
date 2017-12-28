@@ -302,12 +302,6 @@ std::pair<ContainerNode*, PlainTextRange> PlainTextRangeForEphemeralRange(
   return std::make_pair(editable, PlainTextRange::Create(*editable, range));
 }
 
-StyleableMarker::Thickness BoolIsThickToStyleableMarkerThickness(
-    bool is_thick) {
-  return is_thick ? StyleableMarker::Thickness::kThick
-                  : StyleableMarker::Thickness::kThin;
-}
-
 }  // anonymous namespace
 
 InputMethodController* InputMethodController::Create(LocalFrame& frame) {
@@ -512,8 +506,7 @@ void InputMethodController::AddImeTextSpans(
       case ImeTextSpan::Type::kComposition:
         GetDocument().Markers().AddCompositionMarker(
             ephemeral_line_range, ime_text_span.UnderlineColor(),
-            BoolIsThickToStyleableMarkerThickness(ime_text_span.Thick()),
-            ime_text_span.BackgroundColor());
+            ime_text_span.Thickness(), ime_text_span.BackgroundColor());
         break;
       case ImeTextSpan::Type::kSuggestion:
       case ImeTextSpan::Type::kMisspellingSuggestion:
@@ -538,8 +531,7 @@ void InputMethodController::AddImeTextSpans(
                 .SetSuggestions(ime_text_span.Suggestions())
                 .SetHighlightColor(ime_text_span.SuggestionHighlightColor())
                 .SetUnderlineColor(ime_text_span.UnderlineColor())
-                .SetThickness(BoolIsThickToStyleableMarkerThickness(
-                    ime_text_span.Thick()))
+                .SetThickness(ime_text_span.Thickness())
                 .SetBackgroundColor(ime_text_span.BackgroundColor())
                 .Build());
         break;
@@ -801,7 +793,7 @@ void InputMethodController::SetComposition(
 
   if (ime_text_spans.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
-        CompositionEphemeralRange(), Color::kBlack,
+        CompositionEphemeralRange(), Color::kTransparent,
         StyleableMarker::Thickness::kThin,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
     return;
