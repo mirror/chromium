@@ -16,6 +16,24 @@
       "revId": "20e3cf9d29c9abdddea9bd1519c4c9043127c6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3880d9ec_552d5e4c",
+        "filename": "tools/clang/value_cleanup/tests/value-get-type-expected.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-28T10:18:46Z",
+      "side": 0,
+      "message": "Exactly, base::Value::GetType was removed in the meantime.",
+      "parentUuid": "e6b58728_75dbfe7f",
+      "revId": "20e3cf9d29c9abdddea9bd1519c4c9043127c6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
