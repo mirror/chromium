@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e098eb77_cd7fe77d",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-28T21:09:30Z",
+      "side": 1,
+      "message": "s/page_capping_observer_/|...|/",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "af9bc525f658754416e123def5daabf793218208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20647995_d2bc313a",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-28T21:09:30Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 568,
+        "startChar": 24,
+        "endLine": 568,
+        "endChar": 28
+      },
+      "revId": "af9bc525f658754416e123def5daabf793218208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85f40d0_14a4ebbd",
+        "filename": "chrome/browser/data_use_measurement/page_load_capping/chrome_page_load_capping_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-28T21:09:30Z",
+      "side": 1,
+      "message": "nit: At some point, remember to add this to fieldtrial_testing_config.json.",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "af9bc525f658754416e123def5daabf793218208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0525ee0d_419d8f1b",
+        "filename": "chrome/browser/data_use_measurement/page_load_capping/page_load_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-28T21:09:30Z",
+      "side": 1,
+      "message": "#include \"...\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "af9bc525f658754416e123def5daabf793218208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
