@@ -16,7 +16,29 @@ namespace ui {
 // some platforms want to negate it, so we want to ensure the range is below the
 // signed int max.) This can be used when the id has to be unique across
 // multiple frames, since node ids are only unique within one tree.
-int32_t AX_EXPORT GetNextAXPlatformNodeUniqueId();
+// In addition to generating a unique id, this class also helps ensure that
+// programmers don't accidentally conflate these unique ids with the int id
+// that comes with web node data.
+
+class AX_EXPORT AXUniqueId {
+ public:
+  AXUniqueId();
+
+  int32_t Get() const { return id_; }
+
+  bool operator==(const AXUniqueId& other) const {
+    return Get() == other.Get();
+  }
+
+  bool operator!=(const AXUniqueId& other) const {
+    return Get() != other.Get();
+  }
+
+ private:
+  int32_t GetNextAXUniqueId() const;
+
+  int32_t id_;
+};
 
 }  // namespace ui
 
