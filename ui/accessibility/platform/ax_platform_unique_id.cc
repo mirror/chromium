@@ -6,8 +6,11 @@
 
 namespace ui {
 
-int32_t GetNextAXPlatformNodeUniqueId() {
+AXUniqueId::AXUniqueId() : id_(GetNextAXUniqueId()) {}
+
+int32_t AXUniqueId::GetNextAXUniqueId() const {
   static int32_t next_unique_id = 1;
+
   int32_t unique_id = next_unique_id;
   if (next_unique_id == INT32_MAX)
     next_unique_id = 1;
