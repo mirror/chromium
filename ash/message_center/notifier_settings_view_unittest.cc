@@ -132,32 +132,6 @@ NotifierSettingsView* NotifierSettingsViewTest::GetView() const {
   return notifier_settings_view_.get();
 }
 
-TEST_F(NotifierSettingsViewTest, TestLearnMoreButton) {
-  InitView();
-  // Wait for mojo.
-  base::RunLoop().RunUntilIdle();
-  const std::set<NotifierSettingsView::NotifierButton*>& buttons =
-      GetView()->buttons_;
-  EXPECT_EQ(2u, buttons.size());
-  size_t number_of_settings_buttons = 0;
-  for (auto* button : buttons) {
-    if (button->has_learn_more()) {
-      ++number_of_settings_buttons;
-      button->SendLearnMorePressedForTest();
-    }
-  }
-
-  // Wait for mojo.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(1u, number_of_settings_buttons);
-  EXPECT_EQ(1u, client()->settings_request_count());
-  const NotifierId* last_settings_button_id =
-      client()->last_requested_notifier_id();
-  ASSERT_FALSE(last_settings_button_id == nullptr);
-  EXPECT_EQ(NotifierId(NotifierId::APPLICATION, "id"),
-            *last_settings_button_id);
-}
-
 TEST_F(NotifierSettingsViewTest, TestEmptyNotifierView) {
   InitView();
   // Wait for mojo.
