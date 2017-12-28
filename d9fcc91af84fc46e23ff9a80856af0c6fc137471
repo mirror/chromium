@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66609ae2_1a9a378d",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-28T01:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8caec5f_572a381d",
+      "revId": "d9fcc91af84fc46e23ff9a80856af0c6fc137471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60059935_8b40ea54",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-27T18:27:32Z",
       "side": 1,
       "message": "Maybe we could merge this one with LoginShelfButton? Just use views::Button and add image and text as child view when applicable.",
+      "revId": "d9fcc91af84fc46e23ff9a80856af0c6fc137471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3eda21e_6d45a1e8",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-28T01:21:36Z",
+      "side": 1,
+      "message": "There is some fiddling with the layout that repeats LabelButton code if I derive from views:Button. What do you think about setting empty text to LabelButton? It achieves similar result. \nIt might be considered a hacky way, so I can implement derivation of Button if that is preferable. LMK.",
+      "parentUuid": "60059935_8b40ea54",
       "revId": "d9fcc91af84fc46e23ff9a80856af0c6fc137471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
