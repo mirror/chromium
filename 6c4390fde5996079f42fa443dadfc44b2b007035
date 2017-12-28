@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a31dfdfc_3893ef51",
+        "filename": "third_party/openh264/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T18:20:32Z",
+      "side": 1,
+      "message": "I\u0027m a little bit confused... the referenced commit is at the time of writing this comment only 10 days old:\nhttps://chromium.googlesource.com/external/github.com/cisco/openh264/+log/5a5c4f14f471b9f434a55c39e942153453f25661 (5 commits after the desired patches).\n\nBut v.1.7.0 is 7 months old:\nhttps://chromium.googlesource.com/external/github.com/cisco/openh264/+log/v1.7.0\n\nAnd I don\u0027t find the v1.7.0 commit in the log of the referenced commit, isn\u0027t this a more recent commit of the same branch? A fast-forward? Why can\u0027t I find it?\nJust want to make sure I don\u0027t sign off on the wrong version or switching to a different branch accidentally.\n\nThe updating of version number doesn\u0027t seem to be very frequent though, v.1.6.0 was a year and a half ago and I don\u0027t see any tags between 1.6 and 1.7.\nIs there anything you could write here to indicate that it is a more recent version than v.1.7.0?",
+      "revId": "6c4390fde5996079f42fa443dadfc44b2b007035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
