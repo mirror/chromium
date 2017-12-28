@@ -108,6 +108,37 @@ ToVectorAudioInputDeviceCapabilitiesPtr(
 
 }  // namespace
 
+class MediaDevicesDispatcherHost::DeviceChangeSubscription {
+ public:
+  DeviceChangeSubscription(MediaDevicesDispatcherHost* host,
+                           blink::mojom::MediaDevicesListenerPtr listener,
+                           uint32_t id)
+      : host_(host), listener_(std::move(listener)), id_(id) {
+    listener_.set_connection_error_handler(base::BindOnce(
+        &DeviceChangeSubscription::OnConnectionError, base::Unretained(this)));
+  }
+
+  ~DeviceChangeSubscription() {
+    DCHECK_NE(id_, 0u);
+    host_->UnsubscribeDeviceChangeNotifications(id_);
+  }
+
+  void OnConnectionError() {
+    DCHECK_NE(id_, 0u);
+    host_->MediaDevicesListenerHadConnectionError(id_);
+  }
+
+  void OnDevicesChanged(MediaDeviceType type,
+                        const MediaDeviceInfoArray& device_infos) {
+    listener_->OnDevicesChanged(type, id_, device_infos);
+  }
+
+ private:
+  MediaDevicesDispatcherHost* host_;
+  blink::mojom::MediaDevicesListenerPtr listener_;
+  uint32_t id_ = 0u;
+};
+
 // static
 void MediaDevicesDispatcherHost::Create(
     int render_process_id,
@@ -259,6 +290,37 @@ void MediaDevicesDispatcherHost::UnsubscribeDeviceChangeNotifications(
     media_stream_manager_->media_devices_manager()
         ->UnsubscribeDeviceChangeNotifications(type, this);
   }
+}
+
+void MediaDevicesDispatcherHost::SetMediaDevicesListener(
+    blink::mojom::MediaDevicesListenerPtr listener) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  uint32_t subscription_id = ++subscription_id_;
+
+  auto subscription = std::make_unique<DeviceChangeSubscription>(
+      this, std::move(listener), subscription_id);
+  media_stream_manager_->media_devices_manager()
+      ->SubscribeDeviceChangeNotifications(
+          subscription_id,
+          base::BindRepeating(&DeviceChangeSubscription::OnDevicesChanged,
+                              base::Unretained(subscription.get())));
+  subscriptions_[subscription_id] = std::move(subscription);
+}
+
+void MediaDevicesDispatcherHost::UnsubscribeDeviceChangeNotifications(
+    uint32_t subscription_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  media_stream_manager_->media_devices_manager()
+      ->UnsubscribeDeviceChangeNotifications(subscription_id);
+}
+
+void MediaDevicesDispatcherHost::MediaDevicesListenerHadConnectionError(
+    uint32_t subscription_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  auto it = subscriptions_.find(subscription_id);
+  DCHECK(it != subscriptions_.end());
+  subscriptions_.erase(it);
 }
 
 void MediaDevicesDispatcherHost::OnDevicesChanged(

@@ -60,6 +60,10 @@ class CONTENT_EXPORT MediaDevicesManager
   using EnumerationCallback =
       base::Callback<void(const MediaDeviceEnumeration&)>;
 
+  using DeviceChangeCallback =
+      base::RepeatingCallback<void(MediaDeviceType type,
+                                   const MediaDeviceInfoArray& device_infos)>;
+
   MediaDevicesManager(
       media::AudioSystem* audio_system,
       const scoped_refptr<VideoCaptureManager>& video_capture_manager,
@@ -91,6 +95,11 @@ class CONTENT_EXPORT MediaDevicesManager
   void UnsubscribeDeviceChangeNotifications(
       MediaDeviceType type,
       MediaDeviceChangeSubscriber* subscriber);
+
+  void SubscribeDeviceChangeNotifications(
+      uint32_t subscription_id,
+      DeviceChangeCallback device_change_cb);
+  void UnsubscribeDeviceChangeNotifications(uint32_t subscription_id);
 
   // Tries to start device monitoring. If successful, enables caching of
   // enumeration results for the device types supported by the monitor.
@@ -181,6 +190,7 @@ class CONTENT_EXPORT MediaDevicesManager
 
   std::vector<MediaDeviceChangeSubscriber*>
       device_change_subscribers_[NUM_MEDIA_DEVICE_TYPES];
+  std::map<uint32_t, DeviceChangeCallback> device_change_callbacks_;
 
   base::WeakPtrFactory<MediaDevicesManager> weak_factory_;
 
