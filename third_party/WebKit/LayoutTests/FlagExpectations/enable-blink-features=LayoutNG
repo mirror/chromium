@@ -6410,8 +6410,6 @@ crbug.com/591099 fast/text/whitespace/reattach-before-pseudo-nondistributed-whit
 crbug.com/591099 fast/text/whitespace/reattach-before-pseudo-slot-fallback-whitespace.html [ Failure ]
 crbug.com/591099 fast/text/whitespace/reattach-before-pseudo.html [ Failure ]
 crbug.com/591099 fast/text/whitespace/reattach-slotted-whitespace.html [ Failure ]
-crbug.com/636993 fast/text/whitespace/text-align-justify-and-whitespace-pre.html [ Failure ]
-crbug.com/591099 fast/text/whitespace/whitespace-in-pre.html [ Failure ]
 crbug.com/591099 fast/text/writing-root-with-overflow-clip-baseline.html [ Crash ]
 crbug.com/591099 fast/text/zero-width-characters-complex-script.html [ Failure ]
 crbug.com/591099 fast/text/zero-width-characters.html [ Failure ]

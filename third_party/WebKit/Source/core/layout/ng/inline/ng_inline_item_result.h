@@ -75,9 +75,10 @@ struct CORE_EXPORT NGInlineItemResult {
   // Used only during line breaking.
   bool can_break_after = false;
 
-  // Has spaces that hangs beyond the end margin.
-  // Set only for text items.
-  bool has_hanging_spaces = false;
+  // True if this item contains only trailing spaces.
+  // Trailing spaces are measured differently that they are split from other
+  // text items.
+  bool is_trailing_spaces = false;
 
   // End effects for text items.
   // The effects are included in |shape_result|, but not in text content.
@@ -147,6 +148,7 @@ class CORE_EXPORT NGLineInfo {
   // Start/end text offset of this line.
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
+  unsigned EndOffsetWithoutTrailingSpaces() const;
   void SetStartOffset(unsigned offset) { start_offset_ = offset; }
   void SetEndOffset(unsigned offset) { end_offset_ = offset; }
 
