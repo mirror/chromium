@@ -687,6 +687,7 @@ void ServiceWorkerVersion::RunAfterStartWorker(
     std::move(task).Run();
     return;
   }
+  // FOO
   StartWorker(purpose, base::BindOnce(
                            &RunTaskAfterStartWorker, weak_factory_.GetWeakPtr(),
                            std::move(error_callback), std::move(task)));
