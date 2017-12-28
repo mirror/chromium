@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ddfaf9d_949cecdb",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "not for this change, musings to ask what you think:\n\nseems that we are getting more into the investigation territory, so separating out the tools that are not used directly for orderfile generation would probably add clarity. Immediate thoughts are:\n\ntools/cygprofile/tools/compare_profiles.py\ntools/cygprofile/tools/compare_orderfiles.py\n\nWDYT?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10894ae_c95a8a89",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "nit: Appending current directory to sys.path seems unnecessary. At least orderfile_generator_backend.py is not doing it.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6021a0fd_151411c4",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "please provide a one-line docstring\n\nbetter name would be something like: _GetExistingFilesFromList",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10db22b_9eb531df",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "list of globs as an interface is certainly fancy :) Comma-separating globs in bash commandline can be surprising if not quoted, would it be convenient to provide here only the name of the subdirectory for these dumps here?",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eada33e_552564ec",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "is a_by_name[s.name].size different from s.size? The symbol sizes are coming from the same binary, no?",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7497cb_61bd5b68",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "nit: regular_lib_symbol_infos for consistency with the previous param",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 23
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8be8bc7_befa2cab",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "not a (str) anymore",
+      "range": {
+        "startLine": 188,
+        "startChar": 34,
+        "endLine": 188,
+        "endChar": 39
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b39c6e_a2e3951d",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-28T12:31:35Z",
+      "side": 1,
+      "message": "this looks like an unrelated change. Was it intentional or just picked by some of the side changes? Could this break one of our instrumentation pipelines that runs on top of Chrome.apk?\n\nIf this was indeed intentional and you believe it is innocent, please add notes for both into the commit description.",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
