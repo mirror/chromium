@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de70c63_68db48c1",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-28T19:44:37Z",
+      "side": 1,
+      "message": "yoda conditions. network_quality.http_rtt().InMilliseconds() \u003d\u003d nqe::internal::INVALID_RTT_THROUGHPUT instead here and below.",
+      "revId": "f65f77da31ebad13594ebb977c490e34f8dc2328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b74ec6_6e7863ad",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-28T19:44:37Z",
+      "side": 1,
+      "message": "Check if you changed network_quality and then update once.",
+      "revId": "f65f77da31ebad13594ebb977c490e34f8dc2328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
