@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd1956e_c58e35f5",
+        "filename": "net/cert/known_roots_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-28T20:09:05Z",
+      "side": 1,
+      "message": "Curious that the function uses 2 different bool names...",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 44
+      },
+      "revId": "f43bd1c5d00a9f71691666d1da7fb0ec95a096b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
