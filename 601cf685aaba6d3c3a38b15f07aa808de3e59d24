@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "887712f5_43f99bff",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_subclasses.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-28T03:58:04Z",
+      "side": 1,
+      "message": "Done, good catch :)",
+      "parentUuid": "a72b0dbc_4547ca67",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55743da_d9d9c34f",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_subclasses.py",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aa576fb4_214cc5f6",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_subclasses.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-28T03:58:04Z",
+      "side": 1,
+      "message": "Done, much cleaner!",
+      "parentUuid": "f55743da_d9d9c34f",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4fc8a20_9fc0e9b3",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-27T23:22:50Z",
       "side": 1,
       "message": "Do you need to rename these to *Custom.cpp too?",
+      "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7a4e06_3983f6a0",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-28T03:58:04Z",
+      "side": 1,
+      "message": "nope, these are the generated versions. only the hand written versions end in \u0027custom\u0027",
+      "parentUuid": "a4fc8a20_9fc0e9b3",
       "revId": "601cf685aaba6d3c3a38b15f07aa808de3e59d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
