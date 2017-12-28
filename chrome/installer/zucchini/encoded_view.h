@@ -9,7 +9,9 @@
 #include <stdint.h>
 
 #include <iterator>
+#include <vector>
 
+#include "base/macros.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
 
@@ -17,14 +19,14 @@ namespace zucchini {
 
 // Zucchini-gen performs semantics-aware matching:
 // - Same-typed reference target in "old" and "new" can be associated.
-//   Associated targets are assigned an identifier called "label" (for
+//   Associated targets are assigned an identifier called "label" (and for
 //   unassociated targets, label = 0).
-// - EncodedView maps each offset in "old" and "new" images to an "projected
+// - EncodedView maps each offset in "old" and "new" images to a "projected
 //   value", which can be:
 //   - Raw byte value (0-255) for non-references.
 //   - Reference "projected value" (> 256) that depends on target {type, label}
 //     at each reference's location (byte 0).
-//   - Reference padding value (256) at the body of each reference (byte 1+).
+//   - Reference padding value (256) at the body of each reference (bytes 1+).
 // - The projected values for "old" and "new" are used to build the equivalence
 //   map.
 
@@ -130,15 +132,23 @@ class EncodedView {
   // |image_index| is the annotated image being adapted, and is required to
   // remain valid for the lifetime of the object.
   explicit EncodedView(const ImageIndex& image_index);
+  ~EncodedView();
 
   // Projects |location| to a scalar value that describes the content at a
   // higher level of abstraction.
   value_type Projection(offset_t location) const;
 
+  bool IsToken(offset_t location) const {
+    return image_index_.IsToken(location);
+  }
+
   // Returns the cardinality of the projection, i.e., the upper bound on
   // values returned by Projection().
   value_type Cardinality() const;
 
+  // Associates |labels| to targets for a given |pool|, replacing previous
+  // association. Values in |labels| must be smaller than |bound|.
+  void SetLabels(PoolTag pool, std::vector<uint32_t>&& labels, size_t bound);
   const ImageIndex& image_index() const { return image_index_; }
 
   // Range functions.
@@ -151,7 +161,19 @@ class EncodedView {
   }
 
  private:
+  struct PoolInfo {
+    PoolInfo();
+    PoolInfo(PoolInfo&&);
+    ~PoolInfo();
+
+    std::vector<uint32_t> labels;
+    size_t bound = 0;
+  };
+
   const ImageIndex& image_index_;
+  std::vector<PoolInfo> pool_infos_;
+
+  DISALLOW_COPY_AND_ASSIGN(EncodedView);
 };
 
 }  // namespace zucchini
