@@ -14,10 +14,10 @@
 #include "base/containers/flat_set.h"
 #include "content/browser/devtools/devtools_io_context.h"
 #include "content/common/content_export.h"
-#include "content/common/devtools.mojom.h"
 #include "content/common/devtools_messages.h"
 #include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/devtools_agent_host.h"
+#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 
 namespace content {
 
@@ -114,7 +114,8 @@ class DevToolsMessageChunkProcessor {
   void set_state_cookie(const std::string& cookie) { state_cookie_ = cookie; }
   int last_call_id() const { return last_call_id_; }
   bool ProcessChunkedMessageFromAgent(const DevToolsMessageChunk& chunk);
-  bool ProcessChunkedMessageFromAgent(mojom::DevToolsMessageChunkPtr chunk);
+  bool ProcessChunkedMessageFromAgent(
+      blink::mojom::DevToolsMessageChunkPtr chunk);
   void Reset();
 
  private:

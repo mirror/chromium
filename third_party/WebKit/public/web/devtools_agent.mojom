@@ -2,9 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-module content.mojom;
-
-import "ui/gfx/geometry/mojo/geometry.mojom";
+module blink.mojom;
 
 // Used to send large messages in chunks from session to a host.
 struct DevToolsMessageChunk {
@@ -83,7 +81,7 @@ interface DevToolsSession {
   DispatchProtocolMessage(int32 call_id, string method, string message);
 
   // Requests an element at specific position to be inspected.
-  InspectElement(gfx.mojom.Point point);
+  InspectElement(int32 x, int32 y);
 };
 
 // A peer of DevToolsSession representing a remote debugging client

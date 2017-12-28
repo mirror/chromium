@@ -72,8 +72,8 @@ void DevToolsSession::SetFallThroughForNotFound(bool value) {
 }
 
 void DevToolsSession::AttachToAgent(
-    const mojom::DevToolsAgentAssociatedPtr& agent) {
-  mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
+    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
+  blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
   agent->AttachDevToolsSession(
       std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
@@ -83,8 +83,8 @@ void DevToolsSession::AttachToAgent(
 }
 
 void DevToolsSession::ReattachToAgent(
-    const mojom::DevToolsAgentAssociatedPtr& agent) {
-  mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
+    const blink::mojom::DevToolsAgentAssociatedPtr& agent) {
+  blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
   binding_.Bind(mojo::MakeRequest(&host_ptr_info));
   agent->AttachDevToolsSession(
       std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
@@ -166,9 +166,9 @@ void DevToolsSession::DispatchProtocolMessageToAgent(
   }
 }
 
-void DevToolsSession::InspectElement(const gfx::Point& point) {
+void DevToolsSession::InspectElement(int x, int y) {
   if (session_ptr_)
-    session_ptr_->InspectElement(point);
+    session_ptr_->InspectElement(x, y);
 }
 
 bool DevToolsSession::ReceiveMessageChunk(const DevToolsMessageChunk& chunk) {
@@ -190,7 +190,7 @@ void DevToolsSession::flushProtocolNotifications() {
 }
 
 void DevToolsSession::DispatchProtocolMessage(
-    mojom::DevToolsMessageChunkPtr chunk) {
+    blink::mojom::DevToolsMessageChunkPtr chunk) {
   if (chunk_processor_.ProcessChunkedMessageFromAgent(std::move(chunk)))
     return;
 
