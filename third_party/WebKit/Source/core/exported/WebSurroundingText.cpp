@@ -38,11 +38,8 @@
 
 namespace blink {
 
-WebSurroundingText::WebSurroundingText()
-    : start_offset_in_text_content_(0), end_offset_in_text_content_(0) {}
-
-void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
-                                                        size_t max_length) {
+WebSurroundingText::WebSurroundingText(WebLocalFrame* frame, size_t max_length)
+    : start_offset_in_text_content_(0), end_offset_in_text_content_(0) {
   LocalFrame* web_frame = ToWebLocalFrameImpl(frame)->GetFrame();
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -137,7 +134,7 @@ size_t WebSurroundingText::EndOffsetInTextContent() const {
   return end_offset_in_text_content_;
 }
 
-bool WebSurroundingText::IsNull() const {
+bool WebSurroundingText::IsEmpty() const {
   return text_content_.IsEmpty();
 }
 
