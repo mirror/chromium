@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0ac4b98_9b78f246",
+        "filename": "third_party/WebKit/Source/core/css/MediaValues.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "I\u0027d really prefer you to use the actual type here instead of auto, it\u0027s not obvious from the code what type it is",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54fc0ef_94cb2c95",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 824,
+        "startChar": 77,
+        "endLine": 824,
+        "endChar": 78
+      },
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa5ed32_87cb8e5e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f31e93_2038f77d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10602d14_30ca0e0f",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "and especially here!",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf43c0d_4f89e7c8",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2974,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ae0f10_16b39579",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 5332,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-28T00:56:27Z",
+      "side": 1,
+      "message": "layout_view_item -\u003e layout_view ?\n\nAlso, this may not need the \"this-\u003e\" anymore",
+      "revId": "fa9ec69e2fd1b4c0a0d3bd59e213148181903f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
