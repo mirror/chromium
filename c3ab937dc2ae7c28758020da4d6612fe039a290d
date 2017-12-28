@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b8dbcc4_5e74d210",
+        "filename": "content/browser/loader/resource_request_info_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-28T21:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ccc0d9_ff5a6012",
+      "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "055deb8c_7146d813",
         "filename": "third_party/WebKit/public/platform/WebURLLoaderClient.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-28T06:54:47Z",
       "side": 1,
       "message": "I would weakly prefer if this was an enum for readability.\n\nIt may be also nice to document exactly what a \u0027blocked cross site document\u0027 is in the comments in this header.",
+      "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a708ee36_142bae3b",
+        "filename": "third_party/WebKit/public/platform/WebURLLoaderClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-28T21:29:45Z",
+      "side": 1,
+      "message": "Added the documentation.\n\nI\u0027m going to use this \"weakly\" as an escape hatch. The enum literals for this one I can think of are DocumentLoadBlocked and DocumentLoadNotBlocked, which makes reader consider them as valid options for a successful load.\n\nIn our case DocumentLoadBlocked is closer to a failure and this whole concept of fooling Blink with 0 content is somewhat a hack. I was hoping we could eventually convert it to an actual failure with a reason, in which case it would make sense for failure reason to be enum. Does it make sense?",
+      "parentUuid": "055deb8c_7146d813",
       "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
