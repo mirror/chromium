@@ -202,6 +202,13 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
 
   void SetBlobHandles(BlobHandles blob_handles);
 
+  bool blocked_cross_site_document() const {
+    return blocked_cross_site_document_;
+  }
+  void set_blocked_cross_site_document(bool value) {
+    blocked_cross_site_document_ = value;
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ResourceDispatcherHostTest,
                            DeletedFilterDetached);
@@ -240,6 +247,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   scoped_refptr<ResourceRequestBody> body_;
   bool initiated_in_secure_context_;
   std::unique_ptr<NavigationUIData> navigation_ui_data_;
+  bool blocked_cross_site_document_;
 
   // Keeps upload body blobs alive for the duration of the request.
   BlobHandles blob_handles_;
