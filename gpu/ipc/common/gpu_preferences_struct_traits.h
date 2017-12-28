@@ -59,8 +59,8 @@ struct StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences> {
     out->gpu_startup_dialog = prefs.gpu_startup_dialog();
     out->disable_gpu_watchdog = prefs.disable_gpu_watchdog();
     out->gpu_sandbox_start_early = prefs.gpu_sandbox_start_early();
-    out->disable_vaapi_accelerated_video_encode =
-        prefs.disable_vaapi_accelerated_video_encode();
+    out->disable_accelerated_video_encode =
+        prefs.disable_accelerated_video_encode();
     out->disable_web_rtc_hw_encoding = prefs.disable_web_rtc_hw_encoding();
     if (!prefs.ReadEnableAcceleratedVpxDecode(
             &out->enable_accelerated_vpx_decode))
@@ -119,9 +119,9 @@ struct StructTraits<gpu::mojom::GpuPreferencesDataView, gpu::GpuPreferences> {
     return prefs.gpu_sandbox_start_early;
   }
 
-  static bool disable_vaapi_accelerated_video_encode(
+  static bool disable_accelerated_video_encode(
       const gpu::GpuPreferences& prefs) {
-    return prefs.disable_vaapi_accelerated_video_encode;
+    return prefs.disable_accelerated_video_encode;
   }
 
   static bool disable_web_rtc_hw_encoding(const gpu::GpuPreferences& prefs) {
