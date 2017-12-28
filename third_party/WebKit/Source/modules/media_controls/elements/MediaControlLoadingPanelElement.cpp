@@ -51,7 +51,7 @@ MediaControlLoadingPanelElement::MediaControlLoadingPanelElement(
 // +- #cutoff-4
 // +- #fake-timeline
 void MediaControlLoadingPanelElement::PopulateShadowDOM() {
-  ShadowRoot* shadow_root = YoungestShadowRoot();
+  ShadowRoot* shadow_root = GetShadowRoot();
   DCHECK(!shadow_root->HasChildren());
 
   // This stylesheet element and will contain rules that are specific to the
@@ -121,7 +121,7 @@ void MediaControlLoadingPanelElement::RemovedFrom(
 
 void MediaControlLoadingPanelElement::CleanupShadowDOM() {
   // Clear the shadow DOM children and all references to it.
-  ShadowRoot* shadow_root = YoungestShadowRoot();
+  ShadowRoot* shadow_root = GetShadowRoot();
   DCHECK(shadow_root->HasChildren());
   event_listener_->Detach();
   shadow_root->RemoveChildren();
