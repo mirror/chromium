@@ -94,6 +94,7 @@ const gfx::Rect ContainerFloatingBehavior::AdjustSetBoundsRequest(
 gfx::Rect ContainerFloatingBehavior::ContainKeyboardToScreenBounds(
     const gfx::Rect& keyboard_bounds,
     const gfx::Rect& display_bounds) const {
+      return keyboard_bounds;
   int left = keyboard_bounds.x();
   int top = keyboard_bounds.y();
   int right = left + keyboard_bounds.width();
@@ -217,6 +218,7 @@ void ContainerFloatingBehavior::SetCanonicalBounds(
       gfx::Size(kKeyboardWidth, container->bounds().height());
   gfx::Point keyboard_location =
       GetPositionForShowingKeyboard(keyboard_size, display_bounds);
+  SavePosition(keyboard_location);
   container->SetBounds(gfx::Rect(keyboard_location, keyboard_size));
 }
 
