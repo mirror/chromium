@@ -36,6 +36,8 @@ void DataUseAscriber::OnNetworkBytesSent(net::URLRequest* request,
   DataUseRecorder* recorder = GetDataUseRecorder(*request);
   if (recorder)
     recorder->OnNetworkBytesSent(request, bytes_sent);
+  for (auto& observer : observers_)
+    observer.OnNetworkBytesUpdate(*request, &recorder->data_use());
 }
 
 void DataUseAscriber::OnNetworkBytesReceived(net::URLRequest* request,
@@ -43,6 +45,8 @@ void DataUseAscriber::OnNetworkBytesReceived(net::URLRequest* request,
   DataUseRecorder* recorder = GetDataUseRecorder(*request);
   if (recorder)
     recorder->OnNetworkBytesReceived(request, bytes_received);
+  for (auto& observer : observers_)
+    observer.OnNetworkBytesUpdate(*request, &recorder->data_use());
 }
 
 void DataUseAscriber::OnUrlRequestCompleted(const net::URLRequest& request,
