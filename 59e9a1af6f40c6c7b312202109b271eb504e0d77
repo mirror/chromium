@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d7538ab_f8e6522a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-12-28T00:11:17Z",
+      "side": 1,
+      "message": "I might be missing some concepts of the auto-fit logic, but as far as I understood it, the only way a span\u0027s start or/and end lines can point to a collapsed track if they are used in a out-of-flow item. Otherwise, the in-flow item will make such span to belong to an actual (non-collapsed) track.\n\nSo, if I\u0027m not wrong, this logic affects only to positioned items. In any case, if we eventually find some in-flow related cases hit by this issue, we can solve them in a different CL, considering that the issue we are trying to solve is specific to positioned items.",
+      "parentUuid": "9726eed4_3b70e36d",
+      "revId": "59e9a1af6f40c6c7b312202109b271eb504e0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63c22f72_68386548",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/abspos/grid-positioned-items-and-autofit-tracks-001.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-26T10:16:34Z",
       "side": 1,
       "message": "As you\u0027re using check-layout-th.js I\u0027d merge all the tests in this CL in a single file.",
+      "revId": "59e9a1af6f40c6c7b312202109b271eb504e0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5382f91_69b98151",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid/abspos/grid-positioned-items-and-autofit-tracks-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-12-28T00:11:17Z",
+      "side": 1,
+      "message": "I think that having several files makes easier to describe and visualize the different cases we are testing here. It\u0027s also easier to add more in the future.",
+      "parentUuid": "63c22f72_68386548",
       "revId": "59e9a1af6f40c6c7b312202109b271eb504e0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "59e9a1af6f40c6c7b312202109b271eb504e0d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1d7b7c_58cff654",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-12-28T00:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d20401_bb080330",
+      "revId": "59e9a1af6f40c6c7b312202109b271eb504e0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
