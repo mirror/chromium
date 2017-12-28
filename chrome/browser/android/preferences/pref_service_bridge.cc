@@ -1218,9 +1218,7 @@ static void JNI_PrefServiceBridge_MoveAcceptLanguage(
     where = translate::TranslatePrefs::kUp;
   }
 
-  for (int i = 0; i < offset; ++i) {
-    translate_prefs->RearrangeLanguage(language_code, where, languages);
-  }
+  translate_prefs->RearrangeLanguage(language_code, where, offset, languages);
 }
 
 static ScopedJavaLocalRef<jstring>
