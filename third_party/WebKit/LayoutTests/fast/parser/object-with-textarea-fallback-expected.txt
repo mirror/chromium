@@ -18,6 +18,7 @@
 |       "
 "
 |       <shadow:root>
-|         <content>
+|         <slot>
+|           name="internal-fallback-slot"
 |     "
 "
