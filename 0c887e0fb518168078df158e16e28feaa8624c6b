@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0adc929c_103dddd6",
+        "filename": "chrome/browser/media/router/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-28T02:33:33Z",
+      "side": 1,
+      "message": "It seems PSDImpl depends on LocalPresentationManager and that\u0027s causing a compilation error on Android. Since Clank doesn\u0027t need LocalPresentationManager, we might want to surround its use in PSDImpl with OS macros.",
+      "revId": "0c887e0fb518168078df158e16e28feaa8624c6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
