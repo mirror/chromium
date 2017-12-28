@@ -60,11 +60,14 @@ struct Page {
   sk_sp<cc::PaintRecord> content_;
 };
 
+// TODO(weili): Remove pdf from struct name and field names since it is used for
+//              other formats as well.
 struct PdfMetafileSkiaData {
   cc::PaintRecorder recorder_;  // Current recording
 
   std::vector<Page> pages_;
   std::unique_ptr<SkStreamAsset> pdf_data_;
+  std::vector<uint64_t> subframe_content_ids;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -168,7 +171,12 @@ bool PdfMetafileSkia::FinishDocument() {
       doc = MakePdfDocument(printing::GetAgent(), &stream);
       break;
     case SkiaDocumentType::MSKP:
+#if defined(EXPERIMENTAL_SKIA)
+      SkSerialProcs procs;
+      doc = SkMakeMultiPictureDocument(&stream, &procs);
+#else
       doc = SkMakeMultiPictureDocument(&stream);
+#endif
       break;
   }
 
@@ -181,6 +189,32 @@ bool PdfMetafileSkia::FinishDocument() {
   doc->close();
 
   data_->pdf_data_ = stream.detachAsStream();
+  return true;
+}
+
+bool PdfMetafileSkia::FinishFrameContent() {
+  // If we've already set the data in InitFromData, leave it be.
+  if (data_->pdf_data_)
+    return false;
+
+  if (data_->recorder_.getRecordingCanvas())
+    FinishPage();
+
+  if (data_->pages_.size() != 1) {
+    NOTREACHED();
+    return false;
+  }
+  SkDynamicMemoryWStream stream;
+  sk_sp<SkPicture> pic = ToSkPicture(data_->pages_[0].content_,
+                                     SkRect::MakeSize(data_->pages_[0].size_));
+#if defined(EXPERIMENTAL_SKIA)
+  SkSerialProcs procs;
+  pic->serialize(&stream, &procs);
+#else
+  pic->serialize(&stream);
+#endif
+  data_->pdf_data_ = stream.detachAsStream();
+  data_->subframe_content_ids.clear();
   return true;
 }
 
@@ -275,6 +309,10 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   } while (!asset->isAtEnd());
 
   return true;
+}
+
+std::vector<uint64_t> PdfMetafileSkia::GetSubframeContentIDs() const {
+  return data_->subframe_content_ids;
 }
 
 std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
