@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05df9509_bf43e8a1",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/transformed-clip-before-second-column-expected.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-28T21:15:22Z",
+      "side": 1,
+      "message": "Adjusted the transform so that it does not clip out the rectangle.",
+      "parentUuid": "feab8028_a843e783",
+      "revId": "3d8adb0095d966c46488cc2103da9142030e1127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e37849ba_707ec94f",
         "filename": "third_party/WebKit/LayoutTests/fragmentation/transformed-clip-before-second-column.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3d8adb0095d966c46488cc2103da9142030e1127",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9164abb5_57ea9c92",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/transformed-clip-before-second-column.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-28T21:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37849ba_707ec94f",
+      "revId": "3d8adb0095d966c46488cc2103da9142030e1127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
