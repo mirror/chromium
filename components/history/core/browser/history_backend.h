@@ -301,6 +301,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       const std::vector<int>& desired_sizes,
+      bool fallback_to_host,
       std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results);
 
   void GetFaviconForID(
@@ -742,12 +743,14 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // returned. If |icon_types| contains multiple icon types and there are
   // several matched icon types in the database, results will only be returned
   // for a single icon type in the priority of kTouchPrecomposedIcon,
-  // kTouchIcon, and kFavicon. See the comment for
-  // GetFaviconResultsForBestMatch() for more details on how
-  // |favicon_bitmap_results| is constructed.
+  // kTouchIcon, and kFavicon. If |fallback_to_host| is true, the host of
+  // |page_url| will be used to search the favicon database if an exact match
+  // cannot be found. See the comment for GetFaviconResultsForBestMatch() for
+  // more details on how |favicon_bitmap_results| is constructed.
   bool GetFaviconsFromDB(const GURL& page_url,
                          const favicon_base::IconTypeSet& icon_types,
                          const std::vector<int>& desired_sizes,
+                         bool fallback_to_host,
                          std::vector<favicon_base::FaviconRawBitmapResult>*
                              favicon_bitmap_results);
 

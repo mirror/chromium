@@ -405,7 +405,8 @@ void ExpireHistoryBackend::DeleteIcons(const GURL& gurl,
                                        DeleteEffects* effects) {
   // Collect shared information.
   std::vector<IconMapping> icon_mappings;
-  if (thumb_db_ && thumb_db_->GetIconMappingsForPageURL(gurl, &icon_mappings)) {
+  if (thumb_db_ &&
+      thumb_db_->GetIconMappingsForPageURL(gurl, false, &icon_mappings)) {
     for (std::vector<IconMapping>::iterator m = icon_mappings.begin();
          m != icon_mappings.end(); ++m) {
       effects->affected_favicons.insert(m->icon_id);

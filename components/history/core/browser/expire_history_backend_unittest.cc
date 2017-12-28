@@ -331,7 +331,7 @@ favicon_base::FaviconID ExpireHistoryTest::GetFavicon(
     const GURL& page_url,
     favicon_base::IconType icon_type) {
   std::vector<IconMapping> icon_mappings;
-  if (thumb_db_->GetIconMappingsForPageURL(page_url, {icon_type},
+  if (thumb_db_->GetIconMappingsForPageURL(page_url, {icon_type}, false,
                                            &icon_mappings)) {
     return icon_mappings[0].icon_id;
   }
@@ -1087,7 +1087,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteUnstarred) {
   expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
 
   // The icon gets deleted.
-  EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, nullptr));
+  EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, false, nullptr));
   EXPECT_FALSE(thumb_db_->GetFaviconHeader(icon_id, nullptr, nullptr));
   EXPECT_FALSE(thumb_db_->GetFaviconBitmaps(icon_id, nullptr));
 }
@@ -1124,8 +1124,10 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesNotDeleteStarred) {
   EXPECT_TRUE(thumb_db_->GetFaviconBitmaps(icon_id, &favicon_bitmaps));
   EXPECT_EQ(1u, favicon_bitmaps.size());
   std::vector<IconMapping> icon_mapping;
-  EXPECT_TRUE(thumb_db_->GetIconMappingsForPageURL(page_url1, &icon_mapping));
-  EXPECT_TRUE(thumb_db_->GetIconMappingsForPageURL(page_url2, &icon_mapping));
+  EXPECT_TRUE(
+      thumb_db_->GetIconMappingsForPageURL(page_url1, false, &icon_mapping));
+  EXPECT_TRUE(
+      thumb_db_->GetIconMappingsForPageURL(page_url2, false, &icon_mapping));
   EXPECT_EQ(2u, icon_mapping.size());
   EXPECT_EQ(icon_id, icon_mapping[0].icon_id);
   EXPECT_EQ(icon_id, icon_mapping[1].icon_id);
@@ -1159,7 +1161,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteAfterLongDelay) {
   expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
 
   // The icon gets deleted.
-  EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, nullptr));
+  EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, false, nullptr));
   EXPECT_FALSE(thumb_db_->GetFaviconHeader(icon_id, nullptr, nullptr));
   EXPECT_FALSE(thumb_db_->GetFaviconBitmaps(icon_id, nullptr));
 }
@@ -1200,8 +1202,10 @@ TEST_F(ExpireHistoryTest,
   EXPECT_TRUE(thumb_db_->GetFaviconBitmaps(icon_id, &favicon_bitmaps));
   EXPECT_EQ(1u, favicon_bitmaps.size());
   std::vector<IconMapping> icon_mapping;
-  EXPECT_TRUE(thumb_db_->GetIconMappingsForPageURL(page_url1, &icon_mapping));
-  EXPECT_TRUE(thumb_db_->GetIconMappingsForPageURL(page_url2, &icon_mapping));
+  EXPECT_TRUE(
+      thumb_db_->GetIconMappingsForPageURL(page_url1, false, &icon_mapping));
+  EXPECT_TRUE(
+      thumb_db_->GetIconMappingsForPageURL(page_url2, false, &icon_mapping));
   EXPECT_EQ(2u, icon_mapping.size());
   EXPECT_EQ(icon_id, icon_mapping[0].icon_id);
   EXPECT_EQ(icon_id, icon_mapping[1].icon_id);
