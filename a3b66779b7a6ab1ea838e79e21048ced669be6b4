@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "989c5f1d_3dfb47d9",
+        "filename": "content/public/network/ignore_errors_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-28T21:38:41Z",
+      "side": 1,
+      "message": "I\u0027ve opted not to do this. The original code is simply a stl set_intersection with a short-circuit on the first result.",
+      "parentUuid": "d6a7239a_5f2f90c0",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f63d638_90451dff",
         "filename": "net/base/hash_value.cc",
         "patchSetId": 4
@@ -53,6 +71,24 @@
       "writtenOn": "2017-12-28T21:23:06Z",
       "side": 1,
       "message": "The tag check (both here and in operator\u003d\u003d) seem like the sort of thing that someone will fail to update if/when a new tag is ever added.\n\nWhy not just use a generic implementation that compares the hashes as data, irrespective of tag?\n\nreturn std::lexicographical_compare(\n    lhs.data(), lhs.data() + lhs.size(),\n    rhs.data(), rhs.data() + rhs.size());",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74a2dfc_2f56b0b1",
+        "filename": "net/base/hash_value.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-28T21:38:41Z",
+      "side": 1,
+      "message": "Did you mean if a new member is added? If so, that objection seems fundamental to any operator overloading - an std::tie() would be just as at-risk.\n\nCertainly, tags of the same length but different types should not be equivalent. This also is a prevalent pattern through Chrome code, so perhaps I\u0027m not understanding the concern?",
+      "parentUuid": "8f63d638_90451dff",
       "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "47407d8f_dc027ae4",
+        "filename": "net/base/hash_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-28T21:38:41Z",
+      "side": 1,
+      "message": "Opted not to do this. While I similarly share your concern regarding memcmp() functions, I think this meets the bar of triviality that it should be plainly obvious as safe, but I\u0027ll keep it in mind for future changes.",
+      "parentUuid": "dbcf85de_e317b57a",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d97ff0ee_df6430de",
         "filename": "net/base/hash_value.h",
         "patchSetId": 4
@@ -93,6 +153,24 @@
       "writtenOn": "2017-12-28T21:23:06Z",
       "side": 1,
       "message": "Why not make these member functions?",
+      "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9df767_3128b755",
+        "filename": "net/base/hash_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-28T21:38:41Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Operator_Overloading\n\n\"Prefer to define non-modifying binary operators as non-member functions. If a binary operator is defined as a class member, implicit conversions will apply to the right-hand argument, but not the left-hand one. It will confuse your users if a \u003c b compiles but b \u003c a doesn\u0027t.\"",
+      "parentUuid": "d97ff0ee_df6430de",
       "revId": "a3b66779b7a6ab1ea838e79e21048ced669be6b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
