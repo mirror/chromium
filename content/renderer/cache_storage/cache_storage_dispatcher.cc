@@ -52,7 +52,8 @@ ServiceWorkerFetchRequest FetchRequestFromWebRequest(
 
   return ServiceWorkerFetchRequest(
       web_request.Url(), web_request.Method().Ascii(), headers,
-      Referrer(web_request.ReferrerUrl(), web_request.GetReferrerPolicy()),
+      Referrer(web_request.ReferrerUrl(), Referrer::ReferrerPolicyForUrlRequest(
+                                              web_request.GetReferrerPolicy())),
       web_request.IsReload());
 }
 
@@ -68,7 +69,8 @@ void PopulateWebRequestFromFetchRequest(
                            WebString::FromASCII(i->second));
   }
   web_request->SetReferrer(WebString::FromASCII(request.referrer.url.spec()),
-                           request.referrer.policy);
+                           Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
+                               request.referrer.policy));
   web_request->SetIsReload(request.is_reload);
 }
 

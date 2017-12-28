@@ -47,6 +47,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(net::NetworkChangeNotifier::ConnectionType,
                           net::NetworkChangeNotifier::CONNECTION_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(net::EffectiveConnectionType,
                           net::EFFECTIVE_CONNECTION_TYPE_LAST - 1)
+IPC_ENUM_TRAITS_MAX_VALUE(net::URLRequest::ReferrerPolicy,
+                          net::URLRequest::MAX_REFERRER_POLICY - 1)
 IPC_ENUM_TRAITS_MAX_VALUE(content::ConsoleMessageLevel,
                           content::CONSOLE_MESSAGE_LEVEL_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebFrameSerializerCacheControlPolicy,

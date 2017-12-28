@@ -43,6 +43,7 @@
 #include "testing/gmock/include/gmock/gmock-matchers.h"
 
 using content::BrowserThread;
+using content::Referrer;
 using content::WebContents;
 using testing::Eq;
 using testing::UnorderedPointwise;
@@ -414,8 +415,8 @@ class ThreatDetailsTest : public ChromeRenderViewHostTestHarness {
 TEST_F(ThreatDetailsTest, ThreatSubResource) {
   auto navigation = content::NavigationSimulator::CreateBrowserInitiated(
       GURL(kLandingURL), web_contents());
-  navigation->SetReferrer(
-      content::Referrer(GURL(kReferrerURL), blink::kWebReferrerPolicyDefault));
+  navigation->SetReferrer(content::Referrer(
+      GURL(kReferrerURL), Referrer::GetDefaultReferrerPolicy()));
   navigation->Commit();
 
   UnsafeResource resource;
@@ -1189,15 +1190,15 @@ TEST_F(ThreatDetailsTest, ThreatOnMainPageLoadBlocked) {
   // navigation entry.
   auto navigation = content::NavigationSimulator::CreateBrowserInitiated(
       GURL(kUnrelatedURL), web_contents());
-  navigation->SetReferrer(content::Referrer(GURL(kUnrelatedReferrerURL),
-                                            blink::kWebReferrerPolicyDefault));
+  navigation->SetReferrer(content::Referrer(
+      GURL(kUnrelatedReferrerURL), Referrer::GetDefaultReferrerPolicy()));
   navigation->Commit();
 
   // Start a pending load with a referrer.
-  controller().LoadURL(
-      GURL(kLandingURL),
-      content::Referrer(GURL(kReferrerURL), blink::kWebReferrerPolicyDefault),
-      ui::PAGE_TRANSITION_TYPED, std::string());
+  controller().LoadURL(GURL(kLandingURL),
+                       content::Referrer(GURL(kReferrerURL),
+                                         Referrer::GetDefaultReferrerPolicy()),
+                       ui::PAGE_TRANSITION_TYPED, std::string());
 
   // Create UnsafeResource for the pending main page load.
   UnsafeResource resource;
@@ -1248,8 +1249,8 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
   // Load and commit the landing URL with a referrer.
   auto navigation = content::NavigationSimulator::CreateBrowserInitiated(
       GURL(kLandingURL), web_contents());
-  navigation->SetReferrer(
-      content::Referrer(GURL(kReferrerURL), blink::kWebReferrerPolicyDefault));
+  navigation->SetReferrer(content::Referrer(
+      GURL(kReferrerURL), Referrer::GetDefaultReferrerPolicy()));
   navigation->Commit();
 
   // Create UnsafeResource for fake sub-resource of landing page.
@@ -1260,7 +1261,7 @@ TEST_F(ThreatDetailsTest, ThreatWithPendingLoad) {
   // Start a pending load before creating ThreatDetails.
   controller().LoadURL(GURL(kPendingURL),
                        content::Referrer(GURL(kPendingReferrerURL),
-                                         blink::kWebReferrerPolicyDefault),
+                                         Referrer::GetDefaultReferrerPolicy()),
                        ui::PAGE_TRANSITION_TYPED, std::string());
 
   // Do ThreatDetails collection.

@@ -1,3 +1,9 @@
 include_rules = [
   "+components/keyed_service/core",
 ]
+
+specific_include_rules = {
+  "serialized_navigation_entry_test_helper.cc": [
+    "+net/url_request/url_request.h",
+  ],
+}

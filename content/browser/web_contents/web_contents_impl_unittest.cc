@@ -3145,7 +3145,7 @@ TEST_F(WebContentsImplTestWithSiteIsolation, StartStopEventsBalance) {
   {
     NavigationController::LoadURLParams load_params(bar_url);
     load_params.referrer =
-        Referrer(GURL("http://referrer"), blink::kWebReferrerPolicyDefault);
+        Referrer(GURL("http://referrer"), Referrer::GetDefaultReferrerPolicy());
     load_params.transition_type = ui::PAGE_TRANSITION_GENERATED;
     load_params.extra_headers = "content-type: text/plain";
     load_params.load_type = NavigationController::LOAD_TYPE_DEFAULT;

@@ -314,11 +314,12 @@ void PromiseWriterHelper(const DropData& drop_data,
     return nil;
 
   if (downloadURL_.is_valid() && contents_) {
-    scoped_refptr<DragDownloadFile> dragFileDownloader(
-        new DragDownloadFile(filePath, std::move(file), downloadURL_,
-                             content::Referrer(contents_->GetLastCommittedURL(),
-                                               dropData_->referrer_policy),
-                             contents_->GetEncoding(), contents_));
+    scoped_refptr<DragDownloadFile> dragFileDownloader(new DragDownloadFile(
+        filePath, std::move(file), downloadURL_,
+        Referrer(
+            contents_->GetLastCommittedURL(),
+            Referrer::ReferrerPolicyForUrlRequest(dropData_->referrer_policy)),
+        contents_->GetEncoding(), contents_));
 
     // The finalizer will take care of closing and deletion.
     dragFileDownloader->Start(new PromiseFileFinalizer(

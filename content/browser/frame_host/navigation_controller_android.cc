@@ -242,7 +242,8 @@ void NavigationControllerAndroid::LoadUrl(
   if (j_referrer_url) {
     params.referrer = content::Referrer(
         GURL(ConvertJavaStringToUTF8(env, j_referrer_url)),
-        static_cast<blink::WebReferrerPolicy>(referrer_policy));
+        Referrer::ReferrerPolicyForUrlRequest(
+            static_cast<blink::WebReferrerPolicy>(referrer_policy)));
   }
 
   navigation_controller_->LoadURLWithParams(params);
