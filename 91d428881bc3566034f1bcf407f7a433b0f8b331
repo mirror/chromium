@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c982e40a_4ffcac26",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-28T19:08:15Z",
+      "side": 1,
+      "message": "Do you know why we don\u0027t always use the focused element as the algorithm\u0027s starting rectangle? I changed the code into:\n\n  -    if (!HasOffscreenRect(focused_element)) {\n  -      starting_rect \u003d NodeRectInAbsoluteCoordinates(focused_element,\n  -                                                    true /* ignore border */);\n  -    } else if (auto* area \u003d ToHTMLAreaElementOrNull(*focused_element)) {\n  +    starting_rect \u003d NodeRectInAbsoluteCoordinates(focused_element,\n  +                                                  true /* ignore border */);\n  +    if (auto* area \u003d ToHTMLAreaElementOrNull(*focused_element)) {\n\n... and it seems to work :) LayoutTests pass at least...",
+      "parentUuid": "58a7f789_b3485d64",
+      "range": {
+        "startLine": 1403,
+        "startChar": 0,
+        "endLine": 1405,
+        "endChar": 76
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df14ad06_ce0a7935",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 6

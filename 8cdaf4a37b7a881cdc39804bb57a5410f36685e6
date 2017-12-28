@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b996474_ce8c2749",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-28T19:08:15Z",
+      "side": 1,
+      "message": "We could clarify this...",
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7861d038_26d3db29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-28T19:08:15Z",
+      "side": 1,
+      "message": "We will need to explain that this CL also refactors spatnav into not use recursion.",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b28b73_81e77a3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-28T19:08:15Z",
+      "side": 1,
+      "message": "An HTML example here would probably help readers.",
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
