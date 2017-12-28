@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc79127b_4097958f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-28T21:26:17Z",
+      "side": 1,
+      "message": "would ASSERT_EQ work here, and below?",
+      "range": {
+        "startLine": 593,
+        "startChar": 6,
+        "endLine": 593,
+        "endChar": 17
+      },
+      "revId": "1c06d49652bfafe3fcf03a7c84c5de8788a0c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
