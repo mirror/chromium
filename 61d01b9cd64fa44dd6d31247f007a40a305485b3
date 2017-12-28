@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97571a32_fa1aab02",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T16:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f616cc_a11e1d1a",
+      "revId": "61d01b9cd64fa44dd6d31247f007a40a305485b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b2a89b_000ee95d",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "61d01b9cd64fa44dd6d31247f007a40a305485b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33c3df4_e01197f5",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-28T16:33:51Z",
+      "side": 1,
+      "message": "Hm, I\u0027m skipping it in this CL because such utility function would only make sense before the handler has been constructed (otherwise stopped_ \u003d true makes no sense). We might make use of ReleasePeerConnectionHandler() or DCHECK that the utility function is called before the handler does not exist.\n\nIt probably makes more sense to construct the PC with closed_ \u003d stopped_ \u003d false or to replace these, but I feel like this discussion is outside the scope of this CL.",
+      "parentUuid": "07b2a89b_000ee95d",
+      "revId": "61d01b9cd64fa44dd6d31247f007a40a305485b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
