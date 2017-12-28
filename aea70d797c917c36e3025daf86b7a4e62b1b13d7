@@ -34,6 +34,47 @@
       "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5c5b18_0220de64",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-28T13:23:35Z",
+      "side": 1,
+      "message": "I tried to minimise the test case but I am unable to reproduce this scenario.\n\nThis is a rare scenario in which the ComputeVisibleSelectionInDOMTree is different from the createVisibleSelection(GetSelectionInDOMTree()).\n\nBut if I am manually trying to simulate this conditions , the issue don\u0027t happens.\nCould we go ahead with this layout test or if you have some suggestions ?\nThanks in advance.",
+      "parentUuid": "a8e628f8_3867aae7",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03f0f2e_63cf79bd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-28T13:23:35Z",
+      "side": 1,
+      "message": "Do you think that this condition will be correct.\nIf we reach to this place, then we will always have a changed DOM selection and positions will be disconnected always.\nCurrently I was unable to find any layout test reaching to this place,except this CL layout test without the ABORT check.",
+      "range": {
+        "startLine": 443,
+        "startChar": 3,
+        "endLine": 447,
+        "endChar": 62
+      },
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
