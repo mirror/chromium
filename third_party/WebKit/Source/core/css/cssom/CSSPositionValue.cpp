@@ -26,6 +26,27 @@ CSSPositionValue* CSSPositionValue::Create(CSSNumericValue* x,
   return new CSSPositionValue(x, y);
 }
 
+CSSPositionValue* CSSPositionValue::FromCSSValue(const CSSValue& css_value) {
+  if (!css_value.IsValuePair()) {
+    return nullptr;
+  }
+
+  const CSSValuePair& pair = ToCSSValuePair(css_value);
+  CSSNumericValue* x =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(pair.First()));
+  CSSNumericValue* y =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(pair.Second()));
+
+  if (!IsValidCoordinate(x)) {
+    return nullptr;
+  }
+  if (!IsValidCoordinate(y)) {
+    return nullptr;
+  }
+
+  return new CSSPositionValue(x, y);
+}
+
 void CSSPositionValue::setX(CSSNumericValue* x,
                             ExceptionState& exception_state) {
   if (!IsValidCoordinate(x)) {
