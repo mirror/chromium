@@ -15,7 +15,7 @@ test(() => {
 test(() => {
   let result = CSSStyleValue.parse('object-position', '1px 1px');
   result.x = CSS.percent(-3.14);
-  assert_equals(result.toString(), '-3.14% 1%');
+  assert_equals(result.toString(), '-3.14% 1px');
 }, 'CSSPositionValue from DOMString modified by "x" setter serializes correctly');
 
 test(() => {
