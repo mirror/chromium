@@ -16,6 +16,8 @@
 #include "base/win/registry.h"
 #include "chrome/browser/conflicts/msi_util_win.h"
 
+#include <Windows.h>
+
 namespace {
 
 // Returns true if |candidate| is registered as a system component.

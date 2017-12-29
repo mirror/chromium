@@ -28,6 +28,9 @@
 #include "base/rand_util.h"
 #endif
 
+// Work around Windows macro madness.
+//#undef GetMessage
+
 namespace mojo {
 namespace edk {
 namespace ports {
