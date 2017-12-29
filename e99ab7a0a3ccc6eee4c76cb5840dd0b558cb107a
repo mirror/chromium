@@ -195,6 +195,24 @@
       "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d20f26_06c70b7f",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-29T17:13:20Z",
+      "side": 1,
+      "message": "I applied your suggestion. Hopefully all this will go away if the root cause was indeed the layout and if we decide to update the layout before this operation. I\u0027ll investigate in the new year.",
+      "parentUuid": "cb3130bf_12f76fea",
+      "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
