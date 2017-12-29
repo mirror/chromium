@@ -34,6 +34,24 @@
       "revId": "f0b4e689719bf268963a7296b1d7f4a323291f3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84624143_92ac5521",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-29T22:59:29Z",
+      "side": 1,
+      "message": "I don\u0027t think I agree, but I think that you are going to read this more often than I am, so better if you decide.\n\nYou\u0027re kind of using two mechanisms in parallel to iterate over the vector, and I feel that\u0027s a little messy and error-prone.",
+      "parentUuid": "06b0d157_2a2d2b32",
+      "revId": "f0b4e689719bf268963a7296b1d7f4a323291f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
