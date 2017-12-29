@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b040eb7_9c878736",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T11:00:45Z",
+      "side": 1,
+      "message": "while we are here, please also add \" or System.load(...)\"",
+      "range": {
+        "startLine": 363,
+        "startChar": 48,
+        "endLine": 363,
+        "endChar": 71
+      },
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c420624_201392c1",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 2
@@ -31,6 +54,24 @@
       "side": 1,
       "message": "I agree. The assert above should address it. If, in a release version, trying to load the library the old way is useless, I can also change the \u0027if\u0027 statement to throw a more descriptive exception.",
       "parentUuid": "7c420624_201392c1",
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc468ba0_49372ec7",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T11:00:45Z",
+      "side": 1,
+      "message": "I would prefer the assert, no need in elaborate error messages. On L- it should use the LegacyLinker and not go through this codepath at all, so the Build.VERSION.SDK_INT \u003c VERSION_CODES.M is redundant in this sense as well.\n\nFYI: I also added @RequiresApi(api \u003d Build.VERSION_CODES.M) below. AFAICT it does not throw exceptions, but nevertheless self-documents that the negation of the condition under assert is not allowed here. Feel free to leave the assert there as an additional piece of documentation.",
+      "parentUuid": "c54fe7a3_4263319f",
       "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
