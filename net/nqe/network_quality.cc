@@ -13,7 +13,11 @@ base::TimeDelta InvalidRTT() {
 }
 
 NetworkQuality::NetworkQuality()
-    : NetworkQuality(InvalidRTT(), InvalidRTT(), INVALID_RTT_THROUGHPUT) {}
+    : NetworkQuality(InvalidRTT(), InvalidRTT(), INVALID_RTT_THROUGHPUT) {
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, http_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, transport_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, downstream_throughput_kbps_);
+}
 
 NetworkQuality::NetworkQuality(const base::TimeDelta& http_rtt,
                                const base::TimeDelta& transport_rtt,
@@ -21,13 +25,19 @@ NetworkQuality::NetworkQuality(const base::TimeDelta& http_rtt,
     : http_rtt_(http_rtt),
       transport_rtt_(transport_rtt),
       downstream_throughput_kbps_(downstream_throughput_kbps) {
-  DCHECK_GE(downstream_throughput_kbps_, INVALID_RTT_THROUGHPUT);
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, http_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, transport_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, downstream_throughput_kbps_);
 }
 
 NetworkQuality::NetworkQuality(const NetworkQuality& other)
     : NetworkQuality(other.http_rtt_,
                      other.transport_rtt_,
-                     other.downstream_throughput_kbps_) {}
+                     other.downstream_throughput_kbps_) {
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, http_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, transport_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, downstream_throughput_kbps_);
+}
 
 NetworkQuality::~NetworkQuality() = default;
 
@@ -35,6 +45,9 @@ NetworkQuality& NetworkQuality::operator=(const NetworkQuality& other) {
   http_rtt_ = other.http_rtt_;
   transport_rtt_ = other.transport_rtt_;
   downstream_throughput_kbps_ = other.downstream_throughput_kbps_;
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, http_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, transport_rtt_.InMilliseconds());
+  DCHECK_LE(INVALID_RTT_THROUGHPUT, downstream_throughput_kbps_);
   return *this;
 }
 
