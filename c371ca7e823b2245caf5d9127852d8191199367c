@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f4aace6_6580a22b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-empty-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-29T14:04:13Z",
+      "side": 1,
+      "message": "Remove the \"crash\" bits from this test (filename, title)",
+      "revId": "c371ca7e823b2245caf5d9127852d8191199367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea964f9b_e77f79e5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-cue-inline-assertion-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-29T14:04:13Z",
+      "side": 1,
+      "message": "Remove the \"crash\" (and assertion) bits from this test (filename, title, comment)",
+      "revId": "c371ca7e823b2245caf5d9127852d8191199367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
