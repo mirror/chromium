@@ -6,18 +6,5 @@
 <script>
 let EPSILON = 1e-6;
 
-test(() => {
-  let transformValue = new CSSTransformValue([new CSSPerspective(CSS.em(10))]);
-  assert_throws(new TypeError(), () => {
-    transformValue.toMatrix();
-  });
-}, "toMatrix throws TypeError if relative units are used");
-
-test(() => {
-  let expectedMatrix = new DOMMatrixReadOnly();
-  let transformValue = new CSSTransformValue([new CSSPerspective(CSS.px(-10))]);
-  assert_matrix_approx_equals(transformValue.toMatrix(), expectedMatrix, EPSILON);
-}, "toMatrix is the identity when perspective is negative (which is invalid)");
-
 </script>
 
