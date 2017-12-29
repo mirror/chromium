@@ -14,6 +14,8 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/win/msg_util.h"
 
+#include <windows.h>
+
 namespace gfx {
 
 // An interface implemented by classes that use message maps.

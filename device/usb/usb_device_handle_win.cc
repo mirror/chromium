@@ -4,6 +4,7 @@
 
 #include "device/usb/usb_device_handle_win.h"
 
+#include <windows.h>
 #include <usbioctl.h>
 #include <usbspec.h>
 #include <winioctl.h>

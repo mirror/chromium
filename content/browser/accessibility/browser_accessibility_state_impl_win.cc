@@ -4,6 +4,7 @@
 
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 
+#include <windows.h>
 #include <psapi.h>
 #include <stddef.h>
 #include <windows.h>

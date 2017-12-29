@@ -8,7 +8,7 @@
 #ifndef BASE_WIN_RESOURCE_UTIL_H_
 #define BASE_WIN_RESOURCE_UTIL_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <stddef.h>
 
 #include "base/base_export.h"

@@ -39,6 +39,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/current_module.h"
+#include <windows.h>
 #endif
 
 using base::SampleCountIterator;

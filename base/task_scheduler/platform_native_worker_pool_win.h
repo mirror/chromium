@@ -5,7 +5,7 @@
 #ifndef BASE_TASK_SCHEDULER_PLATFORM_NATIVE_WORKER_POOL_WIN_H
 #define BASE_TASK_SCHEDULER_PLATFORM_NATIVE_WORKER_POOL_WIN_H
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/base_export.h"
 #include "base/logging.h"

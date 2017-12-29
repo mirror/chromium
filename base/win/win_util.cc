@@ -2,8 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Must be included before process_metrics.h to get full IoCounters definition
+#include <windows.h>
+
 #include "base/win/win_util.h"
 
+#include <windows.h>
 #include <aclapi.h>
 #include <cfgmgr32.h>
 #include <powrprof.h>

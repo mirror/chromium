@@ -33,6 +33,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/registry.h"
+#include <windows.h>
 #endif
 
 #include "widevine_cdm_version.h"  // In SHARED_INTERMEDIATE_DIR.

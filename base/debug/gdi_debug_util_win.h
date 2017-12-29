@@ -5,7 +5,7 @@
 #ifndef BASE_DEBUG_GDI_DEBUG_UTIL_WIN_H_
 #define BASE_DEBUG_GDI_DEBUG_UTIL_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include "base/base_export.h"
 

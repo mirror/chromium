@@ -23,6 +23,8 @@
 #include "components/crx_file/id_util.h"
 #include "content/public/browser/browser_thread.h"
 
+#include <windows.h>
+
 using content::BrowserThread;
 
 namespace {
