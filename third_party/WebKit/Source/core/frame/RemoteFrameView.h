@@ -44,7 +44,7 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   const IntRect& FrameRect() const override { return frame_rect_; }
   void Paint(GraphicsContext&,
              const GlobalPaintFlags,
-             const CullRect&) const override {}
+             const CullRect&) const override;
   void UpdateGeometry() override;
   void Hide() override;
   void Show() override;
@@ -52,6 +52,8 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
 
   void UpdateViewportIntersectionsForSubtree(
       DocumentLifecycle::LifecycleState) override;
+
+  void Print(const IntRect&, uint32_t) const;
 
   virtual void Trace(blink::Visitor*);
 

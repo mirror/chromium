@@ -1225,7 +1225,8 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const std::vector<int>& pages = print_pages_params_->pages;
 
   if (!print_preview_context_.CreatePreviewDocument(
-          std::move(prep_frame_view_), pages, print_params.printed_doc_type)) {
+          std::move(prep_frame_view_), pages, print_params.printed_doc_type,
+          routing_id())) {
     return false;
   }
 
@@ -2201,7 +2202,8 @@ void PrintRenderFrameHelper::PrintPreviewContext::OnPrintPreview() {
 bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
     const std::vector<int>& pages,
-    SkiaDocumentType doc_type) {
+    SkiaDocumentType doc_type,
+    int frame_id) {
   DCHECK_EQ(INITIALIZED, state_);
   state_ = RENDERING;
 
