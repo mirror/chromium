@@ -1,0 +1,63 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+package org.chromium.chrome.browser.preferences.password;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.preference.Preference;
+
+import org.chromium.base.Callback;
+import org.chromium.chrome.browser.SavedPasswordEntry;
+import org.chromium.chrome.browser.payments.PasswordEditor;
+import org.chromium.chrome.browser.payments.ui.EditorDialog;
+
+/**
+ * Launches the UI to create a credential.
+ */
+public class PasswordEntryEditorPreference extends Preference {
+    final private Activity mActivity;
+    private EditorDialog mEditorDialog;
+    private SavedPasswordEntry mPasswordEntry;
+    private Bundle mExtras;
+
+    public PasswordEntryEditorPreference(Activity activity) {
+        super(activity);
+        mActivity = activity;
+    }
+
+    public EditorDialog getEditorDialog() {
+        return mEditorDialog;
+    }
+
+    @Override
+    protected void onClick() {
+        mExtras = getExtras();
+        prepareEditorDialog();
+        preparePasswordEditor();
+    }
+
+    private void preparePasswordEditor() {
+        PasswordEditor passwordEditor = new PasswordEditor();
+        passwordEditor.setEditorDialog(mEditorDialog);
+
+        passwordEditor.edit(mPasswordEntry, new Callback<SavedPasswordEntry>() {
+            @Override
+            public void onResult(SavedPasswordEntry credential) {
+                PasswordManagerHandlerProvider.getInstance()
+                        .getPasswordManagerHandler()
+                        .updatePasswordLists();
+            }
+        });
+    }
+
+    private void prepareEditorDialog() {
+        mPasswordEntry = new SavedPasswordEntry(
+                mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_URL),
+                mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_URL),
+                mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_NAME),
+                mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_PASSWORD));
+        mEditorDialog = new EditorDialog(mActivity, null /* observer */, null /* runnable */);
+    }
+}
