@@ -174,6 +174,37 @@ public class CookieManagerTest {
     @Test
     @MediumTest
     @Feature({"AndroidWebView", "Privacy"})
+    public void testSetCookieWithDomainForUrl() throws Throwable {
+        // If the app passes ".www.example.com" or "http://.www.example.com", the glue layer "fixes"
+        // this to "http:///.www.example.com"
+        String url = "http:///.www.example.com";
+        String cookie = "name=test";
+        mCookieManager.setCookie(url, cookie);
+        Assert.assertEquals(cookie, mCookieManager.getCookie(url));
+
+        TestCallback<Boolean> callback = new TestCallback<Boolean>();
+        int callCount = callback.getOnResultHelper().getCallCount();
+        removeAllCookiesOnUiThread(callback);
+        callback.getOnResultHelper().waitForCallback(callCount);
+
+        mCookieManager.setCookie(url, cookie + "; Domain=.example.com");
+        Assert.assertEquals(cookie, mCookieManager.getCookie(url));
+        // The Domain attribute should take precedence over a domain-ish URL
+        Assert.assertEquals(cookie, mCookieManager.getCookie("http://example.com"));
+
+        callback = new TestCallback<Boolean>();
+        callCount = callback.getOnResultHelper().getCallCount();
+        removeAllCookiesOnUiThread(callback);
+        callback.getOnResultHelper().waitForCallback(callCount);
+
+        mCookieManager.setCookie(url, cookie + ";");
+        Assert.assertEquals(cookie, mCookieManager.getCookie(url));
+        Assert.assertNull(mCookieManager.getCookie("http://example.com"));
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"AndroidWebView", "Privacy"})
     public void testSetSecureCookieForHttpUrl() throws Throwable {
         String url = "http://www.example.com";
         String secureUrl = "https://www.example.com";
