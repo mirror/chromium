@@ -104,11 +104,16 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
   } else {
     support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
   }
+
+  LOG(ERROR) << "SUBMIT FRAME";
+  compositor_attach_until_frame_lock_.reset();
 }
 
 void DelegatedFrameHostAndroid::DidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
   support_->DidNotProduceFrame(ack);
+  LOG(ERROR) << "DID NOT PRODUCE";
+  compositor_attach_until_frame_lock_.reset();
 }
 
 viz::FrameSinkId DelegatedFrameHostAndroid::GetFrameSinkId() const {
@@ -166,14 +171,26 @@ void DelegatedFrameHostAndroid::AttachToCompositor(
     WindowAndroidCompositor* compositor) {
   if (registered_parent_compositor_)
     DetachFromCompositor();
+  if (!surface_info_.is_valid()) {
+    LOG(ERROR) << "TAKING COMPOSITOR LOCK";
+    // Take the compositor lock, preventing frames from being displayed until
+    // we've produced content. Set a 5 second timeout to prevent locking up the
+    // browser in cases where the renderer hangs or another factor prevents a
+    // frame from being produced.
+    compositor_attach_until_frame_lock_ =
+        compositor->GetCompositorLock(this, base::TimeDelta::FromSeconds(5));
+  }
   compositor->AddChildFrameSink(frame_sink_id_);
   client_->SetBeginFrameSource(&begin_frame_source_);
   registered_parent_compositor_ = compositor;
 }
 
 void DelegatedFrameHostAndroid::DetachFromCompositor() {
+  LOG(ERROR) << "DETACH FROM COMPOSITOR";
   if (!registered_parent_compositor_)
     return;
+  if (compositor_attach_until_frame_lock_)
+    compositor_attach_until_frame_lock_.reset();
   client_->SetBeginFrameSource(nullptr);
   support_->SetNeedsBeginFrame(false);
   registered_parent_compositor_->RemoveChildFrameSink(frame_sink_id_);
@@ -220,6 +237,10 @@ void DelegatedFrameHostAndroid::OnFirstSurfaceActivation(
 
 void DelegatedFrameHostAndroid::OnFrameTokenChanged(uint32_t frame_token) {
   client_->OnFrameTokenChanged(frame_token);
+}
+
+void DelegatedFrameHostAndroid::CompositorLockTimedOut() {
+  LOG(ERROR) << "TIMED OUT";
 }
 
 void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
