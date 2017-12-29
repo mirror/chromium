@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99558d05_3b0860a0",
+        "filename": "third_party/WebKit/Source/core/css/resolver/ScopedStyleResolver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-29T16:45:39Z",
+      "side": 1,
+      "message": "If you need the index anyway, what\u0027s the benefit of using a range based loop?",
+      "revId": "f0b4e689719bf268963a7296b1d7f4a323291f3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
