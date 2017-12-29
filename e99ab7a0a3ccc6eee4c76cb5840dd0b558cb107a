@@ -177,6 +177,24 @@
       "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3130bf_12f76fea",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-29T03:07:25Z",
+      "side": 1,
+      "message": "Looks like you could do something like:\n\n  auto* web_widget \u003d widget_-\u003eGetWebWidget();\n  DCHECK(web_widget-\u003eIsWebFrameWidget());\n  auto* frame_widget \u003d static_cast\u003cWebFrameWidget*\u003e(web_widget);\n  WebFrame* web_frame \u003d frame_widget-\u003eLocalRoot();\n  return RenderFrameImpl::GetRoutingIdForWebFrame(web_frame);\n\nBut I am hoping there\u0027s something simpler you could use without the gymnastics.\n\nYet another approach would be to go ahead and send MSG_ROUTING_NONE (which is what the latest patchset does, I believe), and update the code in the browser instead to special-case that.",
+      "parentUuid": "2d153fdb_3352ebf2",
+      "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
