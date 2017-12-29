@@ -614,6 +614,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
     base::Time start_time,
     WebHistoryService::Request* request,
     const base::DictionaryValue* results_value) {
+  LOG(INFO) << "Got web history";
   base::TimeDelta delta = clock_->Now() - start_time;
   UMA_HISTOGRAM_TIMES("WebHistory.ResponseTime", delta);
 
@@ -630,11 +631,13 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
       NUM_WEB_HISTORY_QUERY_BUCKETS);
 
   if (results_value) {
+    LOG(INFO) << "Has synced results";
     has_synced_results_ = true;
     const base::ListValue* events = nullptr;
     if (results_value->GetList("event", &events)) {
       state->remote_results.reserve(state->remote_results.size() +
                                     events->GetSize());
+      LOG(INFO) << "Number of synced results: " << events->GetSize();
       for (unsigned int i = 0; i < events->GetSize(); ++i) {
         const base::DictionaryValue* event = nullptr;
         const base::DictionaryValue* result = nullptr;
@@ -652,6 +655,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
           continue;
         }
 
+        // LOG(INFO) << "Synced URL: " << url;
         // Ignore any URLs that should not be shown in the history page.
         GURL gurl(url);
         if (driver_->ShouldHideWebHistoryUrl(gurl))

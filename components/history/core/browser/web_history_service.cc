@@ -20,12 +20,10 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/history/core/browser/web_history_service_observer.h"
-#include "components/signin/core/browser/signin_manager.h"
 #include "components/sync/driver/sync_util.h"
 #include "components/sync/protocol/history_status.pb.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-#include "google_apis/gaia/oauth2_token_service.h"
 #include "net/base/load_flags.h"
 #include "net/base/url_util.h"
 #include "net/http/http_status_code.h"
@@ -33,6 +31,7 @@
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/identity/public/cpp/identity_manager.h"
 #include "ui/base/device_form_factor.h"
 #include "url/gurl.h"
 
@@ -68,7 +67,6 @@ const char kSyncProtoMimeType[] = "application/octet-stream";
 const size_t kMaxRetries = 1;
 
 class RequestImpl : public WebHistoryService::Request,
-                    private OAuth2TokenService::Consumer,
                     private net::URLFetcherDelegate {
  public:
   ~RequestImpl() override {}
@@ -86,15 +84,12 @@ class RequestImpl : public WebHistoryService::Request,
   friend class history::WebHistoryService;
 
   RequestImpl(
-      OAuth2TokenService* token_service,
-      SigninManagerBase* signin_manager,
+      identity::IdentityManager* identity_manager,
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
       const GURL& url,
       const WebHistoryService::CompletionCallback& callback,
       const net::PartialNetworkTrafficAnnotationTag& partial_traffic_annotation)
-      : OAuth2TokenService::Consumer("web_history"),
-        token_service_(token_service),
-        signin_manager_(signin_manager),
+      : identity_manager_(identity_manager),
         request_context_(request_context),
         url_(url),
         post_data_mime_type_(kPostDataMimeType),
@@ -103,56 +98,24 @@ class RequestImpl : public WebHistoryService::Request,
         callback_(callback),
         is_pending_(false),
         partial_traffic_annotation_(partial_traffic_annotation) {
-    DCHECK(token_service_);
-    DCHECK(signin_manager_);
+    DCHECK(identity_manager_);
     DCHECK(request_context_);
   }
 
-  // Tells the request to do its thang.
-  void Start() override {
-    OAuth2TokenService::ScopeSet oauth_scopes;
-    oauth_scopes.insert(kHistoryOAuthScope);
+  void OnAccessTokenFetchComplete(const GoogleServiceAuthError& error,
+                                  const std::string& access_token) {
+    access_token_fetcher_.reset();
 
-    token_request_ = token_service_->StartRequest(
-        signin_manager_->GetAuthenticatedAccountId(), oauth_scopes, this);
-    is_pending_ = true;
-  }
+    if (error.state() != GoogleServiceAuthError::NONE) {
+      is_pending_ = false;
+      UMA_HISTOGRAM_BOOLEAN("WebHistory.OAuthTokenCompletion", false);
+      callback_.Run(this, false);
 
-  // content::URLFetcherDelegate interface.
-  void OnURLFetchComplete(const net::URLFetcher* source) override {
-    DCHECK_EQ(source, url_fetcher_.get());
-    response_code_ = url_fetcher_->GetResponseCode();
-
-    UMA_HISTOGRAM_CUSTOM_ENUMERATION("WebHistory.OAuthTokenResponseCode",
-        net::HttpUtil::MapStatusCodeForHistogram(response_code_),
-        net::HttpUtil::GetStatusCodesForHistogram());
-
-    // If the response code indicates that the token might not be valid,
-    // invalidate the token and try again.
-    if (response_code_ == net::HTTP_UNAUTHORIZED && ++auth_retry_count_ <= 1) {
-      OAuth2TokenService::ScopeSet oauth_scopes;
-      oauth_scopes.insert(kHistoryOAuthScope);
-      token_service_->InvalidateAccessToken(
-          signin_manager_->GetAuthenticatedAccountId(), oauth_scopes,
-          access_token_);
-
-      access_token_.clear();
-      Start();
+      // It is valid for the callback to delete |this|, so do not access any
+      // members below here.
       return;
     }
-    url_fetcher_->GetResponseAsString(&response_body_);
-    url_fetcher_.reset();
-    is_pending_ = false;
-    callback_.Run(this, true);
-    // It is valid for the callback to delete |this|, so do not access any
-    // members below here.
-  }
 
-  // OAuth2TokenService::Consumer interface.
-  void OnGetTokenSuccess(const OAuth2TokenService::Request* request,
-                         const std::string& access_token,
-                         const base::Time& expiration_time) override {
-    token_request_.reset();
     DCHECK(!access_token.empty());
     access_token_ = access_token;
 
@@ -163,14 +126,50 @@ class RequestImpl : public WebHistoryService::Request,
     url_fetcher_->Start();
   }
 
-  void OnGetTokenFailure(const OAuth2TokenService::Request* request,
-                         const GoogleServiceAuthError& error) override {
-    token_request_.reset();
+  // Tells the request to do its thang.
+  void Start() override {
+    OAuth2TokenService::ScopeSet oauth_scopes;
+    oauth_scopes.insert(kHistoryOAuthScope);
+
+    access_token_fetcher_ =
+        identity_manager_->CreateAccessTokenFetcherForPrimaryAccount(
+            "web_history", oauth_scopes,
+
+            base::BindOnce(&RequestImpl::OnAccessTokenFetchComplete,
+                           base::Unretained(this)),
+            identity::PrimaryAccountAccessTokenFetcher::Mode::kOneShot);
+    CreateUrlFetcher("");
+    is_pending_ = true;
+  }
+
+  // content::URLFetcherDelegate interface.
+  void OnURLFetchComplete(const net::URLFetcher* source) override {
+    DCHECK_EQ(source, url_fetcher_.get());
+    response_code_ = url_fetcher_->GetResponseCode();
+    if (auth_retry_count_ == 0)
+      response_code_ = net::HTTP_UNAUTHORIZED;
+
+    UMA_HISTOGRAM_CUSTOM_ENUMERATION("WebHistory.OAuthTokenResponseCode",
+        net::HttpUtil::MapStatusCodeForHistogram(response_code_),
+        net::HttpUtil::GetStatusCodesForHistogram());
+
+    // If the response code indicates that the token might not be valid,
+    // invalidate the token and try again.
+    if (response_code_ == net::HTTP_UNAUTHORIZED && ++auth_retry_count_ <= 1) {
+      OAuth2TokenService::ScopeSet oauth_scopes;
+      oauth_scopes.insert(kHistoryOAuthScope);
+      identity_manager_->RemoveAccessTokenFromCache(
+          identity_manager_->GetPrimaryAccountInfo().account_id, oauth_scopes,
+          access_token_);
+
+      access_token_.clear();
+      Start();
+      return;
+    }
+    url_fetcher_->GetResponseAsString(&response_body_);
+    url_fetcher_.reset();
     is_pending_ = false;
-
-    UMA_HISTOGRAM_BOOLEAN("WebHistory.OAuthTokenCompletion", false);
-
-    callback_.Run(this, false);
+    callback_.Run(this, true);
     // It is valid for the callback to delete |this|, so do not access any
     // members below here.
   }
@@ -233,8 +232,7 @@ class RequestImpl : public WebHistoryService::Request,
     user_agent_ = user_agent;
   }
 
-  OAuth2TokenService* token_service_;
-  SigninManagerBase* signin_manager_;
+  identity::IdentityManager* identity_manager_;
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
   // The URL of the API endpoint.
@@ -249,8 +247,8 @@ class RequestImpl : public WebHistoryService::Request,
   // The user agent header used with this request.
   std::string user_agent_;
 
-  // The OAuth2 access token request.
-  std::unique_ptr<OAuth2TokenService::Request> token_request_;
+  std::unique_ptr<identity::PrimaryAccountAccessTokenFetcher>
+      access_token_fetcher_;
 
   // The current OAuth2 access token.
   std::string access_token_;
@@ -353,14 +351,11 @@ WebHistoryService::Request::~Request() {
 }
 
 WebHistoryService::WebHistoryService(
-    OAuth2TokenService* token_service,
-    SigninManagerBase* signin_manager,
+    identity::IdentityManager* identity_manager,
     const scoped_refptr<net::URLRequestContextGetter>& request_context)
-    : token_service_(token_service),
-      signin_manager_(signin_manager),
+    : identity_manager_(identity_manager),
       request_context_(request_context),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 WebHistoryService::~WebHistoryService() {
 }
@@ -377,8 +372,8 @@ WebHistoryService::Request* WebHistoryService::CreateRequest(
     const GURL& url,
     const CompletionCallback& callback,
     const net::PartialNetworkTrafficAnnotationTag& partial_traffic_annotation) {
-  return new RequestImpl(token_service_, signin_manager_, request_context_, url,
-                         callback, partial_traffic_annotation);
+  return new RequestImpl(identity_manager_, request_context_, url, callback,
+                         partial_traffic_annotation);
 }
 
 // static
@@ -401,6 +396,7 @@ std::unique_ptr<WebHistoryService::Request> WebHistoryService::QueryHistory(
     const QueryOptions& options,
     const WebHistoryService::QueryWebHistoryCallback& callback,
     const net::PartialNetworkTrafficAnnotationTag& partial_traffic_annotation) {
+  LOG(INFO) << "Querying web history";
   // Wrap the original callback into a generic completion callback.
   CompletionCallback completion_callback = base::Bind(
       &WebHistoryService::QueryHistoryCompletionCallback, callback);
