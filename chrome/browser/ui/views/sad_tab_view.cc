@@ -28,6 +28,9 @@
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/widget.h"
 
+// Work around Windows macro madness.
+//#undef GetMessage
+
 namespace {
 
 constexpr int kMaxContentWidth = 600;

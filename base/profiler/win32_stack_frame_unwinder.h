@@ -5,7 +5,7 @@
 #ifndef BASE_PROFILER_WIN32_STACK_FRAME_UNWINDER_H_
 #define BASE_PROFILER_WIN32_STACK_FRAME_UNWINDER_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <memory>
 

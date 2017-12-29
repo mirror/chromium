@@ -22,7 +22,7 @@
 #ifndef BASE_WIN_WIN_UTIL_H_
 #define BASE_WIN_WIN_UTIL_H_
 
-#include <windows.h>
+#include "base/win/windows_types.h"
 #include <stdint.h>
 
 #include <string>
@@ -37,6 +37,7 @@ typedef _tagpropertykey PROPERTYKEY;
 
 // This is the same as NONCLIENTMETRICS except that the
 // unused member |iPaddedBorderWidth| has been removed.
+#if defined(_WINDOWS_)
 struct NONCLIENTMETRICS_XP {
     UINT    cbSize;
     int     iBorderWidth;
@@ -54,6 +55,9 @@ struct NONCLIENTMETRICS_XP {
     LOGFONTW lfStatusFont;
     LOGFONTW lfMessageFont;
 };
+#else
+struct NONCLIENTMETRICS_XP;
+#endif
 
 namespace base {
 namespace win {

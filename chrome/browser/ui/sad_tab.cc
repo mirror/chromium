@@ -28,6 +28,9 @@
 #include "chrome/browser/memory/oom_memory_details.h"
 #endif
 
+// Work around Windows macro madness.
+//#undef GetMessage
+
 namespace {
 
 // These stats should use the same counting approach and bucket size as tab

@@ -17,6 +17,10 @@
 #include "net/disk_cache/blockfile/histogram_macros.h"
 #include "net/disk_cache/blockfile/stress_support.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
 // Provide a BackendImpl object to macros from histogram_macros.h.
 #define CACHE_UMA_BACKEND_IMPL_OBJ backend_
 

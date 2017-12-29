@@ -16,6 +16,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/registry.h"
+#include <windows.h>
 #endif
 
 const int32_t kPepperFlashPermissions =

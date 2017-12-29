@@ -5,7 +5,7 @@
 #ifndef BASE_FILE_VERSION_INFO_WIN_H_
 #define BASE_FILE_VERSION_INFO_WIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 
 #include <stdint.h>
 
