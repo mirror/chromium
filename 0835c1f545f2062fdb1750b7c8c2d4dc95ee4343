@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0c09d60_9fa16c82",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "We should not get unexpected messages. Added more check here.",
+      "parentUuid": "da42ebe2_f7feebdd",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7903e1ba_4d618cf9",
         "filename": "chrome/browser/printing/print_browsertest.cc",
         "patchSetId": 16
@@ -39,6 +57,30 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4cc27c_df8b316b",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7903e1ba_4d618cf9",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 9
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f4d909e9_c3df2e1d",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c6d08d_0b0483be",
+      "range": {
+        "startLine": 142,
+        "startChar": 48,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b317449_6f7f4d3b",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 16
@@ -79,6 +145,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb652018_9f3a17b3",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b317449_6f7f4d3b",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "b21e9c66_8a488c04",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfce17e6_5e85cdc5",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67f41bf_e4a9b4e9",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 16
@@ -113,6 +215,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750ea511_d0e9ea21",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "No, right now we print each subframe only once. Once it was requested, the later requests could be ignored.",
+      "parentUuid": "c67f41bf_e4a9b4e9",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "cb84e279_b9f78256",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Yes, you are right. Now I changed to use rph id + frame id as frame\u0027s global unique id.",
+      "parentUuid": "c684251b_b7c44064",
+      "range": {
+        "startLine": 90,
+        "startChar": 39,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d4f3e1_7e533228",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 16
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "f9d08518_e9b4599f",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "I am pretty sure this is the case. Here is an example https://www.w3schools.com/tags/tryit.asp?filename\u003dtryhtml5_ev_onbeforeprint",
+      "parentUuid": "e3d4f3e1_7e533228",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb5c05dc_9894af1e",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 16
@@ -170,6 +332,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e78c1cd_26505510",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Yes, this can happen if this class gets destroyed during beforeprintevent",
+      "parentUuid": "cb5c05dc_9894af1e",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "0c4c3d7f_07b371c2",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f516ea_d9f8e98d",
+      "range": {
+        "startLine": 1455,
+        "startChar": 21,
+        "endLine": 1455,
+        "endChar": 37
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d7a244_7bdf4ed3",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 16
@@ -210,6 +414,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1610e95_b2270550",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "It is possible that printing could try to invalidate this, right? Leave it here for safety.",
+      "parentUuid": "63d7a244_7bdf4ed3",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "f3ded1e8_960b40d4",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "We should handle empty rect during painting. That may be an optimization.",
+      "parentUuid": "71919a89_f7c4467f",
+      "range": {
+        "startLine": 385,
+        "startChar": 63,
+        "endLine": 385,
+        "endChar": 67
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1513e44d_f26693c4",
         "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
         "patchSetId": 16
@@ -256,6 +502,30 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1ffeac_24f429d7",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "It is not checked since it could be any value in its range. It won\u0027t be matched in service if it is wrong.",
+      "parentUuid": "1513e44d_f26693c4",
+      "range": {
+        "startLine": 386,
+        "startChar": 55,
+        "endLine": 386,
+        "endChar": 65
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "245c2b7d_a9c30db4",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "src_rfh and target_rfh are used to indicate the direction the proxy works. Its id is no longer needed.",
+      "parentUuid": "62b8d598_7b28f16e",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 30
+      },
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d650987_194f8867",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 16
@@ -296,6 +590,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f4dba8_253981e6",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Either one is fine, depends on which one gets approved first :)",
+      "parentUuid": "3d650987_194f8867",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +628,24 @@
     },
     {
       "key": {
+        "uuid": "b0fa5ead_99310d31",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc8d996c_11446e82",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b01a76_ae249ded",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 16
@@ -330,6 +660,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfb028a_489d3348",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b01a76_ae249ded",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -350,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "13c5d679_57e3fd17",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "oops, removed.",
+      "parentUuid": "d2f4793d_4095958a",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc7573dd_7bfa7662",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 16
@@ -364,6 +730,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c19d0b0_b5b77bbe",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7573dd_7bfa7662",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +768,24 @@
     },
     {
       "key": {
+        "uuid": "d2411007_82555ce6",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed28a418_5f7b7e87",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "812d0b9d_763f987f",
         "filename": "printing/pdf_metafile_skia.h",
         "patchSetId": 16
@@ -398,6 +800,24 @@
       "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef81a086_18764deb",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T00:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812d0b9d_763f987f",
+      "revId": "0835c1f545f2062fdb1750b7c8c2d4dc95ee4343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
