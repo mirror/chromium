@@ -486,14 +486,14 @@ def ExperimentalCanvasFeaturesPages(base_name):
       'pixel_offscreenCanvas_webgl_commit_main.html',
       base_name + '_OffscreenCanvasWebGLSoftwareCompositing',
       test_rect=[0, 0, 360, 200],
-      revision=6,
+      revision=5,
       browser_args=browser_args + ['--disable-gpu-compositing']),
 
     PixelTestPage(
       'pixel_offscreenCanvas_webgl_commit_worker.html',
       base_name + '_OffscreenCanvasWebGLSoftwareCompositingWorker',
       test_rect=[0, 0, 360, 200],
-      revision=6,
+      revision=5,
       browser_args=browser_args + ['--disable-gpu-compositing']),
 
     PixelTestPage(
@@ -657,7 +657,7 @@ def MacSpecificPages(base_name):
       'pixel_canvas2d_webgl.html',
       base_name + '_IOSurface2DCanvasWebGL',
       test_rect=[0, 0, 300, 300],
-      revision=3,
+      revision=2,
       browser_args=iosurface_2d_canvas_args),
 
     # On macOS, test WebGL non-Chromium Image compositing path.
@@ -665,7 +665,7 @@ def MacSpecificPages(base_name):
       'pixel_webgl_aa_alpha.html',
       base_name + '_WebGLGreenTriangle_NonChromiumImage_AA_Alpha',
       test_rect=[0, 0, 300, 300],
-      revision=2,
+      revision=1,
       browser_args=non_chromium_image_args),
     PixelTestPage(
       'pixel_webgl_noaa_alpha.html',
@@ -677,7 +677,7 @@ def MacSpecificPages(base_name):
       'pixel_webgl_aa_noalpha.html',
       base_name + '_WebGLGreenTriangle_NonChromiumImage_AA_NoAlpha',
       test_rect=[0, 0, 300, 300],
-      revision=2,
+      revision=1,
       browser_args=non_chromium_image_args),
     PixelTestPage(
       'pixel_webgl_noaa_noalpha.html',
