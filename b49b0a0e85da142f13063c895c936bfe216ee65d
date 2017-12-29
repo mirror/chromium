@@ -16,6 +16,24 @@
       "revId": "b49b0a0e85da142f13063c895c936bfe216ee65d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00704005_270a7b33",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3741,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-29T00:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b768f80_382507ac",
+      "revId": "b49b0a0e85da142f13063c895c936bfe216ee65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
