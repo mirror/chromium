@@ -1,0 +1,625 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1780a1b5_79067bdf",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "It seems that this condition should be handled by the following code starting at line 257.\n\nWe just need to add some code after line 271 to test if |mirroring_host_info_map_| is empty.\n\nIf so, just reset the reflector.",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d289a504_a075d250",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "actually you can just pass nullptr. Declare mixed_mode_param only when needed below.",
+      "range": {
+        "startLine": 371,
+        "startChar": 46,
+        "endLine": 371,
+        "endChar": 73
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b16b3b_1d51ea74",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "store this as constexpr at the top of the file.",
+      "range": {
+        "startLine": 375,
+        "startChar": 56,
+        "endLine": 375,
+        "endChar": 75
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e65a32a_99459a26",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 387,
+        "startChar": 26,
+        "endLine": 387,
+        "endChar": 51
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfab01e0_d893a3df",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "std::make_unique here immediately.",
+      "range": {
+        "startLine": 403,
+        "startChar": 44,
+        "endLine": 403,
+        "endChar": 71
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2560062_6e33fdc9",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "This is a duplicate code of what\u0027s in display_preferences.cc. Please remove duplication if possible.",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec48241_d4508a1e",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Nit: out_error",
+      "range": {
+        "startLine": 485,
+        "startChar": 17,
+        "endLine": 485,
+        "endChar": 22
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7af1806_f948e829",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this return an error string too?",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1108,
+        "endChar": 17
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdd7edd_a9e56178",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "You can just say {}.",
+      "range": {
+        "startLine": 1112,
+        "startChar": 34,
+        "endLine": 1112,
+        "endChar": 58
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9fb5eb_f4ff22d5",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "{} /* destination_ids */,\n\nwhenever possible else where too.",
+      "range": {
+        "startLine": 1691,
+        "startChar": 25,
+        "endLine": 1691,
+        "endChar": 40
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dfb6c0_1f238f4a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Just EXPECT_FALSE(SetMixedMode());\n\nNo need to cache success.",
+      "range": {
+        "startLine": 1692,
+        "startChar": 4,
+        "endLine": 1692,
+        "endChar": 26
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadb912c_202aa36a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "{\"bad_format_id\"}",
+      "range": {
+        "startLine": 1707,
+        "startChar": 25,
+        "endLine": 1707,
+        "endChar": 40
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a04860_fad236db",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Nit: out_error",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c49a48_b38a8b67",
+        "filename": "extensions/browser/api/system_display/system_display_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "auto set_mixed_mode_function \u003d base::MakeRefCounted\u003cSystemDisplaySetMixedModeFunction\u003e();",
+      "range": {
+        "startLine": 499,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a1e529_6e181c3f",
+        "filename": "extensions/browser/api/system_display/system_display_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 513,
+        "startChar": 0,
+        "endLine": 514,
+        "endChar": 49
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b516f3d_09ea58b7",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "I think we should:\n1- Mark this as deprecated.\n2- Unify mirror mode and mixed mirror mode together in a single API.\n3- Switch the display settings to use your new API.\n4- Define when to use the default behavior (all displays are in mirror mode), e.g. when all displays are mirroring, then adding one more display keeps us in the same mode...etc.\n\nLet\u0027s discuss 4 with oshima and olga next week.",
+      "range": {
+        "startLine": 199,
+        "startChar": 15,
+        "endLine": 199,
+        "endChar": 32
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09637fa8_41b0c1eb",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Please document why you need it sorted.",
+      "range": {
+        "startLine": 413,
+        "startChar": 4,
+        "endLine": 413,
+        "endChar": 21
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5eac9a_fcacc21e",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Let\u0027s simplify this block.",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85d2c81_799e6d95",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Please document the \"why\" instead of the \"what\", since the \"what\" is already clear from the code. Why do we need to reset it here?",
+      "range": {
+        "startLine": 1274,
+        "startChar": 5,
+        "endLine": 1274,
+        "endChar": 30
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2638d19c_d6f3426c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "How about extracting this function into display_manager_utilities.h, make it return an enum instead of bool for various reasons of errors, and make display_info_provider_chromeos.cc use it instead of duplicating things here and there.\n\nThen you can add unit tests for this function independently.",
+      "range": {
+        "startLine": 1291,
+        "startChar": 21,
+        "endLine": 1291,
+        "endChar": 42
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f719ee6_14dd6a42",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Also make sure no duplicates in destinations, and source is not one of destinations?",
+      "range": {
+        "startLine": 1310,
+        "startChar": 2,
+        "endLine": 1310,
+        "endChar": 14
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5421653b_5dcd2784",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "make_unique",
+      "range": {
+        "startLine": 1318,
+        "startChar": 0,
+        "endLine": 1319,
+        "endChar": 76
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18254942_a0fbe0e1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Can you group the mixed mode code together?",
+      "range": {
+        "startLine": 1635,
+        "startChar": 0,
+        "endLine": 1640,
+        "endChar": 14
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05818299_3de6f739",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "You can still keep using the old code. But you\u0027d have to change the order:\n- Do std::remove_if() first to get an iter to the first info to be removed (those correspond to the destination_ids), \n- use [iter : end) to insert info, and create mirroring display,\n- then erase that range.\n\nAdd comments of course to explain. This would be better and more readable than this for loop.",
+      "range": {
+        "startLine": 1647,
+        "startChar": 0,
+        "endLine": 1661,
+        "endChar": 7
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc32468f_c7ba93a3",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "This seems odd that it can be used to change the mixed mode params without triggering a reconfiguration.",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624085af_b34cb936",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "Remove this and add \u003d default; in header.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 36
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549f30ae_3c84c2bf",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-29T01:34:01Z",
+      "side": 1,
+      "message": "I think it\u0027s enough if you just export the struct.",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
