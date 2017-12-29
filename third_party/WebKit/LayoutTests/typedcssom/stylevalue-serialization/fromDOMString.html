@@ -1,0 +1,40 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Serialization of CSSStyleValue constructed from DOMString</title>
+<link rel="help" href="https://drafts.css-houdini.org/css-typed-om-1/#stylevalue-serialization">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+const gTestCases = [
+  { subclass: CSSKeywordValue, property: 'width', value: ' auto /* */ ' },
+  { subclass: CSSUnitValue, property: 'width', value: '/* */ 12.000px ' },
+  { subclass: CSSMathSum, property: 'width', value: 'calc(1px + 1%)' },
+  { subclass: CSSPositionValue, property: 'object-position', value: '/* */ 100px bottom ' },
+  { subclass: CSSURLImageValue, property: 'background-image', value: ' url( "foobar " /* */ ) /* */' },
+];
+
+for (const {subclass, property, value} of gTestCases) {
+  test(() => {
+    const result = CSSStyleValue.parse(property, value);
+    assert_equals(result.toString(), value);
+  }, subclass.name + ' constructed from DOMString serializes exactly to the given string');
+
+  if (subclass == CSSMathSum) {
+    test(() => {
+      const result = CSSNumericValue.parse(value);
+      assert_equals(result.toString(), value);
+    }, subclass.name + ' constructed from DOMString using CSSNumericValue.parse serializes exactly to the given string');
+  }
+}
+
+test(() => {
+  const result = CSSStyleValue.parseAll('transition-duration', ' 1s /* */ , /* */2s , /* */3s ');
+  assert_equals(result.length, 3);
+  assert_equals(result[0].toString(), ' 1s /* */ ');
+  assert_equals(result[1].toString(), '/* */2s ');
+  assert_equals(result[2].toString(), ' /* */3s ');
+}, 'CSSStyleValues constructed from DOMString of list-valued property serializes each item in the list');
+
+</script>
