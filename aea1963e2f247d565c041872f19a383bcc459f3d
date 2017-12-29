@@ -34,6 +34,24 @@
       "revId": "aea1963e2f247d565c041872f19a383bcc459f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0484b83_4e32ebd8",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-29T06:53:38Z",
+      "side": 1,
+      "message": "After further thought, I think the second call to SystemAllocPages should use \u0027address\u0027 instead of nullptr. Either \u0027address\u0027 \u003d\u003d nullptr or it\u0027s POSIX and the hint is advisory.",
+      "parentUuid": "a074cd8f_da39fa60",
+      "revId": "aea1963e2f247d565c041872f19a383bcc459f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
