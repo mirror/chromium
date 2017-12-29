@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3ba5dded_0ccc29f2",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-29T00:36:20Z",
+      "side": 1,
+      "message": "Since we std::move() the source here (which IIUC makes it null), do we need to move this line after the carryover_urls_whitelist_.insert(source-\u003eurl().spec()); line below?",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45656cca_464070fa",
         "filename": "components/ukm/ukm_recorder_impl.cc",
         "patchSetId": 3
@@ -65,6 +82,24 @@
       "writtenOn": "2017-12-25T18:18:38Z",
       "side": 1,
       "message": "optional: since URLs can be large and take up memory, and since all of the sources associated with URLs in carryover_urls_whitelist_ are retained in sources_, could we instead use a std::unordered_set\u003cSourceId\u003e previously_whitelisted_source_ids_ here, to reduce memory consumption? We could then change AppendWhitelistedUrls to build a set of URLs for the sources in sources_ that are either whitelisted, or are in previously_whitelisted_source_ids_.",
+      "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8357ab0b_e3b570fa",
+        "filename": "components/ukm/ukm_recorder_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-29T00:36:20Z",
+      "side": 1,
+      "message": "On second thought, because the URLs of sources can be updated, we should keep it as you have it here, rather than using a set of SourceIds.",
+      "parentUuid": "b992b255_b06d8cd9",
       "revId": "d3640ca61ba0b284f0a1377c20d5ddcea3ffda88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
