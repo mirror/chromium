@@ -140,7 +140,7 @@ class HungRendererDialogView : public views::DialogDelegateView,
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
 
-  static HungRendererDialogView* g_instance_;
+  static HungRendererDialogView* g_hung_renderer_view_instance_;
 
  private:
   // Initialize the controls in this dialog.

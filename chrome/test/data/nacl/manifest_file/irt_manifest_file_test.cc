@@ -31,7 +31,7 @@
 
 std::vector<std::string> result;
 
-pp::Instance* g_instance = NULL;
+pp::Instance* g_irt_manifest_file_test_instance = NULL;
 
 std::string LoadManifestSuccess(TYPE_nacl_irt_query *query_func) {
   struct nacl_irt_resource_open nacl_irt_resource_open;
@@ -128,7 +128,7 @@ void PostReply(void* user_data, int32_t status) {
   pp::VarArray reply = pp::VarArray();
   for (size_t i = 0; i < result.size(); ++i)
     reply.Set(i, pp::Var(result[i]));
-  g_instance->PostMessage(reply);
+  g_irt_manifest_file_test_instance->PostMessage(reply);
 }
 
 void* RunTestsOnBackgroundThread(void *thread_id) {
@@ -141,7 +141,7 @@ void* RunTestsOnBackgroundThread(void *thread_id) {
 class TestInstance : public pp::Instance {
  public:
   explicit TestInstance(PP_Instance instance) : pp::Instance(instance) {
-    g_instance = this;
+    g_irt_manifest_file_test_instance = this;
   }
 
   virtual ~TestInstance() {}
