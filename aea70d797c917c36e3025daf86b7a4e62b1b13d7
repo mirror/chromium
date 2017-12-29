@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7daee204_5d560607",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-29T06:08:06Z",
+      "side": 1,
+      "message": "1) Tree-:\n\u003chead\u003e\u003c/head\u003e\u003chtml\u003e\u003chead\u003e\u003c/head\u003e\u003cbody\u003e  \n \u003cobject\u003ex\u003c/object\u003e \u003cscript\u003e\nfunction DOMNodeInserted() {\ndocument.execCommand(\"SelectAll\");\n}\nfunction selectionchange() {\n  document.execCommand(\u0027InsertText\u0027);\n}\ndocument.addEventListener(\"DOMNodeInserted\", DOMNodeInserted);\ndocument.addEventListener(\"selectionchange\",selectionchange);\ndocument.designMode \u003d \"on\";\n\nvar body \u003d document.body;\nbody.parentNode.replaceChild(document.documentElement.cloneNode(true), body); // Triggers DOMNodeInserted handler\n\u003c/script\u003e\u003c/body\u003e\u003c/html\u003e\n\n2) SelectionInDOMTree comes as-:\nSelection(base: HTML (editable)@beforeChildren, extent: HTML (editable)@afterChildren)\n\n3) ComputeVisibleSelectionInDOMTreeDeprecated-:\nVisibleSelection(base: OBJECT (editable)@beforeAnchor extent:OBJECT (editable)@afterAnchor start: OBJECT (editable)@beforeAnchor end: OBJECT (editable)@afterAnchor TextAffinity::Downstream Directional)\n\n4) CreateVS(GetSelectionInDOMTree()) \nVisibleSelection(base: #text \"x\"@offsetInAnchor[0] extent:#text \"x\"@offsetInAnchor[1] start: #text \"x\"@offsetInAnchor[0] end: #text \"x\"@offsetInAnchor[1] TextAffinity::Downstream Directional)",
+      "parentUuid": "6c027210_f97661dc",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f0f2e_63cf79bd",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
