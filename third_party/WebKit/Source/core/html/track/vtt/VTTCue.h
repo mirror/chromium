@@ -187,7 +187,8 @@ class VTTCue final : public TextTrackCue {
   VTTDisplayParameters CalculateDisplayParameters() const;
   float CalculateComputedPosition() const;
   LineAlignment CalculateComputedLineAlignment() const;
-  PositionAlignment CalculateComputedPositionAlignment() const;
+  PositionAlignment CalculateComputedPositionAlignment(CSSValueID) const;
+  PositionAlignment CalculateDirectionAlignment(CSSValueID) const;
 
   enum CueSetting {
     kNone,
