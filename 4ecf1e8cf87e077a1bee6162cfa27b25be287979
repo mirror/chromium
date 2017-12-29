@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "9776d002_97981291",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c54f90_7c92a5f1",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 12
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb074706_7a82f1d7",
         "filename": "printing/common/pdf_metafile_utils.cc",
         "patchSetId": 5
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "dc6f7c7b_6d959bf6",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb074706_7a82f1d7",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a86471c9_b31afbaa",
         "filename": "printing/common/pdf_metafile_utils.cc",
         "patchSetId": 5
@@ -131,6 +179,24 @@
       "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a33dc1_46b216c8",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a86471c9_b31afbaa",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "4c627076_f2a264de",
+        "filename": "printing/common/pdf_metafile_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ad8ebe_c5b85f5e",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5586f33f_fc3f39ee",
         "filename": "printing/common/pdf_metafile_utils.h",
         "patchSetId": 5
@@ -165,6 +249,24 @@
       "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc650a4_6cc0921d",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5586f33f_fc3f39ee",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "7a239638_2939178a",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5748b3e5_5250157e",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "864c1628_d2e87d37",
         "filename": "printing/common/pdf_metafile_utils.h",
         "patchSetId": 5
@@ -199,6 +319,24 @@
       "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf06886_850a9923",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864c1628_d2e87d37",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "3f48671a_fc3310a5",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f91351_3df67d56",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24d37b05_8597a9cf",
         "filename": "printing/common/pdf_metafile_utils.h",
         "patchSetId": 5
@@ -236,6 +392,24 @@
     },
     {
       "key": {
+        "uuid": "51a3d2f7_2a9f9e38",
+        "filename": "printing/common/pdf_metafile_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d37b05_8597a9cf",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fca02eb_1e1c800b",
         "filename": "printing/pdf_metafile_skia.cc",
         "patchSetId": 5
@@ -247,6 +421,30 @@
       "writtenOn": "2017-12-22T00:34:55Z",
       "side": 1,
       "message": "This looks odd.",
+      "range": {
+        "startLine": 322,
+        "startChar": 21,
+        "endLine": 322,
+        "endChar": 22
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef0d14b_28717d3e",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Do you mean returning a reference? It is needed during printing to store all the content ids.",
+      "parentUuid": "7fca02eb_1e1c800b",
       "range": {
         "startLine": 322,
         "startChar": 21,
@@ -282,6 +480,30 @@
     },
     {
       "key": {
+        "uuid": "9cdc91d7_008139f7",
+        "filename": "printing/pdf_metafile_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "parentUuid": "2a154af5_d250a329",
+      "range": {
+        "startLine": 330,
+        "startChar": 58,
+        "endLine": 330,
+        "endChar": 59
+      },
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb64cfcb_c76646e7",
         "filename": "printing/pdf_metafile_skia.h",
         "patchSetId": 5
@@ -299,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "bdcebd3d_51183c81",
+        "filename": "printing/pdf_metafile_skia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "Changed back. Done.",
+      "parentUuid": "fb64cfcb_c76646e7",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78c5f023_fd5b0e86",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
         "patchSetId": 5
@@ -310,6 +550,24 @@
       "writtenOn": "2017-12-22T00:34:55Z",
       "side": 1,
       "message": "What are the #include rules inside third_party/WebKit/Source? If we can\u0027t find a way to share the constant with printing/metafile_skia_wrapper.cc, then can we at least add comments in both places to cross-ref each other?",
+      "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd88a83_a64689a5",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-29T05:00:10Z",
+      "side": 1,
+      "message": "The existing deps don\u0027t have /printing. I can add it if allowed. For now, added comment.",
+      "parentUuid": "78c5f023_fd5b0e86",
       "revId": "4ecf1e8cf87e077a1bee6162cfa27b25be287979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
