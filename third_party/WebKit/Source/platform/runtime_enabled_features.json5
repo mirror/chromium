@@ -559,6 +559,9 @@
       status: "experimental",
     },
     {
+      name: "LowPriorityIframes",
+    },
+    {
       name: "MediaCapabilities",
       origin_trial_feature_name: "MediaCapabilities",
       status: "experimental",

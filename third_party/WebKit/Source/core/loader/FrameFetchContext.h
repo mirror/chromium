@@ -34,6 +34,7 @@
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/BaseFetchContext.h"
+#include "platform/Histogram.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -233,6 +234,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   // the |ContentSettingsClient| with the list of client hints and the
   // persistence duration.
   void ParseAndPersistClientHints(const ResourceResponse&);
+
+  ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority) const override;
 
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;
