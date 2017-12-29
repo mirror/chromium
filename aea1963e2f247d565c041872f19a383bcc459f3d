@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767612e1_f88bad84",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-29T01:17:53Z",
+      "side": 1,
+      "message": "Nit: is_oom sounds a bit confusing to me. \u0027ret \u003d\u003d nullptr\u0027 means is_oom. \u0027is_oom \u003d kHintIsAdvisory || address \u003d\u003d nullptr\u0027 means \u0027may_retry_on_a_different_address\u0027.",
+      "revId": "aea1963e2f247d565c041872f19a383bcc459f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
