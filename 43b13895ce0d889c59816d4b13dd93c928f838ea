@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c5dd825_6f6fcae9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-29T03:21:51Z",
+      "side": 1,
+      "message": "Nit: remove from the title and put as a one line explanation in the description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 77
+      },
+      "revId": "43b13895ce0d889c59816d4b13dd93c928f838ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
