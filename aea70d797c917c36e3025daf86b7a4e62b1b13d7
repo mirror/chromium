@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6c027210_f97661dc",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-29T04:46:51Z",
+      "side": 1,
+      "message": "\u003e I tried to minimise the test case but I am unable to reproduce this scenario.\n\u003e \n\u003e This is a rare scenario in which the ComputeVisibleSelectionInDOMTree is different from the createVisibleSelection(GetSelectionInDOMTree()).\n\nThis sounds more serious than a random editing command crash, since we are assuming |ComputeVSInDOMTree \u003d\u003d CreateVS(GetSelectionInDOMTree())|.\n\nCould you show me the DOM tree and selection for this to happen?\n\n\u003e \n\u003e But if I am manually trying to simulate this conditions , the issue don\u0027t happens.\n\u003e Could we go ahead with this layout test or if you have some suggestions ?\n\u003e Thanks in advance.",
+      "parentUuid": "6a5c5b18_0220de64",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f0f2e_63cf79bd",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -66,6 +84,30 @@
       "writtenOn": "2017-12-28T13:23:35Z",
       "side": 1,
       "message": "Do you think that this condition will be correct.\nIf we reach to this place, then we will always have a changed DOM selection and positions will be disconnected always.\nCurrently I was unable to find any layout test reaching to this place,except this CL layout test without the ABORT check.",
+      "range": {
+        "startLine": 443,
+        "startChar": 3,
+        "endLine": 447,
+        "endChar": 62
+      },
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2179f68f_3e169a81",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-29T04:46:51Z",
+      "side": 1,
+      "message": "The ABORT condition looks fine.",
+      "parentUuid": "c03f0f2e_63cf79bd",
       "range": {
         "startLine": 443,
         "startChar": 3,
