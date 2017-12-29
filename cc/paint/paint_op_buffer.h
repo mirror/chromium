@@ -796,6 +796,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   }
 
   PaintOpBuffer();
+  PaintOpBuffer(const gfx::Rect& rect, sk_sp<SkPicture> oop_pic);
   PaintOpBuffer(PaintOpBuffer&& other);
   ~PaintOpBuffer() override;
 
@@ -840,6 +841,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   void push(Args&&... args) {
     static_assert(std::is_convertible<T, PaintOp>::value, "T not a PaintOp.");
     static_assert(alignof(T) <= PaintOpAlign, "");
+    DCHECK(!picture_);  // No painting for out of process content.
 
     size_t skip = ComputeOpSkip(sizeof(T));
     T* op = reinterpret_cast<T*>(AllocatePaintOp(skip));
@@ -1054,6 +1056,11 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
     subrecord_bytes_used_ += op->AdditionalBytesUsed();
   }
+
+  // The rectangluar area to raster |picture_|.
+  const gfx::Rect rect_;
+  // Link to an out-of-process picture content.
+  sk_sp<SkPicture> picture_;
 
   std::unique_ptr<char, base::AlignedFreeDeleter> data_;
   size_t used_ = 0;
