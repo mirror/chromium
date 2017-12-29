@@ -336,6 +336,7 @@ void PaintLayerClipper::CalculateRects(
     return;
   }
   DCHECK(!fragment_data);
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   bool is_clipping_root = &layer_ == context.root_layer;
   LayoutBoxModelObject& layout_object = layer_.GetLayoutObject();
