@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b768f80_382507ac",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3741,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-29T00:06:56Z",
+      "side": 1,
+      "message": "Nit: Doctype seems not to work here because it\u0027s in body\u0027s inner HTML. If you do need the standard mode, you need  GetDocument().SetCompatibilityMode().",
+      "revId": "b49b0a0e85da142f13063c895c936bfe216ee65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
