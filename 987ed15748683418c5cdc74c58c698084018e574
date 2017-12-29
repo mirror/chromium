@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0ab5778_1f545d9c",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T15:21:21Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "d59877d8_96cdf3e5",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 491,
+        "endChar": 78
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6558cc42_12355efe",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-28T18:18:41Z",
       "side": 1,
       "message": "This returns milliseconds https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java#140 and base::TimeTicks::FromInternalValue() expects microseconds https://cs.chromium.org/chromium/src/base/time/time.h?l\u003d425\u0026rcl\u003d4f7cfdfbeb75981159796514c1105d2a03605a5e .\n\nAlso, are you sure that both base::TimeTicks::Now() and Java_UmaUtils_getMainEntryPointTicks() use the same source of time? They must if you want to subtract this value from the main MessageLoop start time (obtained from base::TimeTicks::Now()) here https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/components/startup_metric_utils/browser/startup_metric_utils.cc#613",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffb809d_b911e51b",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T15:21:21Z",
+      "side": 1,
+      "message": "\u003e This returns milliseconds\n\u003e https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java#140\n\u003e and base::TimeTicks::FromInternalValue() expects microseconds\n\u003e https://cs.chromium.org/chromium/src/base/time/time.h?l\u003d425\u0026rcl\u003d4f7cfdfbeb75981159796514c1105d2a03605a5e\n\u003e .\n\nyes, that was awkward, sorry .. I noticed it before, but forgot to adjust ..\nDone\n\n\u003e Also, are you sure that both base::TimeTicks::Now() and\n\u003e Java_UmaUtils_getMainEntryPointTicks() use the same source of time?\n\nYes, they come from the same clock (clock_gettime(CLOCK_MONOTONIC), which is a\nmonotonic non-decreasing amount of ticks of non-sleep uptime since boot, unless\nAndroid OEMs modify this particular aspect of it, which would be too creative).\n\nbase::TimeTicks::Now() side:\nhttps://codesearch.chromium.org/chromium/src/base/time/time_now_posix.cc?sq\u003dpackage:chromium\u0026l\u003d86\n\nSystemClock.uptimeMillis() side:\n1. https://android.googlesource.com/platform/system/core/+/master/libutils/SystemClock.cpp#40\n2. https://android.googlesource.com/platform/system/core/+/master/libutils/Timers.cpp#26\n\n\u003e They must if you want to subtract this value from the main MessageLoop start\n\u003e time (obtained from base::TimeTicks::Now()) here\n\u003e https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/components/startup_metric_utils/browser/startup_metric_utils.cc#613\n\nYes, this is exactly the intention.",
+      "parentUuid": "6558cc42_12355efe",
       "range": {
         "startLine": 31,
         "startChar": 6,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "40cdc168_ff7c0332",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T15:21:21Z",
+      "side": 1,
+      "message": "niiice! Last time I looked there was no constexpr c-tor, time flies fast .. it was added in July. Done. Not converting others, would cause a lot of somewhat-unrelated changes, can do in a separate change if you ask.",
+      "parentUuid": "4ae58944_bc21c22c",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 76
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60f7ac7_a781c256",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059537aa_829fc9e6",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "153a6518_9061845d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "987ed15748683418c5cdc74c58c698084018e574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f9440a_a0cd0070",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84147,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-29T15:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153a6518_9061845d",
+      "range": {
+        "startLine": 84147,
+        "startChar": 53,
+        "endLine": 84147,
+        "endChar": 54
+      },
+      "revId": "987ed15748683418c5cdc74c58c698084018e574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
