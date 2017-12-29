@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "components/prefs/pref_change_registrar.h"
 
+#include <windows.h>
+
 class BrowserView;
 
 // This class is resposible for updating the app id and relaunch details of a

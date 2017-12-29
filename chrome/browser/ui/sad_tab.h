@@ -10,6 +10,9 @@
 #include "base/process/kill.h"
 #include "chrome/browser/ui/sad_tab_types.h"
 
+// Work around Windows macro madness.
+//#undef GetMessage
+
 namespace content {
 class WebContents;
 }

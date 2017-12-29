@@ -8,6 +8,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/debug/stack_trace.h"
+#include <windows.h>
 #elif defined(OS_LINUX)
 // <syslog.h> defines a LOG_WARNING macro that could conflict with
 // base::LOG_WARNING.

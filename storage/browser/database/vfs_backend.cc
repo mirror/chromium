@@ -11,6 +11,10 @@
 #include "base/logging.h"
 #include "third_party/sqlite/sqlite3.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
 namespace storage {
 
 static const int kFileTypeMask = 0x00007F00;
