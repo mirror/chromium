@@ -1618,7 +1618,6 @@ void PaintLayer::AppendSingleFragmentIgnoringPagination(
     const PaintLayer* root_layer,
     const LayoutRect& dirty_rect,
     ClipRectsCacheSlot clip_rects_cache_slot,
-    PaintLayer::GeometryMapperOption geometry_mapper_option,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
     ShouldRespectOverflowClipType respect_overflow_clip,
     const LayoutPoint* offset_from_root,
@@ -1629,11 +1628,8 @@ void PaintLayer::AppendSingleFragmentIgnoringPagination(
                                       sub_pixel_accumulation);
   if (respect_overflow_clip == kIgnoreOverflowClip)
     clip_rects_context.SetIgnoreOverflowClip();
-  Clipper(geometry_mapper_option)
-      .CalculateRects(clip_rects_context,
-                      geometry_mapper_option == kUseGeometryMapper
-                          ? &GetLayoutObject().FirstFragment()
-                          : nullptr,
+  Clipper(kUseGeometryMapper)
+      .CalculateRects(clip_rects_context, &GetLayoutObject().FirstFragment(),
                       dirty_rect, fragment.layer_bounds,
                       fragment.background_rect, fragment.foreground_rect,
                       offset_from_root);
@@ -1664,14 +1660,10 @@ void PaintLayer::CollectFragments(
     const PaintLayer* root_layer,
     const LayoutRect& dirty_rect,
     ClipRectsCacheSlot clip_rects_cache_slot,
-    PaintLayer::GeometryMapperOption geometry_mapper_option,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior,
     ShouldRespectOverflowClipType respect_overflow_clip,
     const LayoutPoint* offset_from_root,
     const LayoutSize& sub_pixel_accumulation) const {
-  // TODO(chrishtr): enable this once it works with rasterize-and-record.
-  // DCHECK_EQ(DocumentLifecycle::kInPaint,
-  //           GetLayoutObject().GetDocument().Lifecycle().GetState());
   PaintLayerFragment fragment;
   ClipRectsContext clip_rects_context(root_layer, clip_rects_cache_slot,
                                       overlay_scrollbar_clip_behavior,
@@ -1685,7 +1677,7 @@ void PaintLayer::CollectFragments(
       !ShouldFragmentCompositedBounds(root_layer);
   for (auto* fragment_data = &GetLayoutObject().FirstFragment(); fragment_data;
        fragment_data = fragment_data->NextFragment()) {
-    Clipper(geometry_mapper_option)
+    Clipper(kUseGeometryMapper)
         .CalculateRects(
             clip_rects_context, fragment_data, dirty_rect,
             fragment.layer_bounds, fragment.background_rect,
@@ -2024,11 +2016,10 @@ PaintLayer* PaintLayer::HitTestLayer(
   if (applied_transform) {
     AppendSingleFragmentIgnoringPagination(
         layer_fragments, root_layer, hit_test_rect, clip_rects_cache_slot,
-        PaintLayer::kDoNotUseGeometryMapper,
         kExcludeOverlayScrollbarSizeForHitTesting);
   } else {
     CollectFragments(layer_fragments, root_layer, hit_test_rect,
-                     clip_rects_cache_slot, PaintLayer::kUseGeometryMapper,
+                     clip_rects_cache_slot,
                      kExcludeOverlayScrollbarSizeForHitTesting);
   }
 
@@ -2145,9 +2136,8 @@ PaintLayer* PaintLayer::HitTestTransformedLayerInFragments(
 
   EnclosingPaginationLayer()->CollectFragments(
       enclosing_pagination_fragments, root_layer, hit_test_rect,
-      clip_rects_cache_slot, PaintLayer::kUseGeometryMapper,
-      kExcludeOverlayScrollbarSizeForHitTesting, kRespectOverflowClip, nullptr,
-      LayoutSize());
+      clip_rects_cache_slot, kExcludeOverlayScrollbarSizeForHitTesting,
+      kRespectOverflowClip, nullptr, LayoutSize());
 
   for (const auto& fragment : enclosing_pagination_fragments) {
     // Apply the page/column clip for this fragment, as well as any clips
