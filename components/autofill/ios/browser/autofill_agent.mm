@@ -716,10 +716,10 @@ void GetFormAndField(autofill::FormData* form,
       !webState->ContentIsHTML()) {
     return;
   }
-  [self processPage:webState];
+  [self processPage:webState forceUpdate:NO];
 }
 
-- (void)processPage:(web::WebState*)webState {
+- (void)processPage:(web::WebState*)webState forceUpdate:(BOOL)forceUpdate {
   DCHECK_EQ(webState_, webState);
   web::URLVerificationTrustLevel trustLevel;
   const GURL pageURL(webState->GetCurrentURL(&trustLevel));
@@ -731,17 +731,21 @@ void GetFormAndField(autofill::FormData* form,
   if (!web::UrlHasWebScheme(pageURL))
     return;
 
-  // This process is only done once.
-  if ([jsAutofillManager_ hasBeenInjected])
+  if ([jsAutofillManager_ hasBeenInjected] && !forceUpdate) {
     return;
+  }
 
-  popupDelegate_.reset();
-  suggestionsAvailableCompletion_ = nil;
-  suggestionHandledCompletion_ = nil;
-  mostRecentSuggestions_ = nil;
-  typedValue_ = nil;
+  // This process is only done once.
+  if (![jsAutofillManager_ hasBeenInjected]) {
+    popupDelegate_.reset();
+    suggestionsAvailableCompletion_ = nil;
+    suggestionHandledCompletion_ = nil;
+    mostRecentSuggestions_ = nil;
+    typedValue_ = nil;
 
-  [jsAutofillManager_ inject];
+    [jsAutofillManager_ inject];
+    [jsAutofillManager_ trackFormUpdate:1000];
+  }
 
   __weak AutofillAgent* weakSelf = self;
   id completionHandler = ^(BOOL success, const FormDataVector& forms) {
@@ -783,13 +787,13 @@ void GetFormAndField(autofill::FormData* form,
     return;
 
   // Returns early and reset the suggestion state if an error occurs.
-  if (params.input_missing)
+  if (params.input_missing && params.type != "new_form")
     return;
 
   // Processing the page can be needed here if Autofill is enabled in settings
   // when the page is already loaded, or if the user focuses a field before the
   // page is fully loaded.
-  [self processPage:webState];
+  [self processPage:webState forceUpdate:(params.type == "new_form")];
 
   // Blur not handled; we don't reset the suggestion state because if the
   // keyboard is about to be dismissed there's no point. If not it means the

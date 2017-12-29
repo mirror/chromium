@@ -154,6 +154,17 @@ __gCrWeb.autofill.lastAutoFilledElement = null;
 __gCrWeb.autofill.styleInjected = false;
 
 /**
+ * The interval watching for form changes.
+ */
+__gCrWeb.autofill.formWatcherInterval = null;
+
+/**
+ * The value of the form signature last time formWatcherInterval was triggerred.
+ */
+__gCrWeb.autofill.lastFormSignature = {};
+
+
+/**
  * Searches an element's ancestors to see if the element is inside a <form> or
  * <fieldset>.
  *
@@ -557,6 +568,41 @@ __gCrWeb.autofill['extractForms'] = function(requiredFields) {
   var results = new __gCrWeb.common.JSONSafeObject;
   results['forms'] = __gCrWeb.autofill.extractNewForms(requiredFields);
   return __gCrWeb.stringify(results);
+};
+
+/**
+ * Returns a simple signature of the form content of the page. Must be fast
+ * as it is called regularly.
+ */
+function getFormSignature_() {
+  return {
+    forms: document.forms.length,
+    input: document.getElementsByTagName('input').length
+  };
+}
+
+/**
+ * Install a watcher to check the form changes. Delay is the interval between
+ * checks in milliseconds.
+ */
+__gCrWeb.autofill['trackFormUpdates'] = function(delay) {
+  if (__gCrWeb.autofill.formWatcherInterval) {
+    clearInterval(__gCrWeb.autofill.formWatcherInterval);
+  }
+  if (delay) {
+    __gCrWeb.autofill.lastFormSignature = getFormSignature_();
+    setInterval(function(){
+      var signature = __gCrWeb.autofill.getFormSignature_;
+      if (signature != __gCrWeb.autofill.lastFormSignature) {
+        __gCrWeb.autofill.lastFormSignature = signature;
+        var msg = {
+          'command': 'form.activity',
+          'type': 'new_form'
+        };
+        __gCrWeb.message.invokeOnHost(msg);
+      }
+    }, delay);
+  }
 };
 
 /**

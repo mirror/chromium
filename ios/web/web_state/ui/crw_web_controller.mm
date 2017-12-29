@@ -2422,10 +2422,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (BOOL)handleFormActivityMessage:(base::DictionaryValue*)message
                           context:(NSDictionary*)context {
   web::FormActivityParams params;
-  if (!message->GetString("formName", &params.form_name) ||
+  if (!message->GetString("type", &params.type) ||
+      !message->GetString("formName", &params.form_name) ||
       !message->GetString("fieldName", &params.field_name) ||
       !message->GetString("fieldType", &params.field_type) ||
-      !message->GetString("type", &params.type) ||
       !message->GetString("value", &params.value)) {
     params.input_missing = true;
   }
