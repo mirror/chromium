@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<title>Tests that adding a track and changing its mode through JS doesn't crash the browser.</title>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<title>Adding a track and changing its mode through JS doesn't crash</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <video>
     <!-- If the src is specified through JS after the body load, the test doesn't crash anymore. -->
-    <source src="../content/test.mp4" type="video/mp4">
-    <source src="../content/test.ogv" type="video/ogg">
+    <source src="/media/test.mp4" type="video/mp4">
+    <source src="/media/test.ogv" type="video/ogg">
 </video>
 <script>
 test(function() {
