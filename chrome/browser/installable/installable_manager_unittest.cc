@@ -5,8 +5,6 @@
 #include "chrome/browser/installable/installable_manager.h"
 
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
-#include "chrome/common/chrome_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 
@@ -187,8 +185,6 @@ TEST_F(InstallableManagerUnitTest, ManifestRequiresMinimalSize) {
 }
 
 TEST_F(InstallableManagerUnitTest, ManifestDisplayModes) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndDisableFeature(features::kPwaMinimalUi);
   content::Manifest manifest = GetValidManifest();
 
   manifest.display = blink::kWebDisplayModeUndefined;
@@ -201,24 +197,13 @@ TEST_F(InstallableManagerUnitTest, ManifestDisplayModes) {
 
   manifest.display = blink::kWebDisplayModeMinimalUi;
   EXPECT_FALSE(IsManifestValid(manifest));
-  EXPECT_EQ(MANIFEST_DISPLAY_NOT_SUPPORTED, GetErrorCode());
+  EXPECT_EQ(NO_ERROR_DETECTED, GetErrorCode());
 
   manifest.display = blink::kWebDisplayModeStandalone;
   EXPECT_TRUE(IsManifestValid(manifest));
   EXPECT_EQ(NO_ERROR_DETECTED, GetErrorCode());
 
   manifest.display = blink::kWebDisplayModeFullscreen;
-  EXPECT_TRUE(IsManifestValid(manifest));
-  EXPECT_EQ(NO_ERROR_DETECTED, GetErrorCode());
-}
-
-TEST_F(InstallableManagerUnitTest, ManifestDisplayModesMinimalUiEnabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(features::kPwaMinimalUi);
-
-  content::Manifest manifest = GetValidManifest();
-  manifest.display = blink::kWebDisplayModeMinimalUi;
-
   EXPECT_TRUE(IsManifestValid(manifest));
   EXPECT_EQ(NO_ERROR_DETECTED, GetErrorCode());
 }

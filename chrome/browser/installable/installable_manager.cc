@@ -494,8 +494,7 @@ bool InstallableManager::IsManifestValidForWebApp(
 
   if (manifest.display != blink::kWebDisplayModeStandalone &&
       manifest.display != blink::kWebDisplayModeFullscreen &&
-      !(manifest.display == blink::kWebDisplayModeMinimalUi &&
-        base::FeatureList::IsEnabled(features::kPwaMinimalUi))) {
+      manifest.display != blink::kWebDisplayModeMinimalUi) {
     valid_manifest_->error = MANIFEST_DISPLAY_NOT_SUPPORTED;
     return false;
   }
