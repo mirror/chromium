@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c0a48849_5a429a2c",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-29T12:09:24Z",
+      "side": 1,
+      "message": "I\u0027d have the common functionality in ActiveStyleSheets.h/cpp instead:\n\nbool ClearMediaQueryDependentRuleSets(ActiveStyleSheets\u0026)\n\nYou should be able to use range-based iteration here like we do in TreeScopeStyleSheetCollection.",
+      "parentUuid": "e4aefc8d_a56de271",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dd6bfc2_894704d5",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 1
@@ -136,6 +154,41 @@
       "side": 1,
       "message": "This is not exactly the same code: in ScopedStyleResolver::AppendActiveStyleSheets we collect the media query results for the newly appended author sheets in a separate vector when new sheets are appended, whereas here we collect the media query results for each user sheet, directly from the sheet, each time this method is called. This is because there\u0027s no append-only optimization for user sheets.\n\nHaving said this, we might be able to share some code, but I wonder if it\u0027s worth it.",
       "parentUuid": "1640d9ed_46049eb6",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d525655_7f89dcc5",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-29T12:09:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa438c15_3deea631",
+      "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a8febe7_423dee89",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-29T12:09:24Z",
+      "side": 1,
+      "message": "Are these methods now used outside of StyleEngine? Could they be private?",
       "revId": "fffd8edbfba90f99a18f93e2ff10cff9ce71bde3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
