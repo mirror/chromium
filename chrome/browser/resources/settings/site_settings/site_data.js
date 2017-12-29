@@ -113,7 +113,9 @@ Polymer({
    * @private
    */
   favicon_: function(url) {
-    return cr.icon.getFavicon(url);
+    // If the url doesn't have a scheme, inject HTTP as the scheme. Otherwise,
+    // the URL isn't valid and no icon will be returned.
+    return cr.icon.getFavicon(url.includes('://') ? url : 'http://' + url);
   },
 
   /**
