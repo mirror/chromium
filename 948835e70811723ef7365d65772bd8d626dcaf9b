@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c78528_4a776265",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-29T12:46:55Z",
+      "side": 0,
+      "message": "Moved to bookmark_home_view_controller_protected.h to let unittest access it.",
+      "revId": "948835e70811723ef7365d65772bd8d626dcaf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
