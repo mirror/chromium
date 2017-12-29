@@ -5,6 +5,7 @@
 #include "core/css/cssom/CSSPositionValue.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/css/CSSValueList.h"
 #include "core/css/CSSValuePair.h"
 #include "core/css/cssom/CSSNumericValue.h"
 
@@ -23,6 +24,31 @@ CSSPositionValue* CSSPositionValue::Create(CSSNumericValue* x,
         "Must pass length or percentage to y in CSSPositionValue");
     return nullptr;
   }
+  return new CSSPositionValue(x, y);
+}
+
+CSSPositionValue* CSSPositionValue::FromCSSValue(const CSSValue& css_value) {
+  if (!css_value.IsValueList()) {
+    return nullptr;
+  }
+
+  const CSSValueList* value_list = ToCSSValueList(&css_value);
+  if (value_list->length() != 2) {
+    return nullptr;
+  }
+
+  CSSNumericValue* x =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value_list->Item(0)));
+  CSSNumericValue* y =
+      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value_list->Item(1)));
+
+  if (!IsValidCoordinate(x)) {
+    return nullptr;
+  }
+  if (!IsValidCoordinate(y)) {
+    return nullptr;
+  }
+
   return new CSSPositionValue(x, y);
 }
 
