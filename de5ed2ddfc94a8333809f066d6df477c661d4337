@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a42c7c_edcba2bf",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-29T01:48:24Z",
+      "side": 1,
+      "message": "Looking at line 37, it seems that |recorder| can be null. In that case, would this crash?",
+      "range": {
+        "startLine": 40,
+        "startChar": 45,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "de5ed2ddfc94a8333809f066d6df477c661d4337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09697dac_fb5ce233",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-29T01:48:24Z",
+      "side": 1,
+      "message": "same comment here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 45,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "de5ed2ddfc94a8333809f066d6df477c661d4337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab70d512_56581b4f",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-29T01:48:24Z",
+      "side": 1,
+      "message": "May be add a comment about |request|.",
+      "range": {
+        "startLine": 61,
+        "startChar": 61,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "de5ed2ddfc94a8333809f066d6df477c661d4337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd9440c_4fef61ba",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-29T01:48:24Z",
+      "side": 1,
+      "message": "May be add:\n|data_use| contains the network data used by the page so far. URL in |data_use| may not be available until OnCommit.",
+      "revId": "de5ed2ddfc94a8333809f066d6df477c661d4337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
