@@ -75,6 +75,7 @@ void FaviconSource::StartDataRequest(
   }
 
   GURL url(parsed.url);
+  DCHECK(url.is_valid());
   int desired_size_in_pixel =
       std::ceil(parsed.size_in_dip * parsed.device_scale_factor);
 
