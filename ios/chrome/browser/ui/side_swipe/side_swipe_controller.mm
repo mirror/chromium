@@ -249,7 +249,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 
   // Otherwise, only allow contentView touches with |swipeGestureRecognizer_|.
   CGRect contentViewFrame =
-      CGRectInset([[swipeDelegate_ contentView] frame], -1, -1);
+      CGRectInset([[swipeDelegate_ sideSwipeContentView] frame], -1, -1);
   if (CGRectContainsPoint(contentViewFrame, location)) {
     if (![gesture isEqual:swipeGestureRecognizer_]) {
       return NO;
@@ -391,7 +391,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     [[model_ currentTab].webController setOverlayPreviewMode:NO];
 
     // Redisplay the view if it was in overlay preview mode.
-    [swipeDelegate_ displayTab:[model_ currentTab] isNewSelection:YES];
+    [swipeDelegate_ sideSwipeRedisplayTab:[model_ currentTab]];
     [self.tabStripDelegate setHighlightsSelectedTab:NO];
     [self deleteGreyCache];
     [[NSNotificationCenter defaultCenter]
@@ -436,7 +436,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     BOOL canNavigate = currentContentProvider_ != nil;
 
     CGRect gestureBounds = gesture.view.bounds;
-    CGFloat headerHeight = [swipeDelegate_ headerHeight];
+    CGFloat headerHeight = [swipeDelegate_ headerHeightForSideSwipe];
     CGRect navigationFrame =
         CGRectMake(CGRectGetMinX(gestureBounds),
                    CGRectGetMinY(gestureBounds) + headerHeight,
@@ -449,7 +449,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
           canNavigate:canNavigate
                 image:[currentContentProvider_ paneIcon]
         rotateForward:[currentContentProvider_ rotateForwardIcon]];
-    [pageSideSwipeView_ setTargetView:[swipeDelegate_ contentView]];
+    [pageSideSwipeView_ setTargetView:[swipeDelegate_ sideSwipeContentView]];
 
     [gesture.view insertSubview:pageSideSwipeView_
                    belowSubview:[self.toolbarInteractionHandler toolbarView]];
@@ -493,7 +493,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 
     inSwipe_ = YES;
 
-    CGRect frame = [[swipeDelegate_ contentView] frame];
+    CGRect frame = [[swipeDelegate_ sideSwipeContentView] frame];
 
     // Add horizontal stack view controller.
     CGFloat headerHeight =
@@ -531,7 +531,7 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
     [gesture.view addSubview:tabSideSwipeView_];
 
     // Remove content area so it doesn't receive any pan events.
-    [[swipeDelegate_ contentView] removeFromSuperview];
+    [[swipeDelegate_ sideSwipeContentView] removeFromSuperview];
   }
 
   [tabSideSwipeView_ handleHorizontalPan:gesture];
@@ -539,11 +539,11 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 
 - (void)addCurtainWithCompletionHandler:(ProceduralBlock)completionHandler {
   if (!curtain_) {
-    curtain_ =
-        [[UIView alloc] initWithFrame:[swipeDelegate_ contentView].bounds];
+    curtain_ = [[UIView alloc]
+        initWithFrame:[swipeDelegate_ sideSwipeContentView].bounds];
     [curtain_ setBackgroundColor:[UIColor whiteColor]];
   }
-  [[swipeDelegate_ contentView] addSubview:curtain_];
+  [[swipeDelegate_ sideSwipeContentView] addSubview:curtain_];
 
   // Fallback in case load takes a while. 3 seconds is a balance between how
   // long it can take a web view to clear the previous page image, and what
@@ -554,9 +554,9 @@ const NSUInteger kIpadGreySwipeTabCount = 8;
 }
 
 - (void)resetContentView {
-  CGRect frame = [swipeDelegate_ contentView].frame;
+  CGRect frame = [swipeDelegate_ sideSwipeContentView].frame;
   frame.origin.x = 0;
-  [swipeDelegate_ contentView].frame = frame;
+  [swipeDelegate_ sideSwipeContentView].frame = frame;
 }
 
 - (void)dismissCurtainWithCompletionHandler:(ProceduralBlock)completionHandler {
