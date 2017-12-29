@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f23d5b_b9a4378c",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-12-29T15:57:03Z",
+      "side": 1,
+      "message": "I found it a little confusing that there weren\u0027t min/targetSdk declarations here. Then I remembered about the jinja default syntax and was enlightened. But it does make me wonder whether using defaults is more opaque than specifying everything in .gn files.\n\nI guess the advantage of doing what we currently do is that there\u0027s only one place to update...",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "67caed9869c759cf764f72627d5c3c90ceaf0bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
