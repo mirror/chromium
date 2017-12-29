@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a05ece_10907645",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-29T08:13:46Z",
+      "side": 1,
+      "message": "Vasilii: do you know why we need this method here? It was added by Irmak a while ago.",
+      "range": {
+        "startLine": 609,
+        "startChar": 2,
+        "endLine": 609,
+        "endChar": 37
+      },
+      "revId": "72671290581eb6b638205f6c659ac37db24d4b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
