@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ff3455_969d82f3",
+        "filename": "net/tools/tld_cleanup/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-12-29T22:49:36Z",
+      "side": 1,
+      "message": "The old URL redirects here and asks to use this file instead of the VCS file.",
+      "revId": "8fc24eb51886dd1a0445ccaf90e6a4767e5b1864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
