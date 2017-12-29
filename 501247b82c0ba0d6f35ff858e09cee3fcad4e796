@@ -1,0 +1,452 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c792685b_145d17eb",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "... kBaseReferenceProjection to avoid collision with raw byte value and reference padding.",
+      "range": {
+        "startLine": 49,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fff042_e739ca82",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "// TODO(etiennep): Remove \"+ 1\" after refactoring.\n\n(Since this is error prone).",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 6
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4941abb5_6c8c5aac",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Remove \"a \".",
+      "range": {
+        "startLine": 35,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de91fb72_9a650a77",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Make capitalization consistent.",
+      "range": {
+        "startLine": 38,
+        "startChar": 70,
+        "endLine": 38,
+        "endChar": 75
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe154cd_421e1420",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "No action needed (it would slow progress): Just some observations and conjectures. If you think this is sound, add TODO maybe?\n\nThe operations needed are:\n(1) Create TargetPool instances.\n(2) Create ReferenceSet instances, and associate each with a TargetPool instance.\n(3) Inject references into TargetPool instances (taking only target).\n(4) Inject references into RefernceSet instances.\n\nPattern: Instance creation and data injection are separate steps.\n\nHowever, current code uses 2 loops with *group.GetReader(disasm):\n- Loop over ref_groups: Do (1) and (3).\n- Loop over ref_groups: Do (2) and (4) in InsertReferences().\n\nAn alternative that seems to better reflect \"pattern\" above, and involving one *group.GetReader(disasm) would be:\n- Do (1) and (3) (\"instance creation\").\n- Do (4) with group.GetReader(disasm).\n- Iterate over ReferenceSet instances, do (2) and inject target of stored references to the associated TargetPool. Set merging can be centralized (keeping multiple calls to SortAndUniquefy() should be okay), leading to less memory fragmentation.\n\nDisadvantage of this is that TargetPool loses some independence.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453321cf_ecfb6649",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Unwrap (since spacing may be reverted when you undo the |disasm| -\u003e |disassembler| change. Same elsewhere.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490436fe_13d74716",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: types",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bb7b25_c41f87a5",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "... by location.",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6af6b9_f2239cc5",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "If this is only used by Zucchini-gen, please mention that.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 76
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d33eadc_2acc57e3",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Make this into constexpr offset_t kWidth \u003d 2U;.",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89966b9a_df85790f",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Too much symmetry (see below).",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 61
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bcf4ca_6933faa2",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Too much symmetry. Suggesting {{10, 0}, {20, 2}, {16, 5}}\n\nand fix referene_set_.at() values after.",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40a7150_cca6fb2d",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "kWidth \u003d 2",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d19e571_213daf65",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "If this is only used by Zucchini-gen, please mention that.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01a27d2_c3f228f0",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: from",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af386921_18056b6a",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT:\n  // Returns the target for a |key|, which is assumed to be valid and held by this class.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce8d104_13cd151c",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Remove extra new line; or move it to 105.",
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3ebafb_64a662a7",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "ReferenceSet::width() returns offset_t.  Maybe use auto?",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 10
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03253618_3065ccf9",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "NIT: Remove new line.",
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee7a2f9_2d5b6c3a",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-29T18:56:58Z",
+      "side": 1,
+      "message": "Please decrease symmetry to improve test -- if the code mixes the two variables, this test won\u0027t catch it. E.g., set this to {0, 10}.",
+      "range": {
+        "startLine": 143,
+        "startChar": 17,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
