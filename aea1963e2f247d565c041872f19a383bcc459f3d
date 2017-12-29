@@ -16,6 +16,24 @@
       "revId": "aea1963e2f247d565c041872f19a383bcc459f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a074cd8f_da39fa60",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-29T01:41:31Z",
+      "side": 1,
+      "message": "Sorry it\u0027s not clearer.\n\nIf \u0027kHintIsAdvisory || address \u003d\u003d nullptr\u0027 is true, it means that the system can\u0027t allocate |length| bytes at any address. In this case, we want to take drastic action, such as releasing our reserve.\n\nI\u0027ve changed the name to: \u0027cant_alloc_length\u0027 and added a comment. Does that help?",
+      "parentUuid": "767612e1_f88bad84",
+      "revId": "aea1963e2f247d565c041872f19a383bcc459f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
