@@ -123,6 +123,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
+#include "third_party/boringssl/src/include/openssl/bytestring.h"
+#include "third_party/boringssl/src/include/openssl/mem.h"
 
 #if defined(OS_FUCHSIA)
 #define USE_BUILTIN_CERT_VERIFIER
@@ -796,6 +798,36 @@ class OCSPErrorTestDelegate : public TestDelegate {
   bool on_ssl_certificate_error_called_ = false;
   SSLInfo ssl_info_;
 };
+
+std::string MakeSubjectFromCommonName(const std::string& common_name) {
+  CBB cbb, top_level, set, inner_seq, oid, cn;
+  uint8_t* x501_data;
+  size_t x501_len;
+  static const uint8_t kCommonNameOID[] = {0x55, 0x04, 0x03};  // 2.5.4.3
+
+  CBB_zero(&cbb);
+
+  if (!CBB_init(&cbb, 32) ||
+      !CBB_add_asn1(&cbb, &top_level, CBS_ASN1_SEQUENCE) ||
+      !CBB_add_asn1(&top_level, &set, CBS_ASN1_SET) ||
+      !CBB_add_asn1(&set, &inner_seq, CBS_ASN1_SEQUENCE) ||
+      !CBB_add_asn1(&inner_seq, &oid, CBS_ASN1_OBJECT) ||
+      !CBB_add_bytes(&oid, kCommonNameOID, sizeof(kCommonNameOID)) ||
+      !CBB_add_asn1(&inner_seq, &cn, CBS_ASN1_PRINTABLESTRING) ||
+      !CBB_add_bytes(&cn, reinterpret_cast<const uint8_t*>(common_name.data()),
+                     common_name.size()) ||
+      !CBB_finish(&cbb, &x501_data, &x501_len)) {
+    CBB_cleanup(&cbb);
+    ADD_FAILURE() << "Failed creating subject";
+    return std::string();
+  }
+
+  std::string result(reinterpret_cast<const char*>(x501_data), x501_len);
+
+  OPENSSL_free(x501_data);
+
+  return result;
+}
 
 }  // namespace
 
@@ -11553,8 +11585,8 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevokedBySubject) {
   ssl_options.cert_common_name = kCommonName;
 
   {
-    ScopedSetCRLSet set_crlset(
-        CRLSet::ForTesting(false, nullptr, "", kCommonName, {}));
+    ScopedSetCRLSet set_crlset(CRLSet::ForTesting(
+        false, nullptr, "", MakeSubjectFromCommonName(kCommonName), {}));
 
     CertStatus cert_status = 0;
     DoConnection(ssl_options, &cert_status);
@@ -11577,8 +11609,9 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevokedBySubject) {
       sizeof(kTestServerSPKISHA256));
 
   {
-    ScopedSetCRLSet set_crlset(
-        CRLSet::ForTesting(false, nullptr, "", kCommonName, {spki_hash}));
+    ScopedSetCRLSet set_crlset(CRLSet::ForTesting(
+        false, nullptr, "", MakeSubjectFromCommonName(kCommonName),
+        {spki_hash}));
 
     CertStatus cert_status = 0;
     DoConnection(ssl_options, &cert_status);
