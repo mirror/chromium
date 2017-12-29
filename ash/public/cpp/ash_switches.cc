@@ -171,6 +171,11 @@ bool IsDisplayMoveWindowAccelsEnabled() {
       kAshEnableDisplayMoveWindowAccels);
 }
 
+bool IsKeyboardShortcutViewerEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      kAshEnableKeyboardShortcutViewer);
+}
+
 bool IsNightLightEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       kAshEnableNightLight);

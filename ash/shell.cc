@@ -12,6 +12,7 @@
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/accelerators/accelerator_delegate.h"
 #include "ash/accelerators/ash_focus_manager_factory.h"
+#include "ash/accelerators/keyboard_shortcut_viewer_controller.h"
 #include "ash/accelerators/magnifier_key_scroller.h"
 #include "ash/accelerators/spoken_feedback_toggler.h"
 #include "ash/accessibility/accessibility_controller.h"
@@ -412,6 +413,11 @@ void Shell::DestroyKeyboard() {
     }
   }
   keyboard::KeyboardController::ResetInstance(nullptr);
+}
+
+KeyboardShortcutViewerController* Shell::keyboard_shortcut_viewer_controller() {
+  DCHECK(switches::IsKeyboardShortcutViewerEnabled());
+  return keyboard_shortcut_viewer_controller_.get();
 }
 
 bool Shell::ShouldSaveDisplaySettings() {
@@ -830,6 +836,10 @@ void Shell::Init(ui::ContextFactory* context_factory,
   // be in the member initialization list.
   if (switches::IsNightLightEnabled())
     night_light_controller_ = std::make_unique<NightLightController>();
+  if (switches::IsKeyboardShortcutViewerEnabled()) {
+    keyboard_shortcut_viewer_controller_ =
+        std::make_unique<KeyboardShortcutViewerController>();
+  }
   touch_devices_controller_ = std::make_unique<TouchDevicesController>();
   bluetooth_power_controller_ = std::make_unique<BluetoothPowerController>();
 

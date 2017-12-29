@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grit-part>
+
+  <!-- Categories -->
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_POPULAR" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Popular Shortcuts
+  </message>
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_WINDOW" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Tabs and Windows
+  </message>
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_BROWSER" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Page and Web Browser
+  </message>
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_SYSTEM" desc="The text in the keyboard shortcut viewer to explain the category.">
+    System and Display Settings
+  </message>
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_TEXT" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Text Editing
+  </message>
+  <message name="IDS_SHORTCUT_VIEWER_CATEGORY_ACCESIBILITY" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Accesibility
+  </message>
+
+</grit-part>

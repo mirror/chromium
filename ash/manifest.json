@@ -29,7 +29,8 @@
           "ash::mojom::TrayAction",
           "ash::mojom::VoiceInteractionController",
           "ash::mojom::VpnList",
-          "ash::mojom::WallpaperController"
+          "ash::mojom::WallpaperController",
+          "keyboard_shortcut_viewer::mojom::KeyboardShortcutViewerController"
         ],
         // Test-only interfaces.
         "test": [
