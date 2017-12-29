@@ -669,6 +669,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return active_sandbox_flags_;
   }
 
+  bool pending_commit_for_testing() { return pending_commit_; }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -798,7 +800,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       bool present,
       blink::WebSuddenTerminationDisablerType disabler_type);
   void OnDidStartLoading(bool to_different_document);
-  void OnDidStopLoading();
+  void OnDidStopLoading(bool reset_pending_commit);
   void OnDidChangeLoadProgress(double load_progress);
   void OnSerializeAsMHTMLResponse(
       int job_id,
@@ -1133,8 +1135,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // document or not.
   bool is_loading_;
 
-  // Used to track whether a commit is expected in this frame. Only used in
-  // tests.
+  // Used to track whether a commit is expected in this frame.
   bool pending_commit_;
 
   // The unique ID of the latest NavigationEntry that this RenderFrameHost is
