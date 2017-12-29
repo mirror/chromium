@@ -56,6 +56,138 @@
       "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f5ef8c_4733de98",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "Let\u0027s follow the guidelines of https://chromium.googlesource.com/chromium/src/+/lkcr/docs/testing/writing_layout_tests.md#JavaScript-Tests : \"... in order to follow the minimality guideline, the test omits the tags \u003chtml\u003e, \u003chead\u003e, and \u003cbody\u003e, as they can be inferred by the HTML parser.\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87ca308_204a022f",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "For clarity:\n\n  * Pre-conditions:\n  1) Run chromium with --enable-spatial-navigation.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 57
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae70437_a325e24f",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "You don\u0027t test the back-path now. Let\u0027s add a few more key strokes so we also test that focus can go back from #end to #start. (I guess renaming #start to #a and #end to #b would make sense)",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d8831c_a7e69fb3",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "The same problem exists also for \u003cdiv style\u003d\"overflow: scroll\"\u003e... Here we only test iframes. I wonder if we shall we duplicate this test and also test scrollable divs.\n\nWhen I run this test manually I see that also LEFT-key will move focus from #start to #end. That\u0027s good. Let\u0027s test that automatically as well: LEFT, RIGHT navigates a -\u003e b, b -\u003e a.",
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04395534_e12a3677",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "no focusable content",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb16497_d78160e2",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-29T18:06:10Z",
+      "side": 1,
+      "message": "content",
+      "range": {
+        "startLine": 59,
+        "startChar": 70,
+        "endLine": 59,
+        "endChar": 76
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
