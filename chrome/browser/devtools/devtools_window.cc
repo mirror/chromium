@@ -73,7 +73,7 @@ using content::WebContents;
 namespace {
 
 typedef std::vector<DevToolsWindow*> DevToolsWindows;
-base::LazyInstance<DevToolsWindows>::Leaky g_instances =
+base::LazyInstance<DevToolsWindows>::Leaky g_devtools_window_instances =
     LAZY_INSTANCE_INITIALIZER;
 
 base::LazyInstance<std::vector<base::Callback<void(DevToolsWindow*)>>>::Leaky
@@ -368,7 +368,7 @@ DevToolsWindow::~DevToolsWindow() {
   if (toolbox_web_contents_)
     delete toolbox_web_contents_;
 
-  DevToolsWindows* instances = g_instances.Pointer();
+  DevToolsWindows* instances = g_devtools_window_instances.Pointer();
   DevToolsWindows::iterator it(
       std::find(instances->begin(), instances->end(), this));
   DCHECK(it != instances->end());
@@ -429,9 +429,9 @@ content::WebContents* DevToolsWindow::GetInTabWebContents(
 // static
 DevToolsWindow* DevToolsWindow::GetInstanceForInspectedWebContents(
     WebContents* inspected_web_contents) {
-  if (!inspected_web_contents || !g_instances.IsCreated())
+  if (!inspected_web_contents || !g_devtools_window_instances.IsCreated())
     return NULL;
-  DevToolsWindows* instances = g_instances.Pointer();
+  DevToolsWindows* instances = g_devtools_window_instances.Pointer();
   for (DevToolsWindows::iterator it(instances->begin()); it != instances->end();
        ++it) {
     if ((*it)->GetInspectedWebContents() == inspected_web_contents)
@@ -442,9 +442,9 @@ DevToolsWindow* DevToolsWindow::GetInstanceForInspectedWebContents(
 
 // static
 bool DevToolsWindow::IsDevToolsWindow(content::WebContents* web_contents) {
-  if (!web_contents || !g_instances.IsCreated())
+  if (!web_contents || !g_devtools_window_instances.IsCreated())
     return false;
-  DevToolsWindows* instances = g_instances.Pointer();
+  DevToolsWindows* instances = g_devtools_window_instances.Pointer();
   for (DevToolsWindows::iterator it(instances->begin()); it != instances->end();
        ++it) {
     if ((*it)->main_web_contents_ == web_contents ||
@@ -580,7 +580,7 @@ void DevToolsWindow::OpenExternalFrontend(
 
 // static
 void DevToolsWindow::OpenNodeFrontendWindow(Profile* profile) {
-  for (DevToolsWindow* window : g_instances.Get()) {
+  for (DevToolsWindow* window : g_devtools_window_instances.Get()) {
     if (window->frontend_type_ == kFrontendNode) {
       window->ActivateWindow();
       return;
@@ -843,7 +843,7 @@ DevToolsWindow::DevToolsWindow(FrontendType frontend_type,
   zoom::ZoomController::FromWebContents(main_web_contents_)
       ->SetShowsNotificationBubble(false);
 
-  g_instances.Get().push_back(this);
+  g_devtools_window_instances.Get().push_back(this);
 
   // There is no inspected_web_contents in case of various workers.
   if (inspected_web_contents)
@@ -958,9 +958,9 @@ GURL DevToolsWindow::GetDevToolsURL(Profile* profile,
 // static
 DevToolsWindow* DevToolsWindow::FindDevToolsWindow(
     DevToolsAgentHost* agent_host) {
-  if (!agent_host || !g_instances.IsCreated())
+  if (!agent_host || !g_devtools_window_instances.IsCreated())
     return NULL;
-  DevToolsWindows* instances = g_instances.Pointer();
+  DevToolsWindows* instances = g_devtools_window_instances.Pointer();
   for (DevToolsWindows::iterator it(instances->begin()); it != instances->end();
        ++it) {
     if ((*it)->bindings_->IsAttachedTo(agent_host))
@@ -972,9 +972,9 @@ DevToolsWindow* DevToolsWindow::FindDevToolsWindow(
 // static
 DevToolsWindow* DevToolsWindow::AsDevToolsWindow(
     content::WebContents* web_contents) {
-  if (!web_contents || !g_instances.IsCreated())
+  if (!web_contents || !g_devtools_window_instances.IsCreated())
     return NULL;
-  DevToolsWindows* instances = g_instances.Pointer();
+  DevToolsWindows* instances = g_devtools_window_instances.Pointer();
   for (DevToolsWindows::iterator it(instances->begin()); it != instances->end();
        ++it) {
     if ((*it)->main_web_contents_ == web_contents)

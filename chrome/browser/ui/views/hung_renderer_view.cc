@@ -58,7 +58,8 @@
 
 using content::WebContents;
 
-HungRendererDialogView* HungRendererDialogView::g_instance_ = NULL;
+HungRendererDialogView* HungRendererDialogView::g_hung_renderer_view_instance_ =
+    NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // HungPagesTableModel, public:
@@ -198,16 +199,17 @@ constexpr int kTableViewHeight = 80;
 // static
 HungRendererDialogView* HungRendererDialogView::Create(
     gfx::NativeWindow context) {
-  if (!g_instance_) {
-    g_instance_ = new HungRendererDialogView;
-    views::DialogDelegate::CreateDialogWidget(g_instance_, context, NULL);
+  if (!g_hung_renderer_view_instance_) {
+    g_hung_renderer_view_instance_ = new HungRendererDialogView;
+    views::DialogDelegate::CreateDialogWidget(g_hung_renderer_view_instance_,
+                                              context, NULL);
   }
-  return g_instance_;
+  return g_hung_renderer_view_instance_;
 }
 
 // static
 HungRendererDialogView* HungRendererDialogView::GetInstance() {
-  return g_instance_;
+  return g_hung_renderer_view_instance_;
 }
 
 // static
@@ -338,7 +340,7 @@ bool HungRendererDialogView::ShouldShowCloseButton() const {
 
 void HungRendererDialogView::WindowClosing() {
   // We are going to be deleted soon, so make sure our instance is destroyed.
-  g_instance_ = NULL;
+  g_hung_renderer_view_instance_ = NULL;
 }
 
 int HungRendererDialogView::GetDialogButtons() const {
