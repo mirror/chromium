@@ -12,6 +12,8 @@
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_export.h"
 
+#include <windows.h>
+
 namespace gl {
 
 class GLSurface;

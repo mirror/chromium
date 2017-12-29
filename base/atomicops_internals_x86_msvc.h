@@ -7,7 +7,11 @@
 #ifndef BASE_ATOMICOPS_INTERNALS_X86_MSVC_H_
 #define BASE_ATOMICOPS_INTERNALS_X86_MSVC_H_
 
+#if defined(_WIN64)
+#include "base/win/windows_types.h"
+#else
 #include <windows.h>
+#endif
 
 #include <intrin.h>
 
@@ -115,25 +119,25 @@ static_assert(sizeof(Atomic64) == sizeof(PVOID), "atomic word is atomic");
 inline Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
                                          Atomic64 old_value,
                                          Atomic64 new_value) {
-  PVOID result = InterlockedCompareExchangePointer(
-    reinterpret_cast<volatile PVOID*>(ptr),
-    reinterpret_cast<PVOID>(new_value), reinterpret_cast<PVOID>(old_value));
+  PVOID result = _InterlockedCompareExchangePointer(
+      reinterpret_cast<volatile PVOID*>(ptr),
+      reinterpret_cast<PVOID>(new_value), reinterpret_cast<PVOID>(old_value));
   return reinterpret_cast<Atomic64>(result);
 }
 
 inline Atomic64 NoBarrier_AtomicExchange(volatile Atomic64* ptr,
                                          Atomic64 new_value) {
-  PVOID result = InterlockedExchangePointer(
-    reinterpret_cast<volatile PVOID*>(ptr),
-    reinterpret_cast<PVOID>(new_value));
+  PVOID result =
+      _InterlockedExchangePointer(reinterpret_cast<volatile PVOID*>(ptr),
+                                  reinterpret_cast<PVOID>(new_value));
   return reinterpret_cast<Atomic64>(result);
 }
 
 inline Atomic64 Barrier_AtomicIncrement(volatile Atomic64* ptr,
                                         Atomic64 increment) {
-  return InterlockedExchangeAdd64(
-      reinterpret_cast<volatile LONGLONG*>(ptr),
-      static_cast<LONGLONG>(increment)) + increment;
+  return _InterlockedExchangeAdd64(reinterpret_cast<volatile LONGLONG*>(ptr),
+                                   static_cast<LONGLONG>(increment)) +
+         increment;
 }
 
 inline Atomic64 NoBarrier_AtomicIncrement(volatile Atomic64* ptr,
