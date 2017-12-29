@@ -67,17 +67,6 @@ base::HistogramBase* GetHistogram(const std::string& statistic_name,
       base::HistogramBase::kUmaTargetedHistogramFlag);
 }
 
-NetworkQualityObservationSource ProtocolSourceToObservationSource(
-    SocketPerformanceWatcherFactory::Protocol protocol) {
-  switch (protocol) {
-    case SocketPerformanceWatcherFactory::PROTOCOL_TCP:
-      return NETWORK_QUALITY_OBSERVATION_SOURCE_TCP;
-    case SocketPerformanceWatcherFactory::PROTOCOL_QUIC:
-      return NETWORK_QUALITY_OBSERVATION_SOURCE_QUIC;
-  }
-  NOTREACHED();
-  return NETWORK_QUALITY_OBSERVATION_SOURCE_TCP;
-}
 
 // Returns true if the scheme of the |request| is either HTTP or HTTPS.
 bool RequestSchemeIsHTTPOrHTTPS(const URLRequest& request) {
@@ -1585,18 +1574,7 @@ void NetworkQualityEstimator::OnUpdatedTransportRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
     const base::TimeDelta& rtt,
     const base::Optional<nqe::internal::IPHash>& host) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
-
-  Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          current_network_id_.signal_strength,
-                          ProtocolSourceToObservationSource(protocol), host);
-  AddAndNotifyObserversOfRTT(observation);
-
-  // Post a task to compute and update the increase in RTT if not already
-  // posted.
-  if (!increase_in_transport_rtt_updater_posted_)
-    IncreaseInTransportRTTUpdater();
+  return;
 }
 
 void NetworkQualityEstimator::AddAndNotifyObserversOfRTT(

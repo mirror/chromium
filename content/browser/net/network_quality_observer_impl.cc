@@ -30,6 +30,9 @@ bool MetricChangedMeaningfully(int32_t past_value, int32_t current_value) {
     return false;
   }
 
+  DCHECK_LE(0, past_value);
+  DCHECK_LE(0, current_value);
+
   // Metric has changed meaningfully only if (i) the difference between the two
   // values exceed the threshold; and, (ii) the ratio of the values also exceeds
   // the threshold.
@@ -94,13 +97,21 @@ class NetworkQualityObserverImpl::UiThreadObserver
   void OnRTTOrThroughputEstimatesComputed(
       const net::nqe::internal::NetworkQuality& network_quality) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    LOG(WARNING)<<"xxx OnRTTOrThroughputEstimatesComputed this="<<this
+    <<" h.rtt="<<network_quality.http_rtt()
+    <<" t.rtt="<<network_quality.transport_rtt()
+    <<" kbps="<<network_quality.downstream_throughput_kbps();
 
     last_notified_network_quality_ = network_quality;
 
     // Notify all the existing renderers of the change in the network quality.
     for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
          !it.IsAtEnd(); it.Advance()) {
-      it.GetCurrentValue()->GetRendererInterface()->OnNetworkQualityChanged(
+       RenderProcessHost* host = it.GetCurrentValue();
+
+      //DCHECK(host->HasConnection());
+     LOG(WARNING)<<"xxx host->HasConnection()="<<host->HasConnection()<<" host="<<host;
+      host->GetRendererInterface()->OnNetworkQualityChanged(
           last_notified_type_, last_notified_network_quality_.http_rtt(),
           last_notified_network_quality_.transport_rtt(),
           last_notified_network_quality_.downstream_throughput_kbps());
