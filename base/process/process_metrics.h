@@ -33,13 +33,18 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
+#include "base/win/windows_types.h"
 #endif
 
 namespace base {
 
 #if defined(OS_WIN)
+#if defined(_WINDOWS_)
 struct IoCounters : public IO_COUNTERS {
 };
+#else
+struct IoCounters;
+#endif
 #elif defined(OS_POSIX)
 struct IoCounters {
   uint64_t ReadOperationCount;

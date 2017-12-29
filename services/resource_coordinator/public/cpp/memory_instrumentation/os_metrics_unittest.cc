@@ -15,6 +15,7 @@
 
 #if defined(OS_WIN)
 #include <base/strings/sys_string_conversions.h>
+#include <Windows.h>
 #endif
 
 namespace memory_instrumentation {
