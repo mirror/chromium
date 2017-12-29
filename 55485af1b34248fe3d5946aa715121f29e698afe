@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05f4a0d3_788e1757",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 7
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-29T23:52:42Z",
+      "side": 1,
+      "message": "Added one failing test for SPv2.",
+      "revId": "55485af1b34248fe3d5946aa715121f29e698afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
