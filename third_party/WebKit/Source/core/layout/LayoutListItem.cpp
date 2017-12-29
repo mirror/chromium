@@ -241,10 +241,22 @@ bool LayoutListItem::UpdateMarkerLocation() {
     // If the marker is currently contained inside an anonymous box, then we
     // are the only item in that anonymous box (since no line box parent was
     // found). It's ok to just leave the marker where it is in this case.
-    if (marker_parent && marker_parent->IsAnonymousBlock())
+    if (marker_parent && marker_parent->IsAnonymousBlock()) {
       line_box_parent = marker_parent;
-    else
+      // We could use marker_parent as line_box_parent only if marker is the
+      // first leaf child of list item.
+      LayoutObject* container = marker_parent;
+      while (container && container != this) {
+        LayoutObject* parent = container->Parent();
+        if (parent && container != parent->SlowFirstChild()) {
+          line_box_parent = this;
+          break;
+        }
+        container = parent;
+      }
+    } else {
       line_box_parent = this;
+    }
   }
 
   if (marker_parent != line_box_parent) {
