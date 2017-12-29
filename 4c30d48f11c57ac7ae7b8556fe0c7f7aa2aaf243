@@ -16,6 +16,24 @@
       "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54fe7a3_4263319f",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-29T03:38:50Z",
+      "side": 1,
+      "message": "I agree. The assert above should address it. If, in a release version, trying to load the library the old way is useless, I can also change the \u0027if\u0027 statement to throw a more descriptive exception.",
+      "parentUuid": "7c420624_201392c1",
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
