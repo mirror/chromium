@@ -135,11 +135,11 @@ class CORE_EXPORT VTTScanner {
   // Note: Does not handle sign.
   unsigned ScanDigits(int& number);
 
-  // Scan a floating point value on one of the forms: \d+\.? \d+\.\d+ \.\d+
-  bool ScanFloat(float& number);
+  // Scan a double value on one of the forms: \d+\.? \d+\.\d+ \.\d+
+  bool ScanDouble(double& number);
 
-  // Scan a floating point value (per scanFloat) followed by a '%'.
-  bool ScanPercentage(float& percentage);
+  // Scan a double value (per ScanDouble) followed by a '%'.
+  bool ScanPercentage(double& percentage);
 
  protected:
   Position GetPosition() const { return data_.characters8; }
