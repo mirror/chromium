@@ -149,12 +149,12 @@ void ServiceWorkerStorage::FindRegistrationForDocument(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::FindRegistrationForDocument,
           weak_factory_.GetWeakPtr(), document_url, std::move(callback)));
       TRACE_EVENT_INSTANT1(
           "ServiceWorker",
-          "ServiceWorkerStorage::FindRegistrationForDocument:LazyInitialize",
+          "ServiceWorkerStorage::FindRegistrationForDocument:Initialize",
           TRACE_EVENT_SCOPE_THREAD, "URL", document_url.spec());
       return;
     case INITIALIZED:
@@ -206,7 +206,7 @@ void ServiceWorkerStorage::FindRegistrationForPattern(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::FindRegistrationForPattern,
           weak_factory_.GetWeakPtr(), scope, std::move(callback)));
       return;
@@ -261,7 +261,7 @@ void ServiceWorkerStorage::FindRegistrationForId(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::FindRegistrationForId,
                          weak_factory_.GetWeakPtr(), registration_id, origin,
                          std::move(callback)));
@@ -308,7 +308,7 @@ void ServiceWorkerStorage::FindRegistrationForIdOnly(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::FindRegistrationForIdOnly,
           weak_factory_.GetWeakPtr(), registration_id, std::move(callback)));
       return;
@@ -349,7 +349,7 @@ void ServiceWorkerStorage::GetRegistrationsForOrigin(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::GetRegistrationsForOrigin,
           weak_factory_.GetWeakPtr(), origin, std::move(callback)));
       return;
@@ -380,7 +380,7 @@ void ServiceWorkerStorage::GetAllRegistrationsInfos(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::GetAllRegistrationsInfos,
                          weak_factory_.GetWeakPtr(), std::move(callback)));
       return;
@@ -635,7 +635,7 @@ void ServiceWorkerStorage::StoreUserData(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::StoreUserData, weak_factory_.GetWeakPtr(),
           registration_id, origin, key_value_pairs, std::move(callback)));
       return;
@@ -677,7 +677,7 @@ void ServiceWorkerStorage::GetUserData(int64_t registration_id,
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(&ServiceWorkerStorage::GetUserData,
+      Initialize(base::BindOnce(&ServiceWorkerStorage::GetUserData,
                                     weak_factory_.GetWeakPtr(), registration_id,
                                     keys, std::move(callback)));
       return;
@@ -722,7 +722,7 @@ void ServiceWorkerStorage::GetUserDataByKeyPrefix(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::GetUserDataByKeyPrefix,
                          weak_factory_.GetWeakPtr(), registration_id,
                          key_prefix, std::move(callback)));
@@ -766,7 +766,7 @@ void ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::GetUserKeysAndDataByKeyPrefix,
                          weak_factory_.GetWeakPtr(), registration_id,
                          key_prefix, std::move(callback)));
@@ -804,7 +804,7 @@ void ServiceWorkerStorage::ClearUserData(int64_t registration_id,
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(&ServiceWorkerStorage::ClearUserData,
+      Initialize(base::BindOnce(&ServiceWorkerStorage::ClearUserData,
                                     weak_factory_.GetWeakPtr(), registration_id,
                                     keys, std::move(callback)));
       return;
@@ -845,7 +845,7 @@ void ServiceWorkerStorage::ClearUserDataByKeyPrefixes(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::ClearUserDataByKeyPrefixes,
                          weak_factory_.GetWeakPtr(), registration_id,
                          key_prefixes, std::move(callback)));
@@ -889,7 +889,7 @@ void ServiceWorkerStorage::GetUserDataForAllRegistrations(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(
+      Initialize(
           base::BindOnce(&ServiceWorkerStorage::GetUserDataForAllRegistrations,
                          weak_factory_.GetWeakPtr(), key, std::move(callback)));
       return;
@@ -927,7 +927,7 @@ void ServiceWorkerStorage::GetUserDataForAllRegistrationsByKeyPrefix(
       return;
     case INITIALIZING:  // Fall-through.
     case UNINITIALIZED:
-      LazyInitialize(base::BindOnce(
+      Initialize(base::BindOnce(
           &ServiceWorkerStorage::GetUserDataForAllRegistrationsByKeyPrefix,
           weak_factory_.GetWeakPtr(), key_prefix, std::move(callback)));
       return;
@@ -1085,13 +1085,13 @@ base::FilePath ServiceWorkerStorage::GetDiskCachePath() {
 
 bool ServiceWorkerStorage::LazyInitializeForTest(base::OnceClosure callback) {
   if (state_ == UNINITIALIZED || state_ == INITIALIZING) {
-    LazyInitialize(std::move(callback));
+    Initialize(std::move(callback));
     return false;
   }
   return !IsDisabled();
 }
 
-void ServiceWorkerStorage::LazyInitialize(base::OnceClosure callback) {
+void ServiceWorkerStorage::Initialize(base::OnceClosure callback) {
   DCHECK(state_ == UNINITIALIZED || state_ == INITIALIZING) << state_;
   pending_tasks_.push_back(std::move(callback));
   if (state_ == INITIALIZING) {
