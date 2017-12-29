@@ -44,8 +44,11 @@ volatile bool g_main_window_startup_interrupted = false;
 base::LazyInstance<base::TimeTicks>::Leaky g_process_creation_ticks =
     LAZY_INSTANCE_INITIALIZER;
 
-base::LazyInstance<base::TimeTicks>::Leaky g_browser_main_entry_point_ticks =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::TimeTicks>::Leaky
+    g_browser_main_entry_point_ticks_computed_from_time =
+        LAZY_INSTANCE_INITIALIZER;
+
+base::TimeTicks g_browser_main_entry_point_ticks;
 
 base::LazyInstance<base::TimeTicks>::Leaky g_renderer_main_entry_point_ticks =
     LAZY_INSTANCE_INITIALIZER;
@@ -424,7 +427,7 @@ base::TimeTicks StartupTimeToTimeTicks(base::Time time) {
 // Record renderer main entry time histogram.
 void RecordRendererMainEntryHistogram() {
   const base::TimeTicks browser_main_entry_point_ticks =
-      g_browser_main_entry_point_ticks.Get();
+      g_browser_main_entry_point_ticks_computed_from_time.Get();
   const base::TimeTicks renderer_main_entry_point_ticks =
       g_renderer_main_entry_point_ticks.Get();
 
@@ -438,11 +441,11 @@ void RecordRendererMainEntryHistogram() {
 
 void AddStartupEventsForTelemetry()
 {
-  DCHECK(!g_browser_main_entry_point_ticks.Get().is_null());
+  DCHECK(!g_browser_main_entry_point_ticks_computed_from_time.Get().is_null());
 
   TRACE_EVENT_INSTANT_WITH_TIMESTAMP0(
       "startup", "Startup.BrowserMainEntryPoint", 0,
-      g_browser_main_entry_point_ticks.Get());
+      g_browser_main_entry_point_ticks_computed_from_time.Get());
 
   if (!g_process_creation_ticks.Get().is_null())
   {
@@ -548,10 +551,15 @@ void RecordStartupProcessCreationTime(base::Time time) {
   DCHECK(!g_process_creation_ticks.Get().is_null());
 }
 
-void RecordMainEntryPointTime(base::Time time) {
-  DCHECK(g_browser_main_entry_point_ticks.Get().is_null());
-  g_browser_main_entry_point_ticks.Get() = StartupTimeToTimeTicks(time);
-  DCHECK(!g_browser_main_entry_point_ticks.Get().is_null());
+void RecordMainEntryPointTime(base::Time wall_time, base::TimeTicks ticks) {
+  DCHECK(g_browser_main_entry_point_ticks.is_null());
+  g_browser_main_entry_point_ticks = ticks;
+  DCHECK(!g_browser_main_entry_point_ticks.is_null());
+
+  DCHECK(g_browser_main_entry_point_ticks_computed_from_time.Get().is_null());
+  g_browser_main_entry_point_ticks_computed_from_time.Get() =
+      StartupTimeToTimeTicks(wall_time);
+  DCHECK(!g_browser_main_entry_point_ticks_computed_from_time.Get().is_null());
 }
 
 void RecordExeMainEntryPointTicks(base::TimeTicks ticks) {
@@ -595,12 +603,16 @@ void RecordBrowserMainMessageLoopStart(base::TimeTicks ticks,
     UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE(
         UMA_HISTOGRAM_LONG_TIMES,
         "Startup.BrowserMessageLoopStartTimeFromMainEntry.FirstRun2",
-        g_browser_main_entry_point_ticks.Get(), ticks);
+        g_browser_main_entry_point_ticks_computed_from_time.Get(), ticks);
   } else {
     UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE_AND_SAME_VERSION_COUNT(
         UMA_HISTOGRAM_LONG_TIMES,
         "Startup.BrowserMessageLoopStartTimeFromMainEntry2",
-        g_browser_main_entry_point_ticks.Get(), ticks);
+        g_browser_main_entry_point_ticks_computed_from_time.Get(), ticks);
+    UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE_AND_SAME_VERSION_COUNT(
+        UMA_HISTOGRAM_LONG_TIMES,
+        "Startup.BrowserMessageLoopStartTimeFromMainEntry3",
+        g_browser_main_entry_point_ticks, ticks);
   }
 
   AddStartupEventsForTelemetry();
@@ -614,7 +626,7 @@ void RecordBrowserMainMessageLoopStart(base::TimeTicks ticks,
     const base::TimeTicks exe_main_ticks =
         g_browser_exe_main_entry_point_ticks.Get();
     const base::TimeTicks main_entry_ticks =
-        g_browser_main_entry_point_ticks.Get();
+        g_browser_main_entry_point_ticks_computed_from_time.Get();
     // Process create to chrome.exe:main().
     UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE_AND_SAME_VERSION_COUNT(
         UMA_HISTOGRAM_LONG_TIMES, "Startup.LoadTime.ProcessCreateToExeMain2",
@@ -788,7 +800,7 @@ void RecordBrowserWindowFirstPaintCompositingEnded(
 }
 
 base::TimeTicks MainEntryPointTicks() {
-  return g_browser_main_entry_point_ticks.Get();
+  return g_browser_main_entry_point_ticks_computed_from_time.Get();
 }
 
 }  // namespace startup_metric_utils
