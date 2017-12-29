@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "532f5587_eae27307",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 0,
+      "message": "why was this line removed? (and I don\u0027t understand why did we need it)",
+      "range": {
+        "startLine": 1328,
+        "startChar": 2,
+        "endLine": 1328,
+        "endChar": 61
+      },
+      "revId": "730c59e1566787f88985b564ce75fea69241f489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

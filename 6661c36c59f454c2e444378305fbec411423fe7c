@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68740bf0_ce61eff3",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: old_username_element and old_username_element are defined very far from the place when they are used and moreover not immediately clear what prefix old_ means. Isn\u0027t it better not to define them here, but to use submitted_form_.username_value and submitted_form_.username_element?",
+      "range": {
+        "startLine": 469,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 45
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8b33f1_a7c8b04b",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: is not",
+      "range": {
+        "startLine": 474,
+        "startChar": 23,
+        "endLine": 474,
+        "endChar": 30
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49291d5b_7449db79",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: username_element.clear()",
+      "range": {
+        "startLine": 476,
+        "startChar": 13,
+        "endLine": 476,
+        "endChar": 29
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283373cf_628f827e",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: is",
+      "range": {
+        "startLine": 478,
+        "startChar": 33,
+        "endLine": 478,
+        "endChar": 40
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de154e68_1f9805c2",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Optional nit: don\u0027t you want to use iff here?",
+      "range": {
+        "startLine": 478,
+        "startChar": 50,
+        "endLine": 478,
+        "endChar": 54
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc37386_0fc702b7",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Why do we need this change?",
+      "range": {
+        "startLine": 1130,
+        "startChar": 25,
+        "endLine": 1130,
+        "endChar": 39
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae9ee1c_dac3879e",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Was it bug without this line?",
+      "range": {
+        "startLine": 1151,
+        "startChar": 4,
+        "endLine": 1151,
+        "endChar": 25
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacc1e1e_f3f9e127",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: base::string16()",
+      "range": {
+        "startLine": 2592,
+        "startChar": 27,
+        "endLine": 2592,
+        "endChar": 43
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd0140c_b821adfa",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 3695,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: username_value.clear()",
+      "range": {
+        "startLine": 3695,
+        "startChar": 21,
+        "endLine": 3695,
+        "endChar": 55
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42c0190_94a1e6f0",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 3702,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: base::string16()",
+      "range": {
+        "startLine": 3702,
+        "startChar": 29,
+        "endLine": 3702,
+        "endChar": 45
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d076f9f0_e162c687",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 3708,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-29T11:20:55Z",
+      "side": 1,
+      "message": "Nit: .clear()",
+      "range": {
+        "startLine": 3708,
+        "startChar": 29,
+        "endLine": 3708,
+        "endChar": 47
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
