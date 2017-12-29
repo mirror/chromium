@@ -45,6 +45,13 @@
   }];
 }
 
+- (void)trackFormUpdate:(NSUInteger)delay {
+  NSString* script = [NSString
+      stringWithFormat:@"__gCrWeb.autofill.trackFormUpdates(%" PRIuNS ")",
+                       delay];
+  [self executeJavaScript:script completionHandler:nil];
+}
+
 - (void)fillForm:(NSString*)dataString
     forceFillFieldName:(NSString*)forceFillFieldName
      completionHandler:(ProceduralBlock)completionHandler {
