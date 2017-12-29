@@ -739,9 +739,10 @@ bool ThumbnailDatabase::DeleteFavicon(favicon_base::FaviconID id) {
 bool ThumbnailDatabase::GetIconMappingsForPageURL(
     const GURL& page_url,
     const favicon_base::IconTypeSet& required_icon_types,
+    bool fallback_to_host,
     std::vector<IconMapping>* filtered_mapping_data) {
   std::vector<IconMapping> mapping_data;
-  if (!GetIconMappingsForPageURL(page_url, &mapping_data))
+  if (!GetIconMappingsForPageURL(page_url, fallback_to_host, &mapping_data))
     return false;
 
   bool result = false;
@@ -760,28 +761,38 @@ bool ThumbnailDatabase::GetIconMappingsForPageURL(
 
 bool ThumbnailDatabase::GetIconMappingsForPageURL(
     const GURL& page_url,
+    bool fallback_to_host,
     std::vector<IconMapping>* mapping_data) {
-  sql::Statement statement(db_.GetCachedStatement(SQL_FROM_HERE,
+  // Try and retrieve an exact match of |page_url| first.
+  bool result = GetIconMappingsForPageURLImpl(
+      SQL_FROM_HERE, page_url,
       "SELECT icon_mapping.id, icon_mapping.icon_id, favicons.icon_type, "
       "favicons.url "
       "FROM icon_mapping "
       "INNER JOIN favicons "
       "ON icon_mapping.icon_id = favicons.id "
       "WHERE icon_mapping.page_url=? "
-      "ORDER BY favicons.icon_type DESC"));
-  statement.BindString(0, URLDatabase::GURLToDatabaseURL(page_url));
+      "ORDER BY favicons.icon_type DESC",
+      URLDatabase::GURLToDatabaseURL(page_url), mapping_data);
 
-  bool result = false;
-  while (statement.Step()) {
-    result = true;
-    if (!mapping_data)
-      return result;
-
-    IconMapping icon_mapping;
-    FillIconMapping(statement, page_url, &icon_mapping);
-    mapping_data->push_back(icon_mapping);
+  if (!fallback_to_host || result || !page_url.has_host() ||
+      !page_url.SchemeIsHTTPOrHTTPS()) {
+    return result;
   }
-  return result;
+
+  // If we didn't find an exact match, and |fallback_to_host| is true, try
+  // searching again but matching only the host of |page_url|, prefixed with
+  // '://' and suffixed with '/' to ensure we match the entire host name.
+  return GetIconMappingsForPageURLImpl(
+      SQL_FROM_HERE, page_url,
+      "SELECT icon_mapping.id, icon_mapping.icon_id, favicons.icon_type, "
+      "favicons.url "
+      "FROM icon_mapping "
+      "INNER JOIN favicons "
+      "ON icon_mapping.icon_id = favicons.id "
+      "WHERE icon_mapping.page_url LIKE ? "
+      "ORDER BY favicons.icon_type DESC",
+      base::StringPrintf("%%://%s/%%", page_url.host().c_str()), mapping_data);
 }
 
 IconMappingID ThumbnailDatabase::AddIconMapping(
@@ -995,6 +1006,29 @@ favicon_base::IconType ThumbnailDatabase::FromPersistedIconType(int icon_type) {
     return favicon_base::IconType::kInvalid;
 
   return static_cast<favicon_base::IconType>(val);
+}
+
+bool ThumbnailDatabase::GetIconMappingsForPageURLImpl(
+    const sql::StatementID& statement_id,
+    const GURL& page_url,
+    const char* query,
+    const std::string& param,
+    std::vector<IconMapping>* mapping_data) {
+  sql::Statement statement(db_.GetCachedStatement(statement_id, query));
+  statement.BindString(0, param);
+
+  bool result = false;
+  while (statement.Step()) {
+    result = true;
+    if (!mapping_data)
+      return result;
+
+    IconMapping icon_mapping;
+    FillIconMapping(statement, page_url, &icon_mapping);
+    mapping_data->push_back(icon_mapping);
+  }
+
+  return result;
 }
 
 sql::InitStatus ThumbnailDatabase::OpenDatabase(sql::Connection* db,
