@@ -272,6 +272,14 @@ class CONTENT_EXPORT ServiceWorkerVersion
                            base::OnceClosure task,
                            StatusCallback error_callback);
 
+  // Starts the worker if it isn't already running and calls |callback| with
+  // the appropriate status code when the worker is either running,
+  // or when starting the worker failed. If the worker is already running,
+  // |callback| is executed synchronously (before this method returns).
+  // |purpose| is used for UMA.
+  void RunAfterStartWorker(ServiceWorkerMetrics::EventType purpose,
+                           StatusCallback callback);
+
   // Call this while the worker is running before dispatching an event to the
   // worker. This informs ServiceWorkerVersion about the event in progress. The
   // worker attempts to keep running until the event finishes.
