@@ -17,6 +17,8 @@
 #include "chrome/utility/importer/importer.h"
 #include "components/favicon_base/favicon_usage_data.h"
 
+#include <windows.h>
+
 struct ImportedBookmarkEntry;
 
 class IEImporter : public Importer {

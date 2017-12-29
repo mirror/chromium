@@ -12,6 +12,8 @@
 #include "base/time/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include <windows.h>
+
 namespace registry_util {
 
 namespace {
