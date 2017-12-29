@@ -29,6 +29,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include <windows.h>
 #include <Psapi.h>
 #endif
 

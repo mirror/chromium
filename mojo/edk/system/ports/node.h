@@ -20,6 +20,9 @@
 #include "mojo/edk/system/ports/port_ref.h"
 #include "mojo/edk/system/ports/user_data.h"
 
+// Work around Windows macro madness.
+//#undef GetMessage
+
 namespace mojo {
 namespace edk {
 namespace ports {

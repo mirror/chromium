@@ -5,7 +5,7 @@
 #ifndef BASE_WIN_WAIT_CHAIN_H_
 #define BASE_WIN_WAIT_CHAIN_H_
 
-#include <windows.h>
+#include "base/win/windows_full.h"
 #include <wct.h>
 
 #include <vector>

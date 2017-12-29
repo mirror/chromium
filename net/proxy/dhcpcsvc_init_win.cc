@@ -7,6 +7,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 
+#include "base/win/windows_full.h"
 #include <dhcpcsdk.h>
 #include <dhcpv6csdk.h>
 

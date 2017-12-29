@@ -18,6 +18,11 @@
 #include "net/disk_cache/blockfile/trace.h"
 #include "net/disk_cache/cache_util.h"
 
+// I'm not sure why this is needed here - need to investigate more.
+// It probably just means that Windows.h was included after base/atomicops.h
+// which means that we do need to make more use of windows_full.h.
+#undef MemoryBarrier
+
 using base::TimeTicks;
 
 namespace {

@@ -36,6 +36,10 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/geometry/size_conversions.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
 namespace cc {
 
 static inline SkPaint CreatePaint() {
