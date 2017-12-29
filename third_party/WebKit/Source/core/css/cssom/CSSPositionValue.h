@@ -24,6 +24,9 @@ class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
                                   CSSNumericValue* y,
                                   ExceptionState&);
 
+  // Blink-internal ways of creating CSSPositionValue.
+  static CSSPositionValue* FromCSSValue(const CSSValue&);
+
   // Getters and setters defined in the IDL.
   CSSNumericValue* x() { return x_.Get(); }
   CSSNumericValue* y() { return y_.Get(); }
