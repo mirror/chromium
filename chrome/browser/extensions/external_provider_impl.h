@@ -91,6 +91,8 @@ class ExternalProviderImpl : public ExternalProviderInterface {
     install_immediately_ = install_immediately;
   }
 
+  void set_allow_updates(bool allow_updates) { allow_updates_ = allow_updates; }
+
  private:
   bool HandleMinProfileVersion(const base::DictionaryValue* extension,
                                const std::string& extension_id,
@@ -123,14 +125,14 @@ class ExternalProviderImpl : public ExternalProviderInterface {
 
   // Indicates that the extensions provided by this provider are loaded
   // entirely.
-  bool ready_;
+  bool ready_ = false;
 
   // The loader that loads the list of external extensions and reports them
   // via |SetPrefs|.
   scoped_refptr<ExternalLoader> loader_;
 
   // The profile that will be used to install external extensions.
-  Profile* profile_;
+  Profile* const profile_;
 
   // Creation flags to use for the extension.  These flags will be used
   // when calling Extension::Create() by the crx installer.
@@ -138,10 +140,14 @@ class ExternalProviderImpl : public ExternalProviderInterface {
 
   // Whether loaded extensions should be automatically acknowledged, so that
   // the user doesn't see an alert about them.
-  bool auto_acknowledge_;
+  bool auto_acknowledge_ = false;
 
   // Whether the extensions from this provider should be installed immediately.
-  bool install_immediately_;
+  bool install_immediately_ = false;
+
+  // Whether the provider should be allowed to update the set of external
+  // extensions it provides.
+  bool allow_updates_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ExternalProviderImpl);
 };
