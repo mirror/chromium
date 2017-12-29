@@ -119,7 +119,7 @@ WARN_UNUSED_RESULT bool CheckPageHasIcon(
     size_t expected_icon_contents_size,
     const unsigned char* expected_icon_contents) {
   std::vector<IconMapping> icon_mappings;
-  if (!db->GetIconMappingsForPageURL(page_url, &icon_mappings)) {
+  if (!db->GetIconMappingsForPageURL(page_url, false, &icon_mappings)) {
     ADD_FAILURE() << "failed GetIconMappingsForPageURL()";
     return false;
   }
@@ -229,7 +229,7 @@ TEST_F(ThumbnailDatabaseTest, AddIconMapping) {
 
   EXPECT_NE(0, db.AddIconMapping(url, id));
   std::vector<IconMapping> icon_mappings;
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, &icon_mappings));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, false, &icon_mappings));
   EXPECT_EQ(1u, icon_mappings.size());
   EXPECT_EQ(url, icon_mappings.front().page_url);
   EXPECT_EQ(id, icon_mappings.front().icon_id);
@@ -521,17 +521,17 @@ TEST_F(ThumbnailDatabaseTest, DeleteIconMappings) {
   ASSERT_NE(id, id2);
 
   std::vector<IconMapping> icon_mapping;
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, &icon_mapping));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, false, &icon_mapping));
   ASSERT_EQ(2u, icon_mapping.size());
   EXPECT_EQ(icon_mapping.front().icon_type, favicon_base::IconType::kTouchIcon);
   EXPECT_TRUE(db.GetIconMappingsForPageURL(
-      url, {favicon_base::IconType::kFavicon}, nullptr));
+      url, {favicon_base::IconType::kFavicon}, false, nullptr));
 
   db.DeleteIconMappings(url);
 
-  EXPECT_FALSE(db.GetIconMappingsForPageURL(url, nullptr));
+  EXPECT_FALSE(db.GetIconMappingsForPageURL(url, false, nullptr));
   EXPECT_FALSE(db.GetIconMappingsForPageURL(
-      url, {favicon_base::IconType::kFavicon}, nullptr));
+      url, {favicon_base::IconType::kFavicon}, false, nullptr));
 }
 
 TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURL) {
@@ -561,7 +561,7 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURL) {
   EXPECT_LT(0, db.AddIconMapping(url, id2));
 
   std::vector<IconMapping> icon_mappings;
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, &icon_mappings));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(url, false, &icon_mappings));
   ASSERT_EQ(2u, icon_mappings.size());
   EXPECT_EQ(id1, icon_mappings[0].icon_id);
   EXPECT_EQ(id2, icon_mappings[1].icon_id);
@@ -630,8 +630,8 @@ TEST_F(ThumbnailDatabaseTest, RetainDataForPageUrls) {
                                kIconUrl5, kLargeSize, sizeof(kBlob2), kBlob2));
 
   // The ones not retained should be missing.
-  EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
-  EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl4, nullptr));
+  EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
+  EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl4, false, nullptr));
 
   // Schema should be the same.
   EXPECT_EQ(original_schema, db.db_.GetSchema());
@@ -709,7 +709,7 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLForReturnOrder) {
                     FaviconBitmapType::ON_VISIT, time, gfx::Size());
   EXPECT_NE(0, db.AddIconMapping(page_url, id));
   std::vector<IconMapping> icon_mappings;
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, &icon_mappings));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, false, &icon_mappings));
 
   EXPECT_EQ(page_url, icon_mappings.front().page_url);
   EXPECT_EQ(id, icon_mappings.front().icon_id);
@@ -727,7 +727,7 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLForReturnOrder) {
   EXPECT_NE(0, db.AddIconMapping(page_url, id2));
 
   icon_mappings.clear();
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, &icon_mappings));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, false, &icon_mappings));
 
   EXPECT_EQ(page_url, icon_mappings.front().page_url);
   EXPECT_EQ(id2, icon_mappings.front().icon_id);
@@ -745,7 +745,7 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLForReturnOrder) {
   EXPECT_NE(0, db.AddIconMapping(page_url, id3));
 
   icon_mappings.clear();
-  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, &icon_mappings));
+  EXPECT_TRUE(db.GetIconMappingsForPageURL(page_url, false, &icon_mappings));
 
   EXPECT_EQ(page_url, icon_mappings.front().page_url);
   EXPECT_EQ(id3, icon_mappings.front().icon_id);
@@ -776,13 +776,86 @@ TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLWithIconTypes) {
   EXPECT_TRUE(db.GetIconMappingsForPageURL(
       kPageUrl,
       {favicon_base::IconType::kFavicon, favicon_base::IconType::kTouchIcon},
-      &icon_mappings));
+      false, &icon_mappings));
   SortMappingsByIconUrl(&icon_mappings);
 
   ASSERT_EQ(3u, icon_mappings.size());
   EXPECT_EQ(kIconUrl1, icon_mappings[0].icon_url);
   EXPECT_EQ(kIconUrl3, icon_mappings[1].icon_url);
   EXPECT_EQ(kIconUrl2, icon_mappings[2].icon_url);
+}
+
+// Test that |fallback_to_host| is used purely as a fallback, and only matches
+// hosts exactly if it is true.
+TEST_F(ThumbnailDatabaseTest, GetIconMappingsForPageURLWithFallbackToHost) {
+  ThumbnailDatabase db(nullptr);
+  ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
+  db.BeginTransaction();
+
+  const GURL kPageUrlHttp("http://www.google.com");
+  const GURL kPageUrlHttps("https://www.google.com");
+  const GURL kPageUrlHttpSamePrefix("http://www.google.com.au");
+  const GURL kPageUrlHttpSameSuffix("http://m.www.google.com");
+  AddAndMapFaviconSimple(&db, kPageUrlHttpSamePrefix, kIconUrl2,
+                         favicon_base::IconType::kFavicon);
+  AddAndMapFaviconSimple(&db, kPageUrlHttpSameSuffix, kIconUrl3,
+                         favicon_base::IconType::kFavicon);
+
+  {
+    // There should be no mappings for kPageUrlHttp, whether or not
+    // |fallback_to_host| is true.
+    std::vector<IconMapping> icon_mappings;
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(
+        kPageUrlHttp, {favicon_base::IconType::kFavicon}, false,
+        &icon_mappings));
+    EXPECT_TRUE(icon_mappings.empty());
+
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(
+        kPageUrlHttp, {favicon_base::IconType::kFavicon}, true,
+        &icon_mappings));
+    EXPECT_TRUE(icon_mappings.empty());
+  }
+
+  AddAndMapFaviconSimple(&db, kPageUrlHttps, kIconUrl1,
+                         favicon_base::IconType::kFavicon);
+
+  {
+    // When |fallback_to_host| is true, we find the added mapping for
+    // kPageUrlHttps.
+    std::vector<IconMapping> icon_mappings;
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(
+        kPageUrlHttp, {favicon_base::IconType::kFavicon}, false,
+        &icon_mappings));
+    EXPECT_TRUE(icon_mappings.empty());
+
+    EXPECT_TRUE(db.GetIconMappingsForPageURL(kPageUrlHttp,
+                                             {favicon_base::IconType::kFavicon},
+                                             true, &icon_mappings));
+    ASSERT_EQ(1u, icon_mappings.size());
+    EXPECT_EQ(kIconUrl1, icon_mappings[0].icon_url);
+  }
+
+  AddAndMapFaviconSimple(&db, kPageUrlHttp, kIconUrl5,
+                         favicon_base::IconType::kFavicon);
+
+  // We should only find the kPageUrlHttp mapping now whether or not
+  // |fallback_to_host| is true since there is an exact match.
+  {
+    std::vector<IconMapping> icon_mappings;
+    EXPECT_TRUE(db.GetIconMappingsForPageURL(kPageUrlHttp,
+                                             {favicon_base::IconType::kFavicon},
+                                             false, &icon_mappings));
+    ASSERT_EQ(1u, icon_mappings.size());
+    EXPECT_EQ(kIconUrl5, icon_mappings[0].icon_url);
+  }
+  {
+    std::vector<IconMapping> icon_mappings;
+    EXPECT_TRUE(db.GetIconMappingsForPageURL(kPageUrlHttp,
+                                             {favicon_base::IconType::kFavicon},
+                                             true, &icon_mappings));
+    ASSERT_EQ(1u, icon_mappings.size());
+    EXPECT_EQ(kIconUrl5, icon_mappings[0].icon_url);
+  }
 }
 
 TEST_F(ThumbnailDatabaseTest, HasMappingFor) {
@@ -973,7 +1046,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery) {
     // this will throw SQLITE_CORRUPT.  The corruption handler will
     // recover the database and poison the handle, so the outer call
     // fails.
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
 
     ASSERT_TRUE(expecter.SawExpectedErrors());
   }
@@ -994,7 +1067,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery) {
     ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
 
     // Now this fails because there is no mapping.
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
 
     // Other data was retained by recovery.
     EXPECT_TRUE(CheckPageHasIcon(&db, kPageUrl1,
@@ -1022,7 +1095,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery) {
     ThumbnailDatabase db(nullptr);
     ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
 
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
     EXPECT_TRUE(CheckPageHasIcon(&db, kPageUrl1,
                                  favicon_base::IconType::kFavicon, kIconUrl1,
                                  kLargeSize, sizeof(kBlob1), kBlob1));
@@ -1077,7 +1150,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery7) {
     // this will throw SQLITE_CORRUPT.  The corruption handler will
     // recover the database and poison the handle, so the outer call
     // fails.
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
 
     ASSERT_TRUE(expecter.SawExpectedErrors());
   }
@@ -1098,7 +1171,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery7) {
     ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
 
     // Now this fails because there is no mapping.
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
 
     // Other data was retained by recovery.
     EXPECT_TRUE(CheckPageHasIcon(&db, kPageUrl1,
@@ -1126,7 +1199,7 @@ TEST_F(ThumbnailDatabaseTest, Recovery7) {
     ThumbnailDatabase db(nullptr);
     ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
 
-    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, nullptr));
+    EXPECT_FALSE(db.GetIconMappingsForPageURL(kPageUrl2, false, nullptr));
     EXPECT_TRUE(CheckPageHasIcon(&db, kPageUrl1,
                                  favicon_base::IconType::kFavicon, kIconUrl1,
                                  kLargeSize, sizeof(kBlob1), kBlob1));

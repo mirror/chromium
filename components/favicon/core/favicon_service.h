@@ -92,10 +92,13 @@ class FaviconService : public KeyedService {
   // IconTypes. If there is no favicon bitmap of size |desired_size_in_pixel|,
   // the favicon bitmap which best matches |desired_size_in_pixel| is resized.
   // If |desired_size_in_pixel| is 0, the largest favicon bitmap is returned.
+  // If |fallback_to_host| is true, the host of |page_url| will be used to
+  // search the favicon database if an exact match cannot be found.
   virtual base::CancelableTaskTracker::TaskId GetRawFaviconForPageURL(
       const GURL& page_url,
       const favicon_base::IconTypeSet& icon_types,
       int desired_size_in_pixel,
+      bool fallback_to_host,
       const favicon_base::FaviconRawBitmapCallback& callback,
       base::CancelableTaskTracker* tracker) = 0;
 
