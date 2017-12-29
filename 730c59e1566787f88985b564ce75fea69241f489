@@ -22,6 +22,30 @@
       "revId": "730c59e1566787f88985b564ce75fea69241f489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4b7b01_cb87a25c",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1328,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-29T21:04:35Z",
+      "side": 0,
+      "message": "\u003e why was this line removed? (and I don\u0027t understand why did we need it)\n\nYou added |was_parsed_using_autofill_predictions| :) https://chromium.googlesource.com/chromium/src/+/89bccb1e2750638fb2fa3684aeb4074c02ff817e \nI think the step 4 in the description answers your question. |username_element| may be changed not only because of autofill predictions. I believe we can remove this and I will remove |was_parsed_using_autofill_predictions| completely later.",
+      "parentUuid": "532f5587_eae27307",
+      "range": {
+        "startLine": 1328,
+        "startChar": 2,
+        "endLine": 1328,
+        "endChar": 61
+      },
+      "revId": "730c59e1566787f88985b564ce75fea69241f489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
