@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42f6b2ab_78dfa233",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6402f8_daeaf531",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1427d0f9_f6196ad1",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d6494_a0a46712",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1427d0f9_f6196ad1",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a09def13_2e8a5c82",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "This was by mistake. Every listed vkey should be painted as icon. Fixed.",
+      "parentUuid": "bbcd6e40_5c135c24",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a88c6894_c42e83cf",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565c3660_ae8a74c9",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done. Cached a vector\u003cinfo\u003e.\nAnd later convert it to vector\u003cmojom::Strcut\u003cinfo\u003e\u003e.",
+      "parentUuid": "a88c6894_c42e83cf",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 3
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "93a5de2e_d1371a4f",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01bc2604_08ef13c7",
+      "range": {
+        "startLine": 126,
+        "startChar": 70,
+        "endLine": 126,
+        "endChar": 77
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fb2e514_3ef6824b",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0d62fe_a2a0603d",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb2e514_3ef6824b",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 9
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2c30ede9_5c3cfa84",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a041be3f_a60b65b2",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 18
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "720025ea_d17f873a",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb15554_37157f90",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Cannot: Complex destructor has an inline body.",
+      "parentUuid": "720025ea_d17f873a",
+      "range": {
+        "startLine": 20,
+        "startChar": 45,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "334dc330_85df10ca",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "The cases with \"actions with multiple accelerator data\" is not tested in this test, so it can be ignored. But I can create a fixture for it to reduce confusion.",
+      "parentUuid": "cb363758_476aab35",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acd6d84_65a7823c",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde91327_11615f75",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3acd6d84_65a7823c",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d7aefc8e_93a6cc40",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25ad4b26_c65a0bcd",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1baab286_16faad7e",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 6
@@ -275,6 +539,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc795371_f2f41264",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1baab286_16faad7e",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "7f0465a9_30aa5cee",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3247db1_02b143b4",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e22df33d_668e2220",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 6
@@ -321,6 +633,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e08ffb_ff36da55",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22df33d_668e2220",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "5a6de022_82d8ecd4",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Moved the function above.\nYes, similar to the controller, need to access the cached member variable accelerator_metadata_ later.",
+      "parentUuid": "2bb05154_d791f327",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a406d69_81c472f9",
         "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
         "patchSetId": 6
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "5f25f809_584f24c2",
+        "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "It is not used for now. Remove it now and add it back in the future when we need to export the KSVView and models.",
+      "parentUuid": "3a406d69_81c472f9",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9b73db_b3a1863e",
         "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
         "patchSetId": 6
@@ -390,6 +774,30 @@
       "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cb6f06_e7148043",
+        "filename": "components/keyboard_shortcut_viewer/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-29T00:06:03Z",
+      "side": 1,
+      "message": "Yeah! and thanks for the gn gen --check.\nc/b/ui/ needs to include KSV_types.h and mojom.h. Add it in the deps. Done.",
+      "parentUuid": "6f9b73db_b3a1863e",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "4c3adbd6ab1545d14442854a575b92ef487515df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
