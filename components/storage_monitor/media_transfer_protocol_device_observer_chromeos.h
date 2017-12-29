@@ -24,7 +24,7 @@ namespace storage_monitor {
 // fills in |id|, |name|, |location|, |vendor_name|, and |product_name|.
 typedef void (*GetStorageInfoFunc)(
     const std::string& storage_name,
-    device::MediaTransferProtocolManager* mtp_manager,
+    const device::mojom::MtpStorageInfo* storage_info,
     std::string* id,
     base::string16* name,
     std::string* location,
@@ -64,6 +64,11 @@ class MediaTransferProtocolDeviceObserverChromeOS
  private:
   // Mapping of storage location and mtp storage info object.
   typedef std::map<std::string, StorageInfo> StorageLocationToInfoMap;
+
+  // The async handler for newly attached storage.
+  void DoAttachStorage(
+      const std::string& storage_name,
+      const device::mojom::MtpStorageInfo* mtp_storage_info);
 
   // Enumerate existing mtp storage devices.
   void EnumerateStorages();
