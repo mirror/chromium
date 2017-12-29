@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c420624_201392c1",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-29T01:19:54Z",
+      "side": 1,
+      "message": "Why add this extra check? Presumably isInZipFile() should return false for \u003c VERSION_CODES.M, and if there\u0027s a bug and at doesn\u0027t, we\u0027d probably want the else branch to be used anyways so that a better error message would be shown.",
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
