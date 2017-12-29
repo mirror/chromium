@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c622ab41_1e6c96f4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-12-29T02:59:29Z",
+      "side": 1,
+      "message": "Let me know if there\u0027s a more elegant way to do this.",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 35
+      },
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5e7bb2b_c945e189",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwCookieManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-12-29T02:59:29Z",
+      "side": 1,
+      "message": "I comment on this case below--not sure if we need to support it, but I wrote a case to handle it since it seems chromium seems to accept a trailing semicolon.",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 48
+      },
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11c3b53b_bc82e328",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/CookieManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-12-29T02:59:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is really a valid cookie syntax, but I included it because it seems to work in chromium. This would look like \"Set-Cookie: key\u003dvalue;\" (trailing semicolon).\n\nIf you know better than I do, and this is in fact an unsupported syntax, I can remove the case.",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 52
+      },
+      "revId": "12de1b7ffe4b9c8a95c51d8bda5d08c389ca6948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
