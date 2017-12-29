@@ -378,8 +378,8 @@ void StartupAppLauncher::LaunchApp() {
   OpenApplication(AppLaunchParams(
       profile_, extension, extensions::LAUNCH_CONTAINER_WINDOW,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_KIOSK));
-  KioskAppManager::Get()->InitSession(profile_, app_id_);
 
+  KioskAppManager::Get()->InitSession(profile_, app_id_);
   session_manager::SessionManager::Get()->SessionStarted();
 
   content::NotificationService::current()->Notify(
@@ -407,7 +407,7 @@ void StartupAppLauncher::OnLaunchFailure(KioskAppLaunchError::Error error) {
 void StartupAppLauncher::BeginInstall() {
   SYSLOG(INFO) << "BeginInstall";
   extensions::file_util::SetUseSafeInstallation(true);
-  KioskAppManager::Get()->InstallFromCache(app_id_);
+  KioskAppManager::Get()->UpdatePrimaryAppLoaderPrefs(app_id_);
   if (extensions::ExtensionSystem::Get(profile_)
           ->extension_service()
           ->pending_extension_manager()
@@ -448,7 +448,8 @@ void StartupAppLauncher::MaybeInstallSecondaryApps() {
   secondary_apps_installed_ = true;
   extensions::KioskModeInfo* info =
       extensions::KioskModeInfo::Get(GetPrimaryAppExtension());
-  KioskAppManager::Get()->InstallSecondaryApps(info->secondary_app_ids);
+  KioskAppManager::Get()->UpdateSecondaryAppsLoaderPrefs(
+      info->secondary_app_ids);
   if (IsAnySecondaryAppPending()) {
     delegate_->OnInstallingApp();
     // Observe the crx installation events.
