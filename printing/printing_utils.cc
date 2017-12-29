@@ -67,6 +67,10 @@ uint64_t GenFrameGuid(int process_id, int frame_id) {
   return static_cast<uint64_t>(process_id) << 32 | frame_id;
 }
 
+uint64_t GenContentGuid(int process_id, uint32_t content_id) {
+  return static_cast<uint64_t>(process_id) << 32 | content_id;
+}
+
 std::vector<uint64_t> ConvertToGlobalUniqueIds(
     int process_id,
     const std::vector<uint32_t>& ids) {
