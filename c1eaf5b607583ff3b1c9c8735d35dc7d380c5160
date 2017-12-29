@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f267b9_e49fc66a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "Please use a function rather than macro. See BindColor for an example of such a function that takes a pointer to a member.",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311c3153_567c5861",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "I\u0027m sorry to be a pain, but after thinking about this a bit more, I think there\u0027s a simpler way to do this.\n\nI think it\u0027d be cleaner to split this element into. One of these two elements will have opacity as a transitioned property, the other will not. I also don\u0027t see why checking for default browsing or fullscreen browsing in the getter is necessary since these elements are already under the 2dBrowsingRoot which should handle visibility for these model properties.\n\nI.e., for the site-info-visibility-toggle-thingy, I think the binding could look like\nsite_info_visibility_toggle-\u003eAddBinding(VR_BIND_FUNC(bool, Model, model_, active_modal_prompt_type \u003d\u003d kModalPromptExitVRForSiteInfo, UiElement, site_info_visibility_toggle, SetVisible))\n\nAnd the site-info-for-audio-perm-toggle (which will have OPACITY as a transitioned property) could have a binding like\naudio_toggle-\u003eAddBinding(VR_BIND(bool, Model, model_, active_modal_prompt_type \u003d\u003d \u003cthe super long name\u003e, UiElement, audio_toggle, SetOpacity(value ? 1.0 : kModalPromptFadeOpacity))",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69e108b_0aff4e93",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "Again, I think we could have two elements here with simpler bindings.",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359c4a80_95df7973",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "nit: Create\u003cVectorIcon\u003e(kNone, kPhaseForeground, 100);",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8346da92_e7da7b5a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "Why not use the constant you\u0027ve defined?",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5d491a_a1eda02a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-29T15:08:43Z",
+      "side": 1,
+      "message": "nit: Create",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
