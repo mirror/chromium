@@ -65,6 +65,9 @@ class MediaTransferProtocolDeviceObserverChromeOS
   // Mapping of storage location and mtp storage info object.
   typedef std::map<std::string, StorageInfo> StorageLocationToInfoMap;
 
+  // The async handler for newly attached storage.
+  void DoAttachStorage(const device::mojom::MtpStorageInfo* storage_info);
+
   // Enumerate existing mtp storage devices.
   void EnumerateStorages();
 
