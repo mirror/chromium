@@ -159,6 +159,24 @@
       "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d153fdb_3352ebf2",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-29T02:56:27Z",
+      "side": 1,
+      "message": "Ah, thanks for looking into that.\n\nFor a null node, I think it\u0027d make sense to use the main-frame as the target. So it should return the routing id of that. I was going to suggest returning |widget_-\u003erouting_id()|, but the Frame vs. Widget difference is not very clear to me, and it looks like the routing-id we send from GetWidgetRoutingIdAtPoint() is actually the routing-id of a frame. So ... we probably need to find the \u0027main frame\u0027 of |widget_|, and return the routing-id of that. I am hoping there\u0027s a way to do that.",
+      "parentUuid": "51bbe7b4_487c090c",
+      "revId": "e99ab7a0a3ccc6eee4c76cb5840dd0b558cb107a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
