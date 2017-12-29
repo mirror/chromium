@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6d85549_a46cd7b8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-29T00:23:16Z",
+      "side": 1,
+      "message": "Thanks. This is my mistake.\nThis is corrected to 16pt.  (32px in 2x device; 48px in 3x device)",
+      "parentUuid": "0fc021e2_3d128f97",
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acda5012_668f0907",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6be0a5e3_a348b578",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-29T00:23:16Z",
+      "side": 1,
+      "message": "Same as above.\nchanged to 32pt. (64px in 2x device, 96px in 3x device).",
+      "parentUuid": "acda5012_668f0907",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40995915_ca3de6f2",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10330f84_fc3d637e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-29T00:23:16Z",
+      "side": 1,
+      "message": "Thanks. A TODO is added to handle \"attempt to download higher-res version\" later.",
+      "parentUuid": "40995915_ca3de6f2",
+      "range": {
+        "startLine": 962,
+        "startChar": 5,
+        "endLine": 962,
+        "endChar": 0
+      },
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

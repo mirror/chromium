@@ -22,6 +22,30 @@
       "revId": "2cc0dbe2c38e0a31b50d1dad8c8640e691716049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec128280_e90e8632",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-29T00:23:16Z",
+      "side": 1,
+      "message": "It ends up that minSize doesn\u0027t change in my newest patch.\nSo the cached icons will not be skipped by the a new minSize limit.\n(The line above will not be reached if cache exists.)\n\nA TODO is added here to handle \"attempt to load a larger icon than the cached one\".",
+      "parentUuid": "4f3f8657_b9742129",
+      "range": {
+        "startLine": 942,
+        "startChar": 15,
+        "endLine": 943,
+        "endChar": 72
+      },
+      "revId": "2cc0dbe2c38e0a31b50d1dad8c8640e691716049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
