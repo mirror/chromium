@@ -459,6 +459,9 @@ void WebRuntimeFeatures::EnableClientPlaceholdersForServerLoFi(bool enable) {
 void WebRuntimeFeatures::EnableLazyInitializeMediaControls(bool enable) {
   RuntimeEnabledFeatures::SetLazyInitializeMediaControlsEnabled(enable);
 }
+void WebRuntimeFeatures::EnableLowPriorityIframes(bool enable) {
+  RuntimeEnabledFeatures::SetLowPriorityIframesEnabled(enable);
+}
 
 void WebRuntimeFeatures::EnableClientHintsPersistent(bool enable) {
   RuntimeEnabledFeatures::SetClientHintsPersistentEnabled(enable);

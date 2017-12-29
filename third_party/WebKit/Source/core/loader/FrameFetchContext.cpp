@@ -1241,4 +1241,25 @@ void FrameFetchContext::RecordDataUriWithOctothorpe() {
   UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
 }
 
+ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(
+    ResourceLoadPriority priority) const {
+  // If enabled, drop the priority of all resources in a subframe.
+  if (!blink::RuntimeEnabledFeatures::LowPriorityIframesEnabled())
+    return priority;
+
+  if (GetFrame()->IsMainFrame()) {
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, main_frame_priority_histogram,
+                        ("LowPriorityIframes.MainFrameRequestPriority",
+                         static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+    main_frame_priority_histogram.Count(static_cast<int>(priority));
+    return priority;
+  }
+
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, iframe_priority_histogram,
+                      ("LowPriorityIframes.IframeRequestPriority",
+                       static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+  iframe_priority_histogram.Count(static_cast<int>(priority));
+  return ResourceLoadPriority::kVeryLow;
+}
+
 }  // namespace blink

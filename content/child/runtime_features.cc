@@ -368,6 +368,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableLazyInitializeMediaControls(
       base::FeatureList::IsEnabled(features::kLazyInitializeMediaControls));
 
+  WebRuntimeFeatures::EnableLowPriorityIframes(
+      base::FeatureList::IsEnabled(features::kLowPriorityIframes));
+
   WebRuntimeFeatures::EnableMediaEngagementBypassAutoplayPolicies(
       base::FeatureList::IsEnabled(
           media::kMediaEngagementBypassAutoplayPolicies));
