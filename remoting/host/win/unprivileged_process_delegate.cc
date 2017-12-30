@@ -8,6 +8,8 @@
 
 #include "remoting/host/win/unprivileged_process_delegate.h"
 
+#include <windows.h>  // Must be in front of other Windows header files
+
 #include <sddl.h>
 
 #include <utility>
@@ -34,6 +36,8 @@
 #include "remoting/host/win/security_descriptor.h"
 #include "remoting/host/win/window_station_and_desktop.h"
 #include "sandbox/win/src/restricted_token.h"
+
+#include <windows.h>
 
 using base::win::ScopedHandle;
 

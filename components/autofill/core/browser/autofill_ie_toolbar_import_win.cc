@@ -27,6 +27,8 @@
 #include "components/autofill/core/browser/phone_number_i18n.h"
 #include "components/os_crypt/os_crypt.h"
 
+#include <windows.h>
+
 using base::win::RegKey;
 
 namespace autofill {

@@ -19,6 +19,8 @@
 #include "base/win/registry.h"
 #include "chrome/browser/conflicts/module_info_util_win.h"
 
+#include <windows.h>
+
 namespace {
 
 void ReadShellExtensions(
