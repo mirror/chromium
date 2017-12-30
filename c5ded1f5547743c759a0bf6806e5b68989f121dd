@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c95be8c_b81d6200",
+        "filename": "net/tools/quic/quic_http_response_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed as suggested",
+      "parentUuid": "9d3b2a93_9f25fdeb",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8f0e300_3ce05043",
         "filename": "net/tools/quic/quic_http_response_proxy.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a7e77178_36323511",
+        "filename": "net/tools/quic/quic_http_response_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d8f0e300_3ce05043",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "804311bc_3929e687",
         "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "capitalize QUIC, end with a period",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc67239_87eb0052",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed to \nthe QUIC client.",
+      "parentUuid": "804311bc_3929e687",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "150ce4dc_bfa163e4",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf745b99_8a1e2fc0",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68939717_51bc6168",
         "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "Is this used when there\u0027s no response from the server, or when there are TCP errors?",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ffaf5e_bedbf068",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "The default status is BACKEND_ERR_REPONSE. Once the first byte of a response is received, the status is set to SUCCESSFUL_RESPONSE in QuicProxyBackendUrlRequest::OnReadCompleted(). So if the status is BACKEND_ERR_REPONSE, it means that there is no response from the server.",
+      "parentUuid": "68939717_51bc6168",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6c23bd3c_23dfd715",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed to\n   A |delegate| may be NULL.\n   If set_delegate() is called multiple times, only the last delegate will be used.",
+      "parentUuid": "c7626ca2_aaace4ae",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "affd440c_b2aad7e7",
         "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "Can this return a const\u0026 instead?",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4f0444_2f38b945",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed to \nconst net::HttpRequestHeaders\u0026 request_headers() const { return request_headers_; }",
+      "parentUuid": "affd440c_b2aad7e7",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "933f844b_3bd5aafc",
+        "filename": "net/tools/quic/quic_proxy_backend_url_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "This is set in set_delegate() which is calls by \nQuicSimpleServerStream::OnInitialHeadersComplete() to pass\nthe delegate handler to be called to pass back response\nto QUIC client by calling delegate_-\u003eOnResponseBackendComplete()\nin QuicSimpleServerStream::OnInitialHeadersComplete().\nTherefore, I think pointer would be easier for checking whether the delegate is set here.",
+      "parentUuid": "3aa6bfeb_f741d086",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "400f2f45_770e94ef",
         "filename": "net/tools/quic/quic_server.h",
         "patchSetId": 1
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c6d2026d_dd3c6f58",
+        "filename": "net/tools/quic/quic_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "400f2f45_770e94ef",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81cfad24_8e8a966c",
         "filename": "net/tools/quic/quic_simple_dispatcher.h",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "Can you add a new param to the existing constructor instead?",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee8acb8_cf4c10f1",
+        "filename": "net/tools/quic/quic_simple_dispatcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Removed line 17 ~ 24 (keeping 26 ~ 34) to add\n      QuicHttpResponseProxy* quic_proxy_context);",
+      "parentUuid": "81cfad24_8e8a966c",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "648dd51d_8ef601c4",
+        "filename": "net/tools/quic/quic_simple_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Remove line 39 ~ 44 (keeping 46 ~ 52) to add \n      QuicHttpResponseProxy* quic_proxy_context);",
+      "parentUuid": "49bfbd02_906afac4",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cecbe691_f4cc9e71",
         "filename": "net/tools/quic/quic_simple_server_stream.cc",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "combine: if (proxy_context_ !\u003d nullptr \u0026\u0026 proxy_context_-\u003eInitialized())",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970275e4_ec787dc3",
+        "filename": "net/tools/quic/quic_simple_server_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed to\n  if (proxy_context_ !\u003d nullptr \u0026\u0026 proxy_context_-\u003eInitialized()) {",
+      "parentUuid": "cecbe691_f4cc9e71",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "3f42c5db_edc7de91",
+        "filename": "net/tools/quic/quic_simple_server_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Remove SendResponseFromCache() and moved those codes to under and reorganized codes as suggested.\nif (proxy_url_request_handler() \u003d\u003d nullptr) {\n    // moved codes inside SendResponseFromCache() here.\n    return;\n}",
+      "parentUuid": "35703f7c_a32b829d",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f9f488d_bdb5506c",
         "filename": "net/tools/quic/quic_simple_server_stream.h",
         "patchSetId": 1
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "2f1a92c9_f2af819f",
+        "filename": "net/tools/quic/quic_simple_server_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Added more description as shown below:\n  // Implements QuicProxyDelegate callbacks from backend URL handler which\n  // calls this function to pass the response it receives from the backend server\n  // back to the QUIC client. Plese refer to quic_proxy_backend_url_request.h\n  // for details regarding how backend URL handler works.",
+      "parentUuid": "9f9f488d_bdb5506c",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "024323e6_13dec6c7",
         "filename": "net/tools/quic/quic_simple_server_stream.h",
         "patchSetId": 1
@@ -251,6 +503,24 @@
       "writtenOn": "2017-12-15T23:45:58Z",
       "side": 1,
       "message": "Specifically, this sends a response from the cache when there is no proxy set, right? Can you say that in the comment? Saying \"instead of backend\" is a bit confusing.",
+      "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2c0db9_f9190b67",
+        "filename": "net/tools/quic/quic_simple_server_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1244449
+      },
+      "writtenOn": "2017-12-30T02:15:37Z",
+      "side": 1,
+      "message": "Changed to\n  // Sends back the response from the cache when there is no proxy set, i.e.\n  // proxy_context_ is null.",
+      "parentUuid": "024323e6_13dec6c7",
       "revId": "c5ded1f5547743c759a0bf6806e5b68989f121dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
