@@ -7,7 +7,7 @@
 #ifndef BASE_ATOMICOPS_INTERNALS_X86_MSVC_H_
 #define BASE_ATOMICOPS_INTERNALS_X86_MSVC_H_
 
-#include <windows.h>
+#include "base/win/windows_types.h"
 
 #include <intrin.h>
 
@@ -56,15 +56,20 @@ inline Atomic32 NoBarrier_AtomicIncrement(volatile Atomic32* ptr,
   return Barrier_AtomicIncrement(ptr, increment);
 }
 
+#pragma warning(push)
+#pragma warning(disable: 4793)
 inline void MemoryBarrier() {
 #if defined(ARCH_CPU_64_BITS)
   // See #undef and note at the top of this file.
   __faststorefence();
 #else
-  // We use MemoryBarrier from WinNT.h
-  ::MemoryBarrier();
+  // We use the implementation of MemoryBarrier from WinNT.h
+  LONG Barrier;
+
+  _InterlockedOr(&Barrier, 0);
 #endif
 }
+#pragma warning(pop)
 
 inline Atomic32 Acquire_CompareAndSwap(volatile Atomic32* ptr,
                                        Atomic32 old_value,
@@ -115,25 +120,25 @@ static_assert(sizeof(Atomic64) == sizeof(PVOID), "atomic word is atomic");
 inline Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
                                          Atomic64 old_value,
                                          Atomic64 new_value) {
-  PVOID result = InterlockedCompareExchangePointer(
-    reinterpret_cast<volatile PVOID*>(ptr),
-    reinterpret_cast<PVOID>(new_value), reinterpret_cast<PVOID>(old_value));
+  PVOID result = _InterlockedCompareExchangePointer(
+      reinterpret_cast<volatile PVOID*>(ptr),
+      reinterpret_cast<PVOID>(new_value), reinterpret_cast<PVOID>(old_value));
   return reinterpret_cast<Atomic64>(result);
 }
 
 inline Atomic64 NoBarrier_AtomicExchange(volatile Atomic64* ptr,
                                          Atomic64 new_value) {
-  PVOID result = InterlockedExchangePointer(
-    reinterpret_cast<volatile PVOID*>(ptr),
-    reinterpret_cast<PVOID>(new_value));
+  PVOID result =
+      _InterlockedExchangePointer(reinterpret_cast<volatile PVOID*>(ptr),
+                                  reinterpret_cast<PVOID>(new_value));
   return reinterpret_cast<Atomic64>(result);
 }
 
 inline Atomic64 Barrier_AtomicIncrement(volatile Atomic64* ptr,
                                         Atomic64 increment) {
-  return InterlockedExchangeAdd64(
-      reinterpret_cast<volatile LONGLONG*>(ptr),
-      static_cast<LONGLONG>(increment)) + increment;
+  return _InterlockedExchangeAdd64(reinterpret_cast<volatile LONGLONG*>(ptr),
+                                   static_cast<LONGLONG>(increment)) +
+         increment;
 }
 
 inline Atomic64 NoBarrier_AtomicIncrement(volatile Atomic64* ptr,
