@@ -13,6 +13,8 @@
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/views_export.h"
 
+#include <windows.h>
+
 namespace ui {
 class MenuModel;
 }
