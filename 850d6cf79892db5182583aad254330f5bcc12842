@@ -46,6 +46,30 @@
       "revId": "850d6cf79892db5182583aad254330f5bcc12842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbce5d0_0e551645",
+        "filename": "third_party/WebKit/Source/modules/fetch/Request.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-12-30T20:56:48Z",
+      "side": 1,
+      "message": "Yeah, a comment to clarify it would be great",
+      "parentUuid": "1a00710b_94491ad5",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 26
+      },
+      "revId": "850d6cf79892db5182583aad254330f5bcc12842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
