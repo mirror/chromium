@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0702a8fb_bfaa52ef",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1910,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-12-30T12:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e045d6dd_ba6b8936",
+      "revId": "edc1708054e0d3d42ecdf824a7933bca394023e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fc11afc_6fda6d41",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "writtenOn": "2017-12-28T22:41:44Z",
       "side": 1,
       "message": "This change seems important too. Rather than bailing for non-block-flows, we continue looking now. There must have been bugs where we had a table (or some other kind of non-block-flow) that was preceded by non-BFC blocks with overhanging floats affecting |child|, right?\n\nIf you have the time and energy, it would be nice to have a test now that passes, which used to fail.",
+      "revId": "edc1708054e0d3d42ecdf824a7933bca394023e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37e0ab5f_720a94e7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-12-30T12:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc11afc_6fda6d41",
       "revId": "edc1708054e0d3d42ecdf824a7933bca394023e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
