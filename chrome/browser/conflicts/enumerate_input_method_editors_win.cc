@@ -20,6 +20,8 @@
 #include "base/win/registry.h"
 #include "chrome/browser/conflicts/module_info_util_win.h"
 
+#include <windows.h>
+
 namespace {
 
 // Returns true if |ime_guid| is the GUID of a built-in Microsoft IME.

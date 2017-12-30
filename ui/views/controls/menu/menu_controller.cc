@@ -247,7 +247,7 @@ static void RepostEventImpl(const ui::LocatedEvent* event,
 
     WPARAM target = client_area ? event->native_event().wParam : nc_hit_result;
     LPARAM window_coords = MAKELPARAM(window_x, window_y);
-    PostMessage(target_window, event_type, target, window_coords);
+    PostMessageW(target_window, event_type, target, window_coords);
     return;
   }
 #endif
