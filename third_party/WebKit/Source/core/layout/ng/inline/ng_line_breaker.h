@@ -75,7 +75,7 @@ class CORE_EXPORT NGLineBreaker {
 
     // Set when the line ended with a forced break. Used to setup the states for
     // the next line.
-    bool is_after_forced_break = false;
+    bool has_forced_break = false;
 
     LayoutUnit AvailableWidth() const {
       DCHECK_GE(line_right_bfc_offset, line_left_bfc_offset);
@@ -90,41 +90,40 @@ class CORE_EXPORT NGLineBreaker {
   void BreakLine(NGLineInfo*);
 
   void PrepareNextLine(const NGLayoutOpportunity&, NGLineInfo*);
+  NGInlineItemResult* AddItem(const NGInlineItem&,
+                              unsigned end_offset,
+                              NGInlineItemResults*);
+  NGInlineItemResult* AddItem(const NGInlineItem&, NGInlineItemResults*);
+  void ComputeCanBreakAfter(NGInlineItemResult*) const;
 
   void UpdatePosition(const NGInlineItemResults&);
   void ComputeLineLocation(NGLineInfo*) const;
 
   enum class LineBreakState {
-    // The current position is not breakable.
-    kNotBreakable,
-    // The current position is breakable.
-    kIsBreakable,
-    // Break by including trailing items (CloseTag).
-    kBreakAfterTrailings,
-    // Break immediately.
-    kForcedBreak
+    kDone,
+    kContinue,
+    kTrailing,
   };
 
-  LineBreakState HandleText(NGLineInfo*,
-                            const NGInlineItem&,
-                            NGInlineItemResult*);
+  LineBreakState HandleText(const NGInlineItem&, LineBreakState, NGLineInfo*);
   void BreakText(NGInlineItemResult*,
                  const NGInlineItem&,
                  LayoutUnit available_width,
                  NGLineInfo*);
-  static void AppendHyphen(const ComputedStyle&, NGLineInfo*);
+  LineBreakState HandleTrailingSpaces(const NGInlineItem&, NGLineInfo*);
+  void AppendHyphen(const ComputedStyle&, NGLineInfo*);
 
-  LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
-  LineBreakState HandleAtomicInline(const NGInlineItem&,
-                                    NGInlineItemResult*,
-                                    const NGLineInfo&);
-  LineBreakState HandleFloat(const NGInlineItem&, NGInlineItemResult*);
+  LineBreakState HandleControlItem(const NGInlineItem&,
+                                   LineBreakState,
+                                   NGLineInfo*);
+  LineBreakState HandleAtomicInline(const NGInlineItem&, NGLineInfo*);
+  void HandleFloat(const NGInlineItem&, NGInlineItemResult*);
 
   void HandleOpenTag(const NGInlineItem&, NGInlineItemResult*);
-  LineBreakState HandleCloseTag(const NGInlineItem&, NGInlineItemResults*);
+  void HandleCloseTag(const NGInlineItem&, NGInlineItemResults*);
 
-  void HandleOverflow(NGLineInfo*);
-  void HandleOverflow(NGLineInfo*,
+  LineBreakState HandleOverflow(NGLineInfo*);
+  LineBreakState HandleOverflow(NGLineInfo*,
                       LayoutUnit available_width,
                       bool force_break_anywhere);
   void Rewind(NGLineInfo*, unsigned new_end);
@@ -133,13 +132,11 @@ class CORE_EXPORT NGLineBreaker {
 
   void SetCurrentStyle(const ComputedStyle&);
   bool IsFirstBreakOpportunity(unsigned, const NGLineInfo&) const;
-  static LineBreakState ToLineBreakState(const NGInlineItemResult&);
-  LineBreakState ComputeIsBreakableAfter(NGInlineItemResult*) const;
 
   void MoveToNextOf(const NGInlineItem&);
   void MoveToNextOf(const NGInlineItemResult&);
-  void SkipCollapsibleWhitespaces();
 
+  const String& GetText() const { return break_iterator_.GetString(); }
   bool IsFirstFormattedLine() const;
   void ComputeBaseDirection();
 
@@ -171,6 +168,8 @@ class CORE_EXPORT NGLineBreaker {
 
   // True when current box allows line wrapping.
   bool auto_wrap_ = false;
+
+  bool collapse_spaces_ = false;
 
   // True when current box has 'word-break/word-wrap: break-word'.
   bool break_if_overflow_ = false;
