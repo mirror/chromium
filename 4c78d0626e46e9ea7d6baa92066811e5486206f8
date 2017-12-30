@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35e0d9bd_ca826c9a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-30T01:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d71a0b1_2d9f83e1",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fccd5870_881c896a",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I see, thanks for explanation.\n\nPerhaps, we can alternatively split by commas, and then either split by spaces (if there is a single chunk after splitting by commas) or remove all spaces.\n\nAlso, I don\u0027t understand why we need the first non-capturing group, and the one around \"a\" value after \"-?\" part.",
       "parentUuid": "51a7d499_75e3c5a1",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eeac28e_8935d56f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-30T01:58:23Z",
+      "side": 1,
+      "message": "The extra non-capturing groups are probably just in there by mistake, after copying \u0026 pasting.\n\nTo clarify, when you say split by commas/spaces would we individually match each value against a regex then? Or still have a regex such as one of these just without the separators?",
+      "parentUuid": "438b8a27_3971b812",
       "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -126,6 +162,30 @@
       "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b99b4e_58a8523a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-30T01:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48cc21e_03e23719",
+      "range": {
+        "startLine": 142,
+        "startChar": 45,
+        "endLine": 142,
+        "endChar": 71
+      },
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
