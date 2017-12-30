@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690d8dc4_5ef0a619",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-30T18:29:35Z",
+      "side": 1,
+      "message": "NIT: Spacing and add\n\n// namespace",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "544a0bf4b6232bf1b4671ff0eb18c831136f1842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

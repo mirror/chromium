@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0471b214_454f3641",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-30T18:29:35Z",
+      "side": 1,
+      "message": "Ah yes, I meant \"Do (1) and (2)\"; and for third bullet, (3).  Thanks for investigating this and !",
+      "parentUuid": "4ce436c9_e3ecbe13",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "453321cf_ecfb6649",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 9
@@ -648,6 +672,30 @@
       "side": 1,
       "message": "Come to think of it, it might be useful someday to put zucchini_gen-only code in a subdirectory, this way, boundary is explicit and we won\u0027t need to specify in class comments.\nDone",
       "parentUuid": "1d19e571_213daf65",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "501247b82c0ba0d6f35ff858e09cee3fcad4e796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da7dd6c_261491b9",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-30T18:29:35Z",
+      "side": 1,
+      "message": "This is a good idea. It can also induce more refactoring.",
+      "parentUuid": "733be7e6_4e8cc7a8",
       "range": {
         "startLine": 18,
         "startChar": 0,
