@@ -1665,5 +1665,108 @@ TEST_F(DisplayInfoProviderChromeosTouchviewTest, GetTabletMode) {
   EXPECT_FALSE(result[1].is_tablet_mode);
 }
 
+class DisplayInfoProviderChromeosMultiMirroringTest
+    : public DisplayInfoProviderChromeosTest {
+ public:
+  DisplayInfoProviderChromeosMultiMirroringTest() = default;
+  ~DisplayInfoProviderChromeosMultiMirroringTest() override = default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableMultiMirroring);
+    DisplayInfoProviderChromeosTest::SetUp();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DisplayInfoProviderChromeosMultiMirroringTest);
+};
+
+TEST_F(DisplayInfoProviderChromeosMultiMirroringTest, SetCustomMirrorMode) {
+  {
+    // Mirroring source id in bad format error.
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, "bad_format_id", {}, &error));
+    EXPECT_EQ(DisplayInfoProviderChromeOS::kMirrorModeSourceIdBadFormatError,
+              error);
+  }
+
+  {
+    // Mirroring destination id in bad format error.
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, "1000000", {"bad_format_id"}, &error));
+    EXPECT_EQ(
+        DisplayInfoProviderChromeOS::kMirrorModeDestinationIdBadFormatError,
+        error);
+  }
+
+  {
+    // Single display error.
+    EXPECT_EQ(1U, display_manager()->num_connected_displays());
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, base::Int64ToString(display::kInvalidDisplayId), {}, &error));
+    EXPECT_EQ(DisplayInfoProviderChromeOS::kMirrorModeSingleDisplayError,
+              error);
+  }
+
+  // Add more displays.
+  UpdateDisplay("200x200,600x600,700x700");
+  display::DisplayIdList id_list = display_manager()->GetCurrentDisplayIdList();
+  EXPECT_EQ(3U, id_list.size());
+
+  {
+    // Mirroring source id not found error.
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, base::Int64ToString(display::kInvalidDisplayId), {}, &error));
+    EXPECT_EQ(DisplayInfoProviderChromeOS::kMirrorModeSourceIdNotFoundError,
+              error);
+  }
+
+  {
+    // Mirroring destination ids empty error.
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, base::Int64ToString(id_list[0]),
+        {base::Int64ToString(display::kInvalidDisplayId)}, &error));
+    EXPECT_EQ(
+        DisplayInfoProviderChromeOS::kMirrorModeDestinationIdNotFoundError,
+        error);
+  }
+
+  {
+    // Duplicate display id error.
+    std::string error;
+    EXPECT_FALSE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, base::Int64ToString(id_list[0]),
+        {base::Int64ToString(id_list[0])}, &error));
+    EXPECT_EQ(DisplayInfoProviderChromeOS::kMirrorModeDuplicateIdError, error);
+  }
+
+  {
+    // Turn on customized mirror mode (mirroring from the first display to the
+    // second one).
+    std::string error;
+    EXPECT_TRUE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        true, base::Int64ToString(id_list[0]),
+        {base::Int64ToString(id_list[1])}, &error));
+    EXPECT_TRUE(error.empty());
+    EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
+    EXPECT_EQ(id_list[0], display_manager()->mirroring_source_id());
+    const display::Displays software_mirroring_display_list =
+        display_manager()->software_mirroring_display_list();
+    EXPECT_EQ(1U, software_mirroring_display_list.size());
+    EXPECT_EQ(id_list[1], software_mirroring_display_list[0].id());
+
+    // Turn off customized mirror mode.
+    EXPECT_TRUE(DisplayInfoProvider::Get()->SetCustomMirrorMode(
+        false, base::Int64ToString(id_list[0]), {}, &error));
+    EXPECT_TRUE(error.empty());
+    EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  }
+}
+
 }  // namespace
 }  // namespace extensions
