@@ -40,22 +40,8 @@ IPC_MESSAGE_ROUTED3(SpellCheckMsg_RespondTextCheck,
 // Messages sent from the renderer to the browser.
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-// TODO(groby): This needs to originate from SpellcheckProvider.
-IPC_SYNC_MESSAGE_CONTROL2_1(SpellCheckHostMsg_CheckSpelling,
-                            base::string16 /* word */,
-                            int /* route_id */,
-                            bool /* correct */)
-
-IPC_SYNC_MESSAGE_CONTROL1_1(SpellCheckHostMsg_FillSuggestionList,
-                            base::string16 /* word */,
-                            std::vector<base::string16> /* suggestions */)
-
 IPC_MESSAGE_CONTROL3(SpellCheckHostMsg_RequestTextCheck,
                      int /* route_id for response */,
                      int /* request identifier given by WebKit */,
                      base::string16 /* sentence */)
-
-IPC_MESSAGE_ROUTED2(SpellCheckHostMsg_ToggleSpellCheck,
-                    bool /* enabled */,
-                    bool /* checked */)
 #endif  // USE_BROWSER_SPELLCHECKER
