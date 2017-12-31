@@ -347,8 +347,9 @@ std::string SanitizeFrontendPath(const std::string& path) {
 }
 
 std::string SanitizeEndpoint(const std::string& value) {
-  if (value.find('&') != std::string::npos
-      || value.find('?') != std::string::npos)
+  if (value.find('&') != std::string::npos ||
+      value.find('?') != std::string::npos ||
+      value.find('\'') != std::string::npos)
     return std::string();
   return value;
 }
@@ -430,7 +431,7 @@ GURL SanitizeFrontendURL(const GURL& url,
             base::StringPrintf("%s=%s", it.GetKey().c_str(), value.c_str()));
       }
     }
-    if (url.has_ref())
+    if (url.has_ref() && url.ref_piece().find('\'') == base::StringPiece::npos)
       fragment = '#' + url.ref();
   }
   std::string query =
