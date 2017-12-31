@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4bdf12e3_c1387570",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1780a1b5_79067bdf",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d289a504_a075d250",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7555821_83e53037",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d289a504_a075d250",
+      "range": {
+        "startLine": 371,
+        "startChar": 46,
+        "endLine": 371,
+        "endChar": 73
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e63d13ae_2d916888",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b16b3b_1d51ea74",
+      "range": {
+        "startLine": 375,
+        "startChar": 56,
+        "endLine": 375,
+        "endChar": 75
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e65a32a_99459a26",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00125789_244d0826",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e65a32a_99459a26",
+      "range": {
+        "startLine": 387,
+        "startChar": 26,
+        "endLine": 387,
+        "endChar": 51
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cb351ed7_061e9164",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfab01e0_d893a3df",
+      "range": {
+        "startLine": 403,
+        "startChar": 44,
+        "endLine": 403,
+        "endChar": 71
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2560062_6e33fdc9",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4264d13d_a31f80bf",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2560062_6e33fdc9",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "095e49b3_c8764b40",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec48241_d4508a1e",
+      "range": {
+        "startLine": 485,
+        "startChar": 17,
+        "endLine": 485,
+        "endChar": 22
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7af1806_f948e829",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 3
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-29T01:34:01Z",
       "side": 1,
       "message": "Shouldn\u0027t this return an error string too?",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1108,
+        "endChar": 17
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be446b55_42468d09",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "This is a flag which enables/disables this API feature. It is currently false by default, should add error message for this?",
+      "parentUuid": "b7af1806_f948e829",
       "range": {
         "startLine": 1107,
         "startChar": 0,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e95eed96_760554f2",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cdd7edd_a9e56178",
+      "range": {
+        "startLine": 1112,
+        "startChar": 34,
+        "endLine": 1112,
+        "endChar": 58
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb9fb5eb_f4ff22d5",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
         "patchSetId": 3
@@ -229,6 +445,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba04f1_5c2243fb",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9fb5eb_f4ff22d5",
+      "range": {
+        "startLine": 1691,
+        "startChar": 25,
+        "endLine": 1691,
+        "endChar": 40
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "b279580e_92f956d8",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dfb6c0_1f238f4a",
+      "range": {
+        "startLine": 1692,
+        "startChar": 4,
+        "endLine": 1692,
+        "endChar": 26
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fadb912c_202aa36a",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
         "patchSetId": 3
@@ -275,6 +539,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c437e417_7c76c02a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fadb912c_202aa36a",
+      "range": {
+        "startLine": 1707,
+        "startChar": 25,
+        "endLine": 1707,
+        "endChar": 40
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "3205c76a_9f62ae4f",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a04860_fad236db",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c49a48_b38a8b67",
         "filename": "extensions/browser/api/system_display/system_display_apitest.cc",
         "patchSetId": 3
@@ -321,6 +633,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973a2780_f0b52d7b",
+        "filename": "extensions/browser/api/system_display/system_display_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c49a48_b38a8b67",
+      "range": {
+        "startLine": 499,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 49
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "2dcfa8e8_d5d9220b",
+        "filename": "extensions/browser/api/system_display/system_display_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2a1e529_6e181c3f",
+      "range": {
+        "startLine": 513,
+        "startChar": 0,
+        "endLine": 514,
+        "endChar": 49
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b516f3d_09ea58b7",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 3
@@ -358,6 +718,30 @@
       "writtenOn": "2017-12-29T01:34:01Z",
       "side": 1,
       "message": "I think we should:\n1- Mark this as deprecated.\n2- Unify mirror mode and mixed mirror mode together in a single API.\n3- Switch the display settings to use your new API.\n4- Define when to use the default behavior (all displays are in mirror mode), e.g. when all displays are mirroring, then adding one more display keeps us in the same mode...etc.\n\nLet\u0027s discuss 4 with oshima and olga next week.",
+      "range": {
+        "startLine": 199,
+        "startChar": 15,
+        "endLine": 199,
+        "endChar": 32
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4ab584_04999d32",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "1. I would land another CL to implement SetMirrorMode described in https://docs.google.com/document/d/1Lnl23AR6r98xz8HR5u-ChmIO5TeZfX6BiLMDyLk6f_k/edit#heading\u003dh.w8inspeo32bj and I would mark this as deprecated there.\n2. It is not easy to do so because of different behavior of mixed and mirror mode. Although, we could make mixed mode transparent to Display manager (We can call it mirror mode param instead of mixed mode parameter, since lots of code are shared between too mode.).\n3. I would do this in the same CL described in 1.\n4. e.g. We have three displays I, A, B. I is mirrored to A. we disconnect B, now all displays are in mirror mode. Then we reconnect B, B will be set in mirror mode which is very ideal.",
+      "parentUuid": "8b516f3d_09ea58b7",
       "range": {
         "startLine": 199,
         "startChar": 15,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "cee9aa8f_cfbb46aa",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09637fa8_41b0c1eb",
+      "range": {
+        "startLine": 413,
+        "startChar": 4,
+        "endLine": 413,
+        "endChar": 21
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5eac9a_fcacc21e",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 3
@@ -413,6 +821,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac32de2_562806ca",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5eac9a_fcacc21e",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "79047c2c_937bcc99",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Changed comment.",
+      "parentUuid": "b85d2c81_799e6d95",
+      "range": {
+        "startLine": 1274,
+        "startChar": 5,
+        "endLine": 1274,
+        "endChar": 30
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2638d19c_d6f3426c",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 3
@@ -450,6 +906,30 @@
       "writtenOn": "2017-12-29T01:34:01Z",
       "side": 1,
       "message": "How about extracting this function into display_manager_utilities.h, make it return an enum instead of bool for various reasons of errors, and make display_info_provider_chromeos.cc use it instead of duplicating things here and there.\n\nThen you can add unit tests for this function independently.",
+      "range": {
+        "startLine": 1291,
+        "startChar": 21,
+        "endLine": 1291,
+        "endChar": 42
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efa749b_6ee5c19a",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. I already tested it in display_info_provider_chromeos_unittest.cc along with the error string, so I think it would be duplicate to test it again.",
+      "parentUuid": "2638d19c_d6f3426c",
       "range": {
         "startLine": 1291,
         "startChar": 21,
@@ -485,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "93aa8ab4_20f2363c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f719ee6_14dd6a42",
+      "range": {
+        "startLine": 1310,
+        "startChar": 2,
+        "endLine": 1310,
+        "endChar": 14
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5421653b_5dcd2784",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 3
@@ -505,6 +1009,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f24e9ac_6690a048",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5421653b_5dcd2784",
+      "range": {
+        "startLine": 1318,
+        "startChar": 0,
+        "endLine": 1319,
+        "endChar": 76
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "c0f9e70b_b8d597f2",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "18254942_a0fbe0e1",
+      "range": {
+        "startLine": 1635,
+        "startChar": 0,
+        "endLine": 1640,
+        "endChar": 14
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05818299_3de6f739",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 3
@@ -542,6 +1094,30 @@
       "writtenOn": "2017-12-29T01:34:01Z",
       "side": 1,
       "message": "You can still keep using the old code. But you\u0027d have to change the order:\n- Do std::remove_if() first to get an iter to the first info to be removed (those correspond to the destination_ids), \n- use [iter : end) to insert info, and create mirroring display,\n- then erase that range.\n\nAdd comments of course to explain. This would be better and more readable than this for loop.",
+      "range": {
+        "startLine": 1647,
+        "startChar": 0,
+        "endLine": 1661,
+        "endChar": 7
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721823f9_f4cd49c2",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "http://www.cplusplus.com/reference/algorithm/remove_if/\nremove_if replace the removed element with the reserved element, so the values after returned iter are not those to be removed.",
+      "parentUuid": "05818299_3de6f739",
       "range": {
         "startLine": 1647,
         "startChar": 0,
@@ -577,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "47a2f933_92f84875",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "This is called by display_preferences to restore mixed mode. The parameters will be applied in the next configuration.",
+      "parentUuid": "dc32468f_c7ba93a3",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "624085af_b34cb936",
         "filename": "ui/display/manager/display_manager_utilities.cc",
         "patchSetId": 3
@@ -600,6 +1200,30 @@
     },
     {
       "key": {
+        "uuid": "23deddee_a8076e91",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done. but I coult not put it in header, because it says \"Complex destructor has an inline body.\"",
+      "parentUuid": "624085af_b34cb936",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 36
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "549f30ae_3c84c2bf",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 3
@@ -620,6 +1244,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05a051f_b5315b4c",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-31T04:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "549f30ae_3c84c2bf",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
