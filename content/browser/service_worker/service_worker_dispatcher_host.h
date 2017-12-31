@@ -128,7 +128,8 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       service_worker_dispatcher_host_unittest::BackgroundSyncManagerTest,
       RegisterWithoutLiveSWRegistration);
 
-  using StatusCallback = base::Callback<void(ServiceWorkerStatusCode status)>;
+  using StatusCallback =
+      base::OnceCallback<void(ServiceWorkerStatusCode status)>;
   enum class ProviderStatus { OK, NO_CONTEXT, DEAD_HOST, NO_HOST, NO_URL };
   // Debugging for https://crbug.com/750267
   enum class Phase { kInitial, kAddedToContext, kRemovedFromContext };
@@ -155,7 +156,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
       ServiceWorkerProviderHost* sender_provider_host,
-      const StatusCallback& callback);
+      StatusCallback callback);
   template <typename SourceInfo>
   void DispatchExtendableMessageEventInternal(
       scoped_refptr<ServiceWorkerVersion> worker,
@@ -163,21 +164,17 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
       const base::Optional<base::TimeDelta>& timeout,
-      const StatusCallback& callback,
+      StatusCallback callback,
       const SourceInfo& source_info);
+  template <typename SourceInfo>
   void DispatchExtendableMessageEventAfterStartWorker(
       scoped_refptr<ServiceWorkerVersion> worker,
       const base::string16& message,
       const url::Origin& source_origin,
       const std::vector<blink::MessagePortChannel>& sent_message_ports,
-      const ExtendableMessageEventSource& source,
-      const base::Optional<base::TimeDelta>& timeout,
-      const StatusCallback& callback);
-  template <typename SourceInfo>
-  void DidFailToDispatchExtendableMessageEvent(
-      const std::vector<blink::MessagePortChannel>& sent_message_ports,
       const SourceInfo& source_info,
-      const StatusCallback& callback,
+      const base::Optional<base::TimeDelta>& timeout,
+      StatusCallback callback,
       ServiceWorkerStatusCode status);
   bool IsValidSourceInfo(const ServiceWorkerClientInfo& source_info);
   bool IsValidSourceInfo(

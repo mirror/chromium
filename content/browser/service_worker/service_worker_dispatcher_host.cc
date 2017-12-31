@@ -220,7 +220,7 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
   DispatchExtendableMessageEvent(
       base::WrapRefCounted(handle->version()), message, source_origin,
       sent_message_ports, sender_provider_host,
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
 }
 
 void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
@@ -229,7 +229,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
     const url::Origin& source_origin,
     const std::vector<MessagePortChannel>& sent_message_ports,
     ServiceWorkerProviderHost* sender_provider_host,
-    const StatusCallback& callback) {
+    StatusCallback callback) {
   switch (sender_provider_host->provider_type()) {
     case blink::mojom::ServiceWorkerProviderType::kForWindow:
     case blink::mojom::ServiceWorkerProviderType::kForSharedWorker:
@@ -239,7 +239,8 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
                          DispatchExtendableMessageEventInternal<
                              ServiceWorkerClientInfo>,
                      this, worker, message, source_origin, sent_message_ports,
-                     base::nullopt, callback));
+                     base::nullopt,
+                     base::AdaptCallbackForRepeating(std::move(callback))));
       break;
     case blink::mojom::ServiceWorkerProviderType::kForServiceWorker: {
       // Clamp timeout to the sending worker's remaining timeout, to prevent
@@ -257,7 +258,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
                                  blink::mojom::ServiceWorkerObjectInfo>,
                          this, worker, message, source_origin,
                          sent_message_ports, base::make_optional(timeout),
-                         callback, *worker_info));
+                         std::move(callback), *worker_info));
       break;
     }
     case blink::mojom::ServiceWorkerProviderType::kUnknown:
@@ -333,60 +334,64 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEventInternal(
     const url::Origin& source_origin,
     const std::vector<MessagePortChannel>& sent_message_ports,
     const base::Optional<base::TimeDelta>& timeout,
-    const StatusCallback& callback,
+    StatusCallback callback,
     const SourceInfo& source_info) {
   if (!IsValidSourceInfo(source_info)) {
-    DidFailToDispatchExtendableMessageEvent<SourceInfo>(
-        sent_message_ports, source_info, callback, SERVICE_WORKER_ERROR_FAILED);
+    std::move(callback).Run(SERVICE_WORKER_ERROR_FAILED);
     return;
   }
 
   // If not enough time is left to actually process the event don't even
   // bother starting the worker and sending the event.
   if (timeout && *timeout < base::TimeDelta::FromMilliseconds(100)) {
-    DidFailToDispatchExtendableMessageEvent<SourceInfo>(
-        sent_message_ports, source_info, callback,
-        SERVICE_WORKER_ERROR_TIMEOUT);
+    DCHECK(IsValidSourceInfo(source_info));
+    ReleaseSourceInfo(source_info);
+    std::move(callback).Run(SERVICE_WORKER_ERROR_TIMEOUT);
     return;
   }
 
   worker->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::MESSAGE,
-      base::BindOnce(&ServiceWorkerDispatcherHost::
-                         DispatchExtendableMessageEventAfterStartWorker,
-                     this, worker, message, source_origin, sent_message_ports,
-                     ExtendableMessageEventSource(source_info), timeout,
-                     callback),
       base::BindOnce(
-          &ServiceWorkerDispatcherHost::DidFailToDispatchExtendableMessageEvent<
-              SourceInfo>,
-          this, sent_message_ports, source_info, callback));
+          &ServiceWorkerDispatcherHost::
+              DispatchExtendableMessageEventAfterStartWorker<SourceInfo>,
+          this, worker, message, source_origin, sent_message_ports, source_info,
+          timeout, std::move(callback)));
 }
 
+template <typename SourceInfo>
 void ServiceWorkerDispatcherHost::
     DispatchExtendableMessageEventAfterStartWorker(
         scoped_refptr<ServiceWorkerVersion> worker,
         const base::string16& message,
         const url::Origin& source_origin,
         const std::vector<MessagePortChannel>& sent_message_ports,
-        const ExtendableMessageEventSource& source,
+        const SourceInfo& source_info,
         const base::Optional<base::TimeDelta>& timeout,
-        const StatusCallback& callback) {
+        StatusCallback callback,
+        ServiceWorkerStatusCode status) {
+  DCHECK(IsValidSourceInfo(source_info));
+  if (status != SERVICE_WORKER_OK) {
+    ReleaseSourceInfo(source_info);
+    std::move(callback).Run(status);
+    return;
+  }
+
   int request_id;
   if (timeout) {
     request_id = worker->StartRequestWithCustomTimeout(
-        ServiceWorkerMetrics::EventType::MESSAGE, callback, *timeout,
+        ServiceWorkerMetrics::EventType::MESSAGE, std::move(callback), *timeout,
         ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
   } else {
     request_id = worker->StartRequest(ServiceWorkerMetrics::EventType::MESSAGE,
-                                      callback);
+                                      std::move(callback));
   }
 
   mojom::ExtendableMessageEventPtr event = mojom::ExtendableMessageEvent::New();
   event->message = message;
   event->source_origin = source_origin;
   event->message_ports = MessagePortChannel::ReleaseHandles(sent_message_ports);
-  event->source = source;
+  event->source = ExtendableMessageEventSource(source_info);
 
   // Hide the client url if the client has a unique origin.
   if (source_origin.unique()) {
@@ -398,17 +403,6 @@ void ServiceWorkerDispatcherHost::
 
   worker->event_dispatcher()->DispatchExtendableMessageEvent(
       std::move(event), worker->CreateSimpleEventCallback(request_id));
-}
-
-template <typename SourceInfo>
-void ServiceWorkerDispatcherHost::DidFailToDispatchExtendableMessageEvent(
-    const std::vector<MessagePortChannel>& sent_message_ports,
-    const SourceInfo& source_info,
-    const StatusCallback& callback,
-    ServiceWorkerStatusCode status) {
-  if (IsValidSourceInfo(source_info))
-    ReleaseSourceInfo(source_info);
-  callback.Run(status);
 }
 
 bool ServiceWorkerDispatcherHost::IsValidSourceInfo(
