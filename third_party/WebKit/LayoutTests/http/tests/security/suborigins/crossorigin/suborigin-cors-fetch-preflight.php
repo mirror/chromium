@@ -31,7 +31,7 @@ SuboriginFetchTest.prototype.execute = function() {
         headers: headers,
         credentials: (settings.crossorigin_value === 'use-credentials') ?
                      'include' :
-                     'exclude',
+                     'omit',
         mode: 'cors'
       }
 
