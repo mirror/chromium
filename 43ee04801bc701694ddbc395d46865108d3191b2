@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7dff2579_59bb1fa2",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1175237
+      },
+      "writtenOn": "2017-12-31T06:45:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1cfde359_49bce149",
+      "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f9e3519_ee893370",
         "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-25T00:11:29Z",
       "side": 1,
       "message": "Can you add checks for the referrer policy (with tests)?",
+      "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183e12dd_5499e1b0",
+        "filename": "third_party/WebKit/Source/modules/fetch/RequestInit.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1175237
+      },
+      "writtenOn": "2017-12-31T06:45:12Z",
+      "side": 1,
+      "message": "Ok I\u0027m guessing the best way to do this is to move most of the logic from `SetUpReferrer` to this function, and then pass in the `referrer_string` and `referrer_policy` parameters as we do now, unless you want this done differently.\n\nAlso I was thinking of renaming `CheckEnumValues` to `ValidateIDL`, let me know what you think.",
+      "parentUuid": "9f9e3519_ee893370",
       "revId": "43ee04801bc701694ddbc395d46865108d3191b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
