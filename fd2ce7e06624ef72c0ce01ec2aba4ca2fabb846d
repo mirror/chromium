@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313eecb0_019c78a0",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-12-31T04:47:43Z",
+      "side": 1,
+      "message": "Is there an issue open for these known failures?",
+      "range": {
+        "startLine": 552,
+        "startChar": 11,
+        "endLine": 552,
+        "endChar": 19
+      },
+      "revId": "fd2ce7e06624ef72c0ce01ec2aba4ca2fabb846d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b11c238_c9762780",
+        "filename": "third_party/WebKit/Source/platform/network/HeaderFieldTokenizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-12-31T04:47:43Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to use String.Contains here, as I suspect it adds a lot of overhead, for what is essentially a couple of comparison operations. It\u0027s probably faster to use the string as an array and compare on it manually here.\n\nAlso, it\u0027s an O(nm) algorithm in theory (even if it\u0027s O(n) in practice), so you may want to add a DCHECK to make sure the `match` string length is lower than some reasonable bound. (e.g. 3)\n\nAlso also, I\u0027d change the name to `ConsumeBeforeAnyCharMatch` to make it clearer.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "fd2ce7e06624ef72c0ce01ec2aba4ca2fabb846d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
