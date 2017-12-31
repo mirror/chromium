@@ -131,4 +131,9 @@ void HeaderFieldTokenizer::SkipSpaces() {
     ++index_;
 }
 
+void HeaderFieldTokenizer::ConsumeBeforeCharMatch(String match) {
+  while (!IsConsumed() && !match.Contains(input_[index_]))
+    ++index_;
+}
+
 }  // namespace blink
