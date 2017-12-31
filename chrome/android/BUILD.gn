@@ -184,6 +184,7 @@ android_library("chrome_java") {
     "$google_play_services_package:google_play_services_auth_base_java",
     "$google_play_services_package:google_play_services_base_java",
     "$google_play_services_package:google_play_services_basement_java",
+    "$google_play_services_package:google_play_services_cast-framework_java",
     "$google_play_services_package:google_play_services_cast_java",
     "$google_play_services_package:google_play_services_gcm_java",
     "$google_play_services_package:google_play_services_iid_java",
