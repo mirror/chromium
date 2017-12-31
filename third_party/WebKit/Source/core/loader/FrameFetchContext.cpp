@@ -66,6 +66,7 @@
 #include "core/svg/graphics/SVGImageChromeClient.h"
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
+#include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/exported/WrappedResourceRequest.h"
@@ -1239,6 +1240,31 @@ void FrameFetchContext::Trace(blink::Visitor* visitor) {
 
 void FrameFetchContext::RecordDataUriWithOctothorpe() {
   UseCounter::Count(GetFrame(), WebFeature::kDataUriHasOctothorpe);
+}
+
+ResourceLoadPriority FrameFetchContext::ModifyPriorityForExperiments(
+    ResourceLoadPriority priority) const {
+  if (!GetSettings())
+    return priority;
+
+  if (!GetSettings()->GetLowPriorityIframesEnabled()) {
+    // If enabled, drop the priority of all resources in a subframe.
+    return priority;
+  }
+
+  if (GetFrame()->IsMainFrame()) {
+    DEFINE_STATIC_LOCAL(EnumerationHistogram, main_frame_priority_histogram,
+                        ("LowPriorityIframes.MainFrameRequestPriority",
+                         static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+    main_frame_priority_histogram.Count(static_cast<int>(priority));
+    return priority;
+  }
+
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, iframe_priority_histogram,
+                      ("LowPriorityIframes.IframeRequestPriority",
+                       static_cast<int>(ResourceLoadPriority::kHighest) + 1));
+  iframe_priority_histogram.Count(static_cast<int>(priority));
+  return ResourceLoadPriority::kVeryLow;
 }
 
 }  // namespace blink

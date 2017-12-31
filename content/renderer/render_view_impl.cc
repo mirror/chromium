@@ -995,6 +995,9 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
 
   settings->SetMediaControlsEnabled(prefs.media_controls_enabled);
 
+  settings->SetLowPriorityIframesEnabled(
+      base::FeatureList::IsEnabled(features::kLowPriorityIframes));
+
 #if defined(OS_MACOSX)
   settings->SetDoubleTapToZoomEnabled(true);
   web_view->SetMaximumLegibleScale(prefs.default_maximum_page_scale_factor);
