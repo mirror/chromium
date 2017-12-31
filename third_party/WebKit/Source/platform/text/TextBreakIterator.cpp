@@ -282,12 +282,16 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
           return i;
         break;
       case BreakSpaceType::kBeforeSpace:
-        if (ch == kSpaceCharacter)
-          return i;
-        if (is_space)
+        // is_space = ch == kSpaceCharacter || ch == kTabulationCharacter;
+        if (is_space) {
+          if (!is_last_space)
+            return i;
           continue;
-        if (is_last_space && last_ch != kSpaceCharacter)
+        }
+#if 0
+        if (last_ch == kNewlineCharacter)
           return i;
+#endif
         break;
       case BreakSpaceType::kAfter:
         if (is_space)
@@ -336,7 +340,7 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
               return i;
             break;
           case BreakSpaceType::kBeforeSpace:
-            if (last_ch != kSpaceCharacter)
+            if (!is_last_space)
               return i;
             break;
           case BreakSpaceType::kAfter:

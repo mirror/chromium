@@ -59,6 +59,15 @@ void NGInlineItemResult::CheckConsistency() const {
 }
 #endif
 
+unsigned NGLineInfo::EndOffsetWithoutTrailingSpaces() const {
+  for (auto item_result = results_.rbegin(); item_result != results_.rend();
+       ++item_result) {
+    if (!item_result->is_trailing_spaces)
+      return item_result->end_offset;
+  }
+  return 0;
+}
+
 void NGLineInfo::SetLineBfcOffset(NGBfcOffset line_bfc_offset,
                                   LayoutUnit available_width,
                                   LayoutUnit width) {
