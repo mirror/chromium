@@ -16,6 +16,7 @@ import org.chromium.chrome.browser.media.router.ChromeMediaRouter;
 import org.chromium.chrome.browser.media.router.MediaRoute;
 import org.chromium.chrome.browser.media.router.MediaRouteManager;
 import org.chromium.chrome.browser.media.router.MediaRouteProvider;
+import com.google.android.gms.cast.framework.CastContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -117,6 +118,7 @@ public class CastMediaRouteProvider extends BaseMediaRouteProvider {
     @Override
     public void createRoute(String sourceId, String sinkId, String presentationId, String origin,
             int tabId, boolean isIncognito, int nativeRequestId) {
+        android.util.Log.i("zqzhang", "createRoute");
         if (mAndroidMediaRouter == null) {
             mManager.onRouteRequestError("Not supported", nativeRequestId);
             return;

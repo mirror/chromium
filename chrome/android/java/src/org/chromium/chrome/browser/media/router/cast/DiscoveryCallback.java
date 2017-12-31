@@ -53,6 +53,7 @@ public class DiscoveryCallback extends MediaRouter.Callback {
 
     @Override
     public void onRouteAdded(MediaRouter router, MediaRouter.RouteInfo route) {
+        // android.util.Log.i("zqzhang", "onRouteAdded" + route);
         if (route == null || !route.matchesSelector(mRouteSelector)) return;
 
         MediaSink sink = MediaSink.fromRoute(route);
@@ -63,6 +64,7 @@ public class DiscoveryCallback extends MediaRouter.Callback {
 
     @Override
     public void onRouteRemoved(MediaRouter router, MediaRouter.RouteInfo route) {
+        // android.util.Log.i("zqzhang", "onRouteRemoved" + route);
         MediaSink sink = MediaSink.fromRoute(route);
         if (!mSinks.contains(sink)) return;
         mSinks.remove(sink);
@@ -80,6 +82,11 @@ public class DiscoveryCallback extends MediaRouter.Callback {
         } else {
             onRouteRemoved(router, route);
         }
+    }
+
+    @Override
+    public void onRouteSelected(MediaRouter router, MediaRouter.RouteInfo route) {
+        android.util.Log.i("zqzhang", "onRouteSelected" + route);
     }
 
     private void updateChromeMediaRouter() {
