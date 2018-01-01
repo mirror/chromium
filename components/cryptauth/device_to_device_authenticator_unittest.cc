@@ -350,10 +350,10 @@ TEST_F(CryptAuthDeviceToDeviceAuthenticatorTest,
   // completes.
   WireMessage wire_message(base::RandBytesAsString(300u),
                            Authenticator::kAuthenticationFeature);
-  connection_.SendMessage(base::MakeUnique<WireMessage>(
+  connection_.SendMessage(std::make_unique<WireMessage>(
       base::RandBytesAsString(300u), Authenticator::kAuthenticationFeature));
   connection_.OnBytesReceived(wire_message.Serialize());
-  connection_.SendMessage(base::MakeUnique<WireMessage>(
+  connection_.SendMessage(std::make_unique<WireMessage>(
       base::RandBytesAsString(300u), Authenticator::kAuthenticationFeature));
   connection_.OnBytesReceived(wire_message.Serialize());
 }
