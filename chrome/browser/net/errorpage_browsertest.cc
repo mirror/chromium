@@ -490,6 +490,13 @@ class DNSErrorPageTest : public ErrorPageTest {
                 return WriteFileToURLLoader(params, "title3.html");
               }
 
+              // DoClickLink clicks on a title2.html link which is not served
+              // by the embedded_test_server.
+              if (params->url_request.url.spec() ==
+                  "http://mock.http/title2.html") {
+                return WriteFileToURLLoader(params, "title2.html");
+              }
+
               return false;
             },
             this),

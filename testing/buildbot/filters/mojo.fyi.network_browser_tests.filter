@@ -642,7 +642,6 @@
 -DNSErrorPageTest.Empty404
 -DNSErrorPageTest.SniffSmallHttpErrorResponseAsDownload
 -DNSErrorPageTest.StaleCacheStatus
--DNSErrorPageTest.DNSError_DoClickLink
 
 # Switch test from using a net::URLRequestFileJob that adds load timing to
 # to using a test URLLoaderFactory via SetNetworkFactoryForTesting.
