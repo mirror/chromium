@@ -791,6 +791,8 @@ void BlinkTestController::OnTestFinished() {
 
 void BlinkTestController::OnAllServiceWorkersCleared() {
   TerminateAllSharedWorkersForTesting(
+      BrowserContext::GetStoragePartition(
+          ShellContentBrowserClient::Get()->browser_context(), nullptr),
       base::BindOnce(&BlinkTestController::OnAllSharedWorkersDestroyed,
                      weak_factory_.GetWeakPtr()));
 }
