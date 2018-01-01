@@ -882,7 +882,8 @@ void NavigatorImpl::OnBeginNavigation(
   NavigationEntryImpl* pending_entry = controller_->GetPendingEntry();
   NavigationEntryImpl* current_entry = controller_->GetLastCommittedEntry();
   bool override_user_agent =
-      current_entry ? current_entry->GetIsOverridingUserAgent() : false;
+      current_entry ? current_entry->GetIsOverridingUserAgent()
+                    : delegate_ && !delegate_->GetUserAgentOverride().empty();
   frame_tree_node->CreatedNavigationRequest(
       NavigationRequest::CreateRendererInitiated(
           frame_tree_node, pending_entry, common_params,

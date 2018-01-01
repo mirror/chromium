@@ -81,6 +81,43 @@ public class PopupWindowTest {
     }
 
     @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testOverrideUserAgentInOnCreateWindow() throws Throwable {
+        final String popupPath = "/popup.html";
+        final String myUserAgentString = "myUserAgent";
+        final String parentPageHtml = CommonResources.makeHtmlPageFrom("",
+                "<script>"
+                        + "function tryOpenWindow() {"
+                        + "  var newWindow = window.open('" + popupPath + "');"
+                        + "}</script>");
+
+        final String popupPageHtml = "<html><head><script>"
+                + "document.title = navigator.userAgent;"
+                + "</script><body><div id='a'></div></body></html>";
+
+        mActivityTestRule.triggerPopup(mParentContents, mParentContentsClient, mWebServer,
+                parentPageHtml, popupPageHtml, popupPath, "tryOpenWindow()");
+
+        // Override the user agent string for the popup window.
+        AwContents popupContents =
+                mActivityTestRule
+                        .connectPendingPopup(mParentContents,
+                                new AwActivityTestRule.OnCreateWindowHandler() {
+                                    @Override
+                                    public boolean onCreateWindow(AwContents awContents) {
+                                        awContents.getSettings().setUserAgentString(
+                                                myUserAgentString);
+                                        return true;
+                                    }
+                                })
+                        .popupContents;
+
+        CriteriaHelper.pollUiThread(Criteria.equals(
+                myUserAgentString, () -> mActivityTestRule.getTitleOnUiThread(popupContents)));
+    }
+
+    @Test
     @DisabledTest
     @SmallTest
     @Feature({"AndroidWebView"})
