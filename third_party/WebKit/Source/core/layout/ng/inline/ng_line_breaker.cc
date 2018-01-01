@@ -100,7 +100,20 @@ void NGLineBreaker::PrepareNextLine(const NGLayoutOpportunity& opportunity,
   line_info->SetStartOffset(offset_);
   line_info->SetLineStyle(node_, constraint_space_, IsFirstFormattedLine(),
                           previous_line_had_forced_break_);
-  SetCurrentStyle(line_info->LineStyle());
+  if (!item_index_ && !offset_) {
+    SetCurrentStyle(line_info->LineStyle());
+  } else {
+    // For non-first lines, find the current style from items.
+    DCHECK(!line_info->UseFirstLineStyle());
+    const Vector<NGInlineItem>& items = node_.Items(false);
+    for (unsigned i = item_index_; i < items.size(); i++) {
+      const NGInlineItem& item = items[i];
+      if (item.Style()) {
+        SetCurrentStyle(*item.Style());
+        break;
+      }
+    }
+  }
   ComputeBaseDirection();
   line_info->SetBaseDirection(base_direction_);
 
