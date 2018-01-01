@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 #include "components/ntp_snippets/reading_list/reading_list_suggestions_provider.h"
+#include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_clock.h"
 #include "components/ntp_snippets/mock_content_suggestions_provider_observer.h"
 #include "components/reading_list/core/reading_list_model_impl.h"
@@ -30,9 +30,9 @@ class ReadingListSuggestionsProviderTest : public ::testing::Test {
  public:
   ReadingListSuggestionsProviderTest() {
     std::unique_ptr<base::SimpleTestClock> clock =
-        base::MakeUnique<base::SimpleTestClock>();
+        std::make_unique<base::SimpleTestClock>();
     clock_ = clock.get();
-    model_ = base::MakeUnique<ReadingListModelImpl>(
+    model_ = std::make_unique<ReadingListModelImpl>(
         /*storage_layer=*/nullptr, /*pref_service=*/nullptr, std::move(clock));
   }
 
@@ -44,7 +44,7 @@ class ReadingListSuggestionsProviderTest : public ::testing::Test {
     EXPECT_CALL(observer_, OnCategoryStatusChanged(_, ReadingListCategory(),
                                                    CategoryStatus::AVAILABLE))
         .RetiresOnSaturation();
-    provider_ = base::MakeUnique<ReadingListSuggestionsProvider>(&observer_,
+    provider_ = std::make_unique<ReadingListSuggestionsProvider>(&observer_,
                                                                  model_.get());
   }
 
