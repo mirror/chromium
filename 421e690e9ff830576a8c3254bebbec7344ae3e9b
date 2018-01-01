@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "286ca64e_65d5cd7d",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "Move inside MakeNewTargetsFromEquivalenceMap.  Maybe rename to kBad.",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d088051_62334e07",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "// ... |new_references| take rvalue to so callers can be simplified.",
+      "range": {
+        "startLine": 68,
+        "startChar": 46,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da39f95_551147f4",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "Define as |kDummySim| and use throughout.\n\nPlease keep in mind that unit tests also serve sample code (for other people and future-you), so unrepresentative usage (for testing convenience) are ideally avoided, or properly documented.",
+      "range": {
+        "startLine": 132,
+        "startChar": 63,
+        "endLine": 132,
+        "endChar": 66
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ea296b_11d3f0e8",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "NIT: Reduce symmetry. Note that there are three 10\u0027s here.  Make it easy for reader to see the relationship among input vs. expected, with minimal confusion.  For testing diversity, it would be good to have cases with more symmetry, but these should be purposeful and with comments.",
+      "range": {
+        "startLine": 136,
+        "startChar": 55,
+        "endLine": 136,
+        "endChar": 57
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafbc218_c65af950",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "NIT: Example re. symmetry: Note that target offsets here are {0, 1, 2, 3}, and at first glance, it\u0027s not obvious whether {1, 2} expected refers to target offsets or indexes. If instead, target offsets are {2, 4, 6, 8} then it becomes obvious. Even better, {8, 4, 2, 6} will also reveal whether the final result should be sorted or not.",
+      "range": {
+        "startLine": 145,
+        "startChar": 39,
+        "endLine": 145,
+        "endChar": 40
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661c197b_1bb63136",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:21:07Z",
+      "side": 1,
+      "message": "NIT: Then after the above demonstration, you can go back to more symmetry if you\u0027d like (so no-op), for simplicity and to change emphasis.",
+      "range": {
+        "startLine": 152,
+        "startChar": 26,
+        "endLine": 152,
+        "endChar": 27
+      },
+      "revId": "421e690e9ff830576a8c3254bebbec7344ae3e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
