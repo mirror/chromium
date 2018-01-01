@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "components/data_reduction_proxy/core/browser/warmup_url_fetcher.h"
+#include <memory>
 
 #include <map>
 #include <vector>
@@ -116,7 +117,7 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLNoViaHeader) {
   success_reads[2] = net::MockRead(net::SYNCHRONOUS, net::OK);
 
   socket_data_providers.push_back(
-      (base::MakeUnique<net::StaticSocketDataProvider>(
+      (std::make_unique<net::StaticSocketDataProvider>(
           success_reads, arraysize(success_reads), nullptr, 0)));
   mock_socket_factory.AddSocketDataProvider(socket_data_providers.back().get());
 
@@ -175,7 +176,7 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLWithViaHeader) {
   success_reads[2] = net::MockRead(net::SYNCHRONOUS, net::OK);
 
   socket_data_providers.push_back(
-      (base::MakeUnique<net::StaticSocketDataProvider>(
+      (std::make_unique<net::StaticSocketDataProvider>(
           success_reads, arraysize(success_reads), nullptr, 0)));
   mock_socket_factory.AddSocketDataProvider(socket_data_providers.back().get());
 
@@ -232,7 +233,7 @@ TEST(WarmupURLFetcherTest,
   success_reads[2] = net::MockRead(net::SYNCHRONOUS, net::OK);
 
   socket_data_providers.push_back(
-      (base::MakeUnique<net::StaticSocketDataProvider>(
+      (std::make_unique<net::StaticSocketDataProvider>(
           success_reads, arraysize(success_reads), nullptr, 0)));
   mock_socket_factory.AddSocketDataProvider(socket_data_providers.back().get());
 
@@ -281,7 +282,7 @@ TEST(WarmupURLFetcherTest, TestConnectionResetFetchWarmupURL) {
   success_reads[0] = net::MockRead(net::SYNCHRONOUS, net::ERR_CONNECTION_RESET);
 
   socket_data_providers.push_back(
-      (base::MakeUnique<net::StaticSocketDataProvider>(
+      (std::make_unique<net::StaticSocketDataProvider>(
           success_reads, arraysize(success_reads), nullptr, 0)));
   mock_socket_factory.AddSocketDataProvider(socket_data_providers.back().get());
 
