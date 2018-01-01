@@ -53,8 +53,8 @@ void BrowsingDataSharedWorkerHelper::DeleteSharedWorker(
     const std::string& name,
     const url::Origin& constructor_origin) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  content::SharedWorkerService::GetInstance()->TerminateWorker(
-      worker, name, constructor_origin, storage_partition_, resource_context_);
+  storage_partition_->GetSharedWorkerService()->TerminateWorker(
+      worker, name, constructor_origin);
 }
 
 CannedBrowsingDataSharedWorkerHelper::CannedBrowsingDataSharedWorkerHelper(
