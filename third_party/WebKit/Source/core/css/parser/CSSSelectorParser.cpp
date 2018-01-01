@@ -530,6 +530,9 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumePseudo(
   switch (selector->GetPseudoType()) {
     case CSSSelector::kPseudoHost:
     case CSSSelector::kPseudoHostContext:
+    case CSSSelector::kPseudoMatches:
+      if (!RuntimeEnabledFeatures::CSSMatchesEnabled())
+        break;
     case CSSSelector::kPseudoAny:
     case CSSSelector::kPseudoCue: {
       DisallowPseudoElementsScope scope(this);
@@ -906,6 +909,10 @@ void CSSSelectorParser::RecordUsageAndDeprecations(
       switch (current->GetPseudoType()) {
         case CSSSelector::kPseudoAny:
           feature = WebFeature::kCSSSelectorPseudoAny;
+          break;
+        case CSSSelector::kPseudoMatches:
+          if (RuntimeEnabledFeatures::CSSMatchesEnabled())
+            feature = WebFeature::kCSSSelectorPseudoMatches;
           break;
         case CSSSelector::kPseudoUnresolved:
           feature = WebFeature::kCSSSelectorPseudoUnresolved;
