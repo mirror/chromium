@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a13c00c4_66c78839",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7722c00_78dee2ec",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b303eb_5f831533",
         "filename": "tools/binary_size/libsupersize/demangle.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30d789b_e809260c",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b303eb_5f831533",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ceedf1a_af80174e",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f79b70e_bba97a93",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2248204_0caa2735",
         "filename": "tools/binary_size/libsupersize/demangle.py",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ebacaf_a812d295",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2248204_0caa2735",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ef5c3177_5020f9f1",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca93047_2a0955fc",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af43e400_9ae3f28e",
         "filename": "tools/binary_size/libsupersize/demangle.py",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "03244014_26a76d22",
+        "filename": "tools/binary_size/libsupersize/demangle.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "This time we need defaultdict (+\u003d below).",
+      "parentUuid": "af43e400_9ae3f28e",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c450a47c_13ebb4e4",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab74df07_a1d8cc2d",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-01T21:32:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c450a47c_13ebb4e4",
+      "revId": "625f09cad2ce2cc71a42b8eb086c0ed4a350e896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
