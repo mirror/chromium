@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "components/download/internal/test/noop_store.h"
+#include <memory>
 
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -47,7 +48,7 @@ void NoopStore::OnInitFinished(InitCallback callback) {
   initialized_ = true;
 
   std::unique_ptr<std::vector<Entry>> entries =
-      base::MakeUnique<std::vector<Entry>>();
+      std::make_unique<std::vector<Entry>>();
   std::move(callback).Run(true /** success */, std::move(entries));
 }
 
