@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e59cb27_99356f8e",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-01T22:47:31Z",
+      "side": 1,
+      "message": "Should this be `if (is_fuchsia)` ?",
+      "revId": "6979ddaa0217eaac0f0bd69719cf920f179b0efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
