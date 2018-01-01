@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "342e5247_966b894c",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-01T22:44:40Z",
+      "side": 1,
+      "message": "Add comment about the source of this value, so that it\u0027s clear that it\u0027s ok to pass it to FromInternalValue().",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "fae5817e8cd70a0ed430b2baceeadd8e28aff2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21e06a1_c4c7dfb0",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-01T22:44:40Z",
+      "side": 1,
+      "message": "RecordMainEntryPointTime",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "fae5817e8cd70a0ed430b2baceeadd8e28aff2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
