@@ -3,11 +3,11 @@
 // found in the LICENSE file.
 
 #include "components/offline_pages/core/offline_page_model_query.h"
+#include <memory>
 
 #include <algorithm>
 #include <unordered_set>
 
-#include "base/memory/ptr_util.h"
 
 namespace offline_pages {
 
@@ -119,7 +119,7 @@ OfflinePageModelQueryBuilder::RequireRestrictedToOriginalTab(
 
 OfflinePageModelQueryBuilder& OfflinePageModelQueryBuilder::RequireNamespace(
     const std::string& name_space) {
-  name_space_ = base::MakeUnique<std::string>(name_space);
+  name_space_ = std::make_unique<std::string>(name_space);
   return *this;
 }
 
@@ -127,7 +127,7 @@ std::unique_ptr<OfflinePageModelQuery> OfflinePageModelQueryBuilder::Build(
     ClientPolicyController* controller) {
   DCHECK(controller);
 
-  auto query = base::MakeUnique<OfflinePageModelQuery>();
+  auto query = std::make_unique<OfflinePageModelQuery>();
 
   query->urls_ = urls_;
   urls_ = std::make_pair(
@@ -197,7 +197,7 @@ std::unique_ptr<OfflinePageModelQuery> OfflinePageModelQueryBuilder::Build(
   restricted_to_original_tab_ = Requirement::UNSET;
 
   if (uses_namespace_restrictions) {
-    query->restricted_to_namespaces_ = base::MakeUnique<std::set<std::string>>(
+    query->restricted_to_namespaces_ = std::make_unique<std::set<std::string>>(
         allowed_namespaces.begin(), allowed_namespaces.end());
   }
 
