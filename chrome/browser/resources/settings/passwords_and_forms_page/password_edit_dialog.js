@@ -37,7 +37,7 @@ Polymer({
    * @param {!Event} event
    * @private
    */
-  onReadonlyInputTap_: function(event) {
+  onInputTapOrFocus_: function(event) {
     /** @type {!PaperInputElement} */ (Polymer.dom(event).localTarget)
         .inputElement.select();
   }
