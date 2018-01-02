@@ -13,10 +13,6 @@ struct TabDiscardsInfo {
   string favicon_url;
   // The title of the tab, as displayed on the tab itself.
   string title;
-  // If the tab corresponds to a Chrome App, this is true.
-  bool is_app;
-  // If the tab corresponds to internal Chrome WebUI, this is true.
-  bool is_internal;
   // If the tab is currently using media functionality (casting, WebRTC, playing
   // audio, etc) this is true.
   bool is_media;
