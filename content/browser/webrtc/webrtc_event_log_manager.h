@@ -75,7 +75,7 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // maximum number of local log files, there is no guarantee about which PCs
   // will get a local log file associated (specifically, we do *not* guarantee
   // it would be either the oldest or the newest).
-  void EnableLocalLogging(
+  virtual void EnableLocalLogging(
       base::FilePath base_path,
       size_t max_file_size_bytes = kDefaultMaxLocalLogFileSizeBytes,
       base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
@@ -83,7 +83,7 @@ class CONTENT_EXPORT WebRtcEventLogManager
   // Disable local logging of RTC events.
   // Any active local logs are stopped. Peer connections added after this call
   // will not get a local log associated with them.
-  void DisableLocalLogging(
+  virtual void DisableLocalLogging(
       base::OnceCallback<void(bool)> reply = base::OnceCallback<void(bool)>());
 
   // Called when a new log fragment is sent from the renderer. This will

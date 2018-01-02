@@ -7,6 +7,8 @@
 #include <memory>
 #include <string>
 
+#include "base/bind.h"
+#include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/values.h"
@@ -76,6 +78,42 @@ class WebRtcEventLogManagerForTesting : public WebRtcEventLogManager {
  public:
   WebRtcEventLogManagerForTesting() = default;
   ~WebRtcEventLogManagerForTesting() override = default;
+
+  // Delegates to the super-class, but blocks until it's finished. We do this
+  // because WebRtcEventLogManager uses a SequencedTaskRunner which could
+  // otherwise be executing tasks after we destroy WebRtcEventLogManager (which
+  // can only happen in unit tests).
+  void EnableLocalLogging(
+      base::FilePath base_path,
+      size_t max_file_size_bytes = kDefaultMaxLocalLogFileSizeBytes,
+      base::OnceCallback<void(bool)> reply =
+          base::OnceCallback<void(bool)>()) override {
+    DCHECK(!reply);
+    WebRtcEventLogManager::EnableLocalLogging(base_path, max_file_size_bytes,
+                                              BoolReplyClosure());
+    loop_.Run();
+  }
+
+  // Delegates to the super-class, but blocks until it's finished. We do this
+  // because WebRtcEventLogManager uses a SequencedTaskRunner which could
+  // otherwise be executing tasks after we destroy WebRtcEventLogManager (which
+  // can only happen in unit tests).
+  void DisableLocalLogging(base::OnceCallback<void(bool)> reply =
+                               base::OnceCallback<void(bool)>()) override {
+    DCHECK(!reply);
+    WebRtcEventLogManager::DisableLocalLogging(BoolReplyClosure());
+    loop_.Run();
+  }
+
+ private:
+  void BoolReply(bool ignored_bool_value) { loop_.QuitWhenIdle(); }
+
+  base::OnceCallback<void(bool)> BoolReplyClosure() {
+    return base::BindOnce(&WebRtcEventLogManagerForTesting::BoolReply,
+                          base::Unretained(this));
+  }
+
+  base::RunLoop loop_;
 };
 
 // Derived class for testing only.  Allows the tests to have their own instance
