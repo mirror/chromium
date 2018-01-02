@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddf8c75_a4dad173",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-02T09:13:28Z",
+      "side": 1,
+      "message": "Nit: Having \"Double\" here is redundant.",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 25
+      },
+      "revId": "9f46791044e77fc9e74de01868e9af9a1894e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0152179_acc130a0",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-02T09:13:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "9f46791044e77fc9e74de01868e9af9a1894e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5dacbe_923d1c61",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScanner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-02T09:13:28Z",
+      "side": 1,
+      "message": "You should do this change in a separate CL (either before or after landing this one), since this is unrelated to the change at hand/issue 699063.",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 3
+      },
+      "revId": "9f46791044e77fc9e74de01868e9af9a1894e413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

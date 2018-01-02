@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94bae77_e6a10ca2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScanner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-02T09:13:28Z",
+      "side": 0,
+      "message": "Nit: It\u0027s actually still \"a floating point value\", so this needn\u0027t change. It could be turned into \"a (double precision) floating point value\", but the type of the out variable should be sufficient to convey that I think.",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "8eb552ea282a7a465389a9a8b4c8ee8ffd365125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fed5b31_b15764cc",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTScanner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2018-01-02T09:13:28Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "8eb552ea282a7a465389a9a8b4c8ee8ffd365125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
