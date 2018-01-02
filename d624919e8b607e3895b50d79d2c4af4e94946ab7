@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e5705e2_4d99b38b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-02T21:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9121368_bdac2c40",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "d624919e8b607e3895b50d79d2c4af4e94946ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c82ef25_caa8a456",
         "filename": "chrome/browser/chromeos/app_mode/kiosk_app_external_loader.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d624919e8b607e3895b50d79d2c4af4e94946ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf8b01e_7926659b",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_external_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-02T21:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c82ef25_caa8a456",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "d624919e8b607e3895b50d79d2c4af4e94946ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
