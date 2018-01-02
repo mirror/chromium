@@ -459,6 +459,9 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
           document.GetTaskRunner(TaskType::kUnthrottled),
           this,
           &HTMLMediaElement::CheckViewportIntersectionTimerFired),
+      start_player_load_timer_(document.GetTaskRunner(TaskType::kUnthrottled),
+                               this,
+                               &HTMLMediaElement::StartPlayerLoadTimerFired),
       played_time_ranges_(),
       async_event_queue_(MediaElementEventQueue::Create(this, &document)),
       playback_rate_(1.0f),
@@ -1209,7 +1212,11 @@ void HTMLMediaElement::LoadResource(const WebMediaPlayerSource& source,
 
 void HTMLMediaElement::StartPlayerLoad() {
   DCHECK(!web_media_player_);
+  start_player_load_timer_.StartOneShot(TimeDelta(), FROM_HERE);
+}
 
+void HTMLMediaElement::StartPlayerLoadTimerFired(TimerBase*) {
+  DCHECK(!web_media_player_);
   WebMediaPlayerSource source;
   if (src_object_) {
     source = WebMediaPlayerSource(WebMediaStream(src_object_));
@@ -4205,6 +4212,49 @@ void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {
   mostly_filling_viewport_ = is_mostly_filling_viewport;
   if (web_media_player_)
     web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
+}
+
+int HTMLMediaElement::ComputePlayerPriority() {
+  // If we don't know the priority, make it as low as possible.
+  const int default_priority = INT_MIN;
+
+  bool should_report_root_bounds = true;
+  IntersectionGeometry geometry(nullptr, *this, Vector<Length>(),
+                                should_report_root_bounds);
+  geometry.ComputeGeometry();
+  IntRect target_rect = geometry.TargetIntRect();
+  IntRect root_rect = geometry.RootIntRect();
+  bool is_valid = target_rect.Width() > 0 && target_rect.Height() > 0 &&
+                  root_rect.Width() > 0 && root_rect.Height() > 0;
+  if (!is_valid)
+    return default_priority;
+
+  // Pick the minimum distance to an edge.  Remember that numerically larger is
+  // higher priority, which is the opposite of what we want for distance.  If
+  // the player is above the line, then use the minimum priority.
+  int top_to_top_edge = target_rect.Y() - root_rect.Y();
+  int bottom_to_top_edge = target_rect.MaxY() - root_rect.Y();
+  LOG(ERROR) << "AVDA: " << __func__ << " top: " << top_to_top_edge
+             << " bot: " << bottom_to_top_edge;
+  // If the bottom edge is above the top, then just use some small priority.
+  if (bottom_to_top_edge < 0)
+    return -root_rect.MaxY();
+
+  // Otherwise, pick whichever is closest to the top of the viewport.  Flip the
+  // sign since we want further players to have numerically lower priorities.
+  return -(top_to_top_edge < bottom_to_top_edge ? top_to_top_edge
+                                                : bottom_to_top_edge);
+
+  IntRect intersect_rect = geometry.IntersectionIntRect();
+
+  int result = (100 * intersect_rect.Size().Area()) / root_rect.Size().Area();
+  LOG(ERROR) << "AVDA: " << __func__ << " " << geometry.TargetIntRect().X()
+             << " " << geometry.TargetIntRect().Y() << " "
+             << geometry.TargetIntRect().Width() << " "
+             << geometry.TargetIntRect().Height()
+             << " int: " << intersect_rect.X() << " " << intersect_rect.Y()
+             << " " << intersect_rect.Width() << " " << intersect_rect.Height();
+  return result;
 }
 
 STATIC_ASSERT_ENUM(WebMediaPlayer::kReadyStateHaveNothing,

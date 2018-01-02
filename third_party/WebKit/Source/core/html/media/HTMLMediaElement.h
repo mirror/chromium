@@ -423,6 +423,7 @@ class CORE_EXPORT HTMLMediaElement
     return remote_playback_client_;
   }
   gfx::ColorSpace TargetColorSpace() override;
+  int ComputePlayerPriority() override;
 
   void LoadTimerFired(TimerBase*);
   void ProgressEventTimerFired(TimerBase*);
@@ -447,6 +448,7 @@ class CORE_EXPORT HTMLMediaElement
   void SelectMediaResource();
   void LoadResource(const WebMediaPlayerSource&, const String& content_type);
   void StartPlayerLoad();
+  void StartPlayerLoadTimerFired(TimerBase*);
   void SetPlayerPreload();
   void ScheduleNextSourceChild();
   void LoadSourceFromObject();
@@ -547,6 +549,7 @@ class CORE_EXPORT HTMLMediaElement
   TaskRunnerTimer<HTMLMediaElement> playback_progress_timer_;
   TaskRunnerTimer<HTMLMediaElement> audio_tracks_timer_;
   TaskRunnerTimer<HTMLMediaElement> check_viewport_intersection_timer_;
+  TaskRunnerTimer<HTMLMediaElement> start_player_load_timer_;
 
   Member<TimeRanges> played_time_ranges_;
   Member<MediaElementEventQueue> async_event_queue_;
