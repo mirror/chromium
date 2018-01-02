@@ -22,6 +22,30 @@
       "revId": "d38b7348c7e3c616378b89727ec396a34addc09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb86b3cc_c2b48c8d",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-02T23:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14304908_7ef0c759",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 10
+      },
+      "revId": "d38b7348c7e3c616378b89727ec396a34addc09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
