@@ -22,6 +22,30 @@
       "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77033219_650a21d3",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-02T22:00:52Z",
+      "side": 1,
+      "message": "You\u0027re right - it did fix the frozen magic window, but effectively lost a frame in the transition. I\u0027ve now reversed the order of these two statements.",
+      "parentUuid": "dba35204_33a20d43",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 41
+      },
+      "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
