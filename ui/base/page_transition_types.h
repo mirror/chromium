@@ -177,6 +177,11 @@ UI_BASE_EXPORT bool PageTransitionIsRedirect(PageTransition type);
 // to a previously committed navigation).
 UI_BASE_EXPORT bool PageTransitionIsNewNavigation(PageTransition type);
 
+// Returns whether the transition is the user triggering something new (typing,
+// bookmarks, suggestions), rather than something related to the page (link
+// clicks, any type of auto or subframe load).
+UI_BASE_EXPORT bool PageTransitionIsWebExternal(PageTransition type);
+
 // Return the qualifier
 UI_BASE_EXPORT int32_t PageTransitionGetQualifier(PageTransition type);
 
