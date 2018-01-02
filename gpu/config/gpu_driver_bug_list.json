@@ -2776,6 +2776,26 @@
       "features": [
         "disable_es3_gl_context"
       ]
+    },
+    {
+      "id": 254,
+      "description": "Limit MSAA samples to 4x on AMD Stoney",
+      "cr_bugs": [798936],
+      "os": {
+        "type" : "chromeos"
+      },
+      "vendor_id": "0x1002",
+      "driver_vendor": "Mesa",
+      "gl_vendor": "X.Org",
+      "gl_renderer": "AMD STONEY",
+      "gl_type": "gles",
+      "gl_version": {
+        "op": ">=",
+          "value": "3.1"
+      }
+      "features": [
+        "max_msaa_sample_count_4"
+      ]
     }
   ]
 }
