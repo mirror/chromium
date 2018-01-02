@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f04f435_358215ee",
+        "filename": "content/test/data/android/input/input_forms.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-02T20:32:53Z",
+      "side": 1,
+      "message": "I\u0027m afraid that this might bring back some of the flakiness issues we had to fix last year.\nHow about creating a separate test file, as in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/827075 ?\n\nOr you could set up all the test cases with different form files, which may require a bigger change but is more forward-looking.\n\nIn doing so, could you also add test cases around\n1) inheriting autocapitalize values from the enclosing form element\n2) div or span\n\nfor more coverage?",
+      "revId": "1b0c0f4c3e5010ae844401dff2637692968a9a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
