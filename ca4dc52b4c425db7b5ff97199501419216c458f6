@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de288acc_6297a758",
+        "filename": "base/atomicops_internals_x86_msvc.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-02T23:10:41Z",
+      "side": 1,
+      "message": "Good catch. That was copied from the WinNT.h implementation and I didn\u0027t notice it wasn\u0027t needed.",
+      "parentUuid": "d1d7bc4a_6ca4fea2",
+      "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb92df4_592624ea",
         "filename": "base/atomicops_internals_x86_msvc.h",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ca1ed425_e1745a69",
+        "filename": "base/atomicops_internals_x86_msvc.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-02T23:10:41Z",
+      "side": 1,
+      "message": "It was a copy/paste thing, but consistency is not really needed. Fixed.",
+      "parentUuid": "bdb92df4_592624ea",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5a9b184_3f36697a",
         "filename": "base/process/process_metrics.h",
         "patchSetId": 15
@@ -56,6 +98,24 @@
       "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2d945a_9dd82226",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-02T23:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a9b184_3f36697a",
+      "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "04b4e4e7_e55dfb31",
+        "filename": "base/synchronization/condition_variable_win.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-02T23:10:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to do a \"real\" check but I did mean to add a check that the sizes match. Done.",
+      "parentUuid": "cc09a7b2_fd552a45",
+      "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65e5eb7d_026e2219",
         "filename": "base/win/windows_full.h",
         "patchSetId": 15
@@ -90,6 +168,24 @@
       "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e57136_b4dce286",
+        "filename": "base/win/windows_full.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-02T23:10:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "65e5eb7d_026e2219",
+      "revId": "ca4dc52b4c425db7b5ff97199501419216c458f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
