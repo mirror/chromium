@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "541c49d6_a71dea23",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1256132
+      },
+      "writtenOn": "2018-01-02T17:39:56Z",
+      "side": 1,
+      "message": "Do we expect to have more known crash types? If so, I might go with UNKNOWN_CRASH_TYPE \u003d 3 so adding new crash types is tidier. I\u0027m fine with this too though.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 15
+      },
+      "revId": "efd92fb123074a1e21f62afe12a35b55309dab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
