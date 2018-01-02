@@ -82,13 +82,11 @@ class StatisticsRecorderTest : public testing::TestWithParam<bool> {
 
   void InitializeStatisticsRecorder() {
     DCHECK(!statistics_recorder_);
-    StatisticsRecorder::UninitializeForTesting();
     statistics_recorder_ = StatisticsRecorder::CreateTemporaryForTesting();
   }
 
   void UninitializeStatisticsRecorder() {
     statistics_recorder_.reset();
-    StatisticsRecorder::UninitializeForTesting();
   }
 
   Histogram* CreateHistogram(const char* name,
@@ -102,19 +100,15 @@ class StatisticsRecorderTest : public testing::TestWithParam<bool> {
     return new Histogram(name, min, max, registered_ranges);
   }
 
-  void DeleteHistogram(HistogramBase* histogram) {
-    delete histogram;
-  }
+  void InitLogOnShutdown() { StatisticsRecorder::InitLogOnShutdown(); }
 
-  void InitLogOnShutdown() {
-    DCHECK(statistics_recorder_);
-    statistics_recorder_->InitLogOnShutdownWithoutLock();
-  }
+  bool VLogInitialized() { return StatisticsRecorder::vlog_initialized_; }
 
-  bool VLogInitialized() {
-    DCHECK(statistics_recorder_);
-    return statistics_recorder_->vlog_initialized_;
-  }
+  void ResetVLogInitialized() { StatisticsRecorder::vlog_initialized_ = false; }
+
+  bool HasGlobalRecorder() { return StatisticsRecorder::top_ != nullptr; }
+
+  void DeleteGlobalRecorder() { delete StatisticsRecorder::top_; }
 
   const bool use_persistent_histogram_allocator_;
 
@@ -132,30 +126,30 @@ INSTANTIATE_TEST_CASE_P(Allocator, StatisticsRecorderTest, testing::Bool());
 
 TEST_P(StatisticsRecorderTest, NotInitialized) {
   UninitializeStatisticsRecorder();
+  EXPECT_FALSE(HasGlobalRecorder());
 
-  ASSERT_FALSE(StatisticsRecorder::IsActive());
+  HistogramBase* histogram = CreateHistogram("TestHistogram", 1, 1000, 10);
+  EXPECT_TRUE(StatisticsRecorder::RegisterOrDeleteDuplicate(histogram));
+  EXPECT_TRUE(HasGlobalRecorder());
 
   StatisticsRecorder::Histograms registered_histograms;
-  std::vector<const BucketRanges*> registered_ranges;
-
   StatisticsRecorder::GetHistograms(&registered_histograms);
-  EXPECT_EQ(0u, registered_histograms.size());
+  EXPECT_GT(registered_histograms.size(), 0u);
 
-  Histogram* histogram = CreateHistogram("TestHistogram", 1, 1000, 10);
+  DeleteGlobalRecorder();
+  EXPECT_FALSE(HasGlobalRecorder());
 
-  // When StatisticsRecorder is not initialized, register is a noop.
-  EXPECT_EQ(histogram,
-            StatisticsRecorder::RegisterOrDeleteDuplicate(histogram));
-  // Manually delete histogram that was not registered.
-  DeleteHistogram(histogram);
-
-  // RegisterOrDeleteDuplicateRanges is a no-op.
   BucketRanges* ranges = new BucketRanges(3);
   ranges->ResetChecksum();
-  EXPECT_EQ(ranges,
-            StatisticsRecorder::RegisterOrDeleteDuplicateRanges(ranges));
+  EXPECT_TRUE(StatisticsRecorder::RegisterOrDeleteDuplicateRanges(ranges));
+  EXPECT_TRUE(HasGlobalRecorder());
+
+  std::vector<const BucketRanges*> registered_ranges;
   StatisticsRecorder::GetBucketRanges(&registered_ranges);
-  EXPECT_EQ(0u, registered_ranges.size());
+  EXPECT_GT(registered_ranges.size(), 0u);
+
+  DeleteGlobalRecorder();
+  EXPECT_FALSE(HasGlobalRecorder());
 }
 
 TEST_P(StatisticsRecorderTest, RegisterBucketRanges) {
@@ -625,6 +619,7 @@ TEST_P(StatisticsRecorderTest, CallbackUsedBeforeHistogramCreatedTest) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownNotInitialized) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_WARNING);
   InitializeStatisticsRecorder();
   EXPECT_FALSE(VLOG_IS_ON(1));
@@ -635,6 +630,7 @@ TEST_P(StatisticsRecorderTest, LogOnShutdownNotInitialized) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownInitializedExplicitly) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_WARNING);
   InitializeStatisticsRecorder();
   EXPECT_FALSE(VLOG_IS_ON(1));
@@ -647,6 +643,7 @@ TEST_P(StatisticsRecorderTest, LogOnShutdownInitializedExplicitly) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownInitialized) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_VERBOSE);
   InitializeStatisticsRecorder();
   EXPECT_TRUE(VLOG_IS_ON(1));
