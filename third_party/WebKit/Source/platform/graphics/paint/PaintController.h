@@ -76,17 +76,7 @@ class PLATFORM_EXPORT PaintController {
   void UpdateCurrentPaintChunkProperties(
       const Optional<PaintChunk::Id>& id,
       const PaintChunkProperties& properties) {
-    if (id) {
-      PaintChunk::Id id_with_fragment(*id, current_fragment_);
-      new_paint_chunks_.UpdateCurrentPaintChunkProperties(id_with_fragment,
-                                                          properties);
-#if DCHECK_IS_ON()
-      CheckDuplicatePaintChunkId(id_with_fragment);
-#endif
-    } else {
-      new_paint_chunks_.UpdateCurrentPaintChunkProperties(WTF::nullopt,
-                                                          properties);
-    }
+    new_paint_chunks_.UpdateCurrentPaintChunkProperties(id, properties);
   }
 
   const PaintChunkProperties& CurrentPaintChunkProperties() const {
@@ -108,7 +98,6 @@ class PLATFORM_EXPORT PaintController {
     DisplayItemClass& display_item =
         new_display_item_list_.AllocateAndConstruct<DisplayItemClass>(
             std::forward<Args>(args)...);
-    display_item.SetFragment(current_fragment_);
     ProcessNewItem(display_item);
   }
 
@@ -214,12 +203,6 @@ class PLATFORM_EXPORT PaintController {
   void BeginFrame(const void* frame);
   FrameFirstPaint EndFrame(const void* frame);
 
-  // The current fragment will be part of the ids of all display items and
-  // paint chunks, to uniquely identify display items in different fragments
-  // for the same client and type.
-  unsigned CurrentFragment() const { return current_fragment_; }
-  void SetCurrentFragment(unsigned fragment) { current_fragment_ = fragment; }
-
  protected:
   PaintController()
       : new_display_item_list_(0),
@@ -235,8 +218,7 @@ class PLATFORM_EXPORT PaintController {
 #endif
         under_invalidation_checking_begin_(0),
         under_invalidation_checking_end_(0),
-        last_cached_subsequence_end_(0),
-        current_fragment_(0) {
+        last_cached_subsequence_end_(0) {
     ResetCurrentListIndices();
     // frame_first_paints_ should have one null frame since the beginning, so
     // that PaintController is robust even if it paints outside of BeginFrame
@@ -276,9 +258,9 @@ class PLATFORM_EXPORT PaintController {
   static size_t FindMatchingItemFromIndex(const DisplayItem::Id&,
                                           const IndicesByClientMap&,
                                           const DisplayItemList&);
-  static void AddToIndicesByClientMap(const DisplayItemClient&,
-                                      size_t index,
-                                      IndicesByClientMap&);
+  static void AddItemToIndexIfNeeded(const DisplayItem&,
+                                     size_t index,
+                                     IndicesByClientMap&);
 
   size_t FindCachedItem(const DisplayItem::Id&);
   size_t FindOutOfOrderCachedItemForward(const DisplayItem::Id&);
@@ -343,7 +325,6 @@ class PLATFORM_EXPORT PaintController {
   SubsequenceMarkers* GetSubsequenceMarkers(const DisplayItemClient&);
 
 #if DCHECK_IS_ON()
-  void CheckDuplicatePaintChunkId(const PaintChunk::Id&);
   void ShowDebugDataInternal(DisplayItemList::JsonFlags) const;
 #endif
 
@@ -413,8 +394,6 @@ class PLATFORM_EXPORT PaintController {
 
   // This is used to check duplicated ids during CreateAndAppend().
   IndicesByClientMap new_display_item_indices_by_client_;
-  // This is used to check duplicated ids for new paint chunks.
-  IndicesByClientMap new_paint_chunk_indices_by_client_;
 #endif
 
   // These are set in UseCachedDrawingIfPossible() and
@@ -445,8 +424,6 @@ class PLATFORM_EXPORT PaintController {
   CachedSubsequenceMap current_cached_subsequences_;
   CachedSubsequenceMap new_cached_subsequences_;
   size_t last_cached_subsequence_end_;
-
-  unsigned current_fragment_;
 
   class DisplayItemListAsJSON;
 };

@@ -52,8 +52,7 @@ void SVGMaskPainter::FinishEffect(const LayoutObject& object,
       const auto* properties = object.FirstFragment().PaintProperties();
       DCHECK(properties && properties->Mask());
       scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                            properties->Mask(), object,
-                                            DisplayItem::kSVGMask);
+                                            properties->Mask(), object);
     }
 
     DrawMaskForLayoutObject(context, object, object.ObjectBoundingBox());

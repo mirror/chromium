@@ -72,9 +72,9 @@ void FramePainter::Paint(GraphicsContext& context,
       const auto* contents_state =
           frame_view_->TotalPropertyTreeStateForContents();
       DCHECK(contents_state);
-      scoped_paint_chunk_properties.emplace(
-          context.GetPaintController(), *contents_state,
-          *GetFrameView().GetLayoutView(), DisplayItem::kUninitializedType);
+      scoped_paint_chunk_properties.emplace(context.GetPaintController(),
+                                            *contents_state,
+                                            *GetFrameView().GetLayoutView());
     }
 
     TransformRecorder transform_recorder(
@@ -104,8 +104,7 @@ void FramePainter::Paint(GraphicsContext& context,
       scoped_paint_chunk_properties.emplace(
           context.GetPaintController(),
           GetFrameView().PreContentClipProperties(),
-          *GetFrameView().GetLayoutView(),
-          DisplayItem::kScrollOverflowControls);
+          *GetFrameView().GetLayoutView());
     }
 
     TransformRecorder transform_recorder(
