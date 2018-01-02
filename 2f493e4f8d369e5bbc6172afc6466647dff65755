@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978b1a23_53557fdd",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-02T15:55:15Z",
+      "side": 1,
+      "message": "Nit: perhaps also briefly explains what this function does? e.g. \"Called when ... to update HTML5 history state\".",
+      "range": {
+        "startLine": 233,
+        "startChar": 14,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "2f493e4f8d369e5bbc6172afc6466647dff65755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2b6a54_3c938c85",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2054,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-02T15:55:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we pass RENDERER_INITIATED here?",
+      "range": {
+        "startLine": 2054,
+        "startChar": 49,
+        "endLine": 2054,
+        "endChar": 0
+      },
+      "revId": "2f493e4f8d369e5bbc6172afc6466647dff65755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
