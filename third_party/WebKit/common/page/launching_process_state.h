@@ -14,7 +14,7 @@ namespace blink {
 // RendererProcessHostImpl and the RendererSchedulerImpl.
 #if defined(OS_ANDROID)
 // This matches Android's ChildProcessConnection state before OnProcessLaunched.
-constexpr bool kLaunchingProcessIsBackgrounded = true;
+constexpr bool kLaunchingProcessIsBackgrounded = false;
 constexpr bool kLaunchingProcessIsBoostedForPendingView = true;
 #else
 constexpr bool kLaunchingProcessIsBackgrounded = false;
