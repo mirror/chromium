@@ -1765,4 +1765,38 @@ public class ImeTest {
                 mRule.getConnectionFactory().getOutAttrs().inputType
                         & EditorInfo.TYPE_TEXT_FLAG_AUTO_CORRECT);
     }
+
+    @Test
+    @SmallTest
+    @Feature({"TextInput"})
+    public void testAutocapitalizeAttribute() throws Throwable {
+        final int autocapitalizeFlagMask = EditorInfo.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                | EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES | EditorInfo.TYPE_TEXT_FLAG_CAP_WORDS;
+
+        // <input> element without autocapitalize attribute set. Should enable sentences
+        // autocapitalization as the default behavior.
+        mRule.focusElement("input_autocapitalize_default");
+        Assert.assertEquals(EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES,
+                mRule.getConnectionFactory().getOutAttrs().inputType & autocapitalizeFlagMask);
+
+        // <input> element that has autocapitalize="none" set.
+        mRule.focusElement("input_autocapitalize_none");
+        Assert.assertEquals(
+                0, mRule.getConnectionFactory().getOutAttrs().inputType & autocapitalizeFlagMask);
+
+        // <input> element that has autocapitalize="characters" set.
+        mRule.focusElement("input_autocapitalize_characters");
+        Assert.assertEquals(EditorInfo.TYPE_TEXT_FLAG_CAP_CHARACTERS,
+                mRule.getConnectionFactory().getOutAttrs().inputType & autocapitalizeFlagMask);
+
+        // <input> element that has autocapitalize="words" set.
+        mRule.focusElement("input_autocapitalize_words");
+        Assert.assertEquals(EditorInfo.TYPE_TEXT_FLAG_CAP_WORDS,
+                mRule.getConnectionFactory().getOutAttrs().inputType & autocapitalizeFlagMask);
+
+        // <input> element that has autocapitalize="sentences" set.
+        mRule.focusElement("input_autocapitalize_sentences");
+        Assert.assertEquals(EditorInfo.TYPE_TEXT_FLAG_CAP_SENTENCES,
+                mRule.getConnectionFactory().getOutAttrs().inputType & autocapitalizeFlagMask);
+    }
 }
