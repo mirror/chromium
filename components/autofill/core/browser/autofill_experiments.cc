@@ -34,6 +34,9 @@ const base::Feature kAutofillScanCardholderName{
     "AutofillScanCardholderName", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardBankNameDisplay{
     "AutofillCreditCardBankNameDisplay", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillCreditCardDropdownGooglePayBranding{
+    "AutofillCreditCardDropdownGooglePayBranding",
+    base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardAblationExperiment{
     "AutofillCreditCardAblationExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardPopupLayout{
@@ -69,6 +72,8 @@ const base::Feature kAutofillUpstreamSendDetectedValues{
     "AutofillUpstreamSendDetectedValues", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamSendPanFirstSix{
     "AutofillUpstreamSendPanFirstSix", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillUseNewSettingsNameInDropdown{
+    "AutofillUseNewSettingsNameInDropdown", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kCreditCardSigninPromoImpressionLimitParamKey[] = "impression_limit";
 const char kAutofillCreditCardPopupBackgroundColorKey[] = "background_color";
 const char kAutofillCreditCardPopupDividerColorKey[] = "dropdown_divider_color";
@@ -131,6 +136,15 @@ bool IsAutofillCreditCardLastUsedDateDisplayExperimentEnabled() {
 
 bool IsAutofillCreditCardBankNameDisplayExperimentEnabled() {
   return base::FeatureList::IsEnabled(kAutofillCreditCardBankNameDisplay);
+}
+
+bool ShowGooglePayLogoInAutofillCreditCardDropdown() {
+  return base::FeatureList::IsEnabled(
+      kAutofillCreditCardDropdownGooglePayBranding);
+}
+
+bool AutofillUseNewSettingsNameInDropdown() {
+  return base::FeatureList::IsEnabled(kAutofillUseNewSettingsNameInDropdown);
 }
 
 // |GetCreditCardPopupParameterUintValue| returns 0 if experiment parameter is
