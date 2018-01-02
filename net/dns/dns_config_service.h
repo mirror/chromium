@@ -20,6 +20,7 @@
 #include "net/base/ip_endpoint.h"  // win requires size of IPEndPoint
 #include "net/base/net_export.h"
 #include "net/dns/dns_hosts.h"
+#include "url/gurl.h"
 
 namespace base {
 class Value;
@@ -29,6 +30,13 @@ namespace net {
 
 // Default to 1 second timeout (before exponential backoff).
 const int64_t kDnsDefaultTimeoutMs = 1000;
+
+typedef struct DnsOverHttpsServerConfig {
+  GURL server;
+  bool use_post;
+  DnsOverHttpsServerConfig(GURL server, bool use_post)
+      : server(server), use_post(use_post) {}
+} DnsOverHttpsServerConfig;
 
 // DnsConfig stores configuration of the system resolver.
 struct NET_EXPORT_PRIVATE DnsConfig {
@@ -87,6 +95,9 @@ struct NET_EXPORT_PRIVATE DnsConfig {
   // DirectAccess. This is exposed for HostResolver to skip IPv6 probes,
   // as it may cause them to return incorrect results.
   bool use_local_ipv6;
+
+  // List of servers to query over HTTPS.
+  std::vector<DnsOverHttpsServerConfig> dns_over_https_servers_;
 };
 
 // Service for reading system DNS settings, on demand or when signalled by

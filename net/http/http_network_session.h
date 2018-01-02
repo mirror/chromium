@@ -1,3 +1,4 @@
+
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -25,6 +26,7 @@
 #include "net/base/host_mapping_rules.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
+#include "net/dns/dns_config_service.h"
 #include "net/dns/host_resolver.h"
 #include "net/http/http_auth_cache.h"
 #include "net/http/http_stream_factory.h"
@@ -205,6 +207,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // Enable HTTP/0.9 for HTTP/HTTPS on ports other than the default one for
     // each protocol.
     bool http_09_on_non_default_ports_enabled;
+
+    std::vector<DnsOverHttpsServerConfig> dns_over_https_servers;
   };
 
   // Structure with pointers to the dependencies of the HttpNetworkSession.
