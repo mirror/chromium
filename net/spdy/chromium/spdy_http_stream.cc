@@ -68,6 +68,7 @@ SpdyHttpStream::~SpdyHttpStream() {
 }
 
 int SpdyHttpStream::InitializeStream(const HttpRequestInfo* request_info,
+                                     bool can_send_early,
                                      RequestPriority priority,
                                      const NetLogWithSource& stream_net_log,
                                      const CompletionCallback& callback) {
@@ -76,6 +77,7 @@ int SpdyHttpStream::InitializeStream(const HttpRequestInfo* request_info,
     return ERR_CONNECTION_CLOSED;
 
   request_info_ = request_info;
+  can_send_early_ = can_send_early;
   // TODO(bnc): Remove this condition once pushed headers are properly
   // validated.  https://crbug.com/554220.
   if (request_info_->method == "GET") {
@@ -276,7 +278,7 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
       base::Bind(&SpdyHeaderBlockNetLogCallback, &headers));
   DispatchRequestHeadersCallback(headers);
   result = stream_->SendRequestHeaders(
-      std::move(headers),
+      std::move(headers), can_send_early_,
       HasUploadData() ? MORE_DATA_TO_SEND : NO_MORE_DATA_TO_SEND);
 
   if (result == ERR_IO_PENDING) {

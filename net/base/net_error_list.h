@@ -407,6 +407,12 @@ NET_ERROR(SSL_VERSION_INTERFERENCE, -175)
 // No socket buffer space is available.
 NET_ERROR(NO_BUFFER_SPACE, -176)
 
+// TLS 1.3 early data was rejected.
+NET_ERROR(EARLY_DATA_REJECTED, -177)
+
+// TLS 1.3 early data was used.
+NET_ERROR(WRONG_VERSION_ON_EARLY_DATA, -178)
+
 // There were no common signature algorithms between our client certificate
 // private key and the server's preferences.
 NET_ERROR(SSL_CLIENT_AUTH_NO_COMMON_ALGORITHMS, -1478)
