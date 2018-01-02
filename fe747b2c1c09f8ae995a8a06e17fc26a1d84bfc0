@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38d43325_31c245f0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58b96974_7288deb6",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60131e2_c7e96634",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64edf5a9_eeec1f7f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60131e2_c7e96634",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "12a40d3a_6139df75",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "Thanks for this. This is actually a bug in GetCompileOptions. I fixed it. Done.",
+      "parentUuid": "b6de31e2_72e56db5",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae0159c_e2ebfc2a",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1e47d0a5_30342f85",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae0159c_e2ebfc2a",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a27306c_a61072fb",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c511db_367b1403",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "No longer a fallthrough after fixing the bug. Done.",
+      "parentUuid": "2a27306c_a61072fb",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "546022ed_57f584d7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "I added another enum for ProduceCodeCache. Done.",
+      "parentUuid": "178b47d3_1e7bfe32",
+      "range": {
+        "startLine": 577,
+        "startChar": 29,
+        "endLine": 577,
+        "endChar": 68
+      },
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "916a4d34_f513948b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
         "patchSetId": 2
@@ -130,6 +244,30 @@
       "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839e9762_373b5f57",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2018-01-02T15:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "916a4d34_f513948b",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 78
+      },
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
