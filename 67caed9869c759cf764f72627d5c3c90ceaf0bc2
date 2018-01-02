@@ -22,6 +22,30 @@
       "revId": "67caed9869c759cf764f72627d5c3c90ceaf0bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc8ddbf_7aac354c",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-02T13:38:03Z",
+      "side": 1,
+      "message": "Especially with upstream/downstream targets it\u0027s fiddly to make global changes to the manifest correctly - I think leaving the defaults in the template is better (there\u0027s also quite a few variables in some of the templates..)",
+      "parentUuid": "37f23d5b_b9a4378c",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "67caed9869c759cf764f72627d5c3c90ceaf0bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
