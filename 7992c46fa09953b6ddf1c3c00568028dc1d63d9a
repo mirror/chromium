@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "145ceada_04953887",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/url-bar/README.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-02T21:39:28Z",
+      "side": 1,
+      "message": "Sure, done. (I\u0027ll put up a separate patch to do the same for fast/rootscroller)",
+      "parentUuid": "f201fc90_15673619",
+      "revId": "7992c46fa09953b6ddf1c3c00568028dc1d63d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82d77653_151f34c1",
         "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-02T19:50:13Z",
       "side": 1,
       "message": "In what circumstance does the hideScrollbars setting change dynamically?",
+      "range": {
+        "startLine": 874,
+        "startChar": 19,
+        "endLine": 874,
+        "endChar": 36
+      },
+      "revId": "7992c46fa09953b6ddf1c3c00568028dc1d63d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ee34f0_72314cd0",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-02T21:39:28Z",
+      "side": 1,
+      "message": "If we want to call this from a layout test (as this patch does), the visual viewport is already initialized by the time we parse any setting changes so we need to tell it to reinitialize scrollbars (taking the new setting value into account)",
+      "parentUuid": "82d77653_151f34c1",
       "range": {
         "startLine": 874,
         "startChar": 19,
