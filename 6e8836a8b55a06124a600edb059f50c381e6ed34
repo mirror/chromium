@@ -1,0 +1,800 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbde623_34c89fde",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "I think that this test does not make a lot of sense anymore. You should probably have a new form with \n\u003cinput type\u003d\u0027text\u0027 id\u003d\u0027input1\u0027 /\u003e\n\u003cinput type\u003d\u0027text\u0027 id\u003d\u0027input2\u0027 /\u003e\n\u003cinput type\u003d\u0027password\u0027 id\u003d\u0027password\u0027 /\u003e\n...\non which you perform this test.",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bec54f_bc3db654",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "// This structure stores for each input element that can be a username:\n// - developer visible values (name and id attribute)\n// - user visible values (label, placeholder, aria-label)\n\n[I don\u0027t know how multiple values are stored a single string16... This should probably be described here.]\n\n// For developer and user visible values, also short tokens (shorter than |kMinimumWordLength|) are stored to [Please explain why].",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9719ddc7_bbc41cd9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "A category may contain a (non-empty) dictionary of Latin character words and a (possibly empty) dictionary of non-Latin character words.\nThe dictionaries contain relevant words (like \"username\", \"account\", ...) and their translations into various languages. If a translation contains non-Latin characters (\"username\" in Hungarian is \"felhasználónév\"), the translation is stored in romanized form (using only ISO basic Latin alphabet [a-zA-Z], e.g. \"felhasznalonev\") in the latin dictionary and in original form (e.g. \"felhasználónév\") in the non-latin dictionary. If a translation contains only Latin characters (\"username\" in Spanish is \"usuario\"), only a non-latin version is stored.\nThe content of the dictionaries does not need to be sorted.\n\n[Please verify whether this is correct]\n[I think that the part about storing both \"felhasznalonev\" and \"felhasználónév\" is currently not the case but should be fixed\"]\n[I think that we should crowdsource more synonyms. For example in German we have \"benutzer\" but not \"nutzer\".]",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a301ebf6_6bdb06dd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "How about this? I think that contrary to your function it returns true if there is just one possible_username. I don\u0027t know whether this is important to you or maybe even a bug in the current code.\n\nDCHECK(!possible_usernames.empty());\nDCHECK(!all_control_elements.empty());\nconst auto\u0026 reference_form \u003d possible_usernames[0];\nfor (const auto\u0026 form : possible_usernames) {\n  if (form !\u003d reference_form)\n    return false;\n}\nfor (const auto\u0026 form : all_control_elements) {\n  if (form !\u003d reference_form)\n    return false;\n}\nreturn true;",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a88417_d17b6daa",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "// Tokenizes a lower case version of |raw_value| by splitting at |kDelimiters|.\n// Tokens are concatenated and appended to |*field_data_value|. Previous content is spearated with a \u0027$\u0027. (Example: raw_value \u003d \"user-Name\", *field_data_value \u003d \"user\" --\u003e *field_data_value \u003d \"user$username\")\n// Tokens of size less than kMinimumWordLength are appended to |*field_data_short_tokens|.",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf980135_309fe395",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "This function name is not correct anymore because it does not append the value.\n--\u003e AppendTokens",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69b118c_2341e5eb",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "developer and user visible values",
+      "range": {
+        "startLine": 119,
+        "startChar": 42,
+        "endLine": 119,
+        "endChar": 66
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f744fae_768fb83c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "computes",
+      "range": {
+        "startLine": 119,
+        "startChar": 34,
+        "endLine": 119,
+        "endChar": 41
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fe1203_5aab59ab",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "them",
+      "range": {
+        "startLine": 120,
+        "startChar": 37,
+        "endLine": 120,
+        "endChar": 39
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5cf3c8_0b02235f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "how about calling this result?",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 30
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455c2f30_9b395963",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "Above you talk about placeholder and aria-labels but you don\u0027t have it here? Add a todo?",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dba7ff2_695d3452",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "computes the",
+      "range": {
+        "startLine": 136,
+        "startChar": 60,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc10ed2d_fe872ece",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "no ||",
+      "range": {
+        "startLine": 137,
+        "startChar": 3,
+        "endLine": 137,
+        "endChar": 4
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b984d68_c6a75dee",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "sets",
+      "range": {
+        "startLine": 142,
+        "startChar": 70,
+        "endLine": 142,
+        "endChar": 73
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d31f44_a686f8cb",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "why? Do you want to say that |form_data.fields| may be a subset of |all_control_elements|?",
+      "range": {
+        "startLine": 143,
+        "startChar": 11,
+        "endLine": 143,
+        "endChar": 12
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a0debd_ce9bb971",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "This should be moved out of the inner for loop and should be\nif (element_name.empty())\n  continue;",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b239093d_546ada0d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "WDYT of the following? It has more memory allocations but the worst case is not quadratic.\n\nstd::map\u003cbase::string16, const blink::WebInputElement*\u003e name_to_element;\nfor (const blink::WebFormControlElement\u0026 control_element :\n     all_control_elements) {\n  const blink::WebInputElement* input_element \u003d\n        ToWebInputElement(\u0026control_element);\n  if (!input_element || input_element-\u003eIsPasswordFieldForAutofill())\n    continue;\n  const base::string16 element_name \u003d\n    input_element-\u003eNameForAutofill().Utf16();\n  if (element_name.empty())\n    continue;\n  name_to_element[element_name] \u003d input_element;\n}\nfor (const auto\u0026 field_data : form_data.fields) {\n  auto it \u003d name_to_element.find(field_data.name);\n  if (it !\u003d name_to_element.end()) {\n    possible_usernames_data-\u003epush_back(\n        ComputeUsernameFieldData(it-\u003esecond, field_data);\n  }  \n}",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3370a7_b7051171",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "in the computed",
+      "range": {
+        "startLine": 172,
+        "startChar": 57,
+        "endLine": 172,
+        "endChar": 65
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8fcaf8_efbf3f9d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "short_tokens",
+      "range": {
+        "startLine": 173,
+        "startChar": 31,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38b6311_05e1f4c7",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "what\u0027s value?",
+      "range": {
+        "startLine": 175,
+        "startChar": 26,
+        "endLine": 175,
+        "endChar": 31
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394c47c3_c4a58d8d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "This looks like a lot of repeated conversions. Would it make sense to store the UTF16 versions in the dictionary?",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48fa525_74f7b90f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "in the computed",
+      "range": {
+        "startLine": 194,
+        "startChar": 55,
+        "endLine": 194,
+        "endChar": 63
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540b05c3_1d362791",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "_",
+      "range": {
+        "startLine": 198,
+        "startChar": 13,
+        "endLine": 198,
+        "endChar": 14
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7690b205_29025efa",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "Is this based on empirical evidence? HTML5 specifies both ID and name as DOMStrings.",
+      "range": {
+        "startLine": 199,
+        "startChar": 49,
+        "endLine": 199,
+        "endChar": 53
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81c902a_98e4133c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 200,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 5
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf718e6c_6797445f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "they",
+      "range": {
+        "startLine": 234,
+        "startChar": 38,
+        "endLine": 234,
+        "endChar": 40
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353cc644_24b82fc2",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "appear",
+      "range": {
+        "startLine": 235,
+        "startChar": 3,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9b61dc_4cd6189e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "why two fields and why only add the first one? Can you document the reasoning behind this?",
+      "range": {
+        "startLine": 235,
+        "startChar": 19,
+        "endLine": 235,
+        "endChar": 20
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66a64ab_9e06b6a7",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "You can use\nif (!ConstainsValue(username_prediction, chosen_field))\n\nfrom base/stl_util.h",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18547fc1_add0e401",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "probability of being the username",
+      "range": {
+        "startLine": 262,
+        "startChar": 65,
+        "endLine": 262,
+        "endChar": 75
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f76b554_af28a93c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "If an element is found,",
+      "range": {
+        "startLine": 299,
+        "startChar": 55,
+        "endLine": 299,
+        "endChar": 58
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4d94fc_0ae4af47",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a unittest for this?",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e292536f_fcb7b599",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "Would this work?\n\nif (username_detector_cache) {\n  auto iterator \u003d username_detector_cache-\u003efind(form);\n  if (iterator !\u003d username_detector_cache-\u003eend()) {\n    return FindUsernameInPredictions(iterator-\u003esecond, possible_usernames,\n                                     username_element);\n}\n\nstd::vector\u003cblink::WebInputElement\u003e username_predictions;\nFindUsernameFieldInternal(all_control_elements, form_data,\n                          \u0026username_predictions);\nbool result \u003d FindUsernameInPredictions(\n    username_predictions, possible_usernames, username_element);\nif (username_detector_cache \u0026\u0026 !username_predictions.empty())\n  username_detector_cache-\u003eemplace(std::move(form), std::move(username_predictions));\nreturn result;",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad0f8a0_49e67317",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "If the above does not work, how about:\n  if (!cache_miss) {\n    return FindUsernameInPredictions(form_position-\u003esecond, possible_usernames,\n                                     username_element);\n  }\n\nand then remove the if () below?",
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547513e2_a7079c31",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "s/reliability/probability/;",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a9aece_6b413027",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "what is the \"first match\"? This contradicts a bit with the next sentence which says that the best match is returned, not the first one.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c197236_8e1ee135",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "If *the* detector\u0027s outcome",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246c86e9_6f975d6a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T10:36:11Z",
+      "side": 1,
+      "message": "this makes grammatically no sense to me.",
+      "range": {
+        "startLine": 758,
+        "startChar": 11,
+        "endLine": 758,
+        "endChar": 19
+      },
+      "revId": "6e8836a8b55a06124a600edb059f50c381e6ed34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
