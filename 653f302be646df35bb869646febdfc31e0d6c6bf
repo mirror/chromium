@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40568b5e_524c9e6b",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T18:47:42Z",
+      "side": 1,
+      "message": "The API should not provide this message, the UI should convert |status| to the appropriate message. This keeps l10n in the web UI code. (Ideally this API would be implemented as a service without any UI/localization dependencies).",
+      "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c36f4c_65a65173",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T18:47:42Z",
+      "side": 1,
+      "message": "We should describe the relationship between |callback| and the event, e.g. the callback will return \u0027FAILED\u0027 if the export was unable to start and no event will be triggered. Otherwise it will return \u0027IN_PRGRESS\u0027 and an event will be triggered when the export completes.",
+      "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
