@@ -110,6 +110,40 @@ var tests = [
     testTapTarget(rootBookmarks[2].$.item, {uri: "http://www.chromium.org"})
 
     chrome.test.succeed();
+  },
+
+  /**
+   * Test that a bookmark is followed when clicked in test-bookmarks.pdf.
+   */
+  function testFollowBookmarkNotMocked() {
+    var bookmarkContent = Polymer.Base.create('viewer-bookmarks-content', {
+      bookmarks: viewer.bookmarks,
+      depth: 1
+    });
+
+    Polymer.dom.flush();
+
+    var rootBookmarks =
+        bookmarkContent.shadowRoot.querySelectorAll('viewer-bookmark');
+    chrome.test.assertEq(3, rootBookmarks.length, "three root bookmarks");
+    MockInteractions.tap(rootBookmarks[0].$.expand);
+
+    Polymer.dom.flush();
+
+    var subBookmarks =
+        rootBookmarks[0].shadowRoot.querySelectorAll('viewer-bookmark');
+    chrome.test.assertEq(1, subBookmarks.length, "one sub bookmark");
+
+    function testTapTarget(tapTarget, expectedEvent) {
+      MockInteractions.tap(tapTarget);
+    }
+
+    testTapTarget(rootBookmarks[0].$.item, {page: 0, x: 0, y: 166})
+    testTapTarget(subBookmarks[0].$.item, {page: 1, x: 0, y: 166})
+    testTapTarget(rootBookmarks[1].$.item, {page: 2, x: 0, y: 166})
+    testTapTarget(rootBookmarks[2].$.item, {uri: "http://www.chromium.org"})
+
+    chrome.test.succeed();
   }
 ];
 
