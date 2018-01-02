@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "4f2290c9_6d2842f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-02T18:55:53Z",
+      "side": 1,
+      "message": "conceptually it seems odd that we are nulling this out.\n\nSimply based on the name, it seems like the surface manager \"should\" be in charge of managing the surfaces.  I\u0027m wondering why we couldn\u0027t make it be aware of the VR state of the world and allow an injected surface.\n\nAlternatively, could this swap out the surface manager from a OverlayModeCapableSurfaceManager to a VrSurfaceManager?  Ideally, i\u0027d like to avoid forking the code everywhere if that is possible.",
+      "range": {
+        "startLine": 423,
+        "startChar": 8,
+        "endLine": 423,
+        "endChar": 33
+      },
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd2edcb0_419c3513",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 2
