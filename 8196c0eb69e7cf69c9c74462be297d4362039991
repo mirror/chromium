@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5215a1b_62de1835",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4705895_98478a15",
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da1ce95_53a48c00",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928c7e51_846cbf52",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da1ce95_53a48c00",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dfa4c6c3_b1ba695d",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31f2f0b_91394cdb",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d7b2b4a_4fdc2461",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
@@ -85,6 +151,30 @@
       "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42d913e_9b52d5e0",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Not worth it. This line will disappear with the next CL.",
+      "parentUuid": "2d7b2b4a_4fdc2461",
+      "range": {
+        "startLine": 243,
+        "startChar": 12,
+        "endLine": 243,
+        "endChar": 0
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "40e0c04a_6b1d6938",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c009715_3dd355e5",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 31
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "213b6d61_3cbcce17",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 9
@@ -125,6 +239,24 @@
       "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6896a5c6_405734e0",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-02T23:15:33Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "213b6d61_3cbcce17",
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
