@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d38141_e1b17956",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-02T22:12:30Z",
+      "side": 1,
+      "message": "How about a \nTODO(crbug.com/nnnn) for, \"Future work will update the Favicon Service to allow\nhostname-bound querying\".\n\nassuming that would remove the need to prepend a scheme.",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3a2321_3880a3aa",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-02T22:12:30Z",
+      "side": 1,
+      "message": "WDYT of using https in place of http; Or checking for IsSecure on the cookie to see if https should be used; Or adding a bug/todo about fetching icons via https?",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
