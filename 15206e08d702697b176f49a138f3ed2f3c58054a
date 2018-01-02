@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "65c3466c_129039de",
+        "filename": "components/viz/common/gl_helper_scaling.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T23:05:56Z",
+      "side": 1,
+      "message": "I did `git cl format` before uploading the first patch.\nBut the presubmit doesn\u0027t complain anything.\nIt can only be reformatted when the #include is put in a right place.\n\nFor example,\nIf put this line between line 10 and line 11 and then run git cl format,\nit works well (fixing the wrong order)\n\nBut if put this line here, it doesn\u0027t work well.",
+      "parentUuid": "29322023_ba28183a",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00759508_40a0223a",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 1
