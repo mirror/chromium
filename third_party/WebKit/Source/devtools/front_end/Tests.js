@@ -565,9 +565,11 @@
   TestSuite.prototype.testPauseInSharedWorkerInitialization1 = function() {
     // Make sure the worker is loaded.
     this.takeControl();
+    console.error('init1');
     this._waitForTargets(2, callback.bind(this));
 
     function callback() {
+      console.log('callback: ' + new Error().stack);
       Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(this.releaseControl.bind(this));
     }
   };
@@ -579,10 +581,15 @@
     function callback() {
       var debuggerModel = SDK.targetManager.models(SDK.DebuggerModel)[0];
       if (debuggerModel.isPaused()) {
+        console.error('debugger model is paused\n');
         this.releaseControl();
         return;
       }
-      this._waitForScriptPause(this.releaseControl.bind(this));
+      console.error('wait for script pause\n');
+      this._waitForScriptPause(() => {
+        console.error('stack: ' + new Error().stack);
+        this.releaseControl();
+      });
     }
   };
 
