@@ -53,6 +53,7 @@ from __future__ import print_function
 import sys
 
 import argparse
+import json
 import os
 import subprocess
 import threading
@@ -98,6 +99,40 @@ CLANG_COVERAGE_BUILD_ARG = 'use_clang_coverage'
 # A set of targets that depend on target "testing/gtest", this set is generated
 # by 'gn refs "testing/gtest"', and it is lazily initialized when needed.
 GTEST_TARGET_NAMES = None
+
+
+class _PerFileCoverageSummary(object):
+  """Excapsulates coverage calculations for files."""
+
+  def __init__(self):
+    """Initializes PerFileCoverageSummary object."""
+    self._coverage_summaries = {}
+
+  def AddFile(self, file_path, total_regions, covered_regions, total_functions,
+              covered_functions, total_lines, covered_lines):
+    """Adds a new file entry."""
+    summary = {
+        'total_regions': total_regions,
+        'covered_regions': covered_regions,
+        'total_functions': total_functions,
+        'covered_functions': covered_functions,
+        'total_lines': total_lines,
+        'covered_lines': covered_lines,
+    }
+
+    print(file_path)
+    print(os.path.abspath(file_path))
+
+    self._coverage_summaries[os.path.abspath(file_path)] = summary
+
+  def GetCoverageForFile(self, path):
+    """Returns a dictionary representing the coverage summary for a file."""
+    if os.path.isabs(path):
+      return GetCoverageForFile(os.path.relpath(path, SRC_ROOT_PATH))
+
+    assert path in self._coverage_summaries, (
+        '"%s" is not in the file coverage report' % path)
+    return self._coverage_summaries[path]
 
 
 def _GetPlatform():
@@ -154,11 +189,10 @@ def DownloadCoverageToolsIfNeeded():
   coverage_revision, coverage_sub_revision = _GetRevisionFromStampFile(
       coverage_revision_stamp_file, platform)
 
-  has_coverage_tools = (os.path.exists(LLVM_COV_PATH) and
-                        os.path.exists(LLVM_PROFDATA_PATH))
+  has_coverage_tools = (
+      os.path.exists(LLVM_COV_PATH) and os.path.exists(LLVM_PROFDATA_PATH))
 
-  if (has_coverage_tools and
-      coverage_revision == clang_revision and
+  if (has_coverage_tools and coverage_revision == clang_revision and
       coverage_sub_revision == clang_sub_revision):
     # LLVM coverage tools are up to date, bail out.
     return clang_revision
@@ -248,8 +282,6 @@ def _BuildTargets(targets, jobs_count):
     targets: A list of targets to build with coverage instrumentation.
     jobs_count: Number of jobs to run in parallel for compilation. If None, a
                 default value is derived based on CPUs availability.
-
-
   """
 
   def _IsGomaConfigured():
@@ -373,6 +405,49 @@ def _CreateCoverageProfileDataFromProfRawData(profraw_file_paths):
     raise error
 
   return profdata_file_path
+
+
+def _GeneratePerFileCoverageSummary(binary_paths, profdata_file_path, filters):
+  """Generates per file coverage summary using "llvm-cov export" command."""
+  # llvm-cov export [options] -instr-profile PROFILE BIN [-object BIN,...]
+  # [[-object BIN]] [SOURCES].
+  # NOTE: For object files, the first one is specified as a positional argument,
+  # and the rest are specified as keyword argument.
+  subprocess_cmd = [
+      LLVM_COV_PATH, 'export', '-summary-only',
+      '-instr-profile=' + profdata_file_path, binary_paths[0]
+  ]
+  subprocess_cmd.extend(
+      ['-object=' + binary_path for binary_path in binary_paths[1:]])
+  subprocess_cmd.extend(filters)
+
+  json_output = json.loads(subprocess.check_output(subprocess_cmd))
+  assert len(json_output['data']) == 1
+  files_coverage_summary = json_output['data'][0]['files']
+
+  per_file_coverage_summary = _PerFileCoverageSummary()
+  for file_coverage_summary in files_coverage_summary:
+    file_path = file_coverage_summary['filename']
+
+    # TODO(crbug.com/797345): Currently, [SOURCES] parameter doesn't apply to
+    # llvm-cov export command, so work it around by manually filter the paths.
+    # Remove this logic once the bug is fixed and clang has rolled past it.
+    if not any(
+        os.path.abspath(file_path).startswith(os.path.abspath(filter))
+        for filter in filters):
+      continue
+
+    per_file_coverage_summary.AddFile(
+        file_path=file_path,
+        total_regions=file_coverage_summary['summary']['regions']['count'],
+        covered_regions=file_coverage_summary['summary']['regions']['covered'],
+        total_functions=file_coverage_summary['summary']['functions']['count'],
+        covered_functions=file_coverage_summary['summary']['functions'][
+            'covered'],
+        total_lines=file_coverage_summary['summary']['lines']['count'],
+        covered_lines=file_coverage_summary['summary']['lines']['covered'])
+
+  return per_file_coverage_summary
 
 
 def _GetBinaryPath(command):
@@ -562,8 +637,10 @@ def Main():
 
   profdata_file_path = _CreateCoverageProfileDataForTargets(
       args.targets, args.command, args.jobs)
-
   binary_paths = [_GetBinaryPath(command) for command in args.command]
+
+  file_coverage_summary = _GeneratePerFileCoverageSummary(
+      binary_paths, profdata_file_path, absolute_filter_paths)
   _GenerateLineByLineFileCoverageInHtml(binary_paths, profdata_file_path,
                                         absolute_filter_paths)
   html_index_file_path = 'file://' + os.path.abspath(
