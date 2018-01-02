@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9286f35_eea87121",
+        "filename": "third_party/libpng/patches/0000-plte.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-02T18:55:28Z",
+      "side": 1,
+      "message": "This is a note for third_party/libpng/ owners who will be reviewing:\n\nI am not a third_party/libpng/ owner and this would be the first entry into patches/.\nWe do the patches/ thing in third_party/zlib/. It has been there for a while and is a bit of a legacy. It may or may not be what you want to do. The purpose (imho) is to assist in reapplying pulled updates.\n\nIf libpng is updated and we pull it, we\u0027ll want to reapply the patches. It may be difficult to have to do a typical merge if we get too many patches. So rather than apply the libpng update on top of the patches (all of them), you can wipe local libpng when pulling and then reapply the patches one at a time.\n\nThat info can also be found just by getting it from git when the time comes. So it doesn\u0027t really need to be stored as a .patch inside the repo. I think the benefit is when the second upstream pull happens, you don\u0027t have to hunt back to the first time the patch landed each time. Over enough upstream pulls, this could become a game of telephone where the original patch becomes slightly twisted each time.",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
