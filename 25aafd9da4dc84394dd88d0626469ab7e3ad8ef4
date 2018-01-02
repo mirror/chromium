@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69ddfe2_5f12261a",
+        "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T19:01:40Z",
+      "side": 1,
+      "message": "I would like to use `valExpr-\u003egetLocEnd()` here, but this results in `valExpr` being swallowed. Apparently `valExpr-\u003egetLocStart()` and `valExpr-\u003egetLocEnd()` are equal here. Do you happen to know why this is?",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 37
+      },
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613b1916_ccb44ee8",
+        "filename": "tools/clang/value_cleanup/tests/listvalue-expected.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T19:01:40Z",
+      "side": 1,
+      "message": "This confuses me a bit since I am building the initializer_list string without spaces. Also the generated edit snippets are without spaces. Does the apply_edits script do some magic here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
