@@ -87,6 +87,8 @@ component("ash") {
     "cancel_mode.h",
     "cast_config_controller.cc",
     "cast_config_controller.h",
+    "cursor/cursor_view.cc",
+    "cursor/cursor_view.h",
     "debug.cc",
     "debug.h",
     "default_wallpaper_delegate.cc",
