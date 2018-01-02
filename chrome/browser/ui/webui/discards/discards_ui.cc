@@ -10,7 +10,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/discard_reason.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/browser/ui/webui/discards/discards.mojom.h"
 #include "chrome/common/webui_url_constants.h"
@@ -45,34 +44,37 @@ class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
   void GetTabDiscardsInfo(GetTabDiscardsInfoCallback callback) override {
     resource_coordinator::TabManager* tab_manager =
         g_browser_process->GetTabManager();
-    resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
+    const auto& lifecycle_units = tab_manager->lifecycle_units();
 
     std::vector<mojom::TabDiscardsInfoPtr> infos;
-    infos.reserve(stats.size());
+    infos.reserve(lifecycle_units.size());
 
-    base::TimeTicks now = resource_coordinator::NowTicks();
+    // base::TimeTicks now = resource_coordinator::NowTicks();
 
     // Convert the TabStatsList to a vector of TabDiscardsInfos.
-    size_t rank = 1;
-    for (const auto& tab : stats) {
+    // size_t rank = 1;
+    for (const auto* lifecycle_unit : lifecycle_units) {
       mojom::TabDiscardsInfoPtr info(mojom::TabDiscardsInfo::New());
-
-      info->tab_url = tab.tab_url;
-      // This can be empty for pages without a favicon. The WebUI takes care of
-      // showing the chrome://favicon default in that case.
-      info->favicon_url = tab.favicon_url;
-      info->title = base::UTF16ToUTF8(tab.title);
-      info->is_app = tab.is_app;
-      info->is_internal = tab.is_internal_page;
-      info->is_media = tab.is_media;
-      info->is_pinned = tab.is_pinned;
-      info->is_discarded = tab.is_discarded;
-      info->discard_count = tab.discard_count;
-      info->utility_rank = rank++;
-      auto elapsed = now - tab.last_active;
-      info->last_active_seconds = static_cast<int32_t>(elapsed.InSeconds());
-      info->is_auto_discardable = tab.is_auto_discardable;
-      info->id = tab.id;
+      /*
+            info->tab_url = tab.tab_url;
+            // This can be empty for pages without a favicon. The WebUI takes
+         care of
+            // showing the chrome://favicon default in that case.
+            info->favicon_url = tab.favicon_url;
+            info->title = base::UTF16ToUTF8(tab.title);
+            info->is_app = tab.is_app;
+            info->is_internal = tab.is_internal_page;
+            info->is_media = tab.is_media;
+            info->is_pinned = tab.is_pinned;
+            info->is_discarded = tab.is_discarded;
+            info->discard_count = tab.discard_count;
+            info->utility_rank = rank++;
+            auto elapsed = now - tab.last_active;
+            info->last_active_seconds =
+         static_cast<int32_t>(elapsed.InSeconds()); info->is_auto_discardable =
+         tab.is_auto_discardable;
+            */
+      info->id = lifecycle_unit->GetID();
 
       infos.push_back(std::move(info));
     }
@@ -83,9 +85,9 @@ class DiscardsDetailsProviderImpl : public mojom::DiscardsDetailsProvider {
   void SetAutoDiscardable(int32_t tab_id,
                           bool is_auto_discardable,
                           SetAutoDiscardableCallback callback) override {
-    resource_coordinator::TabManager* tab_manager =
-        g_browser_process->GetTabManager();
-    tab_manager->SetTabAutoDiscardableState(tab_id, is_auto_discardable);
+    //  resource_coordinator::TabManager* tab_manager =
+    //     g_browser_process->GetTabManager();
+    ////  tab_manager->SetTabAutoDiscardableState(tab_id, is_auto_discardable);
     std::move(callback).Run();
   }
 

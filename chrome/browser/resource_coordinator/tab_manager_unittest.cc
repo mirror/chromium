@@ -25,6 +25,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
+#include "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h"
 #include "chrome/browser/resource_coordinator/tab_manager_features.h"
 #include "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
@@ -149,6 +150,7 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     tab_manager_ = g_browser_process->GetTabManager();
+    tab_lifecycle_unit_source_.AddObserver(tab_manager_);
   }
 
   void TearDown() override {
@@ -168,6 +170,7 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
     contents2_.reset();
     contents3_.reset();
 
+    tab_lifecycle_unit_source_.RemoveObserver(tab_manager_);
     base::MessageLoop::current()->SetTaskRunner(original_task_runner_);
     ChromeRenderViewHostTestHarness::TearDown();
   }
@@ -251,6 +254,7 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   }
 
   TabManager* tab_manager_ = nullptr;
+  TabLifecycleUnitSource tab_lifecycle_unit_source_;
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_ =
       base::MakeRefCounted<base::TestMockTimeTaskRunner>();
   std::unique_ptr<base::TickClock> tick_clock_ =
@@ -291,107 +295,6 @@ class TabManagerWithExperimentDisabledTest : public TabManagerTest {
 // TODO(georgesak): Add tests for protection to tabs with form input and
 // playing audio;
 
-// Tests the sorting comparator to make sure it's producing the desired order.
-TEST_F(TabManagerTest, Comparator) {
-  TabStatsList test_list;
-  const base::TimeTicks now = NowTicks();
-
-  // Add kAutoDiscardable last to verify that the array is being sorted.
-
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.is_pinned = true;
-    stats.child_process_host_id = kPinned;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.is_app = true;
-    stats.child_process_host_id = kApp;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.is_media = true;
-    stats.child_process_host_id = kPlayingAudio;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.has_form_entry = true;
-    stats.child_process_host_id = kFormEntry;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now - base::TimeDelta::FromSeconds(10);
-    stats.child_process_host_id = kRecent;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now - base::TimeDelta::FromMinutes(15);
-    stats.child_process_host_id = kOld;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now - base::TimeDelta::FromDays(365);
-    stats.child_process_host_id = kReallyOld;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.is_pinned = true;
-    stats.last_active = now - base::TimeDelta::FromDays(365);
-    stats.child_process_host_id = kOldButPinned;
-    test_list.push_back(stats);
-  }
-
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.is_internal_page = true;
-    stats.child_process_host_id = kInternalPage;
-    test_list.push_back(stats);
-  }
-
-  // This entry sorts to the front, so by adding it last, it verifies that the
-  // array is being sorted.
-  {
-    TabStats stats;
-    stats.last_active = now;
-    stats.is_auto_discardable = false;
-    stats.child_process_host_id = kAutoDiscardable;
-    test_list.push_back(stats);
-  }
-
-  std::sort(test_list.begin(), test_list.end(), TabManager::CompareTabStats);
-
-  int index = 0;
-  EXPECT_EQ(kAutoDiscardable, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kFormEntry, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kPlayingAudio, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kPinned, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kOldButPinned, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kApp, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kRecent, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kOld, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kReallyOld, test_list[index++].child_process_host_id);
-  EXPECT_EQ(kInternalPage, test_list[index++].child_process_host_id);
-}
-
 TEST_F(TabManagerTest, IsInternalPage) {
   EXPECT_TRUE(TabManager::IsInternalPage(GURL(chrome::kChromeUIDownloadsURL)));
   EXPECT_TRUE(TabManager::IsInternalPage(GURL(chrome::kChromeUIHistoryURL)));
@@ -408,124 +311,6 @@ TEST_F(TabManagerTest, IsInternalPage) {
   // Prefix matches are included.
   EXPECT_TRUE(
       TabManager::IsInternalPage(GURL("chrome://settings/fakeSetting")));
-}
-
-// Ensures discarding tabs leaves TabStripModel in a good state.
-TEST_F(TabManagerTest, DiscardWebContentsAt) {
-  // Create a tab strip in a visible and active window.
-  TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
-  tabstrip.AddObserver(tab_manager_);
-
-  BrowserInfo browser_info;
-  browser_info.tab_strip_model = &tabstrip;
-  browser_info.window_is_minimized = false;
-  browser_info.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info);
-
-  // Fill it with some tabs.
-  WebContents* contents1 = CreateWebContents();
-  tabstrip.AppendWebContents(contents1, true);
-  WebContents* contents2 = CreateWebContents();
-  tabstrip.AppendWebContents(contents2, true);
-
-  // Start watching for events after the appends to avoid observing state
-  // transitions that aren't relevant to this test.
-  MockTabStripModelObserver tabstrip_observer;
-  tabstrip.AddObserver(&tabstrip_observer);
-
-  // Discard one of the tabs.
-  WebContents* null_contents1 = tab_manager_->DiscardWebContentsAt(
-      0, &tabstrip, DiscardReason::kProactive);
-  ASSERT_EQ(2, tabstrip.count());
-  EXPECT_TRUE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-  ASSERT_EQ(null_contents1, tabstrip.GetWebContentsAt(0));
-  ASSERT_EQ(contents2, tabstrip.GetWebContentsAt(1));
-  ASSERT_EQ(1, tabstrip_observer.NbEvents());
-  EXPECT_EQ(contents1, tabstrip_observer.OldContents());
-  EXPECT_EQ(null_contents1, tabstrip_observer.NewContents());
-  tabstrip_observer.Reset();
-
-  // Discard the same tab again, after resetting its discard state.
-  tab_manager_->GetWebContentsData(tabstrip.GetWebContentsAt(0))
-      ->SetDiscardState(false);
-  WebContents* null_contents2 = tab_manager_->DiscardWebContentsAt(
-      0, &tabstrip, DiscardReason::kProactive);
-  ASSERT_EQ(2, tabstrip.count());
-  EXPECT_TRUE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-  ASSERT_EQ(null_contents2, tabstrip.GetWebContentsAt(0));
-  ASSERT_EQ(contents2, tabstrip.GetWebContentsAt(1));
-  ASSERT_EQ(1, tabstrip_observer.NbEvents());
-  EXPECT_EQ(null_contents1, tabstrip_observer.OldContents());
-  EXPECT_EQ(null_contents2, tabstrip_observer.NewContents());
-
-  // Activating the tab should clear its discard state.
-  tabstrip.ActivateTabAt(0, true /* user_gesture */);
-  ASSERT_EQ(2, tabstrip.count());
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-
-  tabstrip.CloseAllTabs();
-  EXPECT_TRUE(tabstrip.empty());
-}
-
-// Makes sure that reloading a discarded tab without activating it unmarks the
-// tab as discarded so it won't reload on activation.
-TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
-  // Note that we do not add |tab_manager| as an observer to |tabstrip| here as
-  // the event we are trying to test for is not related to the tab strip, but
-  // the web content instead and therefore should be handled by WebContentsData
-  // (which observes the web content).
-  TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
-
-  // Create 2 tabs because the active tab cannot be discarded.
-  tabstrip.AppendWebContents(CreateWebContents(), true);
-  content::WebContents* test_contents =
-      WebContentsTester::CreateTestWebContents(browser_context(), nullptr);
-  tabstrip.AppendWebContents(test_contents, false);  // Opened in background.
-
-  // Navigate to a web page. This is necessary to set a current entry in memory
-  // so the reload can happen.
-  WebContentsTester::For(test_contents)
-      ->NavigateAndCommit(GURL("chrome://newtab"));
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-
-  tab_manager_->DiscardWebContentsAt(1, &tabstrip, DiscardReason::kProactive);
-  EXPECT_TRUE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-
-  tabstrip.GetWebContentsAt(1)->GetController().Reload(
-      content::ReloadType::NORMAL, false);
-  EXPECT_FALSE(tab_manager_->IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-  tabstrip.CloseAllTabs();
-  EXPECT_TRUE(tabstrip.empty());
-}
-
-// Makes sure that the last active time property is saved even though the tab is
-// discarded.
-TEST_F(TabManagerTest, DiscardedTabKeepsLastActiveTime) {
-  TabStripDummyDelegate delegate;
-  TabStripModelImpl tabstrip(&delegate, profile());
-  tabstrip.AddObserver(tab_manager_);
-
-  tabstrip.AppendWebContents(CreateWebContents(), true);
-  WebContents* test_contents = CreateWebContents();
-  tabstrip.AppendWebContents(test_contents, false);
-
-  // Simulate an old inactive tab about to get discarded.
-  base::TimeTicks new_last_active_time =
-      NowTicks() - base::TimeDelta::FromMinutes(35);
-  test_contents->SetLastActiveTime(new_last_active_time);
-  EXPECT_EQ(new_last_active_time, test_contents->GetLastActiveTime());
-
-  WebContents* null_contents = tab_manager_->DiscardWebContentsAt(
-      1, &tabstrip, DiscardReason::kProactive);
-  EXPECT_EQ(new_last_active_time, null_contents->GetLastActiveTime());
-
-  tabstrip.CloseAllTabs();
-  EXPECT_TRUE(tabstrip.empty());
 }
 
 TEST_F(TabManagerTest, DefaultTimeToPurgeInCorrectRange) {
@@ -574,12 +359,7 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripDummyDelegate delegate;
   TabStripModelImpl tabstrip(&delegate, profile());
   tabstrip.AddObserver(tab_manager_);
-
-  BrowserInfo browser_info;
-  browser_info.tab_strip_model = &tabstrip;
-  browser_info.window_is_minimized = false;
-  browser_info.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info);
+  tabstrip.AddObserver(&tab_lifecycle_unit_source_);
 
   WebContents* tab1 = CreateWebContents();
   WebContents* tab2 = CreateWebContents();
@@ -610,61 +390,6 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   tabstrip.CloseAllTabs();
 }
 
-// Verify that the |is_in_visible_window| field of TabStats returned by
-// GetUnsortedTabStats() is set correctly.
-TEST_F(TabManagerTest, GetUnsortedTabStatsIsInVisibleWindow) {
-  TabStripDummyDelegate delegate;
-
-  WebContents* web_contents1a = CreateWebContents();
-  WebContents* web_contents1b = CreateWebContents();
-  WebContents* web_contents2a = CreateWebContents();
-  WebContents* web_contents2b = CreateWebContents();
-
-  // Create 2 TabStripModels.
-  TabStripModelImpl tab_strip1(&delegate, profile());
-  tab_strip1.AppendWebContents(web_contents1a, true);
-  tab_strip1.AppendWebContents(web_contents1b, false);
-
-  TabStripModelImpl tab_strip2(&delegate, profile());
-  tab_strip2.AppendWebContents(web_contents2a, true);
-  tab_strip2.AppendWebContents(web_contents2b, false);
-
-  // Add the 2 TabStripModels to the TabManager.
-  // The window for |tab_strip1| is visible while the window for |tab_strip2| is
-  // minimized.
-  BrowserInfo browser_info1;
-  browser_info1.tab_strip_model = &tab_strip1;
-  browser_info1.window_is_minimized = false;
-  browser_info1.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info1);
-
-  BrowserInfo browser_info2;
-  browser_info2.tab_strip_model = &tab_strip2;
-  browser_info2.window_is_minimized = true;
-  browser_info2.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info2);
-
-  // Get TabStats and verify the the |is_in_visible_window| field of each
-  // TabStats is set correctly.
-  auto tab_stats = tab_manager_->GetUnsortedTabStats();
-
-  ASSERT_EQ(4U, tab_stats.size());
-
-  EXPECT_EQ(tab_stats[0].id, tab_manager_->IdFromWebContents(web_contents1a));
-  EXPECT_EQ(tab_stats[1].id, tab_manager_->IdFromWebContents(web_contents1b));
-  EXPECT_EQ(tab_stats[2].id, tab_manager_->IdFromWebContents(web_contents2a));
-  EXPECT_EQ(tab_stats[3].id, tab_manager_->IdFromWebContents(web_contents2b));
-
-  EXPECT_TRUE(tab_stats[0].is_in_visible_window);
-  EXPECT_TRUE(tab_stats[1].is_in_visible_window);
-  EXPECT_FALSE(tab_stats[2].is_in_visible_window);
-  EXPECT_FALSE(tab_stats[3].is_in_visible_window);
-
-  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
-  tab_strip1.CloseAllTabs();
-  tab_strip2.CloseAllTabs();
-}
-
 // Data race on Linux. http://crbug.com/787842
 #if defined(OS_LINUX)
 #define MAYBE_DiscardTabWithNonVisibleTabs DISABLED_DiscardTabWithNonVisibleTabs
@@ -673,35 +398,28 @@ TEST_F(TabManagerTest, GetUnsortedTabStatsIsInVisibleWindow) {
 #endif
 
 // Verify that:
-// - On ChromeOS, DiscardTab can discard every tab in a non-visible window, but
-//   cannot discard the active tab in a visible window.
-// - On other platforms, DiscardTab can discard every non-active tab.
+// - On ChromeOS, DiscardTab can discard every non-visible tab, but cannot
+//   discard a visible tab.
+// - On other platforms, DiscardTab can discard every tab that is not active in
+//   its tab strip.
 TEST_F(TabManagerTest, MAYBE_DiscardTabWithNonVisibleTabs) {
   TabStripDummyDelegate delegate;
 
-  // Create 2 TabStripModels.
+  // Create 2 tab strips. Simulate the second tab strip being hidden by hiding
+  // its active tab.
   TabStripModelImpl tab_strip1(&delegate, profile());
+  tab_strip1.AddObserver(&tab_lifecycle_unit_source_);
   tab_strip1.AppendWebContents(CreateWebContents(), true);
   tab_strip1.AppendWebContents(CreateWebContents(), false);
+  tab_strip1.GetWebContentsAt(0)->WasShown();
+  tab_strip1.GetWebContentsAt(1)->WasHidden();
 
   TabStripModelImpl tab_strip2(&delegate, profile());
+  tab_strip2.AddObserver(&tab_lifecycle_unit_source_);
   tab_strip2.AppendWebContents(CreateWebContents(), true);
   tab_strip2.AppendWebContents(CreateWebContents(), false);
-
-  // Add the 2 TabStripModels to the TabManager.
-  // The window for |tab_strip1| is visible while the window for |tab_strip2|
-  // is minimized.
-  BrowserInfo browser_info1;
-  browser_info1.tab_strip_model = &tab_strip1;
-  browser_info1.window_is_minimized = false;
-  browser_info1.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info1);
-
-  BrowserInfo browser_info2;
-  browser_info2.tab_strip_model = &tab_strip2;
-  browser_info2.window_is_minimized = true;
-  browser_info2.browser_is_app = false;
-  tab_manager_->test_browser_info_list_.push_back(browser_info2);
+  tab_strip2.GetWebContentsAt(0)->WasHidden();
+  tab_strip2.GetWebContentsAt(1)->WasHidden();
 
   // Fast-forward time until no tab is protected from being discarded for having
   // recently been used.
@@ -718,11 +436,12 @@ TEST_F(TabManagerTest, MAYBE_DiscardTabWithNonVisibleTabs) {
   EXPECT_TRUE(tab_manager_->IsTabDiscarded(tab_strip2.GetWebContentsAt(1)));
 
 #if defined(OS_CHROMEOS)
-  // On ChromeOS, active tab in a minimized window should be discarded.
+  // On ChromeOS, a non-visible tab should be discarded even if it's active in
+  // its tab strip.
   EXPECT_TRUE(tab_manager_->IsTabDiscarded(tab_strip2.GetWebContentsAt(0)));
 #else
-  // On other platforms, an active tab is never discarded, even if its window is
-  // minimized.
+  // On other platforms, an active tab is never discarded, even if it's not
+  // visible.
   EXPECT_FALSE(tab_manager_->IsTabDiscarded(tab_strip2.GetWebContentsAt(0)));
 #endif  // defined(OS_CHROMEOS)
 

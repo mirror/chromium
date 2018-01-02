@@ -71,9 +71,11 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   // LifecycleUnit:
   base::string16 GetTitle() const override;
   std::string GetIconURL() const override;
+  TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() override;
   SortKey GetSortKey() const override;
   State GetState() const override;
   int GetEstimatedMemoryFreedOnDiscardKB() const override;
+  bool CanPurge() const override;
   bool CanDiscard(DiscardReason reason) const override;
   bool Discard(DiscardReason discard_reason) override;
 
@@ -81,7 +83,7 @@ class TabLifecycleUnitSource::TabLifecycleUnit
   content::WebContents* GetWebContents() const override;
   bool IsAutoDiscardable() const override;
   void SetAutoDiscardable(bool auto_discardable) override;
-  void DiscardTab() override;
+  bool DiscardTab() override;
   bool IsDiscarded() const override;
 
  private:

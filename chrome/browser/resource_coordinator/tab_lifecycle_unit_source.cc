@@ -26,6 +26,7 @@ TabLifecycleUnitSource::TabLifecycleUnitSource()
   DCHECK(BrowserList::GetInstance()->empty());
   browser_tab_strip_tracker_.Init();
   instance_ = this;
+  UpdateFocusedTab();
 }
 
 TabLifecycleUnitSource::~TabLifecycleUnitSource() {
@@ -65,7 +66,9 @@ void TabLifecycleUnitSource::SetFocusedTabStripModelForTesting(
 TabStripModel* TabLifecycleUnitSource::GetFocusedTabStripModel() const {
   if (focused_tab_strip_model_for_testing_)
     return focused_tab_strip_model_for_testing_;
-  Browser* const focused_browser = chrome::FindBrowserWithActiveWindow();
+  // Using FindLastActive() rather FindBrowserWithActiveWindow() avoids
+  // flakiness when focus changes during browser tests.
+  Browser* const focused_browser = chrome::FindLastActive();
   if (!focused_browser)
     return nullptr;
   return focused_browser->tab_strip_model();
