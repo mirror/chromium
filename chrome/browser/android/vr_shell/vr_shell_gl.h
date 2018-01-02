@@ -114,7 +114,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
       device::mojom::VRPresentationProviderRequest request,
-      device::mojom::VRDisplayInfoPtr display_info);
+      device::mojom::VRDisplayInfoPtr display_info,
+      device::mojom::VRRequestPresentOptionsPtr present_options);
 
   void set_is_exiting(bool exiting) { is_exiting_ = exiting; }
 
@@ -125,6 +126,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
  private:
   void GvrInit(gvr_context* gvr_api);
+  device::mojom::VRDisplayFrameTransportOptionsPtr
+  GetWebVrFrameTransportOptions();
   void InitializeRenderer();
   // Returns true if successfully resized.
   bool ResizeForWebVR(int16_t frame_index);
@@ -160,6 +163,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnWebVrFrameTimedOut();
 
   base::TimeDelta GetPredictedFrameTime();
+  void AddWebVrRenderTimeEstimate(int16_t frame_index,
+                                  base::TimeTicks submit_start,
+                                  base::TimeTicks submit_done);
 
   void OnVSync(base::TimeTicks frame_time);
 
@@ -177,6 +183,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void ForceExitVr();
 
+  bool ShouldSkipVSync();
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
   void ClosePresentationBindings();
@@ -184,8 +191,9 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // samplerExternalOES texture data for WebVR content image.
   int webvr_texture_id_ = 0;
 
-  // Set from feature flag.
+  // Set from feature flags.
   bool webvr_vsync_align_;
+  bool webvr_experimental_rendering_;
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
@@ -211,6 +219,15 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
+
+  // WebVR currently supports multiple render path choices, with runtime
+  // selection based on underlying support being available and feature flags.
+  // The webvr_use_* booleans choose among the implementations. Please don't
+  // check webvr_experimental_rendering_ or other feature flags in individual
+  // code paths directly to avoid inconsistent logic.
+  bool webvr_use_gpu_fence_ = false;
+
+  int webvr_unstuff_ratelimit_frames_ = 0;
 
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
