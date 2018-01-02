@@ -245,6 +245,11 @@ PlayerUtils.registerEMEEventListeners = function(player) {
   return navigator
       .requestMediaKeySystemAccess(player.testConfig.keySystem, [config])
       .then(function(access) {
+        return new Promise(resolve => {
+          window.setTimeout(resolve, 1, access);
+        });
+      })
+      .then(function(access) {
         player.access = access;
         return access.createMediaKeys();
       })
