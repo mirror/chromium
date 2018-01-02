@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e26f42e1_87248576",
+        "filename": "ui/gfx/codec/png_codec.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2018-01-02T15:46:32Z",
+      "side": 0,
+      "message": "do we not need this check?",
+      "range": {
+        "startLine": 448,
+        "startChar": 4,
+        "endLine": 448,
+        "endChar": 20
+      },
+      "revId": "17f533a1b0d19ccc689b0a5b7a8837eef1395970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
