@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07bc5b0_56974189",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-02T09:40:39Z",
+      "side": 1,
+      "message": "nit: just initialise to a list\n\n  ARC_COMPILED_GUARD \u003d [\n      \u0027#if !defined(__has_feature) || !__has_feature(objc_arc)\u0027,\n      \u0027#error \"This file requires ARC support.\"\u0027,\n      \u0027#endif\u0027,\n  ]",
+      "revId": "749c46f1339dfc181812763117540193955843ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ad7e19_3dcc6f66",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-02T09:40:39Z",
+      "side": 1,
+      "message": "nit: add a documentation string\n\n  def IsSubListOf(needle, hay):\n    \"\"\"Returns whether there is a slice of |hay| equal to |needle|.\"\"\"\n    ...",
+      "revId": "749c46f1339dfc181812763117540193955843ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
