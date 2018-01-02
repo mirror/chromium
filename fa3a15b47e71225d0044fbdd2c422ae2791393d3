@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e87fe3b_5520eefa",
+        "filename": "chrome/browser/ui/ash/accessibility/ax_tree_source_aura_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T19:29:21Z",
+      "side": 1,
+      "message": "The aura desktop tree only ever has one tree root, so I\u0027m unsure why this needs to be changed.",
+      "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a56314d2_c71e940a",
+        "filename": "chrome/browser/ui/aura/accessibility/ax_tree_source_aura.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T19:29:21Z",
+      "side": 1,
+      "message": "This isn\u0027t quite equivalent. Still some tree sources that use -1 as a default.",
+      "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fe6314e_67e5fde2",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T19:29:21Z",
+      "side": 1,
+      "message": "As is, this won\u0027t work. These wrapper objects are keyed off of their backing view/widget/window. There are still references to GetID using the AXAuraObjCache in AXWindowObjWrapper, for instance. There would be a weird split between the AXWindowObjWrapper using AXAuraObjCache id\u0027s and AXViewWrapper using ids from your unique id counter and they won\u0027t be guaranteed to be unique...",
+      "revId": "fa3a15b47e71225d0044fbdd2c422ae2791393d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
