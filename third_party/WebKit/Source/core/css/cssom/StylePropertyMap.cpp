@@ -33,11 +33,10 @@ CSSValueList* CssValueListForPropertyID(CSSPropertyID property_id) {
 }
 
 const CSSValue* StyleValueToCSSValue(CSSPropertyID property_id,
-                                     const CSSStyleValue& style_value,
-                                     SecureContextMode secure_context_mode) {
+                                     const CSSStyleValue& style_value) {
   if (!CSSOMTypes::PropertyCanTake(property_id, style_value))
     return nullptr;
-  return style_value.ToCSSValueWithProperty(property_id, secure_context_mode);
+  return style_value.ToCSSValueWithProperty(property_id);
 }
 
 const CSSValue* CoerceStyleValuesOrStringsToCSSValues(
@@ -60,8 +59,7 @@ const CSSValue* CoerceStyleValuesOrStringsToCSSValues(
         return nullptr;
 
       const CSSValue* css_value =
-          StyleValueToCSSValue(property_id, *value.GetAsCSSStyleValue(),
-                               parser_context->GetSecureContextMode());
+          StyleValueToCSSValue(property_id, *value.GetAsCSSStyleValue());
       if (!css_value)
         return nullptr;
 
@@ -74,8 +72,8 @@ const CSSValue* CoerceStyleValuesOrStringsToCSSValues(
         return nullptr;
 
       for (const auto& subvalue : subvalues) {
-        const CSSValue* css_value = StyleValueToCSSValue(
-            property_id, *subvalue, parser_context->GetSecureContextMode());
+        const CSSValue* css_value =
+            StyleValueToCSSValue(property_id, *subvalue);
         if (!css_value)
           return nullptr;
 
