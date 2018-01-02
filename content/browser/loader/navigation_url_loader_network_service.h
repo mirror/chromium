@@ -76,6 +76,8 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   // attribute.
   base::Optional<std::string> suggested_filename_;
 
+  base::Optional<url::Origin> request_initiator_;
+
   // Current URL that is being navigated, updated after redirection.
   GURL url_;
 
