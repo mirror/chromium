@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79125174_a461fe81",
+        "filename": "ipc/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "This really shouldn\u0027t need to depend on the parsed mojom.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db4aaa7_054c35cf",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "Use __ for internal targets.",
+      "range": {
+        "startLine": 327,
+        "startChar": 40,
+        "endLine": 327,
+        "endChar": 47
+      },
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34949ba6_45aa46b2",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 353,
+        "startChar": 38,
+        "endLine": 353,
+        "endChar": 45
+      },
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519f6cdb_49922137",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "Source sets are for groupings of C/C++ files. You probably want to use a group here.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c8c5d6_507a3b01",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "This probably should be public too.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50a1551_191fc594",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "cPickle",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4addf26d_9a90a901",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "I think this can go now.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103e65de_b4e81696",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "I suspect you won\u0027t get a mojom.error.Error from (un)pickling.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369d3a9b_369f5233",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "You\u0027ll need to replace this since |_parsed_files| is no longer populated.",
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1359866f_00e559f1",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-02T04:30:55Z",
+      "side": 1,
+      "message": "Consider _GetPicklePath() instead. PicklePath sounds like it\u0027s pickling a path.",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "33353cc6105fbd2796ef2f090fcda7316f57fb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
