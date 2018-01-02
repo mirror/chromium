@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "36d85901_dc6c0cef",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-02T19:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f8b86e_de58cd1e",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b010c4f1_4ec64db6",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 10
@@ -248,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "e27689f5_bb5eb92b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-02T19:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d8c8d0e_56325834",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2355a7_01ba146b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 10
@@ -298,6 +334,24 @@
       "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e80d5a_f01c464f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-02T19:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7b57ec_2cb84a0d",
+      "revId": "3c1800dd58481250dc01a7426e3ae962e5581dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
