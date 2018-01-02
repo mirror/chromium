@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abe721d4_a509222d",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-02T20:57:08Z",
+      "side": 1,
+      "message": "Will it cause any problem in the scenario: in login screen, suppose there is already one user. Now click on the \"Add person\" button, and then click \"Back\" to cancel the dialog, will the wallpaper go back to the existing user\u0027s wallpaper?",
+      "revId": "925546cf1f7ad1a3782ec5d4e27b9090b8ecd9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
