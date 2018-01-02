@@ -89,7 +89,9 @@ class VIEWS_EXPORT MenuItemView : public View {
     CHECKBOX,
     RADIO,
     SEPARATOR,
-    EMPTY
+    EMPTY,
+    BUTTON,
+    CHECKBUTTON
   };
 
   // Where the menu should be drawn, above or below the bounds (when
@@ -172,6 +174,11 @@ class VIEWS_EXPORT MenuItemView : public View {
   // type       The type of item.
   MenuItemView* AppendMenuItem(int item_id,
                                const base::string16& label,
+                               Type type);
+  // prototype
+  MenuItemView* AppendMenuItem(int item_id,
+                               const base::string16& label,
+                               gfx::ImageSkia& icon,
                                Type type);
 
   // Append a submenu to this menu.

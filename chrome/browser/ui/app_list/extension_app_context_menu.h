@@ -49,6 +49,7 @@ class ExtensionAppContextMenu : public AppContextMenu {
 
  private:
   bool is_platform_app_ = false;
+  bool is_touchable_app_context_menu_enabled_;
 
   std::unique_ptr<extensions::ContextMenuMatcher> extension_menu_items_;
 

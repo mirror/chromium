@@ -21,6 +21,9 @@
 #include "base/metrics/user_metrics.h"
 #include "base/numerics/safe_conversions.h"
 #include "components/prefs/pref_service.h"
+#include "components/vector_icons/vector_icons.h"
+#include "ui/app_list/app_list_features.h"
+#include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image.h"
 
@@ -160,8 +163,12 @@ ShelfContextMenuModel::ShelfContextMenuModel(MenuItemList menu_items,
     : ui::SimpleMenuModel(this),
       menu_items_(std::move(menu_items)),
       delegate_(delegate),
-      display_id_(display_id) {
+      display_id_(display_id),
+      is_touchable_app_context_menu_enabled_(
+          app_list::features::IsTouchableAppContextMenuEnabled())  {
   // Append some menu items that are handled locally by Ash.
+// fix this logic.
+  if (!is_touchable_app_context_menu_enabled_ || (is_touchable_app_context_menu_enabled_ && !delegate_))
   AddLocalMenuItems(&menu_items_, display_id);
   AddItems(this, this, menu_items_, &submenus_);
 }
@@ -175,30 +182,45 @@ void ShelfContextMenuModel::AddItems(ui::SimpleMenuModel* model,
                                      SubmenuList* submenus) {
   for (const mojom::MenuItemPtr& item : items) {
     switch (item->type) {
-      case ui::MenuModel::TYPE_COMMAND:
+    case ui::MenuModel::TYPE_COMMAND:
+      // problem: get the google black icon asset into the resources available
+      // to this class. warx had a cl for this.
+      if (app_list::features::IsTouchableAppContextMenuEnabled())
+        model->AddButton(item->command_id, item->label,
+                         vector_icons::kBluetoothConnectedIcon);
+      else
         model->AddItem(item->command_id, item->label);
-        break;
-      case ui::MenuModel::TYPE_CHECK:
+      break;
+    case ui::MenuModel::TYPE_CHECK:
+      if (app_list::features::IsTouchableAppContextMenuEnabled())
+        model->AddCheckButton(item->command_id, item->label,
+                              vector_icons::kBluetoothConnectedIcon);
+      else
         model->AddCheckItem(item->command_id, item->label);
-        break;
-      case ui::MenuModel::TYPE_RADIO:
-        model->AddRadioItem(item->command_id, item->label,
-                            item->radio_group_id);
-        break;
-      case ui::MenuModel::TYPE_SEPARATOR:
+      break;
+    case ui::MenuModel::TYPE_RADIO:
+      model->AddRadioItem(item->command_id, item->label,
+                          item->radio_group_id);
+      break;
+    case ui::MenuModel::TYPE_SEPARATOR:
+      if (!app_list::features::IsTouchableAppContextMenuEnabled())
         model->AddSeparator(ui::NORMAL_SEPARATOR);
-        break;
-      case ui::MenuModel::TYPE_BUTTON_ITEM:
-        NOTREACHED() << "TYPE_BUTTON_ITEM is not yet supported.";
-      case ui::MenuModel::TYPE_SUBMENU:
-        if (item->submenu.has_value()) {
-          std::unique_ptr<ui::MenuModel> submenu =
-              std::make_unique<ShelfContextSubMenuModel>(
-                  delegate, item->submenu.value(), submenus);
-          model->AddSubMenu(item->command_id, item->label, submenu.get());
-          submenus->push_back(std::move(submenu));
-        }
-        break;
+      break;
+    case ui::MenuModel::TYPE_BUTTON_ITEM:
+      NOTREACHED() << "TYPE_BUTTON_ITEM is not yet supported.";
+    case ui::MenuModel::TYPE_SUBMENU:
+      if (item->submenu.has_value()) {
+        std::unique_ptr<ui::MenuModel> submenu =
+            std::make_unique<ShelfContextSubMenuModel>(
+                delegate, item->submenu.value(), submenus);
+        model->AddSubMenu(item->command_id, item->label, submenu.get());
+        submenus->push_back(std::move(submenu));
+      }
+      break;
+    case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+    case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+      LOG(ERROR) << "pls";
+      break;
     }
     if (!item->image.isNull()) {
       model->SetIcon(model->GetIndexOfCommandId(item->command_id),

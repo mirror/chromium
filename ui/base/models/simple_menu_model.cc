@@ -95,6 +95,52 @@ void SimpleMenuModel::AddItem(int command_id, const base::string16& label) {
   AppendItem(item);
 }
 
+void SimpleMenuModel::AddButton(int command_id,
+                                const base::string16& label,
+                                const gfx::VectorIcon& icon) {
+  Item item = {command_id,
+               label,
+               base::string16(),
+               base::string16(),
+               gfx::Image(gfx::CreateVectorIcon(
+                   icon, 24, SkColorSetARGBMacro(0xDE, 0x00, 0x00, 0x00))),
+               TYPE_TOUCHABLE_BUTTON,
+               -1,
+               NULL,
+               NULL,
+               NORMAL_SEPARATOR};
+  AppendItem(item);
+}
+
+void SimpleMenuModel::AddButtonWithStringId(int command_id,
+                                            int string_id,
+                                            const gfx::VectorIcon& icon) {
+  AddButton(command_id, l10n_util::GetStringUTF16(string_id), icon);
+}
+
+void SimpleMenuModel::AddCheckButton(int command_id,
+                                     const base::string16& label,
+                                     const gfx::VectorIcon& icon) {
+  Item item = {command_id,
+               label,
+               base::string16(),
+               base::string16(),
+               gfx::Image(gfx::CreateVectorIcon(
+                   icon, 24, SkColorSetARGBMacro(0xDE, 0x00, 0x00, 0x00))),
+               TYPE_TOUCHABLE_CHECK_BUTTON,
+               -1,
+               NULL,
+               NULL,
+               NORMAL_SEPARATOR};
+  AppendItem(item);
+}
+
+void SimpleMenuModel::AddCheckButtonWithStringId(int command_id,
+                                                 int string_id,
+                                                 const gfx::VectorIcon& icon) {
+  AddCheckButton(command_id, l10n_util::GetStringUTF16(string_id), icon);
+}
+
 void SimpleMenuModel::AddItemWithStringId(int command_id, int string_id) {
   AddItem(command_id, l10n_util::GetStringUTF16(string_id));
 }

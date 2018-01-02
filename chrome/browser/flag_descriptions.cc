@@ -530,6 +530,12 @@ const char kEnablePixelCanvasRecordingDescription[] =
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
+extern const char kEnableTouchableAppContextMenuName[] =
+    "Enable Touchable App Context Menus.";
+extern const char kEnableTouchableAppContextMenuDescription[] =
+    "Enable the new app context menus which will be active on the shelf and "
+    "launcher.";
+
 extern const char kEnableTouchpadAndWheelScrollLatchingName[] =
     "Wheel Scroll Latching.";
 extern const char kEnableTouchpadAndWheelScrollLatchingDescription[] =

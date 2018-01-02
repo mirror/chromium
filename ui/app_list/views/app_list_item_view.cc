@@ -34,6 +34,9 @@
 #include "ui/views/controls/progress_bar.h"
 #include "ui/views/drag_controller.h"
 
+#include "ui/app_list/app_list_features.h"
+#include "ui/views/layout/grid_layout.h"
+
 namespace app_list {
 
 namespace {
@@ -49,6 +52,23 @@ constexpr int kMouseDragUIDelayInMs = 200;
 // ET_GESTURE_LONG_PRESS delay, which is too long for this case, e.g., about
 // 650ms.
 constexpr int kTouchLongpressDelayInMs = 300;
+
+class TouchableAppContextMenuHost : public views::View {
+  public:
+  TouchableAppContextMenuHost(gfx::NativeWindow parent_window, ui::MenuModel* menu_model) {
+    views::GridLayout* grid_layout = SetLayoutManager(std::make_unique<views::GridLayout>(this));
+
+  }
+  ~TouchableAppContextMenuHost() override;
+
+  // Closes the touchable context menu.
+  void Close() {
+  }
+
+  // List of context menu options.
+  ui::MenuModel* menu_model_;
+  // UI elements of the touchable context menu.
+};
 
 }  // namespace
 
@@ -265,6 +285,7 @@ void AppListItemView::SetItemPercentDownloaded(int percent_downloaded) {
 void AppListItemView::ShowContextMenuForView(views::View* source,
                                              const gfx::Point& point,
                                              ui::MenuSourceType source_type) {
+
   if (context_menu_runner_ && context_menu_runner_->IsRunning())
     return;
 
@@ -275,12 +296,20 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
 
   if (!apps_grid_view_->IsSelectedView(this))
     apps_grid_view_->ClearAnySelectedView();
+
+  if (features::IsTouchableAppContextMenuEnabled()) {
+
+    gfx::NativeWindow parent = GetWidget()->GetNativeWindow();
+    views::View* touchable_context_menu_view = new TouchableAppContextMenuHost(parent, menu_model);
+    return;
+  } else {
   int run_types = views::MenuRunner::HAS_MNEMONICS |
                   views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
   context_menu_runner_.reset(new views::MenuRunner(menu_model, run_types));
   context_menu_runner_->RunMenuAt(GetWidget(), NULL,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);
+  }
 }
 
 void AppListItemView::StateChanged(ButtonState old_state) {
