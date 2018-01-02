@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "4c6a8c7c_74096084",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-02T18:32:05Z",
+      "side": 1,
+      "message": "\u003e \u003e Seems ok to me, though I\u0027d defer this to url/ OWNERS.\n\u003e \n\u003e Ack.\n\u003e \n\u003e \u003e It does seem like we\u0027ve got a few of these aliases for URLs, though not origins AFAICT.  Maybe those could be simplified with a similar macro for GURLs.\n\u003e \n\u003e Yes.  I planned to do that when moving the DEBUG_ALIAS_FOR_CSTR to //base (to justify having something in //base, there need to be 3 independent usages somewhere).  OTOH, I could potentially include this change in the current CL.  WDYT?\n\nsgtm; seems fine to do the move to //base in a followup and land this CL sooner.",
+      "parentUuid": "b9768648_27df6cad",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0abeb6a5_19fe5d70",
         "filename": "url/origin.h",
         "patchSetId": 2
