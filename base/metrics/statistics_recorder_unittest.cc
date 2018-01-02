@@ -82,13 +82,11 @@ class StatisticsRecorderTest : public testing::TestWithParam<bool> {
 
   void InitializeStatisticsRecorder() {
     DCHECK(!statistics_recorder_);
-    StatisticsRecorder::UninitializeForTesting();
     statistics_recorder_ = StatisticsRecorder::CreateTemporaryForTesting();
   }
 
   void UninitializeStatisticsRecorder() {
     statistics_recorder_.reset();
-    StatisticsRecorder::UninitializeForTesting();
   }
 
   Histogram* CreateHistogram(const char* name,
@@ -106,15 +104,11 @@ class StatisticsRecorderTest : public testing::TestWithParam<bool> {
     delete histogram;
   }
 
-  void InitLogOnShutdown() {
-    DCHECK(statistics_recorder_);
-    statistics_recorder_->InitLogOnShutdownWithoutLock();
-  }
+  void InitLogOnShutdown() { StatisticsRecorder::InitLogOnShutdown(); }
 
-  bool VLogInitialized() {
-    DCHECK(statistics_recorder_);
-    return statistics_recorder_->vlog_initialized_;
-  }
+  bool VLogInitialized() { return StatisticsRecorder::vlog_initialized_; }
+
+  void ResetVLogInitialized() { StatisticsRecorder::vlog_initialized_ = false; }
 
   const bool use_persistent_histogram_allocator_;
 
@@ -625,6 +619,7 @@ TEST_P(StatisticsRecorderTest, CallbackUsedBeforeHistogramCreatedTest) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownNotInitialized) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_WARNING);
   InitializeStatisticsRecorder();
   EXPECT_FALSE(VLOG_IS_ON(1));
@@ -635,6 +630,7 @@ TEST_P(StatisticsRecorderTest, LogOnShutdownNotInitialized) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownInitializedExplicitly) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_WARNING);
   InitializeStatisticsRecorder();
   EXPECT_FALSE(VLOG_IS_ON(1));
@@ -647,6 +643,7 @@ TEST_P(StatisticsRecorderTest, LogOnShutdownInitializedExplicitly) {
 
 TEST_P(StatisticsRecorderTest, LogOnShutdownInitialized) {
   UninitializeStatisticsRecorder();
+  ResetVLogInitialized();
   logging::SetMinLogLevel(logging::LOG_VERBOSE);
   InitializeStatisticsRecorder();
   EXPECT_TRUE(VLOG_IS_ON(1));
