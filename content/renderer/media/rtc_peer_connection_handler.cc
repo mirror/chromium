@@ -293,6 +293,20 @@ void GetNativeRtcConfiguration(
       NOTREACHED();
   }
 
+  switch (blink_config.sdp_format) {
+    case blink::WebRTCSdpFormat::kDefault:
+      webrtc_config->sdp_semantics = webrtc::SdpSemantics::kDefault;
+      break;
+    case blink::WebRTCSdpFormat::kPlanB:
+      webrtc_config->sdp_semantics = webrtc::SdpSemantics::kPlanB;
+      break;
+    case blink::WebRTCSdpFormat::kUnifiedPlan:
+      webrtc_config->sdp_semantics = webrtc::SdpSemantics::kUnifiedPlan;
+      break;
+    default:
+      NOTREACHED();
+  }
+
   webrtc_config->certificates.clear();
   for (const std::unique_ptr<blink::WebRTCCertificate>& blink_certificate :
        blink_config.certificates) {
