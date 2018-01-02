@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "74565ae1_5982c6f9",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-02T22:45:38Z",
+      "side": 1,
+      "message": "Cool. Yeah, this loop was making my head go wild.\n\nCan we modify these comments to indicate that kHintIsAdvisory is only true on POSIX?  As is, the code is actually gated on kHintIsAdvisory, so when reading the comment, it seems like the \"POSIX only\" and \"Windows only\" attributes are intrinsic to their memory subsystem APIs when in fact, it\u0027s an inference made by our compile time constants that happens to correlate with platform...",
+      "parentUuid": "9c480cd6_f7d023c3",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a86d32_1cc7f541",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 12
