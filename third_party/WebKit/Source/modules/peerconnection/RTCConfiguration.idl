@@ -24,6 +24,12 @@ enum RTCRtcpMuxPolicy {
     "require"
 };
 
+// Nonstandard
+enum SdpFormat {
+  "plan-b",
+  "unified-plan"
+};
+
 // https://w3c.github.io/webrtc-pc/#rtcconfiguration-dictionary
 
 dictionary RTCConfiguration {
@@ -39,4 +45,6 @@ dictionary RTCConfiguration {
     // TODO(foolip): DOMString peerIdentity;
     sequence<RTCCertificate> certificates;
     [EnforceRange] octet iceCandidatePoolSize = 0;
+    // Nonstandard, added for Unified Plan migration
+    [RuntimeEnabled=WebRTCUnifiedPlan] SdpFormat sdpFormat = "plan-b";
 };

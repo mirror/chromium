@@ -278,10 +278,21 @@ WebRTCConfiguration ParseConfiguration(ExecutionContext* context,
   } else {
     DCHECK_EQ(rtcp_mux_policy_string, "require");
   }
+
+  WebRTCSdpFormat sdp_format = WebRTCSdpFormat::kDefault;
+  String sdp_format_string = configuration.sdpFormat();
+  if (sdp_format_string == "plan-b") {
+    sdp_format = WebRTCSdpFormat::kPlanB;
+  } else {
+    DCHECK_EQ(sdp_format_string, "unified-plan");
+    sdp_format = WebRTCSdpFormat::kUnifiedPlan;
+  }
+
   WebRTCConfiguration web_configuration;
   web_configuration.ice_transport_policy = ice_transport_policy;
   web_configuration.bundle_policy = bundle_policy;
   web_configuration.rtcp_mux_policy = rtcp_mux_policy;
+  web_configuration.sdp_format = sdp_format;
 
   if (configuration.hasIceServers()) {
     Vector<WebRTCIceServer> ice_servers;

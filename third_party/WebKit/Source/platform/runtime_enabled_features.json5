@@ -1136,6 +1136,10 @@
       name: "WebNFC",
       status: "experimental",
     },
+    {
+      name: "WebRTCUnifiedPlan",
+      status: "experimental",
+    },
     // WebShare is enabled by default on Android.
     {
       name: "WebShare",
