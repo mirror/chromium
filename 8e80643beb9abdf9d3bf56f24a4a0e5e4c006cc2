@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892a2aad_6956564a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T23:31:38Z",
+      "side": 1,
+      "message": "nit: IsContextLost? or CheckIfContextLost? grammar a little bit awk\nextranit: if you take a const\u0026 instead of a *, the callers are a bit simpler (operator* instead of .get()) and this can\u0027t be null so why pointer",
+      "revId": "8e80643beb9abdf9d3bf56f24a4a0e5e4c006cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e74378_1d0eb647",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T23:31:38Z",
+      "side": 1,
+      "message": "samenaming",
+      "revId": "8e80643beb9abdf9d3bf56f24a4a0e5e4c006cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

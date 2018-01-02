@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a66ba930_a363b133",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T23:31:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a172cc81_510a0041",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe2d571_d1d0a0d6",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "So the main and worker contexts aren\u0027t in the same share group anymore. I\u0027m not exactly sure what we need to do here anymore. I\u0027m checking if the worker is lost when we\u0027re creating LayerTreeFrameSinks, same as GpuProcessTransportFactory, which seems to work.",
       "parentUuid": "bbe2d571_d1d0a0d6",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384dec54_5712d851",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T23:31:38Z",
+      "side": 1,
+      "message": "LayerTreeFrameSink observes the worker context and loses the sink when it is lost, so we don\u0027t need to watch for it in this class. A comment to find our way back there again could be helpful.\n\nChecking on create is good, it shortcuts that process if we manage to catch it early, and it replaces it when it was lost.",
+      "parentUuid": "08dfd766_5cbaa0fb",
       "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
