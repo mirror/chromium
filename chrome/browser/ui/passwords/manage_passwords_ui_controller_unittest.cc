@@ -263,6 +263,9 @@ ManagePasswordsUIControllerTest::CreateFormManagerWithBestMatches(
           &password_manager_, &client_, driver_.AsWeakPtr(), observed_form,
           base::WrapUnique(new password_manager::StubFormSaver), &fetcher_));
   test_form_manager->Init(metrics_recorder);
+  test_form_manager->ProvisionallySave(
+      autofill::PasswordForm(),
+      password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
   fetcher_.SetNonFederated(best_matches, 0u);
   return test_form_manager;
 }
