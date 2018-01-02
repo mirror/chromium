@@ -71,6 +71,15 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
     client_lofi_requested_ = client_lofi_requested;
   }
 
+  // Whether the Cache-Control: no-transform response header was present and is
+  // being honored for this request.
+  bool cache_control_no_transform() const {
+    return cache_control_no_transform_;
+  }
+  void set_cache_control_no_transform(bool cache_control_no_transform) {
+    cache_control_no_transform_ = cache_control_no_transform;
+  }
+
   // The session key used for this request. Only set for main frame requests.
   std::string session_key() const { return session_key_; }
   void set_session_key(const std::string& session_key) {
@@ -138,6 +147,10 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
 
   // Whether a lite page response was seen for the request or navigation.
   bool lofi_received_;
+
+  // Whether the Cache-Control: no-transform response header was present and is
+  // being honored for this request.
+  bool cache_control_no_transform_;
 
   // The session key used for this request or navigation.
   std::string session_key_;

@@ -190,6 +190,10 @@ void RecordAcceptTransformEvent(AcceptTransformEvent event) {
                             event, ACCEPT_TRANSFORM_EVENT_BOUNDARY);
 }
 
+void RecordCacheControlNoTransform(bool honored) {
+  UMA_HISTOGRAM_BOOLEAN("Previews.CacheControlNoTransform.Honored", honored);
+}
+
 void RecordAcceptTransformSentUMA(
     const net::HttpRequestHeaders& request_headers) {
   switch (ParseRequestTransform(request_headers)) {
@@ -208,6 +212,7 @@ void RecordAcceptTransformSentUMA(
     case TRANSFORM_NONE:
       break;
     case TRANSFORM_PAGE_POLICIES_EMPTY_IMAGE:
+    case TRANSFORM_CACHE_CONTROL_NO_TRANSFORM:
     case TRANSFORM_UNKNOWN:
       NOTREACHED();
       break;
@@ -220,7 +225,8 @@ void RecordAcceptTransformReceivedUMA(const net::URLRequest& request) {
     return;
   }
 
-  switch (ParseResponseTransform(*response_headers)) {
+  TransformDirective directive = ParseResponseTransform(*response_headers);
+  switch (directive) {
     case TRANSFORM_UNKNOWN:
       RecordAcceptTransformEvent(UNKNOWN_TRANSFORM_RECEIVED);
       break;
@@ -239,8 +245,16 @@ void RecordAcceptTransformReceivedUMA(const net::URLRequest& request) {
     case TRANSFORM_COMPRESSED_VIDEO:
       RecordAcceptTransformEvent(COMPRESSED_VIDEO_RECEIVED);
       break;
+    case TRANSFORM_CACHE_CONTROL_NO_TRANSFORM:
+      RecordCacheControlNoTransform(true /* honored */);
+      break;
     case TRANSFORM_NONE:
       break;
+  }
+
+  if (directive != TRANSFORM_CACHE_CONTROL_NO_TRANSFORM &&
+      HasCacheControlNoTransform(*response_headers)) {
+    RecordCacheControlNoTransform(false /* honored */);
   }
 }
 
@@ -564,6 +578,10 @@ void DataReductionProxyNetworkDelegate::OnHeadersReceivedInternal(
     case TRANSFORM_EMPTY_IMAGE:
       DataReductionProxyData::GetDataAndCreateIfNecessary(request)
           ->set_lofi_received(true);
+      break;
+    case TRANSFORM_CACHE_CONTROL_NO_TRANSFORM:
+      DataReductionProxyData::GetDataAndCreateIfNecessary(request)
+          ->set_cache_control_no_transform(true);
       break;
     case TRANSFORM_IDENTITY:
     case TRANSFORM_COMPRESSED_VIDEO:

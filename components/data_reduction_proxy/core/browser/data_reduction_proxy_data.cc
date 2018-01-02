@@ -19,6 +19,7 @@ DataReductionProxyData::DataReductionProxyData()
       lite_page_received_(false),
       lofi_policy_received_(false),
       lofi_received_(false),
+      cache_control_no_transform_(false),
       effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
 
 DataReductionProxyData::~DataReductionProxyData() {}
@@ -31,6 +32,7 @@ std::unique_ptr<DataReductionProxyData> DataReductionProxyData::DeepCopy()
   copy->client_lofi_requested_ = client_lofi_requested_;
   copy->lite_page_received_ = lite_page_received_;
   copy->lofi_received_ = lofi_received_;
+  copy->cache_control_no_transform_ = cache_control_no_transform_;
   copy->session_key_ = session_key_;
   copy->request_url_ = request_url_;
   copy->effective_connection_type_ = effective_connection_type_;

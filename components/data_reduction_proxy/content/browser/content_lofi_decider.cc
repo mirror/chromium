@@ -43,6 +43,9 @@ ContentLoFiDecider::DetermineCommittedServerPreviewsState(
            ~(content::SERVER_LITE_PAGE_ON | content::SERVER_LOFI_ON);
   }
   content::PreviewsState updated_state = initial_state;
+  if (drp_data->cache_control_no_transform()) {
+    return content::PREVIEWS_OFF;
+  }
   if (!drp_data->lite_page_received()) {
     // Turn off LitePage bit.
     updated_state &= ~(content::SERVER_LITE_PAGE_ON);
