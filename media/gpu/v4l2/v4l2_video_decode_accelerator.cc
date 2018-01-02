@@ -527,12 +527,20 @@ void V4L2VideoDecodeAccelerator::AssignEGLImage(
 
 void V4L2VideoDecodeAccelerator::ImportBufferForPicture(
     int32_t picture_buffer_id,
+    VideoPixelFormat pixel_format,
     const gfx::GpuMemoryBufferHandle& gpu_memory_buffer_handle) {
   DVLOGF(3) << "picture_buffer_id=" << picture_buffer_id;
   DCHECK(child_task_runner_->BelongsToCurrentThread());
 
   if (output_mode_ != Config::OutputMode::IMPORT) {
     LOGF(ERROR) << "Cannot import in non-import mode";
+    NOTIFY_ERROR(INVALID_ARGUMENT);
+    return;
+  }
+
+  if (pixel_format !=
+      V4L2Device::V4L2PixFmtToVideoPixelFormat(output_format_fourcc_)) {
+    VLOGF(1) << "Unsupported import format: " << pixel_format;
     NOTIFY_ERROR(INVALID_ARGUMENT);
     return;
   }
