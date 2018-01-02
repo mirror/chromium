@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "505b28e9_09c3c8d4",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "This is no longer relevant, right?",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5781cdf7_e2d69753",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83379497_6f3df7bb",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "nit: std::move(aborted_guids)",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a787cace_0036310f",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "Is this really better than the scheduler just knowing about the job controller? The latter doesn\u0027t know about the former, so it\u0027d be clean and we\u0027d lose a layer of abstraction.",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949fa03a_a013033f",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "kServiceWorkerRegistrationId\n\nWith \"Example\" if you please.",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6225bc_f04b6650",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "DCHECK_EQ, also on line 70",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd8d3cc_04390b2f",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "nit: {} --\u003e \u003d default;",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c1f177_4e8a1deb",
+        "filename": "content/browser/background_fetch/background_fetch_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "Document interface methods.",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1822565c_125f988f",
+        "filename": "content/browser/background_fetch/background_fetch_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "I\u0027d rather that we pass a callback like base::BindOnce(\u0026DoNothing) in the tests, so that we can drop these null checks.",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b687f912_c6a02623",
+        "filename": "content/browser/background_fetch/background_fetch_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea88711_050d202b",
+        "filename": "content/browser/background_fetch/background_fetch_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "nit: s/explicit// (it\u0027s only useful for single-argument constructors)",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdaa42f_d3569084",
+        "filename": "content/browser/background_fetch/background_fetch_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:25:40Z",
+      "side": 1,
+      "message": "++docs",
+      "revId": "e01544b4beffcd7ded0d5bf472c92c0767706e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
