@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82fd7fbd_0d865530",
+        "filename": "third_party/WebKit/Source/platform/network/HeaderFieldTokenizer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-02T18:24:32Z",
+      "side": 1,
+      "message": "Can you simply return here?",
+      "range": {
+        "startLine": 141,
+        "startChar": 14,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "f1c67086e8c671f70f6ff24a4e4ffb9cf605ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
