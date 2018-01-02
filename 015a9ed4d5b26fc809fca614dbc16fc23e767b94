@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b080bd7_3ad81093",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T17:29:42Z",
+      "side": 1,
+      "message": "While you are updating this, please use different sets of values instead of repeating 10.6 \u0026 10.4.",
+      "range": {
+        "startLine": 305,
+        "startChar": 20,
+        "endLine": 305,
+        "endChar": 37
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ef862e_e0bdd36f",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T17:29:42Z",
+      "side": 1,
+      "message": "Hmm, the halving of width/height is caused by scaling, not radius vs width diff.  Please change the page scale factor in Line 130 to any non-two value ;)",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 24
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846ac3d1_de40cd6a",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T17:29:42Z",
+      "side": 1,
+      "message": "I think this shouldn\u0027t be private, ultimately someone else need to call it.",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3820977e_f87d5fef",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T17:29:42Z",
+      "side": 1,
+      "message": "Looks like we don\u0027t need this?",
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45082b6_8a8805a4",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T17:29:42Z",
+      "side": 1,
+      "message": "We don\u0027t need this ctor anymore then, right?",
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
