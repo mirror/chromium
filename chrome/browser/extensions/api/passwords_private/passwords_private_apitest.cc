@@ -150,7 +150,8 @@ class TestDelegate : public PasswordsPrivateDelegate {
     importPasswordsTriggered = true;
   }
 
-  void ExportPasswords(content::WebContents* web_contents) override {
+  void ExportPasswords(base::OnceCallback<void(bool)> accepted,
+                       content::WebContents* web_contents) override {
     // The testing of password exporting itself should be handled via
     // |PasswordManagerPorter|.
     exportPasswordsTriggered = true;
