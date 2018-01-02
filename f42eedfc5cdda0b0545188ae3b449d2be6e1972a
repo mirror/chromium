@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5da6134_26c423bd",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T18:28:18Z",
+      "side": 1,
+      "message": "Nit: is this check needed? Isn\u0027t it sufficient that you\u0027re using client_shortcuts_info.begin()/end() below?",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 39
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b906b3_e5f567f4",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T18:28:18Z",
+      "side": 1,
+      "message": "Therefore, replacement information would already be provided in the |kKSVItemInfoToActions| for this entry.",
+      "range": {
+        "startLine": 137,
+        "startChar": 56,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdcf5f4_2e21e270",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T18:28:18Z",
+      "side": 1,
+      "message": "Why not cache this directly?",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752537cb_1b84e0ec",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T18:28:18Z",
+      "side": 1,
+      "message": "Nit: no braces.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed38053_2d0178bf",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T18:28:18Z",
+      "side": 1,
+      "message": "same question here, why not cache this directly?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
