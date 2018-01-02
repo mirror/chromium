@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76fdaae_ff7433c0",
+        "filename": "chrome/browser/chromeos/printing/external_printers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-02T19:32:54Z",
+      "side": 1,
+      "message": "Do I understand it correctly that this is the only difference between the original CL and this CL? I don\u0027t understand why the deferred deletion in ExternalPrinterImpl doesn\u0027t work?",
+      "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
