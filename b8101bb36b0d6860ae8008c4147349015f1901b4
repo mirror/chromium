@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b083b50_0a835cdd",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2018-01-02T17:00:33Z",
+      "side": 1,
+      "message": "Swiftshader is the new way that is preferred in place of mesa. Have you considered using that instead? If not, why?",
+      "revId": "b8101bb36b0d6860ae8008c4147349015f1901b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
