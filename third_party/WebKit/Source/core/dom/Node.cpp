@@ -2228,6 +2228,13 @@ void Node::HandleLocalEvents(Event& event) {
       !RuntimeEnabledFeatures::SendMouseEventsDisabledFormControlsEnabled()) {
     UseCounter::Count(GetDocument(),
                       WebFeature::kDispatchMouseEventOnDisabledFormControl);
+    if ((event.type() == EventTypeNames::mousedown ||
+         event.type() == EventTypeNames::mouseup) &&
+        HasEventListeners(event.type())) {
+      UseCounter::Count(
+          GetDocument(),
+          WebFeature::kDispatchMouseUpDownEventOnDisabledFormControl);
+    }
     return;
   }
 
