@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c9c3d7_b1faf116",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-02T10:38:55Z",
+      "side": 0,
+      "message": "I found that ids \u0027un8\u0027 and \u0027pw8\u0027 are used in lines 725-730. So I changed this test to use unique ids and to move it in the end of this HTML in order to have it in order with test data in lines 880-885.",
+      "range": {
+        "startLine": 715,
+        "startChar": 6,
+        "endLine": 715,
+        "endChar": 21
+      },
+      "revId": "10d932801bc9e23960f855f2bc4fd9f6a67a5f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
