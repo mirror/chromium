@@ -299,6 +299,24 @@
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f3cafd_0a05b8f5",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-02T01:45:22Z",
+      "side": 1,
+      "message": "There are two files use the SWClientInfo.IsEmpty or IsValid: ServiceWorkerContextClient and service_worker_client_utils, https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_client_utils.cc?dr\u003dC\u0026l\u003d349\n\nIn the ServiceWorkerContextClient, the code always do something whether SWClientInfo is empty or not, for example, https://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_context_client.cc?q\u003dservice_worker_context_client.cc\u0026dr\u0026l\u003d1738\nAnd considering the comments in  https://cs.chromium.org/chromium/src/content/common/service_worker/service_worker_client_info.h?q\u003dservice_worker_client_info\u0026dr\u003dCSs\u0026l\u003d19\n// An instance can be created empty or can be filed with the expected properties.\n// Except for the client_uuid, it is preferred to use the constructor to fill the properties.\n\nI think there maybe a case that SWClientInfo is empty but with a valid client_uuid? because only client_uuid is generated when SWProviderHost is created. However, I still not very clear about how this case happens in the current code implementation, maybe I missed something, do you have any more info about that? If that make sense, I think that\u0027s the reason why we need both IsEmpty and IsValid?",
+      "parentUuid": "ab5238b1_54d32f50",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
