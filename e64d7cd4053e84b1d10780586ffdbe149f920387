@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1791e3d3_0cbba8c7",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_display_chooser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:42:18Z",
+      "side": 1,
+      "message": "It would be more consistent if you got rid of UpdateTouchscreenDevices() and just used InputDeviceClientTestApi here (like it\u0027s used below).",
+      "revId": "e64d7cd4053e84b1d10780586ffdbe149f920387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
