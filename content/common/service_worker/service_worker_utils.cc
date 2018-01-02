@@ -18,6 +18,8 @@
 #include "content/public/common/origin_util.h"
 #include "net/http/http_byte_range.h"
 #include "net/http/http_util.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 
 namespace content {
 
