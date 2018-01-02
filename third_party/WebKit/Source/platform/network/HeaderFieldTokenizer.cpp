@@ -131,4 +131,22 @@ void HeaderFieldTokenizer::SkipSpaces() {
     ++index_;
 }
 
+void HeaderFieldTokenizer::ConsumeBeforeAnyCharMatch(Vector<char> chars) {
+  DCHECK_LT(chars.size(), 3U);
+  while (!IsConsumed()) {
+    bool found = false;
+    for (const auto& c : chars) {
+      if (c == input_[index_]) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found)
+      break;
+
+    ++index_;
+  }
+}
+
 }  // namespace blink
