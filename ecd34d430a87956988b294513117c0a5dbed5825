@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efffbc55_717c44a7",
+        "filename": "base/metrics/histogram_snapshot_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T21:11:28Z",
+      "side": 1,
+      "message": "Nit: If this function no longer requires a template, it should no longer be implemented inline in the .h file and should instead move to the .cc file.",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "ecd34d430a87956988b294513117c0a5dbed5825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
