@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95995d61_58055c57",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-02T20:14:58Z",
+      "side": 1,
+      "message": "Combine kError with kUnavailable since we are going to treat them the same in the 3rd patch. For transient errors we can just not invoke the callback.",
+      "revId": "5cd16b8460befccdf4a671f18a86b13b5f7a5265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
