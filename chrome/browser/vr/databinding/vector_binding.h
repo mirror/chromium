@@ -61,6 +61,8 @@ class VectorBinding : public BindingBase {
     return updated;
   }
 
+  std::string ToString() override { return ""; }
+
  private:
   std::vector<M>* models_ = nullptr;
   std::vector<std::unique_ptr<ElementBinding>> bindings_;
