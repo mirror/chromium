@@ -80,8 +80,6 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
       if (parameters.command_line.HasSwitch(switches::kBrowserStartupDialog))
         WaitForDebugger("Browser");
 
-      base::StatisticsRecorder::Initialize();
-
       notification_service_.reset(new NotificationServiceImpl);
 
 #if defined(OS_WIN)
