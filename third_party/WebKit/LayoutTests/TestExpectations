@@ -3581,3 +3581,6 @@ crbug.com/796913 virtual/gpu/fast/canvas/canvas-zero-length-lineCap.html [ Needs
 
 crbug.com/797138 external/wpt/credential-management/federatedcredential-framed-get.sub.https.html [ Crash ]
 crbug.com/797138 external/wpt/credential-management/passwordcredential-framed-get.sub.https.html [ Crash ]
+
+# Sheriff failures 2018-01-02
+crbug.com/798592 [ Win7 ] virtual/threaded/http/tests/devtools/tracing/timeline-style/timeline-recalculate-styles.js [ Pass Failure ]
