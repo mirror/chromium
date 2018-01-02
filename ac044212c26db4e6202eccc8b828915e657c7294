@@ -22,6 +22,30 @@
       "revId": "ac044212c26db4e6202eccc8b828915e657c7294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ac6916_8b300c2c",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2018-01-02T15:37:05Z",
+      "side": 1,
+      "message": "Nowhere - the owning java object is an immortal singleton.",
+      "parentUuid": "835ed74c_2ca662e4",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "ac044212c26db4e6202eccc8b828915e657c7294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
