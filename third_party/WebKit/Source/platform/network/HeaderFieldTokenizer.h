@@ -29,6 +29,7 @@ class PLATFORM_EXPORT HeaderFieldTokenizer final {
   bool Consume(char);
   bool ConsumeToken(Mode, StringView& output);
   bool ConsumeTokenOrQuotedString(Mode, String& output);
+  void ConsumeBeforeAnyCharMatch(Vector<char>);
 
   unsigned Index() const { return index_; }
   bool IsConsumed() const { return index_ >= input_.length(); }
