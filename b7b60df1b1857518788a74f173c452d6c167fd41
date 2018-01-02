@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee3e484b_91506db7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentClassFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:56:19Z",
+      "side": 1,
+      "message": "you sure nothing here needs to be in content_public?",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54333a5_94ea1781",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentClassFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:56:19Z",
+      "side": 1,
+      "message": "this is for downstream code injecting things into content, right? say that somewhere",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5f80ef_05a3b69c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:56:19Z",
+      "side": 1,
+      "message": "again, you sure this won\u0027t need to be in content_public?",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "630276bc_0dd765f8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
         "patchSetId": 2
@@ -18,6 +69,53 @@
         "startChar": 17,
         "endLine": 10,
         "endChar": 31
+      },
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aade1df_48c3dd37",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:56:19Z",
+      "side": 1,
+      "message": "\u003e This term is too broad - how about SelectionInsertionHandleObserver or TextHandleObserver?\n\n+1",
+      "parentUuid": "630276bc_0dd765f8",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc5bd4e_c2cbe15d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:56:19Z",
+      "side": 1,
+      "message": "looking at implementaiton, should this be StartedOrMoved?",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 26
       },
       "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
