@@ -353,6 +353,30 @@
       "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c0bbeca_23d09f3d",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T21:27:25Z",
+      "side": 1,
+      "message": "If you think the tests aren\u0027t useful, then remove them and don\u0027t make the functions virtual. I\u0027m happy as long as there are no virtual functions in this class.",
+      "parentUuid": "a5b31495_c82ccc55",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
