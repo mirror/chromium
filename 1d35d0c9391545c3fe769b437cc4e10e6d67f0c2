@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221ab29f_ba881c9b",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T22:24:11Z",
+      "side": 1,
+      "message": "I have to remove this line after this CL lands.",
+      "revId": "1d35d0c9391545c3fe769b437cc4e10e6d67f0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
