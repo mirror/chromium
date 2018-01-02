@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7f4a3ad_a643d0cc",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "There is no negotiation for now. The buffer format is decide by the cros_gralloc. We require a flexible YUV420 format and cros_gralloc allocate a buffer. And that is the only supported format.",
+      "parentUuid": "2dae4082_52274cfe",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70deac4b_429cae92",
         "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-27T00:38:52Z",
       "side": 1,
       "message": "Could we still support RGBA formats as well if clients needed to use them?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344e4cd6_0d74bbb1",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "The RGBA format is a legacy code. It existed because that was the only supported format on Intel platform. However, Android requires to support Flexible YUV format. It has been removed after we add the support on Intel platform.",
+      "parentUuid": "70deac4b_429cae92",
       "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "676d94c8_c263d62c",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a575d1ac_0d88a8a8",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0536b125_c5fb52f7",
         "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4233c268_eb962eda",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0536b125_c5fb52f7",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9ec009cf_ac0776bc",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538dda63_b57dfeb1",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abd4e95_53c3ddc5",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
         "patchSetId": 9
@@ -98,6 +188,30 @@
       "writtenOn": "2017-12-27T00:38:52Z",
       "side": 1,
       "message": "Is it fine to remove ARM-only check given the above TODO and issue? From the above, we needed to revert NV12 import due to issues?",
+      "range": {
+        "startLine": 123,
+        "startChar": 27,
+        "endLine": 123,
+        "endChar": 43
+      },
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916504bb_b367fb47",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "We are adding YUV_420_BIPLANAR support to Intel. I don\u0027t think that conflict with the TODO, which querying the support via minigbm. But let me add dcastagna@ as reviwer for sure.",
+      "parentUuid": "2abd4e95_53c3ddc5",
       "range": {
         "startLine": 123,
         "startChar": 27,
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "2d2942d9_b5b79a26",
+        "filename": "media/gpu/v4l2/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1795,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "I would prefer to add the support when there are real use cases.",
+      "parentUuid": "c4eb8a58_f5704166",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56e7cb76_84848a32",
         "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
         "patchSetId": 9
@@ -138,6 +270,24 @@
       "writtenOn": "2017-12-27T00:38:52Z",
       "side": 1,
       "message": "Could we use enumerated formats instead (please see the comment in V4L2SVDA), also taking into account image processor (possibly negotiating from here)?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88120d8_29fc6461",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "I would prefer to add support when there are real need, we may stay for the same pixel format on ARM platform.",
+      "parentUuid": "56e7cb76_84848a32",
       "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "e608b32b_6f724569",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "GetBufferFormatForImportMode() removed. But for the current implementation, the pixel format is decide in Android side, it ignore the value in ProvidePictureBuffers.",
+      "parentUuid": "9d97ce3d_a4232330",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01e60d5c_0112f2f6",
         "filename": "media/video/video_decode_accelerator.h",
         "patchSetId": 9
@@ -172,6 +340,24 @@
       "writtenOn": "2017-12-27T00:38:52Z",
       "side": 1,
       "message": "Imports |gpu_memory_buffer_handle|, pointing to a buffer in |pixel_format|, as backing memory for picture buffer associated with |picture_buffer_id|.\n\nCould we define how this relates to pixel_format in ProvidePictureBuffers() (as well as Config::supported_output_formats) please?\n\nMy current feeling is that, given that ProvidePictureBuffers() allows only one format and not a vector, we could either make it use a vector, or pass only the most preferred format to PPB(), while providing the full vector in Config::supported_output_formats?\n\nAlso, what should happen if pixel_format differed for subsequent calls to ImportBufferForPicture()? Perhaps we could leave it to be implementation dependent/up to each particular VDA whether it supports multiple formats in one session?",
+      "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43d9cd4_b97c88f1",
+        "filename": "media/video/video_decode_accelerator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-02T03:36:28Z",
+      "side": 1,
+      "message": "comments updated.\n\nHowever, the pixel_format used here, has nothing to do with the pixel_format in ProvidePictureBuffers or Config::supported_output_formats.\n\nThe problem is in Android side, we cannot make sure the format until we really allocate the buffer.\n\nSo, we just ask chromium side to import the buffer, if it cannot be supported, an error should be reported.",
+      "parentUuid": "01e60d5c_0112f2f6",
       "revId": "24c6b2c0dddb05fbe9502bffb5c318cf48728577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
