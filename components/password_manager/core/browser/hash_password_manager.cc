@@ -19,7 +19,6 @@ constexpr char kSeparator = '.';
 }  // namespace
 
 namespace password_manager {
-
 SyncPasswordData::SyncPasswordData(const base::string16& password,
                                    bool force_update)
     : length(password.size()),
