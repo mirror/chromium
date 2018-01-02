@@ -104,7 +104,7 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   std::unique_ptr<net::ClientSocketHandle> transport_;
 
   const net::SSLConfig ssl_config_;
-  net::ProxyService::PacRequest* pac_request_;
+  net::ProxyService::Request* pac_request_;
   net::ProxyInfo proxy_info_;
   const net::HostPortPair dest_host_port_pair_;
   const GURL proxy_url_;

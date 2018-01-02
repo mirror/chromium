@@ -67,7 +67,7 @@ class CONTENT_EXPORT ResolveProxyMsgHelper : public BrowserMessageFilter {
      IPC::Message* reply_msg;
 
      // Handle for cancelling the current request if it has started (else NULL).
-     net::ProxyService::PacRequest* pac_req;
+     net::ProxyService::Request* pac_req;
   };
 
   // Info about the current outstanding proxy request.

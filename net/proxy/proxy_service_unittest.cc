@@ -517,7 +517,7 @@ TEST_F(ProxyServiceTest, PAC) {
 
   ProxyInfo info;
   TestCompletionCallback callback;
-  ProxyService::PacRequest* request;
+  ProxyService::Request* request;
   BoundTestNetLog log;
 
   int rv = service.ResolveProxy(url, std::string(), &info, callback.callback(),
@@ -1966,7 +1966,7 @@ TEST_F(ProxyServiceTest, CancelInProgressRequest) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(url2, std::string(), &info2, callback2.callback(),
                             &request2, nullptr, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -2027,7 +2027,7 @@ TEST_F(ProxyServiceTest, InitialPACScriptDownload) {
 
   ProxyInfo info1;
   TestCompletionCallback callback1;
-  ProxyService::PacRequest* request1;
+  ProxyService::Request* request1;
   int rv =
       service.ResolveProxy(url1, std::string(), &info1, callback1.callback(),
                            &request1, nullptr, NetLogWithSource());
@@ -2039,14 +2039,14 @@ TEST_F(ProxyServiceTest, InitialPACScriptDownload) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(url2, std::string(), &info2, callback2.callback(),
                             &request2, nullptr, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
 
   ProxyInfo info3;
   TestCompletionCallback callback3;
-  ProxyService::PacRequest* request3;
+  ProxyService::Request* request3;
   rv = service.ResolveProxy(url3, std::string(), &info3, callback3.callback(),
                             &request3, nullptr, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -2196,7 +2196,7 @@ TEST_F(ProxyServiceTest, CancelWhilePACFetching) {
   // Start 3 requests.
   ProxyInfo info1;
   TestCompletionCallback callback1;
-  ProxyService::PacRequest* request1;
+  ProxyService::Request* request1;
   BoundTestNetLog log1;
   int rv = service.ResolveProxy(GURL("http://request1"), std::string(), &info1,
                                 callback1.callback(), &request1, nullptr,
@@ -2209,7 +2209,7 @@ TEST_F(ProxyServiceTest, CancelWhilePACFetching) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(GURL("http://request2"), std::string(), &info2,
                             callback2.callback(), &request2, nullptr,
                             NetLogWithSource());
@@ -2303,7 +2303,7 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomPac) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(url2, std::string(), &info2, callback2.callback(),
                             &request2, nullptr, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -2387,7 +2387,7 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomPac2) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(url2, std::string(), &info2, callback2.callback(),
                             &request2, nullptr, NetLogWithSource());
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
@@ -2464,7 +2464,7 @@ TEST_F(ProxyServiceTest, FallbackFromAutodetectToCustomToManual) {
 
   ProxyInfo info2;
   TestCompletionCallback callback2;
-  ProxyService::PacRequest* request2;
+  ProxyService::Request* request2;
   rv = service.ResolveProxy(GURL("http://request2"), std::string(), &info2,
                             callback2.callback(), &request2, nullptr,
                             NetLogWithSource());
@@ -3718,7 +3718,7 @@ TEST_F(ProxyServiceTest, OnShutdownWithLiveRequest) {
 
   ProxyInfo info;
   TestCompletionCallback callback;
-  ProxyService::PacRequest* request;
+  ProxyService::Request* request;
   int rv = service.ResolveProxy(GURL("http://request/"), std::string(), &info,
                                 callback.callback(), &request, nullptr,
                                 NetLogWithSource());
@@ -3754,7 +3754,7 @@ TEST_F(ProxyServiceTest, OnShutdownFollowedByRequest) {
 
   ProxyInfo info;
   TestCompletionCallback callback;
-  ProxyService::PacRequest* request;
+  ProxyService::Request* request;
   int rv = service.ResolveProxy(GURL("http://request/"), std::string(), &info,
                                 callback.callback(), &request, nullptr,
                                 NetLogWithSource());
