@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29322023_ba28183a",
+        "filename": "components/viz/common/gl_helper_scaling.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T22:20:13Z",
+      "side": 1,
+      "message": "Just run git cl format, and it should get these things right for you. The viz presubmit will complain if you didn\u0027t anyhow, so you should have been told that when this was uploaded the first time?",
+      "parentUuid": "d4abacdb_e9a62862",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00759508_40a0223a",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 1
