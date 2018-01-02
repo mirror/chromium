@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c42e0c_31225382",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Everything from here to the end of this deleted section was moved to StyleAttributeMutationScope.h/cpp",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bd75368_b90c4a14",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Everything from here to the next comment was moved to AbstractPropertySetCSSStyleDeclaration.cpp",
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69ea5c6_53486b56",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Moved to StyleRuleCSSStyleDeclaration.cpp",
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e54c499f_adb767e9",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Moved to InlineCSSStyleDeclaration.cpp",
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27b8a9d3_5af4883a",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Moved to AbstractPropertySetCSSStyleDeclaration.h",
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2427586b_395bc24e",
+        "filename": "third_party/WebKit/Source/core/css/PropertySetCSSStyleDeclaration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-02T05:03:30Z",
+      "side": 0,
+      "message": "Moved to StyleRuleCSSStyleDeclaration.h",
+      "revId": "a6490f89b7e4827ffbad73a46bd8bc1d80277766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
