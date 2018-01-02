@@ -2785,47 +2785,79 @@ class MockCALayerGLES2Interface : public cc::TestGLES2Interface {
                     GLuint edge_aa_mask,
                     const GLfloat* bounds_rect,
                     GLuint filter));
+  MOCK_METHOD2(ScheduleCALayerInUseQueryCHROMIUM,
+               void(GLsizei count, const GLuint* textures));
+
+  void InitializeTestContext(cc::TestWebGraphicsContext3D* context) override {
+    // Support image storage for GpuMemoryBuffers, needed for
+    // CALayers/IOSurfaces backed by textures.
+    context->set_support_texture_storage_image(true);
+
+    // Allow the renderer to make an empty SwapBuffers - skipping even the
+    // root RenderPass.
+    context->set_have_commit_overlay_planes(true);
+  }
 };
 
-TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
+class CALayerGLRendererTest : public GLRendererTest {
+ protected:
+  void SetUp() override {
+    // A mock GLES2Interface that can watch CALayer stuff happen.
+    auto gles2_interface = std::make_unique<MockCALayerGLES2Interface>();
+    gl_ = gles2_interface.get();
+
+    auto provider = cc::TestContextProvider::Create(std::move(gles2_interface));
+    provider->BindToCurrentThread();
+
+    cc::FakeOutputSurfaceClient output_surface_client;
+    output_surface_ = cc::FakeOutputSurface::Create3d(std::move(provider));
+    output_surface_->BindToClient(&output_surface_client);
+
+    // This validator allows the renderer to make CALayer overlays. If all
+    // quads can be turned into CALayer overlays, then all damage is removed and
+    // we can skip the root RenderPass, swapping empty.
+    output_surface_->SetOverlayCandidateValidator(&validator_);
+
+    display_resource_provider_ =
+        cc::FakeResourceProvider::CreateDisplayResourceProvider(
+            output_surface_->context_provider(), nullptr);
+
+    settings_ = std::make_unique<RendererSettings>();
+    // This setting is enabled to use CALayer overlays.
+    settings_->release_overlay_resources_after_gpu_query = true;
+    renderer_ = std::make_unique<FakeRendererGL>(
+        settings_.get(), output_surface_.get(),
+        display_resource_provider_.get(), base::ThreadTaskRunnerHandle::Get());
+    renderer_->Initialize();
+    renderer_->SetVisible(true);
+
+    TestOverlayProcessor* processor =
+        new TestOverlayProcessor(output_surface_.get());
+    processor->Initialize();
+    renderer_->SetOverlayProcessor(processor);
+  }
+
+  void TearDown() override {
+    renderer_.reset();
+    display_resource_provider_.reset();
+    output_surface_.reset();
+  }
+
+  MockCALayerGLES2Interface& gl() const { return *gl_; }
+  FakeRendererGL& renderer() const { return *renderer_; }
+  cc::FakeOutputSurface& output_surface() const { return *output_surface_; }
+
+ private:
+  MockCALayerGLES2Interface* gl_;
+  CALayerValidator validator_;
+  std::unique_ptr<cc::FakeOutputSurface> output_surface_;
+  std::unique_ptr<cc::DisplayResourceProvider> display_resource_provider_;
+  std::unique_ptr<RendererSettings> settings_;
+  std::unique_ptr<FakeRendererGL> renderer_;
+};
+
+TEST_F(CALayerGLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
   gfx::Size viewport_size(10, 10);
-
-  // A mock GLES2Interface that can watch CALayer stuff happen.
-  auto gles2_interface = std::make_unique<MockCALayerGLES2Interface>();
-  auto* gl = gles2_interface.get();
-
-  // The context capabilities include |commit_overlay_planes| which will
-  // allow the renderer to make an empty SwapBuffers - skipping even the
-  // root RenderPass.
-  auto provider = cc::TestContextProvider::Create(std::move(gles2_interface));
-  provider->UnboundTestContext3d()->set_have_commit_overlay_planes(true);
-  provider->BindToCurrentThread();
-
-  cc::FakeOutputSurfaceClient output_surface_client;
-  auto output_surface = cc::FakeOutputSurface::Create3d(std::move(provider));
-  output_surface->BindToClient(&output_surface_client);
-
-  auto parent_resource_provider =
-      cc::FakeResourceProvider::CreateDisplayResourceProvider(
-          output_surface->context_provider(), nullptr);
-
-  RendererSettings settings;
-  FakeRendererGL renderer(&settings, output_surface.get(),
-                          parent_resource_provider.get(),
-                          base::ThreadTaskRunnerHandle::Get());
-  renderer.Initialize();
-  renderer.SetVisible(true);
-
-  TestOverlayProcessor* processor =
-      new TestOverlayProcessor(output_surface.get());
-  processor->Initialize();
-  renderer.SetOverlayProcessor(processor);
-
-  // This validator allows the renderer to make CALayer overlays. If all
-  // quads can be turned into CALayer overlays, then all damage is removed and
-  // we can skip the root RenderPass, swapping empty.
-  auto validator = std::make_unique<CALayerValidator>();
-  output_surface->SetOverlayCandidateValidator(validator.get());
 
   // This frame has a root pass with a RenderPassDrawQuad pointing to a child
   // pass that is at 1,2 to make it identifiable.
@@ -2843,14 +2875,14 @@ TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
                           SkBlendMode::kSrcOver);
   }
 
-  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
 
   // The child pass is drawn, promoted to an overlay, and scheduled as a
   // CALayer.
   {
     InSequence sequence;
-    EXPECT_CALL(*gl, ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
-    EXPECT_CALL(*gl, ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
         .WillOnce(
             Invoke([](GLuint contents_texture_id, const GLfloat* contents_rect,
                       GLuint background_color, GLuint edge_aa_mask,
@@ -2860,14 +2892,14 @@ TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
               EXPECT_EQ(2, bounds_rect[1]);
             }));
   }
-  DrawFrame(&renderer, viewport_size);
-  Mock::VerifyAndClearExpectations(gl);
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
 
-  renderer.SwapBuffers(std::vector<ui::LatencyInfo>());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
 
   // The damage was eliminated when everything was promoted to CALayers.
-  ASSERT_TRUE(output_surface->last_sent_frame()->sub_buffer_rect);
-  EXPECT_TRUE(output_surface->last_sent_frame()->sub_buffer_rect->IsEmpty());
+  ASSERT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect);
+  EXPECT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect->IsEmpty());
 
   // Frame number 2. Same inputs, except...
   {
@@ -2885,7 +2917,7 @@ TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
     child_pass->cache_render_pass = true;
   }
 
-  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
 
   // The child RenderPassDrawQuad gets promoted again, but importantly it
   // did not itself have to be drawn this time as it can use the cached texture.
@@ -2895,13 +2927,313 @@ TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
   // RenderPassDrawQuad is emitted.
   {
     InSequence sequence;
-    EXPECT_CALL(*gl, ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
-    EXPECT_CALL(*gl, ScheduleCALayerCHROMIUM(_, _, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _));
   }
-  DrawFrame(&renderer, viewport_size);
-  Mock::VerifyAndClearExpectations(gl);
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
 
-  renderer.SwapBuffers(std::vector<ui::LatencyInfo>());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+}
+
+TEST_F(CALayerGLRendererTest, CALayerOverlaysReusesTextureWithDifferentSizes) {
+  gfx::Size viewport_size(300, 300);
+
+  // This frame has a root pass with a RenderPassDrawQuad pointing to a child
+  // pass that is at 1,2 to make it identifiable.
+  // The child's size is 250x251, but it will be rounded up to a multiple of 64
+  // in order to promote easier texture reuse. See https://crbug.com/146070.
+  RenderPassId child_pass_id = 2;
+  RenderPassId root_pass_id = 1;
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(250, 251) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child pass is drawn, promoted to an overlay, and scheduled as a
+  // CALayer. The bounds of the texture are rounded up to 256x256. We save the
+  // texture ID to make sure we reuse it correctly.
+  uint32_t saved_texture_id = 0;
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // This is the child RenderPassDrawQuad.
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The size is rounded to a multiple of 64.
+              EXPECT_EQ(256, bounds_rect[2]);
+              EXPECT_EQ(256, bounds_rect[3]);
+              saved_texture_id = contents_texture_id;
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+
+  // ScheduleCALayerCHROMIUM happened and used a non-0 texture.
+  EXPECT_NE(saved_texture_id, 0u);
+
+  // The damage was eliminated when everything was promoted to CALayers.
+  ASSERT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect);
+  EXPECT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect->IsEmpty());
+
+  // The texture will be checked to verify if it is free yet.
+  EXPECT_CALL(gl(), ScheduleCALayerInUseQueryCHROMIUM(1, _));
+  renderer().SwapBuffersComplete();
+  Mock::VerifyAndClearExpectations(&gl());
+
+  // Frame number 2. We change the size of the child RenderPass to be smaller
+  // than the next multiple of 64, but larger than half the previous size so
+  // that our texture reuse heuristics will reuse the texture if it is free.
+  // For now, it is not.
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(190, 191) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child RenderPass will use a new 192x192 texture, since the last texture
+  // is still in use.
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // New texture id.
+              EXPECT_NE(saved_texture_id, contents_texture_id);
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The texture is 192x192 since we snap up to multiples of 64.
+              EXPECT_EQ(192, bounds_rect[2]);
+              EXPECT_EQ(192, bounds_rect[3]);
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+
+  // There are now 2 textures to check if they are free.
+  EXPECT_CALL(gl(), ScheduleCALayerInUseQueryCHROMIUM(2, _));
+  renderer().SwapBuffersComplete();
+  Mock::VerifyAndClearExpectations(&gl());
+
+  // The first (256x256) texture is returned to the GLRenderer.
+  renderer().DidReceiveTextureInUseResponses({{saved_texture_id, false}});
+
+  // Frame number 3 looks just like frame number 2. The child RenderPass is
+  // smaller than the next multiple of 64 from the released texture, but larger
+  // than half of its size so that our texture reuse heuristics will kick in.
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(190, 191) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child RenderPass would try to use a 192x192 texture, but since we have
+  // an existing 256x256 texture, we can reuse that.
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // The first texture is reused.
+              EXPECT_EQ(saved_texture_id, contents_texture_id);
+              // This is the child RenderPassDrawQuad.
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The size here is the size of the texture being used, not
+              // the size we tried to use (192x192).
+              EXPECT_EQ(256, bounds_rect[2]);
+              EXPECT_EQ(256, bounds_rect[3]);
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+}
+
+TEST_F(CALayerGLRendererTest, CALayerOverlaysDontReuseTooBigTexture) {
+  gfx::Size viewport_size(300, 300);
+
+  // This frame has a root pass with a RenderPassDrawQuad pointing to a child
+  // pass that is at 1,2 to make it identifiable.
+  // The child's size is 250x251, but it will be rounded up to a multiple of 64
+  // in order to promote easier texture reuse. See https://crbug.com/146070.
+  RenderPassId child_pass_id = 2;
+  RenderPassId root_pass_id = 1;
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(250, 251) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child pass is drawn, promoted to an overlay, and scheduled as a
+  // CALayer. The bounds of the texture are rounded up to 256x256. We save the
+  // texture ID to make sure we reuse it correctly.
+  uint32_t saved_texture_id = 0;
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // This is the child RenderPassDrawQuad.
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The size is rounded to a multiple of 64.
+              EXPECT_EQ(256, bounds_rect[2]);
+              EXPECT_EQ(256, bounds_rect[3]);
+              saved_texture_id = contents_texture_id;
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+
+  // ScheduleCALayerCHROMIUM happened and used a non-0 texture.
+  EXPECT_NE(saved_texture_id, 0u);
+
+  // The damage was eliminated when everything was promoted to CALayers.
+  ASSERT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect);
+  EXPECT_TRUE(output_surface().last_sent_frame()->sub_buffer_rect->IsEmpty());
+
+  // The texture will be checked to verify if it is free yet.
+  EXPECT_CALL(gl(), ScheduleCALayerInUseQueryCHROMIUM(1, _));
+  renderer().SwapBuffersComplete();
+  Mock::VerifyAndClearExpectations(&gl());
+
+  // Frame number 2. We change the size of the child RenderPass to be much
+  // smaller.
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(20, 21) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child RenderPass will use a new 64x64 texture, since the last texture
+  // is still in use.
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // New texture id.
+              EXPECT_NE(saved_texture_id, contents_texture_id);
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The texture is 64x64 since we snap up to multiples of 64.
+              EXPECT_EQ(64, bounds_rect[2]);
+              EXPECT_EQ(64, bounds_rect[3]);
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
+
+  // There are now 2 textures to check if they are free.
+  EXPECT_CALL(gl(), ScheduleCALayerInUseQueryCHROMIUM(2, _));
+  renderer().SwapBuffersComplete();
+  Mock::VerifyAndClearExpectations(&gl());
+
+  // The first (256x256) texture is returned to the GLRenderer.
+  renderer().DidReceiveTextureInUseResponses({{saved_texture_id, false}});
+
+  // Frame number 3 looks just like frame number 2. The child RenderPass is
+  // too small to reuse the old texture.
+  {
+    RenderPass* child_pass =
+        cc::AddRenderPass(&render_passes_in_draw_order_, child_pass_id,
+                          gfx::Rect(20, 21) + gfx::Vector2d(1, 2),
+                          gfx::Transform(), cc::FilterOperations());
+    RenderPass* root_pass = cc::AddRenderPass(
+        &render_passes_in_draw_order_, root_pass_id, gfx::Rect(viewport_size),
+        gfx::Transform(), cc::FilterOperations());
+    cc::AddRenderPassQuad(root_pass, child_pass, 0, gfx::Transform(),
+                          SkBlendMode::kSrcOver);
+  }
+
+  renderer().DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+
+  // The child RenderPass would try to use a 64x64 texture. We have a free and
+  // existing 256x256 texture, but it's too large for us to reuse it.
+  {
+    InSequence sequence;
+    EXPECT_CALL(gl(), ScheduleCALayerSharedStateCHROMIUM(_, _, _, _, _));
+    EXPECT_CALL(gl(), ScheduleCALayerCHROMIUM(_, _, _, _, _, _))
+        .WillOnce(
+            Invoke([&](GLuint contents_texture_id, const GLfloat* contents_rect,
+                       GLuint background_color, GLuint edge_aa_mask,
+                       const GLfloat* bounds_rect, GLuint filter) {
+              // The first texture is not reused.
+              EXPECT_NE(saved_texture_id, contents_texture_id);
+              // This is the child RenderPassDrawQuad.
+              EXPECT_EQ(1, bounds_rect[0]);
+              EXPECT_EQ(2, bounds_rect[1]);
+              // The new texture has a smaller size.
+              EXPECT_EQ(64, bounds_rect[2]);
+              EXPECT_EQ(64, bounds_rect[3]);
+            }));
+  }
+  DrawFrame(&renderer(), viewport_size);
+  Mock::VerifyAndClearExpectations(&gl());
+  renderer().SwapBuffers(std::vector<ui::LatencyInfo>());
 }
 
 class FramebufferWatchingGLRenderer : public FakeRendererGL {
