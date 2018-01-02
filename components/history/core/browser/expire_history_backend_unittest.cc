@@ -1084,7 +1084,7 @@ TEST_F(ExpireHistoryTest, ClearOldOnDemandFaviconsDoesDeleteUnstarred) {
   GURL page_url("http://google.com/");
   ASSERT_NE(0, thumb_db_->AddIconMapping(page_url, icon_id));
 
-  expirer_.ClearOldOnDemandFavicons(GetOldFaviconThreshold());
+  expirer_.ClearOldOnDemandFaviconsIfPossible(GetOldFaviconThreshold());
 
   // The icon gets deleted.
   EXPECT_FALSE(thumb_db_->GetIconMappingsForPageURL(page_url, nullptr));
