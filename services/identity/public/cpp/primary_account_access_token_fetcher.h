@@ -33,6 +33,14 @@ class PrimaryAccountAccessTokenFetcher : public SigninManagerBase::Observer,
       base::OnceCallback<void(const GoogleServiceAuthError& error,
                               const std::string& access_token)>;
 
+  // Specifies how this instance should behave:
+  // |kOneShot|: immediate request with no retry on error.
+  // |kWaitForAvailability|: waits for the primary account to be available
+  // before making the request and retries once on cancellation.
+  // Note that using |kWaitForAvailability| can result in waiting forever
+  // if the user is not signed in and doesn't sign in.
+  enum class Mode { kOneShot, kWaitForAvailability };
+
   // Instantiates a fetcher and immediately starts the process of obtaining an
   // OAuth2 access token for the given |scopes|. The |callback| is called once
   // the request completes (successful or not). If the
@@ -42,7 +50,8 @@ class PrimaryAccountAccessTokenFetcher : public SigninManagerBase::Observer,
                                    SigninManagerBase* signin_manager,
                                    OAuth2TokenService* token_service,
                                    const OAuth2TokenService::ScopeSet& scopes,
-                                   TokenCallback callback);
+                                   TokenCallback callback,
+                                   Mode mode);
 
   ~PrimaryAccountAccessTokenFetcher() override;
 
@@ -81,6 +90,8 @@ class PrimaryAccountAccessTokenFetcher : public SigninManagerBase::Observer,
 
   // When a token request gets canceled, we want to retry once.
   bool access_token_retried_;
+
+  Mode mode_;
 
   DISALLOW_COPY_AND_ASSIGN(PrimaryAccountAccessTokenFetcher);
 };

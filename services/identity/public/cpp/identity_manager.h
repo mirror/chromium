@@ -58,7 +58,8 @@ class IdentityManager : public SigninManagerBase::Observer {
   CreateAccessTokenFetcherForPrimaryAccount(
       const std::string& oauth_consumer_name,
       const OAuth2TokenService::ScopeSet& scopes,
-      PrimaryAccountAccessTokenFetcher::TokenCallback callback);
+      PrimaryAccountAccessTokenFetcher::TokenCallback callback,
+      PrimaryAccountAccessTokenFetcher::Mode mode);
 
   // Methods to register or remove observers.
   void AddObserver(Observer* observer);
