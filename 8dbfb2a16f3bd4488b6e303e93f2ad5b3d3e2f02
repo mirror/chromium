@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cdfcd66_353a5476",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09637fd_96d97537",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b4782e_09f4919c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad796920_9a3142a5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b4782e_09f4919c",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5f1059_fcedd24c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-22T23:09:59Z",
       "side": 1,
       "message": "This doesn\u0027t look right, why did this need to change?\nWas it broken before, for granularity moves other than\neditable text?",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a445fa55_df363d81",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "The granularity move is broken for edit texts but not for other text nodes and my change might have adverse effect on other text nodes. I have made my change specific to edit texts, but incase this should be handled by talkback and not here, we can do that too.",
+      "parentUuid": "3a5f1059_fcedd24c",
       "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "28b2e405_3d3174c9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "This is required as granularity move is broken when you add some letters in the middle of a word. The cursor index does not get updated.",
+      "parentUuid": "903461a4_f326c48a",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "140d4558_f9e3a2fe",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 11
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2db7dac7_961a8125",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140d4558_f9e3a2fe",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c399108_119bf761",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3d70fb_a0d2c63d",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2018-01-02T10:59:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c399108_119bf761",
+      "revId": "8dbfb2a16f3bd4488b6e303e93f2ad5b3d3e2f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
