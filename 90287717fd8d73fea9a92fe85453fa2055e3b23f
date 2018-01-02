@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47dc84ea_468ae90c",
+        "filename": "content/renderer/screen_orientation/screen_orientation_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-02T10:10:46Z",
+      "side": 1,
+      "message": "nit: `return pending_callback_ ? request_id_ : -1;`",
+      "revId": "90287717fd8d73fea9a92fe85453fa2055e3b23f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
