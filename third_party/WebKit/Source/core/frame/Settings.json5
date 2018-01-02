@@ -950,5 +950,10 @@
       name: "navigatorPlatformOverride",
       type: "String",
     },
+    {
+      name: "lowPriorityIframesEnabled",
+      initial: "WebEffectiveConnectionType::kTypeUnknown",
+      type: "WebEffectiveConnectionType",
+    },
   ],
 }

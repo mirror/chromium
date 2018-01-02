@@ -265,6 +265,11 @@ class PLATFORM_EXPORT FetchContext
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
 
+  virtual ResourceLoadPriority ModifyPriorityForExperiments(
+      ResourceLoadPriority priority) const {
+    return priority;
+  }
+
  protected:
   FetchContext();
 
