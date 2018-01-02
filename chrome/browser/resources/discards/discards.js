@@ -64,10 +64,8 @@ cr.define('discards', function() {
     }
 
     // Compares boolean fields.
-    if ([
-          'isApp', 'isInternal', 'isMedia', 'isPinned', 'isDiscarded',
-          'isAutoDiscardable'
-        ].includes(sortKey)) {
+    if (['isMedia', 'isPinned', 'isDiscarded', 'isAutoDiscardable'].includes(
+            sortKey)) {
       if (val1 == val2)
         return 0;
       return val1 ? 1 : -1;
