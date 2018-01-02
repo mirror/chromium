@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1750be8b_dc4ed27e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-02T10:33:45Z",
+      "side": 1,
+      "message": "Would it be possible to include the text from above (ie. IDS_MEDIA_REMOTING_STOP_TEXT) to guarantee consistency?",
+      "range": {
+        "startLine": 10964,
+        "startChar": 35,
+        "endLine": 10964,
+        "endChar": 63
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9500024f_5ff2cc89",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-02T10:33:45Z",
+      "side": 1,
+      "message": "FWIW, the parameters should be inverted.",
+      "range": {
+        "startLine": 477,
+        "startChar": 14,
+        "endLine": 477,
+        "endChar": 26
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6737d9fa_98088fde",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-02T10:33:45Z",
+      "side": 1,
+      "message": "Would it make sense to have this down the chain? The string is passed to a lot of places which, in addition of possibly creating more string conversions than needed, creates cruft such as calling `MediaRemotingStopped(WebString())` above (in mediaplayer_ms). I wonder if we could pass the error code instead and at the end, convert it to the localized string. WDYT?",
+      "range": {
+        "startLine": 479,
+        "startChar": 35,
+        "endLine": 479,
+        "endChar": 49
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e177d2d9_4144f589",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-02T10:33:45Z",
+      "side": 1,
+      "message": "I wonder if a `reason` shouldn\u0027t be used here instead (which would be an enum).",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
