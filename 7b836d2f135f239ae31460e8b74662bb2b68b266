@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7035eb9c_b95c5a17",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "If the developer passes in [500, 200, 100], why would the pattern here be [500, 100, 200]?",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689a3692_2b7d63b2",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "nit: could play it safe and remove const\u0026 here too",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbe6c42_8c5f3858",
+        "filename": "content/common/notifications/notification_struct_traits.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "Here too: can we drop the intermediate std::vector\u003c\u003e and just use PlatformNotificationData.actions directly?",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e68defd_4347ac10",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "nit: s/browser/common/",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cca8815_4aaeb898",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "nit: maybe add a TODO to align the types we use for `data`? More modern code uses base::span, which I think we can use here too to remove the copy:\n\n  static const base::span\u003cconst int8_t\u003e data(\n      const content::PlatformNotificationData\u0026 data) {\n    return base::make_span(\n        reinterpret_cast\u003cconst int8_t*\u003e(data.data.data()),\n        data.data.size());\n  }\n\n(data.data.data, go us \\o/)\n\nI\u0027m fairly sure that we can do that for the vibration_pattern too.",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f65559_3bec2303",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "Why not just return data.actions as a const\u0026?",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e578afd_051c1f06",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "Can we try the base::span\u003c\u003e trick here too?",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20be4b32_b6308733",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "This could do with a comment explaining why we\u0027re not just reading to the type directly. (String -\u003e WebString conversion until we can remove the WebKit API code for notifications.)",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d2db5f_f0218450",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "nit: the scalar types can be inlined in the header at least.",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5accdb_b318ac3b",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "SCOPED_TRACE(i);\n\nThat\u0027s a trick to give clearer error messages depending on which iteration we\u0027re in. Basically what you added on line 107.",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f86a98_99652319",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-02T15:47:23Z",
+      "side": 1,
+      "message": "nit: two-space indent",
+      "revId": "7b836d2f135f239ae31460e8b74662bb2b68b266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
