@@ -516,6 +516,11 @@ BOOL forceMagicMouse = NO;
   if (![theEvent respondsToSelector:@selector(phase)])
     return NO;
 
+  // reset the state to pending when scroll wheel events begin
+  if ([theEvent phase] == NSEventPhaseBegan) {
+    recognitionState_ = history_swiper::kPending;
+  }
+
   // The only events that this class consumes have type NSEventPhaseChanged.
   // This simultaneously weeds our regular mouse wheel scroll events, and
   // gesture events with incorrect phase.
