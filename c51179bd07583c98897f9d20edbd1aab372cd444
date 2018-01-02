@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304b490b_6b35ec3b",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-02T15:14:14Z",
+      "side": 1,
+      "message": "How crazy would it be to put the base::BindRepeating() call into the macro?  It seems like this macro would never wrap anything other than a BindRepeating result.",
+      "revId": "c51179bd07583c98897f9d20edbd1aab372cd444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
