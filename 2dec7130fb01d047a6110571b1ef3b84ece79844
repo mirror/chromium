@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9e8515e_47eb817e",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T22:51:51Z",
+      "side": 1,
+      "message": "BindToCurrentLoop is used here and below only to break the stack to prevent it from growing too deep. PTAL at Yuri\u0027s comments on PS #3.",
+      "parentUuid": "edd9b45d_708f5a7c",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1995fb3_9279f9a6",
         "filename": "chrome/browser/media/cast_remoting_sender.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa507e4_363e8346",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T22:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1995fb3_9279f9a6",
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7351808e_a9025db8",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T22:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92c2143a_f2add00b",
+      "range": {
+        "startLine": 76,
+        "startChar": 59,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39059be_97bc7b15",
         "filename": "chrome/browser/media/cast_remoting_sender.h",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72abc0b8_82f36997",
+        "filename": "chrome/browser/media/cast_remoting_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T22:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b39059be_97bc7b15",
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3cae9b_3a95f475",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T22:51:51Z",
+      "side": 1,
+      "message": "Yes, it is safe. The watcher callback will be called with |MOJO_RESULT_CANCELLED| no matter whether the watcher is armed. (https://cs.chromium.org/chromium/src/mojo/public/cpp/system/simple_watcher.h?rcl\u003de9889d5c571cbc055685c9fff115c088a564ee95\u0026l\u003d116)",
+      "parentUuid": "974301e0_5aad3569",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 24
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
