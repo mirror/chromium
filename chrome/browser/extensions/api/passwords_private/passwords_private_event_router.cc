@@ -86,6 +86,23 @@ void PasswordsPrivateEventRouter::OnPlaintextPasswordFetched(
   event_router_->BroadcastEvent(std::move(extension_event));
 }
 
+void PasswordsPrivateEventRouter::OnPasswordsExportProgress(
+    api::passwords_private::ExportProgressStatus status,
+    const std::string& message) {
+  api::passwords_private::PasswordExportProgress params;
+  params.status = status;
+  params.message = std::make_unique<std::string>(std::move(message));
+
+  std::unique_ptr<base::ListValue> event_value(new base::ListValue());
+  event_value->Append(params.ToValue());
+
+  std::unique_ptr<Event> extension_event(new Event(
+      events::PASSWORDS_PRIVATE_ON_PASSWORDS_FILE_EXPORT_PROGRESS,
+      api::passwords_private::OnPasswordsFileExportProgress::kEventName,
+      std::move(event_value)));
+  event_router_->BroadcastEvent(std::move(extension_event));
+}
+
 PasswordsPrivateEventRouter* PasswordsPrivateEventRouter::Create(
     content::BrowserContext* context) {
   return new PasswordsPrivateEventRouter(context);

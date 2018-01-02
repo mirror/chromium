@@ -121,9 +121,9 @@ bool HasPasswordWithAutocompleteAttribute(
 base::string16 FieldName(const FormFieldData& field,
                          bool ambiguous_or_empty_names) {
   return ambiguous_or_empty_names
-             ? (IsFieldPasswordField(field)
-                    ? base::ASCIIToUTF16(kDummyPasswordField)
-                    : base::ASCIIToUTF16(kDummyUsernameField))
+             ? IsFieldPasswordField(field)
+                   ? base::ASCIIToUTF16(kDummyPasswordField)
+                   : base::ASCIIToUTF16(kDummyUsernameField)
              : field.name;
 }
 
@@ -370,7 +370,7 @@ void UpdateFieldValueAndPropertiesMaskMap(
     it->second.second |= added_flags;
   } else {
     (*field_value_and_properties_map)[element] = std::make_pair(
-        value ? std::make_unique<base::string16>(*value) : nullptr,
+        value ? base::MakeUnique<base::string16>(*value) : nullptr,
         added_flags);
   }
   // Reset USER_TYPED and AUTOFILLED flags if the value is empty.
