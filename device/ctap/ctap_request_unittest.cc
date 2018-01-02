@@ -12,7 +12,7 @@ namespace device {
 
 // Leveraging example 4 for section 6.1 of the spec
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html
-TEST(CTAPDataTest, TestConstructMakeCredentialRequestParam) {
+TEST(CTAPRequestTest, TestConstructMakeCredentialRequestParam) {
   const std::vector<uint8_t> client_data_hash_bytes = {
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42,
       0x50, 0x5f, 0x8e, 0xd2, 0xb1, 0x6a, 0xe2, 0x2f, 0x16, 0xbb, 0x05,
@@ -26,7 +26,7 @@ TEST(CTAPDataTest, TestConstructMakeCredentialRequestParam) {
   const std::vector<uint8_t> serialized_request = {
       // clang format-off
       0x01,        // authenticatorMakeCredential command
-      0xa4,        // map(4)
+      0xa5,        // map(5)
       0x01,        //  clientDataHash
       0x58, 0x20,  // bytes(32)
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42, 0x50,
@@ -94,7 +94,17 @@ TEST(CTAPDataTest, TestConstructMakeCredentialRequestParam) {
       0x74, 0x79, 0x70, 0x65,  // "type"
       0x6a,                    // text(10)
       // "public-key"
-      0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79
+      0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79,
+
+      0x07,        // unsigned(7) - options
+      0xa2,        // map(2)
+      0x62,        // text(2)
+      0x72, 0x6b,  // "rk"
+      0xf5,        // True(21)
+      0x62,        // text(2)
+      0x75, 0x76,  // "uv"
+      0xf5         // True(21)
+
       // clang format-on
   };
 
@@ -109,12 +119,14 @@ TEST(CTAPDataTest, TestConstructMakeCredentialRequestParam) {
   CTAPMakeCredentialRequestParam make_credential_param(
       client_data_hash_bytes, std::move(rp), std::move(user),
       PublicKeyCredentialParams({{"public-key", 7}, {"public-key", 257}}));
-  auto serialized_data = make_credential_param.SerializeToCBOR();
+  auto serialized_data = make_credential_param.SetResidentKey(true)
+                             .SetUserVerification(true)
+                             .SerializeToCBOR();
   ASSERT_TRUE(serialized_data);
   EXPECT_THAT(*serialized_data, testing::ElementsAreArray(serialized_request));
 }
 
-TEST(CTAPDataTest, TestConstructGetAssertionRequest) {
+TEST(CTAPRequestTest, TestConstructGetAssertionRequestParam) {
   const std::vector<uint8_t> client_data_hash_bytes = {
       0x68, 0x71, 0x34, 0x96, 0x82, 0x22, 0xec, 0x17, 0x20, 0x2e, 0x42,
       0x50, 0x5f, 0x8e, 0xd2, 0xb1, 0x6a, 0xe2, 0x2f, 0x16, 0xbb, 0x05,
@@ -128,7 +140,7 @@ TEST(CTAPDataTest, TestConstructGetAssertionRequest) {
   static const uint8_t serialized_request[] = {
       // clang format-off
       0x02,  // authenticatorGetAssertion command
-      0xa3,  // map(3)
+      0xa4,  // map(4)
 
       0x01,  // rpId
       0x68,  // text(8)
@@ -175,6 +187,16 @@ TEST(CTAPDataTest, TestConstructGetAssertionRequest) {
       0x6a,                    // text(10)
       // "public-key"
       0x70, 0x75, 0x62, 0x6C, 0x69, 0x63, 0x2D, 0x6B, 0x65, 0x79,
+
+      0x07,        // unsigned(7) - options
+      0xa2,        // map(2)
+      0x62,        // text(2)
+      0x75, 0x70,  // "up"
+      0xf5,        // True(21)
+      0x62,        // text(2)
+      0x75, 0x76,  // "uv"
+      0xf5         // True(21)
+
       // clang format-on
   };
 
@@ -197,7 +219,9 @@ TEST(CTAPDataTest, TestConstructGetAssertionRequest) {
        0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03,
        0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03}));
 
-  get_assertion_req.SetAllowList(std::move(allowed_list));
+  get_assertion_req.SetAllowList(std::move(allowed_list))
+      .SetUserPresence(true)
+      .SetUserVerification(true);
 
   auto serialized_data = get_assertion_req.SerializeToCBOR();
   ASSERT_TRUE(serialized_data);
