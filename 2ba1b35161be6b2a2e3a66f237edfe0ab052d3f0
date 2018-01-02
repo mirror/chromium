@@ -16,6 +16,24 @@
       "revId": "2ba1b35161be6b2a2e3a66f237edfe0ab052d3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9d6ba3_539d9379",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-02T12:08:53Z",
+      "side": 1,
+      "message": "We do test this in PagePlaceholderTabHelperTest.DestructWebStateWhenShowingPlaceholder as this is the only way to test that the view is deleted when WebState is destroyed.",
+      "parentUuid": "52e2bdff_eb80b9e1",
+      "revId": "2ba1b35161be6b2a2e3a66f237edfe0ab052d3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
