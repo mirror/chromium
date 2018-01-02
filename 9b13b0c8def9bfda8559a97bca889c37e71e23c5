@@ -16,6 +16,24 @@
       "revId": "9b13b0c8def9bfda8559a97bca889c37e71e23c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ad6716_95912f03",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-02T20:09:31Z",
+      "side": 1,
+      "message": "There\u0027s actually some new-line and white-space characters due to how the code is formatted, so I opted for indexOf to avoid the trimming code.",
+      "parentUuid": "c4deacf5_946cbd23",
+      "revId": "9b13b0c8def9bfda8559a97bca889c37e71e23c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
