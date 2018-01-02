@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1934549_8ac65d04",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-createOffer-promise.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-02T13:01:02Z",
+      "side": 1,
+      "message": "nit: double space",
+      "revId": "43de41767b7a36f940f056bd08d4d5a933fabd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
