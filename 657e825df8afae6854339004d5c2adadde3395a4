@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7431243e_56588cec",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e167a77_168e523f",
+      "range": {
+        "startLine": 26,
+        "startChar": 64,
+        "endLine": 26,
+        "endChar": 76
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b472b624_b02bb97b",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "657e825df8afae6854339004d5c2adadde3395a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ded8cf_a852498f",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b472b624_b02bb97b",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2a55c4e7_9fc07b48",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c7c4f2_2a3ef548",
+      "range": {
+        "startLine": 72,
+        "startChar": 77,
+        "endLine": 72,
+        "endChar": 79
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f20f0d94_f3a1d8ed",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "657e825df8afae6854339004d5c2adadde3395a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dddb0c_5777ea35",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20f0d94_f3a1d8ed",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 1
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ca41e168_95533785",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71103c27_cbf3b6df",
+      "range": {
+        "startLine": 155,
+        "startChar": 28,
+        "endLine": 155,
+        "endChar": 42
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56162c19_f3cfd779",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "657e825df8afae6854339004d5c2adadde3395a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf081f2_a888ada7",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2018-01-02T23:05:05Z",
+      "side": 1,
+      "message": "It\u0027s actually {0 - 0} because indices are compared. Having old targets makes it clearer, though I admit this function is quite hard to understand and test (which is why I plan to change reference deltas in 627188)",
+      "parentUuid": "56162c19_f3cfd779",
+      "range": {
+        "startLine": 214,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
