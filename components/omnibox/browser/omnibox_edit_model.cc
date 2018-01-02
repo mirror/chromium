@@ -331,9 +331,20 @@ void OmniboxEditModel::AdjustTextForCopy(int sel_min,
   // the text parses as a url with a scheme of http, the user selected the
   // entire host, and the user hasn't edited the host or manually removed the
   // scheme.
-  GURL perm_url(PermanentURL());
-  if (perm_url.SchemeIs(url::kHttpScheme) && url->SchemeIs(url::kHttpScheme) &&
-      perm_url.host_piece() == url->host_piece()) {
+  GURL reference_url = PermanentURL();
+  // If the popup is open, the user is in input mode, and has a current match,
+  // use the destination URL as the reference URL instead.
+  if (PopupIsOpen() && user_input_in_progress_) {
+    AutocompleteMatch current_match = CurrentMatch(nullptr);
+    if (!AutocompleteMatch::IsSearchType(current_match.type) &&
+        current_match.destination_url.is_valid()) {
+      reference_url = current_match.destination_url;
+    }
+  }
+
+  if (reference_url.SchemeIs(url::kHttpScheme) &&
+      url->SchemeIs(url::kHttpScheme) &&
+      reference_url.host_piece() == url->host_piece()) {
     *write_url = true;
     base::string16 http = base::ASCIIToUTF16(url::kHttpScheme) +
         base::ASCIIToUTF16(url::kStandardSchemeSeparator);
