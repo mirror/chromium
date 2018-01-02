@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66b3493_d5901ad1",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-02T20:47:34Z",
+      "side": 1,
+      "message": "Can rename to AllocPagesIncludingReserved() or something similar?\n\nTryVerb() vs Verb() tends to make me think Verb() blocks until success (like with a Mutex) where in this case, both functions can legitimately return nullptr.",
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60518f23_633941e1",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-02T20:47:34Z",
+      "side": 1,
+      "message": "Can\u0027t ret be NULL in any platform due to OOM here?  Why is this comment parked POSIX only?",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a86d32_1cc7f541",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-02T20:47:34Z",
+      "side": 1,
+      "message": "Isn\u0027t this also true for POSIX?",
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21daf9d_803ab8ca",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2018-01-02T20:47:34Z",
+      "side": 1,
+      "message": "This isn\u0027t windows only.  It\u0027d also apply to arm32 POSIX (aka Android) wouldn\u0027t it?",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 53
+      },
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
