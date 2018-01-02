@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce20ed38_3c3bd3b8",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2018-01-02T14:07:09Z",
+      "side": 1,
+      "message": "These are internal/private Skia headers, not suitable for external consumption.\n\nWhich bits do you need for your CL?  We\u0027ll have to either expose those in public headers or find other ways to support.",
+      "revId": "a4ada90737b645373d6d1ea05a4a418a993494bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84182fe_a4d46366",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2018-01-02T14:07:09Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "a4ada90737b645373d6d1ea05a4a418a993494bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
