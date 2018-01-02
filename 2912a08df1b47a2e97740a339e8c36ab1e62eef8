@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174ad5ec_e4c14f1c",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_external_policy_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-02T18:27:47Z",
+      "side": 1,
+      "message": "nit: remove this since we include \"external_cache_impl.h\"",
+      "revId": "2912a08df1b47a2e97740a339e8c36ab1e62eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd7c1fb_7edee3a9",
+        "filename": "chrome/browser/chromeos/extensions/external_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-02T18:27:47Z",
+      "side": 1,
+      "message": "nit: alredy -\u003e already",
+      "range": {
+        "startLine": 22,
+        "startChar": 71,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "2912a08df1b47a2e97740a339e8c36ab1e62eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74567d5_0b13f4bf",
+        "filename": "chrome/browser/chromeos/extensions/external_cache.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-02T18:27:47Z",
+      "side": 1,
+      "message": "nit: Callback -\u003e OnceCallback ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "2912a08df1b47a2e97740a339e8c36ab1e62eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0001a198_1d565bb4",
+        "filename": "chrome/browser/chromeos/extensions/external_cache_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-02T18:27:47Z",
+      "side": 1,
+      "message": "nit: unused ?",
+      "revId": "2912a08df1b47a2e97740a339e8c36ab1e62eef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
