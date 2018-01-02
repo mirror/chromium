@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68befed_ceb28486",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2018-01-02T16:45:11Z",
+      "side": 1,
+      "message": "Plz add a // TODO(primiano): add 0x prefix to SharedMemoryTracker::GetDumpNameForTracing(), remove this function and just use 0x? in the general whitelist above.\n\nIf we remove the parenthesis there is no need of this extra special code.",
+      "range": {
+        "startLine": 281,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 3
+      },
+      "revId": "3fd03130de2bad7ebc785889856b28e093b172a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
