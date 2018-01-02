@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5e0c58b_ece2bf47",
+        "filename": "chromeos/components/tether/hotspot_usage_duration_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-02T23:25:33Z",
+      "side": 1,
+      "message": "Medium times only goes up to 10 minutes, I recommend a larger bucket.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "bb0748b28df6bc2f7853fc784c7783280088045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e3d21b_23ae876b",
+        "filename": "chromeos/components/tether/hotspot_usage_duration_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-02T23:25:33Z",
+      "side": 1,
+      "message": "Is it necessary to use a pointer to achieve this behavior? base::Time should have a is_null() method.",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 44
+      },
+      "revId": "bb0748b28df6bc2f7853fc784c7783280088045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40a622b_f106f780",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30559,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-02T23:25:33Z",
+      "side": 1,
+      "message": "This is in ms, not s.",
+      "range": {
+        "startLine": 30559,
+        "startChar": 75,
+        "endLine": 30559,
+        "endChar": 76
+      },
+      "revId": "bb0748b28df6bc2f7853fc784c7783280088045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
