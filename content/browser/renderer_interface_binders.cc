@@ -87,7 +87,7 @@ void ForwardServiceRequest(const char* service_name,
   connector->BindInterface(service_name, std::move(request));
 }
 
-void GetRestrictedCookieManager(
+void GetRestrictedCookieManagerForMojo(
     network::mojom::RestrictedCookieManagerRequest request,
     RenderProcessHost* render_process_host,
     const url::Origin& origin) {
@@ -163,7 +163,7 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
   parameterized_binder_registry_.AddInterface(
       base::BindRepeating(&BackgroundFetchServiceImpl::Create));
   parameterized_binder_registry_.AddInterface(
-      base::BindRepeating(GetRestrictedCookieManager));
+      base::BindRepeating(GetRestrictedCookieManagerForMojo));
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {
