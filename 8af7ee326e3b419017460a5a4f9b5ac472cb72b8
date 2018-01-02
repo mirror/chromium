@@ -16,6 +16,24 @@
       "revId": "8af7ee326e3b419017460a5a4f9b5ac472cb72b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a866327_94fd94ca",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-02T21:05:06Z",
+      "side": 1,
+      "message": "They can\u0027t handle it in the sense that they ignore the value. I was using that as a reason why we\u0027re requesting something larger than what we \"can handle\". Basically, this computed value whether or not it\u0027s larger or smaller than |max_decoded_bytes| is only used by the JPEG decoder. For JPEG decoders, this code change _should_ be a no-op because we shouldn\u0027t be allocating a backing that is larger than |max_decoded_bytes|. For the rest of the decoders, this change brings it on par with what it was before decode to scale bits were introduced, but it would still be pretty much ignored.",
+      "parentUuid": "b7c33eea_83b7eaf9",
+      "revId": "8af7ee326e3b419017460a5a4f9b5ac472cb72b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
