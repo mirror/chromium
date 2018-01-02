@@ -25,6 +25,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/win/registry.h"
 #include "base/win/shortcut.h"
 #include "ui/aura/window.h"
@@ -229,6 +230,7 @@ class SelectFileDialogImpl : public ui::SelectFileDialog,
   struct SelectFolderDialogOptions {
     const wchar_t* default_path;
     bool is_upload;
+    base::TimeTicks initialized_tickcount;
   };
 
   // Shows the file selection dialog modal to |owner| and calls the result
@@ -515,16 +517,32 @@ int CALLBACK SelectFileDialogImpl::BrowseCallbackProc(HWND window,
   if (message == BFFM_INITIALIZED) {
     SelectFolderDialogOptions* options =
         reinterpret_cast<SelectFolderDialogOptions*>(data);
+    if (options->default_path) {
+      SendMessage(window, BFFM_SETSELECTION, TRUE,
+                  reinterpret_cast<LPARAM>(options->default_path));
+    }
     if (options->is_upload) {
       SendMessage(window, BFFM_SETOKTEXT, 0,
                   reinterpret_cast<LPARAM>(
                       l10n_util::GetStringUTF16(
                           IDS_SELECT_UPLOAD_FOLDER_DIALOG_UPLOAD_BUTTON)
                           .c_str()));
+      // Disable the OK button by default to combat Gesture-jacking; see
+      // https://crbug.com/637098.
+      SendMessage(window, BFFM_ENABLEOK, 0, FALSE);
     }
-    if (options->default_path) {
-      SendMessage(window, BFFM_SETSELECTION, TRUE,
-                  reinterpret_cast<LPARAM>(options->default_path));
+    options->initialized_tickcount = base::TimeTicks::Now();
+  } else if (message == BFFM_SELCHANGED) {
+    // Disable the OK button for at least one second to combat Gesture-jacking;
+    // see https://crbug.com/637098.
+    SelectFolderDialogOptions* options =
+        reinterpret_cast<SelectFolderDialogOptions*>(data);
+
+    if (options->is_upload &&
+        (options->initialized_tickcount.is_null() ||
+         (base::TimeTicks::Now() - options->initialized_tickcount <
+          base::TimeDelta::FromSeconds(1)))) {
+      SendMessage(window, BFFM_ENABLEOK, 0, FALSE);
     }
   }
   return 0;
