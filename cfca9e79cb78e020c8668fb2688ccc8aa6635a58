@@ -16,6 +16,24 @@
       "revId": "cfca9e79cb78e020c8668fb2688ccc8aa6635a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb5377b_f8ddf6ee",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2018-01-02T23:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbfb0738_79011fa4",
+      "revId": "cfca9e79cb78e020c8668fb2688ccc8aa6635a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
