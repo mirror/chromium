@@ -728,6 +728,30 @@
     },
     {
       "key": {
+        "uuid": "875b6e5d_492b4f8e",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T23:17:01Z",
+      "side": 1,
+      "message": "Double checked that they can work properly.",
+      "parentUuid": "f157dec7_828da462",
+      "range": {
+        "startLine": 1577,
+        "startChar": 2,
+        "endLine": 1577,
+        "endChar": 3
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b00432b0_dd780278",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 12
