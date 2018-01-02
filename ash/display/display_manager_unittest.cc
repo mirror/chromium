@@ -158,6 +158,11 @@ class DisplayManagerTest : public AshTestBase,
     return false;
   }
 
+  void ActivateSoftwareMirrorMode(bool active) {
+    display_manager()->SetMirrorMode(active);
+    RunAllPendingInMessageLoop();
+  }
+
  private:
   vector<display::Display> changed_;
   vector<display::Display> added_;
@@ -995,16 +1000,6 @@ TEST_F(DisplayManagerTest, NoOverlappedDisplaysWithDetachedDisplays) {
   const display::DisplayLayout& layout =
       display_manager()->GetCurrentResolvedDisplayLayout();
   EXPECT_TRUE(layout.HasSamePlacementList(*(expected_layout_builder.Build())));
-}
-
-// TODO(weidongg/774795) Remove test when multi mirroring is enabled by default.
-TEST_F(DisplayManagerTest, NoMirrorInThreeDisplays) {
-  UpdateDisplay("640x480,320x200,400x300");
-  ash::Shell::Get()->display_configuration_controller()->SetMirrorMode(true);
-  EXPECT_FALSE(display_manager()->IsInMirrorMode());
-  EXPECT_EQ(3u, display_manager()->GetNumDisplays());
-  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_DISPLAY_MIRRORING_NOT_SUPPORTED),
-            GetDisplayErrorNotificationMessageForTest());
 }
 
 TEST_F(DisplayManagerTest, OverscanInsetsTest) {
@@ -2280,40 +2275,6 @@ TEST_F(DisplayManagerTest, RotateInSoftwareMirroring) {
       primary_id, display::Display::ROTATE_180,
       display::Display::ROTATION_SOURCE_ACTIVE);
   display_manager()->SetMirrorMode(false);
-}
-
-// TODO(weidongg/774795) Remove test when multi mirroring is enabled by default.
-// Make sure this does not cause any crashes. See http://crbug.com/412910
-TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
-  UpdateDisplay("300x400,400x500");
-
-  MirrorWindowTestApi test_api;
-  EXPECT_TRUE(test_api.GetHosts().empty());
-
-  display::ManagedDisplayInfo secondary_info =
-      display_manager()->GetDisplayInfo(
-          display_manager()->GetSecondaryDisplay().id());
-
-  display_manager()->SetSoftwareMirroring(true);
-  display_manager()->UpdateDisplays();
-
-  aura::Window::Windows root_windows = Shell::GetAllRootWindows();
-  EXPECT_FALSE(root_windows[0]->Contains(test_api.GetCursorWindow()));
-
-  Shell::Get()->SetCursorCompositingEnabled(true);
-
-  EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
-
-  // Removes the first display and keeps the second one.
-  display_manager()->SetSoftwareMirroring(false);
-  std::vector<display::ManagedDisplayInfo> new_info_list;
-  new_info_list.push_back(secondary_info);
-  display_manager()->OnNativeDisplaysChanged(new_info_list);
-
-  root_windows = Shell::GetAllRootWindows();
-  EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
-
-  Shell::Get()->SetCursorCompositingEnabled(false);
 }
 
 TEST_F(DisplayManagerTest, InvertLayout) {
@@ -3782,26 +3743,7 @@ TEST_F(DisplayManagerOrientationTest, DisplayChangeShouldNotSaveUserRotation) {
   EXPECT_EQ(display::Display::ROTATE_0, screen->GetPrimaryDisplay().rotation());
 }
 
-class MultiMirroringTest : public DisplayManagerTest {
- public:
-  MultiMirroringTest() = default;
-  ~MultiMirroringTest() override = default;
-
-  // DisplayManagerTest:
-  void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        ::switches::kEnableMultiMirroring);
-    DisplayManagerTest::SetUp();
-  }
-
-  void ActivateSoftwareMirrorMode(bool active) {
-    display_manager()->SetMirrorMode(active);
-    RunAllPendingInMessageLoop();
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MultiMirroringTest);
-};
+using MultiMirroringTest = DisplayManagerTest;
 
 TEST_F(MultiMirroringTest, HardwareMirrorMode) {
   // Create three displays with the same origin in frame buffer.
