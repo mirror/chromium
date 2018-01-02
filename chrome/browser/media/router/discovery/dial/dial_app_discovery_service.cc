@@ -51,7 +51,9 @@ DialAppDiscoveryService::DialAppDiscoveryService(
     service_manager::Connector* connector,
     const DialAppInfoParseCompletedCallback& completed_cb)
     : completed_cb_(completed_cb),
-      parser_(std::make_unique<SafeDialAppInfoParser>(connector)) {}
+      parser_(std::make_unique<SafeDialAppInfoParser>(connector)) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 DialAppDiscoveryService::~DialAppDiscoveryService() = default;
 

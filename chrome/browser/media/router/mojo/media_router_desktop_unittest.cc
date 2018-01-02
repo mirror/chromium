@@ -55,12 +55,17 @@ class MockDialMediaSinkService : public DialMediaSinkService {
       : DialMediaSinkService(context) {}
   ~MockDialMediaSinkService() override {}
 
-  MOCK_METHOD3(Start,
+  MOCK_METHOD4(Start,
                void(const OnSinksDiscoveredCallback&,
                     const OnDialSinkAddedCallback&,
+                    const OnAvailableSinksUpdatedCallback&,
                     const scoped_refptr<base::SequencedTaskRunner>&));
   MOCK_METHOD0(ForceSinkDiscoveryCallback, void());
   MOCK_METHOD0(OnUserGesture, void());
+  MOCK_METHOD1(StartMonitoringAvailableSinksForApp,
+               void(const std::string& app_name));
+  MOCK_METHOD1(StopMonitoringAvailableSinksForApp,
+               void(const std::string& app_name));
 };
 
 class MockCastMediaSinkService : public CastMediaSinkService {
@@ -230,6 +235,54 @@ TEST_F(MediaRouterDesktopTest, TestProvideSinks) {
 TEST_F(MediaRouterDesktopTest, SendCastJoinRequestsToExtension) {
   TestJoinRoute(kAutoJoinPresentationId);
   TestJoinRoute(kCastPresentationIdPrefix + std::string("123"));
+}
+
+TEST_F(MediaRouterDesktopTest, TestRegisterUnregisterObserver) {
+  MockMediaSinksObserver observer1(
+      router(), MediaSource("cast-dial:YouTube"),
+      url::Origin::Create(GURL("https://tv.youtube.com")));
+  MockMediaSinksObserver observer2(
+      router(), MediaSource("cast-dial:YouTube"),
+      url::Origin::Create(GURL("https://www.youtube.com")));
+  MockMediaSinksObserver observer3(
+      router(), MediaSource("cast-dial:Netflix"),
+      url::Origin::Create(GURL("https://www.netflix.com")));
+  MockMediaSinksObserver observer4(
+      router(), MediaSource("cast-dial:Netflix"),
+      url::Origin::Create(GURL("https://www.netflix.com")));
+
+  EXPECT_CALL(*dial_media_sink_service(),
+              StartMonitoringAvailableSinksForApp("YouTube"))
+      .Times(2);
+  EXPECT_CALL(*dial_media_sink_service(),
+              StartMonitoringAvailableSinksForApp("Netflix"))
+      .Times(2);
+  observer1.Init();
+  observer2.Init();
+  observer3.Init();
+  observer4.Init();
+
+  MediaSink sink("sink id 1", "sink name 1", SinkIconType::GENERIC);
+  MediaSinkInternal sink_internal(sink, DialSinkExtraData());
+  std::vector<MediaSink> sinks{sink};
+
+  EXPECT_CALL(observer1, OnSinksReceived(sinks));
+  EXPECT_CALL(observer2, OnSinksReceived(sinks));
+
+  MediaRouterDesktop* media_router_desktop =
+      static_cast<MediaRouterDesktop*>(router());
+  media_router_desktop->OnAvailableSinksUpdated("YouTube", {sink_internal});
+
+  EXPECT_CALL(observer3, OnSinksReceived(sinks));
+  EXPECT_CALL(observer4, OnSinksReceived(sinks));
+  media_router_desktop->OnAvailableSinksUpdated("Netflix", {sink_internal});
+
+  EXPECT_CALL(*dial_media_sink_service(),
+              StopMonitoringAvailableSinksForApp("YouTube"))
+      .Times(2);
+  EXPECT_CALL(*dial_media_sink_service(),
+              StopMonitoringAvailableSinksForApp("Netflix"))
+      .Times(2);
 }
 
 }  // namespace media_router
