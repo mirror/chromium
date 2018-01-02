@@ -357,7 +357,7 @@ void RemotePlayback::StateChanged(WebRemotePlaybackState state) {
       DispatchEvent(Event::Create(EventTypeNames::disconnect));
       if (RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled() &&
           media_element_->IsHTMLVideoElement()) {
-        ToHTMLVideoElement(media_element_)->MediaRemotingStopped();
+        ToHTMLVideoElement(media_element_)->MediaRemotingStopped(WebString());
       }
       break;
   }

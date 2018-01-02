@@ -521,9 +521,9 @@ void HTMLVideoElement::MediaRemotingStarted(
   remoting_interstitial_->Show(remote_device_friendly_name);
 }
 
-void HTMLVideoElement::MediaRemotingStopped() {
+void HTMLVideoElement::MediaRemotingStopped(const WebString& user_message) {
   if (remoting_interstitial_)
-    remoting_interstitial_->Hide();
+    remoting_interstitial_->Hide(user_message);
 }
 
 WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {

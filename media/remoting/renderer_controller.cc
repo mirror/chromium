@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "build/buildflag.h"
+#include "media/base/localized_strings.h"
 #include "media/media_features.h"
 #include "media/remoting/remoting_cdm.h"
 #include "media/remoting/remoting_cdm_context.h"
@@ -64,6 +65,45 @@ StopTrigger GetStopTrigger(mojom::RemotingStopReason reason) {
   }
 
   return UNKNOWN_STOP_TRIGGER;  // To suppress compiler warning on Windows.
+}
+
+std::string GetUserMessage(StopTrigger stop_trigger) {
+  const std::string stop_text =
+      GetLocalizedStringUTF8(MEIDA_REMOTING_STOP_TEXT);
+  switch (stop_trigger) {
+    case FRAME_DROP_RATE_HIGH:
+    case PACING_TOO_SLOWLY:
+      return stop_text + ", " +
+             GetLocalizedStringUTF8(MEDIA_REMOTING_STOP_BY_BANDWIDTH_TEXT);
+    case EXITED_FULLSCREEN:
+    case BECAME_AUXILIARY_CONTENT:
+    case DISABLED_BY_PAGE:
+    case USER_DISABLED:
+    case UNKNOWN_STOP_TRIGGER:
+      return stop_text;
+    case UNSUPPORTED_AUDIO_CODEC:
+    case UNSUPPORTED_VIDEO_CODEC:
+    case UNSUPPORTED_AUDIO_AND_VIDEO_CODECS:
+    case DECRYPTION_ERROR:
+    case RECEIVER_INITIALIZE_FAILED:
+    case RECEIVER_PIPELINE_ERROR:
+    case PEERS_OUT_OF_SYNC:
+    case RPC_INVALID:
+    case DATA_PIPE_CREATE_ERROR:
+    case MOJO_PIPE_ERROR:
+    case MESSAGE_SEND_FAILED:
+    case DATA_SEND_FAILED:
+    case UNEXPECTED_FAILURE:
+    case SERVICE_GONE:
+      return stop_text + ", " +
+             GetLocalizedStringUTF8(MEDIA_REMOTING_STOP_BY_ERROR_TEXT);
+    case ROUTE_TERMINATED:
+    case MEDIA_ELEMENT_DESTROYED:
+    case START_RACE:
+      return std::string();
+  }
+
+  return std::string();  // To suppress compiler warning on Windows.
 }
 
 }  // namespace
@@ -438,9 +478,9 @@ void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
     // force-stop the session when remoting has ended; so no need to call
     // StopRemoting() from here.
     DCHECK(!is_encrypted_);
-    DCHECK_NE(stop_trigger, UNKNOWN_STOP_TRIGGER);
+    DCHECK_NE(UNKNOWN_STOP_TRIGGER, stop_trigger);
     metrics_recorder_.WillStopSession(stop_trigger);
-    client_->SwitchToLocalRenderer();
+    client_->SwitchToLocalRenderer(GetUserMessage(stop_trigger));
     VLOG(2) << "Request to stop remoting: stop_trigger=" << stop_trigger;
     session_->StopRemoting(this);
   }
@@ -499,7 +539,7 @@ void RendererController::StartRemoting(StartTrigger start_trigger) {
     client_->SwitchToRemoteRenderer(session_->sink_name());
     return;
   }
-  DCHECK_NE(start_trigger, UNKNOWN_START_TRIGGER);
+  DCHECK_NE(UNKNOWN_START_TRIGGER, start_trigger);
   metrics_recorder_.WillStartSession(start_trigger);
   // |MediaObserverClient::SwitchToRemoteRenderer()| will be called after
   // remoting is started successfully.
