@@ -145,13 +145,16 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   // Callbacks for saving pages.
   void InformSavePageDone(const SavePageCallback& calback,
                           SavePageResult result,
-                          const OfflinePageItem& page);
+                          const ClientId& client_id,
+                          int64_t offline_id);
   void OnAddPageForSavePageDone(const SavePageCallback& callback,
                                 const OfflinePageItem& page_attempted,
                                 AddPageResult add_page_result,
                                 int64_t offline_id);
-  void OnCreateArchiveDone(const SavePageCallback& callback,
-                           OfflinePageItem proposed_page,
+  void OnCreateArchiveDone(const SavePageParams& save_page_params,
+                           int64_t offline_id,
+                           const base::Time& start_time,
+                           const SavePageCallback& callback,
                            OfflinePageArchiver* archiver,
                            OfflinePageArchiver::ArchiverResult archiver_result,
                            const GURL& saved_url,
