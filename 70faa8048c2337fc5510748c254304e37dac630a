@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "aafcda2b_9222d9fb",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-02T23:26:57Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t think we have a good way to do so-- we could maybe try to keep track of the enabled state (because sometimes Windows intentionally disables the button if the user has e.g. an unselectable folder selected) but I don\u0027t know of a good place to PostMessage since we\u0027re in the middle of a blocking UI call. I suppose we could spawn a task/thread to do the countdown and send, but that level of complexity seems risky.",
+      "parentUuid": "06eceac4_63df6c32",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 35
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b62346_9022479a",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 4
