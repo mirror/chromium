@@ -88,8 +88,26 @@ void MessagePort::postMessage(ScriptState* script_state,
   if (exception_state.HadException())
     return;
 
-  channel_.PostMojoMessage(
-      mojom::blink::TransferableMessage::SerializeAsMessage(&msg));
+  mojo::Message mojo_message;
+  // Only documents and dedicated workers can be in the same agent cluster
+  // with other agents. So forcibly serialize the mojo message in all other
+  // cases.
+  // TODO(mek): The actual definition of what is the same agent cluster is more
+  // strict (involving all possibly same origin windows that are reachable from
+  // eachother, and their dedicated workers).
+  // TODO(mek): Forcibly serializing same-process messages to different agent
+  // clusters is also a bit heavy-handed. We could still avoid the extra copies
+  // caused by that by checking the agent cluster when deserializing the
+  // SerializedScriptValue.
+  // https://crbug.com/798572
+  if (GetExecutionContext()->IsDocument() ||
+      GetExecutionContext()->IsDedicatedWorkerGlobalScope()) {
+    mojo_message =
+        mojom::blink::TransferableMessage::WrapAsMessage(std::move(msg));
+  } else {
+    mojo_message = mojom::blink::TransferableMessage::SerializeAsMessage(&msg);
+  }
+  channel_.PostMojoMessage(std::move(mojo_message));
 }
 
 MessagePortChannel MessagePort::Disentangle() {
@@ -165,6 +183,22 @@ bool MessagePort::TryGetMessage(BlinkTransferableMessage& message) {
   mojo::Message mojo_message;
   if (!channel_.GetMojoMessage(&mojo_message))
     return false;
+
+  // Only documents and dedicated workers can be in the same agent cluster
+  // with other agents. So forcibly serialize the mojo message in all other
+  // cases.
+  // TODO(mek): The actual definition of what is the same agent cluster is more
+  // strict (involving all possibly same origin windows that are reachable from
+  // eachother, and their dedicated workers).
+  // TODO(mek): Forcibly serializing same-process messages to different agent
+  // clusters is also a bit heavy-handed. We could still avoid the extra copies
+  // caused by that by checking the agent cluster when deserializing the
+  // SerializedScriptValue.
+  // https://crbug.com/798572
+  if (!GetExecutionContext()->IsDocument() &&
+      !GetExecutionContext()->IsDedicatedWorkerGlobalScope()) {
+    mojo_message.SerializeIfNecessary();
+  }
 
   if (!mojom::blink::TransferableMessage::DeserializeFromMessage(
           std::move(mojo_message), &message)) {
