@@ -82,15 +82,14 @@ static ScrollableArea* ScrollableAreaForSnapping(const LayoutBox& layout_box) {
 }
 
 void SnapCoordinator::UpdateSnapContainerData(const LayoutBox& snap_container) {
-  if (snap_container.Style()->GetScrollSnapType().is_none)
-    return;
-
-  SnapContainerData snap_container_data(
-      snap_container.Style()->GetScrollSnapType());
-
+  ScrollSnapType scroll_snap_type = snap_container.Style()->GetScrollSnapType();
   ScrollableArea* scrollable_area = ScrollableAreaForSnapping(snap_container);
-  if (!scrollable_area)
+  if (!scrollable_area || scroll_snap_type.is_none) {
+    snap_container_map_.Set(&snap_container, SnapContainerData());
     return;
+  }
+
+  SnapContainerData snap_container_data(scroll_snap_type);
   FloatPoint max_position = ScrollOffsetToPosition(
       scrollable_area->MaximumScrollOffset(), scrollable_area->ScrollOrigin());
   snap_container_data.max_position =
@@ -352,41 +351,6 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   return snap_area_data;
 }
 
-FloatPoint SnapCoordinator::FindSnapPosition(const FloatPoint& current_position,
-                                             const SnapContainerData& data,
-                                             bool should_snap_on_x,
-                                             bool should_snap_on_y) {
-  float smallest_distance_x = std::numeric_limits<float>::max();
-  float smallest_distance_y = std::numeric_limits<float>::max();
-  FloatPoint snap_position = current_position;
-  for (SnapAreaData snap_area_data : data.snap_area_list) {
-    // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
-    if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.x();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.X() - offset);
-      if (distance < smallest_distance_x) {
-        smallest_distance_x = distance;
-        snap_position.SetX(offset);
-      }
-    }
-    if (should_snap_on_y && (snap_area_data.snap_axis == SnapAxis::kY ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.y();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.Y() - offset);
-      if (distance < smallest_distance_y) {
-        smallest_distance_y = distance;
-        snap_position.SetY(offset);
-      }
-    }
-  }
-  return snap_position;
-}
-
 bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
                                       bool did_scroll_x,
                                       bool did_scroll_y,
@@ -399,18 +363,17 @@ bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
   if (!data.snap_area_list.size())
     return false;
 
-  SnapAxis axis = data.scroll_snap_type.axis;
-  did_scroll_x &= (axis == SnapAxis::kX || axis == SnapAxis::kBoth);
-  did_scroll_y &= (axis == SnapAxis::kY || axis == SnapAxis::kBoth);
-
   ScrollableArea* scrollable_area = ScrollableAreaForSnapping(snap_container);
   if (!scrollable_area)
     return false;
 
   FloatPoint current_position = scrollable_area->ScrollPosition();
 
-  *snap_position =
-      FindSnapPosition(current_position, data, did_scroll_x, did_scroll_y);
+  gfx::ScrollOffset position = data.FindSnapPosition(
+      gfx::ScrollOffset(current_position.X(), current_position.Y()),
+      did_scroll_x, did_scroll_y);
+  snap_position->SetX(position.x());
+  snap_position->SetY(position.y());
 
   return *snap_position != current_position;
 }
@@ -433,25 +396,23 @@ void SnapCoordinator::PerformSnapping(const LayoutBox& snap_container,
 
 void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
                                              ScrollSnapType scroll_snap_type) {
-  if (scroll_snap_type.is_none) {
-    snap_container_map_.erase(&snap_container);
+  if (scroll_snap_type.is_none)
     snap_container.ClearSnapAreas();
-  } else {
-    if (scroll_snap_type.axis == SnapAxis::kInline) {
-      if (snap_container.Style()->IsHorizontalWritingMode())
-        scroll_snap_type.axis = SnapAxis::kX;
-      else
-        scroll_snap_type.axis = SnapAxis::kY;
-    }
-    if (scroll_snap_type.axis == SnapAxis::kBlock) {
-      if (snap_container.Style()->IsHorizontalWritingMode())
-        scroll_snap_type.axis = SnapAxis::kY;
-      else
-        scroll_snap_type.axis = SnapAxis::kX;
-    }
-    // TODO(sunyunjia): Only update when the localframe doesn't need layout.
-    UpdateSnapContainerData(snap_container);
+
+  if (scroll_snap_type.axis == SnapAxis::kInline) {
+    if (snap_container.Style()->IsHorizontalWritingMode())
+      scroll_snap_type.axis = SnapAxis::kX;
+    else
+      scroll_snap_type.axis = SnapAxis::kY;
   }
+  if (scroll_snap_type.axis == SnapAxis::kBlock) {
+    if (snap_container.Style()->IsHorizontalWritingMode())
+      scroll_snap_type.axis = SnapAxis::kY;
+    else
+      scroll_snap_type.axis = SnapAxis::kX;
+  }
+  // TODO(sunyunjia): Only update when the localframe doesn't need layout.
+  UpdateSnapContainerData(snap_container);
 
   // TODO(majidvp): Add logic to correctly handle orphaned snap areas here.
   // 1. Removing container: find a new snap container for its orphan snap
@@ -461,13 +422,17 @@ void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
   // container or from existing areas in orphan pool.
 }
 
-SnapContainerData SnapCoordinator::EnsureSnapContainerData(
+void SnapCoordinator::RemoveSnapContainer(const LayoutBox& container) {
+  snap_container_map_.erase(&container);
+}
+
+Optional<SnapContainerData> SnapCoordinator::GetSnapContainerData(
     const LayoutBox& snap_container) {
   auto iter = snap_container_map_.find(&snap_container);
   if (iter != snap_container_map_.end()) {
     return iter->value;
   }
-  return SnapContainerData();
+  return Optional<SnapContainerData>();
 }
 
 #ifndef NDEBUG
