@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bac3559_3eaf6dc6",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "Nit: Put ()\u0027s after method names to make it clear you\u0027re referring to methods. Same on line 46.",
+      "range": {
+        "startLine": 40,
+        "startChar": 44,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5807d64f_9694b6ab",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "Remove this comment. See comment above:\n\n\"this method must be called very early, before any threads have started.\"",
+      "range": {
+        "startLine": 210,
+        "startChar": 17,
+        "endLine": 210,
+        "endChar": 19
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62580fb_bef980a5",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "Nit: WithoutLock -\u003e WhileLocked",
+      "range": {
+        "startLine": 275,
+        "startChar": 42,
+        "endLine": 275,
+        "endChar": 43
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6665ac0_6b26639a",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "Please expand this comment to mention the stacked set up.",
+      "range": {
+        "startLine": 289,
+        "startChar": 29,
+        "endLine": 289,
+        "endChar": 0
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e467aefd_4c65ac46",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "is_vlog_initialized_\n\nAlso, add a comment.",
+      "range": {
+        "startLine": 292,
+        "startChar": 32,
+        "endLine": 292,
+        "endChar": 0
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6d9b48_1907e066",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "IsVLogInitialized",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 23
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea82462_0916fd69",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:32:47Z",
+      "side": 1,
+      "message": "If you always call these two functions together, fold them into one.",
+      "range": {
+        "startLine": 622,
+        "startChar": 25,
+        "endLine": 622,
+        "endChar": 0
+      },
+      "revId": "a30d2430814010236ac19846947f8e954b166800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
