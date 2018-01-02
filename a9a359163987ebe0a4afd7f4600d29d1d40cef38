@@ -317,6 +317,24 @@
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812ef4e3_b1ed197c",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2018-01-02T03:36:42Z",
+      "side": 1,
+      "message": "I suppose the client_uuid got from SWProviderHost should always be valid, as it\u0027s initialized in ctor of SWProviderHost. Would you please clarify why it could be your concern?\n\nThe only thing you need to confirm is that whether such a SWClientInfo instance exists: client_uuid is valid but all other fields are \u0027empty\u0027.",
+      "parentUuid": "f2f3cafd_0a05b8f5",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
