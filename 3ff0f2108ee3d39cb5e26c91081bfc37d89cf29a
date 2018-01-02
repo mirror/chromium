@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb1164f_ee82c179",
+        "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1167349
+      },
+      "writtenOn": "2018-01-02T06:28:37Z",
+      "side": 1,
+      "message": "moved to more appropriate alphabetically correct place.",
+      "revId": "3ff0f2108ee3d39cb5e26c91081bfc37d89cf29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
