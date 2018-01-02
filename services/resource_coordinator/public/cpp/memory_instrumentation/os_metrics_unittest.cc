@@ -14,6 +14,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include <windows.h>
 #include <base/strings/sys_string_conversions.h>
 #endif
 
