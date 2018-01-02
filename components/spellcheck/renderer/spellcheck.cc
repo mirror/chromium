@@ -182,7 +182,7 @@ SpellCheck::SpellCheck(
 
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
-      base::Bind(&SpellCheck::SpellCheckerRequest, base::Unretained(this)),
+      base::BindOnce(&SpellCheck::SpellCheckerRequest, base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
 
   service_manager_connection->AddConnectionFilter(
@@ -447,8 +447,8 @@ void SpellCheck::PostDelayedSpellCheckTask(SpellcheckRequest* request) {
     return;
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&SpellCheck::PerformSpellCheck, AsWeakPtr(),
-                            base::Owned(request)));
+      FROM_HERE, base::BindOnce(&SpellCheck::PerformSpellCheck, AsWeakPtr(),
+                                base::Owned(request)));
 }
 #endif
 

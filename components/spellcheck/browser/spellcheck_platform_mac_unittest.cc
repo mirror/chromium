@@ -22,8 +22,8 @@ namespace {
 class SpellcheckPlatformMacTest: public testing::Test {
  public:
   SpellcheckPlatformMacTest()
-      : callback_(base::Bind(&SpellcheckPlatformMacTest::CompletionCallback,
-                             base::Unretained(this))),
+      : callback_(base::BindOnce(&SpellcheckPlatformMacTest::CompletionCallback,
+                                 base::Unretained(this))),
         callback_finished_(false) {}
 
   void WaitForCallback() {

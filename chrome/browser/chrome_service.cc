@@ -35,11 +35,11 @@ ChromeService::ChromeService() {
       base::Bind(&startup_metric_utils::StartupMetricHostImpl::Create));
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   registry_with_source_info_.AddInterface(
-      base::Bind(&SpellCheckHostImpl::Create),
+      base::BindOnce(&SpellCheckHostImpl::Create),
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI));
 #if BUILDFLAG(HAS_SPELLCHECK_PANEL)
-  registry_.AddInterface(base::Bind(&SpellCheckPanelHostImpl::Create),
+  registry_.AddInterface(base::BindOnce(&SpellCheckPanelHostImpl::Create),
                          content::BrowserThread::GetTaskRunnerForThread(
                              content::BrowserThread::UI));
 #endif
