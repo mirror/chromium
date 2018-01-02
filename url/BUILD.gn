@@ -17,6 +17,7 @@ buildflag_header("url_features") {
 
 component("url") {
   sources = [
+    "debug_alias_helper.h",
     "gurl.cc",
     "gurl.h",
     "origin.cc",
