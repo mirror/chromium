@@ -221,12 +221,12 @@ TEST_F(QuicConfigTest, InvalidFlowControlWindow) {
             config.GetInitialStreamFlowControlWindowToSend());
 }
 
-TEST_F(QuicConfigTest, HasClientSentConnectionOption) {
+TEST_F(QuicConfigTest, HasClientRequestedSharedOption) {
   QuicConfig client_config;
   QuicTagVector copt;
   copt.push_back(kTBBR);
   client_config.SetConnectionOptionsToSend(copt);
-  EXPECT_TRUE(client_config.HasClientSentConnectionOption(
+  EXPECT_TRUE(client_config.HasClientRequestedSharedOption(
       kTBBR, Perspective::IS_CLIENT));
 
   CryptoHandshakeMessage msg;
@@ -241,7 +241,7 @@ TEST_F(QuicConfigTest, HasClientSentConnectionOption) {
   EXPECT_TRUE(config_.HasReceivedConnectionOptions());
   EXPECT_EQ(1u, config_.ReceivedConnectionOptions().size());
   EXPECT_TRUE(
-      config_.HasClientSentConnectionOption(kTBBR, Perspective::IS_SERVER));
+      config_.HasClientRequestedSharedOption(kTBBR, Perspective::IS_SERVER));
 }
 
 TEST_F(QuicConfigTest, DontSendClientConnectionOptions) {
@@ -270,7 +270,7 @@ TEST_F(QuicConfigTest, HasClientRequestedIndependentOption) {
   copt.push_back(kTBBR);
   client_config.SetClientConnectionOptions(client_opt);
   client_config.SetConnectionOptionsToSend(copt);
-  EXPECT_TRUE(client_config.HasClientSentConnectionOption(
+  EXPECT_TRUE(client_config.HasClientRequestedSharedOption(
       kTBBR, Perspective::IS_CLIENT));
   EXPECT_TRUE(client_config.HasClientRequestedIndependentOption(
       kRENO, Perspective::IS_CLIENT));
