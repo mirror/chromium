@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47ae7803_7fc5bee5",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T18:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1750be8b_dc4ed27e",
+      "range": {
+        "startLine": 10964,
+        "startChar": 35,
+        "endLine": 10964,
+        "endChar": 63
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9500024f_5ff2cc89",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07284aa_fb6defc9",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T18:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9500024f_5ff2cc89",
+      "range": {
+        "startLine": 477,
+        "startChar": 14,
+        "endLine": 477,
+        "endChar": 26
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ee1907f_7c8ae9f2",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T18:37:50Z",
+      "side": 1,
+      "message": "The StopTrigger is currently only exposed to media/remoting since it is specific to Media Remoting. As calling MediaRemotingStopped() only triggers the remoting UI, it sounds reasonable to me to do the conversion here to only let the UI know which message to show. Though I am open to other suggestions.\n\n+miu@, +xhwang@",
+      "parentUuid": "6737d9fa_98088fde",
+      "range": {
+        "startLine": 479,
+        "startChar": 35,
+        "endLine": 479,
+        "endChar": 49
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e177d2d9_4144f589",
         "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-02T10:33:45Z",
       "side": 1,
       "message": "I wonder if a `reason` shouldn\u0027t be used here instead (which would be an enum).",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e672f02c_233fa8fb",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-02T18:37:50Z",
+      "side": 1,
+      "message": "This seems related to the other comment. Yes, a reason can be used if it was passed instead of a message.",
+      "parentUuid": "e177d2d9_4144f589",
       "range": {
         "startLine": 41,
         "startChar": 29,
