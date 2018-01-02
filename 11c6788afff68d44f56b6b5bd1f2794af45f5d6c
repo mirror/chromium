@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f5c81a_48d1ef00",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-02T18:14:49Z",
+      "side": 1,
+      "message": "Style guide is a little hazy on this, but usually lambdas are preferred instead of bind if you need a placeholder.  However, since style guide is not definite on this, leave it if you prefer.",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "992ba8c0_2a75ebf6",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-02T18:14:49Z",
+      "side": 1,
+      "message": "Can I talk you into a little more descriptive name here?  You\u0027re not just validating, you\u0027re also returning the contents.",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79b26ed_e908a578",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-02T18:14:49Z",
+      "side": 1,
+      "message": "Wow, this looks suspicious to me, but after peering at the documentation for the relevant APIs  I do think it\u0027s correct...I think I disagree with the authors of the the Value API about how this should be done though.  :)",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
