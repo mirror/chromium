@@ -387,7 +387,7 @@ public class ContextualSearchManager
             mWereInfoBarsHidden = false;
             InfoBarContainer container = getInfoBarContainer();
             if (container != null) {
-                container.setIsObscuredByOtherView(false);
+                container.setHidden(false);
             }
         }
 
@@ -439,7 +439,7 @@ public class ContextualSearchManager
             InfoBarContainer container = getInfoBarContainer();
             if (container != null && container.getVisibility() == View.VISIBLE) {
                 mWereInfoBarsHidden = true;
-                container.setIsObscuredByOtherView(true);
+                container.setHidden(true);
             }
         }
 
