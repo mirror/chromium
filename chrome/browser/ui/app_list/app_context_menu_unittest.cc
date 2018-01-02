@@ -461,6 +461,12 @@ TEST_F(AppContextMenuTest, ArcMenuStickyItem) {
     ui::MenuModel* menu = item.GetContextMenuModel();
     ASSERT_NE(nullptr, menu);
 
+    ShelfContextMenuModel menu(MenuItemList(), nullptr,
+                               GetPrimaryDisplay().id());
+    // There should be 5 items in the context menu. If you're adding a
+    // context menu option ensure that you have added the enum to
+    // tools/metrics/enums.xml and that you haven't modified the order of the
+    // existing enums.
     ASSERT_EQ(5, menu->GetItemCount());
     ValidateItemState(menu, 0, MenuState(app_list::AppContextMenu::LAUNCH_NEW));
     ValidateItemState(menu, 1, MenuState());  // separator
@@ -469,4 +475,23 @@ TEST_F(AppContextMenuTest, ArcMenuStickyItem) {
     ValidateItemState(
         menu, 4, MenuState(app_list::AppContextMenu::SHOW_APP_INFO));
   }
+}
+
+TEST_F(AppContextMenuTest, CommandIdsMatchEnumsForHistograms) {
+  // Tests that CommandId enums are not changed as the values are used in
+  // histograms.
+  EXPECT_EQ(app_list::AppContextMenu::LAUNCH_NEW, 100);
+  EXPECT_EQ(app_list::AppContextMenu::TOGGLE_PIN, 101);
+  EXPECT_EQ(app_list::AppContextMenu::SHOW_APP_INFO, 102);
+  EXPECT_EQ(app_list::AppContextMenu::OPTIONS, 103);
+  EXPECT_EQ(app_list::AppContextMenu::UNINSTALL, 104);
+  EXPECT_EQ(app_list::AppContextMenu::REMOVE_FROM_FOLDER, 105);
+  EXPECT_EQ(app_list::AppContextMenu::MENU_NEW_WINDOW, 106);
+  EXPECT_EQ(app_list::AppContextMenu::MENU_NEW_INCOGNITO_WINDOW, 107);
+  EXPECT_EQ(app_list::AppContextMenu::INSTALL, 108);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_COMMAND_START, 200);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_PINNED, 200);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_REGULAR, 201);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_FULLSCREEN, 202);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_WINDOW, 203);
 }
