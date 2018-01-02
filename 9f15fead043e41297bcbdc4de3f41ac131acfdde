@@ -33,6 +33,24 @@
       "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057bd8e6_10bfdfd6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-02T04:15:19Z",
+      "side": 1,
+      "message": "I think the suggestion you had doesn\u0027t work because the whole permission section of the Page Info bubble is a single column set. When there are comboboxes that are bigger that the max threshold size, the permission label column width might not go all the way up to the start of the combobox like in the diagram below:\n\n  *-----------------------------------------------*\n  | .____. | .______________. |        .________. |\n  | |Icon| | |Location      | |        |Block  v| |\n  | \u0027¯¯¯¯\u0027 | :\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d: |        \u0027¯¯¯¯¯¯¯¯\u0027 |\n  |        | |Automatically | |                   |\n  |        | |blocked       | |                   |\n  |        | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 |                   |\n  *-----------------------------------------------*\n  | .____. | .______________. | ._______________. |\n  | |Icon| | |Flash         | | |Ask (default) v| |\n  | \u0027¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 |\n  *-----------------------------------------------*\n\nOne possible solution is to just give every permission row its own columnset instead. The problem with this may be that sometimes this might happen:\n\n  *---------------------------------------------------------------------*\n  | .____. | .___________________________________________. | .________. |\n  | |Icon| | |A really long translated name for Location?| | |Block  v| |\n  | \u0027¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯\u0027 |\n  *\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d*\n  | .____. | .____________________________________. | ._______________. |\n  | |Icon| | |A less long name for Flash          | | |Ask (default) v| |\n  | \u0027¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 | \u0027¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\u0027 |\n  *---------------------------------------------------------------------*\n\nWhere the permission title might overlap with the combobox area - this probably only looks really bad if you have \u003e 2 permissions that overlap though, so I\u0027m not sure how much we care about this case.\n\nI did notice that SetPermissionInfo() already calls SizeToContents() (at the end) though, so maybe doing this won\u0027t introduce any regressions? Would it be OK if we set the size of the label in PageInfoBubbleView::CalculatePreferredSize() instead? (So, piggyback off of layouts that are already occurring instead of standalone in SetPermissionInfo()?) Or is doing it then too late?",
+      "parentUuid": "efff1011_f1f2cf9f",
+      "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
