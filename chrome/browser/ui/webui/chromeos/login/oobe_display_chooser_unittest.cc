@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/run_loop.h"
+#include "services/ui/public/cpp/input_devices/input_device_client_test_api.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/display/display.h"
 #include "ui/display/display_observer.h"
@@ -18,7 +19,6 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
-#include "ui/events/devices/device_data_manager.h"
 #include "ui/events/devices/touchscreen_device.h"
 
 namespace chromeos {
@@ -34,19 +34,13 @@ class OobeDisplayChooserTest : public ash::AshTestBase {
   }
 
   void UpdateTouchscreenDevices(const ui::TouchscreenDevice& touchscreen) {
-    std::vector<ui::TouchscreenDevice> devices{touchscreen};
-
-    ui::DeviceHotplugEventObserver* manager =
-        ui::DeviceDataManager::GetInstance();
-    manager->OnTouchscreenDevicesUpdated(devices);
+    ui::InputDeviceClientTestApi().SetTouchscreenDevices({touchscreen});
   }
 
   // ash::AshTestBase:
   void SetUp() override {
     ash::AshTestBase::SetUp();
-    static_cast<ui::DeviceHotplugEventObserver*>(
-        ui::DeviceDataManager::GetInstance())
-        ->OnDeviceListsComplete();
+    ui::InputDeviceClientTestApi().OnDeviceListsComplete();
   }
 
  private:
@@ -84,6 +78,14 @@ TEST_F(OobeDisplayChooserTest, PreferTouchAsPrimary) {
       .Associate(&display_info[1], touchscreen);
   display_manager()->OnNativeDisplaysChanged(display_info);
   base::RunLoop().RunUntilIdle();
+
+  // For mus we have to explicitly tell the InputDeviceClient the
+  // TouchscreenDevices. Normally InputDeviceClient is told of the
+  // TouchscreenDevices by way of implementing
+  // ui::mojom::InputDeviceObserverMojo. In unit tests InputDeviceClient is not
+  // wired to the window server (the window server isn't running).
+  touchscreen.target_display_id = display_info[1].id();
+  ui::InputDeviceClientTestApi().SetTouchscreenDevices({touchscreen}, true);
 
   OobeDisplayChooser display_chooser;
   EXPECT_EQ(1, GetPrimaryDisplay());
