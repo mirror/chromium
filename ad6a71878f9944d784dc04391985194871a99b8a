@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1100a670_b2fa9ea8",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T23:04:40Z",
+      "side": 1,
+      "message": "It feels wrong to set a value in a method called NeedsDecode. Should this code move\nto DecodeImageIfNecessary?",
+      "revId": "ad6a71878f9944d784dc04391985194871a99b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59613ca7_1ebd418b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T23:04:40Z",
+      "side": 1,
+      "message": "Remove second editorial sentence :)",
+      "revId": "ad6a71878f9944d784dc04391985194871a99b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2149f24_38f7400c",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T23:04:40Z",
+      "side": 1,
+      "message": "FindCandidateDecodedImageAndLock? Also document this method to say that it finds\nany cached decode which is at a higher miplevel, at the closest available miplevel to the\ndesired one.",
+      "revId": "ad6a71878f9944d784dc04391985194871a99b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
