@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2d3e3dc6_6759e886",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2018-01-02T17:37:24Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice they were different in the other IDLNullable declaration, sorry.",
+      "parentUuid": "d1bf5b1c_ad79de4a",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f4657c7_8a122fc0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 7
