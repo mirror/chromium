@@ -19,14 +19,14 @@ SigninErrorController::AuthStatusProvider::AuthStatusProvider() {
 SigninErrorController::AuthStatusProvider::~AuthStatusProvider() {
 }
 
-SigninErrorController::SigninErrorController()
-    : auth_error_(GoogleServiceAuthError::AuthErrorNone()) {
-}
+SigninErrorController::SigninErrorController(AccountMode mode)
+    : account_mode_(mode),
+      auth_error_(GoogleServiceAuthError::AuthErrorNone()) {}
 
 SigninErrorController::~SigninErrorController() {
   DCHECK(provider_set_.empty())
-      << "All AuthStatusProviders should be unregistered before"
-      << " SigninErrorController::Shutdown() is called";
+      << "All AuthStatusProviders should be unregistered before "
+      << "SigninErrorController is destroyed";
 }
 
 void SigninErrorController::AddProvider(const AuthStatusProvider* provider) {
@@ -65,6 +65,12 @@ void SigninErrorController::AuthStatusChanged() {
 
     std::string account_id = (*it)->GetAccountId();
 
+    // In MAIN_ACCOUNT mode, ignore all secondary accounts.
+    if (account_mode_ == AccountMode::MAIN_ACCOUNT &&
+        (account_id != main_account_id_)) {
+      continue;
+    }
+
     // Prioritize this error if it matches the previous |auth_error_|.
     if (error.state() == prev_state && account_id == prev_account_id) {
       auth_error_ = error;
@@ -99,6 +105,12 @@ void SigninErrorController::AuthStatusChanged() {
 bool SigninErrorController::HasError() const {
   return auth_error_.state() != GoogleServiceAuthError::NONE &&
       auth_error_.state() != GoogleServiceAuthError::CONNECTION_FAILED;
+}
+
+void SigninErrorController::SetMainAccountID(const std::string& account_id) {
+  main_account_id_ = account_id;
+  if (account_mode_ == AccountMode::MAIN_ACCOUNT)
+    AuthStatusChanged();  // Recompute the error state.
 }
 
 void SigninErrorController::AddObserver(Observer* observer) {
