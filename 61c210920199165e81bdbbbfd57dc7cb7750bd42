@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67badc1c_1ae3b093",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T23:42:17Z",
+      "side": 0,
+      "message": "Is this used anywhere else? We should probably remove this as well in the same CL to make sure we don\u0027t break anything unexpected.",
+      "revId": "61c210920199165e81bdbbbfd57dc7cb7750bd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
