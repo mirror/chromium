@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "0509d949_fb227381",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T19:09:26Z",
+      "side": 0,
+      "message": "This seems to trigger the at_raster_decode paths. Is it really just unittests?",
+      "revId": "e6cb4b637951be3274d4a0c90a95596bb7508985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9255bc49_947360ca",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
