@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c98828cd_608ef398",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-02T15:41:40Z",
+      "side": 1,
+      "message": "Optional nit: \n\nusing DestructWebStateWhenShowingPlaceholder and using DestructWebStateWhenShowingPlaceholder could help with formatting.",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 42
+      },
+      "revId": "1be829c37595f609e6ef1f5c1104182fbd73dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
