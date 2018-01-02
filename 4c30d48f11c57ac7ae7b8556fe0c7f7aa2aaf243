@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01c4852f_5976d584",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-02T16:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b040eb7_9c878736",
+      "range": {
+        "startLine": 363,
+        "startChar": 48,
+        "endLine": 363,
+        "endChar": 71
+      },
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c420624_201392c1",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 2
@@ -75,6 +99,24 @@
       "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c205fd7a_658eec42",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-02T16:13:42Z",
+      "side": 1,
+      "message": "Done. Removed the version check and added the lint suppression. Keeping the assert.",
+      "parentUuid": "fc468ba0_49372ec7",
+      "revId": "4c30d48f11c57ac7ae7b8556fe0c7f7aa2aaf243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
