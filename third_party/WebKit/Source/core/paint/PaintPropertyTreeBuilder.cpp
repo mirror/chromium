@@ -1665,8 +1665,9 @@ void ObjectPaintPropertyTreeBuilder::UpdateCompositedLayerPaginationOffset() {
       object_.GetMutableForPainting().FirstFragment();
   bool is_paint_invalidation_container = object_.IsPaintInvalidationContainer();
   const auto* parent_composited_layer =
-      context_.painting_layer->EnclosingLayerWithCompositedLayerMapping(
-          is_paint_invalidation_container ? kExcludeSelf : kIncludeSelf);
+      context_.painting_layer
+          ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries(
+              is_paint_invalidation_container ? kExcludeSelf : kIncludeSelf);
   if (is_paint_invalidation_container &&
       (!parent_composited_layer ||
        !parent_composited_layer->EnclosingPaginationLayer())) {
