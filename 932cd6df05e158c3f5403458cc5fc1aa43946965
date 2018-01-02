@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f671d75_a78c368f",
+        "filename": "net/http2/hpack/http2_hpack_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T10:54:55Z",
+      "side": 1,
+      "message": "It is customary to declare constants before functions, and usually before enums.  Consider moving to line 20.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "932cd6df05e158c3f5403458cc5fc1aa43946965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
