@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79a122cc_4ad40f34",
+        "filename": "content/browser/net/network_quality_observer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-02T22:07:05Z",
+      "side": 1,
+      "message": ".... May be called with either RTT or throughput values to compare.",
+      "revId": "5d1bb3d1a395e54a9021849b8fc04bae97f1fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13be9c4_2c702a06",
+        "filename": "content/browser/net/network_quality_observer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-02T22:07:05Z",
+      "side": 1,
+      "message": "Unit test for this?",
+      "revId": "5d1bb3d1a395e54a9021849b8fc04bae97f1fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
