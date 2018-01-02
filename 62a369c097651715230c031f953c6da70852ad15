@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3030724_ad42a916",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T21:50:40Z",
+      "side": 1,
+      "message": "The style guide forbids passing values by non-const reference. Use ReadCallback* instead. Same for WritePtr.",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "62a369c097651715230c031f953c6da70852ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55df652_c4469b06",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T21:50:40Z",
+      "side": 1,
+      "message": "DCHECKs are not always compiled so you should write this as:\n\nbool result \u003d base::HexStringToBytes(in.as_string(), \u0026out);\nDCHECK(result);",
+      "revId": "62a369c097651715230c031f953c6da70852ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d441596_25c9a315",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T21:50:40Z",
+      "side": 1,
+      "message": "Conversion to uppercase is not necessary to call base::HexBytesToString.",
+      "range": {
+        "startLine": 55,
+        "startChar": 39,
+        "endLine": 55,
+        "endChar": 62
+      },
+      "revId": "62a369c097651715230c031f953c6da70852ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bfa289_22fcc43c",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T21:50:40Z",
+      "side": 1,
+      "message": "out.resize(64) will have the same effect as new elements will be value-initialized.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "62a369c097651715230c031f953c6da70852ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e025f5_faafb4a9",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T21:50:40Z",
+      "side": 1,
+      "message": "Can you provide a little documentation for this magic number?",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "62a369c097651715230c031f953c6da70852ad15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
