@@ -21,7 +21,8 @@
       "requires": {
         "*": [ "app" ],
         "content_browser": [
-          "field_trials"
+          "field_trials",
+          "utility"
         ],
         "device": [
           "device:power_monitor",
