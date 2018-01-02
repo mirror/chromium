@@ -19,9 +19,17 @@
 #include "third_party/skia/include/core/SkStream.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/test/gl_image_test_template.h"
 #include "ui/gl/test/gl_test_helper.h"
 
 namespace vr {
+
+namespace {
+
+// Resolution of Pixel Phone for one eye.
+static const gfx::Size kPixelHalfScreen(960, 1080);
+
+}  // namespace
 
 UiPixelTest::UiPixelTest() : frame_buffer_size_(kPixelHalfScreen) {}
 
@@ -35,10 +43,32 @@ void UiPixelTest::SetUp() {
       base::MakeUnique<GlTestEnvironment>(frame_buffer_size_);
 
   // Make content texture.
-  content_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
+  // content_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
   // TODO(tiborg): Make GL_TEXTURE_EXTERNAL_OES texture for content and fill it
   // with fake content.
+      content_texture_ = gl_test_environment_->MakeTextureExternalOes(gfx::Size(500, 500));
   ASSERT_EQ(glGetError(), (GLenum)GL_NO_ERROR);
+
+
+  // EGLint eglImageAttributes[] = {EGL_WIDTH,
+  //                              500,
+  //                              EGL_HEIGHT,
+  //                              500,
+  //                              EGL_MATCH_FORMAT_KHR,
+  //                              EGL_FORMAT_RGBA_8888_KHR};
+  // GLuint texture = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
+  // EGLDisplay display = eglGetPlatformDisplayEXT(EGL_PLATFORM_X11_KHR, surface_->GetDisplay(), eglImageAttributes);
+  // static_assert(sizeof(uint64_t) == sizeof(EGLClientBuffer), "");
+  // uint64_t content_texture_large = texture;
+  // EGLClientBuffer client_buffer;
+  // std::memcpy(&client_buffer, &content_texture_large, sizeof(uint64_t));
+  // /*EGLImageKHR image =*/
+  //   eglCreateImageKHR(display, EGL_NO_CONTEXT,
+  //                     EGL_GL_TEXTURE_2D_KHR,
+  //                     client_buffer, eglImageAttributes);
+
+  // ASSERT_EQ(glGetError(), (GLenum)GL_NO_ERROR);
+  // ASSERT_EQ(eglGetError(), (GLenum)GL_NO_ERROR);
 
   browser_ = base::MakeUnique<MockUiBrowserInterface>();
 #endif

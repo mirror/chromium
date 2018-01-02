@@ -17,6 +17,8 @@ class GlTestEnvironment {
   explicit GlTestEnvironment(const gfx::Size frame_buffer_size);
   ~GlTestEnvironment();
 
+  GLuint MakeTextureExternalOes(const gfx::Size& size);
+
   GLuint GetFrameBufferForTesting();
 
  private:
@@ -24,6 +26,7 @@ class GlTestEnvironment {
   scoped_refptr<gl::GLContext> context_;
   GLuint vao_ = 0;
   GLuint frame_buffer_ = 0;
+  GLuint depth_render_buffer_ = 0;
 };
 
 }  // namespace vr
