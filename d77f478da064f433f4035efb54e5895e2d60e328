@@ -16,6 +16,24 @@
       "revId": "d77f478da064f433f4035efb54e5895e2d60e328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8800194_214a3e09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-02T22:29:33Z",
+      "side": 1,
+      "message": "Yes we can remove BotttomSheetObserver#onNativeLibraryReady() and use a BrowserStartupController instead.\n\nHowever, we need to make sure that suggestions are initialized before SuggestionsSheetVisibilityChangeObserver#onStateChanged is called(i.e. to make sure that the onSuccess() in SuggestionsBottomSheetContent is called before the one in SuggestionsSheetVisibilityChangeObserver). I\u0027m not sure if it is a good idea to rely on BrowserStartupController to call the callbacks in the right order based on whichever one is added first.",
+      "parentUuid": "83d1729e_2e944fe1",
+      "revId": "d77f478da064f433f4035efb54e5895e2d60e328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
