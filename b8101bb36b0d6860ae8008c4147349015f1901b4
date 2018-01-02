@@ -16,6 +16,24 @@
       "revId": "b8101bb36b0d6860ae8008c4147349015f1901b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2157da1c_26c249f7",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-02T18:14:25Z",
+      "side": 1,
+      "message": "We currently compile fuchsia with headless ozone backend, and headless currently supports Mesa, but not Swiftshader. We will look into enabling swiftshader in the future, e.g. when we switch to a real ozone platform impl instead of headless, but I\u0027m not sure we will want to use ozone on Fuchsia long-term. I\u0027m also not sure we will need SW rendering on Fuchsia at all. This change is necessary short-term mainly to get layout tests running.",
+      "parentUuid": "9b083b50_0a835cdd",
+      "revId": "b8101bb36b0d6860ae8008c4147349015f1901b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
