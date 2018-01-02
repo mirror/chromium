@@ -59,10 +59,10 @@ PASS CSSUnitValue can be constructed with s
 PASS CSSUnitValue.unit can be updated to s
 PASS CSSUnitValue can be constructed with ms
 PASS CSSUnitValue.unit can be updated to ms
-FAIL CSSUnitValue can be constructed with Hz assert_equals: expected "Hz" but got "hz"
-FAIL CSSUnitValue.unit can be updated to Hz assert_equals: expected "Hz" but got "hz"
-FAIL CSSUnitValue can be constructed with kHz assert_equals: expected "kHz" but got "khz"
-FAIL CSSUnitValue.unit can be updated to kHz assert_equals: expected "kHz" but got "khz"
+PASS CSSUnitValue can be constructed with Hz
+PASS CSSUnitValue.unit can be updated to Hz
+PASS CSSUnitValue can be constructed with kHz
+PASS CSSUnitValue.unit can be updated to kHz
 PASS CSSUnitValue can be constructed with dpi
 PASS CSSUnitValue.unit can be updated to dpi
 PASS CSSUnitValue can be constructed with dpcm
