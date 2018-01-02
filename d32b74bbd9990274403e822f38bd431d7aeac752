@@ -46,6 +46,30 @@
       "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d860081e_80daddde",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-02T22:03:31Z",
+      "side": 1,
+      "message": "Turns out it\u0027s not that simple, reversing the order breaks layout tests. Checking.",
+      "parentUuid": "77033219_650a21d3",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 41
+      },
+      "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
