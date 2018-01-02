@@ -22,6 +22,30 @@
       "revId": "3fd03130de2bad7ebc785889856b28e093b172a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f3ad81_e0313b35",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2018-01-02T17:25:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow this, so leaving it as is.",
+      "parentUuid": "f68befed_ceb28486",
+      "range": {
+        "startLine": 281,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 3
+      },
+      "revId": "3fd03130de2bad7ebc785889856b28e093b172a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
