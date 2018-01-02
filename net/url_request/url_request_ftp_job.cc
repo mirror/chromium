@@ -127,7 +127,7 @@ void URLRequestFtpJob::Start() {
 
 void URLRequestFtpJob::Kill() {
   if (pac_request_) {
-    proxy_service_->CancelPacRequest(pac_request_);
+    proxy_service_->CancelRequest(pac_request_);
     pac_request_ = nullptr;
   }
   if (ftp_transaction_)

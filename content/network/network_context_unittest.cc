@@ -619,7 +619,7 @@ TEST_F(NetworkContextTest, NoInitialProxyConfig) {
   // Before there's a proxy configuration, proxy requests should hang.
   net::ProxyInfo proxy_info;
   net::TestCompletionCallback test_callback;
-  net::ProxyService::PacRequest* pac_request = nullptr;
+  net::ProxyService::Request* pac_request = nullptr;
   ASSERT_EQ(net::ERR_IO_PENDING,
             proxy_service->ResolveProxy(GURL("http://bar/"), "GET", &proxy_info,
                                         test_callback.callback(), &pac_request,
