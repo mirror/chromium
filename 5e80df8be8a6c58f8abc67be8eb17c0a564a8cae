@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00c1913c_7e6ce92f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T21:01:27Z",
+      "side": 1,
+      "message": "content has a lot of \"embedders\" and android webview is just one of them. it\u0027s not ok to relax checks for all of them just because webview needs this flexibility. what we do in this case is have the embedder explicitly tell content it\u0027s ok to relax this check, or maybe even skip this altogether. maybe use ContentClient or some more explicit way though I didn\u0027t check if this is before or after ContentClient is set.\n\nchrome as a rule doesn\u0027t have build flags for features",
+      "revId": "5e80df8be8a6c58f8abc67be8eb17c0a564a8cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
