@@ -69,6 +69,7 @@ void GetSavePasswordDialogTitleTextAndLinkRange(
 // "this site".
 void GetManagePasswordsDialogTitleText(const GURL& user_visible_url,
                                        const GURL& password_origin_url,
+                                       bool empty_credentials,
                                        base::string16* title);
 
 // Sets the formatted |title| in the Account Chooser UI.
