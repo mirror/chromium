@@ -274,9 +274,6 @@ int GpuMain(const MainFunctionParams& parameters) {
 
   base::PlatformThread::SetName("CrGpuMain");
 
-  // Initializes StatisticsRecorder which tracks UMA histograms.
-  base::StatisticsRecorder::Initialize();
-
 #if defined(OS_ANDROID) || defined(OS_CHROMEOS)
   // Set thread priority before sandbox initialization.
   base::PlatformThread::SetCurrentThreadPriority(base::ThreadPriority::DISPLAY);
