@@ -343,9 +343,12 @@ void NGInlineLayoutStateStack::UpdateAfterReorder(
 
 #if DCHECK_IS_ON()
   // Check all BoxData have ranges.
-  for (const auto& box_data : box_data_list_) {
-    DCHECK_NE(box_data.fragment_end, 0u);
-    DCHECK_GT(box_data.fragment_end, box_data.fragment_start);
+  if (std::any_of(line_box->begin(), line_box->end(),
+                  [](const auto& child) { return child.HasFragment(); })) {
+    for (const auto& box_data : box_data_list_) {
+      DCHECK_NE(box_data.fragment_end, 0u);
+      DCHECK_GT(box_data.fragment_end, box_data.fragment_start);
+    }
   }
 #endif
 }
@@ -371,7 +374,7 @@ LayoutUnit NGInlineLayoutStateStack::ComputeInlinePositions(
   for (auto& box_data : box_data_list_) {
     unsigned start = box_data.fragment_start;
     unsigned end = box_data.fragment_end;
-    DCHECK_GT(end, start);
+    DCHECK_GE(end, start);
     NGLineBoxFragmentBuilder::Child& start_child = (*line_box)[start];
     // Clamping left offset is not defined, match to the existing behavior.
     LayoutUnit line_left_offset =
