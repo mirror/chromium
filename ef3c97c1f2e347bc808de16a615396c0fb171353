@@ -22,6 +22,30 @@
       "revId": "ef3c97c1f2e347bc808de16a615396c0fb171353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c99efe_e7babd24",
+        "filename": "chrome/browser/ui/android/infobars/translate_compact_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-02T23:49:12Z",
+      "side": 1,
+      "message": "It\u0027s the legacy design issue. I had a chat with groby@ one year ago for this. Basically ChromeTranslateClient::CreateInfoBar\u0027s implementation is isolated in the scope of different build targets (iOS, Mac and Android)\nhttps://cs.chromium.org/search/?q\u003dChromeTranslateClient::CreateInfoBar+\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nIn this way, the base Class (ChromeTranslateClient) doesn\u0027t need to know the final implementation which avoid circular dependency .",
+      "parentUuid": "af982791_3c475fca",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "ef3c97c1f2e347bc808de16a615396c0fb171353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
