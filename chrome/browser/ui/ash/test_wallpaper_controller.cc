@@ -113,3 +113,9 @@ void TestWallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   NOTIMPLEMENTED();
 }
+
+void TestWallpaperController::IsActiveUserPolicyControlled(
+    ash::mojom::WallpaperController::IsActiveUserPolicyControlledCallback
+        callback) {
+  NOTIMPLEMENTED();
+}
