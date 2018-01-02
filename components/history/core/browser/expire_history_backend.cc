@@ -18,6 +18,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/sequenced_task_runner.h"
+#include "base/stl_util.h"
 #include "components/history/core/browser/history_backend_client.h"
 #include "components/history/core/browser/history_backend_notifier.h"
 #include "components/history/core/browser/history_database.h"
@@ -365,6 +366,8 @@ VisitVector ExpireHistoryBackend::GetVisitsAndRedirectParents(
   for (const auto v : visits) {
     VisitRow current_visit = v;
     do {
+      if (base::ContainsValue(visits_and_redirects, current_visit))
+        break;
       visits_and_redirects.push_back(current_visit);
     } while (current_visit.referring_visit &&
              main_db_->GetRowForVisit(current_visit.referring_visit,
