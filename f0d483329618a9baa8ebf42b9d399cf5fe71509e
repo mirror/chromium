@@ -70,6 +70,30 @@
       "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c5f630_4b05bcdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2018-01-02T10:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da79d129_38ce821d",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
