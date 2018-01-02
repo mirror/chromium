@@ -1769,13 +1769,6 @@ viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() {
 
   active_tree_->GetViewportSelection(&metadata.selection);
 
-  if (const auto* outer_viewport_scroll_node = OuterViewportScrollNode()) {
-    metadata.root_overflow_x_hidden =
-        !outer_viewport_scroll_node->user_scrollable_horizontal;
-    metadata.root_overflow_y_hidden =
-        !outer_viewport_scroll_node->user_scrollable_vertical;
-  }
-
   if (GetDrawMode() == DRAW_MODE_RESOURCELESS_SOFTWARE) {
     metadata.is_resourceless_software_draw_with_scroll_or_animation =
         IsActivelyScrolling() || mutator_host_->NeedsTickAnimations();
@@ -1788,11 +1781,6 @@ viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() {
   const auto* inner_viewport_scroll_node = InnerViewportScrollNode();
   if (!inner_viewport_scroll_node)
     return metadata;
-
-  metadata.root_overflow_x_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_horizontal;
-  metadata.root_overflow_y_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_vertical;
 
   // TODO(miletus) : Change the metadata to hold ScrollOffset.
   metadata.root_scroll_offset =

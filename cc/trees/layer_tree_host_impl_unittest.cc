@@ -4177,8 +4177,6 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
     EXPECT_EQ(gfx::SizeF(100.f, 100.f), metadata.root_layer_size);
     EXPECT_EQ(0.5f, metadata.min_page_scale_factor);
     EXPECT_EQ(4.f, metadata.max_page_scale_factor);
-    EXPECT_FALSE(metadata.root_overflow_x_hidden);
-    EXPECT_FALSE(metadata.root_overflow_y_hidden);
   }
 
   // Scrolling should update metadata immediately.
@@ -4198,69 +4196,6 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
     viz::CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_EQ(gfx::Vector2dF(0.f, 10.f), metadata.root_scroll_offset);
-  }
-
-  // Root "overflow: hidden" properties should be reflected on the outer
-  // viewport scroll layer.
-  {
-    host_impl_->active_tree()
-        ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    viz::CompositorFrameMetadata metadata =
-        host_impl_->MakeCompositorFrameMetadata();
-    EXPECT_TRUE(metadata.root_overflow_x_hidden);
-    EXPECT_FALSE(metadata.root_overflow_y_hidden);
-
-    host_impl_->active_tree()
-        ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    metadata = host_impl_->MakeCompositorFrameMetadata();
-    EXPECT_TRUE(metadata.root_overflow_x_hidden);
-    EXPECT_TRUE(metadata.root_overflow_y_hidden);
-  }
-
-  // Re-enable scrollability and verify that overflows are no longer hidden.
-  {
-    host_impl_->active_tree()
-        ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = true;
-    host_impl_->active_tree()
-        ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = true;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    viz::CompositorFrameMetadata metadata =
-        host_impl_->MakeCompositorFrameMetadata();
-    EXPECT_FALSE(metadata.root_overflow_x_hidden);
-    EXPECT_FALSE(metadata.root_overflow_y_hidden);
-  }
-
-  // Root "overflow: hidden" properties should also be reflected on the
-  // inner viewport scroll layer.
-  {
-    host_impl_->active_tree()
-        ->InnerViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    viz::CompositorFrameMetadata metadata =
-        host_impl_->MakeCompositorFrameMetadata();
-    EXPECT_TRUE(metadata.root_overflow_x_hidden);
-    EXPECT_FALSE(metadata.root_overflow_y_hidden);
-
-    host_impl_->active_tree()
-        ->InnerViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    metadata = host_impl_->MakeCompositorFrameMetadata();
-    EXPECT_TRUE(metadata.root_overflow_x_hidden);
-    EXPECT_TRUE(metadata.root_overflow_y_hidden);
   }
 
   // Page scale should update metadata correctly (shrinking only the viewport).
