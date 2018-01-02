@@ -56,6 +56,10 @@ class DataUseAscriber {
     // The page load completed. This is when the tab is closed or another
     // navigation starts due to omnibox search, link clicks, page reload, etc.
     virtual void OnPageLoadConcluded(DataUse* data_use) = 0;
+
+    // Called whenever a request uses any amount of network data.
+    virtual void OnNetworkBytesUpdate(const net::URLRequest& request,
+                                      DataUse* data_use) = 0;
   };
 
   DataUseAscriber();
