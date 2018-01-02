@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2155ecc0_53e3f240",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerTabUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-02T21:29:24Z",
+      "side": 1,
+      "message": "nit: doc, it\u0027s unclear from \"Integer\" what this represents (in this case a native enum).",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "89f0b996ddf5358dec8d85f67a2bf99475d13958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf88a1f_4336f5f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-02T21:29:24Z",
+      "side": 1,
+      "message": "nit: excludedMobileFriendly?",
+      "range": {
+        "startLine": 521,
+        "startChar": 28,
+        "endLine": 521,
+        "endChar": 36
+      },
+      "revId": "89f0b996ddf5358dec8d85f67a2bf99475d13958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
