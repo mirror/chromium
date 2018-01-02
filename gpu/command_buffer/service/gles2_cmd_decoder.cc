@@ -2946,6 +2946,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
       GL_UNSIGNED_BYTE, gfx::Rect(size));
   decoder_->texture_manager()->SetLevelImage(texture_ref_.get(), Target(), 0,
                                              image_.get(), Texture::BOUND);
+  texture_ref_->texture()->SetImmutable(true);
 
   // Ignore the zero flag if the alpha channel needs to be cleared for RGB
   // emulation.
@@ -18112,6 +18113,8 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
 
   if (texture->IsAttachedToFramebuffer())
     framebuffer_state_.clear_state_dirty = true;
+
+  texture->SetImmutable(true);
 }
 
 void GLES2DecoderImpl::DoProduceTextureDirectCHROMIUM(
@@ -18374,6 +18377,8 @@ void GLES2DecoderImpl::BindTexImage2DCHROMIUMImpl(const char* function_name,
                                   size.height(), 1, 0, texture_internalformat,
                                   GL_UNSIGNED_BYTE, gfx::Rect(size));
   texture_manager()->SetLevelImage(texture_ref, target, 0, image, image_state);
+
+  texture_ref->texture()->SetImmutable(true);
 }
 
 void GLES2DecoderImpl::DoReleaseTexImage2DCHROMIUM(
