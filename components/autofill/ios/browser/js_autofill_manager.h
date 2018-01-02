@@ -51,6 +51,10 @@
 // Marks up the form with autofill field prediction data (diagnostic tool).
 - (void)fillPredictionData:(NSString*)dataString;
 
+// Installs a tracker to check the form updates in the page. Delay is the
+// interval between checks in milliseconds.
+- (void)trackFormUpdate:(NSUInteger)delay;
+
 @end
 
 #endif  // COMPONENTS_AUTOFILL_IOS_BROWSER_JS_AUTOFILL_MANAGER_H_
