@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4deacf5_946cbd23",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-02T19:29:18Z",
+      "side": 1,
+      "message": "optional: maybe go with startsWith() since it already returns a bool. No big deal though.",
+      "revId": "9b13b0c8def9bfda8559a97bca889c37e71e23c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
