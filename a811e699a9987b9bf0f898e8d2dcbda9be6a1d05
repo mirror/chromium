@@ -509,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "302233a0_38ab6e0e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-02T16:12:12Z",
+      "side": 1,
+      "message": "I believe you can have multiple touch points on a touchscreen laptop.",
+      "parentUuid": "078d6bfb_045e2a9a",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21ca60dc_0d7c5c3a",
         "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
         "patchSetId": 4
