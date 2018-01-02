@@ -16,6 +16,24 @@
       "revId": "402f62b2179f1fcd23e3014f92609ceec78874a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879e9079_fe8a5dd7",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4397,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-02T23:48:09Z",
+      "side": 1,
+      "message": "Done, this target is removed.",
+      "parentUuid": "05edb684_b63ba457",
+      "revId": "402f62b2179f1fcd23e3014f92609ceec78874a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
