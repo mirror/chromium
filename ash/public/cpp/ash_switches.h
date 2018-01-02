@@ -65,6 +65,7 @@ ASH_PUBLIC_EXPORT extern const char kTouchscreenUsableWhileScreenOff[];
 ASH_PUBLIC_EXPORT extern const char kUseIMEService[];
 
 ASH_PUBLIC_EXPORT bool IsDisplayMoveWindowAccelsEnabled();
+ASH_PUBLIC_EXPORT bool IsKeyboardShortcutViewerEnabled();
 ASH_PUBLIC_EXPORT bool IsNightLightEnabled();
 ASH_PUBLIC_EXPORT bool IsSidebarEnabled();
 ASH_PUBLIC_EXPORT bool IsUsingViewsLogin();
