@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e79778_5ac3d2dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:32:24Z",
+      "side": 1,
+      "message": "didn\u0027t read chrome code, but this description doesn\u0027t really make sense to me\n\nCompositorView and ComopsitorSurfaceHolder are pretty tightly coupled (they used to be the same thing before this whole surface switching thing for full screen happened). So I don\u0027t really understand what it means to destroy one but not the other.",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2edcb0_419c3513",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:32:24Z",
+      "side": 1,
+      "message": "DCHECK this is not throwing away an existing layer. Also what about readback_layer_tree_? Registering/unregistering begin frame source. Root layer bounds, \n\nshould avoid duplicating this code with the constructor/destructor. This should do things like a proper setter, so check if root_window_ \u003d\u003d root_window, allow nulls. Then constructor and destructor can just call this instead",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d7623c_8409f075",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-02T14:32:24Z",
+      "side": 1,
+      "message": "similarly, dedup this with CreateLayerTreeHost",
+      "revId": "f8aa41e74f29105f9c02d43ce7193d6e79f1ed3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
