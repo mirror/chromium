@@ -13,7 +13,9 @@
 FakeSigninManagerBase::FakeSigninManagerBase(
     SigninClient* client,
     AccountTrackerService* account_tracker_service)
-    : SigninManagerBase(client, account_tracker_service) {}
+    : SigninManagerBase(client,
+                        account_tracker_service,
+                        nullptr /* signin_error_controller */) {}
 
 FakeSigninManagerBase::~FakeSigninManagerBase() {}
 
@@ -27,11 +29,13 @@ FakeSigninManager::FakeSigninManager(
     SigninClient* client,
     ProfileOAuth2TokenService* token_service,
     AccountTrackerService* account_tracker_service,
-    GaiaCookieManagerService* cookie_manager_service)
+    GaiaCookieManagerService* cookie_manager_service,
+    SigninErrorController* signin_error_controller)
     : SigninManager(client,
                     token_service,
                     account_tracker_service,
-                    cookie_manager_service),
+                    cookie_manager_service,
+                    signin_error_controller),
       token_service_(token_service) {}
 
 FakeSigninManager::~FakeSigninManager() {}
