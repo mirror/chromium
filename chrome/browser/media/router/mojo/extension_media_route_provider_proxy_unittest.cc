@@ -10,7 +10,7 @@
 #include "base/test/mock_callback.h"
 #include "chrome/browser/media/router/event_page_request_manager.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
-#include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
+#include "chrome/browser/media/router/test/media_router_mojo_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
