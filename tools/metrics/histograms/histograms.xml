@@ -67203,6 +67203,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Previews.CacheControlNoTransform.Honored" enum="Boolean">
+  <owner>dougarnett@chromium.org</owner>
+  <summary>
+    Records when the &quot;Cache-Control: no-transform&quot; header is received
+    on a main frame response where previews are enabled and buckets whether the
+    header was honored or not.
+  </summary>
+</histogram>
+
 <histogram name="Previews.ContentLength" units="KB">
   <owner>ryansturm@chromium.org</owner>
   <summary>

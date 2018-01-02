@@ -34,6 +34,8 @@ const char kChromeProxyAcceptTransformHeader[] =
     "chrome-proxy-accept-transform";
 const char kChromeProxyContentTransformHeader[] =
     "chrome-proxy-content-transform";
+const char kCacheControlHeader[] = "cache-control";
+const char kNoTransformValue[] = "no-transform";
 
 const char kActionValueDelimiter = '=';
 
@@ -213,6 +215,9 @@ TransformDirective ParseResponseTransform(
                                     &chrome_proxy_header_value)) {
       return ParsePagePolicyDirective(chrome_proxy_header_value);
     }
+    if (HasCacheControlNoTransform(headers)) {
+      return TRANSFORM_CACHE_CONTROL_NO_TRANSFORM;
+    }
     return TRANSFORM_NONE;
   }
   if (base::LowerCaseEqualsASCII(content_transform_value,
@@ -231,6 +236,12 @@ TransformDirective ParseResponseTransform(
     return TRANSFORM_COMPRESSED_VIDEO;
   }
   return TRANSFORM_UNKNOWN;
+}
+
+bool HasCacheControlNoTransform(const net::HttpResponseHeaders& headers) {
+  std::string value;
+  return headers.EnumerateHeader(nullptr, kCacheControlHeader, &value) &&
+         base::LowerCaseEqualsASCII(value, kNoTransformValue);
 }
 
 bool IsEmptyImagePreview(const net::HttpResponseHeaders& headers) {

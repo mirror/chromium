@@ -32,6 +32,7 @@ enum TransformDirective {
   TRANSFORM_COMPRESSED_VIDEO,
   TRANSFORM_PAGE_POLICIES_EMPTY_IMAGE,
   TRANSFORM_IDENTITY,
+  TRANSFORM_CACHE_CONTROL_NO_TRANSFORM,
 };
 
 // Values of the UMA DataReductionProxy.BypassType{Primary|Fallback} and
@@ -127,6 +128,10 @@ TransformDirective ParseRequestTransform(
 // be returned.
 TransformDirective ParseResponseTransform(
     const net::HttpResponseHeaders& headers);
+
+// Returns true if the response |headers| has the |Cache-Control: no-transform|
+// header.
+bool HasCacheControlNoTransform(const net::HttpResponseHeaders& headers);
 
 // Returns true if the provided value of the Chrome-Proxy-Content-Transform
 // response header that is provided in |content_transform_value| indicates that
