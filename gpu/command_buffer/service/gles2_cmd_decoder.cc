@@ -72,6 +72,7 @@
 #include "gpu/command_buffer/service/transform_feedback_manager.h"
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
+#include "gpu/vulkan/vulkan_implementation.h"
 #include "third_party/angle/src/image_util/loadimage.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -79,6 +80,12 @@
 #include "third_party/skia/include/core/SkTypeface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/vk/GrVkInterface.h"
+#include "third_party/skia/include/gpu/vk/GrVkTypes.h"
+#include "third_party/skia/src/gpu/vk/GrVkCommandBuffer.h"
+#include "third_party/skia/src/gpu/vk/GrVkImage.h"
+#include "third_party/skia/src/gpu/vk/GrVkMemory.h"
+#include "third_party/skia/src/gpu/vk/GrVkUtil.h"
 #include "third_party/smhasher/src/City.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
@@ -2298,6 +2305,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void UnbindTexture(TextureRef* texture_ref,
                      bool supports_separate_framebuffer_binds);
 
+  GLintptr DoCreateVkImage(GLint width, GLint height);
+
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
 #define GLES2_CMD_OP(name) \
@@ -2562,6 +2571,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   sk_sp<GrContext> gr_context_;
   sk_sp<SkSurface> sk_surface_;
 
+  scoped_refptr<viz::VulkanInProcessContextProvider> vulkan_context_provider =
+      nullptr;
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GLES2DecoderImpl);
@@ -8699,6 +8710,36 @@ void GLES2DecoderImpl::UnbindTexture(TextureRef* texture_ref,
                                                                texture_ref);
     }
   }
+}
+
+GLintptr GLES2DecoderImpl::DoCreateVkImage(GLint width, GLint height) {
+  VkFormat vk_format = VK_FORMAT_R8G8B8A8_UNORM;
+  GrVkImageInfo info;
+  GrVkImage::ImageDesc imageDesc;
+  GrGpu* gr_gpu;
+
+  if (!vulkan_context_provider && gpu::InitializeVulkan())
+    vulkan_context_provider = viz::VulkanInProcessContextProvider::Create();
+
+  GrContext* gr_context = vulkan_context_provider->GetGrContext();
+  gr_gpu = gr_context->getGpu();
+  GrVkGpu* gr_vk_gpu = reinterpret_cast<GrVkGpu*>(gr_gpu);
+  imageDesc.fImageType = VK_IMAGE_TYPE_2D;
+  imageDesc.fFormat = vk_format;
+  imageDesc.fHeight = height;
+  imageDesc.fWidth = width;
+  imageDesc.fLevels = 1;
+  imageDesc.fSamples = 8;
+  imageDesc.fImageTiling = VK_IMAGE_TILING_OPTIMAL;
+  imageDesc.fUsageFlags = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+  imageDesc.fMemProps = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+  if (!GrVkImage::InitImageInfo(gr_vk_gpu, imageDesc, &info)) {
+    LOG(ERROR) << "Vk Image Creation Failed.";
+    return 0;
+  }
+
+  return (long int)info.fImage;
 }
 
 void GLES2DecoderImpl::EnsureRenderbufferBound() {

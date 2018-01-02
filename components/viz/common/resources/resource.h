@@ -218,6 +218,8 @@ struct VIZ_COMMON_EXPORT Resource {
   // Used to track generating mipmaps for texture-backed resources.
   MipmapState mipmap_state = INVALID;
 
+  long int vk_handle = 0;
+
  private:
   // Tracks if a sync token needs to be waited on before using the resource.
   SynchronizationState synchronization_state_ = SYNCHRONIZED;

@@ -41,6 +41,7 @@ class VIZ_COMMON_EXPORT VulkanInProcessContextProvider
   sk_sp<GrContext> gr_context_;
   std::unique_ptr<gpu::VulkanDeviceQueue> device_queue_;
   sk_sp<GrVkBackendContext> backend_context_;
+  static scoped_refptr<VulkanInProcessContextProvider> context_provider;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(VulkanInProcessContextProvider);

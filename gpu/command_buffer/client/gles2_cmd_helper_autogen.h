@@ -469,6 +469,16 @@ void CreateShader(GLenum type, uint32_t client_id) {
   }
 }
 
+void CreateVkImage(GLint width,
+                   GLint height,
+                   uint32_t result_shm_id,
+                   uint32_t result_shm_offset) {
+  gles2::cmds::CreateVkImage* c = GetCmdSpace<gles2::cmds::CreateVkImage>();
+  if (c) {
+    c->Init(width, height, result_shm_id, result_shm_offset);
+  }
+}
+
 void CullFace(GLenum mode) {
   gles2::cmds::CullFace* c = GetCmdSpace<gles2::cmds::CullFace>();
   if (c) {

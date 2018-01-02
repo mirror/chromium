@@ -4,6 +4,8 @@
 
 #include "components/viz/common/gpu/vulkan_in_process_context_provider.h"
 #include "gpu/vulkan/features.h"
+#include "third_party/skia/include/gpu/vk/GrVkBackendContext.h"
+#include "third_party/skia/include/gpu/vk/GrVkInterface.h"
 
 #if BUILDFLAG(ENABLE_VULKAN)
 #include "gpu/vulkan/vulkan_device_queue.h"
@@ -15,15 +17,22 @@
 namespace viz {
 
 scoped_refptr<VulkanInProcessContextProvider>
+    VulkanInProcessContextProvider::context_provider = nullptr;
+
+scoped_refptr<VulkanInProcessContextProvider>
 VulkanInProcessContextProvider::Create() {
 #if BUILDFLAG(ENABLE_VULKAN)
   if (!gpu::VulkanSupported())
     return nullptr;
+  if (context_provider != nullptr)
+    return context_provider;
 
-  scoped_refptr<VulkanInProcessContextProvider> context_provider(
+  scoped_refptr<VulkanInProcessContextProvider> context_provider_local(
       new VulkanInProcessContextProvider);
-  if (!context_provider->Initialize())
+  if (!context_provider_local->Initialize())
     return nullptr;
+  context_provider = std::move(context_provider_local);
+
   return context_provider;
 #else
   return nullptr;

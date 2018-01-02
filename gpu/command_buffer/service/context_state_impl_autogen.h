@@ -68,6 +68,8 @@ void ContextState::Initialize() {
   color_mask_alpha = true;
   cached_color_mask_alpha = true;
   coverage_modulation = GL_NONE;
+  width = 0;
+  height = 0;
   cull_mode = GL_BACK;
   depth_func = GL_LESS;
   depth_mask = true;
@@ -556,6 +558,18 @@ bool ContextState::GetStateAsGLint(GLenum pname,
         params[0] = static_cast<GLint>(coverage_modulation);
       }
       return true;
+    case GL_RENDERBUFFER_WIDTH:
+      *num_written = 1;
+      if (params) {
+        params[0] = static_cast<GLint>(width);
+      }
+      return true;
+    case GL_RENDERBUFFER_HEIGHT:
+      *num_written = 1;
+      if (params) {
+        params[0] = static_cast<GLint>(height);
+      }
+      return true;
     case GL_CULL_FACE_MODE:
       *num_written = 1;
       if (params) {
@@ -1010,6 +1024,18 @@ bool ContextState::GetStateAsGLfloat(GLenum pname,
       *num_written = 1;
       if (params) {
         params[0] = static_cast<GLfloat>(coverage_modulation);
+      }
+      return true;
+    case GL_RENDERBUFFER_WIDTH:
+      *num_written = 1;
+      if (params) {
+        params[0] = static_cast<GLfloat>(width);
+      }
+      return true;
+    case GL_RENDERBUFFER_HEIGHT:
+      *num_written = 1;
+      if (params) {
+        params[0] = static_cast<GLfloat>(height);
       }
       return true;
     case GL_CULL_FACE_MODE:

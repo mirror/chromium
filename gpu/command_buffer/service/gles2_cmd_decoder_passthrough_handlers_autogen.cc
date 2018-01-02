@@ -552,6 +552,26 @@ error::Error GLES2DecoderPassthroughImpl::HandleCopyTexSubImage3D(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::HandleCreateVkImage(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::CreateVkImage& c =
+      *static_cast<const volatile gles2::cmds::CreateVkImage*>(cmd_data);
+  GLint width = static_cast<GLint>(c.width);
+  GLint height = static_cast<GLint>(c.height);
+  typedef cmds::CreateVkImage::Result Result;
+  Result* result = GetSharedMemoryAs<Result*>(
+      c.result_shm_id, c.result_shm_offset, sizeof(*result));
+  if (!result) {
+    return error::kOutOfBounds;
+  }
+  error::Error error = DoCreateVkImage(width, height, result);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
+}
+
 error::Error GLES2DecoderPassthroughImpl::HandleCullFace(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {

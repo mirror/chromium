@@ -12,6 +12,7 @@ enum class ResourceType {
   kGpuMemoryBuffer,
   kTexture,
   kBitmap,
+  kVulkan,
 };
 
 }  // namespace viz
