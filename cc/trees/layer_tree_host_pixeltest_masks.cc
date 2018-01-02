@@ -551,8 +551,14 @@ TEST_P(LayerTreeHostMaskAsBlendingPixelTest, PixelAlignedNoop) {
   mask_layer->SetBlendMode(SkBlendMode::kDstIn);
   mask_isolation->AddChild(mask_layer);
 
-  RunPixelResourceTest(
-      root, base::FilePath(FILE_PATH_LITERAL("mask_as_blending_noop.png")));
+  if (use_antialiasing_) {
+    RunPixelResourceTest(
+        root,
+        base::FilePath(FILE_PATH_LITERAL("mask_as_blending_noop_aa.png")));
+  } else {
+    RunPixelResourceTest(
+        root, base::FilePath(FILE_PATH_LITERAL("mask_as_blending_noop.png")));
+  }
 }
 
 TEST_P(LayerTreeHostMaskAsBlendingPixelTest, PixelAlignedClippedCircle) {
