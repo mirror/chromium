@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e747f5e9_4862375a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0b24501a_2765bc22",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae5d6e90_91dc2c6a",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38b689a_24f223a1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ae5d6e90_91dc2c6a",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1822b932_d9b3bab5",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "561be720_f143540f",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb72e968_a3c56428",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4d5780f7_c9aaeaf7",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb72e968_a3c56428",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf9bbf4c_ee2dd287",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-25T04:24:52Z",
       "side": 1,
       "message": "Sorry, I\u0027m making two experiment name change suggestions in this file.  I know it\u0027ll take a bit of changing since the names are everywhere, but I want to make sure they\u0027re as clear as possible since the names will come up when we try to launch them...",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ea973ed_13b4e9b1",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "No problem at all!",
+      "parentUuid": "bf9bbf4c_ee2dd287",
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "bdc0008c_5bbbbe1c",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "91771d83_20c21575",
+      "range": {
+        "startLine": 197,
+        "startChar": 43,
+        "endLine": 197,
+        "endChar": 53
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca1f76b_e77ff36f",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 12
@@ -130,6 +244,30 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a353ffe2_62b5e1e4",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca1f76b_e77ff36f",
+      "range": {
+        "startLine": 220,
+        "startChar": 39,
+        "endLine": 220,
+        "endChar": 46
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "dafd6b89_e4256a5f",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bf4ded2_c80b0db1",
+      "range": {
+        "startLine": 98,
+        "startChar": 19,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3525eb7_b74f29d8",
         "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
         "patchSetId": 12
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "87b714ec_05fb97ee",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3525eb7_b74f29d8",
+      "range": {
+        "startLine": 367,
+        "startChar": 33,
+        "endLine": 367,
+        "endChar": 40
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d7ab95_0ddab535",
         "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
         "patchSetId": 12
@@ -190,6 +376,24 @@
       "writtenOn": "2017-12-25T04:24:52Z",
       "side": 1,
       "message": "Ah, so the current plan is to only show the logo if there are *no* local cards, eh?",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73c253e5_1209c8e9",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "34d7ab95_0ddab535",
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "f0c52d80_292176bb",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a0dc7e_2005cf7f",
+      "range": {
+        "startLine": 118,
+        "startChar": 55,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e98dc9a_ba81dad7",
         "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
         "patchSetId": 12
@@ -233,6 +461,24 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51117b62_2efbef79",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e98dc9a_ba81dad7",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +505,30 @@
     },
     {
       "key": {
+        "uuid": "e236878f_8dd0902d",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d07508_584f9a21",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 12
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "488a3e44_2ae13d43",
         "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
         "patchSetId": 12
@@ -279,6 +549,30 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71846d3c_a650088e",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Oh. Weird. I didn\u0027t see this method when I wrote the test. Thanks.",
+      "parentUuid": "488a3e44_2ae13d43",
+      "range": {
+        "startLine": 765,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 80
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +599,30 @@
     },
     {
       "key": {
+        "uuid": "ef2041dc_5a7293e7",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c72e24d_227ad68e",
+      "range": {
+        "startLine": 813,
+        "startChar": 10,
+        "endLine": 813,
+        "endChar": 12
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df7057c1_4b6cd5c0",
         "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
         "patchSetId": 12
@@ -325,6 +643,30 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af00282_e8d3bb7b",
+        "filename": "components/autofill/core/browser/autofill_external_delegate_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7057c1_4b6cd5c0",
+      "range": {
+        "startLine": 815,
+        "startChar": 40,
+        "endLine": 815,
+        "endChar": 0
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "c2710dbc_d7e5ebf5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad9cd4c_b8592ce1",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b00432b0_dd780278",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 12
@@ -382,6 +742,24 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e331ce5_8225afa9",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00432b0_dd780278",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +803,48 @@
     },
     {
       "key": {
+        "uuid": "3004b4f3_6da0b9c7",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1112a053_5f3b39cf",
+      "range": {
+        "startLine": 409,
+        "startChar": 12,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfbfcb04_b97685a9",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "This is served as an additional parameter returned by the method to indicate whether the returned suggestions are all server cards.",
+      "parentUuid": "eb14f848_27dfc977",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bebbe00_da57ed37",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 12
@@ -439,6 +859,24 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3462b7ca_ac11a265",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bebbe00_da57ed37",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -465,6 +903,30 @@
     },
     {
       "key": {
+        "uuid": "b2c781e9_1b299be0",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4986a414_94404fa3",
+      "range": {
+        "startLine": 564,
+        "startChar": 50,
+        "endLine": 564,
+        "endChar": 76
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df44986e_faedf4df",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 12
@@ -485,6 +947,30 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b98b60_d2660ca6",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6103,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df44986e_faedf4df",
+      "range": {
+        "startLine": 6103,
+        "startChar": 39,
+        "endLine": 6103,
+        "endChar": 42
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -511,6 +997,30 @@
     },
     {
       "key": {
+        "uuid": "3d8e0fb1_e8ca8936",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6104,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c11d75d_a7f2fe82",
+      "range": {
+        "startLine": 6104,
+        "startChar": 3,
+        "endLine": 6104,
+        "endChar": 42
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3956f6a8_febc6fe5",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 12
@@ -534,6 +1044,30 @@
     },
     {
       "key": {
+        "uuid": "886d48d1_2e5fc314",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6123,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3956f6a8_febc6fe5",
+      "range": {
+        "startLine": 6123,
+        "startChar": 76,
+        "endLine": 6123,
+        "endChar": 79
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb0ad006_b53dafe4",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 12
@@ -548,6 +1082,24 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94c17fa_d1cdcdfc",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6129,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb0ad006_b53dafe4",
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -574,6 +1126,30 @@
     },
     {
       "key": {
+        "uuid": "40974056_981546e7",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d8c011_6aee83a3",
+      "range": {
+        "startLine": 135,
+        "startChar": 142,
+        "endLine": 135,
+        "endChar": 154
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2d999f_cc4a6dd6",
         "filename": "components/autofill_strings.grdp",
         "patchSetId": 12
@@ -594,6 +1170,30 @@
       "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532d6ccb_c23de055",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-02T21:20:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2d999f_cc4a6dd6",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 0
+      },
+      "revId": "8c5f0e01fb7c55699be58520399dbc8468614708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
