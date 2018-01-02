@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99b086b4_b0e914c0",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1250340
+      },
+      "writtenOn": "2018-01-02T18:10:47Z",
+      "side": 1,
+      "message": "I don\u0027t really have a strong opinion but the motivation for \"semantics\" is that it changes the behavior of SetLocalDescription/SetRemoteDescription and also enables RtpTransceivers in the API.",
+      "parentUuid": "548d3660_e9ff50cb",
+      "revId": "43de41767b7a36f940f056bd08d4d5a933fabd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1934549_8ac65d04",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-createOffer-promise.html",
         "patchSetId": 1
