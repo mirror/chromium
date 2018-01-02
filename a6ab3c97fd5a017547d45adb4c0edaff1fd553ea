@@ -22,6 +22,30 @@
       "revId": "a6ab3c97fd5a017547d45adb4c0edaff1fd553ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a409176_013c8783",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-02T23:26:47Z",
+      "side": 0,
+      "message": "This will be removed after PM does\u0027t need any experiment. \nCurrently we are still using its params to verify some tweaks (eg. font color, auto never behavior...) \n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/android/infobars/translate_compact_infobar.cc?l\u003d208",
+      "parentUuid": "65c6d962_6401eb52",
+      "range": {
+        "startLine": 1852,
+        "startChar": 24,
+        "endLine": 1852,
+        "endChar": 54
+      },
+      "revId": "a6ab3c97fd5a017547d45adb4c0edaff1fd553ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
