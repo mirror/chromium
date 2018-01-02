@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3b4c56fa_21910ecf",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-02T10:48:10Z",
+      "side": 1,
+      "message": "Usually will is not used after if,\nbut there are exceptions, see for example for exceptions https://www.grammarly.com/blog/will-would-in-if-clause/.",
+      "parentUuid": "6c5c2fe7_7869f947",
+      "range": {
+        "startLine": 474,
+        "startChar": 23,
+        "endLine": 474,
+        "endChar": 30
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49291d5b_7449db79",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 21
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "76654c0a_ece04626",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-02T10:48:10Z",
+      "side": 1,
+      "message": "I think here it\u0027s the same case as on line 474.",
+      "parentUuid": "1e7983ff_b2ce94a2",
+      "range": {
+        "startLine": 478,
+        "startChar": 33,
+        "endLine": 478,
+        "endChar": 40
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc37386_0fc702b7",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 21
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "2d63058c_fd14265a",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-02T10:48:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01bba86d_84774a88",
+      "range": {
+        "startLine": 1130,
+        "startChar": 25,
+        "endLine": 1130,
+        "endChar": 39
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae9ee1c_dac3879e",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 21
@@ -319,6 +391,30 @@
       "side": 1,
       "message": "\u003e Was it bug without this line?\n\nI think so.\n\nWe should add this line because |is_new_login_| is not initiated for this branch. It is set in the constructor, but CreatePendingCredentials can be called several times after construction.",
       "parentUuid": "2ae9ee1c_dac3879e",
+      "range": {
+        "startLine": 1151,
+        "startChar": 4,
+        "endLine": 1151,
+        "endChar": 25
+      },
+      "revId": "6661c36c59f454c2e444378305fbec411423fe7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19a551e2_77f7adec",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-02T10:48:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "171b04e0_f586e103",
       "range": {
         "startLine": 1151,
         "startChar": 4,
