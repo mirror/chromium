@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54954841_7b2511e4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T18:16:02Z",
+      "side": 1,
+      "message": "I am trying to cover the URL in https://crrev.com/846109 (via crash metadata, rather than by including the URL in the dump).  I still need to investigate why some tryjobs there are red.",
+      "parentUuid": "7be92ebf_0a917286",
+      "range": {
+        "startLine": 1623,
+        "startChar": 0,
+        "endLine": 1623,
+        "endChar": 73
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8d0362_ecd2d6b4",
         "filename": "url/debug_alias_helper.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af3fa75_14ba6797",
+        "filename": "url/debug_alias_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T18:16:02Z",
+      "side": 1,
+      "message": "Done.\n\n(I haven\u0027t done that earlier, because I wasn\u0027t sure if the base/strings/string_util.h dependency is okay for base/debug/alias.h, but it surely is okay for url/debug_alias_helper.h and we can think about suitability for base/debug/alias.h later, when moving this macro to //base)",
+      "parentUuid": "ef8d0362_ecd2d6b4",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,30 @@
       "side": 1,
       "message": "Seems ok to me, though I\u0027d defer this to url/ OWNERS.\n\nIt does seem like we\u0027ve got a few of these aliases for URLs, though not origins AFAICT.  Maybe those could be simplified with a similar macro for GURLs.",
       "parentUuid": "840342f9_8273611b",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9768648_27df6cad",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T18:16:02Z",
+      "side": 1,
+      "message": "\u003e Seems ok to me, though I\u0027d defer this to url/ OWNERS.\n\nAck.\n\n\u003e It does seem like we\u0027ve got a few of these aliases for URLs, though not origins AFAICT.  Maybe those could be simplified with a similar macro for GURLs.\n\nYes.  I planned to do that when moving the DEBUG_ALIAS_FOR_CSTR to //base (to justify having something in //base, there need to be 3 independent usages somewhere).  OTOH, I could potentially include this change in the current CL.  WDYT?",
+      "parentUuid": "3d170c50_51989665",
       "range": {
         "startLine": 194,
         "startChar": 8,
@@ -139,6 +211,30 @@
       "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d107f4_6f565878",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T18:16:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "acc53bd0_a9e9c117",
+      "range": {
+        "startLine": 195,
+        "startChar": 61,
+        "endLine": 195,
+        "endChar": 64
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
