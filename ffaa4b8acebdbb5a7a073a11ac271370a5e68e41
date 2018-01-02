@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d275797_349a1d44",
+        "filename": "ash/display/display_shutdown_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T21:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c95ec0_c4a58a47",
+      "range": {
+        "startLine": 5,
+        "startChar": 46,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd647b8_5948d9de",
         "filename": "ash/display/projecting_observer_chromeos.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5d851215_4e221b8a",
+        "filename": "ash/display/projecting_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T21:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd647b8_5948d9de",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b79caa87_48d94f2f",
         "filename": "ash/shell.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-02T17:54:26Z",
       "side": 1,
       "message": "initialized? That said, I\u0027m not entirely sure I understand this comment.",
+      "range": {
+        "startLine": 891,
+        "startChar": 19,
+        "endLine": 891,
+        "endChar": 30
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08d1096_70afa7d4",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T21:32:42Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "b79caa87_48d94f2f",
       "range": {
         "startLine": 891,
         "startChar": 19,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1a5bca36_f383c65c",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T21:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0c12a7_88472873",
+      "range": {
+        "startLine": 1128,
+        "startChar": 29,
+        "endLine": 1128,
+        "endChar": 33
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9875655_23a410c7",
         "filename": "ash/shell.cc",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-02T17:54:26Z",
       "side": 1,
       "message": "The set of classes ProjectingObserver needs to observe is an implementation detail of ProjectingObserver. It seems ProjectingObserver should be responsible for wiring up the necessary observers. Is there a reason not to do this?",
+      "range": {
+        "startLine": 1129,
+        "startChar": 2,
+        "endLine": 1130,
+        "endChar": 47
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f47de3_3c980c68",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T21:32:42Z",
+      "side": 1,
+      "message": "I agree. I just moved this code and intended to limit the re-factorning, but since this CL already touches projecting_observer, done.",
+      "parentUuid": "a9875655_23a410c7",
       "range": {
         "startLine": 1129,
         "startChar": 2,
