@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "14d7ed09_aeba1921",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:02:21Z",
+      "side": 1,
+      "message": "This is the flag you are about to flip, right? If yes, then never mind this comment.",
+      "parentUuid": "be446b55_42468d09",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1108,
+        "endChar": 17
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cdd7edd_a9e56178",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 3
@@ -942,6 +966,30 @@
     },
     {
       "key": {
+        "uuid": "56d9f381_63d17f7d",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:02:21Z",
+      "side": 1,
+      "message": "ACK. Although it\u0027s always better to keep tests next to the code they assert.",
+      "parentUuid": "3efa749b_6ee5c19a",
+      "range": {
+        "startLine": 1291,
+        "startChar": 21,
+        "endLine": 1291,
+        "endChar": 42
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f719ee6_14dd6a42",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 3
@@ -1130,6 +1178,30 @@
     },
     {
       "key": {
+        "uuid": "c5b77a07_1ec17d55",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1661,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:02:21Z",
+      "side": 1,
+      "message": "Oh, sorry. I thought it swaps rather than moves. Never mind then.",
+      "parentUuid": "721823f9_f4cd49c2",
+      "range": {
+        "startLine": 1647,
+        "startChar": 0,
+        "endLine": 1661,
+        "endChar": 7
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc32468f_c7ba93a3",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 3
@@ -1174,6 +1246,30 @@
       "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933abaf7_bc3fe521",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:02:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "47a2f933_92f84875",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 3
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
