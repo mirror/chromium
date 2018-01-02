@@ -779,4 +779,61 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
   }
 }
 
+// Regression test for https://crbug.com/696204
+// Sending cookie on 302 redirect should work with the following attributes:
+//  * Secure
+//  * Http-Only
+//  * Expiration Not Set
+//  * SameSite Policy: Strict
+//  * Path /
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn302Redirect) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+
+  // Handler for /a
+  https_server.RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/a")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        // 302 redirect
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "./b");
+
+        // Add a cookie
+        http_response->AddCustomHeader(
+            "Set-Cookie", "a=a;Secure;HttpOnly;SameSite=strict;Path=/");
+        return http_response;
+      }));
+
+  // Handler for /b
+  https_server.RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/b")
+          return nullptr;
+
+        // Check that the cookie `a=a` was sent.
+        auto cookie_header = request.headers.find("Cookie");
+        EXPECT_NE(request.headers.end(), cookie_header);
+        EXPECT_EQ("a=a", cookie_header->second);
+
+        // Return a basic response to end the test.
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->set_content_type("text/plain");
+        http_response->set_content("OK");
+        return http_response;
+      }));
+
+  ASSERT_TRUE(https_server.Start());
+
+  GURL url_a(https_server.GetURL("/a"));
+  EXPECT_FALSE(NavigateToURL(shell(), url_a));
+}
+
 }  // namespace content
