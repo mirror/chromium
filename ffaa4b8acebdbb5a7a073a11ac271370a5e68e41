@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74c95ec0_c4a58a47",
+        "filename": "ash/display/display_shutdown_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:54:26Z",
+      "side": 1,
+      "message": "As you\u0027re renaming, how about removing \u0027chromeos\u0027 from the name. ash is entirely chromeos at this point.",
+      "range": {
+        "startLine": 5,
+        "startChar": 46,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd647b8_5948d9de",
+        "filename": "ash/display/projecting_observer_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:54:26Z",
+      "side": 1,
+      "message": "It\u0027s less error prone and clearer to friend the test (or a test api) rather than exposing public functions.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79caa87_48d94f2f",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:54:26Z",
+      "side": 1,
+      "message": "initialized? That said, I\u0027m not entirely sure I understand this comment.",
+      "range": {
+        "startLine": 891,
+        "startChar": 19,
+        "endLine": 891,
+        "endChar": 30
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0c12a7_88472873",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:54:26Z",
+      "side": 1,
+      "message": "make_unique",
+      "range": {
+        "startLine": 1128,
+        "startChar": 29,
+        "endLine": 1128,
+        "endChar": 33
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9875655_23a410c7",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:54:26Z",
+      "side": 1,
+      "message": "The set of classes ProjectingObserver needs to observe is an implementation detail of ProjectingObserver. It seems ProjectingObserver should be responsible for wiring up the necessary observers. Is there a reason not to do this?",
+      "range": {
+        "startLine": 1129,
+        "startChar": 2,
+        "endLine": 1130,
+        "endChar": 47
+      },
+      "revId": "ffaa4b8acebdbb5a7a073a11ac271370a5e68e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
