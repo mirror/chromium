@@ -42,6 +42,7 @@ class AccountTrackerService;
 class PrefRegistrySimple;
 class PrefService;
 class SigninClient;
+class SigninErrorController;
 
 namespace password_manager {
 class PasswordStoreSigninNotifierImpl;
@@ -103,7 +104,8 @@ class SigninManagerBase : public KeyedService {
   };
 
   SigninManagerBase(SigninClient* client,
-                    AccountTrackerService* account_tracker_service);
+                    AccountTrackerService* account_tracker_service,
+                    SigninErrorController* signin_error_controller);
   ~SigninManagerBase() override;
 
   // Registers per-profile prefs.
@@ -209,6 +211,7 @@ class SigninManagerBase : public KeyedService {
 
   SigninClient* client_;
   AccountTrackerService* account_tracker_service_;
+  SigninErrorController* signin_error_controller_;
   bool initialized_;
 
   // Account id after successful authentication.
