@@ -46,10 +46,6 @@
 // Dismisses all modal dialogs.
 - (void)dismissModalDialogs;
 
-// TODO(crbug.com/779791) : Do not pass baseViewController through dispatcher.
-// Shows the Settings UI, presenting from |baseViewController|.
-- (void)showSettingsFromViewController:(UIViewController*)baseViewController;
-
 // Switches to show either regular or incognito tabs, and then opens
 // a new oen of those tabs. |newTabCommand|'s |incognito| property inidcates
 // the type of tab to open.
