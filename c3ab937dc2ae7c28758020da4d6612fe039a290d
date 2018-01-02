@@ -69,6 +69,24 @@
       "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef389bb1_903bb9b0",
+        "filename": "third_party/WebKit/public/platform/WebURLLoaderClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T22:07:11Z",
+      "side": 1,
+      "message": "Using a separate function sounds good to me. Would you mind filing a bug and adding a TODO pointing to that? I can probably poke at that at some point down the road.",
+      "parentUuid": "a708ee36_142bae3b",
+      "revId": "c3ab937dc2ae7c28758020da4d6612fe039a290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
