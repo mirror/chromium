@@ -4,7 +4,12 @@
 
 package org.chromium.components.signin.test;
 
+import static org.robolectric.Shadows.shadowOf;
+
 import android.accounts.Account;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.UserManager;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.UiThreadTestRule;
 
@@ -13,30 +18,43 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.components.signin.AccountManagerDelegateException;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ProfileDataSource;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
 import org.chromium.testing.local.CustomShadowAsyncTask;
+import org.chromium.testing.local.CustomShadowUserManager;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /**
  * Test class for {@link AccountManagerFacade}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE, shadows = {CustomShadowAsyncTask.class})
+@Config(manifest = Config.NONE,
+        shadows = {CustomShadowAsyncTask.class, CustomShadowUserManager.class})
 public class AccountManagerFacadeTest {
     @Rule
     public UiThreadTestRule mRule = new UiThreadTestRule();
 
+    private CustomShadowUserManager mShadowUserManager;
     private FakeAccountManagerDelegate mDelegate;
     private AccountManagerFacade mFacade;
 
     @Before
     public void setUp() throws Exception {
+        Context context = RuntimeEnvironment.application;
+        ContextUtils.initApplicationContextForTests(context);
+        UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
+        mShadowUserManager = (CustomShadowUserManager) shadowOf(userManager);
+    }
+
+    private void initAccountManagerFacade() {
+        Assert.assertNull(mDelegate);
         mDelegate = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.ENABLE_PROFILE_DATA_SOURCE);
         Assert.assertFalse(mDelegate.isRegisterObserversCalled());
@@ -45,9 +63,18 @@ public class AccountManagerFacadeTest {
         mFacade = AccountManagerFacade.get();
     }
 
+    private void initAccountManagerFacadeWithAccountRestrictionPattern(String pattern) {
+        Bundle restrictions = new Bundle();
+        restrictions.putString(AccountManagerFacade.ACCOUNT_RESTRICTION_PATTERN_KEY, pattern);
+        mShadowUserManager.setApplicationRestrictions(
+                RuntimeEnvironment.application.getPackageName(), restrictions);
+        initAccountManagerFacade();
+    }
+
     @Test
     @SmallTest
     public void testCanonicalAccount() {
+        initAccountManagerFacade();
         addTestAccount("test@gmail.com");
 
         Assert.assertTrue(mFacade.hasAccountForName("test@gmail.com"));
@@ -60,6 +87,7 @@ public class AccountManagerFacadeTest {
     @Test
     @SmallTest
     public void testNonCanonicalAccount() {
+        initAccountManagerFacade();
         addTestAccount("test.me@gmail.com");
 
         Assert.assertTrue(mFacade.hasAccountForName("test.me@gmail.com"));
@@ -71,6 +99,7 @@ public class AccountManagerFacadeTest {
     @Test
     @SmallTest
     public void testProfileDataSource() throws Throwable {
+        initAccountManagerFacade();
         String accountName = "test@gmail.com";
         addTestAccount(accountName);
 
@@ -93,6 +122,7 @@ public class AccountManagerFacadeTest {
     @Test
     @SmallTest
     public void testGetAccounts() throws AccountManagerDelegateException {
+        initAccountManagerFacade();
         Assert.assertArrayEquals(new Account[] {}, mFacade.getGoogleAccounts());
 
         Account account = addTestAccount("test@gmail.com");
@@ -107,6 +137,28 @@ public class AccountManagerFacadeTest {
 
         removeTestAccount(account2);
         Assert.assertArrayEquals(new Account[] {account, account3}, mFacade.getGoogleAccounts());
+    }
+
+    @Test
+    @SmallTest
+    public void testGetAccountsWithRestrictionPattern() throws AccountManagerDelegateException {
+        initAccountManagerFacadeWithAccountRestrictionPattern(".*@example\\.com$");
+        Account account = addTestAccount("test@example.com");
+        Assert.assertArrayEquals(new Account[] {account}, mFacade.getGoogleAccounts());
+
+        // Add account that doesn't match the pattern.
+        addTestAccount("test@gmail.com");
+        Assert.assertArrayEquals(new Account[] {account}, mFacade.getGoogleAccounts());
+
+        Account account2 = addTestAccount("test2@example.com");
+        Assert.assertArrayEquals(new Account[] {account, account2}, mFacade.getGoogleAccounts());
+
+        // Add another account that doesn't match the pattern.
+        addTestAccount("test2@gmail.com");
+        Assert.assertArrayEquals(new Account[] {account, account2}, mFacade.getGoogleAccounts());
+
+        removeTestAccount(account);
+        Assert.assertArrayEquals(new Account[] {account2}, mFacade.getGoogleAccounts());
     }
 
     private Account addTestAccount(String accountName) {
