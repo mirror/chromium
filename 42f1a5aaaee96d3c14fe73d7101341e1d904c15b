@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c71e1a0_bc1131bf",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-02T23:46:09Z",
+      "side": 1,
+      "message": "This was very helpful. Thank you.\n\nAnd thank you, commutative operations (integer multiplication and xor) for making parallelizing so much easier.\n\nFrom that paper, I learned about Barrett reduction which can replace modulo operations (not commutative) with multiplications.",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
