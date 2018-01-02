@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7be92ebf_0a917286",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-02T17:44:20Z",
+      "side": 1,
+      "message": "Would it be useful to alias the URL as well, in case it\u0027s also useful for debugging?  We\u0027ve got some precedent for that, e.g. in https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_message_filter.cc?l\u003d529\u0026rcl\u003de4d6d0b50ec2e40aabe6a8c9928f512101771bb1 or https://cs.chromium.org/chromium/src/content/browser/loader/resource_dispatcher_host_impl.cc?l\u003d926\u0026rcl\u003d8b9799f3477553ff169933c5007cca6d4a29c21c",
+      "range": {
+        "startLine": 1623,
+        "startChar": 0,
+        "endLine": 1623,
+        "endChar": 73
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8d0362_ecd2d6b4",
+        "filename": "url/debug_alias_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-02T17:44:20Z",
+      "side": 1,
+      "message": "base::strlcpy(var_name, (c_str), arraysize(var_name))?  (Should avoid the need to null-terminate.)",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "840342f9_8273611b",
         "filename": "url/origin.h",
         "patchSetId": 2
@@ -25,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "3d170c50_51989665",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-02T17:44:20Z",
+      "side": 1,
+      "message": "Seems ok to me, though I\u0027d defer this to url/ OWNERS.\n\nIt does seem like we\u0027ve got a few of these aliases for URLs, though not origins AFAICT.  Maybe those could be simplified with a similar macro for GURLs.",
+      "parentUuid": "840342f9_8273611b",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0abeb6a5_19fe5d70",
         "filename": "url/origin.h",
         "patchSetId": 2
@@ -36,6 +106,30 @@
       "writtenOn": "2018-01-02T16:56:50Z",
       "side": 1,
       "message": "Not sure what to put here.\n\n- Some people say [1] that an average *URL* (not just origin) length is 77 characters.  Therefore 128 should be enough to store an *origin* (even if it is longer than average).\n\n- I am not sure what exactly is the nature of downpressure on this number.  I guess we don\u0027t want to say |10000| because this might lead to stack overflows?\n\n[1] https://stackoverflow.com/a/31758386/4692014",
+      "range": {
+        "startLine": 195,
+        "startChar": 61,
+        "endLine": 195,
+        "endChar": 64
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc53bd0_a9e9c117",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-02T17:44:20Z",
+      "side": 1,
+      "message": "128 seems fine.  It\u0027s consistent with existing URL/origin aliases, e.g., https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_message_filter.cc?l\u003d529\u0026rcl\u003de4d6d0b50ec2e40aabe6a8c9928f512101771bb1",
+      "parentUuid": "0abeb6a5_19fe5d70",
       "range": {
         "startLine": 195,
         "startChar": 61,
