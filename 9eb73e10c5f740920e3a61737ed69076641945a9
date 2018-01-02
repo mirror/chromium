@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d148ac46_d95cb579",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionInsertionHandleObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-02T20:15:59Z",
+      "side": 1,
+      "message": "nit: \"An interface\" should be enough.",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "9eb73e10c5f740920e3a61737ed69076641945a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
