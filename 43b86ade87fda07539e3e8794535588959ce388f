@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d33cf4bd_b28bf0b8",
+        "filename": "components/omnibox/browser/omnibox_edit_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-02T23:01:57Z",
+      "side": 1,
+      "message": "I realize it\u0027s somewhat \"impure\" to override this class rather than the member omnibox_controller_. I thought this was a lot more obvious for readers though.",
+      "revId": "43b86ade87fda07539e3e8794535588959ce388f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
