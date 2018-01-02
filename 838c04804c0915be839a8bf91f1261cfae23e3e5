@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb96f34_f6870319",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-02T22:59:38Z",
+      "side": 1,
+      "message": "Brain dump\n\nThis reduces sleep time on the main thread when the main thread has tasks to run:\n\nfor (;;) {\n  bool has_task_scheduler_tasks \u003d \n      task_tracker_-\u003eHasIncompleteUndelayedTasksForTesting();\n  bool has_main_thread_tasks \u003d HasMainThreadTasks();\n\n  if (!has_task_scheduler_tasks \u0026\u0026 !has_main_thread_tasks)\n    break;\n\n  if (has_main_thread_tasks) {\n    // This RunLoop will run at least one task.\n    base::RunLoop::RunUntilIdle();\n  } else {\n    PlatformThread::Sleep(TimeDelta::FromMilliseconds(1));\n  }\n}\n\nThis avoids \"sleeping\", but requires signaling an event when a task is posted to the main thread, when a task completes on the main thread or when a task completes in TaskScheduler:\n\nwhile (task_tracker_-\u003eHasIncompleteUndelayedTasksForTesting() ||  \n       HasMainThreadTasks()) {\n  event-\u003eWait();\n  base::RunLoop::RunUntilIdle();\n}",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b828527_5083ddcb",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-02T22:59:38Z",
+      "side": 1,
+      "message": "This CHECK can fail if a delayed task becomes ripe for execution while line 163 is running.\n\nI believe that we need to return false and loop again if there are tasks running when this is called.",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc83b53c_96827101",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-02T22:59:38Z",
+      "side": 1,
+      "message": "Until",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
