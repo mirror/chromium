@@ -26,7 +26,9 @@ int UserActivityLoggerDelegateUkm::BucketEveryFivePercents(int original_value) {
 }
 
 UserActivityLoggerDelegateUkm::UserActivityLoggerDelegateUkm()
-    : ukm_recorder_(ukm::UkmRecorder::Get()) {}
+    : ukm_recorder_(ukm::UkmRecorder::Get()) {
+  DCHECK(ukm_recorder_);
+}
 
 UserActivityLoggerDelegateUkm::~UserActivityLoggerDelegateUkm() = default;
 
