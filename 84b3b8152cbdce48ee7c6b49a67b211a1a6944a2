@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dce0986_42e9bb39",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "This comment belongs above `ash_shortcuts_metadata_`.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a81cda_d3fa3916",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "Nit: Can you add an empty line above this?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 56
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c1cd04_dce9f427",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "Nit: Move this TODO to line 21.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3bea81_53fd26b6",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "Nit: Please add an empty line above this.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 76
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9784c659_367e2547",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f8111_be5b3ab2",
+        "filename": "components/keyboard_shortcut_viewer/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-02T21:29:50Z",
+      "side": 1,
+      "message": "This is not needed for this CL.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
