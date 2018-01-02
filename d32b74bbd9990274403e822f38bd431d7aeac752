@@ -70,6 +70,30 @@
       "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d30bac_d00d0740",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-02T23:52:32Z",
+      "side": 1,
+      "message": "I was on the completely wrong track, pending_magic_window_vsync_ is always false in this code path since it\u0027s set to false at the start of OnMagicWindowVSync. The actual problem is that the current frame\u0027s pose got delivered before exiting VR, so it\u0027s a half second old when the matching OnMagicWindowVSync executes and considered stale.\n\nNew logic explicitly checks if there\u0027s an outstanding pose request that\u0027s newer than the last received pose, and only defers the animation if that\u0027s the case.",
+      "parentUuid": "d860081e_80daddde",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 41
+      },
+      "revId": "d32b74bbd9990274403e822f38bd431d7aeac752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
