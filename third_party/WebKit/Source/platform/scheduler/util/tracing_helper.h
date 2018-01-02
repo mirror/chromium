@@ -7,9 +7,11 @@
 
 #include <string>
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "platform/PlatformExport.h"
+#include "public/platform/TaskType.h"
 
 namespace blink {
 namespace scheduler {
@@ -34,6 +36,10 @@ PLATFORM_EXPORT bool AreVerboseSnapshotsEnabled();
 PLATFORM_EXPORT std::string PointerToString(const void* pointer);
 
 PLATFORM_EXPORT double TimeDeltaToMilliseconds(const base::TimeDelta& value);
+
+PLATFORM_EXPORT const char* TaskTypeToString(TaskType task_type);
+PLATFORM_EXPORT const char* OptionalTaskTypeToString(
+    base::Optional<TaskType> opt_task_type);
 
 // TRACE_EVENT macros define static variable to cache a pointer to the state
 // of category. Hence, we need distinct version for each category in order to
@@ -96,12 +102,16 @@ class TraceableState {
 
     started_ = is_enabled();
     if (started_) {
-      // Trace viewer logic relies on subslice starting at the exact same time
-      // as the async event.
-      base::TimeTicks now = base::TimeTicks::Now();
-      TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0(category, name_, object_, now);
-      TRACE_EVENT_ASYNC_STEP_INTO_WITH_TIMESTAMP0(category, name_, object_,
-                                                  converter_(state_), now);
+      // Converter returns nullptr to indicate the absence of state.
+      const char* state_str = converter_(state_);
+      if (state_str != nullptr) {
+        // Trace viewer logic relies on subslice starting at the exact same time
+        // as the async event.
+        base::TimeTicks now = base::TimeTicks::Now();
+        TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0(category, name_, object_, now);
+        TRACE_EVENT_ASYNC_STEP_INTO_WITH_TIMESTAMP0(category, name_, object_,
+                                                    state_str, now);
+      }
     }
   }
 

@@ -368,6 +368,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                    "RendererScheduler.ProcessType",
                    renderer_scheduler_impl,
                    RendererProcessTypeToString),
+      task_type_for_tracing(base::nullopt,
+                            "RendererScheduler.MainThreadTaskType",
+                            renderer_scheduler_impl,
+                            OptionalTaskTypeToString),
       virtual_time_policy(VirtualTimePolicy::kAdvance),
       virtual_time_pause_count(0),
       max_virtual_time_task_starvation_count(0),
@@ -2266,6 +2270,7 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
   seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start, queue);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
+  main_thread_only().task_type_for_tracing = task.task_type();
 }
 
 void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
@@ -2426,6 +2431,7 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
   main_thread_only().has_navigated.OnTraceLogEnabled();
   main_thread_only().pause_timers_for_webview.OnTraceLogEnabled();
   main_thread_only().process_type.OnTraceLogEnabled();
+  main_thread_only().task_type_for_tracing.OnTraceLogEnabled();
 
   for (WebViewSchedulerImpl* web_view_scheduler :
        main_thread_only().web_view_schedulers) {

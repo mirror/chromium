@@ -61,5 +61,72 @@ double TimeDeltaToMilliseconds(const base::TimeDelta& value) {
   return value.InMillisecondsF();
 }
 
+const char* TaskTypeToString(TaskType task_type) {
+  switch (task_type) {
+    case TaskType::kDOMManipulation:
+      return "DOM Manipultion";
+    case TaskType::kUserInteraction:
+      return "User Interaction";
+    case TaskType::kNetworking:
+      return "Networking";
+    case TaskType::kNetworkingControl:
+      return "Networking Control";
+    case TaskType::kHistoryTraversal:
+      return "History Traversal";
+    case TaskType::kEmbed:
+      return "Embed";
+    case TaskType::kMediaElementEvent:
+      return "MediaElement Event";
+    case TaskType::kCanvasBlobSerialization:
+      return "Canvas Blob Serialization";
+    case TaskType::kMicrotask:
+      return "Microtask";
+    case TaskType::kJavascriptTimer:
+      return "Javascript Timer";
+    case TaskType::kRemoteEvent:
+      return "Remote Event";
+    case TaskType::kWebSocket:
+      return "WebSocket";
+    case TaskType::kPostedMessage:
+      return "Posted Message";
+    case TaskType::kUnshippedPortMessage:
+      return "Unshiped Port Message";
+    case TaskType::kFileReading:
+      return "File Reading";
+    case TaskType::kDatabaseAccess:
+      return "Database Access";
+    case TaskType::kPresentation:
+      return "Presentation";
+    case TaskType::kSensor:
+      return "Sensor";
+    case TaskType::kPerformanceTimeline:
+      return "Performance Timeline";
+    case TaskType::kWebGL:
+      return "WebGL";
+    case TaskType::kIdleTask:
+      return "Idle Task";
+    case TaskType::kMiscPlatformAPI:
+      return "Misc Platform API";
+    case TaskType::kUnspecedTimer:
+      return "Unspeced Timer";
+    case TaskType::kUnspecedLoading:
+      return "Unspeced Loading";
+    case TaskType::kUnthrottled:
+      return "Unthrottled";
+    case TaskType::kInternalTest:
+      return "Internal Test";
+    case TaskType::kCount:
+      return "Count";
+  }
+  NOTREACHED();
+  return "";
+}
+
+const char* OptionalTaskTypeToString(base::Optional<TaskType> opt_task_type) {
+  if (!opt_task_type.has_value())
+    return nullptr;
+  return TaskTypeToString(opt_task_type.value());
+}
+
 }  // namespace scheduler
 }  // namespace blink
