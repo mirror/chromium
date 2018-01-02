@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9456557_07be5cd0",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-02T19:54:42Z",
+      "side": 1,
+      "message": "nit: put this in DCHECK_IS_ON()?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0871174_c3e9143d",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-02T19:54:42Z",
+      "side": 1,
+      "message": "Add a comment or a \"\u003c\u003c\" string to explain why we check this.",
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd384320_01f76b4a",
+        "filename": "content/public/renderer/key_system_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-02T19:54:42Z",
+      "side": 1,
+      "message": "nit: which UMA? Also, the UMA is currently reported at the browser side. \n\nAlso, that UMA is very plugin-specific, maybe we need to create a new UMA which doesn\u0027t depend on plugin code; but we can discuss about this in your next CL.",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
