@@ -133,9 +133,12 @@ void MediaControlTimelineElement::DefaultEventHandler(Event* event) {
   if (!isConnected() || !GetDocument().IsActive())
     return;
 
+  DLOG(ERROR) << event->type();
+
   RenderBarSegments();
 
   if (BeginScrubbingEvent(*event)) {
+    DLOG(ERROR) << "begin scrubbing";
     Platform::Current()->RecordAction(
         UserMetricsAction("Media.Controls.ScrubbingBegin"));
     GetMediaControls().BeginScrubbing();
@@ -147,6 +150,7 @@ void MediaControlTimelineElement::DefaultEventHandler(Event* event) {
     if (current_time_display_)
       current_time_display_->SetIsWanted(true);
   } else if (EndScrubbingEvent(*event)) {
+    DLOG(ERROR) << "end scrubbing";
     Platform::Current()->RecordAction(
         UserMetricsAction("Media.Controls.ScrubbingEnd"));
     GetMediaControls().EndScrubbing();
@@ -172,7 +176,9 @@ void MediaControlTimelineElement::DefaultEventHandler(Event* event) {
 
   // Update the value based on the touchmove event.
   if (is_touching_ && event->type() == EventTypeNames::touchmove) {
+    DLOG(ERROR) << "touchmove event";
     TouchEvent* touch_event = ToTouchEvent(event);
+    DLOG(ERROR) << touch_event->touches()->length();
     if (touch_event->touches()->length() != 1)
       return;
 
