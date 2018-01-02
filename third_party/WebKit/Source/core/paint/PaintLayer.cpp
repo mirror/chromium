@@ -1016,11 +1016,12 @@ PaintLayer* PaintLayer::EnclosingLayerWithCompositedLayerMapping(
 // Return the enclosingCompositedLayerForPaintInvalidation for the given Layer
 // including crossing frame boundaries.
 PaintLayer*
-PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
+PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries(
+    IncludeSelfOrNot include_self) const {
   const PaintLayer* layer = this;
   PaintLayer* composited_layer = nullptr;
   while (!composited_layer) {
-    composited_layer = layer->EnclosingLayerForPaintInvalidation();
+    composited_layer = layer->EnclosingLayerForPaintInvalidation(include_self);
     if (!composited_layer) {
       CHECK(layer->GetLayoutObject().GetFrame());
       auto* owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutObject();
@@ -1032,10 +1033,11 @@ PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
   return composited_layer;
 }
 
-PaintLayer* PaintLayer::EnclosingLayerForPaintInvalidation() const {
+PaintLayer* PaintLayer::EnclosingLayerForPaintInvalidation(
+    IncludeSelfOrNot include_self) const {
   DCHECK(IsAllowedToQueryCompositingState());
 
-  if (IsPaintInvalidationContainer())
+  if (IsPaintInvalidationContainer() && include_self == kIncludeSelf)
     return const_cast<PaintLayer*>(this);
 
   for (PaintLayer* curr = CompositingContainer(); curr;
