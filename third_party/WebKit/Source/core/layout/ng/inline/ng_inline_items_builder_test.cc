@@ -424,6 +424,13 @@ TEST_F(NGInlineItemsBuilderTest, BidiIsolate) {
                    u"\u2069"
                    u" World"),
             builder.ToString());
+  EXPECT_EQ(NGInlineItem::kText, items[0].Type());
+  EXPECT_EQ(NGInlineItem::kOpenTag, items[1].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[2].Type());
+  EXPECT_EQ(NGInlineItem::kText, items[3].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[4].Type());
+  EXPECT_EQ(NGInlineItem::kCloseTag, items[5].Type());
+  EXPECT_EQ(NGInlineItem::kText, items[6].Type());
   EXPECT_EQ("{}", GetCollapsed(builder.GetOffsetMappingBuilder()));
 }
 
@@ -449,6 +456,15 @@ TEST_F(NGInlineItemsBuilderTest, BidiIsolateOverride) {
                    u"\u202C\u2069"
                    u" World"),
             builder.ToString());
+  EXPECT_EQ(NGInlineItem::kText, items[0].Type());
+  EXPECT_EQ(NGInlineItem::kOpenTag, items[1].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[2].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[3].Type());
+  EXPECT_EQ(NGInlineItem::kText, items[4].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[5].Type());
+  EXPECT_EQ(NGInlineItem::kBidiControl, items[6].Type());
+  EXPECT_EQ(NGInlineItem::kCloseTag, items[7].Type());
+  EXPECT_EQ(NGInlineItem::kText, items[8].Type());
   EXPECT_EQ("{}", GetCollapsed(builder.GetOffsetMappingBuilder()));
 }
 

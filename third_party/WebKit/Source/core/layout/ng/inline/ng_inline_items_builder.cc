@@ -485,10 +485,13 @@ template <typename OffsetMappingBuilder>
 void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterInline(
     LayoutObject* node) {
   DCHECK(node);
+
   mapping_builder_.EnterInline(*node);
 
-  // https://drafts.csswg.org/css-writing-modes-3/#bidi-control-codes-injection-table
   const ComputedStyle* style = node->Style();
+  AppendOpaque(NGInlineItem::kOpenTag, style, node);
+
+  // https://drafts.csswg.org/css-writing-modes-3/#bidi-control-codes-injection-table
   if (style->RtlOrdering() == EOrder::kLogical) {
     switch (style->GetUnicodeBidi()) {
       case UnicodeBidi::kNormal:
@@ -521,8 +524,6 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterInline(
         break;
     }
   }
-
-  AppendOpaque(NGInlineItem::kOpenTag, style, node);
 }
 
 template <typename OffsetMappingBuilder>
@@ -543,9 +544,9 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::ExitInline(
     LayoutObject* node) {
   DCHECK(node);
 
-  AppendOpaque(NGInlineItem::kCloseTag, node->Style(), node);
-
   Exit(node);
+
+  AppendOpaque(NGInlineItem::kCloseTag, node->Style(), node);
 
   mapping_builder_.ExitInline(*node);
 }
