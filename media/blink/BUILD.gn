@@ -34,6 +34,8 @@ component("blink") {
     "resource_fetch_context.h",
     "resource_multibuffer_data_provider.cc",
     "resource_multibuffer_data_provider.h",
+    "resource_scheduler_metrics.cc",
+    "resource_scheduler_metrics.h",
     "texttrack_impl.cc",
     "texttrack_impl.h",
     "url_index.cc",
