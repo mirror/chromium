@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4abacdb_e9a62862",
+        "filename": "components/viz/common/gl_helper_scaling.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00759508_40a0223a",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a58fec_98fd8708",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d0dac3_77402e8e",
+        "filename": "components/viz/service/gl/gpu_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d548787_0af1fab9",
+        "filename": "components/viz/service/gl/gpu_service_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b1382b_a043bb17",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158cb825_0befd305",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29549c61_c5275ddd",
+        "filename": "components/viz/test/test_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-02T22:07:38Z",
+      "side": 1,
+      "message": "Fixed this in latest patch set.",
+      "revId": "15206e08d702697b176f49a138f3ed2f3c58054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
