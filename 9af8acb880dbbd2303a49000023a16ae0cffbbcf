@@ -87,6 +87,24 @@
       "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f998c5e0_f7332dfe",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2018-01-02T21:42:24Z",
+      "side": 1,
+      "message": "Yes, we can let QuotedPrintableEncode handle this. But it will make the semantics of QuotedPrintableEncode a bit confusing because QuotedPrintableEncode is supposed to convert a character only, regardless how it represents, UTF-8 or not. So having QuotedPrintableEncode output ?\"utf-8?Q?\" sounds a bit unnatural.\n\nWe can pass a delegate to QuotedPrintableEncode to do some specific things:\n  class QuotedPrintableEncodeDelegate {\n   public:\n    // Returns maximum number of characters allowed for an encoded line,\n    // excluding prefix and soft line break.\n    size_t GetMaxLineLengthForEncodedContent() const;\n\n    // Returns true if space and tab characters need to be encoded.\n    bool ShouldEncodeWhiteSpaceCharacters(bool end_of_line) const;\n\n    // Adds a prefix.\n    void AddPrefix(Vector\u003cchar\u003e\u0026 out);\n\n    // Adds a soft line break.\n    void AddSoftLineBreak(Vector\u003cchar\u003e\u0026 out);\n  };\n\n  PLATFORM_EXPORT void QuotedPrintableEncode(const char*,\n                                             size_t,\n                                             QuotedPrintableEncodeDelegate*,\n                                             Vector\u003cchar\u003e\u0026);\n\nHow do you think?",
+      "parentUuid": "b2260a72_58804b8b",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
