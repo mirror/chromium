@@ -14,8 +14,11 @@
 
 namespace keyboard {
 
-// Width of the floatin keyboard
-constexpr int kKeyboardWidth = 600;
+// Minimal width of the floating keyboard
+constexpr int kKeyboardMinWidth = 200;
+
+// Minimal height of the floating keyboard
+constexpr int kKeyboardMinHeight = 200;
 
 // Length of the animation to show and hide the keyboard.
 constexpr int kAnimationDurationMs = 200;
@@ -72,8 +75,15 @@ const gfx::Rect ContainerFloatingBehavior::AdjustSetBoundsRequest(
     const gfx::Rect& requested_bounds) {
   gfx::Rect keyboard_bounds = requested_bounds;
 
-  // floating keyboard has a fixed width.
-  keyboard_bounds.set_width(kKeyboardWidth);
+  if (requested_bounds.width() < kKeyboardMinWidth) {
+    // floating keyboard has a minimal width.
+    keyboard_bounds.set_width(kKeyboardMinWidth);
+  }
+
+  if (requested_bounds.width() < kKeyboardMinHeight) {
+    // floating keyboard has a minimal height.
+    keyboard_bounds.set_height(kKeyboardMinHeight);
+  }
 
   if (UseDefaultPosition()) {
     // If the keyboard hasn't been shown yet, ignore the request and use
@@ -214,7 +224,7 @@ void ContainerFloatingBehavior::SetCanonicalBounds(
     aura::Window* container,
     const gfx::Rect& display_bounds) {
   gfx::Size keyboard_size =
-      gfx::Size(kKeyboardWidth, container->bounds().height());
+      gfx::Size(container->bounds().width(), container->bounds().height());
   gfx::Point keyboard_location =
       GetPositionForShowingKeyboard(keyboard_size, display_bounds);
   container->SetBounds(gfx::Rect(keyboard_location, keyboard_size));
