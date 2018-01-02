@@ -17,7 +17,7 @@ class CTAPRequestParam {
  public:
   CTAPRequestParam();
   virtual ~CTAPRequestParam();
-  virtual base::Optional<std::vector<uint8_t>> SerializeToCBOR() const = 0;
+  virtual base::Optional<std::vector<uint8_t>> Encode() const = 0;
 };
 
 }  // namespace device

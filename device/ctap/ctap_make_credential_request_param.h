@@ -6,6 +6,7 @@
 #define DEVICE_CTAP_CTAP_MAKE_CREDENTIAL_REQUEST_PARAM_H_
 
 #include <stdint.h>
+#include <list>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,7 @@
 #include "device/ctap/public_key_credential_params.h"
 #include "device/ctap/public_key_credential_rp_entity.h"
 #include "device/ctap/public_key_credential_user_entity.h"
+#include "device/ctap/u2f_register_param.h"
 
 namespace device {
 
@@ -34,7 +36,13 @@ class CTAPMakeCredentialRequestParam : public CTAPRequestParam {
       CTAPMakeCredentialRequestParam&& other);
   ~CTAPMakeCredentialRequestParam() override;
 
-  base::Optional<std::vector<uint8_t>> SerializeToCBOR() const override;
+  base::Optional<std::vector<uint8_t>> Encode() const override;
+
+  bool CheckConvertToU2FRegisterCriteria() const;
+  std::vector<uint8_t> GetU2FApplicationParameter() const;
+  std::vector<uint8_t> GetU2FChallengeParameter() const;
+  std::list<std::vector<uint8_t>> GetU2FRegisteredKeysParameter() const;
+
   CTAPMakeCredentialRequestParam& SetExcludeList(
       std::vector<PublicKeyCredentialDescriptor> exclude_list);
   CTAPMakeCredentialRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);

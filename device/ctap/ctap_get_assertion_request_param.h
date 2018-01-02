@@ -6,6 +6,7 @@
 #define DEVICE_CTAP_CTAP_GET_ASSERTION_REQUEST_PARAM_H_
 
 #include <stdint.h>
+#include <list>
 #include <string>
 #include <vector>
 
@@ -13,6 +14,7 @@
 #include "components/cbor/cbor_values.h"
 #include "device/ctap/ctap_request_param.h"
 #include "device/ctap/public_key_credential_descriptor.h"
+#include "device/ctap/u2f_sign_param.h"
 
 namespace device {
 
@@ -26,7 +28,12 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
   CTAPGetAssertionRequestParam& operator=(CTAPGetAssertionRequestParam&& other);
   ~CTAPGetAssertionRequestParam() override;
 
-  base::Optional<std::vector<uint8_t>> SerializeToCBOR() const override;
+  base::Optional<std::vector<uint8_t>> Encode() const override;
+  std::vector<uint8_t> GetU2FApplicationParameter() const;
+  std::vector<uint8_t> GetU2FChallengeParameter() const;
+  std::list<std::vector<uint8_t>> GetU2FRegisteredKeysParameter() const;
+  bool CheckConvertToU2FSignCriteria() const;
+
   CTAPGetAssertionRequestParam& SetAllowList(
       std::vector<PublicKeyCredentialDescriptor> allow_list);
   CTAPGetAssertionRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);

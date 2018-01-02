@@ -16,18 +16,9 @@
 
 namespace device {
 
-namespace {
-
 using CBOR = cbor::CBORValue;
 
-constants::CTAPResponseCode GetResponseCode(uint8_t first_byte) {
-  for (const auto& code : constants::kResponseCodeList) {
-    if (base::checked_cast<uint8_t>(code) == first_byte) {
-      return code;
-    }
-  }
-  return constants::CTAPResponseCode::kCtap2ErrOther;
-}
+namespace {
 
 bool MakeCredentialResponseCheck(const CBOR& response) {
   if (!response.is_map())
@@ -119,6 +110,15 @@ bool GetInfoResponseCheck(const CBOR& response) {
 }  // namespace
 
 namespace response_convertor {
+
+constants::CTAPResponseCode GetResponseCode(uint8_t first_byte) {
+  for (const auto& code : constants::kResponseCodeList) {
+    if (base::checked_cast<uint8_t>(code) == first_byte) {
+      return code;
+    }
+  }
+  return constants::CTAPResponseCode::kCtap2ErrInvalidCBOR;
+}
 
 base::Optional<AuthenticatorMakeCredentialResponse>
 ReadCTAPMakeCredentialResponse(const std::vector<uint8_t>& buffer) {

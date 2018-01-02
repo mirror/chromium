@@ -20,6 +20,10 @@ namespace device {
 // CTAP protocol, null optional is returned.
 namespace response_convertor {
 
+// Parses response code of response buffer received from the authenticator.
+// If unknown response code value is received, then CTAP2_ERR_OTHER is returned.
+constants::CTAPResponseCode GetResponseCode(uint8_t first_byte);
+
 // De-serializes CBOR encoded response to AuthenticatorMakeCredential request
 // to AuthenticatorMakeCredentialResponse object.
 base::Optional<AuthenticatorMakeCredentialResponse>
