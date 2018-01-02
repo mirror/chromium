@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3191e534_a769cf42",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-02T06:18:48Z",
+      "side": 1,
+      "message": "These are really good questions. :) Here are my interpretations\n1. is_active: the active tab of the latest active browser that is visible. The latest browser may be invisible (e.g. minimized), but it still has an active tab, which will be ignored (i.e. its is_active is false).\n\n2. is_visible: if browser is visible, doesn\u0027t matter if the tab is the active one of the browser and doesn\u0027t matter if the browser is in focus.\n\n3. is_browser_focused: only checks if browser if focused. I think the last active browser can be minimized and the it won\u0027t be in focus.\n\nRe overlapping, if a browser is in focus and is visible then one of its tabs should has is_active set to true. But I can\u0027t be certain whether a more recently active browser could be visible but not in focus -- if so the active tab will be in this browser instead. \n\nSo that I won\u0027t miss any corner cases, I\u0027d like to log fields explicitly and will do post processing to analyse them.",
+      "parentUuid": "b1bd6346_69f2c80b",
+      "revId": "35ef5df6f0f58aa3dd59bdd97cb0f107520fd96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4bc024_f42efbcd",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "35ef5df6f0f58aa3dd59bdd97cb0f107520fd96f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af94a71_98ee2ea6",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-02T06:18:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc4bc024_f42efbcd",
+      "revId": "35ef5df6f0f58aa3dd59bdd97cb0f107520fd96f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
