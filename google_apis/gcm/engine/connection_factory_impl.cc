@@ -79,7 +79,7 @@ ConnectionFactoryImpl::~ConnectionFactoryImpl() {
   CloseSocket();
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
   if (pac_request_) {
-    gcm_network_session_->proxy_service()->CancelPacRequest(pac_request_);
+    gcm_network_session_->proxy_service()->CancelRequest(pac_request_);
     pac_request_ = NULL;
   }
 }

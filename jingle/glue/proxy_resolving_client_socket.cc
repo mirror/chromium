@@ -338,7 +338,7 @@ void ProxyResolvingClientSocket::ReportSuccessfulProxyConnection() {
 void ProxyResolvingClientSocket::Disconnect() {
   CloseTransportSocket();
   if (pac_request_) {
-    network_session_->proxy_service()->CancelPacRequest(pac_request_);
+    network_session_->proxy_service()->CancelRequest(pac_request_);
     pac_request_ = NULL;
   }
   user_connect_callback_.Reset();

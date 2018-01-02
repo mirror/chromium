@@ -50,7 +50,7 @@ ResolveProxyMsgHelper::~ResolveProxyMsgHelper() {
   // default request context or override).
   if (!pending_requests_.empty()) {
     PendingRequest req = pending_requests_.front();
-    proxy_service_->CancelPacRequest(req.pac_req);
+    proxy_service_->CancelRequest(req.pac_req);
   }
 
   for (PendingRequestList::iterator it = pending_requests_.begin();

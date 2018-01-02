@@ -108,7 +108,7 @@ HttpStreamFactoryImpl::JobController::~JobController() {
   bound_job_ = nullptr;
   if (pac_request_) {
     DCHECK_EQ(STATE_RESOLVE_PROXY_COMPLETE, next_state_);
-    session_->proxy_service()->CancelPacRequest(pac_request_);
+    session_->proxy_service()->CancelRequest(pac_request_);
   }
   net_log_.EndEvent(NetLogEventType::HTTP_STREAM_JOB_CONTROLLER);
 }
