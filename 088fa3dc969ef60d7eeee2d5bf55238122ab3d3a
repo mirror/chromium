@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9ba4113_c9edb40f",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_unserialized_message_context.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-02T21:32:03Z",
+      "side": 1,
+      "message": "Could you please document that this is used for what it\u0027s used for?",
+      "revId": "088fa3dc969ef60d7eeee2d5bf55238122ab3d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b839b410_738c500d",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/wrapper_class_declaration.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-02T21:32:03Z",
+      "side": 1,
+      "message": "nit: how about just WrapAsMessage, with documentation explaining that the object is serialized lazily only if moving cross-process or cross-language.",
+      "revId": "088fa3dc969ef60d7eeee2d5bf55238122ab3d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
