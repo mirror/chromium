@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3d1da776_6b899593",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-02T19:18:01Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t Ozone just a windowing-system abstraction layer, i.e. something that would \n\u003e actually be useful for us to employ across all platforms, including Fuchsia, in principle?\n\nIn theory yes. But we will need to take close look into what ozone requires from a platform and if it\u0027s compatible with what\u0027s provided in Fuchsia. Also on Fuchsia UI shell is replaceable, so what works for Armadillo may not work for other shells.\n\n\u003e Is there any performance/compatibility reason that Headless might prefer to use Mesa over Swiftshader?\n\nAFAICT it\u0027s just because headless was implemented before swiftshader was added to chromium.",
+      "parentUuid": "a34347a7_8226bacb",
+      "revId": "b8101bb36b0d6860ae8008c4147349015f1901b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd874497_c1ad7ea6",
         "filename": "ui/gl/gl_implementation_osmesa.cc",
         "patchSetId": 4
@@ -66,6 +84,30 @@
       "writtenOn": "2018-01-02T18:24:16Z",
       "side": 1,
       "message": "nit: This comment says _what_ we\u0027re doing, but not _why_ - this code uses a fully-qualified path here in part to ensure that we\u0027ll use _our_ libosmesa.so, rather than some other random version that happens to be on the library search path.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 79
+      },
+      "revId": "b8101bb36b0d6860ae8008c4147349015f1901b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7673eba_0ae7d284",
+        "filename": "ui/gl/gl_implementation_osmesa.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-02T19:18:01Z",
+      "side": 1,
+      "message": "Reworded the comment.",
+      "parentUuid": "bd874497_c1ad7ea6",
       "range": {
         "startLine": 23,
         "startChar": 5,
