@@ -1202,7 +1202,7 @@
       if (SDK.targetManager.targets().length >= n)
         callback.call(null);
       else
-        this.addSniffer(SDK.TargetManager.prototype, 'addTarget', checkTargets.bind(this));
+        this.addSniffer(SDK.TargetManager.prototype, 'createTarget', checkTargets.bind(this));
     }
   };
 
