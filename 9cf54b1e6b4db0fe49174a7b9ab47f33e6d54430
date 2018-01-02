@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b6c7267_280f1f75",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ca6bac_f08137b7",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 21
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c5653e_2190ede8",
         "filename": "tools/chrome_proxy/webdriver/lite_page.py",
         "patchSetId": 1
@@ -45,6 +69,53 @@
       "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497cb0bc_dfdb00aa",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5c5653e_2190ede8",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 53
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12aa230f_37d1809c",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "This was mistakenly changed in the previous Cl.",
+      "range": {
+        "startLine": 249,
+        "startChar": 30,
+        "endLine": 249,
+        "endChar": 32
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2336d7c0_499cc899",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dda1e18_0a13df7d",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 61
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cef0562c_d728377e",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 1
@@ -85,6 +180,24 @@
       "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9392f8_3b05026e",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cef0562c_d728377e",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "663cc72f_6d4a72ae",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45dba668_6d2caac0",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f24428_824911b1",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 1
@@ -131,6 +268,30 @@
       "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753e93ef_b2a08911",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f24428_824911b1",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "96f7e842_35ded108",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7447516c_178b718d",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 61
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c56fbd_24ae9332",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 1
@@ -171,6 +356,24 @@
       "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239c6421_568f9337",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57c56fbd_24ae9332",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "f84cc897_4992787a",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0016e586_f1cbc9f2",
+      "range": {
+        "startLine": 247,
+        "startChar": 6,
+        "endLine": 247,
+        "endChar": 25
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef453e2b_c462176d",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 1
@@ -220,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "1caa3217_60d1da33",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef453e2b_c462176d",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 328,
+        "endChar": 58
+      },
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bbad58_4d41e670",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 1
@@ -234,6 +485,24 @@
       "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eda49ac_3ab1562e",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-02T18:08:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22bbad58_4d41e670",
+      "revId": "9cf54b1e6b4db0fe49174a7b9ab47f33e6d54430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
