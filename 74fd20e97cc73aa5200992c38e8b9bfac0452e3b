@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c825cdf6_44449dfa",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Nit: \"whether\".  Also s/WebPointerEvent/|WebPointerProperties|/.",
+      "range": {
+        "startLine": 79,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 37
+      },
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a2ede2_b40f64d9",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Need to reset the new states here.",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0659b3_790987b7",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "\"CacheTouchAdjustmentResult\" since the general concept is still touch adjustment.",
+      "range": {
+        "startLine": 1384,
+        "startChar": 19,
+        "endLine": 1384,
+        "endChar": 48
+      },
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82c4487_da0184fe",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Need to differentiate this method from the name EventHandler::ShouldApplyTouchAdjustment.  \"GestureCorrespondToAdjustedTouch\" may be?",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86124c5_6298545b",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also check if |pointerdown_adjusted_result_.adjusted| is true?",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fd7b3a_ab9d445f",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "The overall logic here seems too complicated.  For multitouch, we stop adjustment after the second kGestureTapDown, right?  So there is really a single range of gesture events which goes through adjustment, hence a single bit should be enough I think.  Instead of the EH state |should_use_touch_event_adjusted_point_|, can\u0027t we reuse TouchAdjustmentResult.adjusted?",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa83e2e_2162f860",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "This condition seems redundant, checked in the line above.",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753f07ef_4f3272cb",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Looks like a leftover from some past refactoring.  Could you please remove this state?",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0372db_da47de74",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T20:09:46Z",
+      "side": 1,
+      "message": "Does \"touch_adjustment_result_\" sound better since this is only holding touch adjustment data for gestures?",
+      "revId": "74fd20e97cc73aa5200992c38e8b9bfac0452e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
