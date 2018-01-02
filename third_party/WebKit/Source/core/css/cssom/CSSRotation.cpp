@@ -166,8 +166,8 @@ const CSSFunctionValue* CSSRotation::ToCSSValue(
   DCHECK(x_->to(CSSPrimitiveValue::UnitType::kNumber));
   DCHECK(y_->to(CSSPrimitiveValue::UnitType::kNumber));
   DCHECK(z_->to(CSSPrimitiveValue::UnitType::kNumber));
+  DCHECK(angle_->to(CSSPrimitiveValue::UnitType::kRadians));
 
-  CSSUnitValue* angle = ToCSSUnitValue(angle_);
   CSSFunctionValue* result =
       CSSFunctionValue::Create(is2D() ? CSSValueRotate : CSSValueRotate3d);
   if (!is2D()) {
@@ -181,8 +181,12 @@ const CSSFunctionValue* CSSRotation::ToCSSValue(
     result->Append(*y);
     result->Append(*z);
   }
-  result->Append(
-      *CSSPrimitiveValue::Create(angle->value(), angle->GetInternalUnit()));
+
+  const CSSValue* angle = angle_->ToCSSValue(secure_context_mode);
+  if (!angle)
+    return nullptr;
+
+  result->Append(*angle);
   return result;
 }
 

@@ -111,12 +111,6 @@ test(() => {
   });
 }, "Invalid arguments to constructor should throw");
 
-for (let params of testParams) {
-  test(() => {
-    assert_equals(params.input.toString(), params.cssText);
-  }, "toString value is correct for " + params.cssText);
-}
-
 test(() => {
   let rotation = new CSSRotation(1, 2, 3, CSS.deg(10));
   assert_equals(rotation.toString(), 'rotate3d(1, 2, 3, 10deg)');
