@@ -39,6 +39,14 @@ class ListValue : public Value {
   bool AppendIfNotPresent(std::unique_ptr<Value> in_value);
 };
 
+class DictionaryValue : public Value {
+ public:
+  Value* SetBoolean(std::string, bool);
+  Value* SetInteger(std::string, int);
+  Value* SetDouble(std::string, double);
+  Value* SetString(std::string, std::string);
+};
+
 }  // namespace base
 
 #endif  // VALUES_H_
