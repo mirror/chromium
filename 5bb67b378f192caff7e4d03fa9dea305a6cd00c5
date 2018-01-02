@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1b43f6_b88b5215",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:49:16Z",
+      "side": 1,
+      "message": "Why * 2? because this is a WTF::String now?",
+      "range": {
+        "startLine": 673,
+        "startChar": 61,
+        "endLine": 673,
+        "endChar": 65
+      },
+      "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd86eaf_6b5be7ba",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:49:16Z",
+      "side": 1,
+      "message": "Given that public/platform already uses gfx.mojom, maybe we should just use it here as well?",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
