@@ -9,7 +9,7 @@ import("//testing/test.gni")
 
 declare_args() {
   # Enables incremental marking in Oilpan.
-  enable_blink_heap_incremental_marking = false
+  enable_blink_heap_incremental_marking = true
 }
 
 buildflag_header("blink_heap_incremental_marking") {
