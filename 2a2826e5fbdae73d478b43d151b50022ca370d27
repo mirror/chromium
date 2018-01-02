@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216aeeb3_f2085bbb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 551,
+        "startChar": 24,
+        "endLine": 551,
+        "endChar": 25
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa74ba0_5ae1389f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_service_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8347bc_af4d83cc",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "nit: move this below before \"#include \u003cstring\u003e\"",
+      "range": {
+        "startLine": 6,
+        "startChar": 10,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025cfa5c_eee11f52",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_interceptor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a567d6a3_8298fd36",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "Is this include still needed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec572b25_75f105a5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9082748_e27a0887",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "nit: move this line below.",
+      "range": {
+        "startLine": 6,
+        "startChar": 10,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e1615d_c8284d95",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46962bbb_c839c5a5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 22,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ea0867_f4c2894c",
+        "filename": "components/data_reduction_proxy/core/browser/warmup_url_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-02T07:01:47Z",
+      "side": 1,
+      "message": "nit: move this line below between \"#include \u003cmap\u003e\" and \"#include \u003cvector\u003e\".",
+      "range": {
+        "startLine": 6,
+        "startChar": 10,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "2a2826e5fbdae73d478b43d151b50022ca370d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
