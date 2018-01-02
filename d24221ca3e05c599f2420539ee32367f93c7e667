@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38592182_9e8472be",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2018-01-02T18:42:32Z",
+      "side": 0,
+      "message": "Should we replace this with #include \u003cmemory\u003e so that the file is self contained?  We shouldn\u0027t rely on other h files to include \u003cmemory\u003e if we need it here (Same comment for many other files in this change.)",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d24221ca3e05c599f2420539ee32367f93c7e667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
