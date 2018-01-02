@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b1239e2_e4d43bc1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Nit: just 2, as this isn\u0027t using the double overload.",
+      "range": {
+        "startLine": 101,
+        "startChar": 38,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48348386_155c4b40",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "FWIW, it\u0027s getting pretty hard for me to follow this logic. For example, it\u0027s not clear to me if it\u0027s possible that this can overwrite |callback_| when !callback_.is_null().\n\nCould we add some class-level comments on the members describing some of these state transitions?",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2041338_f3f23483",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Nit: please follow standard C++ naming conventions here (i.e. preserve_drawing_buffer). Same below.",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea81b22e_9ba9ab50",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "I\u0027m curious why we need to distinguish between SUBMIT_AS_TEXTURE_HANDLE and SUBMIT_AS_MAILBOX_HOLDER. As each behavior seems platform-specific, can we give this a more generic name and implement different strategies depending on the platform?",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2411a8_48ae4db4",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "So it\u0027s possible for a platform to set all of these to true? Or are there only some legal combination of options here?",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6b95a6_5521d5b9",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Grammar nit: semicolon or colon or period, since a comma by itself can\u0027t join two independent clauses.",
+      "range": {
+        "startLine": 158,
+        "startChar": 53,
+        "endLine": 158,
+        "endChar": 54
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b9cf40_937aa6c9",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Another option would be to just a VRDisplayFrameTransportOptions? and only return non-null on success? Maybe that\u0027d be a little simpler?",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 69
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c152a400_b70f6205",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Nit: be consistent with naming (this should probably be presentOptions to be consist with other JS)",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6946b6_20fcc8e1",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55850ac1_4fab6994",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me where the \u0027sending to the GPU service process\u0027 happens here.",
+      "range": {
+        "startLine": 702,
+        "startChar": 0,
+        "endLine": 703,
+        "endChar": 33
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022da8ea_e773f80a",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T23:29:54Z",
+      "side": 1,
+      "message": "Might be nice to have a comment here why it\u0027s OK to unconditionally reset this to false here.",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
