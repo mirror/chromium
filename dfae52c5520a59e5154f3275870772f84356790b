@@ -22,6 +22,30 @@
       "revId": "dfae52c5520a59e5154f3275870772f84356790b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adffc40b_a9a3ce2b",
+        "filename": "components/security_state/content/content_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2018-01-02T22:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781ef3cf_8ac5b805",
+      "range": {
+        "startLine": 658,
+        "startChar": 16,
+        "endLine": 658,
+        "endChar": 27
+      },
+      "revId": "dfae52c5520a59e5154f3275870772f84356790b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
