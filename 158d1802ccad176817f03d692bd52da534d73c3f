@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcff9a93_ff0de139",
+        "filename": "components/variations/net/variations_http_headers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T15:25:30Z",
+      "side": 1,
+      "message": "Nit: Non-const params should be last.",
+      "range": {
+        "startLine": 42,
+        "startChar": 59,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "158d1802ccad176817f03d692bd52da534d73c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
