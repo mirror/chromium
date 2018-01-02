@@ -32,8 +32,10 @@ class CC_EXPORT ScrollState {
   void DistributeToScrollChainDescendant();
   // Positive when scrolling right.
   double delta_x() const { return data_.delta_x; }
+  void set_delta_x(double x) { data_.delta_x = x; }
   // Positive when scrolling down.
   double delta_y() const { return data_.delta_y; }
+  void set_delta_y(double y) { data_.delta_y = y; }
   // Positive when scrolling right.
   double delta_x_hint() const { return data_.delta_x_hint; }
   // Positive when scrolling down.

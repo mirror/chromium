@@ -189,11 +189,14 @@ class CC_EXPORT LayerTreeHostImpl
       const gfx::Vector2dF& scroll_delta,
       base::TimeDelta delayed_by = base::TimeDelta()) override;
   void ApplyScroll(ScrollNode* scroll_node, ScrollState* scroll_state);
+  void AdjustFlingDelta(ScrollState* scroll_state);
   InputHandlerScrollResult ScrollBy(ScrollState* scroll_state) override;
   void RequestUpdateForSynchronousInputHandler() override;
   void SetSynchronousInputHandlerRootScrollOffset(
       const gfx::ScrollOffset& root_offset) override;
   void ScrollEnd(ScrollState* scroll_state) override;
+  void HandleGestureScrollEnd(ScrollState* scroll_state) override;
+  void SnapAtScrollEnd(ScrollNode* node, bool did_scroll_x, bool did_scroll_y);
   InputHandler::ScrollStatus FlingScrollBegin() override;
 
   void MouseDown() override;
@@ -854,6 +857,11 @@ class CC_EXPORT LayerTreeHostImpl
   DecodedImageTracker decoded_image_tracker_;
 
   gfx::Vector2dF accumulated_root_overscroll_;
+
+  // True iff some of the delta has been consumed for the current scroll
+  // sequence on the specific axis.
+  bool did_scroll_x_for_scroll_gesture_;
+  bool did_scroll_y_for_scroll_gesture_;
 
   bool pinch_gesture_active_;
   bool pinch_gesture_end_should_clear_scrolling_node_;
