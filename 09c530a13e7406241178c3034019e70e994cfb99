@@ -34,6 +34,29 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be81d0b4_fd98eada",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T21:12:59Z",
+      "side": 1,
+      "message": "Remove \u0027 \u0027 between.",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 37
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
