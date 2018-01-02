@@ -33,7 +33,6 @@
 @end
 
 @implementation LegacyToolbarCoordinator
-@synthesize tabModel = _tabModel;
 @synthesize toolbarViewController = _toolbarViewController;
 @synthesize toolbarController = _toolbarController;
 
