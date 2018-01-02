@@ -1,0 +1,425 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e649ac0d_296d4109",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: \"constexpr char kUserActivityEntryName \u003d ...\"\n\n(don\u0027t permit these constants to be reassigned to point elsewhere)",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e9a3a1_fd443e4e",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "please make these be char arrays instead; we don\u0027t permit static class-type variables: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32e877a_4aa72bbf",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "same comment here about not creating static class-type variables",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f6dbd3_e1fd1eb9",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: just use public, at least for the c\u0027tor?",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd20faf_c025d230",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "how about making this be protected? then you don\u0027t need an accessor.",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3947f0_fb6d0848",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: specify type explicitly here since it\u0027s non-obvious what CreateBrowser... returns",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d83fc95_109cd0e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "does this build? you have a typo here (and also on line 108)",
+      "range": {
+        "startLine": 102,
+        "startChar": 27,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0529cf8_16b0604c",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: delete blank line so it\u0027s easier to see that the previous line and the next one are related? or just get rid of the metric_value local var, since it doesn\u0027t look like it gets used anywhere else:\n\n  ASSERT_TRUE(ukm::TestUkmRecorder::FindMetric(...));",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb943511_117d44e8",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: kUserActivity... here and below? (missing \u0027r\u0027)",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f7bdf8_fbe66e29",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: inline FindMetric call here too",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecdc35e_842403d9",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: just make this protected so you don\u0027t need an accessor?",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f7a4e2_e0d0e065",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "you don\u0027t need to override this if you\u0027re not doing anything new here",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4137a7_0322adc7",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: i think that args are usually commented like this:\n\n  , true /* user_gesture */);",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb0e380_2d8eb393",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: how about something like this?\n\n  const auto it \u003d num_entries_.find(entry_name);\n  return it !\u003d num_entries_.end() ? it.second : 0;",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09545d8_054ab336",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "ASSERT_FALSE? (you\u0027ll crash otherwise)\n\nor CHECK if you can\u0027t ASSERT since this has a return value",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdedc7d7_36186584",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "ASSERT_TRUE for the same reason?",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6425b33d_932fd9f3",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: include \u003cmap\u003e, \u003cutility\u003e, \u003cvector\u003e, \u003cmemory\u003e, \u003cbase/macros.h\u003e, probably more that i missed",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af25dca_dfb5b707",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: add blank line after d\u0027tor",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753d767b_bde0441b",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "please use const std::string\u0026 throughout unless there\u0027s a reason that all of these need to be const char*",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8c3839_3f6ce307",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "what does the \"New\" here correspond to? is this the same count that NumEntries returns? if so, consider just calling NumEntries instead and using EXPECT_EQ.\n\n(please document this in any case)",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2faded3_d85cd0e7",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "typo: GetSourceIdForUrl",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70215e6_0586c21f",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "re std::string comment above: with const char* here, you\u0027ll use freed memory if someone frees a string after passing it to ExpectNewEntry",
+      "range": {
+        "startLine": 87,
+        "startChar": 11,
+        "endLine": 87,
+        "endChar": 22
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b953064_ffa1673d",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T19:15:54Z",
+      "side": 1,
+      "message": "nit: add DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
