@@ -52,6 +52,29 @@
       "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb3c6db_729dfd5e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-02T17:39:37Z",
+      "side": 1,
+      "message": "#include \"base/bind_helpers.h\", \"base/bind.h\", and \"content/public/browser/browser_thread.h\"",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
