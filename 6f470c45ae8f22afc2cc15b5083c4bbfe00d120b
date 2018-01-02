@@ -22,6 +22,30 @@
       "revId": "6f470c45ae8f22afc2cc15b5083c4bbfe00d120b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c657ba22_715d75f7",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-02T19:57:44Z",
+      "side": 0,
+      "message": "Scott, could you comment on the issue then if you don\u0027t think this is something we should be doing?",
+      "parentUuid": "69bfd8d5_5379f2fe",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6f470c45ae8f22afc2cc15b5083c4bbfe00d120b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
