@@ -380,9 +380,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // this one. Note that the enclosing layer may or may not have its own
   // GraphicsLayer backing, but is nevertheless the root for a call to the
   // Layer::paint*() methods.
-  PaintLayer* EnclosingLayerForPaintInvalidation() const;
+  PaintLayer* EnclosingLayerForPaintInvalidation(
+      IncludeSelfOrNot = kIncludeSelf) const;
 
-  PaintLayer* EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const;
+  PaintLayer* EnclosingLayerForPaintInvalidationCrossingFrameBoundaries(
+      IncludeSelfOrNot = kIncludeSelf) const;
 
   bool HasAncestorWithFilterThatMovesPixels() const;
 
