@@ -183,12 +183,15 @@ void MediaControlOverlayPlayButtonElement::MaybeJump(int seconds) {
 }
 
 void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
+  DLOG(ERROR) << event->type();
+
   if (event->type() == EventTypeNames::click) {
     event->SetDefaultHandled();
 
     // Double tap to navigate should only be available on modern controls.
     if (!MediaControlsImpl::IsModern() || !event->IsMouseEvent()) {
       MaybePlayPause();
+      DLOG(ERROR) << "not mouse";
       return;
     }
 
@@ -198,6 +201,7 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
     MouseEvent* mouse_event = ToMouseEvent(event);
     if (!mouse_event->HasPosition()) {
       MaybePlayPause();
+      DLOG(ERROR) << "no position";
       return;
     }
 
@@ -207,14 +211,15 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
                       kInnerButtonTouchPaddingSize, mouse_event->clientX(),
                       mouse_event->clientY())) {
       MaybePlayPause();
+      DLOG(ERROR) << "middle";
     } else if (!tap_timer_.IsActive()) {
       // If there was not a previous touch and this was outside of the button
       // then we should toggle visibility with a small unnoticeable delay in
       // case their is a second tap.
-      if (tap_timer_.IsActive())
-        return;
+      DLOG(ERROR) << "tap timer";
       tap_timer_.StartOneShot(kDoubleTapDelay, FROM_HERE);
     } else {
+      DLOG(ERROR) << "double tap";
       // Cancel the play pause event.
       tap_timer_.Stop();
 
@@ -254,6 +259,7 @@ WebSize MediaControlOverlayPlayButtonElement::GetSizeOrDefault() const {
 }
 
 void MediaControlOverlayPlayButtonElement::TapTimerFired(TimerBase*) {
+  DLOG(ERROR) << "timer fired";
   GetMediaControls().MaybeToggleControlsFromTap();
 }
 

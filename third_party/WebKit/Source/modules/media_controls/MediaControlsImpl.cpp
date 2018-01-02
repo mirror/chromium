@@ -1044,6 +1044,7 @@ void MediaControlsImpl::DefaultEventHandler(Event* event) {
   if (!MediaElement().ShouldShowControls())
     return;
 
+  DLOG(ERROR) << event()->type();
   // Add IgnoreControlsHover to m_hideTimerBehaviorFlags when we see a touch
   // event, to allow the hide-timer to do the right thing when it fires.
   // FIXME: Preferably we would only do this when we're actually handling the
