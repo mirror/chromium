@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d2b55323_b929b1b2",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-02T18:47:52Z",
+      "side": 1,
+      "message": "I kinda like the current approach to keep the details (e.g. triggers) in remoting code and only expose the string to media pipeline.",
+      "parentUuid": "8ee1907f_7c8ae9f2",
+      "range": {
+        "startLine": 479,
+        "startChar": 35,
+        "endLine": 479,
+        "endChar": 49
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e177d2d9_4144f589",
         "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
         "patchSetId": 4
