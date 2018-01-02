@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8778a65b_4ad5e276",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-01-02T05:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9779fbd9_afcd1374",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 29
+      },
+      "revId": "a7f3e378de1d7616d00e4d87c602fe1ec4ce6934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36992102_dd35c5ee",
         "filename": "ui/keyboard/container_floating_behavior.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-02T03:20:02Z",
       "side": 1,
       "message": "why not just use keyboard_bounds?",
+      "range": {
+        "startLine": 212,
+        "startChar": 21,
+        "endLine": 212,
+        "endChar": 40
+      },
+      "revId": "a7f3e378de1d7616d00e4d87c602fe1ec4ce6934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000991c2_8699dc68",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-01-02T05:45:11Z",
+      "side": 1,
+      "message": "new_bounds may be outside the display boundary. then after movement, new keyboard bound is different new_bounds.",
+      "parentUuid": "36992102_dd35c5ee",
       "range": {
         "startLine": 212,
         "startChar": 21,
@@ -68,6 +116,30 @@
       "revId": "a7f3e378de1d7616d00e4d87c602fe1ec4ce6934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a72d06_34a3dfc4",
+        "filename": "ui/keyboard/container_floating_behavior.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2018-01-02T05:45:11Z",
+      "side": 1,
+      "message": "Already correct the logic now. More strict rules.\nOnly allow mouse_pressed/touch_pressed/mouse_drag/touch_move, other events will end drag.",
+      "parentUuid": "776080f6_c1445bcf",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 31
+      },
+      "revId": "a7f3e378de1d7616d00e4d87c602fe1ec4ce6934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
