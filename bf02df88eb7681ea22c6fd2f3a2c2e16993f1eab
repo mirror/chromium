@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a82dc5d_e929564f",
+        "filename": "content/browser/renderer_host/input/passthrough_touch_event_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-02T21:30:03Z",
+      "side": 1,
+      "message": "Nit: may be drop \"PassThrough\"?  It is still holding on to the events despite immediate forwarding, for reasons other than just ack re-ordering I think.",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "bf02df88eb7681ea22c6fd2f3a2c2e16993f1eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
