@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5f6812_b2f3818a",
+        "filename": "net/http2/test_tools/frame_parts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T13:14:30Z",
+      "side": 1,
+      "message": "Once you are touching this file anyway, could you please move this operator\u003c\u003c() to just below the class declaration, and remove the forward declaration and the comment?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 65
+      },
+      "revId": "81e14e7d7b1599775e16a4219817bc1f709c948e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5562c26_1980d178",
+        "filename": "net/http2/test_tools/frame_parts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T13:14:30Z",
+      "side": 1,
+      "message": "Http2FrameHeader is a class with two 32-bit and two 8-bit members.  It is big enough that a getter should return it by const ref.\n\nAlso note that usually methods should not return by const value.",
+      "range": {
+        "startLine": 114,
+        "startChar": 25,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "81e14e7d7b1599775e16a4219817bc1f709c948e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cde8584_d285218f",
+        "filename": "net/http2/test_tools/frame_parts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T13:14:30Z",
+      "side": 1,
+      "message": "Please mark every getter method as const (except ones that can be used for mutating the class, in which case this should be explicitly denoted).",
+      "range": {
+        "startLine": 116,
+        "startChar": 38,
+        "endLine": 116,
+        "endChar": 52
+      },
+      "revId": "81e14e7d7b1599775e16a4219817bc1f709c948e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df1fa2f_dbe109b0",
+        "filename": "net/http2/test_tools/frame_parts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T13:14:30Z",
+      "side": 1,
+      "message": "This is not a getter, because it can be used and is used to change the state of the class.  Can you add an AppendSetting() method instead?  (There is no need for a getter, because settings are never read, only appended to.)",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 70
+      },
+      "revId": "81e14e7d7b1599775e16a4219817bc1f709c948e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
