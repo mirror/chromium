@@ -7,14 +7,20 @@
 #include "base/power_monitor/power_monitor.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/webrtc/webrtc_event_log_manager.h"
+#include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/browser/webrtc/webrtc_internals.h"
 #include "content/common/media/peer_connection_tracker_messages.h"
 
 namespace content {
 
-PeerConnectionTrackerHost::PeerConnectionTrackerHost(int render_process_id)
+PeerConnectionTrackerHost::PeerConnectionTrackerHost(
+    int render_process_id,
+    const base::WeakPtr<WebRTCEventLogHost>& event_log_host)
     : BrowserMessageFilter(PeerConnectionTrackerMsgStart),
-      render_process_id_(render_process_id) {}
+      render_process_id_(render_process_id),
+      event_log_host_(event_log_host) {
+  DCHECK(event_log_host);
+}
 
 bool PeerConnectionTrackerHost::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
@@ -75,15 +81,15 @@ void PeerConnectionTrackerHost::OnAddPeerConnection(
       info.url,
       info.rtc_configuration,
       info.constraints);
-  WebRtcEventLogManager::GetInstance()->PeerConnectionAdded(render_process_id_,
-                                                            info.lid);
+  if (event_log_host_)
+    event_log_host_->PeerConnectionAdded(info.lid);
 }
 
 void PeerConnectionTrackerHost::OnRemovePeerConnection(int lid) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   WebRTCInternals::GetInstance()->OnRemovePeerConnection(peer_pid(), lid);
-  WebRtcEventLogManager::GetInstance()->PeerConnectionRemoved(
-      render_process_id_, lid);
+  if (event_log_host_)
+    event_log_host_->PeerConnectionRemoved(lid);
 }
 
 void PeerConnectionTrackerHost::OnUpdatePeerConnection(
