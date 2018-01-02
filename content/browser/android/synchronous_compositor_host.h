@@ -15,14 +15,16 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "components/viz/common/quads/compositor_frame.h"
+#include "content/common/input/synchronous_compositor.mojom.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/common/input_event_ack_state.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/geometry/size_f.h"
 
 namespace IPC {
 class Message;
-class Sender;
 }
 
 namespace ui {
@@ -35,9 +37,11 @@ namespace content {
 class RenderWidgetHostViewAndroid;
 class SynchronousCompositorClient;
 class SynchronousCompositorBrowserFilter;
+class SynchronousCompositorLegacyChromeIPC;
 struct SyncCompositorCommonRendererParams;
 
-class SynchronousCompositorHost : public SynchronousCompositor {
+class SynchronousCompositorHost : public SynchronousCompositor,
+                                  public mojom::SynchronousCompositorHost {
  public:
   static std::unique_ptr<SynchronousCompositorHost> Create(
       RenderWidgetHostViewAndroid* rwhva);
@@ -70,9 +74,13 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   // Called by SynchronousCompositorBrowserFilter.
   int routing_id() const { return routing_id_; }
   void UpdateFrameMetaData(viz::CompositorFrameMetadata frame_metadata);
-  void ProcessCommonParams(const SyncCompositorCommonRendererParams& params);
+  void SynchronizeState();
 
   SynchronousCompositorClient* client() { return client_; }
+
+  // SynchronousCompositorHost overrides.
+  void LayerTreeFrameSinkCreated() override;
+  void UpdateState(const SyncCompositorCommonRendererParams& params) override;
 
  private:
   class ScopedSendZeroMemory;
@@ -82,19 +90,20 @@ class SynchronousCompositorHost : public SynchronousCompositor {
 
   SynchronousCompositorHost(RenderWidgetHostViewAndroid* rwhva,
                             bool use_in_proc_software_draw);
-  void LayerTreeFrameSinkCreated();
   bool DemandDrawSwInProc(SkCanvas* canvas);
   void SetSoftwareDrawSharedMemoryIfNeeded(size_t stride, size_t buffer_size);
   void SendZeroMemory();
   SynchronousCompositorBrowserFilter* GetFilter();
+  mojom::SynchronousCompositor* GetSynchronousCompositor();
 
   RenderWidgetHostViewAndroid* const rwhva_;
   SynchronousCompositorClient* const client_;
-  const scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
   const int process_id_;
   const int routing_id_;
-  IPC::Sender* const sender_;
   const bool use_in_process_zero_copy_software_draw_;
+  std::unique_ptr<SynchronousCompositorLegacyChromeIPC> legacy_compositor_;
+  mojom::SynchronousCompositorAssociatedPtr sync_compositor_;
+  mojo::AssociatedBinding<mojom::SynchronousCompositorHost> host_binding_;
 
   bool registered_with_filter_ = false;
 

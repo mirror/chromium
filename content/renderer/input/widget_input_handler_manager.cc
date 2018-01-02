@@ -22,6 +22,11 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "ui/events/base_event_utils.h"
 
+#if defined(OS_ANDROID)
+#include "content/public/common/content_client.h"
+#include "content/renderer/android/synchronous_compositor_proxy.h"
+#endif
+
 namespace content {
 namespace {
 void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
@@ -36,6 +41,14 @@ void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
           : base::nullopt,
       touch_action);
 }
+
+#if defined(OS_ANDROID)
+void ReleaseSynchronousCompositorProxy(
+    std::unique_ptr<content::SynchronousCompositorProxy> proxy) {
+  // intentionally empty; invoking this empty function will cause the destructor
+  // of the proxy to fire.
+}
+#endif
 
 }  // namespace
 
@@ -64,16 +77,30 @@ WidgetInputHandlerManager::WidgetInputHandlerManager(
 
 void WidgetInputHandlerManager::Init() {
   if (compositor_task_runner_) {
+    bool sync_compositing = false;
+#if defined(OS_ANDROID)
+    sync_compositing = GetContentClient()->UsingSynchronousCompositing();
+#endif
+
     compositor_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(
             &WidgetInputHandlerManager::InitOnCompositorThread, this,
             render_widget_->compositor()->GetInputHandler(),
-            render_widget_->compositor_deps()->IsScrollAnimatorEnabled()));
+            render_widget_->compositor_deps()->IsScrollAnimatorEnabled(),
+            sync_compositing));
   }
 }
 
-WidgetInputHandlerManager::~WidgetInputHandlerManager() {}
+WidgetInputHandlerManager::~WidgetInputHandlerManager() {
+#if defined(OS_ANDROID)
+  if (synchronous_compositor_proxy_) {
+    compositor_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&ReleaseSynchronousCompositorProxy,
+                                  std::move(synchronous_compositor_proxy_)));
+  }
+#endif
+}
 
 void WidgetInputHandlerManager::AddAssociatedInterface(
     mojom::WidgetInputHandlerAssociatedRequest request,
@@ -214,6 +241,16 @@ WidgetInputHandlerManager::GetWidgetInputHandlerHost() {
   return nullptr;
 }
 
+void WidgetInputHandlerManager::AttachSynchronousCompositor(
+    mojom::SynchronousCompositorControlHostPtr control_host,
+    mojom::SynchronousCompositorHostAssociatedPtrInfo host,
+    mojom::SynchronousCompositorAssociatedRequest compositor_request) {
+#if defined(OS_ANDROID)
+  synchronous_compositor_proxy_->BindChannel(
+      std::move(control_host), std::move(host), std::move(compositor_request));
+#endif
+}
+
 void WidgetInputHandlerManager::ObserveGestureEventOnMainThread(
     const blink::WebGestureEvent& gesture_event,
     const cc::InputHandlerScrollResult& scroll_result) {
@@ -272,11 +309,20 @@ void WidgetInputHandlerManager::DispatchEvent(
 
 void WidgetInputHandlerManager::InitOnCompositorThread(
     const base::WeakPtr<cc::InputHandler>& input_handler,
-    bool smooth_scroll_enabled) {
+    bool smooth_scroll_enabled,
+    bool sync_compositing) {
   input_handler_proxy_ = std::make_unique<ui::InputHandlerProxy>(
       input_handler.get(), this,
       base::FeatureList::IsEnabled(features::kTouchpadAndWheelScrollLatching));
   input_handler_proxy_->set_smooth_scroll_enabled(smooth_scroll_enabled);
+
+#if defined(OS_ANDROID)
+  if (sync_compositing)
+    synchronous_compositor_proxy_ =
+        base::MakeUnique<SynchronousCompositorProxy>(
+            input_handler_proxy_.get());
+  synchronous_compositor_proxy_->Init();
+#endif
 }
 
 void WidgetInputHandlerManager::BindAssociatedChannel(
@@ -412,6 +458,15 @@ void WidgetInputHandlerManager::ObserveGestureEventOnCompositorThread(
   DCHECK(input_handler_proxy_->scroll_elasticity_controller());
   input_handler_proxy_->scroll_elasticity_controller()
       ->ObserveGestureEventAndResult(gesture_event, scroll_result);
+}
+
+content::SynchronousCompositorProxy*
+WidgetInputHandlerManager::GetSynchronousCompositorProxy() {
+#if defined(OS_ANDROID)
+  return synchronous_compositor_proxy_.get();
+#else
+  return nullptr;
+#endif
 }
 
 }  // namespace content
