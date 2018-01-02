@@ -682,6 +682,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     RendererMetricsHelper metrics_helper;
     TraceableState<RendererProcessType, kTracingCategoryNameDefault>
         process_type;
+    TraceableState<base::Optional<TaskType>, kTracingCategoryNameInfo>
+        task_type_for_tracing;  // Don't use except for tracing.
     base::ObserverList<VirtualTimeObserver> virtual_time_observers;
     base::TimeTicks initial_virtual_time;
     VirtualTimePolicy virtual_time_policy;

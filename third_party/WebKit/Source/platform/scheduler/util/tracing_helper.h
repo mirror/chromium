@@ -7,9 +7,11 @@
 
 #include <string>
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "platform/PlatformExport.h"
+#include "public/platform/TaskType.h"
 
 namespace blink {
 namespace scheduler {
@@ -35,6 +37,10 @@ PLATFORM_EXPORT std::string PointerToString(const void* pointer);
 
 PLATFORM_EXPORT double TimeDeltaToMilliseconds(const base::TimeDelta& value);
 
+PLATFORM_EXPORT const char* TaskTypeToString(TaskType task_type);
+PLATFORM_EXPORT const char* OptionalTaskTypeToString(
+    base::Optional<TaskType> opt_task_type);
+
 // TRACE_EVENT macros define static variable to cache a pointer to the state
 // of category. Hence, we need distinct version for each category in order to
 // prevent unintended leak of state.
@@ -52,13 +58,13 @@ class TraceableState {
         object_(object),
         converter_(converter),
         state_(initial_state),
-        started_(false) {
+        slice_is_open_(false) {
     internal::ValidateTracingCategory(category);
     Trace();
   }
 
   ~TraceableState() {
-    if (started_)
+    if (slice_is_open_)
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
   }
 
@@ -91,17 +97,22 @@ class TraceableState {
   }
 
   void Trace() {
-    if (started_)
+    if (slice_is_open_) {
       TRACE_EVENT_ASYNC_END0(category, name_, object_);
-
-    started_ = is_enabled();
-    if (started_) {
-      // Trace viewer logic relies on subslice starting at the exact same time
-      // as the async event.
-      base::TimeTicks now = base::TimeTicks::Now();
-      TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0(category, name_, object_, now);
-      TRACE_EVENT_ASYNC_STEP_INTO_WITH_TIMESTAMP0(category, name_, object_,
-                                                  converter_(state_), now);
+      slice_is_open_ = false;
+    }
+    if (is_enabled()) {
+      // Converter returns nullptr to indicate the absence of state.
+      const char* state_str = converter_(state_);
+      if (state_str != nullptr) {
+        // Trace viewer logic relies on subslice starting at the exact same time
+        // as the async event.
+        base::TimeTicks now = base::TimeTicks::Now();
+        TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP0(category, name_, object_, now);
+        TRACE_EVENT_ASYNC_STEP_INTO_WITH_TIMESTAMP0(category, name_, object_,
+                                                    state_str, now);
+        slice_is_open_ = true;
+      }
     }
   }
 
@@ -116,9 +127,7 @@ class TraceableState {
   const ConverterFuncPtr converter_;
 
   T state_;
-  // We have to track |started_| state to avoid race condition since SetState
-  // might be called before OnTraceLogEnabled notification.
-  bool started_;
+  bool slice_is_open_;
 
   DISALLOW_COPY(TraceableState);
 };
