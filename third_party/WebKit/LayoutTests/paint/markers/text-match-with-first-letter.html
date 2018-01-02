@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<script src="../../resources/run-after-layout-and-paint.js"></script>
+<style>
+div:first-letter {
+  color: red;
+}
+</style>
+
+<div id="div">foo bar</div>
+
+<script>
+function addTextMatchMarker(elem, start, end) {
+    const range = document.createRange();
+    const textNode = elem.firstChild;
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+    if (typeof internals !== 'undefined') {
+        internals.addTextMatchMarker(range, 'kActive');
+        internals.setMarkedTextMatchesAreHighlighted(document, true);
+    }
+};
+
+onload = runAfterLayoutAndPaint(function() {
+    addTextMatchMarker(div, 4, 7);
+}, true);
+</script>
