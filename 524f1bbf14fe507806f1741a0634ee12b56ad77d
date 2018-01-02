@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6b66877_ad574c5f",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T21:56:45Z",
+      "side": 1,
+      "message": "If you wanted to be a bit fancier, you could use Gmock matchers and write:\n\nEXPECT_THAT(*a, ElementsAre(2, 3));",
+      "revId": "524f1bbf14fe507806f1741a0634ee12b56ad77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
