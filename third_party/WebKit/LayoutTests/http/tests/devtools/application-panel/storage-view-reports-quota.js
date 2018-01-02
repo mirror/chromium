@@ -15,7 +15,7 @@
 
   async function writeArray() {
     var array = [];
-    for (var i = 0; i < 5000000; i++)
+    for (var i = 0; i < 50000; i++)
       array.push(i % 10);
     var mainFrameId = TestRunner.resourceTreeModel.mainFrame.id;
     await new Promise(resolve => ApplicationTestRunner.createDatabase(mainFrameId, 'Database1', resolve));
@@ -71,7 +71,7 @@
   TestRunner.markStep('Now with data');
 
   await writeArray();
-  await dumpWhenMatches(clearStorageView, usage => usage > 5000000);
+  await dumpWhenMatches(clearStorageView, usage => usage > 50000);
 
   TestRunner.completeTest();
 })();
