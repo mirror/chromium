@@ -1224,8 +1224,10 @@ const char* Resource::ResourceTypeToString(
       return "Text track";
     case Resource::kImportResource:
       return "Imported resource";
-    case Resource::kMedia:
-      return "Media";
+    case Resource::kAudio:
+      return "Audio";
+    case Resource::kVideo:
+      return "Video";
     case Resource::kManifest:
       return "Manifest";
     case Resource::kMock:
@@ -1253,7 +1255,8 @@ bool Resource::IsLoadEventBlockingResourceType() const {
     case Resource::kRaw:
     case Resource::kLinkPrefetch:
     case Resource::kTextTrack:
-    case Resource::kMedia:
+    case Resource::kAudio:
+    case Resource::kVideo:
     case Resource::kManifest:
     case Resource::kMock:
       return false;
