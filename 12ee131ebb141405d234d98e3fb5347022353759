@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a7ab0a_4aeb054f",
+        "filename": "net/base/url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T17:21:24Z",
+      "side": 1,
+      "message": "How many callers don\u0027t have a GURL? Seems less error prone to have the function take a GURL. If there are enough that don\u0027t have a GURL, how about another function here that takes a GURL?",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 50
+      },
+      "revId": "12ee131ebb141405d234d98e3fb5347022353759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
