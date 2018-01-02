@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d28b16c2_ef131097",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "That\u0027s not a bad idea, that\u0027s a reason why I split this out from process_profiles in the first place. Note that process_profiles is also currently used for investigation and not orderfile generation. Will do in separate CL after discussing with lizeb@ his vision.",
+      "parentUuid": "0ddfaf9d_949cecdb",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f10894ae_c95a8a89",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512103a5_f5bce22a",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "process_profiles is doing it, will let lizeb comment on his rationale.\n\nAt least it makes moving this easy :)",
+      "parentUuid": "f10894ae_c95a8a89",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e56510a_8dbe7ecc",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "Done. Note docstrings are not necessary for private methods.",
+      "parentUuid": "6021a0fd_151411c4",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10db22b_9eb531df",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900948a4_f526688a",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "In the current workflow several different kinds of dumps can be mixed together in the same directory.",
+      "parentUuid": "b10db22b_9eb531df",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "99ed1c0a_14141609",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "Yes, there\u0027s not reason not to be consistent with the other uses of size.",
+      "parentUuid": "8eada33e_552564ec",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7497cb_61bd5b68",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b547412_4f6d2e5d",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "Made consistent, but also smaller. The long variable names were getting cumbersome.",
+      "parentUuid": "eb7497cb_61bd5b68",
+      "range": {
+        "startLine": 162,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 23
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "29addadf_6c4e96a7",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8be8bc7_befa2cab",
+      "range": {
+        "startLine": 188,
+        "startChar": 34,
+        "endLine": 188,
+        "endChar": 39
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b39c6e_a2e3951d",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37dab25f_35977372",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-02T09:46:55Z",
+      "side": 1,
+      "message": "Thanks, will break out in an unrelated change.\n\nNote that process_profiles is not used for orderfile generation.",
+      "parentUuid": "03b39c6e_a2e3951d",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
