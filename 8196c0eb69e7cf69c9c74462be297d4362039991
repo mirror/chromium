@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4705895_98478a15",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T22:49:09Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think guard is commonly used in Chrome codebase for AutoLock. Seems most code uses either auto_lock or lock, so use one of those names. Please change throughout.",
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da1ce95_53a48c00",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T22:49:09Z",
+      "side": 1,
+      "message": "Please add a comment about this annotation explaining why it\u0027s leaked.",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31f2f0b_91394cdb",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T22:49:09Z",
+      "side": 1,
+      "message": "Nit: surround variable names in comments with |\u0027s, i.e. |guard| or |auto_lock|",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7b2b4a_4fdc2461",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T22:49:09Z",
+      "side": 1,
+      "message": "Nit: Maybe just inline this as a ternary operator?",
+      "range": {
+        "startLine": 243,
+        "startChar": 12,
+        "endLine": 243,
+        "endChar": 0
+      },
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213b6d61_3cbcce17",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-02T22:49:09Z",
+      "side": 1,
+      "message": "Is this formatting the result of git cl format? I find it surprising that it put it on the same line, but maybe that\u0027s the behavior when the function is declared inline.",
+      "revId": "8196c0eb69e7cf69c9c74462be297d4362039991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
