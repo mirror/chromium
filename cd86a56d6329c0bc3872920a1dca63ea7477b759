@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d217b8_953d075b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-02T23:31:18Z",
+      "side": 1,
+      "message": "When would style be different from line_info-\u003eLineStyle?",
+      "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
