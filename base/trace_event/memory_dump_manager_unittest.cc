@@ -527,16 +527,14 @@ TEST_F(MemoryDumpManagerTest, PostTaskForSequencedTaskRunner) {
   task_runner1->set_enabled(false);
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
                                         MemoryDumpLevelOfDetail::DETAILED));
-  // Tasks should be individually posted even if |mdps[1]| and |mdps[2]| belong
-  // to same task runner.
   EXPECT_EQ(1u, task_runner1->no_of_post_tasks());
-  EXPECT_EQ(2u, task_runner2->no_of_post_tasks());
+  EXPECT_EQ(1u, task_runner2->no_of_post_tasks());
 
   task_runner1->set_enabled(true);
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
                                         MemoryDumpLevelOfDetail::DETAILED));
   EXPECT_EQ(2u, task_runner1->no_of_post_tasks());
-  EXPECT_EQ(4u, task_runner2->no_of_post_tasks());
+  EXPECT_EQ(2u, task_runner2->no_of_post_tasks());
   DisableTracing();
 }
 
@@ -1024,6 +1022,65 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeededUnsupported) {
   mdm_->EnableHeapProfilingIfNeeded();
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
 #endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+}
+
+class SimpleMockMemoryDumpProvider : public MemoryDumpProvider {
+ public:
+  SimpleMockMemoryDumpProvider(bool return_val, int expected_num_dump_calls)
+      : return_val_(return_val),
+        expected_num_dump_calls_(expected_num_dump_calls),
+        num_dump_calls_(0) {}
+
+  ~SimpleMockMemoryDumpProvider() override {
+    EXPECT_EQ(expected_num_dump_calls_, num_dump_calls_);
+  }
+
+  bool OnMemoryDump(const MemoryDumpArgs& args,
+                    ProcessMemoryDump* pmd) override {
+    ++num_dump_calls_;
+    return return_val_;
+  }
+
+ private:
+  bool return_val_;
+  int expected_num_dump_calls_;
+  int num_dump_calls_;
+};
+
+TEST_F(MemoryDumpManagerTest, NoStackOverflowWithTooManyMDPs) {
+  InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
+  SetDumpProviderWhitelistForTesting(kTestMDPWhitelist);
+  SetDumpProviderSummaryWhitelistForTesting(kTestMDPWhitelistForSummary);
+  int kMDPCount = 1000;
+  std::vector<std::unique_ptr<SimpleMockMemoryDumpProvider>> mdps;
+  int mdp_idx = 0;
+  for (; mdp_idx < kMDPCount; ++mdp_idx) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(true, 1));
+    RegisterDumpProvider(mdps.back().get(), nullptr);
+  }
+  for (; mdp_idx < 2 * kMDPCount; ++mdp_idx) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(false, 1));
+    RegisterDumpProvider(mdps.back().get(), nullptr);
+  }
+  for (; mdp_idx < 3 * kMDPCount; ++mdp_idx) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(true, 2));
+    RegisterDumpProvider(mdps.back().get(), nullptr, kDefaultOptions,
+                         kBackgroundButNotSummaryWhitelistedMDPName);
+  }
+  std::unique_ptr<Thread> stopped_thread(new Thread("test thread"));
+  stopped_thread->Start();
+  for (; mdp_idx < 4 * kMDPCount; ++mdp_idx) {
+    mdps.push_back(std::make_unique<SimpleMockMemoryDumpProvider>(false, 0));
+    RegisterDumpProvider(mdps.back().get(), stopped_thread->task_runner());
+  }
+  stopped_thread->Stop();
+
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                        MemoryDumpLevelOfDetail::DETAILED));
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                        MemoryDumpLevelOfDetail::BACKGROUND));
+  EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::SUMMARY_ONLY,
+                                        MemoryDumpLevelOfDetail::BACKGROUND));
 }
 
 }  // namespace trace_event
