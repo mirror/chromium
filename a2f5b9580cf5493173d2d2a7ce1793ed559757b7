@@ -52,6 +52,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77aadd3b_519a0b5c",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T17:31:10Z",
+      "side": 1,
+      "message": "Maybe I don\u0027t fully understand...\n\nThere are two issues right now:\n\n1) variations::AppendVariationHeaders() it mostly called in the context of URLFetchers. \nSee for example here: components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc Until all URLFetchers are gone, I think that we should test that the stripping happens correctly if some code uses a URLFetcher. Once all use of URLFetchers is gone, the test can be deleted.\n\n2) Network requests that are triggered with content::LoadBasicRequest() do not get the variation headers attached. Therefore, I cannot test whether they are removed. I have added a test that will break once requests via content::LoadBasicRequest() get a variation header attached. That test also has an explanation of what needs to happen when it breaks.",
+      "parentUuid": "6d97cf81_424ad47b",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
