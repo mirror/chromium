@@ -272,6 +272,10 @@ bool TabLifecycleUnitSource::TabLifecycleUnit::IsDiscarded() const {
   return GetState() == State::DISCARDED;
 }
 
+int TabLifecycleUnitSource::TabLifecycleUnit::GetDiscardCount() const {
+  return discard_count_;
+}
+
 void TabLifecycleUnitSource::TabLifecycleUnit::OnDiscardedStateChange() {
   for (auto& observer : *observers_)
     observer.OnDiscardedStateChange(GetWebContents(), IsDiscarded());
