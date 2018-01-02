@@ -157,6 +157,7 @@ v8::Local<v8::Value> V8ScriptValueDeserializer::Deserialize() {
   if (!version_)
     version_ = deserializer_.GetWireFormatVersion();
 
+  CloneSharedArrayBuffers();
   // Prepare to transfer the provided transferables.
   Transfer();
 
@@ -191,6 +192,27 @@ void V8ScriptValueDeserializer::Transfer() {
       deserializer_.TransferArrayBuffer(
           i, v8::Local<v8::ArrayBuffer>::Cast(wrapper));
     }
+  }
+}
+
+void V8ScriptValueDeserializer::CloneSharedArrayBuffers() {
+  if (!unpacked_value_) {
+    return;
+  }
+
+  v8::Isolate* isolate = script_state_->GetIsolate();
+  v8::Local<v8::Context> context = script_state_->GetContext();
+  v8::Local<v8::Object> creation_context = context->Global();
+
+  // Clone shared array buffers.
+  const auto& shared_array_buffers = unpacked_value_->SharedArrayBuffers();
+  for (unsigned i = 0; i < shared_array_buffers.size(); i++) {
+    DOMSharedArrayBuffer* shared_array_buffer = shared_array_buffers.at(i);
+    v8::Local<v8::Value> wrapper =
+        ToV8(shared_array_buffer, creation_context, isolate);
+    DCHECK(wrapper->IsSharedArrayBuffer());
+    deserializer_.CloneSharedArrayBuffer(
+        i, v8::Local<v8::SharedArrayBuffer>::Cast(wrapper));
   }
 }
 

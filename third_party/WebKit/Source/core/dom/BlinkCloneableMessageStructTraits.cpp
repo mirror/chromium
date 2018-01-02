@@ -6,6 +6,7 @@
 
 #include "platform/blob/BlobData.h"
 #include "platform/runtime_enabled_features.h"
+#include "public/platform/Platform.h"
 
 namespace mojo {
 
@@ -36,12 +37,6 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
   Vector<blink::mojom::blink::SerializedBlobPtr> blobs;
   if (!data.ReadBlobs(&blobs))
     return false;
-  for (auto& blob : blobs) {
-    out->message->BlobDataHandles().Set(
-        blob->uuid,
-        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
-                                      blob->size, blob->blob.PassInterface()));
-  }
 
   return true;
 }

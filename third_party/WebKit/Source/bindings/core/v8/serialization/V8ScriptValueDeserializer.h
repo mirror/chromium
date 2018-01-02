@@ -100,6 +100,8 @@ class CORE_EXPORT V8ScriptValueDeserializer
   v8::MaybeLocal<v8::WasmCompiledModule> GetWasmModuleFromId(v8::Isolate*,
                                                              uint32_t) override;
 
+  void CloneSharedArrayBuffers();
+
   scoped_refptr<ScriptState> script_state_;
   Member<UnpackedSerializedScriptValue> unpacked_value_;
   scoped_refptr<SerializedScriptValue> serialized_script_value_;

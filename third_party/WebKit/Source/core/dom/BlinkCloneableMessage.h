@@ -19,6 +19,7 @@ struct CORE_EXPORT BlinkCloneableMessage {
   ~BlinkCloneableMessage();
 
   scoped_refptr<blink::SerializedScriptValue> message;
+  uint32_t process_id;
 };
 
 }  // namespace blink
