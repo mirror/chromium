@@ -26,6 +26,7 @@
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/obsolete_system/obsolete_system.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -53,6 +54,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/extension_metrics.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
@@ -65,6 +67,7 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
+#include "google_apis/google_api_keys.h"
 #include "rlz/features/features.h"
 #include "ui/base/ui_features.h"
 
@@ -792,10 +795,16 @@ void StartupBrowserCreatorImpl::AddInfoBarsIfNecessary(
       !command_line_.HasSwitch(switches::kTestType) &&
       !command_line_.HasSwitch(switches::kEnableAutomation)) {
     chrome::ShowBadFlagsPrompt(browser);
-    GoogleApiKeysInfoBarDelegate::Create(InfoBarService::FromWebContents(
-        browser->tab_strip_model()->GetActiveWebContents()));
-    ObsoleteSystemInfoBarDelegate::Create(InfoBarService::FromWebContents(
-        browser->tab_strip_model()->GetActiveWebContents()));
+    InfoBarService* infobar_service = InfoBarService::FromWebContents(
+        browser->tab_strip_model()->GetActiveWebContents());
+    if (!google_apis::HasKeysConfigured())
+      GoogleApiKeysInfoBarDelegate::Create(infobar_service);
+    if (ObsoleteSystem::IsObsoleteNowOrSoon()) {
+      PrefService* local_state = g_browser_process->local_state();
+      if (!local_state ||
+          !local_state->GetBoolean(prefs::kSuppressUnsupportedOSWarning))
+        ObsoleteSystemInfoBarDelegate::Create(infobar_service);
+    }
 
 #if !defined(OS_CHROMEOS)
     if (!command_line_.HasSwitch(switches::kNoDefaultBrowserCheck)) {
