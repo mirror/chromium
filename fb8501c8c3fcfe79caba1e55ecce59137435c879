@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "323644d2_a598bc79",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-02T15:46:28Z",
+      "side": 1,
+      "message": "Note for reviewers - it would have been more general to actually allow reply to be non-empty, but I think it\u0027s best to not overcomplicate unless needed.",
+      "revId": "fb8501c8c3fcfe79caba1e55ecce59137435c879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
