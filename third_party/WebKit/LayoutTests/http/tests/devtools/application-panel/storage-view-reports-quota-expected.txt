@@ -6,7 +6,7 @@ Clear storage view is visible: true
 Usage breakdown:
 
 Running: Now with data
-9.5 MB used out of -- storage quota
+98.4 KB used out of -- storage quota
 Usage breakdown:
-IndexedDB: 9.5 MB
+IndexedDB: 98.4 KB
 
