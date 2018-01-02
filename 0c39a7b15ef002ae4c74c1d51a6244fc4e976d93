@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "588ba703_d6ed18cd",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3453,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-02T17:29:51Z",
+      "side": 1,
+      "message": "This was wrong, it should be the size of the actual texture being used.",
+      "revId": "0c39a7b15ef002ae4c74c1d51a6244fc4e976d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
