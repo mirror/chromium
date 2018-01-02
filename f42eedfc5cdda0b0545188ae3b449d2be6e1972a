@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a08f594_b1a84215",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-02T21:04:07Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d5da6134_26c423bd",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 39
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b906b3_e5f567f4",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c13d26_7633ac16",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-02T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b906b3_e5f567f4",
+      "range": {
+        "startLine": 137,
+        "startChar": 56,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7201c807_b51be167",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-02T21:04:07Z",
+      "side": 1,
+      "message": "KSVItemInfoPtrList is a vector\u003cmojo::StructPtr\u003cKeyboardShortcutItemInfo\u003e\u003e, mojo::StructPtr has unique_ptr of KeyboardShortcutItemInfo. So it will be std::move to the KeyboardShortcutView.\n\nAdded a comment why we cannot cache this directly.",
+      "parentUuid": "3fdcf5f4_2e21e270",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "752537cb_1b84e0ec",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cb0c2af1_006e95f0",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-02T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752537cb_1b84e0ec",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed38053_2d0178bf",
         "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.cc",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09219441_a03cd0b7",
+        "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2018-01-02T21:04:07Z",
+      "side": 1,
+      "message": "Same as above. Added comments.",
+      "parentUuid": "2ed38053_2d0178bf",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "f42eedfc5cdda0b0545188ae3b449d2be6e1972a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
