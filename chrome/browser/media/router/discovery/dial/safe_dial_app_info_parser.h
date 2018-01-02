@@ -39,7 +39,7 @@ class SafeDialAppInfoParser {
 
   // |connector| should be a valid connector to the ServiceManager.
   explicit SafeDialAppInfoParser(service_manager::Connector* connector);
-  ~SafeDialAppInfoParser();
+  virtual ~SafeDialAppInfoParser();
 
   // Callback function invoked when done parsing DIAL app info XML.
   // |app_info|: app info object. Empty if parsing failed.
@@ -57,7 +57,7 @@ class SafeDialAppInfoParser {
   // utility process is still cleaned up automatically if unused after some
   // time, even if this object is still alive.
   // Note also that the callback is not called if the object is deleted.
-  void Parse(const std::string& xml_text, ParseCallback callback);
+  virtual void Parse(const std::string& xml_text, ParseCallback callback);
 
  private:
   void OnXmlParsingDone(ParseCallback callback,
