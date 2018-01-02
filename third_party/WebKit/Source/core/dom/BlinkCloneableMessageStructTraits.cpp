@@ -6,6 +6,7 @@
 
 #include "platform/blob/BlobData.h"
 #include "platform/runtime_enabled_features.h"
+#include "public/platform/Platform.h"
 
 namespace mojo {
 
