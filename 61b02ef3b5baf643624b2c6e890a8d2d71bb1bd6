@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72177ca2_9e9f0609",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-02T23:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b319824_11c43e4b",
+      "revId": "61b02ef3b5baf643624b2c6e890a8d2d71bb1bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf3c9612_ce84ca02",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T20:59:04Z",
       "side": 1,
       "message": "Why is this code added?",
+      "revId": "61b02ef3b5baf643624b2c6e890a8d2d71bb1bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9f552c_fef50ef5",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2018-01-02T23:07:20Z",
+      "side": 1,
+      "message": "The unit test fails otherwise:\n\n#0 0x7f260a8e916d base::debug::StackTrace::StackTrace()\n#1 0x7f260a8e76ec base::debug::StackTrace::StackTrace()\n#2 0x7f260a96bb1d logging::LogMessage::~LogMessage()\n#3 0x7f260aaa12fb base::internal::LockImpl::Lock()\n#4 0x7f260a88fad3 base::Lock::Acquire()\n#5 0x7f260a88f7f3 base::AutoLock::AutoLock()\n#6 0x7f260ab0b2e4 base::ThreadCheckerImpl::CalledOnValidThread()\n#7 0x7f26067bb27d viz::SurfaceManager::GetSurfaceForId()\n#8 0x7f26067b13dc viz::SurfaceDependencyTracker::NotifySurfaceIdAvailable()\n#9 0x7f26067b1ef5 viz::SurfaceDependencyTracker::OnSurfaceDiscarded()\n#10 0x7f26067bacdc viz::SurfaceManager::SurfaceDiscarded()\n#11 0x7f260679b030 viz::Surface::~Surface()\n#12 0x7f26067ccf30 std::__1::pair\u003c\u003e::~pair()\n#13 0x7f26067ccd99 std::__1::__vector_base\u003c\u003e::~__vector_base()\n#14 0x7f26067ccc85 std::__1::vector\u003c\u003e::~vector()\n#15 0x7f26067ccc65 base::internal::flat_tree\u003c\u003e::Impl::~Impl()\n#16 0x7f26067ccc45 base::internal::flat_tree\u003c\u003e::~flat_tree()\n#17 0x7f26067c6a25 base::flat_map\u003c\u003e::~flat_map()\n#18 0x7f26067b91f9 viz::SurfaceManager::~SurfaceManager()\n#19 0x7f260673bd27 viz::FrameSinkManagerImpl::~FrameSinkManagerImpl()\n\n\nA surface remains lingering because it has a temporary reference and when we go to delete the surfaces map, we end up triggering SurfaceDependencyTracker which has already been destroyed. By garbage collecting in SurfaceManager\u0027s constructor, we avoid this.",
+      "parentUuid": "bf3c9612_ce84ca02",
       "revId": "61b02ef3b5baf643624b2c6e890a8d2d71bb1bd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
