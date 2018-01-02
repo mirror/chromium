@@ -8,6 +8,7 @@
 
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
+#include "content/browser/devtools/devtools_session.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
@@ -62,6 +63,23 @@ EmulationHandler::EmulationHandler()
 }
 
 EmulationHandler::~EmulationHandler() {
+}
+
+// static
+std::vector<EmulationHandler*>
+EmulationHandler::DeviceEmulationEnabledForWebContents(
+    WebContentsImpl* contents) {
+  if (!DevToolsAgentHost::HasFor(contents))
+    return std::vector<EmulationHandler*>();
+  std::vector<EmulationHandler*> result;
+  auto* host = static_cast<DevToolsAgentHostImpl*>(
+      DevToolsAgentHost::GetOrCreateFor(contents).get());
+  for (auto* handler : DevToolsSession::HandlersForAgentHost<EmulationHandler>(
+           host, Emulation::Metainfo::domainName)) {
+    if (handler->device_emulation_enabled_)
+      result.push_back(handler);
+  }
+  return result;
 }
 
 void EmulationHandler::SetRenderer(RenderProcessHost* process_host,
@@ -302,6 +320,11 @@ Response EmulationHandler::SetVisibleSize(int width, int height) {
 
   widget_host->GetView()->SetSize(gfx::Size(width, height));
   return Response::OK();
+}
+
+gfx::Size EmulationHandler::GetVisibleSize() {
+  return host_ ? host_->GetRenderWidgetHost()->GetView()->GetViewBounds().size()
+               : gfx::Size();
 }
 
 blink::WebDeviceEmulationParams EmulationHandler::GetDeviceEmulationParams() {

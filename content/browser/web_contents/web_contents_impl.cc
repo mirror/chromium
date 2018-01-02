@@ -39,6 +39,7 @@
 #include "content/browser/browser_plugin/browser_plugin_embedder.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/devtools/protocol/emulation_handler.h"
 #include "content/browser/devtools/protocol/page_handler.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
@@ -5771,6 +5772,12 @@ gfx::Size WebContentsImpl::GetSizeForNewRenderView() {
   gfx::Size size;
   if (delegate_)
     size = delegate_->GetSizeForNewRenderView(this);
+  if (size.IsEmpty()) {
+    std::vector<protocol::EmulationHandler*> handlers =
+        protocol::EmulationHandler::DeviceEmulationEnabledForWebContents(this);
+    for (auto* handler : handlers)
+      size = handler->GetVisibleSize();
+  }
   if (size.IsEmpty())
     size = GetContainerBounds().size();
   return size;
