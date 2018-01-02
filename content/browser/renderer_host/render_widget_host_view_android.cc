@@ -1275,6 +1275,7 @@ void RenderWidgetHostViewAndroid::SubmitCompositorFrame(
 
     ack.has_damage = false;
     OnDidNotProduceFrame(ack);
+    delegated_frame_host_->DidSubmitCompositorFrameWithNoContent();
   } else {
     delegated_frame_host_->SubmitCompositorFrame(local_surface_id,
                                                  std::move(frame));
