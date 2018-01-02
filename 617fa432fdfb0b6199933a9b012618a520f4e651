@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f90c3952_346566e3",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T18:38:31Z",
+      "side": 1,
+      "message": "Would be much cleaner if you could dispatch events below rather than within UpdateTreeIdOfNotificationSurface. See other comment.",
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acdcf78d_58a2daf1",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 3
@@ -25,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "9cc387d7_887bcd87",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T18:38:31Z",
+      "side": 1,
+      "message": "How does this happen? Is it worth logging?",
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7684131d_3c3b5de3",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T18:38:31Z",
+      "side": 1,
+      "message": "Have you verified the tree gets properly detached extension-side?",
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d70d20_94c395b9",
         "filename": "components/arc/common/accessibility_helper.mojom",
         "patchSetId": 3
@@ -45,6 +96,23 @@
       "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5296f6a6_a44c96f8",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-02T18:38:31Z",
+      "side": 1,
+      "message": "Would this be cleaner as part of the notifications mojom? I could see this being confusing moving forward (e.g. for future version maintainers). At least, maybe add a new method OnNotificationStateChanged to separate from OnAccessibilityEvent.",
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
