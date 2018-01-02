@@ -37,4 +37,21 @@ class BubbleSyncPromoView : public views::StyledLabel,
   DISALLOW_COPY_AND_ASSIGN(BubbleSyncPromoView);
 };
 
+class DiceBubbleSyncPromoView : public views::View {
+ public:
+  // |delegate| is not owned by BubbleSyncPromoView.
+  DiceBubbleSyncPromoView(BubbleSyncPromoDelegate* delegate,
+                          int link_text_resource_id,
+                          int message_text_resource_id);
+  ~DiceBubbleSyncPromoView() override;
+
+  void Layout() override;
+
+ private:
+  // Delegate, to handle clicks on the sign in link.
+  // BubbleSyncPromoDelegate* delegate_;
+
+  DISALLOW_COPY_AND_ASSIGN(DiceBubbleSyncPromoView);
+};
+
 #endif  // CHROME_BROWSER_UI_VIEWS_SYNC_BUBBLE_SYNC_PROMO_VIEW_H_

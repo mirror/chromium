@@ -63,7 +63,7 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
     : views::LabelButton(button_listener, text),
       title_(nullptr),
       subtitle_(nullptr) {
-  DCHECK(button_listener);
+  // DCHECK(button_listener);
   SetFocusBehavior(FocusBehavior::ALWAYS);
   SetFocusPainter(nullptr);
 
