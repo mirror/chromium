@@ -83,11 +83,6 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     // NonDocumentRootScroller (https://github.com/bokand/NonDocumentRootScroller)
     [RaisesException=Setter, RuntimeEnabled=SetRootScroller, Measure] attribute Element? rootScroller;
 
-    // FIXME: xmlEncoding/xmlVersion/xmlStandalone have been removed from the spec.
-    [MeasureAs=DocumentXMLEncoding] readonly attribute DOMString? xmlEncoding;
-    [RaisesException=Setter, MeasureAs=DocumentXMLVersion] attribute DOMString? xmlVersion;
-    [RaisesException=Setter, MeasureAs=DocumentXMLStandalone] attribute boolean xmlStandalone;
-
     // HTML
     // https://html.spec.whatwg.org/#the-document-object
 

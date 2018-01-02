@@ -1595,9 +1595,6 @@ interface Document : Node
     getter webkitHidden
     getter webkitIsFullScreen
     getter webkitVisibilityState
-    getter xmlEncoding
-    getter xmlStandalone
-    getter xmlVersion
     method adoptNode
     method append
     method captureEvents
@@ -1757,8 +1754,6 @@ interface Document : Node
     setter selectedStylesheetSet
     setter title
     setter vlinkColor
-    setter xmlStandalone
-    setter xmlVersion
 interface DocumentFragment : Node
     attribute @@toStringTag
     attribute @@unscopables
