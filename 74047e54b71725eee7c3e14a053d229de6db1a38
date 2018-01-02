@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "95abfe27_1fb2913b",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-02T07:06:11Z",
+      "side": 1,
+      "message": "CreateTestWindowInShellWithBounds is calling aura::Window::Show(), not views::Widget::Show(). In my mind, aura::Window::Show() doesn\u0027t necessarily mean window activated.\n\nAnd I have seen many existing tests doing ActivateWindow:\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/workspace_controller_unittest.cc?type\u003dcs\u0026l\u003d175\n[2] https://cs.chromium.org/chromium/src/ash/wm/window_cycle_controller_unittest.cc?sq\u003dpackage:chromium\u0026l\u003d741\n\nOne way if we want to get rid of ActivateWindow is to use CreateTestWidget().\n\nIf I am wrong, I prefer filing a bug and doing it separately. WDYT?",
+      "parentUuid": "9c262457_84733578",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 29
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d74894d_8b43104a",
         "filename": "ash/extended_desktop_unittest.cc",
         "patchSetId": 7
@@ -188,6 +212,30 @@
       "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3063300c_452a8dbc",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-02T07:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793b9093_065920ce",
+      "range": {
+        "startLine": 114,
+        "startChar": 29,
+        "endLine": 114,
+        "endChar": 61
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

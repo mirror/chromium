@@ -16,6 +16,24 @@
       "revId": "ab861bc8b2bee6d694a99e5baae3c6a46d6f57ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fa806f_815107d7",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-02T07:06:11Z",
+      "side": 1,
+      "message": "I think the callers should take care of your concern.\n\nSee:\n[1] https://cs.chromium.org/chromium/src/ash/wm/window_positioning_utils.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d148\n[2] https://cs.chromium.org/chromium/src/ash/display/display_move_window_util.cc?q\u003ddisplay_move_window\u0026dr\u003dC\u0026l\u003d149\n\nHowever, it doesn\u0027t hurt to add the skip. I added it in this patch.",
+      "parentUuid": "221b0185_159b4b5b",
+      "revId": "ab861bc8b2bee6d694a99e5baae3c6a46d6f57ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
