@@ -604,8 +604,9 @@ WebGestureEvent ContentViewCore::MakeGestureEvent(WebInputEvent::Type type,
                                                   int64_t time_ms,
                                                   float x,
                                                   float y) const {
-  return WebGestureEventBuilder::Build(type, time_ms / 1000.0, x / dpi_scale(),
-                                       y / dpi_scale());
+  return WebGestureEventBuilder::Build(
+      type, base::TimeTicks() + base::TimeDelta::FromMilliseconds(time_ms),
+      x / dpi_scale(), y / dpi_scale());
 }
 
 void ContentViewCore::SendGestureEvent(const blink::WebGestureEvent& event) {

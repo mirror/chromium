@@ -522,8 +522,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                         const blink::WebPluginAction& action);
   void OnMoveOrResizeStarted();
   void OnReleaseDisambiguationPopupBitmap(const viz::SharedBitmapId& id);
-  void OnResolveTapDisambiguation(double timestamp_seconds,
-                                  gfx::Point tap_viewport_offset,
+  void OnResolveTapDisambiguation(base::TimeTicks timestamp,
+                                  const gfx::Point& tap_viewport_offset,
                                   bool is_long_press);
   void OnSetActive(bool active);
   void OnSetBackgroundOpaque(bool opaque);

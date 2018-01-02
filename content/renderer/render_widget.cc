@@ -984,13 +984,12 @@ void RenderWidget::RecordWheelAndTouchScrollingCount(
                                                     has_scrolled_by_touch);
 }
 
-void RenderWidget::BeginMainFrame(double frame_time_sec) {
+void RenderWidget::BeginMainFrame(base::TimeTicks frame_time) {
   if (input_event_queue_) {
-    input_event_queue_->DispatchRafAlignedInput(
-        ui::EventTimeStampFromSeconds(frame_time_sec));
+    input_event_queue_->DispatchRafAlignedInput(frame_time);
   }
 
-  GetWebWidget()->BeginFrame(frame_time_sec);
+  GetWebWidget()->BeginFrame(frame_time);
 }
 
 void RenderWidget::RequestNewLayerTreeFrameSink(

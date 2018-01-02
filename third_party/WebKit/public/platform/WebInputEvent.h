@@ -31,12 +31,13 @@
 #ifndef WebInputEvent_h
 #define WebInputEvent_h
 
+#include <string.h>
+
 #include "WebCommon.h"
 #include "WebPointerProperties.h"
 #include "WebRect.h"
 #include "WebTouchPoint.h"
-
-#include <string.h>
+#include "base/time/time.h"
 
 namespace blink {
 
@@ -299,7 +300,10 @@ class WebInputEvent {
   static const int kInputModifiers =
       kShiftKey | kControlKey | kAltKey | kMetaKey;
 
-  static constexpr double kTimeStampForTesting = 123.0;
+  // TODO(dcheng): This really shouldn't use FromInternalValue(), but constexpr
+  // support for time operations is a bit busted...
+  BLINK_PLATFORM_EXPORT static constexpr base::TimeTicks kTimeStampForTesting =
+      base::TimeTicks::FromInternalValue(123);
 
   // Returns true if the WebInputEvent |type| is a mouse event.
   static bool IsMouseEventType(WebInputEvent::Type type) {
@@ -409,8 +413,8 @@ class WebInputEvent {
   int GetModifiers() const { return modifiers_; }
   void SetModifiers(int modifiers_param) { modifiers_ = modifiers_param; }
 
-  double TimeStampSeconds() const { return time_stamp_seconds_; }
-  void SetTimeStampSeconds(double seconds) { time_stamp_seconds_ = seconds; }
+  base::TimeTicks TimeStamp() const { return time_stamp_; }
+  void SetTimeStamp(base::TimeTicks time_stamp) { time_stamp_ = time_stamp; }
 
   unsigned size() const { return size_; }
 
@@ -421,17 +425,17 @@ class WebInputEvent {
   // The root frame translation (applied post scale).
   WebFloatPoint frame_translate_;
 
-  WebInputEvent(unsigned size_param,
-                Type type_param,
-                int modifiers_param,
-                double time_stamp_seconds_param) {
+  WebInputEvent(unsigned size,
+                Type type,
+                int modifiers,
+                base::TimeTicks time_stamp) {
     // TODO(dtapuska): Remove this memset when we remove the chrome IPC of this
     // struct.
-    memset(this, 0, size_param);
-    time_stamp_seconds_ = time_stamp_seconds_param;
-    size_ = size_param;
-    type_ = type_param;
-    modifiers_ = modifiers_param;
+    memset(this, 0, size);
+    time_stamp_ = time_stamp;
+    size_ = size;
+    type_ = type;
+    modifiers_ = modifiers;
 #if DCHECK_IS_ON()
     // If dcheck is on force failures if frame scale is not initialized
     // correctly by causing DIV0.
@@ -445,7 +449,7 @@ class WebInputEvent {
     // TODO(dtapuska): Remove this memset when we remove the chrome IPC of this
     // struct.
     memset(this, 0, size_param);
-    time_stamp_seconds_ = 0.0;
+    time_stamp_ = base::TimeTicks();
     size_ = size_param;
     type_ = kUndefined;
 #if DCHECK_IS_ON()
@@ -457,9 +461,10 @@ class WebInputEvent {
 #endif
   }
 
-  double time_stamp_seconds_;  // Seconds since platform start with microsecond
-                               // resolution.
-  unsigned size_;              // The size of this structure, for serialization.
+  // Event time since platform start with microsecond resolution.
+  base::TimeTicks time_stamp_;
+  // The size of this structure, for serialization.
+  unsigned size_;
   Type type_;
   int modifiers_;
 };

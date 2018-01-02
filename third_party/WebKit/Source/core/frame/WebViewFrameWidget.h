@@ -48,7 +48,7 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
   void DidEnterFullscreen() override;
   void DidExitFullscreen() override;
   void SetSuppressFrameRequestsWorkaroundFor704763Only(bool) final;
-  void BeginFrame(double last_frame_time_monotonic) override;
+  void BeginFrame(base::TimeTicks last_frame_time) override;
   void UpdateAllLifecyclePhases() override;
   void Paint(WebCanvas*, const WebRect& view_port) override;
   void LayoutAndPaintAsync(WebLayoutAndPaintAsyncCallback*) override;

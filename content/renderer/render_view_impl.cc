@@ -2451,10 +2451,11 @@ void RenderViewImpl::OnReleaseDisambiguationPopupBitmap(
   DCHECK_EQ(1U, erased_count);
 }
 
-void RenderViewImpl::OnResolveTapDisambiguation(double timestamp_seconds,
-                                                gfx::Point tap_viewport_offset,
-                                                bool is_long_press) {
-  webview()->ResolveTapDisambiguation(timestamp_seconds, tap_viewport_offset,
+void RenderViewImpl::OnResolveTapDisambiguation(
+    base::TimeTicks timestamp,
+    const gfx::Point& tap_viewport_offset,
+    bool is_long_press) {
+  webview()->ResolveTapDisambiguation(timestamp, tap_viewport_offset,
                                       is_long_press);
 }
 

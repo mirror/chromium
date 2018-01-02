@@ -138,8 +138,7 @@ Gestures BuildScrollSequence(size_t steps,
   const gfx::Vector2dF delta = ScaleVector2d(distance, 1.f / steps);
 
   WebGestureEvent gesture(WebInputEvent::kGestureScrollBegin,
-                          WebInputEvent::kNoModifiers,
-                          ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+                          WebInputEvent::kNoModifiers, ui::EventTimeForNow());
   gesture.x = origin.x();
   gesture.y = origin.y();
   gestures.push_back(gesture);
@@ -166,7 +165,7 @@ Touches BuildTouchSequence(size_t steps,
   const gfx::Vector2dF delta = ScaleVector2d(distance, 1.f / steps);
 
   WebTouchEvent touch(WebInputEvent::kTouchStart, WebInputEvent::kNoModifiers,
-                      ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+                      ui::EventTimeForNow());
   touch.touches_length = 1;
   touch.touches[0].id = 0;
   touch.touches[0].state = WebTouchPoint::kStatePressed;

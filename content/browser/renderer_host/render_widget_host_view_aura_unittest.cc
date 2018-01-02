@@ -1773,8 +1773,7 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   events = GetAndResetDispatchedMessages();
   wheel_event = static_cast<const WebMouseWheelEvent*>(
       events[0]->ToEvent()->Event()->web_event.get());
-  base::TimeTicks wheel_event_timestamp =
-      ui::EventTimeStampFromSeconds(wheel_event->TimeStampSeconds());
+  base::TimeTicks wheel_event_timestamp = wheel_event->TimeStamp();
   EXPECT_EQ(WebMouseWheelEvent::kPhaseChanged, wheel_event->phase);
   events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
 
@@ -1802,8 +1801,7 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   EXPECT_EQ(0U, wheel_end_event->delta_y);
   EXPECT_EQ(0U, wheel_end_event->wheel_ticks_x);
   EXPECT_EQ(0U, wheel_end_event->wheel_ticks_y);
-  EXPECT_GT(ui::EventTimeStampFromSeconds(wheel_end_event->TimeStampSeconds()),
-            wheel_event_timestamp);
+  EXPECT_GT(wheel_end_event->TimeStamp(), wheel_event_timestamp);
 
   gesture_event = static_cast<const WebGestureEvent*>(
       events[1]->ToEvent()->Event()->web_event.get());

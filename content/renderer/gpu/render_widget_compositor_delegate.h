@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/time/time.h"
 #include "content/common/content_export.h"
 
 namespace cc {
@@ -49,7 +50,7 @@ class CONTENT_EXPORT RenderWidgetCompositorDelegate {
       bool has_scrolled_by_touch) = 0;
 
   // Notifies that the compositor has issed a BeginMainFrame.
-  virtual void BeginMainFrame(double frame_time_sec) = 0;
+  virtual void BeginMainFrame(base::TimeTicks frame_time) = 0;
 
   // Requests a LayerTreeFrameSink to submit CompositorFrames to.
   virtual void RequestNewLayerTreeFrameSink(

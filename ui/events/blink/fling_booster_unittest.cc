@@ -29,7 +29,7 @@ class FlingBoosterTest : public testing::Test {
                                    const gfx::Vector2dF& velocity,
                                    int modifiers) {
     WebGestureEvent fling_start(WebInputEvent::kGestureFlingStart, modifiers,
-                                EventTimeStampToSeconds(timestamp));
+                                timestamp);
     fling_start.source_device = source_device;
     fling_start.data.fling_start.velocity_x = velocity.x();
     fling_start.data.fling_start.velocity_y = velocity.y();
@@ -39,7 +39,7 @@ class FlingBoosterTest : public testing::Test {
   WebGestureEvent CreateFlingCancel(base::TimeTicks timestamp,
                                     WebGestureDevice source_device) {
     WebGestureEvent fling_cancel(WebInputEvent::kGestureFlingCancel, 0,
-                                 EventTimeStampToSeconds(timestamp));
+                                 timestamp);
     fling_cancel.source_device = source_device;
     return fling_cancel;
   }
@@ -78,8 +78,7 @@ TEST_F(FlingBoosterTest, FlingBoost) {
 
   // The GestureScrollBegin should be swallowed by the fling when a fling
   // cancellation is deferred.
-  gesture_scroll_event_.SetTimeStampSeconds(
-      EventTimeStampToSeconds(event_time_));
+  gesture_scroll_event_.SetTimeStamp(event_time_);
   gesture_scroll_event_.SetType(WebInputEvent::kGestureScrollBegin);
   bool cancel_current_fling;
   EXPECT_TRUE(fling_booster_->FilterGestureEventForFlingBoosting(
@@ -94,8 +93,7 @@ TEST_F(FlingBoosterTest, FlingBoost) {
 
   // GestureScrollUpdates in the same direction and at sufficient speed should
   // be swallowed by the fling.
-  gesture_scroll_event_.SetTimeStampSeconds(
-      EventTimeStampToSeconds(event_time_));
+  gesture_scroll_event_.SetTimeStamp(event_time_);
   gesture_scroll_event_.SetType(WebInputEvent::kGestureScrollUpdate);
   gesture_scroll_event_.data.scroll_update.delta_x = 100;
   gesture_scroll_event_.data.scroll_update.delta_y = 100;
@@ -145,8 +143,7 @@ TEST_F(FlingBoosterTest, NoFlingBoostIfScrollDelayed) {
 
   // The GestureScrollBegin should be swallowed by the fling when a fling
   // cancellation is deferred.
-  gesture_scroll_event_.SetTimeStampSeconds(
-      EventTimeStampToSeconds(event_time_));
+  gesture_scroll_event_.SetTimeStamp(event_time_);
   gesture_scroll_event_.SetType(WebInputEvent::kGestureScrollBegin);
   bool cancel_current_fling;
   EXPECT_TRUE(fling_booster_->FilterGestureEventForFlingBoosting(
@@ -177,8 +174,7 @@ TEST_F(FlingBoosterTest, NoFlingBoostIfNotAnimated) {
 
   // The GestureScrollBegin should be swallowed by the fling when a fling
   // cancellation is deferred.
-  gesture_scroll_event_.SetTimeStampSeconds(
-      EventTimeStampToSeconds(event_time_));
+  gesture_scroll_event_.SetTimeStamp(event_time_);
   gesture_scroll_event_.SetType(WebInputEvent::kGestureScrollBegin);
   bool cancel_current_fling;
   EXPECT_TRUE(fling_booster_->FilterGestureEventForFlingBoosting(
@@ -225,8 +221,7 @@ TEST_F(FlingBoosterTest, NoFlingBoostIfScrollInDifferentDirection) {
 
   // If the GestureScrollUpdate is in a different direction than the fling,
   // the fling should be cancelled and the update event shouldn't get filtered.
-  gesture_scroll_event_.SetTimeStampSeconds(
-      EventTimeStampToSeconds(event_time_));
+  gesture_scroll_event_.SetTimeStamp(event_time_);
   gesture_scroll_event_.SetType(WebInputEvent::kGestureScrollUpdate);
   gesture_scroll_event_.data.scroll_update.delta_x = -100;
   bool cancel_current_fling;

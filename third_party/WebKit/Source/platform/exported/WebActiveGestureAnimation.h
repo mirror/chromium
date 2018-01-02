@@ -27,6 +27,7 @@
 #define WebActiveGestureAnimation_h
 
 #include <memory>
+#include "base/time/time.h"
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
@@ -49,18 +50,18 @@ class PLATFORM_EXPORT WebActiveGestureAnimation {
   static std::unique_ptr<WebActiveGestureAnimation> CreateWithTimeOffset(
       std::unique_ptr<WebGestureCurve>,
       WebGestureCurveTarget*,
-      double start_time);
+      base::TimeTicks start_time);
   ~WebActiveGestureAnimation();
 
-  bool Animate(double time);
+  bool Animate(base::TimeTicks);
 
  private:
   // Assumes a valid WebGestureCurveTarget that outlives the animation.
   WebActiveGestureAnimation(std::unique_ptr<WebGestureCurve>,
                             WebGestureCurveTarget*,
-                            double start_time);
+                            base::TimeTicks start_time);
 
-  double start_time_;
+  base::TimeTicks start_time_;
   std::unique_ptr<WebGestureCurve> curve_;
   WebGestureCurveTarget* target_;
 };

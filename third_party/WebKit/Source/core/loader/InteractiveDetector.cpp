@@ -203,11 +203,12 @@ void InteractiveDetector::OnDomContentLoadedEnd(double dcl_end_time) {
   CheckTimeToInteractiveReached();
 }
 
-void InteractiveDetector::OnInvalidatingInputEvent(double timestamp_seconds) {
+void InteractiveDetector::OnInvalidatingInputEvent(base::TimeTicks timestamp) {
   if (page_event_times_.first_invalidating_input != 0.0)
     return;
 
-  page_event_times_.first_invalidating_input = timestamp_seconds;
+  page_event_times_.first_invalidating_input =
+      timestamp.since_origin().InSecondsF();
   if (GetSupplementable()->Loader())
     GetSupplementable()->Loader()->DidChangePerformanceTiming();
 }

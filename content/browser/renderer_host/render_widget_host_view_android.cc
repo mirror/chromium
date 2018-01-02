@@ -1978,9 +1978,7 @@ void RenderWidgetHostViewAndroid::SendGestureEvent(
     switch (event.GetType()) {
       case blink::WebInputEvent::kGestureLongPress:
         touch_selection_controller_->HandleLongPressEvent(
-            base::TimeTicks() +
-                base::TimeDelta::FromSecondsD(event.TimeStampSeconds()),
-            gfx::PointF(event.x, event.y));
+            event.TimeStamp(), gfx::PointF(event.x, event.y));
         break;
 
       case blink::WebInputEvent::kGestureTap:
@@ -2047,8 +2045,9 @@ void RenderWidgetHostViewAndroid::ResolveTapDisambiguation(
     bool is_long_press) {
   DCHECK(host_);
   host_->Send(new ViewMsg_ResolveTapDisambiguation(
-      host_->GetRoutingID(), timestamp_seconds, tap_viewport_offset,
-      is_long_press));
+      host_->GetRoutingID(),
+      base::TimeTicks() + base::TimeDelta::FromSecondsD(timestamp_seconds),
+      tap_viewport_offset, is_long_press));
 }
 
 void RenderWidgetHostViewAndroid::MoveCaret(const gfx::Point& point) {
@@ -2381,8 +2380,7 @@ void RenderWidgetHostViewAndroid::OnStylusSelectTap(base::TimeTicks time,
   // Treat the stylus tap as a long press, activating either a word selection or
   // context menu depending on the targetted content.
   blink::WebGestureEvent long_press = WebGestureEventBuilder::Build(
-      blink::WebInputEvent::kGestureLongPress,
-      (time - base::TimeTicks()).InSecondsF(), x, y);
+      blink::WebInputEvent::kGestureLongPress, time, x, y);
   SendGestureEvent(long_press);
 }
 
