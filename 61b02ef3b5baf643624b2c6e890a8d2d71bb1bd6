@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b319824_11c43e4b",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-02T20:59:04Z",
+      "side": 1,
+      "message": "I think this description could be better. We are testing resurrection, not just deletion. I think without resurrection we always did the right thing and not crash?",
+      "revId": "61b02ef3b5baf643624b2c6e890a8d2d71bb1bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3c9612_ce84ca02",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-02T20:59:04Z",
+      "side": 1,
+      "message": "Why is this code added?",
+      "revId": "61b02ef3b5baf643624b2c6e890a8d2d71bb1bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
