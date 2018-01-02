@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3270d0f4_7921e4ec",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2018-01-02T11:45:34Z",
+      "side": 1,
+      "message": "We are duplicating this logic further down on L200. Could we refactor this into an internal method?",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 3
+      },
+      "revId": "7388ab847990f0517b89c2bd790cfa589d264a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
