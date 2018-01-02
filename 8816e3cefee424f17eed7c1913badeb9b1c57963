@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2c667f6c_0118492f",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-02T10:49:26Z",
+      "side": 1,
+      "message": "The use of glob in this function is something I wanted to get a hint about early after reading the name. Note I did not ask to add a docstring for other private functions.\n\nYou wrote \"Done\" and changed it to _GetGlobbedFileList(file_list) without providing a docstring. This looks slightly unfinished :) Perhaps s/file_list/glob_list/ and _GetFileListFromGlobs? I know what a \"file list is\", I don\u0027t necessarily easily figure out what a \"globbed file list is\".",
+      "parentUuid": "0e56510a_8dbe7ecc",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10db22b_9eb531df",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "In the current workflow several different kinds of dumps can be mixed together in the same directory.",
       "parentUuid": "b10db22b_9eb531df",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faff00c2_207849d5",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-02T10:49:26Z",
+      "side": 1,
+      "message": "humble opinion: having to provide magic globs in commandline seems error-prone and makes profiles less easy to share with teammates, up to you, it\u0027s all experimental",
+      "parentUuid": "900948a4_f526688a",
       "range": {
         "startLine": 72,
         "startChar": 51,
@@ -237,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "b5a1eb40_56155327",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-02T10:49:26Z",
+      "side": 1,
+      "message": "Did you change something to make it more consistent? I could not understand your response, sorry.",
+      "parentUuid": "99ed1c0a_14141609",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7497cb_61bd5b68",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 3
@@ -281,6 +353,29 @@
       "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d070464_6012da03",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-02T10:49:26Z",
+      "side": 1,
+      "message": "will this break the use in orderfile_generator_backend.py at _GenerateAndProcessProfile()?",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -366,6 +461,30 @@
       "side": 1,
       "message": "Thanks, will break out in an unrelated change.\n\nNote that process_profiles is not used for orderfile generation.",
       "parentUuid": "03b39c6e_a2e3951d",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75b9a207_40f93870",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-02T10:49:26Z",
+      "side": 1,
+      "message": "are you sure? GetReachedSymbolsFromDumpsAndMaybeWriteOffsets() is used in orderfile_generator_backend.py\n\nIt is in the lightweight instrumentation path, but still it would be good to keep it working",
+      "parentUuid": "37dab25f_35977372",
       "range": {
         "startLine": 230,
         "startChar": 60,
