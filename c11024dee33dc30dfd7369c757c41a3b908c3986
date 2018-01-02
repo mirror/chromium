@@ -46,6 +46,30 @@
       "revId": "c11024dee33dc30dfd7369c757c41a3b908c3986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e026ee1_308c7ec0",
+        "filename": "ui/gl/gl_implementation_osmesa.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-02T21:35:30Z",
+      "side": 1,
+      "message": "Thanks for clarifying; I wonder if the intention is for the dynamic loader to look for the libraries under a lib/ path in the calling application\u0027s package, in future.",
+      "parentUuid": "5bb54c1b_194b2287",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "c11024dee33dc30dfd7369c757c41a3b908c3986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
