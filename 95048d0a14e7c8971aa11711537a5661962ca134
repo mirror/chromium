@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b053bd5e_ec3477c1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f81d4f_8659245a",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6e0262_8e4f2b5b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-27T18:22:27Z",
       "side": 1,
       "message": "Is this covering a case that the usual `using CppType \u003d typename NativeValueTraits\u003cT\u003e::ImplType` doesn\u0027t?",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85914e52_5a7f5d7b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "Regrettably, yes. For interface types, like Node, ImplType ends up resolving to Node rather than Node*. (I consider this slightly weird, but so it is.)\n\nWe could go do a cleanup to define exactly what we mean by ImplType (is it the result of NativeValue? something else?) at some point. For now, this gets the exact type produced by the conversion.",
+      "parentUuid": "8c6e0262_8e4f2b5b",
       "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d1bf5b1c_ad79de4a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "Various things currently check whether ImplType is a garbage-collected type or similar, and in the case where we aren\u0027t getting a wrapper, we need that logic to work. I think this should probably ultimately be fixed by a cleanup of what ImplType actually means (I don\u0027t think it\u0027s reasonable for it to be the pointee type in the case of GC objects, but that\u0027s not a trivial change).\n\nIn the meantime, though, this CL needs a way to both preserve that and select the type that NativeValueTraits\u003cIDLNullable\u003cT\u003e\u003e should return.",
+      "parentUuid": "25731c7b_b426e0ce",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f4657c7_8a122fc0",
         "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b44b3d18_11b490ee",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "We could, but then we still have to have a way of detecting whether an Optional\u003c\u003e wrapper is needed, and the presence of NullValue no longer works. So we\u0027d have to add some other explicit tag, or do something slightly more subtle, like checking whether NullValue returns base::nullopt_t or not.",
+      "parentUuid": "6f4657c7_8a122fc0",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48e2bb29_61d69df5",
         "filename": "third_party/WebKit/Source/bindings/core/v8/NativeValueTraitsImpl.h",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-27T18:22:27Z",
       "side": 1,
       "message": "To me, doing this here rather than in IDLTypes.h looks inconsistent, especially since IDLNullable does it there. In terms of semantics, I think it makes more sense to have a function whose purpose is to return what corresponds to a null value for a given type along with ImplType.",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d082324e_59045508",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/NativeValueTraitsImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "To me it seemed like a better fit with NativeValueTraits, in that it produces a native value corresponding to a V8 value (where that value is null, as opposed to being a v8::String or whatever).\n\nI agree that it\u0027s awkward that IDLNullable ends up really making that decision that template itself, which is basically because we need to check the nullability of the underlying type in order to alias ImplType correctly. :/\n\nThe other thing that\u0027s important here is that interface types don\u0027t exist in IDLTypes.h, but does have NativeValueTraits, so the bindings generator is able to augment the existing NativeValueTraits they have with a NullValue member.",
+      "parentUuid": "48e2bb29_61d69df5",
       "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +209,24 @@
       "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2215da7f_dd911f91",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-02T16:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfc31925_1f0f125c",
+      "revId": "95048d0a14e7c8971aa11711537a5661962ca134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
