@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b8b712_ca526d62",
+        "filename": "third_party/WebKit/Source/core/paint/AdjustPaintOffsetScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Remove for now.",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5767ec_bc0d1487",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "I think it might be less confusing to write the code like this:\n\nif (object.IsTableSection()) {\n  if (section.IsRepeatingHeaderGroup()\n    code\n  else if (section.IsRepeatingFooterGroup()\n    code\n}",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3b9189_7f3534af",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Add a comment: subtract 1 to ensure overlap of 1 px for a fragment that has exactly one\nrow plus space for the footer.",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1390003b_e50c8078",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Therefore, for fragments other than the first, adjust by |repeated|-|original|\nto ensure this alignment.\n\nAlso, this comment makes more sense inside of the if statement on line 1761.",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576253f2_b9749d49",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "auto alignment_offset \u003d repeating_offset_in_fragment - original_offset_in_flow_thread",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6f84ce_7e09605c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "alignment_offset - PaginationOffset()",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c63741_17d24bb0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t PaginationOffset().Y() still be included?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bf2063_7604ae53",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1790,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Why do you have to include VBorderSpacing here but not for header groups?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8c076d_1ef38f42",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "PaginationOffset doesn\u0027t seem right to implement page size. Shouldn\u0027t it instead be\nthe height of the FragmentData or similar?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260e737a_a33bfdf0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-02T22:48:13Z",
+      "side": 1,
+      "message": "Add a comment explaining this. I think the if statement is testing for whether this\nLayotObject is a child of a repeating header or footer, is that correct?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
