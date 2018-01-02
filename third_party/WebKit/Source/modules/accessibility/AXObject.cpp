@@ -1372,6 +1372,9 @@ void AXObject::TokenVectorFromAttribute(Vector<String>& tokens,
 
   attribute_value.SimplifyWhiteSpace();
   attribute_value.Split(' ', tokens);
+  for (unsigned i = 0; i < tokens.size(); i++) {
+    tokens[i] = tokens[i].StripWhiteSpace();
+  }
 }
 
 void AXObject::ElementsFromAttribute(HeapVector<Member<Element>>& elements,
