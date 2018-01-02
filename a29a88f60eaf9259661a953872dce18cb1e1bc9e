@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6240d635_f6489d07",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-02T20:00:22Z",
+      "side": 1,
+      "message": "This isn\u0027t right - we do want nextversion \u003d 0, but we want it in \u003cevent\u003e, not in \u003capp\u003e.\n\ni.e. the semantics are:\n\u003cevent previousversion\u003e ← The version of the app before the operation.\n\u003cevent nextversion\u003e ← The intended version of the app after the operation.\n\u003capp version\u003e ← The actual version of the app after the operation.\n\nSo for uninstalls:\n\u003capp version\u003d\"0\"\u003e\n \u003cevent previousversion\u003d\"1.2.3.4\" nextversion\u003d\"0\"/\u003e\n\u003c/app\u003e\n\nAnd then on the server side, we should pick up the version of uninstalled items from the uninstall event ping\u0027s previousversion, not from app version. However, different update clients do different things w.r.t. these versions, so we\u0027ll have to have some conditional logic on the server end.",
+      "range": {
+        "startLine": 253,
+        "startChar": 25,
+        "endLine": 253,
+        "endChar": 26
+      },
+      "revId": "a29a88f60eaf9259661a953872dce18cb1e1bc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
