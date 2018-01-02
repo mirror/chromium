@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d6058a_5e5ff491",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-02T21:27:59Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem valid anymore.  This is called from ChromeApplication#onCreate and not from any particular activity.  Also, we should consider moving that call from onCreate to attachBaseContext as that will happen first and is starting to get larger and larger as we add more stuff there.",
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee182fe_0ff2c633",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-02T21:27:59Z",
+      "side": 1,
+      "message": "\"in theory\" OEMs could change the implementation of uptimeMillis though right?  Can we guarantee this across all versions of Android?",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ca8dd8_8b4e00e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84157,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-02T21:27:59Z",
+      "side": 1,
+      "message": "I apologize for asking a rather naive question, but what is \"Main\" here?\n\nWe use Main to refer to ACTION_MAIN, which we often conflate with launching Chrome via the App Icon (although that actually needs to check the launcher category too).\n\nThe start time here is at application init, which could happen for Chrome icon clicks, Custom Tab opens, sync message received, queries to our browser provider, updates to the bookmark widget (i.e. any of the service, provider, receiver entries in https://cs.chromium.org/chromium/src/chrome/android/java/AndroidManifest.xml).  Not all will spin up the browser process, so we could get some errant wrong numbers as components spin up the application but do not trigger the browser process init.\n\nJust trying to get a general idea of what the goal of the metric is and whether we should highlight any of the known gotchas that could produce inaccurate results.",
+      "range": {
+        "startLine": 84157,
+        "startChar": 56,
+        "endLine": 84157,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc016ab_ef9883bc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84159,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-02T21:27:59Z",
+      "side": 1,
+      "message": "Should you be an owner of this metric?",
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
