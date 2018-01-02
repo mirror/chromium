@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6efcc024_367cc022",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-02T21:15:03Z",
+      "side": 1,
+      "message": "I like that - done.",
+      "parentUuid": "a66b3493_d5901ad1",
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60518f23_633941e1",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9c480cd6_f7d023c3",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-02T21:15:03Z",
+      "side": 1,
+      "message": "|ret| can be null here only if kHintIsAdvisory is true. That\u0027s currently only on POSIX.\n\nOn Windows, either:\na) address !\u003d nullptr and ret \u003d\u003d address and is therefore aligned, or\nb) address \u003d\u003d nullptr and ret must be some non-aligned address, so we FreePages and try again.\n\nI have a follow on patch that tries to make this loop less subtle.",
+      "parentUuid": "60518f23_633941e1",
+      "range": {
+        "startLine": 221,
+        "startChar": 42,
+        "endLine": 221,
+        "endChar": 47
+      },
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a86d32_1cc7f541",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 12
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "850b1f68_0f35e71e",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-02T21:15:03Z",
+      "side": 1,
+      "message": "We can only hit this code path on Windows (again because kHintIsAdvisory is true on POSIX).",
+      "parentUuid": "a0a86d32_1cc7f541",
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c21daf9d_803ab8ca",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 12
@@ -70,6 +130,30 @@
       "writtenOn": "2018-01-02T20:47:34Z",
       "side": 1,
       "message": "This isn\u0027t windows only.  It\u0027d also apply to arm32 POSIX (aka Android) wouldn\u0027t it?",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 53
+      },
+      "revId": "8e77c5f102afb88fc02d3cc3d0e7cfcd659b84c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e66071c_90456782",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2018-01-02T21:15:03Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "parentUuid": "c21daf9d_803ab8ca",
       "range": {
         "startLine": 235,
         "startChar": 0,
