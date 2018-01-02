@@ -34,6 +34,24 @@
       "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b961d8c_c28d3899",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2018-01-02T10:02:52Z",
+      "side": 1,
+      "message": "What is actually depending on the AGSA account in Chrome? What would the user experience be like if it takes longer to get the account?\n\nI would imagine the change still being worth it though, as AGSA is pretty heavy to start up.",
+      "parentUuid": "fe828b4f_23e0b8cd",
+      "revId": "56b2e5f008b6ddfa390e6493c1e8e52056a5d9ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
