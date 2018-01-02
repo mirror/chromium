@@ -83,6 +83,7 @@ DelegatedFrameHostAndroid::~DelegatedFrameHostAndroid() {
 void DelegatedFrameHostAndroid::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame) {
+  LOG(ERROR) << "EK: SUBMIT " << this;
   if (local_surface_id != surface_info_.id().local_surface_id()) {
     DestroyDelegatedContent();
     DCHECK(!content_layer_);
@@ -104,10 +105,20 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
   } else {
     support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
   }
+
+  if (compositor_attach_until_frame_lock_) {
+    LOG(ERROR) << "EK: REMOVING LOCK " << this;
+    compositor_attach_until_frame_lock_.reset();
+  }
+}
+
+void DelegatedFrameHostAndroid::DidSubmitCompositorFrameWithNoContent() {
+  LOG(ERROR) << "EK: NO CONTENT " << this;
 }
 
 void DelegatedFrameHostAndroid::DidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
+  LOG(ERROR) << "EK: DID NOT PRODUCE " << this;
   support_->DidNotProduceFrame(ack);
 }
 
@@ -119,6 +130,7 @@ void DelegatedFrameHostAndroid::RequestCopyOfSurface(
     WindowAndroidCompositor* compositor,
     const gfx::Rect& src_subrect_in_pixel,
     viz::CopyOutputRequest::CopyOutputRequestCallback result_callback) {
+  LOG(ERROR) << "EK: REQUEST COPY " << this;
   DCHECK(surface_info_.is_valid());
   DCHECK(!result_callback.is_null());
 
@@ -164,16 +176,30 @@ void DelegatedFrameHostAndroid::CompositorFrameSinkChanged() {
 
 void DelegatedFrameHostAndroid::AttachToCompositor(
     WindowAndroidCompositor* compositor) {
+  LOG(ERROR) << "EK: ATTACH " << this;
   if (registered_parent_compositor_)
     DetachFromCompositor();
+  // Take the compositor lock, preventing frames from being displayed until
+  // we've produced content. Set a 5 second timeout to prevent locking up the
+  // browser in cases where the renderer hangs or another factor prevents a
+  // frame from being produced.
+  //
+  LOG(ERROR) << "EK: ADDING LOCK " << this;
+  compositor_attach_until_frame_lock_ =
+      compositor->GetCompositorLock(this, base::TimeDelta::FromSeconds(5));
   compositor->AddChildFrameSink(frame_sink_id_);
   client_->SetBeginFrameSource(&begin_frame_source_);
   registered_parent_compositor_ = compositor;
 }
 
 void DelegatedFrameHostAndroid::DetachFromCompositor() {
+  LOG(ERROR) << "EK: DETACH " << this;
   if (!registered_parent_compositor_)
     return;
+  if (compositor_attach_until_frame_lock_) {
+    LOG(ERROR) << "EK: REMOVING LOCK " << this;
+    compositor_attach_until_frame_lock_.reset();
+  }
   client_->SetBeginFrameSource(nullptr);
   support_->SetNeedsBeginFrame(false);
   registered_parent_compositor_->RemoveChildFrameSink(frame_sink_id_);
@@ -193,9 +219,12 @@ void DelegatedFrameHostAndroid::DidPresentCompositorFrame(
     uint32_t flags) {}
 
 void DelegatedFrameHostAndroid::DidDiscardCompositorFrame(
-    uint32_t presentation_token) {}
+    uint32_t presentation_token) {
+  LOG(ERROR) << "EK: DID DISCARD " << this;
+}
 
 void DelegatedFrameHostAndroid::OnBeginFrame(const viz::BeginFrameArgs& args) {
+  LOG(ERROR) << "EK: BEGIN FRAME " << this;
   begin_frame_source_.OnBeginFrame(args);
 }
 
@@ -205,15 +234,18 @@ void DelegatedFrameHostAndroid::ReclaimResources(
 }
 
 void DelegatedFrameHostAndroid::OnBeginFramePausedChanged(bool paused) {
+  LOG(ERROR) << "EK: Begin frame paused changed " << paused << " " << this;
   begin_frame_source_.OnSetBeginFrameSourcePaused(paused);
 }
 
 void DelegatedFrameHostAndroid::OnNeedsBeginFrames(bool needs_begin_frames) {
+  LOG(ERROR) << "EK: NEEDS BEGIN FRAMES " << this;
   support_->SetNeedsBeginFrame(needs_begin_frames);
 }
 
 void DelegatedFrameHostAndroid::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
+  LOG(ERROR) << "EK: FIRST SURFACE ACTIVATION " << this;
   // TODO(fsamuel): Once surface synchronization is turned on, the fallback
   // surface should be set here.
 }
@@ -221,6 +253,8 @@ void DelegatedFrameHostAndroid::OnFirstSurfaceActivation(
 void DelegatedFrameHostAndroid::OnFrameTokenChanged(uint32_t frame_token) {
   client_->OnFrameTokenChanged(frame_token);
 }
+
+void DelegatedFrameHostAndroid::CompositorLockTimedOut() {}
 
 void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
   constexpr bool is_root = false;
