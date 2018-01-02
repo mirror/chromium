@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3739b4b_f398934f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentClassFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-02T19:23:50Z",
+      "side": 1,
+      "message": "There is another downstream class will set different version of this class which is in content_public, I think this one should remain in content. See my downstream cl: http://crrev/i/537539",
+      "parentUuid": "ee3e484b_91506db7",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e54333a5_94ea1781",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentClassFactory.java",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "316e87bc_73ab6dca",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentClassFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-02T19:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e54333a5_94ea1781",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae5f80ef_05a3b69c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-02T14:56:19Z",
       "side": 1,
       "message": "again, you sure this won\u0027t need to be in content_public?",
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213c9094_ec294182",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-02T19:23:50Z",
+      "side": 1,
+      "message": "This class will only be used by ContentClassFactory and SelectionPopupController, there is no need to expose this to content public IMO.",
+      "parentUuid": "ae5f80ef_05a3b69c",
       "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "936b6379_fb3a722a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-02T19:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aade1df_48c3dd37",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc5bd4e_c2cbe15d",
         "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
         "patchSetId": 2
@@ -120,6 +198,30 @@
       "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4247223f_0c2d46b4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/HandleObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2018-01-02T19:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc5bd4e_c2cbe15d",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "b7b60df1b1857518788a74f173c452d6c167fd41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
