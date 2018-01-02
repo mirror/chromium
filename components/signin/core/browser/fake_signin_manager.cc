@@ -13,7 +13,9 @@
 FakeSigninManagerBase::FakeSigninManagerBase(
     SigninClient* client,
     AccountTrackerService* account_tracker_service)
-    : SigninManagerBase(client, account_tracker_service) {}
+    : SigninManagerBase(client,
+                        account_tracker_service,
+                        nullptr /* signin_error_controller */) {}
 
 FakeSigninManagerBase::~FakeSigninManagerBase() {}
 
@@ -31,7 +33,8 @@ FakeSigninManager::FakeSigninManager(
     : SigninManager(client,
                     token_service,
                     account_tracker_service,
-                    cookie_manager_service),
+                    cookie_manager_service,
+                    nullptr /* signin_error_controller */),
       token_service_(token_service) {}
 
 FakeSigninManager::~FakeSigninManager() {}
