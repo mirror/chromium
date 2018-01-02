@@ -23,7 +23,6 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
-#include "platform/graphics/paint/ScopedDisplayItemFragment.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
 #include "platform/graphics/paint/Transform3DDisplayItem.h"
@@ -747,18 +746,6 @@ void PaintLayerPainter::RepeatFixedPositionObjectInPages(
   }
 }
 
-static void ForAllFragments(
-    GraphicsContext& context,
-    const PaintLayerFragments& fragments,
-    const std::function<void(const PaintLayerFragment&)> function) {
-  for (size_t i = 0; i < fragments.size(); ++i) {
-    Optional<ScopedDisplayItemFragment> scoped_display_item_fragment;
-    if (i)
-      scoped_display_item_fragment.emplace(context, i);
-    function(fragments[i]);
-  }
-}
-
 PaintResult PaintLayerPainter::PaintLayerWithTransform(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& painting_info,
@@ -817,33 +804,27 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
       result = kMayBeClippedByPaintDirtyRect;
   }
 
-  // We have to skip cache for fragments under transform because we will paint
-  // all the fragments of sublayers in each fragment like the following:
-  //  fragment 0 { sub-layer fragment 0; sub-layer fragment 1 }
-  //  fragment 1 { sub-layer fragment 0; sub-layer fragment 1 }
   Optional<DisplayItemCacheSkipper> cache_skipper;
   if (layer_fragments.size() > 1)
     cache_skipper.emplace(context);
 
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        Optional<LayerClipRecorder> clip_recorder;
-        if (parent_layer &&
-            !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-          if (NeedsToClip(painting_info, fragment.background_rect, paint_flags,
-                          paint_layer_.GetLayoutObject())) {
-            clip_recorder.emplace(
-                context, *parent_layer, DisplayItem::kClipLayerParent,
-                fragment.background_rect, painting_info.root_layer,
-                fragment.pagination_offset, paint_flags,
-                paint_layer_.GetLayoutObject());
-          }
-        }
-        if (PaintFragmentByApplyingTransform(context, painting_info,
-                                             paint_flags, fragment) ==
-            kMayBeClippedByPaintDirtyRect)
-          result = kMayBeClippedByPaintDirtyRect;
-      });
+  for (const auto& fragment : layer_fragments) {
+    Optional<LayerClipRecorder> clip_recorder;
+    if (parent_layer && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      if (NeedsToClip(painting_info, fragment.background_rect, paint_flags,
+                      paint_layer_.GetLayoutObject())) {
+        clip_recorder.emplace(
+            context, *parent_layer, DisplayItem::kClipLayerParent,
+            fragment.background_rect, painting_info.root_layer,
+            fragment.pagination_offset, paint_flags,
+            paint_layer_.GetLayoutObject());
+      }
+    }
+    if (PaintFragmentByApplyingTransform(context, painting_info, paint_flags,
+                                         fragment) ==
+        kMayBeClippedByPaintDirtyRect)
+      result = kMayBeClippedByPaintDirtyRect;
+  }
   return result;
 }
 
@@ -966,51 +947,52 @@ void PaintLayerPainter::PaintOverflowControlsForFragments(
   if (!scrollable_area)
     return;
 
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
-        if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-          PaintChunkProperties properties(
-              *fragment.fragment_data->LocalBorderBoxProperties());
-          properties.backface_hidden =
-              paint_layer_.GetLayoutObject().HasHiddenBackface();
-          fragment_paint_chunk_properties.emplace(
-              context.GetPaintController(), properties, paint_layer_,
-              DisplayItem::kScrollOverflowControls);
-        }
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
 
-        // We need to apply the same clips and transforms that
-        // paintFragmentWithPhase would have.
-        LayoutRect cull_rect = fragment.background_rect.Rect();
+  for (auto& fragment : layer_fragments) {
+    Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      PaintChunkProperties properties(
+          *fragment.fragment_data->LocalBorderBoxProperties());
+      properties.backface_hidden =
+          paint_layer_.GetLayoutObject().HasHiddenBackface();
+      fragment_paint_chunk_properties.emplace(
+          context.GetPaintController(), properties, paint_layer_,
+          DisplayItem::kScrollOverflowControls);
+    }
 
-        Optional<LayerClipRecorder> clip_recorder;
-        if (NeedsToClip(local_painting_info, fragment.background_rect,
-                        paint_flags, paint_layer_.GetLayoutObject())) {
-          clip_recorder.emplace(
-              context, paint_layer_, DisplayItem::kClipLayerOverflowControls,
-              fragment.background_rect, local_painting_info.root_layer,
-              fragment.pagination_offset, paint_flags,
-              paint_layer_.GetLayoutObject());
-        }
+    // We need to apply the same clips and transforms that
+    // paintFragmentWithPhase would have.
+    LayoutRect cull_rect = fragment.background_rect.Rect();
 
-        Optional<ScrollRecorder> scroll_recorder;
-        if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-            !local_painting_info.scroll_offset_accumulation.IsZero()) {
-          cull_rect.Move(local_painting_info.scroll_offset_accumulation);
-          scroll_recorder.emplace(
-              context, paint_layer_.GetLayoutObject(),
-              DisplayItem::kScrollOverflowControls,
-              local_painting_info.scroll_offset_accumulation);
-        }
+    Optional<LayerClipRecorder> clip_recorder;
+    if (NeedsToClip(local_painting_info, fragment.background_rect, paint_flags,
+                    paint_layer_.GetLayoutObject())) {
+      clip_recorder.emplace(
+          context, paint_layer_, DisplayItem::kClipLayerOverflowControls,
+          fragment.background_rect, local_painting_info.root_layer,
+          fragment.pagination_offset, paint_flags,
+          paint_layer_.GetLayoutObject());
+    }
 
-        // We pass IntPoint() as the paint offset here, because
-        // ScrollableArea::paintOverflowControls just ignores it and uses the
-        // offset found in a previous pass.
-        CullRect snapped_cull_rect(PixelSnappedIntRect(cull_rect));
-        ScrollableAreaPainter(*scrollable_area)
-            .PaintOverflowControls(context, IntPoint(), snapped_cull_rect,
-                                   true);
-      });
+    Optional<ScrollRecorder> scroll_recorder;
+    if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+        !local_painting_info.scroll_offset_accumulation.IsZero()) {
+      cull_rect.Move(local_painting_info.scroll_offset_accumulation);
+      scroll_recorder.emplace(context, paint_layer_.GetLayoutObject(),
+                              DisplayItem::kScrollOverflowControls,
+                              local_painting_info.scroll_offset_accumulation);
+    }
+
+    // We pass IntPoint() as the paint offset here, because
+    // ScrollableArea::paintOverflowControls just ignores it and uses the
+    // offset found in a previous pass.
+    CullRect snapped_cull_rect(PixelSnappedIntRect(cull_rect));
+    ScrollableAreaPainter(*scrollable_area)
+        .PaintOverflowControls(context, IntPoint(), snapped_cull_rect, true);
+  }
 }
 
 void PaintLayerPainter::PaintFragmentWithPhase(
@@ -1129,13 +1111,15 @@ void PaintLayerPainter::PaintBackgroundForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        PaintFragmentWithPhase(PaintPhase::kSelfBlockBackgroundOnly, fragment,
-                               context, fragment.background_rect,
-                               local_painting_info, paint_flags,
-                               kHasNotClipped);
-      });
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
+  for (auto& fragment : layer_fragments) {
+    PaintFragmentWithPhase(PaintPhase::kSelfBlockBackgroundOnly, fragment,
+                           context, fragment.background_rect,
+                           local_painting_info, paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintForegroundForFragments(
@@ -1231,14 +1215,16 @@ void PaintLayerPainter::PaintForegroundForFragmentsWithPhase(
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags,
     ClipState clip_state) {
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        if (!fragment.foreground_rect.IsEmpty()) {
-          PaintFragmentWithPhase(phase, fragment, context,
-                                 fragment.foreground_rect, local_painting_info,
-                                 paint_flags, clip_state);
-        }
-      });
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
+  for (auto& fragment : layer_fragments) {
+    if (!fragment.foreground_rect.IsEmpty()) {
+      PaintFragmentWithPhase(phase, fragment, context, fragment.foreground_rect,
+                             local_painting_info, paint_flags, clip_state);
+    }
+  }
 }
 
 void PaintLayerPainter::PaintSelfOutlineForFragments(
@@ -1246,15 +1232,17 @@ void PaintLayerPainter::PaintSelfOutlineForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        if (!fragment.background_rect.IsEmpty()) {
-          PaintFragmentWithPhase(PaintPhase::kSelfOutlineOnly, fragment,
-                                 context, fragment.background_rect,
-                                 local_painting_info, paint_flags,
-                                 kHasNotClipped);
-        }
-      });
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
+  for (auto& fragment : layer_fragments) {
+    if (!fragment.background_rect.IsEmpty()) {
+      PaintFragmentWithPhase(PaintPhase::kSelfOutlineOnly, fragment, context,
+                             fragment.background_rect, local_painting_info,
+                             paint_flags, kHasNotClipped);
+    }
+  }
 }
 
 void PaintLayerPainter::PaintMaskForFragments(
@@ -1262,12 +1250,15 @@ void PaintLayerPainter::PaintMaskForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        PaintFragmentWithPhase(PaintPhase::kMask, fragment, context,
-                               fragment.background_rect, local_painting_info,
-                               paint_flags, kHasNotClipped);
-      });
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
+  for (auto& fragment : layer_fragments) {
+    PaintFragmentWithPhase(PaintPhase::kMask, fragment, context,
+                           fragment.background_rect, local_painting_info,
+                           paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintAncestorClippingMask(
@@ -1302,32 +1293,33 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1)
+    cache_skipper.emplace(context);
+
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     const DisplayItemClient& client =
         *paint_layer_.GetCompositedLayerMapping()->ChildClippingMaskLayer();
-    ForAllFragments(
-        context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-          auto state = fragment.fragment_data->ContentsProperties();
-          // This is a hack to incorporate mask-based clip-path.
-          // See CompositingLayerPropertyUpdater.cpp about
-          // ChildClippingMaskLayer.
-          state.SetEffect(fragment.fragment_data->PreFilter());
-          ScopedPaintChunkProperties fragment_paint_chunk_properties(
-              context.GetPaintController(), state, client,
-              DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
-          ClipRect mask_rect = fragment.background_rect;
-          mask_rect.MoveBy(fragment.fragment_data->PaintOffset());
-          FillMaskingFragment(context, mask_rect, client);
-        });
+    for (auto& fragment : layer_fragments) {
+      auto state = fragment.fragment_data->ContentsProperties();
+      // This is a hack to incorporate mask-based clip-path.
+      // See CompositingLayerPropertyUpdater.cpp about ChildClippingMaskLayer.
+      state.SetEffect(fragment.fragment_data->PreFilter());
+      ScopedPaintChunkProperties fragment_paint_chunk_properties(
+          context.GetPaintController(), state, client,
+          DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
+      ClipRect mask_rect = fragment.background_rect;
+      mask_rect.MoveBy(fragment.fragment_data->PaintOffset());
+      FillMaskingFragment(context, mask_rect, client);
+    }
     return;
   }
 
-  ForAllFragments(
-      context, layer_fragments, [&](const PaintLayerFragment& fragment) {
-        PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
-                               fragment.foreground_rect, local_painting_info,
-                               paint_flags, kHasNotClipped);
-      });
+  for (auto& fragment : layer_fragments) {
+    PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
+                           fragment.foreground_rect, local_painting_info,
+                           paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintOverlayScrollbars(

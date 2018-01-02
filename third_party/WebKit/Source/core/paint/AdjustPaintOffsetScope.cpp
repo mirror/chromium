@@ -21,10 +21,8 @@ bool AdjustPaintOffsetScope::AdjustForPaintOffsetTranslation(
     return false;
 
   DCHECK(fragment->LocalBorderBoxProperties());
-  contents_properties_.emplace(
-      old_paint_info_.context.GetPaintController(),
-      *fragment->LocalBorderBoxProperties(), box,
-      DisplayItem::PaintPhaseToDrawingType(old_paint_info_.phase));
+  contents_properties_.emplace(old_paint_info_.context.GetPaintController(),
+                               *fragment->LocalBorderBoxProperties(), box);
 
   new_paint_info_.emplace(old_paint_info_);
   new_paint_info_->UpdateCullRect(
