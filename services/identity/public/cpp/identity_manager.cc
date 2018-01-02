@@ -30,6 +30,18 @@ AccountInfo IdentityManager::GetPrimaryAccountInfo() {
   return primary_account_info_;
 }
 
+void IdentityManager::RemoveAccessTokenFromCache(
+    const std::string& account_id,
+    const OAuth2TokenService::ScopeSet& scopes,
+    const std::string& access_token) {
+  // Call PO2TS asynchronously to mimic the eventual interaction with the
+  // Identity Service.
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&OAuth2TokenService::InvalidateAccessToken,
+                                base::Unretained(token_service_), account_id,
+                                scopes, access_token));
+}
+
 std::unique_ptr<PrimaryAccountAccessTokenFetcher>
 IdentityManager::CreateAccessTokenFetcherForPrimaryAccount(
     const std::string& oauth_consumer_name,
