@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbfb0738_79011fa4",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2018-01-02T17:01:06Z",
+      "side": 1,
+      "message": "nit: do this as\n\n  try:\n    with tempfile.NamedTemporaryFile(delete\u003dFalse) as temp_file:\n      # write the contents of temp_file\n\n    # No need for temp_file.close()\n    # Remove same_version logic\n    if not dry_run:\n      shutil.move(temp_file.name, file_path)\n\n  finally:\n    if os.path.exists(temp_file.name):\n      os.remove(temp_file.name)",
+      "revId": "cfca9e79cb78e020c8668fb2688ccc8aa6635a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
