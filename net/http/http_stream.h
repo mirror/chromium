@@ -54,6 +54,7 @@ class NET_EXPORT_PRIVATE HttpStream {
   // will not access |*request_info| and it may be deleted.
   // Returns a net error code, possibly ERR_IO_PENDING.
   virtual int InitializeStream(const HttpRequestInfo* request_info,
+                               bool can_send_early,
                                RequestPriority priority,
                                const NetLogWithSource& net_log,
                                const CompletionCallback& callback) = 0;
