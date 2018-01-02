@@ -5,7 +5,6 @@
 #include "core/css/cssom/CSSUnitValue.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/css/CSSCalculationValue.h"
 #include "core/css/CSSResolutionUnits.h"
 #include "core/css/cssom/CSSMathMax.h"
 #include "core/css/cssom/CSSMathMin.h"
@@ -140,7 +139,7 @@ bool CSSUnitValue::Equals(const CSSNumericValue& other) const {
   return value_ == other_unit_value.value_ && unit_ == other_unit_value.unit_;
 }
 
-const CSSPrimitiveValue* CSSUnitValue::ToCSSValue(SecureContextMode) const {
+const CSSPrimitiveValue* CSSUnitValue::ToCSSValue() const {
   return CSSPrimitiveValue::Create(value_, unit_);
 }
 
