@@ -104,6 +104,7 @@ function PDFViewer(browserApi) {
   this.isPrintPreview_ = location.origin === 'chrome://print';
   this.isPrintPreviewLoaded_ = false;
   this.isUserInitiatedEvent_ = true;
+  // this.aa.bb();
 
   /**
    * @type {PDFMetrics}
@@ -225,6 +226,8 @@ function PDFViewer(browserApi) {
   }
 
   document.body.addEventListener('change-page', e => {
+    console.log('pdf.js change-page');
+    this.metrics.nothing();
     this.viewport_.goToPage(e.detail.page);
     if (e.detail.origin == 'bookmark')
       this.metrics.onBookmarkFollowed();
@@ -233,12 +236,15 @@ function PDFViewer(browserApi) {
   });
 
   document.body.addEventListener('change-page-and-xy', e => {
+    console.log('pdf.js change-page-and-xy');
+    this.metrics.nothing2();
     this.viewport_.goToPageAndXY(e.detail.page, e.detail.x, e.detail.y);
     if (e.detail.origin == 'bookmark')
       this.metrics.onFollowBookmark();
   });
 
   document.body.addEventListener('navigate', e => {
+    console.log('pdf.js navigate');
     var disposition = e.detail.newtab ?
         Navigator.WindowOpenDisposition.NEW_BACKGROUND_TAB :
         Navigator.WindowOpenDisposition.CURRENT_TAB;
@@ -246,6 +252,7 @@ function PDFViewer(browserApi) {
   });
 
   document.body.addEventListener('dropdown-opened', e => {
+    this.metrics.nothing3();
     if (e.detail == 'bookmarks')
       this.metrics.onOpenBookmarksPanel();
   });
@@ -445,6 +452,7 @@ PDFViewer.prototype = {
    * Rotate the plugin clockwise.
    */
   rotateClockwise_: function() {
+    this.aa.cc();
     this.metrics.onRotation();
     this.plugin_.postMessage({type: 'rotateClockwise'});
   },
@@ -454,6 +462,7 @@ PDFViewer.prototype = {
    * Rotate the plugin counter-clockwise.
    */
   rotateCounterClockwise_: function() {
+    this.aa.cc();
     this.metrics.onRotation();
     this.plugin_.postMessage({type: 'rotateCounterclockwise'});
   },
