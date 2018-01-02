@@ -34,9 +34,6 @@ void TestSuiteNoAtExit::Initialize() {
   // Run TestSuite::Initialize first so that logging is initialized.
   base::TestSuite::Initialize();
 
-  // Ensure histograms hit during tests are registered properly.
-  base::StatisticsRecorder::Initialize();
-
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   command_line->AppendSwitch(switches::kEnableInbandTextTracks);
 

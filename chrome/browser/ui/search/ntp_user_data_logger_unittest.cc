@@ -73,8 +73,6 @@ MATCHER_P3(IsBucketBetween, lower_bound, upper_bound, count, "") {
 }  // namespace
 
 TEST(NTPUserDataLoggerTest, ShouldRecordNumberOfTiles) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   // Ensure non-zero statistics.
@@ -107,8 +105,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordNumberOfTiles) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldNotRecordImpressionsBeforeAllTilesLoaded) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   base::HistogramTester histogram_tester;
@@ -145,8 +141,6 @@ TEST(NTPUserDataLoggerTest, ShouldNotRecordImpressionsBeforeAllTilesLoaded) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordImpressions) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   base::HistogramTester histogram_tester;
@@ -231,8 +225,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordImpressions) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldNotRecordRepeatedImpressions) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   base::HistogramTester histogram_tester;
@@ -296,8 +288,6 @@ TEST(NTPUserDataLoggerTest, ShouldNotRecordRepeatedImpressions) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldNotRecordImpressionsForBinsBeyondEight) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   base::HistogramTester histogram_tester;
@@ -346,8 +336,6 @@ TEST(NTPUserDataLoggerTest, ShouldNotRecordImpressionsForBinsBeyondEight) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordImpressionsAgainAfterNavigating) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   // Record some previous tile impressions.
@@ -426,8 +414,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordImpressionsAgainAfterNavigating) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordNavigations) {
-  base::StatisticsRecorder::Initialize();
-
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
 
   {
@@ -603,8 +589,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordNavigations) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordLoadTime) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   TestNTPUserDataLogger logger(GURL("chrome://newtab/"));
@@ -697,8 +681,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordLoadTime) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeLocalNTPGoogle) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   TestNTPUserDataLogger logger((GURL(chrome::kChromeSearchLocalNtpUrl)));
@@ -734,8 +716,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeLocalNTPGoogle) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeLocalNTPOther) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   TestNTPUserDataLogger logger((GURL(chrome::kChromeSearchLocalNtpUrl)));
@@ -771,8 +751,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeLocalNTPOther) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeRemoteNTPGoogle) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   TestNTPUserDataLogger logger(GURL("https://www.google.com/_/chrome/newtab"));
@@ -806,8 +784,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeRemoteNTPGoogle) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeRemoteNTPOther) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   TestNTPUserDataLogger logger(GURL("https://www.notgoogle.com/newtab"));
@@ -841,8 +817,6 @@ TEST(NTPUserDataLoggerTest, ShouldRecordLoadTimeRemoteNTPOther) {
 }
 
 TEST(NTPUserDataLoggerTest, ShouldRecordImpressionsAge) {
-  base::StatisticsRecorder::Initialize();
-
   base::HistogramTester histogram_tester;
 
   // Ensure non-zero statistics.
