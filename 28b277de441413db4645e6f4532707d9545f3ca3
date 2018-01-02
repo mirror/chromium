@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d62dad3e_0f031062",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-02T19:08:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a513f47_0355443e",
+      "range": {
+        "startLine": 325,
+        "startChar": 12,
+        "endLine": 325,
+        "endChar": 34
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce9ed4c_4e533b6f",
         "filename": "device/u2f/u2f_hid_device_unittest.cc",
         "patchSetId": 6
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7501c1b1_798dfe61",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-02T19:08:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce9ed4c_4e533b6f",
+      "range": {
+        "startLine": 329,
+        "startChar": 17,
+        "endLine": 329,
+        "endChar": 22
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506e7059_4f390bd0",
         "filename": "device/u2f/u2f_hid_device_unittest.cc",
         "patchSetId": 6
@@ -82,6 +130,24 @@
       "writtenOn": "2017-12-07T22:18:55Z",
       "side": 1,
       "message": "I\u0027m concerned that these tests are bypassing too much of the code that uses the HidConnection by calling methods like DeviceTransact and OnAllocateChannel manually. Can you follow the example of how we use MockUsbDeviceHandle in usb_descriptors_unittest.cc and have the mock connection set up with the data we expect to read and write?\n\nThis can be done in a follow-up since the tests above should also be updated.",
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332afcf2_12bd78c4",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-02T19:08:02Z",
+      "side": 1,
+      "message": "Configured MockHidConnection so that behavior in U2fHidDevice::OnAllocateChannel() could be tested without calling intermediate functions.",
+      "parentUuid": "506e7059_4f390bd0",
       "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
