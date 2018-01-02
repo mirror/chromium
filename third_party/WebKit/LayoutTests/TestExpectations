@@ -3579,3 +3579,7 @@ crbug.com/796913 virtual/gpu/fast/canvas/canvas-zero-length-lineCap.html [ Needs
 
 crbug.com/797138 external/wpt/credential-management/federatedcredential-framed-get.sub.https.html [ Crash ]
 crbug.com/797138 external/wpt/credential-management/passwordcredential-framed-get.sub.https.html [ Crash ]
+
+
+# Sheriff failures 2018-01-02
+crbug.com/798527 [ Linux ] virtual/spv175/compositing/gestures/gesture-tapHighlight-with-box-shadow.html [ Pass Failure ]
