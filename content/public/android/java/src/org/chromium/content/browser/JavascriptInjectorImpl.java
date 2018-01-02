@@ -6,7 +6,6 @@ package org.chromium.content.browser;
 
 import android.util.Pair;
 
-import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.webcontents.WebContentsUserData;
 import org.chromium.content.browser.webcontents.WebContentsUserData.UserDataFactory;
@@ -23,7 +22,8 @@ import java.util.Set;
  * Implementation class of the interface {@link JavascriptInjector}.
  */
 @JNINamespace("content")
-public class JavascriptInjectorImpl implements JavascriptInjector {
+public class JavascriptInjectorImpl
+        implements JavascriptInjector, WebContentsUserData.DestroyObserver {
     private static final class UserDataFactoryLazyHolder {
         private static final UserDataFactory<JavascriptInjectorImpl> INSTANCE =
                 JavascriptInjectorImpl::new;
@@ -47,9 +47,12 @@ public class JavascriptInjectorImpl implements JavascriptInjector {
         mNativePtr = nativeInit(webContents, mRetainedObjects);
     }
 
-    @CalledByNative
-    private void onDestroy() {
-        mNativePtr = 0;
+    @Override
+    public void onDestroy() {
+        if (mNativePtr != 0) {
+            nativeDestroy(mNativePtr);
+            mNativePtr = 0;
+        }
     }
 
     @Override
@@ -78,6 +81,7 @@ public class JavascriptInjectorImpl implements JavascriptInjector {
     }
 
     private native long nativeInit(WebContents webContents, Object retainedObjects);
+    private native void nativeDestroy(long nativeJavascriptInjector);
     private native void nativeSetAllowInspection(long nativeJavascriptInjector, boolean allow);
     private native void nativeAddInterface(
             long nativeJavascriptInjector, Object object, String name, Class requiredAnnotation);

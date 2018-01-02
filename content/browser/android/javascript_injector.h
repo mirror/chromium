@@ -14,15 +14,18 @@
 namespace content {
 
 class GinJavaBridgeDispatcherHost;
+class WebContents;
 
-class JavascriptInjector : public WebContentsUserData<JavascriptInjector> {
+class JavascriptInjector {
  public:
   JavascriptInjector(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& retained_objects,
       WebContents* web_contents);
-  ~JavascriptInjector() override;
+  ~JavascriptInjector();
+
+  void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   void SetAllowInspection(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
