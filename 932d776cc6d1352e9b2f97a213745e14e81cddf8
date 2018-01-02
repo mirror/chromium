@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bca8deb_263a2156",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-02T22:43:30Z",
+      "side": 1,
+      "message": "Done. (I used \"SafeBrowsing\" instead of \"safe browsing\" to be more consistent with the surroundings.)",
+      "parentUuid": "8b8159f8_c467172c",
+      "revId": "932d776cc6d1352e9b2f97a213745e14e81cddf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c924c04_5c907bd3",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "932d776cc6d1352e9b2f97a213745e14e81cddf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aeebdf_c275594f",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-02T22:43:30Z",
+      "side": 1,
+      "message": "Done. That makes good sense.",
+      "parentUuid": "0c924c04_5c907bd3",
+      "revId": "932d776cc6d1352e9b2f97a213745e14e81cddf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
