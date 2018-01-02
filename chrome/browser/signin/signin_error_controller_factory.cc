@@ -6,6 +6,7 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/signin/core/browser/profile_management_switches.h"
 
 SigninErrorControllerFactory::SigninErrorControllerFactory()
     : BrowserContextKeyedServiceFactory(
@@ -28,5 +29,9 @@ SigninErrorControllerFactory* SigninErrorControllerFactory::GetInstance() {
 
 KeyedService* SigninErrorControllerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new SigninErrorController();
+  SigninErrorController::AccountMode account_mode =
+      signin::IsAccountConsistencyMirrorEnabled()
+          ? SigninErrorController::AccountMode::ANY_ACCOUNT
+          : SigninErrorController::AccountMode::MAIN_ACCOUNT;
+  return new SigninErrorController(account_mode);
 }

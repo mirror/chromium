@@ -63,7 +63,9 @@ class SyncUsernameTestBase : public testing::Test {
    public:
     FakeSigninManagerBase(SigninClient* client,
                           AccountTrackerService* account_tracker_service)
-        : SigninManagerBase(client, account_tracker_service) {}
+        : SigninManagerBase(client,
+                            account_tracker_service,
+                            nullptr /* signin_error_controller */) {}
 
     using SigninManagerBase::clear_authenticated_user;
   };
