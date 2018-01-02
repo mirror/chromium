@@ -43,9 +43,6 @@ class WebDatabaseHostImpl : public blink::mojom::WebDatabaseHost,
   void GetFileAttributes(const base::string16& vfs_file_name,
                          GetFileAttributesCallback callback) override;
 
-  void GetFileSize(const base::string16& vfs_file_name,
-                   GetFileSizeCallback callback) override;
-
   void SetFileSize(const base::string16& vfs_file_name,
                    int64_t expected_size,
                    SetFileSizeCallback callback) override;

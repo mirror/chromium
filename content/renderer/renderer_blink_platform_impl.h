@@ -118,7 +118,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
                          bool sync_dir) override;
   long DatabaseGetFileAttributes(
       const blink::WebString& vfs_file_name) override;
-  long long DatabaseGetFileSize(const blink::WebString& vfs_file_name) override;
   long long DatabaseGetSpaceAvailableForOrigin(
       const blink::WebSecurityOrigin& origin) override;
   bool DatabaseSetFileSize(const blink::WebString& vfs_file_name,

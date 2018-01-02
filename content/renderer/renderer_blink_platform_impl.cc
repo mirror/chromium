@@ -717,13 +717,6 @@ long RendererBlinkPlatformImpl::DatabaseGetFileAttributes(
   return rv;
 }
 
-long long RendererBlinkPlatformImpl::DatabaseGetFileSize(
-    const WebString& vfs_file_name) {
-  int64_t rv = 0LL;
-  GetWebDatabaseHost().GetFileSize(vfs_file_name.Utf16(), &rv);
-  return rv;
-}
-
 long long RendererBlinkPlatformImpl::DatabaseGetSpaceAvailableForOrigin(
     const blink::WebSecurityOrigin& origin) {
   int64_t rv = 0LL;
