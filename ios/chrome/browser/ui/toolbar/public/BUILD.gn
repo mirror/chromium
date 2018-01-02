@@ -5,8 +5,11 @@
 source_set("public") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "abstract_primary_toolbar.h",
     "abstract_toolbar.h",
     "abstract_web_toolbar.h",
+    "omnibox_focuser.h",
+    "side_swipe_toolbar_interacting.h",
     "toolbar_controller_constants.h",
     "toolbar_controller_constants.mm",
     "toolbar_utils.h",
