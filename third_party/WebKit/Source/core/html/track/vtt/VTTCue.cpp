@@ -664,7 +664,8 @@ float VTTCue::CalculateComputedPosition() const {
   return 50;
 }
 
-VTTCue::PositionAlignment VTTCue::CalculateComputedPositionAlignment() const {
+VTTCue::PositionAlignment VTTCue::CalculateComputedPositionAlignment(
+    CSSValueID direction) const {
   // https://w3c.github.io/webvtt/#cue-computed-position-alignment
 
   // 1. If the WebVTT cue position alignment is not auto, then return the value
@@ -682,7 +683,23 @@ VTTCue::PositionAlignment VTTCue::CalculateComputedPositionAlignment() const {
   if (text_alignment_ == TextAlignment::kRight)
     return PositionAlignment::kLineRight;
 
-  // 4. Otherwise, return center.
+  // 4. If the WebVTT cue text alignment is start, return line-left if the base
+  // direction of the cue text is left-to-right, line-right otherwise.
+  if (text_alignment_ == TextAlignment::kStart) {
+    if (direction == CSSValueLtr)
+      return PositionAlignment::kLineLeft;
+    return PositionAlignment::kLineRight;
+  }
+
+  // 5. If the WebVTT cue text alignment is end, return line-right if the base
+  // direction of the cue text is left-to-right, line-left otherwise.
+  if (text_alignment_ == TextAlignment::kEnd) {
+    if (direction == CSSValueLtr)
+      return PositionAlignment::kLineRight;
+    return PositionAlignment::kLineLeft;
+  }
+
+  // 6. Otherwise, return center.
   return PositionAlignment::kCenter;
 }
 
@@ -719,7 +736,7 @@ VTTDisplayParameters VTTCue::CalculateDisplayParameters() const {
   // Resolve the cue alignment to one of the values {line-left, line-right,
   // center}.
   PositionAlignment computed_position_alignment =
-      CalculateComputedPositionAlignment();
+      CalculateComputedPositionAlignment(display_parameters.direction);
 
   // 4. Determine the value of maximum size for cue as per the appropriate
   // rules from the following list:
