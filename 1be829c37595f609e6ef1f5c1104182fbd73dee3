@@ -22,6 +22,30 @@
       "revId": "1be829c37595f609e6ef1f5c1104182fbd73dee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f8e217_251e294e",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-02T16:22:12Z",
+      "side": 1,
+      "message": "I assume you meant \"using testing::kWaitForUIElementTimeout\" and \"using testing::WaitUntilConditionOrTimeout\". Done.",
+      "parentUuid": "c98828cd_608ef398",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 42
+      },
+      "revId": "1be829c37595f609e6ef1f5c1104182fbd73dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
