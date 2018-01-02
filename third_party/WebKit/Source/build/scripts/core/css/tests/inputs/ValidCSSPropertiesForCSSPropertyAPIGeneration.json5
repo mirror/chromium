@@ -1,0 +1,27 @@
+{
+
+  data: [
+    // Test "alias_for"
+    {
+      name: "-alias_for_test",
+      alias_for: "alias_for",
+    },
+    // Test "api_class: True", "api_methods"
+    {
+      name: "true_api_class",
+      api_class: true,
+      api_methods: ["Method"],
+    },
+    // Test "api_class: ClassName"
+    {
+      name: "named_api_class",
+      api_class: "NamedApiClass",
+      api_methods: ["Method"],
+    },
+    // Test "longhands"
+    {
+      name: "animation",
+      longhands: ["animation-name", "animation-duration"],
+    },
+  ],
+}

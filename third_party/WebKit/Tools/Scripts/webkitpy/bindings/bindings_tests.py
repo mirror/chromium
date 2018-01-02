@@ -29,7 +29,7 @@ import os
 import shutil
 import tempfile
 
-from webkitpy.common.system.executive import Executive
+from webkitpy.common.compare_files import compare_files
 
 from webkitpy.common import path_finder
 path_finder.add_bindings_scripts_dir_to_sys_path()
@@ -207,8 +207,6 @@ class IdlCompilerOptions(object):
 
 
 def bindings_tests(output_directory, verbose, suppress_diff):
-    executive = Executive()
-
     def list_files(directory):
         files = []
         for component in os.listdir(directory):
@@ -219,18 +217,6 @@ def bindings_tests(output_directory, verbose, suppress_diff):
                 files.append(os.path.join(directory_with_component, filename))
         return files
 
-    def diff(filename1, filename2):
-        # Python's difflib module is too slow, especially on long output, so
-        # run external diff(1) command
-        cmd = ['diff',
-               '-u',  # unified format
-               '-N',  # treat absent files as empty
-               filename1,
-               filename2]
-        # Return output and don't raise exception, even though diff(1) has
-        # non-zero exit if files differ.
-        return executive.run_command(cmd, error_handler=lambda x: None)
-
     def is_cache_file(filename):
         return filename.endswith('.cache')
 
@@ -240,50 +226,6 @@ def bindings_tests(output_directory, verbose, suppress_diff):
                        if is_cache_file(os.path.basename(path))]
         for cache_file in cache_files:
             os.remove(cache_file)
-
-    def identical_file(reference_filename, output_filename):
-        reference_basename = os.path.basename(reference_filename)
-
-        if not os.path.isfile(reference_filename):
-            print 'Missing reference file!'
-            print '(if adding new test, update reference files)'
-            print reference_basename
-            print
-            return False
-
-        if not filecmp.cmp(reference_filename, output_filename):
-            # cmp is much faster than diff, and usual case is "no difference",
-            # so only run diff if cmp detects a difference
-            print 'FAIL: %s' % reference_basename
-            if not suppress_diff:
-                print diff(reference_filename, output_filename)
-            return False
-
-        if verbose:
-            print 'PASS: %s' % reference_basename
-        return True
-
-    def identical_output_files(output_files):
-        reference_files = [os.path.join(REFERENCE_DIRECTORY,
-                                        os.path.relpath(path, output_directory))
-                           for path in output_files]
-        return all([identical_file(reference_filename, output_filename)
-                    for (reference_filename, output_filename) in zip(reference_files, output_files)])
-
-    def no_excess_files(output_files):
-        generated_files = set([os.path.relpath(path, output_directory)
-                               for path in output_files])
-        excess_files = []
-        for path in list_files(REFERENCE_DIRECTORY):
-            relpath = os.path.relpath(path, REFERENCE_DIRECTORY)
-            if relpath not in generated_files:
-                excess_files.append(relpath)
-        if excess_files:
-            print ('Excess reference files! '
-                   '(probably cruft from renaming or deleting):\n' +
-                   '\n'.join(excess_files))
-            return False
-        return True
 
     try:
         generate_interface_dependencies()
@@ -373,10 +315,13 @@ def bindings_tests(output_directory, verbose, suppress_diff):
     finally:
         delete_cache_files()
 
-    # Detect all changes
-    output_files = list_files(output_directory)
-    passed = identical_output_files(output_files)
-    passed &= no_excess_files(output_files)
+    passed = True
+    for component in COMPONENT_DIRECTORY:
+        passed &= compare_files(
+            os.path.join(REFERENCE_DIRECTORY, component),
+            output_directory,
+            verbose,
+            suppress_diff)
 
     if passed:
         if verbose:

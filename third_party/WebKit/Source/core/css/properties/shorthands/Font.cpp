@@ -88,7 +88,7 @@ bool ConsumeSystemFont(bool important,
 bool ConsumeFont(bool important,
                  CSSParserTokenRange& range,
                  const CSSParserContext& context,
-                 HeapVector<CSSPropertyValue, 256>& properties) {
+                 HeapVector<CSSPropertyValue, 256>& properties) const {
   // Let's check if there is an inherit or initial somewhere in the shorthand.
   CSSParserTokenRange range_copy = range;
   while (!range_copy.AtEnd()) {

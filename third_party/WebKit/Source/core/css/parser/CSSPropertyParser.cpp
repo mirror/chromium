@@ -13,6 +13,8 @@
 #include "core/css/CSSUnsetValue.h"
 #include "core/css/CSSVariableReferenceValue.h"
 #include "core/css/HashTools.h"
+#include "core/css/parser/CSSParserFastPaths.h"
+#include "core/css/parser/CSSParserIdioms.h"
 #include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
