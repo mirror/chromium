@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2bbb142_fcbb594d",
+        "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T19:33:44Z",
+      "side": 1,
+      "message": "Nit: key_literal, et cetera (we generally still use Chrome C++ conventions, even though this is built on top of LLVM\u0027s slightly different coding conventions)",
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f9c3c9_8705e6c3",
+        "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T19:33:44Z",
+      "side": 1,
+      "message": "Can we use llvm::StringRef::split(SmallVectorImpl\u003cStringRef\u003e\u0026, char, int, bool) here?",
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e69ddfe2_5f12261a",
         "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2018-01-02T19:01:40Z",
       "side": 1,
       "message": "I would like to use `valExpr-\u003egetLocEnd()` here, but this results in `valExpr` being swallowed. Apparently `valExpr-\u003egetLocStart()` and `valExpr-\u003egetLocEnd()` are equal here. Do you happen to know why this is?",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 37
+      },
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709e1a0f_2efde100",
+        "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T19:33:44Z",
+      "side": 1,
+      "message": "It\u0027s probably a token range rather than a character range, so the end loc is actually pointing the last token in the source range, rather than one past the end of the character range (if that makes sense). If you want to be explicit about this, you can use clang::Lexer::getLocForEndOfToken(), which should do the right thing. Probably.",
+      "parentUuid": "e69ddfe2_5f12261a",
       "range": {
         "startLine": 85,
         "startChar": 29,
@@ -41,6 +99,53 @@
         "startChar": 17,
         "endLine": 35,
         "endChar": 36
+      },
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b0a62b_b0f4e66c",
+        "filename": "tools/clang/value_cleanup/tests/listvalue-expected.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T19:33:44Z",
+      "side": 1,
+      "message": "The pipeline automatically runs clang-format on the output.\n\n(There\u0027s also some special magic for extending deletions to include commas if deleting an item in a list, but that wouldn\u0027t be used here)",
+      "parentUuid": "613b1916_ccb44ee8",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d637267d_af100511",
+        "filename": "tools/clang/value_cleanup/tests/listvalue-expected.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-02T19:33:44Z",
+      "side": 1,
+      "message": "I\u0027m curious--but why require manual construction of a base::Value? It means we\u0027d only need one overload of SetPath / SetKey -- but it also means that every caller needs to manually construct a base::Value. Wouldn\u0027t that be worse for overall binary size?",
+      "range": {
+        "startLine": 35,
+        "startChar": 39,
+        "endLine": 35,
+        "endChar": 57
       },
       "revId": "25aafd9da4dc84394dd88d0626469ab7e3ad8ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
