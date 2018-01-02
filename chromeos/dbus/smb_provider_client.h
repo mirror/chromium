@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_SMB_PROVIDER_CLIENT_H_
 
 #include "base/callback.h"
+#include "base/files/scoped_file.h"
 #include "base/files/file_path.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
@@ -30,6 +31,7 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
   using GetMetdataEntryCallback =
       base::OnceCallback<void(smbprovider::ErrorType error,
                               const smbprovider::DirectoryEntry& entry)>;
+  using TestCallback = base::OnceCallback<void(base::ScopedFD& fd)>;
 
   ~SmbProviderClient() override;
 
@@ -60,6 +62,8 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
   virtual void GetMetadataEntry(int32_t mount_id,
                                 const base::FilePath& entry_path,
                                 GetMetdataEntryCallback callback) = 0;
+
+  virtual void TestFile(const base::FilePath& path, TestCallback callback) = 0;
 
  protected:
   // Create() should be used instead.

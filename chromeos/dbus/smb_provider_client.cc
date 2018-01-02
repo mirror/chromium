@@ -42,6 +42,7 @@ smbprovider::ErrorType GetErrorAndProto(
     DLOG(ERROR) << "Failed to parse protobuf.";
     return smbprovider::ERROR_DBUS_PARSE_FAILED;
   }
+  LOG(ERROR) << "succesfullly returning error";
   return smbprovider::ERROR_OK;
 }
 
@@ -81,6 +82,8 @@ class SmbProviderClientImpl : public SmbProviderClient {
   void ReadDirectory(int32_t mount_id,
                      const base::FilePath& directory_path,
                      ReadDirectoryCallback callback) override {
+
+    LOG(ERROR) << "READ DIR CALLWEED: " << directory_path.value();
     dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
                                  smbprovider::kReadDirectoryMethod);
     dbus::MessageWriter writer(&method_call);
@@ -99,6 +102,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
   void GetMetadataEntry(int32_t mount_id,
                         const base::FilePath& entry_path,
                         GetMetdataEntryCallback callback) override {
+    LOG(ERROR) << "GET METADTAT CALLWEED: " << entry_path.value();
     dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
                                  smbprovider::kGetMetadataEntryMethod);
     dbus::MessageWriter writer(&method_call);
@@ -112,6 +116,15 @@ class SmbProviderClientImpl : public SmbProviderClient {
                            smbprovider::DirectoryEntry>,
                        weak_ptr_factory_.GetWeakPtr(),
                        base::Passed(&callback)));
+  }
+
+  void TestFile(const base::FilePath& path, TestCallback callback) override {
+    dbus::MethodCall method_call(smbprovider::kSmbProviderInterface, "TestFile");
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendString(path.value());
+    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&SmbProviderClientImpl::HandleTestCallback,
+                   weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
   }
 
  protected:
@@ -138,12 +151,29 @@ class SmbProviderClientImpl : public SmbProviderClient {
       return;
     }
     int32_t mount_id = -1;
-    if (!reader.PopInt32(&mount_id) || mount_id <= 0) {
+    if (!reader.PopInt32(&mount_id) || mount_id < 0) {
       DLOG(ERROR) << "Mount: failed to parse mount id";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED, -1);
       return;
     }
     std::move(callback).Run(smbprovider::ERROR_OK, mount_id);
+  }
+
+  void HandleTestCallback(TestCallback callback, dbus::Response* response) {
+    base::ScopedFD fd;
+    if (!response) {
+      DLOG(ERROR) << "test calllback failed";
+      std::move(callback).Run(fd);
+      return;
+    }
+    dbus::MessageReader reader(response);
+    if (!reader.PopFileDescriptor(&fd)) {
+      LOG(ERROR) << "failed to parse fd";
+      std::move(callback).Run(fd);
+      return;
+    }
+    LOG(ERROR) << "successfully passing file descriptor";
+    std::move(callback).Run(fd);
   }
 
   // Handles D-Bus callback for unmount.

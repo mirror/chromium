@@ -47,5 +47,11 @@ void FakeSmbProviderClient::GetMetadataEntry(int32_t mount_id,
       FROM_HERE,
       base::BindOnce(std::move(callback), smbprovider::ERROR_OK, entry));
 }
+void FakeSmbProviderClient::TestFile(const base::FilePath& path, TestCallback callback) {
+  // base::ScopedFD fd;
+  // base::ThreadTaskRunnerHandle::Get()->PostTask(
+  //     FROM_HERE,
+  //     base::BindOnce(std::move(callback), fd));
+}
 
 }  // namespace chromeos

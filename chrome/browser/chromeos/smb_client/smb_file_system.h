@@ -35,6 +35,8 @@ namespace smb_client {
 
 class RequestManager;
 
+storage::DirectoryEntry::DirectoryEntryType MapEntryType(bool is_directory);
+
 // Smb provided file system implementation. For communication with Smb
 // filesystems.
 // Smb is an application level protocol used by Windows and Samba fileservers.
@@ -170,6 +172,17 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
   void HandleRequestUnmountCallback(
       const storage::AsyncFileUtil::StatusCallback& callback,
       smbprovider::ErrorType smb_error) const;
+
+  void HandleRequestReadDirectoryCallback(
+      const storage::AsyncFileUtil::ReadDirectoryCallback& callback,
+      smbprovider::ErrorType error,
+      const smbprovider::DirectoryEntryList& entries) const;
+
+  void HandleRequestGetMetadataEntryCallback(
+      ProvidedFileSystemInterface::MetadataFieldMask fields,
+      const ProvidedFileSystemInterface::GetMetadataCallback& callback,
+      smbprovider::ErrorType error,
+      const smbprovider::DirectoryEntry& entry) const;
 
   int32_t GetMountId() const;
 

@@ -43,6 +43,16 @@
 #include "printing/backend/print_backend.h"
 #include "url/third_party/mozilla/url_parse.h"
 
+#include <fcntl.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include "chrome/browser/chromeos/smb_client/smb_service.h"
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
+#include "chromeos/dbus/smb_provider_client.h"
+
 namespace chromeos {
 namespace settings {
 
@@ -526,8 +536,72 @@ void CupsPrintersHandler::OnAutoconfQueried(const std::string& callback_id,
   ResolveJavascriptCallback(base::Value(callback_id), info);
 }
 
+void DoNothingCallback(base::File::Error error){
+  LOG(ERROR) << "~~~ Mount Result: " << error;
+  return;
+}
+
+void TestCallback(base::ScopedFD& file_desc) {
+  int fd = file_desc.get();
+  LOG(ERROR) << "fd:" << fd << "Test callback called with fd: " << fd;
+
+  struct stat test_stat;
+  int result = fstat(fd, &test_stat);
+  LOG(ERROR) << "fd:" << fd << "stat result: " << result;
+  if (result < 0) {
+    LOG(ERROR) << "errno: " << errno;
+    return;
+  }
+  LOG(ERROR) << "is fifo: " << S_ISFIFO(test_stat.st_mode);
+  LOG(ERROR) << "fd:" << fd << " size: " << test_stat.st_size;
+  LOG(ERROR) << "fd:" << fd << " block: " << test_stat.st_blksize;
+  LOG(ERROR) << "fd:" << fd << " dev: " << test_stat.st_dev;
+
+  int fresult = fcntl(fd, F_GETFD);
+  LOG(ERROR) << "fresult: " << fresult;
+  // FILE* filep = fdopen(fd, "rb");
+  // LOG(ERROR) << "got file poitmer";
+  // if (!filep) {
+  //   LOG(ERROR) << "didnt find pointer";
+  //   return;
+  // }
+  // int pos = ftell(filep);
+  // LOG(ERROR) << "position: " << pos;
+
+
+  size_t size = 1000000;
+  char buf[size];
+  const ssize_t bytes_read = HANDLE_EINTR(read(fd, buf, size));
+  if (bytes_read < 0 && errno != EAGAIN && errno != EWOULDBLOCK) {
+    LOG(ERROR) << "fd:" << fd << "read() from fd " << fd << " failed";
+    LOG(ERROR) << "fd:" << fd << "errno:" << errno;
+    return;
+  }
+  LOG(ERROR) << "fd:" << fd << "successfuly read: " << bytes_read;
+
+
+
+  // bool result = base::ReadFromFD(6565, buf, size);
+  // if (result) {
+  //   LOG(ERROR) << "SUCCESFULY READ BYTES";
+  // } else {
+  //   LOG(ERROR) << "FAIELD TO READ BYTES";
+  // }
+}
+
 void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   AllowJavascript();
+  LOG(ERROR) << "~~~ Hijacking button";
+  chromeos::smb_client::SmbService* const service =
+      chromeos::smb_client::SmbService::Get(profile_);
+
+  chromeos::file_system_provider::MountOptions mo;
+  mo.file_system_id = "foo";
+  mo.display_name = "display name";
+
+  LOG(ERROR) << "~~~ about to call mount api";
+  chromeos::DBusThreadManager::Get()->GetSmbProviderClient()->TestFile(base::FilePath("smb://192.168.50.60/testShare/temp/dog.jpg"), base::BindOnce(&TestCallback));
+  // service->Mount(mo, base::FilePath("smb://192.168.50.60/testShare"), base::BindOnce(&DoNothingCallback));
 
   const base::DictionaryValue* printer_dict = nullptr;
   CHECK(args->GetDictionary(0, &printer_dict));

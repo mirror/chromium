@@ -27,7 +27,7 @@ class CHROMEOS_EXPORT FakeSmbProviderClient : public SmbProviderClient {
   void GetMetadataEntry(int32_t mount_id,
                         const base::FilePath& entry_path,
                         GetMetdataEntryCallback callback) override;
-
+  void TestFile(const base::FilePath& path, TestCallback callback) override;
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeSmbProviderClient);
 };

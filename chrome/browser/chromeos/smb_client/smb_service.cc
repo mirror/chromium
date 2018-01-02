@@ -50,7 +50,9 @@ void SmbService::OnMountResponse(
     return;
   }
 
-  DCHECK_GT(mount_id, 0);
+  DCHECK_GE(mount_id, 0);
+
+  LOG(ERROR) << "Received mount id: " << mount_id;
 
   file_system_provider::MountOptions mount_options(options);
   mount_options.file_system_id = base::NumberToString(mount_id);
