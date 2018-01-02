@@ -41,6 +41,8 @@ class VectorElementBinding : public BindingBase {
 
   std::vector<std::unique_ptr<BindingBase>>& bindings() { return bindings_; }
 
+  std::string ToString() override { return ""; }
+
  private:
   std::vector<M>* models_ = nullptr;
   size_t index_ = 0;
