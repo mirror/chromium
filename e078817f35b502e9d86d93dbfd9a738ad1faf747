@@ -942,6 +942,30 @@
     },
     {
       "key": {
+        "uuid": "9bb3f063_11fe5ad8",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T10:02:23Z",
+      "side": 1,
+      "message": "I still think this should be a vector, as this preserves the order of preferences as well. The only operations you do on the parameters are getting their size() and iterate through them. For this a (const) vector is better than a list, due to less memory allocations and better cache locality.",
+      "parentUuid": "559f74e3_d659d3c0",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc8faad_8e32b277",
         "filename": "device/ctap/public_key_credential_rp_entity.h",
         "patchSetId": 15

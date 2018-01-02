@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67adb9c2_dbbe64b3",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T10:02:23Z",
+      "side": 1,
+      "message": "nit: const is not needed here",
+      "range": {
+        "startLine": 41,
+        "startChar": 49,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "76c1693493e79cc37583afaac9dd8ec3b0e2ca7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c7faa5_013365dd",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T10:02:23Z",
+      "side": 1,
+      "message": "constexpr, applies to all strings",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "76c1693493e79cc37583afaac9dd8ec3b0e2ca7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7554896b_51a8ef11",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-02T10:02:23Z",
+      "side": 1,
+      "message": "Return early in case of error, i.e.\n\n  if (!cbor.is_map())\n    return base::nullopt;\n\n  ...",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "76c1693493e79cc37583afaac9dd8ec3b0e2ca7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
