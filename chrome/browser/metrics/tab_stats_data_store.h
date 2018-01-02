@@ -6,10 +6,18 @@
 #define CHROME_BROWSER_METRICS_TAB_STATS_DATA_STORE_H_
 
 #include <memory>
+#include <vector>
 
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
+#include "base/optional.h"
 #include "base/sequence_checker.h"
 
 class PrefService;
+
+namespace content {
+class WebContents;
+}  // namespace content
 
 namespace metrics {
 
@@ -40,14 +48,36 @@ class TabStatsDataStore {
     size_t window_count_max;
   };
 
+  // Structure describing the state of a tab during an interval of time.
+  struct TabStateDuringInterval {
+    // Indicates if the tab exists at the beginning of the interval.
+    bool existed_before_interval;
+    // Indicates if the tab still exists.
+    bool exists_currently;
+    // Whether or not the tab has been visible or audible at any moment during
+    // the interval.
+    bool visible_or_audible_during_interval;
+    // Indicates if the tab has been interacted with or became active during the
+    // interval.
+    bool interacted_during_interval;
+  };
+
+  using TabID = size_t;
+  // Represents the state of a set of tabs during an interval of time.
+  using TabsStateDuringIntervalMap =
+      base::flat_map<TabID, TabStateDuringInterval>;
+
   explicit TabStatsDataStore(PrefService* pref_service);
-  ~TabStatsDataStore() {}
+  virtual ~TabStatsDataStore();
 
   // Functions used to update the window/tab count.
   void OnWindowAdded();
   void OnWindowRemoved();
-  void OnTabsAdded(size_t tab_count);
-  void OnTabsRemoved(size_t tab_count);
+  // Virtual for unittesting.
+  virtual void OnTabAdded(content::WebContents* web_contents);
+  virtual void OnTabRemoved(content::WebContents* web_contents);
+  void OnTabReplaced(content::WebContents* old_contents,
+                     content::WebContents* new_contents);
 
   // Update the maximum number of tabs in a single window if |value| exceeds
   // this.
@@ -59,19 +89,55 @@ class TabStatsDataStore {
   // metrics have been reported.
   void ResetMaximumsToCurrentState();
 
+  // Records that there's been a direct user interaction with a tab, see the
+  // comment for |DidGetUserInteraction| in
+  // content/public/browser/web_contents_observer.h for a list of the possible
+  // type of interactions.
+  void OnTabInteraction(content::WebContents* web_contents);
+
+  // Records that a tab became audible.
+  void OnTabAudible(content::WebContents* web_contents);
+
+  // Records that a tab became visible.
+  void OnTabVisible(content::WebContents* web_contents);
+
+  // Creates a new interval map for the given interval.
+  TabsStateDuringIntervalMap* AddInterval();
+
+  // Reset |interval_map| with the list of current tabs.
+  void ResetIntervalData(TabsStateDuringIntervalMap* interval_map);
+
   const TabsStats& tab_stats() const { return tab_stats_; }
+
+  base::Optional<TabID> GetTabIDForTesting(content::WebContents* web_contents);
 
  protected:
   // Update the maximums metrics if needed.
   void UpdateTotalTabCountMaxIfNeeded();
   void UpdateWindowCountMaxIfNeeded();
 
+  // Adds a tab to an interval map.
+  void AddTabToInterval(TabsStateDuringIntervalMap* interval_map,
+                        content::WebContents* web_contents,
+                        bool existed_before_interval);
+
+  // Returns the TabID associated with a tab.
+  TabID GetTabID(content::WebContents* web_contents);
+
  private:
+  void OnTabAudibleOrVisible(content::WebContents* web_contents);
+
   // The tabs stats.
   TabsStats tab_stats_;
 
   // A raw pointer to the PrefService used to read and write the statistics.
   PrefService* pref_service_;
+
+  // The interval maps, one per period of time that we want to observe.
+  std::vector<std::unique_ptr<TabsStateDuringIntervalMap>> interval_maps_;
+
+  // The existing tabs.
+  base::flat_map<content::WebContents*, TabID> existing_tabs_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
