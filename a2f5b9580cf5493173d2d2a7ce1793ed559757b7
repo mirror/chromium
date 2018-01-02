@@ -16,6 +16,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b73de90_e126d1a4",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-02T12:23:18Z",
+      "side": 1,
+      "message": "Done - sort-of...\n\nThe current network service does not get the X-Content-Header injected. I have added a test that fails once this happens.\n\nI have not removed the code using the URLFetcher because that is used throughout the Chromium code base.",
+      "parentUuid": "0ff425ca_b229294a",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
