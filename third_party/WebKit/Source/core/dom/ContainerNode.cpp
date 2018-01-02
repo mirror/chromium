@@ -1629,6 +1629,9 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
     const QualifiedName* attr_name,
     Element* attribute_owner_element,
     const ChildrenChange* change) {
+  if (change && change->type == kTextChanged)
+    return;
+
   if (HasRareData() && (!attr_name || IsAttributeNode())) {
     if (NodeListsNodeData* lists = RareData()->NodeLists()) {
       if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
