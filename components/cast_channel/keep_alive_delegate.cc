@@ -7,9 +7,6 @@
 #include <string>
 #include <utility>
 
-#include "base/json/json_reader.h"
-#include "base/json/json_writer.h"
-#include "base/values.h"
 #include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket.h"
 #include "components/cast_channel/logger.h"
@@ -17,56 +14,8 @@
 #include "net/base/net_errors.h"
 
 namespace cast_channel {
-namespace {
-
-const char kHeartbeatNamespace[] = "urn:x-cast:com.google.cast.tp.heartbeat";
-const char kPingSenderId[] = "chrome";
-const char kPingReceiverId[] = "receiver-0";
-const char kTypeNodeId[] = "type";
-
-// Parses the JSON-encoded payload of |message| and returns the value in the
-// "type" field or the empty string if the parse fails or the field is not
-// found.
-std::string ParseForPayloadType(const CastMessage& message) {
-  std::unique_ptr<base::Value> parsed_payload(
-      base::JSONReader::Read(message.payload_utf8()));
-  base::DictionaryValue* payload_as_dict;
-  if (!parsed_payload || !parsed_payload->GetAsDictionary(&payload_as_dict))
-    return std::string();
-  std::string type_string;
-  if (!payload_as_dict->GetString(kTypeNodeId, &type_string))
-    return std::string();
-  return type_string;
-}
-
-}  // namespace
-
-// static
-const char KeepAliveDelegate::kHeartbeatPingType[] = "PING";
-
-// static
-const char KeepAliveDelegate::kHeartbeatPongType[] = "PONG";
 
 using ::cast_channel::ChannelError;
-
-// static
-CastMessage KeepAliveDelegate::CreateKeepAliveMessage(
-    const char* message_type) {
-  CastMessage output;
-  output.set_protocol_version(CastMessage::CASTV2_1_0);
-  output.set_source_id(kPingSenderId);
-  output.set_destination_id(kPingReceiverId);
-  output.set_namespace_(kHeartbeatNamespace);
-  base::DictionaryValue type_dict;
-  type_dict.SetString(kTypeNodeId, message_type);
-  if (!base::JSONWriter::Write(type_dict, output.mutable_payload_utf8())) {
-    LOG(ERROR) << "Failed to serialize dictionary.";
-    return output;
-  }
-  output.set_payload_type(
-      CastMessage::PayloadType::CastMessage_PayloadType_STRING);
-  return output;
-}
 
 KeepAliveDelegate::KeepAliveDelegate(
     CastSocket* socket,
@@ -83,8 +32,8 @@ KeepAliveDelegate::KeepAliveDelegate(
   DCHECK(ping_interval_ < liveness_timeout_);
   DCHECK(inner_delegate_);
   DCHECK(socket_);
-  ping_message_ = CreateKeepAliveMessage(kHeartbeatPingType);
-  pong_message_ = CreateKeepAliveMessage(kHeartbeatPongType);
+  ping_message_ = CreateKeepAliveMessage(KeepAliveMessageType::kPing);
+  pong_message_ = CreateKeepAliveMessage(KeepAliveMessageType::kPong);
 }
 
 KeepAliveDelegate::~KeepAliveDelegate() {}
@@ -114,11 +63,13 @@ void KeepAliveDelegate::Start() {
 
   ping_timer_->Start(
       FROM_HERE, ping_interval_,
-      base::Bind(&KeepAliveDelegate::SendKeepAliveMessage,
-                 base::Unretained(this), ping_message_, kHeartbeatPingType));
+      base::BindRepeating(&KeepAliveDelegate::SendKeepAliveMessage,
+                          base::Unretained(this), ping_message_,
+                          KeepAliveMessageType::kPing));
   liveness_timer_->Start(
       FROM_HERE, liveness_timeout_,
-      base::Bind(&KeepAliveDelegate::LivenessTimeout, base::Unretained(this)));
+      base::BindRepeating(&KeepAliveDelegate::LivenessTimeout,
+                          base::Unretained(this)));
 
   started_ = true;
   inner_delegate_->Start();
@@ -130,10 +81,11 @@ void KeepAliveDelegate::ResetTimers() {
   liveness_timer_->Reset();
 }
 
-void KeepAliveDelegate::SendKeepAliveMessage(const CastMessage& message,
-                                             const char* message_type) {
+void KeepAliveDelegate::SendKeepAliveMessage(
+    const CastMessage& message,
+    KeepAliveMessageType message_type) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  VLOG(2) << "Sending " << message_type;
+  VLOG(2) << "Sending " << KeepAliveMessageTypeToString(message_type);
   // TODO(https://crbug.com/656607): Add proper annotation.
   socket_->transport()->SendMessage(
       message,
@@ -142,12 +94,14 @@ void KeepAliveDelegate::SendKeepAliveMessage(const CastMessage& message,
       NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
-void KeepAliveDelegate::SendKeepAliveMessageComplete(const char* message_type,
-                                                     int rv) {
-  VLOG(2) << "Sending " << message_type << " complete, rv=" << rv;
+void KeepAliveDelegate::SendKeepAliveMessageComplete(
+    KeepAliveMessageType message_type,
+    int rv) {
+  VLOG(2) << "Sending " << KeepAliveMessageTypeToString(message_type)
+          << " complete, rv=" << rv;
   if (rv != net::OK) {
     // An error occurred while sending the ping response.
-    VLOG(1) << "Error sending " << message_type;
+    VLOG(1) << "Error sending " << KeepAliveMessageTypeToString(message_type);
     logger_->LogSocketEventWithRv(socket_->id(), ChannelEvent::PING_WRITE_ERROR,
                                   rv);
     OnError(ChannelError::CAST_SOCKET_ERROR);
@@ -182,11 +136,11 @@ void KeepAliveDelegate::OnMessage(const CastMessage& message) {
   // PING and PONG messages are intercepted and handled by KeepAliveDelegate
   // here. All other messages are passed through to |inner_delegate_|.
   const std::string payload_type = ParseForPayloadType(message);
-  if (payload_type == kHeartbeatPingType) {
+  if (payload_type == kKeepAlivePingType) {
     VLOG(2) << "Received PING.";
     if (started_)
-      SendKeepAliveMessage(pong_message_, kHeartbeatPongType);
-  } else if (payload_type == kHeartbeatPongType) {
+      SendKeepAliveMessage(pong_message_, KeepAliveMessageType::kPong);
+  } else if (payload_type == kKeepAlivePongType) {
     VLOG(2) << "Received PONG.";
   } else {
     inner_delegate_->OnMessage(message);
