@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c08ec357_e649f762",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-02T21:54:58Z",
+      "side": 1,
+      "message": "This is still quite unexpected, since SelectionEditor calculate VSInDOMTree as CreateVisibleSelection(selection_):\n\nhttps://chromium.googlesource.com/chromium/src/+/265e7911ca9eead00cc5918231181f91b940beb9/third_party/WebKit/Source/core/editing/SelectionEditor.cpp#370\n\nCould you upload a patch with LOG(INFO) printing these selections at proper lines, so that we can better diagnose what went wrong? Thanks!",
+      "parentUuid": "7daee204_5d560607",
+      "revId": "aea70d797c917c36e3025daf86b7a4e62b1b13d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c03f0f2e_63cf79bd",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
