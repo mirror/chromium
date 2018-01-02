@@ -23,6 +23,9 @@ class EmulationHandler : public DevToolsDomainHandler,
   EmulationHandler();
   ~EmulationHandler() override;
 
+  static std::vector<EmulationHandler*> DeviceEmulationEnabledForWebContents(
+      WebContentsImpl* contents);
+
   void Wire(UberDispatcher* dispatcher) override;
   void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host) override;
@@ -55,6 +58,7 @@ class EmulationHandler : public DevToolsDomainHandler,
   Response ClearDeviceMetricsOverride() override;
 
   Response SetVisibleSize(int width, int height) override;
+  gfx::Size GetVisibleSize();
 
   blink::WebDeviceEmulationParams GetDeviceEmulationParams();
   void SetDeviceEmulationParams(const blink::WebDeviceEmulationParams& params);
