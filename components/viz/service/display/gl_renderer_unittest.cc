@@ -2785,6 +2785,12 @@ class MockCALayerGLES2Interface : public cc::TestGLES2Interface {
                     GLuint edge_aa_mask,
                     const GLfloat* bounds_rect,
                     GLuint filter));
+
+  void InitializeTestContext(cc::TestWebGraphicsContext3D* context) override {
+    // Support image storage for GpuMemoryBuffers, needed for
+    // CALayers/IOSurfaces backed by textures.
+    context->set_support_texture_storage_image(true);
+  }
 };
 
 TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
@@ -2810,6 +2816,8 @@ TEST_F(GLRendererTest, CALayerOverlaysWithAllQuadsPromoted) {
           output_surface->context_provider(), nullptr);
 
   RendererSettings settings;
+  // This setting is enabled to use CALayer overlays.
+  settings.release_overlay_resources_after_gpu_query = true;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           parent_resource_provider.get(),
                           base::ThreadTaskRunnerHandle::Get());
