@@ -40,6 +40,18 @@ const int kDefaultFontSize = 12;
 // Kerning value for the title text.
 const CGFloat kKernAmount = 0.2;
 
+NSPoint FlippedIfRTL(NSPoint point, NSRect inRect) {
+  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
+    point.x = NSMaxX(inRect) - (point.x - NSMinX(inRect));
+  return point;
+}
+
+NSRect FlippedIfRTL(NSRect rect, NSRect inRect) {
+  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
+    rect.origin.x = NSMaxX(inRect) - (NSMaxX(rect) - NSMinX(inRect));
+  return rect;
+}
+
 };  // namespace
 
 // TODO(lgrey): Bake setting the chevron image into this
@@ -392,30 +404,22 @@ const CGFloat kKernAmount = 0.2;
 
 - (NSRect)imageRectForBounds:(NSRect)theRect {
   NSRect imageRect = [super imageRectForBounds:theRect];
-  const CGFloat inset = [[self class] insetInView:[self controlView]];
   imageRect.origin.y -= 1;
-  imageRect.origin.x =
-      cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
-          ? NSMaxX(theRect) - kIconLeadingPadding - NSWidth(imageRect) + inset
-          : kIconLeadingPadding;
-  return imageRect;
+  imageRect.origin.x = kIconLeadingPadding;
+  return FlippedIfRTL(imageRect, theRect);
 }
 
 - (NSRect)titleRectForBounds:(NSRect)theRect {
   // This lays out textRect for LTR and flips it for RTL at the end, if needed.
   NSRect textRect = [super titleRectForBounds:theRect];
   NSRect imageRect = [self imageRectForBounds:theRect];
-  CGFloat imageEnd = cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
-                         ? NSWidth(theRect) - NSMinX(imageRect)  // Un-flip
-                         : NSMaxX(imageRect);
+  CGFloat imageEnd = NSMaxX(FlippedIfRTL(imageRect, theRect));
   textRect.origin.x = imageEnd + kIconTextSpacer;
   textRect.size.width = NSWidth(theRect) - NSMinX(textRect) - kTrailingPadding;
   if (drawFolderArrow_)
     textRect.size.width -=
         [arrowImage_ size].width + kHierarchyButtonTrailingPadding;
-  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
-    textRect.origin.x = NSWidth(theRect) - NSWidth(textRect) - NSMinX(textRect);
-  return textRect;
+  return FlippedIfRTL(textRect, theRect);
 }
 
 - (void)drawFocusRingMaskWithFrame:(NSRect)cellFrame
@@ -448,22 +452,15 @@ const CGFloat kKernAmount = 0.2;
   BookmarkButton* button = static_cast<BookmarkButton*>([self controlView]);
   DCHECK([button respondsToSelector:@selector(isFolder)]);
   if ([button isFolder]) {
-    NSRect imageRect = NSZeroRect;
-    imageRect.size = [arrowImage_ size];
     const CGFloat kArrowOffset = 1.0;  // Required for proper centering.
-    CGFloat dX = cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
-                     ? kHierarchyButtonTrailingPadding
-                     : NSWidth(cellFrame) - NSWidth(imageRect) -
-                           kHierarchyButtonTrailingPadding;
-    CGFloat dY = (NSHeight(cellFrame) / 2.0) - (NSHeight(imageRect) / 2.0) +
-        kArrowOffset;
-    NSRect drawRect = NSOffsetRect(imageRect, dX, dY);
-    [arrowImage_ drawInRect:drawRect
-                    fromRect:imageRect
+    const NSSize imageSize = [arrowImage_ size];
+    const NSPoint imageOrigin = NSMakePoint(
+        NSMaxX(cellFrame) - imageSize.height - kHierarchyButtonTrailingPadding,
+        NSMidY(cellFrame) - imageSize.height / 2 + kArrowOffset);
+    [arrowImage_ drawAtPoint:FlippedIfRTL(imageOrigin, cellFrame)
+                    fromRect:NSZeroRect
                    operation:NSCompositeSourceOver
-                    fraction:[self isEnabled] ? 1.0 : 0.5
-              respectFlipped:YES
-                       hints:nil];
+                    fraction:[self isEnabled] ? 1.0 : 0.5];
   }
 }
 
