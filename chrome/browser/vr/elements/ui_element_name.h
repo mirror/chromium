@@ -99,6 +99,9 @@ enum UiElementName {
   kSpeechRecognitionListening,
   kSpeechRecognitionListeningGrowingCircle,
   kSpeechRecognitionListeningCloseButton,
+  kSnackbarDownloading,
+  kSnackbarPaused,
+  kSnackbarReady,
 
   // This must be last.
   kNumUiElementNames,
