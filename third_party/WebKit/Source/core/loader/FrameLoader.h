@@ -180,6 +180,7 @@ class CORE_EXPORT FrameLoader final {
   void SaveScrollAnchor();
   void SaveScrollState();
   void RestoreScrollPositionAndViewState();
+  void RestoreScrollAnchor();
 
   // The navigation should only be continued immediately in this frame if this
   // returns NavigationPolicyCurrentTab.
