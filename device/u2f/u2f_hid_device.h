@@ -42,6 +42,7 @@ class U2fHidDevice : public U2fDevice {
  private:
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestConnectionFailure);
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestDeviceError);
+  FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestRetryChannelAllocation);
 
   static constexpr uint8_t kWinkCapability = 0x01;
   static constexpr uint8_t kLockCapability = 0x02;
