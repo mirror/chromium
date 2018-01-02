@@ -100,18 +100,6 @@ bool PluginDispatcher::Sender::Send(IPC::Message* msg) {
   TRACE_EVENT2("ppapi proxy", "PluginDispatcher::Send", "Class",
                IPC_MESSAGE_ID_CLASS(msg->type()), "Line",
                IPC_MESSAGE_ID_LINE(msg->type()));
-  // We always want plugin->renderer messages to arrive in-order. If some sync
-  // and some async messages are sent in response to a synchronous
-  // renderer->plugin call, the sync reply will be processed before the async
-  // reply, and everything will be confused.
-  //
-  // Allowing all async messages to unblock the renderer means more reentrancy
-  // there but gives correct ordering.
-  //
-  // We don't want reply messages to unblock however, as they will potentially
-  // end up on the wrong queue - see crbug.com/122443
-  if (!msg->is_reply())
-    msg->set_unblock(true);
   if (msg->is_sync()) {
     // Synchronous messages might be re-entrant, so we need to drop the lock.
     ProxyAutoUnlock unlock;
@@ -246,8 +234,6 @@ bool PluginDispatcher::SendAndStayLocked(IPC::Message* msg) {
   TRACE_EVENT2("ppapi proxy", "PluginDispatcher::SendAndStayLocked",
                "Class", IPC_MESSAGE_ID_CLASS(msg->type()),
                "Line", IPC_MESSAGE_ID_LINE(msg->type()));
-  if (!msg->is_reply())
-    msg->set_unblock(true);
   return sender_->SendMessage(msg);
 }
 
