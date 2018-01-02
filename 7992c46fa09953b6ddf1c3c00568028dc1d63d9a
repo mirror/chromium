@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f201fc90_15673619",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/url-bar/README.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-02T19:50:13Z",
+      "side": 1,
+      "message": "The fast/ prefix doesn\u0027t really mean anything anymore.  Can we use virtual/android/url-bar?",
+      "revId": "7992c46fa09953b6ddf1c3c00568028dc1d63d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d77653_151f34c1",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-02T19:50:13Z",
+      "side": 1,
+      "message": "In what circumstance does the hideScrollbars setting change dynamically?",
+      "range": {
+        "startLine": 874,
+        "startChar": 19,
+        "endLine": 874,
+        "endChar": 36
+      },
+      "revId": "7992c46fa09953b6ddf1c3c00568028dc1d63d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
