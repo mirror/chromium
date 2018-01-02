@@ -652,6 +652,42 @@ void Image::SetSourceColorSpace(CGColorSpaceRef color_space) {
 }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
+void Image::NormalizeIcon(bool circle) {
+  const int kMaxSize =
+      24 * 2;  // twice the max size to avoid scaling down twice.
+
+  SkBitmap bitmap = bitmap();
+  gfx::ImageSkiaRep rep = input.GetRepresentation(1.0);
+  int width = rep.pixel_width();
+  int height = rep.pixel_height();
+  if (width <= 0 || height <= 0) {
+    width = width <= 0 || width > kMaxSize ? kMaxSize : width;
+    height = height <= 0 || height > kMaxSize ? kMaxSize : height;
+  } else if (width > kMaxSize || height > kMaxSize) {
+    int max = std::max(width, height);
+    width = kMaxSize * width / max;
+    height = kMaxSize * height / max;
+  }
+
+  // Overall bounds of the visible icon.
+  int top_y, bottom_y, right_x = -1;
+  int left_x = kMaxSize - 1;
+
+  // Create the border by going through all pixels one row at a time and for
+  // each row find the first and alst non-transparent pixel. Set those values to
+  // left_border and right_border and use -1 if there are no visible pixels in
+  // the row.
+  int index = 0; // buffer position.
+  int row_size_diff = kMaxSize - width; // buffer shift after every row, width of buffer = kMaxSize.
+  int first_x, last_x; // First and last position for any row.
+  for (int y = 0; y < height; y++) {
+    first_x = last_x = -1;
+    for (int x = 0; x < width; x++) {
+
+    }
+  }
+}
+
 Image::RepresentationType Image::DefaultRepresentationType() const {
   CHECK(storage());
   return storage()->default_representation_type();

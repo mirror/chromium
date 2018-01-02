@@ -34,6 +34,11 @@
 #include "ui/views/controls/progress_bar.h"
 #include "ui/views/drag_controller.h"
 
+#include "ui/gfx/gfx_export.h"
+#include "ui/gfx/image/image_skia_rep.h"
+#include "ui/gfx/skbitmap_operations.h"
+#include "ui/gfx/image/image.h"
+
 namespace app_list {
 
 namespace {

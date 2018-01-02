@@ -150,6 +150,8 @@ class GFX_EXPORT Canvas {
   // Draws a dashed rectangle of the specified color.
   void DrawDashedRect(const RectF& rect, SkColor color);
 
+  void NormalizeIcon(const gfx::ImageSkia& before, gfx::ImageSkia& after, bool circle);
+
   // Unscales by the image scale factor (aka device scale factor), and returns
   // that factor.  This is useful when callers want to draw directly in the
   // native scale.

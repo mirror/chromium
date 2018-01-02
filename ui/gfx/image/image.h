@@ -177,6 +177,8 @@ class GFX_EXPORT Image {
   void SetSourceColorSpace(CGColorSpaceRef color_space);
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
+  void NormalizeIcon(bool circle);
+
  private:
   // Returns the type of the default representation.
   RepresentationType DefaultRepresentationType() const;
