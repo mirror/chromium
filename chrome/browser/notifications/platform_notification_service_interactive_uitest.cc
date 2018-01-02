@@ -304,8 +304,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
           icon: 'icon.png',
           badge: 'icon.png',
           timestamp: 621046800000,
+          vibrate: [500, 200, 100],
           renotify: true,
-          silent: true,
           requireInteraction: true,
           data: [
             { property: 'value' }
@@ -335,8 +335,11 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_EQ(kIconWidth, all_options_notification.icon().Width());
   EXPECT_EQ(kIconHeight, all_options_notification.icon().Height());
   EXPECT_TRUE(all_options_notification.small_image().IsEmpty());
+
+  EXPECT_THAT(all_options_notification.vibration_pattern(),
+              testing::ElementsAreArray({500, 200, 100}));
+
   EXPECT_TRUE(all_options_notification.renotify());
-  EXPECT_TRUE(all_options_notification.silent());
   EXPECT_TRUE(all_options_notification.never_timeout());
   EXPECT_DOUBLE_EQ(kNotificationTimestamp,
                    all_options_notification.timestamp().ToJsTime());
@@ -1036,8 +1039,8 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
           icon: 'icon.png',
           badge: 'icon.png',
           timestamp: 621046800000,
+          vibrate: [500, 200, 100],
           renotify: true,
-          silent: true,
           requireInteraction: true,
           data: [
             { property: 'value' }
@@ -1052,5 +1055,41 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   notifications = GetDisplayedNotifications(false /* is_persistent */);
   ASSERT_EQ(2u, notifications.size());
 
+  message_center::Notification notification = notifications[1];
+  EXPECT_EQ("Title2", base::UTF16ToUTF8(notification.title()));
+  EXPECT_EQ("Contents", base::UTF16ToUTF8(notification.message()));
+  EXPECT_NE(notification.id(), default_notification.id());
+
+  EXPECT_TRUE(notification.small_image().IsEmpty());
+  EXPECT_TRUE(notification.image().IsEmpty());
+  EXPECT_TRUE(notification.icon().IsEmpty());
+
   // TODO(https://crbug.com/595685): Test the rest of the properties.
+
+  // Test that notifications with the same tag replace each other and have
+  // identical ids.
+
+  {
+    // This closure ensures the notification has been shown before we check it.
+    // TODO(crbug.com/595685): We can dispense with this closure once the show
+    // event is implemented via mojo.
+    base::RunLoop run_loop;
+    display_service_tester_->SetNotificationAddedClosure(
+        run_loop.QuitClosure());
+    ASSERT_TRUE(RunScript(
+        R"(DisplayNonPersistentNotificationWithoutWaitingForEvent('Title3', {
+          tag: 'replace-id'
+        }))",
+        &script_result));
+    EXPECT_EQ("sync-ok", script_result);
+
+    run_loop.Run();
+  }
+
+  notifications = GetDisplayedNotifications(false /* is_persistent */);
+  ASSERT_EQ(2u, notifications.size());
+
+  message_center::Notification replacement = notifications[1];
+  ASSERT_EQ("Title3", base::UTF16ToUTF8(replacement.title()));
+  ASSERT_EQ(notification.id(), replacement.id());
 }
