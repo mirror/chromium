@@ -216,6 +216,7 @@ int GetInfoFromDataURL(const GURL& url,
   info->content_length = data->length();
   info->encoded_data_length = 0;
   info->encoded_body_length = 0;
+  info->previews_state = PREVIEWS_OFF;
 
   return net::OK;
 }

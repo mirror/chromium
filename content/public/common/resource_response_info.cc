@@ -24,7 +24,7 @@ ResourceResponseInfo::ResourceResponseInfo()
       was_fallback_required_by_service_worker(false),
       response_type_via_service_worker(
           network::mojom::FetchResponseType::kDefault),
-      previews_state(PREVIEWS_OFF),
+      previews_state(PREVIEWS_UNSPECIFIED),
       effective_connection_type(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN),
       cert_status(0),
       ssl_connection_status(0),
