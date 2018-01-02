@@ -240,6 +240,8 @@ static_library("whitelist") {
     "whitelist/whitelist_file.h",
     "whitelist/whitelist_ime.cc",
     "whitelist/whitelist_ime.h",
+    "whitelist/whitelist_log.cc",
+    "whitelist/whitelist_log.h",
   ]
   deps = [
     ":nt_registry",
@@ -264,6 +266,7 @@ test("chrome_elf_unittests") {
     "sha1/sha1_unittest.cc",
     "whitelist/whitelist_file_unittest.cc",
     "whitelist/whitelist_ime_unittest.cc",
+    "whitelist/whitelist_log_unittest.cc",
   ]
   include_dirs = [ "$target_gen_dir" ]
   deps = [
