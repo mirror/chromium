@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "17f8c92a_c0c20756",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-02T23:10:46Z",
+      "side": 1,
+      "message": "Expanding on what xhwang@ said: We\u0027d prefer to keep media remoting as compartmentalized as possible to avoid having to plumb-through and maintain extra media pipeline interfaces and Blink public interfaces. Also, the meaning of the enums is knowledge known to this controller code; and to have that in Blink would mean there would be Blink code with special knowledge of media remoting\u0027s internals.",
+      "parentUuid": "d2b55323_b929b1b2",
+      "range": {
+        "startLine": 479,
+        "startChar": 35,
+        "endLine": 479,
+        "endChar": 49
+      },
+      "revId": "de702b8b58bfc03137795883b7a2c1d7ba754c07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e177d2d9_4144f589",
         "filename": "third_party/WebKit/Source/core/html/media/MediaRemotingInterstitial.h",
         "patchSetId": 4

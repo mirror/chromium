@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "baef7ea4_79918c34",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-02T23:10:46Z",
+      "side": 1,
+      "message": "It should be fixed top-center of the viewport, overlayed on top of the whole page (like the \"Press Esc to exit fullscreen\" messaging), and not affected by the page layout (or re-layout after exiting fullscreen). Note that this does not have anything to do with the position of the video element on the page. The message might appear partially or fully outside the video element.",
+      "parentUuid": "b583b4ce_7c621463",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 13
+      },
+      "revId": "b41c8ecf780b72bd5ea57a83b50444732ec1051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26fdcdb9_1f721288",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
         "patchSetId": 2
