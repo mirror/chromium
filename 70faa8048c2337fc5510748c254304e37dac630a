@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01e9c63b_9f7714bf",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T18:57:30Z",
+      "side": 1,
+      "message": "base::TimeTicks?",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 14
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8e8ec7_c16b740e",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T18:57:30Z",
+      "side": 1,
+      "message": "This bug isn\u0027t world viewable, so there is no point in adding a reference to it.\n\nDisabling the OK button for one second seems supremely annoying. Can you elaborate on the nature of the attach? Feel free to email directly if you prefer.",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 35
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b62346_9022479a",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T18:57:30Z",
+      "side": 1,
+      "message": "Don\u0027t you need to reenable at some point?",
+      "range": {
+        "startLine": 542,
+        "startChar": 6,
+        "endLine": 542,
+        "endChar": 51
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
