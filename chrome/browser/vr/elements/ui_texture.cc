@@ -47,8 +47,8 @@ UiTexture::~UiTexture() = default;
 void UiTexture::DrawAndLayout(SkCanvas* canvas, const gfx::Size& texture_size) {
   TRACE_EVENT0("gpu", "UiTexture::DrawAndLayout");
   canvas->drawColor(SK_ColorTRANSPARENT);
-  dirty_ = false;
   Draw(canvas, texture_size);
+  dirty_ = false;
 }
 
 bool UiTexture::HitTest(const gfx::PointF& point) const {

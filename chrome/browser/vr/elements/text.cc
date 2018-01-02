@@ -52,6 +52,8 @@ class TextTexture : public UiTexture {
 
   SkColor color_ = SK_ColorBLACK;
 
+  std::vector<std::pair<sk_sp<SkTextBlob>, cc::PaintFlags>> blobs_;
+
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
 
@@ -80,20 +82,37 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
   gfx::Canvas* canvas = &gfx_canvas;
 
-  gfx::FontList fonts;
-  float pixels_per_meter = texture_size.width() / text_width_;
-  int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
-  GetFontList(pixel_font_height, text_, &fonts);
-  gfx::Rect text_bounds(texture_size.width(), 0);
+  // LOG(INFO) << "bla";
 
-  std::vector<std::unique_ptr<gfx::RenderText>> lines =
-      // TODO(vollick): if this subsumes all text, then we should probably move
-      // this function into this class.
-      PrepareDrawStringRect(text_, fonts, color_, &text_bounds,
-                            kTextAlignmentCenter, kWrappingBehaviorWrap);
-  // Draw the text.
-  for (auto& render_text : lines)
-    render_text->Draw(canvas);
+  gfx::Rect text_bounds(texture_size.width(), 0);
+  if (dirty()) {
+    // LOG(INFO) << "Recreating render text";
+    gfx::FontList fonts;
+    float pixels_per_meter = texture_size.width() / text_width_;
+    int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
+    GetFontList(pixel_font_height, text_, &fonts);
+
+    std::vector<std::unique_ptr<gfx::RenderText>> lines =
+        // TODO(vollick): if this subsumes all text, then we should probably move
+        // this function into this class.
+        PrepareDrawStringRect(text_, fonts, color_, &text_bounds,
+                              kTextAlignmentCenter, kWrappingBehaviorWrap);
+    
+    blobs_.clear();
+    blobs_.reserve(lines.size());
+
+    // Draw the text.
+    for (auto& render_text : lines)
+      blobs_.push_back(render_text->Draw(canvas));
+  }
+
+  // sk_sp<SkTextBlob> blob;
+  // PaintFlags flags;
+
+  // sk_canvas->drawTextBlob(blob.get(), 0, 0, paint);
+
+  for (auto& blob : blobs_)
+    paint_canvas.drawTextBlob(blob.first, 0, 0, blob.second);
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());

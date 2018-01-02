@@ -241,7 +241,8 @@ void SkiaTextRenderer::DrawPosText(const SkPoint* pos,
   static_assert(sizeof(*pos) == 2 * sizeof(*run_buffer.pos), "");
   memcpy(run_buffer.pos, pos, glyph_count * sizeof(*pos));
 
-  canvas_skia_->drawTextBlob(builder.make(), 0, 0, flags_);
+  blob_ = builder.make();
+  canvas_skia_->drawTextBlob(blob_, 0, 0, flags_);
 }
 
 void SkiaTextRenderer::DrawUnderline(int x, int y, int width) {
@@ -775,7 +776,7 @@ int RenderText::GetBaseline() {
   return baseline_;
 }
 
-void RenderText::Draw(Canvas* canvas) {
+std::pair<sk_sp<SkTextBlob>, cc::PaintFlags> RenderText::Draw(Canvas* canvas) {
   EnsureLayout();
 
   if (clip_to_display_rect()) {
@@ -789,13 +790,17 @@ void RenderText::Draw(Canvas* canvas) {
   if (!text().empty() && focused())
     DrawSelection(canvas);
 
+  std::pair<sk_sp<SkTextBlob>, cc::PaintFlags> ret_val;
   if (!text().empty()) {
     internal::SkiaTextRenderer renderer(canvas);
     DrawVisualText(&renderer);
+    ret_val = std::make_pair(renderer.blob_, renderer.flags_);
   }
 
   if (clip_to_display_rect())
     canvas->Restore();
+
+  return ret_val;
 }
 
 bool RenderText::IsValidLogicalIndex(size_t index) const {

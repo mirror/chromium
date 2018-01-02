@@ -71,12 +71,14 @@ class GFX_EXPORT SkiaTextRenderer {
   void DrawUnderline(int x, int y, int width);
   void DrawStrike(int x, int y, int width, SkScalar thickness_factor);
 
+  cc::PaintFlags flags_;
+  sk_sp<SkTextBlob> blob_;
+
  private:
   friend class test::RenderTextTestApi;
 
   Canvas* canvas_;
   cc::PaintCanvas* canvas_skia_;
-  cc::PaintFlags flags_;
 
   DISALLOW_COPY_AND_ASSIGN(SkiaTextRenderer);
 };
@@ -411,7 +413,7 @@ class GFX_EXPORT RenderText {
   // not depend on the text.
   int GetBaseline();
 
-  void Draw(Canvas* canvas);
+  std::pair<sk_sp<SkTextBlob>, cc::PaintFlags> Draw(Canvas* canvas);
 
   // Gets the SelectionModel from a visual point in local coordinates.
   virtual SelectionModel FindCursorPosition(const Point& point) = 0;
