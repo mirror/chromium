@@ -22,6 +22,30 @@
       "revId": "c11024dee33dc30dfd7369c757c41a3b908c3986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb54c1b_194b2287",
+        "filename": "ui/gl/gl_implementation_osmesa.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-02T21:14:01Z",
+      "side": 1,
+      "message": "I tried loading it with a correct full path, but it still didn\u0027t work. It looks like dlopen() allows only relative paths. See fs_load_object() and open_from_libpath() in https://fuchsia.googlesource.com/zircon/+/master/system/ulib/launchpad/loader-service.c . It may be by design, but I\u0027m not sure about it, so I\u0027ve filed ZX-1518.\nIn either case it I think using relative paths is the right thing to do on Fuchsia.",
+      "parentUuid": "b5ce57aa_6f9c2b27",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "c11024dee33dc30dfd7369c757c41a3b908c3986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
