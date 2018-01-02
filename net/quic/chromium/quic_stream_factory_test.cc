@@ -501,8 +501,9 @@ class QuicStreamFactoryTestBase {
     HttpRequestInfo request_info;
     request_info.method = "GET";
     request_info.url = GURL("https://www.example.org/");
-    EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                           net_log_, CompletionCallback()));
+    EXPECT_EQ(OK,
+              stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
+                                       net_log_, CompletionCallback()));
     // Ensure that session is alive and active.
     QuicChromiumClientSession* session = GetActiveSession(host_port_pair_);
     EXPECT_TRUE(QuicStreamFactoryPeer::IsLiveSession(factory_.get(), session));
@@ -1571,8 +1572,9 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
     }
     std::unique_ptr<HttpStream> stream = CreateStream(&request);
     EXPECT_TRUE(stream);
-    EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                           net_log_, CompletionCallback()));
+    EXPECT_EQ(OK,
+              stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                       net_log_, CompletionCallback()));
     streams.push_back(std::move(stream));
   }
 
@@ -1584,8 +1586,8 @@ TEST_P(QuicStreamFactoryTest, MaxOpenStream) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream);
   EXPECT_EQ(ERR_IO_PENDING,
-            stream->InitializeStream(&request_info, DEFAULT_PRIORITY, net_log_,
-                                     callback_.callback()));
+            stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                     net_log_, callback_.callback()));
 
   // Close the first stream.
   streams.front()->Close(false);
@@ -1702,7 +1704,7 @@ TEST_P(QuicStreamFactoryTest, CloseAllSessions) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Close the session and verify that stream saw the error.
@@ -1886,7 +1888,7 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   IPAddress last_address;
@@ -1941,7 +1943,7 @@ TEST_P(QuicStreamFactoryTest, OnIPAddressChangedWithConnectionMigration) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   IPAddress last_address;
@@ -2010,7 +2012,7 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2142,7 +2144,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2252,7 +2254,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnectedWithNetworkList(
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2312,7 +2314,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2362,7 +2364,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultNonMigratableStreamV2) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2411,7 +2413,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkMadeDefaultConnectionMigrationDisabled) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2465,7 +2467,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2519,7 +2521,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2567,7 +2569,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkDisconnectedNonMigratableStreamV2) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2615,7 +2617,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2667,7 +2669,7 @@ TEST_P(QuicStreamFactoryTest,
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2884,7 +2886,7 @@ TEST_P(QuicStreamFactoryTest, NewNetworkConnectedAfterNoNetwork) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -2991,7 +2993,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3130,8 +3132,9 @@ TEST_P(QuicStreamFactoryTest,
   HttpRequestInfo request_info1;
   request_info1.method = "GET";
   request_info1.url = url_;
-  EXPECT_EQ(OK, stream1->InitializeStream(&request_info1, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream1->InitializeStream(&request_info1, true, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   HttpResponseInfo response1;
   HttpRequestHeaders request_headers1;
   EXPECT_EQ(OK, stream1->SendRequest(request_headers1, &response1,
@@ -3142,8 +3145,9 @@ TEST_P(QuicStreamFactoryTest,
   HttpRequestInfo request_info2;
   request_info2.method = "GET";
   request_info2.url = url_;
-  EXPECT_EQ(OK, stream2->InitializeStream(&request_info2, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream2->InitializeStream(&request_info2, true, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   HttpResponseInfo response2;
   HttpRequestHeaders request_headers2;
   EXPECT_EQ(OK, stream2->SendRequest(request_headers2, &response2,
@@ -3212,7 +3216,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3339,7 +3343,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3458,7 +3462,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNoNewNetwork) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3512,7 +3516,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyNonMigratableStream) {
   // Cause QUIC stream to be created, but marked as non-migratable.
   HttpRequestInfo request_info;
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3564,7 +3568,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyConnectionMigrationDisabled) {
 
   // Cause QUIC stream to be created.
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3625,7 +3629,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteError(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3715,7 +3719,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNoNewNetwork(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3806,7 +3810,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNonMigratableStream(
   request_info.load_flags |= LOAD_DISABLE_CONNECTION_MIGRATION;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3870,7 +3874,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorMigrationDisabled(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -3950,7 +3954,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnMultipleWriteErrors(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4031,7 +4035,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorWithNotificationQueued(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4130,7 +4134,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnNotificationWithWriteErrorQueued(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4230,7 +4234,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4365,7 +4369,7 @@ void QuicStreamFactoryTestBase::
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4521,7 +4525,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyToBadSocket) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = url_;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4585,7 +4589,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigration) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4729,7 +4733,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigrationIPv4ToIPv6Fails) {
   HttpRequestInfo request_info;
   request_info.method = "GET";
   request_info.url = GURL("https://www.example.org/");
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, true, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Ensure that session is alive and active.
@@ -4780,7 +4784,7 @@ TEST_P(QuicStreamFactoryTest, OnSSLConfigChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   ssl_config_service_->NotifySSLConfigChange();
@@ -4835,7 +4839,7 @@ TEST_P(QuicStreamFactoryTest, OnCertDBChanged) {
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   // Change the CA cert and verify that stream saw the event.
@@ -5015,7 +5019,7 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
   std::unique_ptr<HttpStream> stream = CreateStream(&request);
   EXPECT_TRUE(stream.get());
   HttpRequestInfo request_info;
-  EXPECT_EQ(OK, stream->InitializeStream(&request_info, DEFAULT_PRIORITY,
+  EXPECT_EQ(OK, stream->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
                                          net_log_, CompletionCallback()));
 
   DVLOG(1)
@@ -5046,8 +5050,9 @@ TEST_P(QuicStreamFactoryTest, ReducePingTimeoutOnConnectionTimeOutOpenStreams) {
 
   std::unique_ptr<HttpStream> stream2 = CreateStream(&request2);
   EXPECT_TRUE(stream2.get());
-  EXPECT_EQ(OK, stream2->InitializeStream(&request_info, DEFAULT_PRIORITY,
-                                          net_log_, CompletionCallback()));
+  EXPECT_EQ(OK,
+            stream2->InitializeStream(&request_info, false, DEFAULT_PRIORITY,
+                                      net_log_, CompletionCallback()));
   session2->connection()->CloseConnection(
       QUIC_NETWORK_IDLE_TIMEOUT, "test", ConnectionCloseBehavior::SILENT_CLOSE);
   // Need to spin the loop now to ensure that
