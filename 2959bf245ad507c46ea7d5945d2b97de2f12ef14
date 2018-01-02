@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840342f9_8273611b",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T16:56:50Z",
+      "side": 1,
+      "message": "If this is contentious, then I can inline this into content/browser/frame_host/render_frame_host_impl.cc",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 48
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abeb6a5_19fe5d70",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-02T16:56:50Z",
+      "side": 1,
+      "message": "Not sure what to put here.\n\n- Some people say [1] that an average *URL* (not just origin) length is 77 characters.  Therefore 128 should be enough to store an *origin* (even if it is longer than average).\n\n- I am not sure what exactly is the nature of downpressure on this number.  I guess we don\u0027t want to say |10000| because this might lead to stack overflows?\n\n[1] https://stackoverflow.com/a/31758386/4692014",
+      "range": {
+        "startLine": 195,
+        "startChar": 61,
+        "endLine": 195,
+        "endChar": 64
+      },
+      "revId": "2959bf245ad507c46ea7d5945d2b97de2f12ef14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
