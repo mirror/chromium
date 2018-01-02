@@ -95,7 +95,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
     public static final String VIDEO_ELEMENT = "video";
 
     // Max time to open a view.
-    public static final int MAX_VIEW_TIME_MS = 10000;
+    public static final int MAX_VIEW_TIME_MS = 5000;
 
     // Time to let a video run to ensure that it has started.
     public static final int RUN_TIME_MS = 1000;
@@ -279,7 +279,12 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
                 mMediaRouteController.addUiListener(new TestListener());
             }
         });
+
+        Log.e(TAG, "EK: about to click button");
+
         tapCastButton(tab, videoRect);
+
+        Log.e(TAG, "EK: clicked buttn");
 
         // Wait for the test device to appear in the device list.
         try {
