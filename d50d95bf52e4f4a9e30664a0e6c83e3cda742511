@@ -22,6 +22,30 @@
       "revId": "d50d95bf52e4f4a9e30664a0e6c83e3cda742511",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816a9dcc_6655d446",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2018-01-02T23:51:35Z",
+      "side": 1,
+      "message": "Maybe, but I\u0027m a bit reluctant of adding one more layer of indirection for a potentially-useful-but-single-implementation-only callback. I guess making code more complex can always wait until it\u0027s actually needed? After all gin is already the embedder.",
+      "parentUuid": "3d2c516c_2609886a",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 31
+      },
+      "revId": "d50d95bf52e4f4a9e30664a0e6c83e3cda742511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
