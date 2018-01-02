@@ -148,6 +148,10 @@ class MockTransaction : public DnsTransaction,
     }
   }
 
+  void SetRequestContext(URLRequestContextGetter*) override {}
+  void AddDnsOverHttpsServer(GURL server, bool use_post) override {}
+  void SetRequestPriority(RequestPriority priority) override {}
+
   MockDnsClientRule::Result result_;
   const std::string hostname_;
   const uint16_t qtype_;

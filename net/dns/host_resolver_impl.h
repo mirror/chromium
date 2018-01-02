@@ -11,17 +11,15 @@
 #include <map>
 #include <memory>
 
-#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/strings/string_piece.h"
-#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "net/base/net_export.h"
 #include "net/base/network_change_notifier.h"
 #include "net/dns/host_cache.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/host_resolver_proc.h"
+#include "net/url_request/url_request_context_getter.h"
+#include "url/gurl.h"
 
 namespace net {
 
@@ -30,6 +28,13 @@ class DnsClient;
 class IPAddress;
 class NetLog;
 class NetLogWithSource;
+
+typedef struct DnsOverHttpsServerConfig {
+  GURL server;
+  bool use_post;
+  DnsOverHttpsServerConfig(GURL server, bool use_post)
+      : server(server), use_post(use_post) {}
+} DnsOverHttpsServerConfig;
 
 // For each hostname that is requested, HostResolver creates a
 // HostResolverImpl::Job. When this job gets dispatched it creates a ProcTask
@@ -169,6 +174,9 @@ class NET_EXPORT HostResolverImpl
 
   void SetNoIPv6OnWifi(bool no_ipv6_on_wifi) override;
   bool GetNoIPv6OnWifi() override;
+
+  void SetRequestContext(URLRequestContextGetter*) override;
+  void AddDnsOverHttpsServer(std::string, bool) override;
 
   void set_proc_params_for_test(const ProcTaskParams& proc_params) {
     proc_params_ = proc_params;
@@ -380,6 +388,9 @@ class NET_EXPORT HostResolverImpl
   bool persist_initialized_;
   PersistCallback persist_callback_;
   base::OneShotTimer persist_timer_;
+
+  scoped_refptr<URLRequestContextGetter> url_request_context_;
+  std::vector<DnsOverHttpsServerConfig> dns_over_https_servers_;
 
   THREAD_CHECKER(thread_checker_);
 

@@ -1,3 +1,4 @@
+
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -74,6 +75,13 @@ const uint32_t kSpdyMaxHeaderTableSize = 64 * 1024;
 
 // Specifies the maximum concurrent streams server could send (via push).
 const uint32_t kSpdyMaxConcurrentPushedStreams = 1000;
+
+typedef struct DnsOverHttpsServerConfig {
+  GURL server;
+  bool use_post;
+  DnsOverHttpsServerConfig(GURL server, bool use_post)
+      : server(server), use_post(use_post) {}
+} DnsOverHttpsServerConfig;
 
 // This class holds session objects used by HttpNetworkTransaction objects.
 class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
@@ -205,6 +213,8 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // Enable HTTP/0.9 for HTTP/HTTPS on ports other than the default one for
     // each protocol.
     bool http_09_on_non_default_ports_enabled;
+
+    std::vector<DnsOverHttpsServerConfig> dns_over_https_servers;
   };
 
   // Structure with pointers to the dependencies of the HttpNetworkSession.
