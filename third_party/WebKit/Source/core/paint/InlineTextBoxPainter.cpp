@@ -39,12 +39,18 @@ namespace {
 std::pair<unsigned, unsigned> GetTextMatchMarkerPaintOffsets(
     const DocumentMarker& marker,
     const InlineTextBox& text_box) {
+  // text_box.Start() returns an offset relative to the start of the layout
+  // object. We add the LineLayoutItem's TextStartOffset() to get a DOM offset
+  // (which is what DocumentMarker uses).
+  const unsigned text_box_start =
+      text_box.Start() + text_box.GetLineLayoutItem().TextStartOffset();
+
   DCHECK_EQ(DocumentMarker::kTextMatch, marker.GetType());
-  const unsigned start_offset = marker.StartOffset() > text_box.Start()
-                                    ? marker.StartOffset() - text_box.Start()
+  const unsigned start_offset = marker.StartOffset() > text_box_start
+                                    ? marker.StartOffset() - text_box_start
                                     : 0U;
   const unsigned end_offset =
-      std::min(marker.EndOffset() - text_box.Start(), text_box.Len());
+      std::min(marker.EndOffset() - text_box_start, text_box.Len());
   return std::make_pair(start_offset, end_offset);
 }
 
