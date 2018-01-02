@@ -16,6 +16,24 @@
       "revId": "d86c4f8fdaaf4da023fc71172e20508f2ffd31ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8332f91f_ad48805a",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-02T06:49:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9623a4fd_b65d6329",
+      "revId": "d86c4f8fdaaf4da023fc71172e20508f2ffd31ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
