@@ -103,3 +103,15 @@ function createInlineStyleMap(test, cssText) {
 function createComputedStyleMap(test, cssText) {
   return createDivWithStyle(test, cssText).computedStyleMap();
 }
+
+// Creates a new style element with a rule |cssText| and returns
+// its declared style property map.
+function createDeclaredStyleMap(test, cssText) {
+  const style = document.createElement('style');
+  document.head.appendChild(style);
+  const rule = style.sheet.cssRules[style.sheet.insertRule('#test { ' + cssText + '}')];
+  test.add_cleanup(() => {
+    style.remove();
+  });
+  return rule.attributeStyleMap;
+}
