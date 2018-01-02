@@ -1058,6 +1058,10 @@
       status: "experimental",
     },
     {
+      name: "UnifiedTouchAdjustment",
+      status: "experimental",
+    },
+    {
       name: "UpdateHoverPostLayout",
       status: "stable",
     },

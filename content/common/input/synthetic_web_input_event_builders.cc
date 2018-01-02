@@ -199,7 +199,8 @@ int SyntheticWebTouchEvent::PressPoint(float x, float y) {
   point.SetPositionInWidget(x, y);
   point.SetPositionInScreen(x, y);
   point.state = WebTouchPoint::kStatePressed;
-  point.radius_x = point.radius_y = 1.f;
+  // Use GestureConfiguration::default_radius_ as synthetic touch point radius.
+  point.radius_x = point.radius_y = 25.f;
   point.rotation_angle = 1.f;
   point.force = 1.f;
   point.tilt_x = point.tilt_y = 0;
