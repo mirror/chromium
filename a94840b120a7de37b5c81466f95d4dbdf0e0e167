@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f901c82_ea672faa",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8737,
+      "author": {
+        "id": 1185209
+      },
+      "writtenOn": "2018-01-02T15:24:06Z",
+      "side": 1,
+      "message": "You should not be using Skia\u0027s internal helpers to create your VkImage. You should either create your own VkImages and then wrap them for skia\u0027s use with factories on SkImage or SkSurface, or use other factories on SkImage/Surface to tell skia to generate one for you.",
+      "range": {
+        "startLine": 8718,
+        "startChar": 1,
+        "endLine": 8737,
+        "endChar": 60
+      },
+      "revId": "a94840b120a7de37b5c81466f95d4dbdf0e0e167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
