@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c50ef2b_c5f1b48d",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c255f74_8246d8d7",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c54b12_56e8daa1",
         "filename": "net/spdy/chromium/spdy_http_stream.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f18804_27e69877",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Unfortunately GetPushStream() needs to be called here unconditionally, because\n(1) if the pushed stream was created after HttpStreamFactoryImpl::Job called ClaimPushedStream(), then pushed_stream_id_ is kNoPushedStreamFound, but GetPushStream() can find the stream, also\n(2) if the pushed stream has http scheme, then ClaimPushedStream() does not return it, because such pushes are only allowed on the SpdySession that is selected by the normal pooling logic.  Such pushed streams are found by GetPushStream().",
+      "parentUuid": "65c54b12_56e8daa1",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "deee5aca_0f7a9cb3",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9ac99738_37effbc5",
+      "range": {
+        "startLine": 833,
+        "startChar": 26,
+        "endLine": 833,
+        "endChar": 46
+      },
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dd192a2_3ac805e1",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b54b8c2_e269c6fe",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Case 1: http scheme.  This is only allowed for trusted proxies.  This is covered by existing HttpNetworkTransactionTest.CrossOriginSPDYProxyPush test.\n\nCase 2: stream pushed later.  Good catch.  I am adding SpdyHttpStreamTest.UsePushedStreamEvenWithKNoPushedStreamFound for this.  Also, I am adding a few lines to SpdySessionTest.GetPushedStream to test that GetPushedStream() can return an error to a stream ID at one point and can return an actual stream for the same stream ID later.",
+      "parentUuid": "5dd192a2_3ac805e1",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "23d6e55f_97cd89d0",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Good catch.  I put the whole expression into ||, here and in the next paragraph.",
+      "parentUuid": "7c4f9bd7_96aeb208",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9eb9d68_9d675300",
         "filename": "net/spdy/chromium/spdy_session.h",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "a397dc97_e6f52502",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "a9eb9d68_9d675300",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e8be9cc_3059247b",
         "filename": "net/spdy/chromium/spdy_session_unittest.cc",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ebea4f_fb809e8f",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5664,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-02T19:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8be9cc_3059247b",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
