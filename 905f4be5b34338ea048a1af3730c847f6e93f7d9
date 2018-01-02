@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6bf2a24_484eb876",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddf83efa_fbc812df",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e19ed4d_70edb5b4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-02T18:56:15Z",
       "side": 1,
       "message": "What SDK functionality does it depend on, that needs rolling?\n\nIs the dependency on an SDK roll important to understanding the CL? Mustn\u0027t the roll already have happened before this CL lands, in which case the note is no longer relevant?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72987bd0_3b27d5fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "The roll\u0027s already done, so the comment\u0027s removed.",
+      "parentUuid": "8e19ed4d_70edb5b4",
       "range": {
         "startLine": 14,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ec4c2942_ab5836f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c078f64_6ebe5fa3",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7218d6_e3d91c48",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c068a6ce_3054e5fd",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7218d6_e3d91c48",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a9478fe5_323c5eef",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045d6ad3_95dd97eb",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "331948c5_d5106da4",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c0f74f_2f6ad0f0",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "331948c5_d5106da4",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e991b4e9_d280b4b6",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98cd414f_ac48cb99",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff3e8a5_3289ce56",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc7dc5c_bb135c06",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ff3e8a5_3289ce56",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "97b8c62a_c737e166",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "453e0abb_5b3905db",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d42e17f1_4360594e",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 2
@@ -220,6 +436,30 @@
       "writtenOn": "2018-01-02T18:56:15Z",
       "side": 1,
       "message": "Based on these examples, it seems that there\u0027s not any meaningful distinction between common_prefix and output_directory (given that output_directory is always a sub-directory of common_prefix).\n\nYou could have this function accept a list of directory prefixes, and the location, and have the function return the shortest path relative to any prefix paths that match, which I think would make the functioning easier to understand.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d95472b_225bc9f2",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "That\u0027s an improvement. Done. All of your comments re: comments are N/A because the function has been rewritten.",
+      "parentUuid": "d42e17f1_4360594e",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "59a9bc25_8e6f737c",
+        "filename": "testing/test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "That\u0027s right. This is similar to Android, where \"base_unittests\" resolves to a test_runner_script() action; the test executable and APK packages are indirectly pulled in via dependency rules.\n\nIt\u0027s better for cross-platform consistency if we maintain the binding between the GN target name and the ninja target name.",
+      "parentUuid": "36c89450_494946b2",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 5
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4d1dda9_7b473a36",
         "filename": "testing/test.gni",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a71714f_bbd9c00b",
+        "filename": "testing/test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-02T21:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4d1dda9_7b473a36",
+      "range": {
+        "startLine": 260,
+        "startChar": 20,
+        "endLine": 260,
+        "endChar": 41
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
