@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69bfd8d5_5379f2fe",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-02T18:33:34Z",
+      "side": 0,
+      "message": "One of the reasons we have this code here is we have tried to structure code such that code in chrome/browser does not refer to code in the c/b/ui/platform-specific-directory. You can see a similar structure to this in c/b/ui/views/chrome_browser_main_extra_part_views. This patch results in more dependencies between chrome/browser and c/b/ui/ash. I tend to think the right thing is to rename c/b/ui/views/ash to c/b/ui/views/chromeos (or c/b/ui/chromeos).\n\nNone-the-less I think the code in ChromeBrowserMainExtraPartsAsh should stay where it is at.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6f470c45ae8f22afc2cc15b5083c4bbfe00d120b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
