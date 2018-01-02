@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed70b08_38beac8d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2018-01-02T22:32:40Z",
+      "side": 1,
+      "message": "Is this just a \"Plan B SDP\" thing? My interpretation is that with Plan B, removeTrack removes the sender permanently (hence this expected behavior), whereas with Unified Plan it just sets the track to null and changes the direction attribute. If that\u0027s an accurate summation, may want to leave a comment documenting this.",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
