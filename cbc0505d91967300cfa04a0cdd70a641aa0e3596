@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274578ba_4296c520",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T14:17:23Z",
+      "side": 1,
+      "message": "per earlier comment thread, please rename this and update the comment to match what it contains:\n\n  // Whether the browser containing the tab is visible.\n  bool is_browser_visible;\n\nif \"visible\" isn\u0027t well-defined in chrome, it\u0027d probably also be good to mention exactly what it means:\n\na) browser isn\u0027t minimized or on another desktop\nb) browser isn\u0027t obscured by another (possibly fullscreen?) window\n\ni think that this probably just implies a), but i\u0027m not 100% sure.",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00592f3f_d7e2e311",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-02T14:17:23Z",
+      "side": 1,
+      "message": "could this be changed?\n\n  // Whether the tab is the selected tab in its browser.\n  bool is_selected;\n\n(or s/selected/active/ if \"active\" is the word that chrome uses for this concept.)\n\n\"is_active\" feels a bit confusing to me on its own, since this apparently actually means \"is_tab_active_and_browser_visible\".\n\nwhat i was trying to get at before is that this seems like it overlaps with is_browser_visible, e.g. is_selected will never be true in a TabProperty if is_browser_visible is false. if that\u0027s correct, would it be strictly better to only track the tab\u0027s active/selected state here instead of mixing in information about the browser?",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
