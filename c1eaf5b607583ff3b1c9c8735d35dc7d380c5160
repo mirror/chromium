@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8be64f9d_c6d3e250",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Spoke to you about this offline. We have both functions and properties that use this, so we would need two functions. We agreed on leaving the macro for now.",
+      "parentUuid": "43f267b9_e49fc66a",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311c3153_567c5861",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75285ae_99a6fa93",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Done! Np, its a lot cleaner!",
+      "parentUuid": "311c3153_567c5861",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3a31605_2d747ad6",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Done. In fact, we don\u0027t need the second element since we can never trigger site info from omnibox editing mode.",
+      "parentUuid": "b69e108b_0aff4e93",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359c4a80_95df7973",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9920079_38b07d5b",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359c4a80_95df7973",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "98a8f930_a8dd107a",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Oops, probably got distracted after creating the constant :P",
+      "parentUuid": "8346da92_e7da7b5a",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb5d491a_a1eda02a",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db12d48_c73099e4",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2018-01-02T19:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb5d491a_a1eda02a",
+      "revId": "c1eaf5b607583ff3b1c9c8735d35dc7d380c5160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
