@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "249d4b4e_ddce42f9",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "This is unrelated to the other changes so I\u0027ve removed it.",
+      "parentUuid": "d6e7c9cf_dfc409d7",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df3406c1_66f0c8a0",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "762a6ab0_44233ffd",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df3406c1_66f0c8a0",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a013c9_1f147b48",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T20:32:28Z",
       "side": 1,
       "message": "Is there potential for weird ordering if we don\u0027t drop the contexts immediately? Like we reconnect the host, then see the context is lost, and we end up making too many contexts or something? Or OnContextLost drops the host we just reconnected?",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a172cc81_510a0041",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "We don\u0027t recreate contexts until we find out they\u0027re lost, so I don\u0027t think that could happen. If OnLostMainThreadSharedContext() runs before this, but that is the same problem as context lost but no GPU crash and there is already a TODO about it above.",
+      "parentUuid": "84a013c9_1f147b48",
       "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "08dfd766_5cbaa0fb",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "So the main and worker contexts aren\u0027t in the same share group anymore. I\u0027m not exactly sure what we need to do here anymore. I\u0027m checking if the worker is lost when we\u0027re creating LayerTreeFrameSinks, same as GpuProcessTransportFactory, which seems to work.",
+      "parentUuid": "bbe2d571_d1d0a0d6",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "223dc5df_89e30bf3",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4361ec24_1dc681ce",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "As per discussion, there is no GLHelper. Also fixed the comment on GetGLHelper() to say that.",
+      "parentUuid": "223dc5df_89e30bf3",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c8e841b_47c9246e",
         "filename": "content/browser/compositor/viz_process_transport_factory.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8346940f_6f7fbc0f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-02T21:32:41Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "3c8e841b_47c9246e",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
