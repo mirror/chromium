@@ -22,7 +22,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_conversions.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ui {
 namespace ws {
 
@@ -112,6 +112,11 @@ bool EventDispatcher::SetCaptureWindow(ServerWindow* window,
   if (window == capture_window_ && client_id == capture_window_client_id_)
     return true;
 
+  LOG(ERROR) << "MSW EventDispatcher::SetCaptureWindow A window:" << window
+            //  << "(" << (window? window->GetName() : "") << ") capture_window_:" << capture_window_; 
+            << " bounds:" << (window? window->bounds().ToString() : ""); 
+  // return true; 
+  // base::debug::StackTrace().Print(); 
   // A window that is blocked by a modal window cannot gain capture.
   if (window && modal_window_controller_.IsWindowBlocked(window))
     return false;
@@ -732,6 +737,10 @@ void EventDispatcher::DispatchToClient(ServerWindow* window,
   gfx::Point location = ConvertPointFromRootForEventDispatch(
       delegate_->GetRootWindowForEventDispatch(window), window,
       event.location());
+  ServerWindow* root = delegate_->GetRootWindowForEventDispatch(window);
+  LOG(ERROR) << "MSW EventDispatcher::DispatchToClient A location: before:" << event.location().ToString() << " after:" << location.ToString()
+   << " root_location:" << event.root_location().ToString()
+   << " window:" << (window ? window->bounds().ToString() : "Unknown") << " root:" << (root ? root->bounds().ToString() : "Unknown"); 
   std::unique_ptr<ui::Event> clone = ui::Event::Clone(event);
   clone->AsLocatedEvent()->set_location(location);
   // TODO(jonross): add post-target accelerator support once accelerators

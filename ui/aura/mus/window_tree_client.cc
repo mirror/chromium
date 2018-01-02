@@ -32,6 +32,7 @@
 #include "services/ui/public/interfaces/window_tree_host_factory.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/drag_drop_client.h"
+#include "ui/aura/client/screen_position_client.h" 
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/env_input_state_controller.h"
@@ -1198,6 +1199,7 @@ void WindowTreeClient::OnUnembed(Id window_id) {
 
 void WindowTreeClient::OnCaptureChanged(Id new_capture_window_id,
                                         Id old_capture_window_id) {
+  LOG(ERROR) << "MSW WindowTreeClient::OnCaptureChanged A:" << old_capture_window_id << " -> " << new_capture_window_id; 
   WindowMus* new_capture_window = GetWindowByServerId(new_capture_window_id);
   WindowMus* lost_capture_window = GetWindowByServerId(old_capture_window_id);
   if (!new_capture_window && !lost_capture_window)
@@ -1478,14 +1480,102 @@ void WindowTreeClient::OnWindowInputEvent(
     uint32_t event_id,
     Id window_id,
     int64_t display_id,
+    Id display_root_window_id,
     const gfx::PointF& event_location_in_screen_pixel_layout,
     std::unique_ptr<ui::Event> event,
     bool matches_pointer_watcher) {
   DCHECK(event);
-
   WindowMus* window = GetWindowByServerId(window_id);  // May be null.
 
+  // TODO(msw): When a captured event is targetted at a window, it only has the
+  // window-relative location and the mirror-display 'root' location, not the screen location.
+  // WindowTreeClient can't look up the mirror display from screen, Ash, etc. 
+  // WindowTreeClient needs the mirror's ScreenPositionClient, (pass display root window from Mus?)
+  // Or Mus needs to know about Ash's mirroring (display locations). 
+  // Or some processing layer below WindowTreeClient needs to handle the mapping. 
+  // Or Mus needs to map the screen position from the window heirarchy, not the raw display location... 
+  WindowMus* display_root_window = GetWindowByServerId(display_root_window_id);  // May be null.
+
+
+  if (event->IsLocatedEvent()) {
+    LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent A display:" << display_id
+               << " window: (" << (window ? window->GetWindow() : nullptr) << " - "
+                             << (window ? window->GetWindow()->bounds().ToString() : "Unknown") << ")"
+               << " display_root_window: (" << (display_root_window ? display_root_window->GetWindow() : nullptr) << " - "
+                             << (display_root_window ? display_root_window->GetWindow()->bounds().ToString() : "Unknown") << ")"
+              //  << " target: " << event->target()
+               << " location:" << (event->IsLocatedEvent()? event->AsLocatedEvent()->location().ToString() : "")
+               << " root_location:" << (event->IsLocatedEvent()? event->AsLocatedEvent()->root_location().ToString() : "")
+               << " / " << event_location_in_screen_pixel_layout.ToString(); 
+
+    // display::Display display;
+    // if (display::Screen::GetScreen()->GetDisplayWithDisplayId(display_id, &display))
+    //     LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent A1 " << display.bounds().origin().ToString();
+  }
+
+  // TODO(msw): Fixup the event location in unified mode... 
+  if (event->IsLocatedEvent() && window && window->GetWindow() &&
+      display::Screen::GetScreen()->GetPrimaryDisplay().id() == display::kUnifiedDisplayId) {
+    ui::LocatedEvent* located_event = event->AsLocatedEvent();
+
+    // // TODO(msw): Correct root window? 
+    aura::Window* root_window = display_root_window ? display_root_window->GetWindow()->GetRootWindow() : nullptr;
+    aura::client::ScreenPositionClient* screen_position_client =
+        aura::client::GetScreenPositionClient(root_window);
+    // // gfx::Rect local(wth->GetBoundsInPixels().size());
+    // // local.Inset(GetHostInsets());
+
+    if (screen_position_client /*&& !local.Contains(event->location())*/) {
+      gfx::Point root_location(located_event->root_location());
+      // In order to get the correct point in screen coordinates
+      // during passive grab, we first need to find on which host window
+      // the mouse is on, and find out the screen coordinates on that
+      // host window, then convert it back to this host window's coordinate.
+      screen_position_client->ConvertPointToScreen(root_window, &root_location); 
+      // screen_position_client->ConvertHostPointToScreen(root_window, &location);
+
+      gfx::Point location(root_location);
+      // screen_position_client->ConvertPointFromScreen(root_window, &location);
+      if (window && window->GetWindow())
+        screen_position_client->ConvertPointFromScreen(window->GetWindow(), &location);
+      // aura::Window::ConvertPointToTarget(
+      // wth->ConvertDIPToPixels(&location);
+
+      LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent B "
+        << " root before:" << located_event->root_location().ToString() << " after:" << root_location.ToString()
+        << " local before:" << located_event->location().ToString() << " after:" << location.ToString(); 
+      located_event->set_root_location(root_location);
+      located_event->set_location(location);
+      
+      // TODO(msw): Update event_location_in_screen_pixel_layout? 
+      // LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent B root:" << located_event->root_location().ToString() << " location:" << located_event->location().ToString(); 
+      // // located_event->set_root_location(location);
+    }
+ 
+
+  //   gfx::PointF unified_location = event_location_in_screen_pixel_layout;
+  //   // aura::Window::ConvertPointToTarget(static_cast<aura::Window*>(event->target()), capture_synchronizer_->capture_window()->GetWindow()->GetRootWindow(), &unified_location);
+  //   display::Display display;
+  //   if (display::Screen::GetScreen()->GetDisplayWithDisplayId(display_id, &display)) {
+  //     // unified_location += display.bounds().OffsetFromOrigin(); // gfx::Vector2d(400, 0); 
+  //   }
+  //   // if (window && window->GetWindow())
+  //   //   unified_location += window->GetWindow()->bounds().OffsetFromOrigin(); 
+  //   located_event->set_root_location_f(unified_location);
+  //   gfx::PointF target_location = unified_location;
+  //   if (capture_synchronizer_->capture_window()) {
+  //     aura::Window::ConvertPointToTarget(capture_synchronizer_->capture_window()->GetWindow()->GetRootWindow(), capture_synchronizer_->capture_window()->GetWindow(), &target_location);
+  //   } else if (event->target()) {
+  //     aura::Window* target_window = static_cast<aura::Window*>(event->target());
+  //     aura::Window::ConvertPointToTarget(target_window->GetRootWindow(), target_window, &target_location);
+  //   }
+  //   located_event->set_location_f(target_location);
+  //   LOG(ERROR) << "MSW display.origin()" << display.bounds().origin().ToString() << " unified_location:" << unified_location.ToString() << " target_location:" << target_location.ToString(); 
+  }
+
+
   if (matches_pointer_watcher && has_pointer_watcher_) {
+    LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent B"; 
     DCHECK(event->IsPointerEvent());
     std::unique_ptr<ui::Event> event_in_dip(ui::Event::Clone(*event));
     ConvertPointerEventLocationToDip(display_id, window,
@@ -1497,6 +1587,7 @@ void WindowTreeClient::OnWindowInputEvent(
   // If the window has already been deleted, use |event| to update event states
   // kept in aura::Env.
   if (!window || !window->GetWindow()->GetHost()) {
+    LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent C"; 
     EnvInputStateController* env_controller =
         Env::GetInstance()->env_controller();
     std::unique_ptr<ui::Event> mapped_event = MapEvent(*event.get());
@@ -1534,9 +1625,13 @@ void WindowTreeClient::OnWindowInputEvent(
   std::unique_ptr<ui::MouseEvent> mapped_event_with_native;
   if (mapped_event->type() == ui::ET_MOUSE_MOVED ||
       mapped_event->type() == ui::ET_MOUSE_DRAGGED) {
+    // TODO(msw): Fix event construction here... static cast is not so good. 
     mapped_event_with_native = std::make_unique<ui::MouseEvent>(
         static_cast<const base::NativeEvent&>(mapped_event.get()));
     // MouseEvent(NativeEvent) sets the root_location to location.
+      LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent D "
+        << " root before:" << mapped_event_with_native->root_location().ToString() << " after:" << event_location_in_screen_pixel_layout.ToString()
+        << " local before:" << mapped_event_with_native->location().ToString() << " after:" << event_location_in_screen_pixel_layout.ToString(); 
     mapped_event_with_native->set_root_location_f(
         event_location_in_screen_pixel_layout);
     // |mapped_event| is now the NativeEvent. It's expected the location of the
@@ -1546,6 +1641,13 @@ void WindowTreeClient::OnWindowInputEvent(
     event_to_dispatch = mapped_event_with_native.get();
   }
 #endif
+
+  // if (event_to_dispatch->IsLocatedEvent()) {
+  //   ui::LocatedEvent* located_event = event_to_dispatch->AsLocatedEvent();
+  //   located_event->set_location_f(event_location_in_screen_pixel_layout);
+  //   located_event->set_root_location_f(event_location_in_screen_pixel_layout);
+  // }
+  LOG(ERROR) << "MSW WindowTreeClient::OnWindowInputEvent D location:" <<  (event_to_dispatch->IsLocatedEvent()? event_to_dispatch->AsLocatedEvent()->location().ToString() : ""); 
   DispatchEventToTarget(event_to_dispatch, window);
   ack_handler.set_handled(event_to_dispatch->handled());
 }

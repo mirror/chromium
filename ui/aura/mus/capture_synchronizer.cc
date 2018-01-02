@@ -10,7 +10,7 @@
 #include "ui/aura/mus/capture_synchronizer_delegate.h"
 #include "ui/aura/mus/window_mus.h"
 #include "ui/aura/window.h"
-
+#include "base/debug/stack_trace.h" 
 namespace aura {
 
 CaptureSynchronizer::CaptureSynchronizer(CaptureSynchronizerDelegate* delegate,
@@ -20,6 +20,7 @@ CaptureSynchronizer::CaptureSynchronizer(CaptureSynchronizerDelegate* delegate,
 CaptureSynchronizer::~CaptureSynchronizer() {}
 
 void CaptureSynchronizer::SetCaptureFromServer(WindowMus* window) {
+  LOG(ERROR) << "MSW CaptureSynchronizer::SetCaptureFromServer A window:" << window << " capture_window_:" << capture_window_;
   if (window == capture_window_)
     return;
 
@@ -49,6 +50,7 @@ void CaptureSynchronizer::DetachFromCaptureClient(
 }
 
 void CaptureSynchronizer::SetCaptureWindow(WindowMus* window) {
+  LOG(ERROR) << "MSW CaptureSynchronizer::SetCaptureWindow A window:" << window << " capture_window_:" << capture_window_;
   if (capture_window_)
     capture_window_->GetWindow()->RemoveObserver(this);
   capture_window_ = window;
@@ -67,6 +69,8 @@ void CaptureSynchronizer::OnWindowDestroying(Window* window) {
 
 void CaptureSynchronizer::OnCaptureChanged(Window* lost_capture,
                                            Window* gained_capture) {
+  LOG(ERROR) << "MSW CaptureSynchronizer::OnCaptureChanged A " << lost_capture << " -> " << gained_capture << "(" << (gained_capture? gained_capture->GetTitle() : base::string16()) << ")";
+  // base::debug::StackTrace().Print(); 
   if (!gained_capture && !capture_window_)
     return;  // Happens if the window is deleted during notification.
 

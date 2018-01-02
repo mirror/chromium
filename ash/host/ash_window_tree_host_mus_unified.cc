@@ -32,6 +32,8 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
                                       ui::Event* event) override {
     // Unlike the classic config, mus may provide a target for the event.
+    // LOG(ERROR) << "MSW UnifiedEventTargeter::FindTargetForEvent A root:" << static_cast<aura::Window*>(root)->GetName() << " src_root_:" << static_cast<aura::Window*>(src_root_)->GetName() << " event->target():" << event->target(); 
+    LOG(ERROR) << "MSW UnifiedEventTargeter::FindTargetForEvent A " << root << " =?= " << src_root_ << " event->target():" << event->target(); 
     if (root == src_root_) {
       delegate_->SetCurrentEventTargeterSourceHost(src_root_->GetHost());
 

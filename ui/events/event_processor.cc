@@ -6,7 +6,7 @@
 
 #include "ui/events/event_target.h"
 #include "ui/events/event_targeter.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ui {
 
 EventProcessor::EventProcessor() : weak_ptr_factory_(this) {}
@@ -14,6 +14,9 @@ EventProcessor::EventProcessor() : weak_ptr_factory_(this) {}
 EventProcessor::~EventProcessor() {}
 
 EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
+  LOG(ERROR) << "MSW EventProcessor::OnEventFromSource A type:" << event->type() << " location:" << (event->IsLocatedEvent() ? event->AsLocatedEvent()->location().ToString() : "") << " target:" << event->target(); 
+  // if (event->IsLocatedEvent() && event->AsLocatedEvent()->location().x() < 0)
+  //   base::debug::StackTrace().Print(); 
   base::WeakPtr<EventProcessor> weak_this = weak_ptr_factory_.GetWeakPtr();
   // If |event| is in the process of being dispatched or has already been
   // dispatched, then dispatch a copy of the event instead. We expect event
@@ -33,12 +36,14 @@ EventDispatchDetails EventProcessor::OnEventFromSource(Event* event) {
   EventTarget* initial_target = event_to_dispatch->handled()
                                     ? nullptr
                                     : GetInitialEventTarget(event_to_dispatch);
+  LOG(ERROR) << "MSW EventProcessor::OnEventFromSource B handled:" << event_to_dispatch->handled() << " initial_target:" << initial_target; 
   if (!event_to_dispatch->handled()) {
     EventTarget* target = initial_target;
     EventTargeter* targeter = nullptr;
 
     if (!target) {
       EventTarget* root = GetRootForEvent(event_to_dispatch);
+      LOG(ERROR) << "MSW EventProcessor::OnEventFromSource C GetRootForEvent:" << root; 
       DCHECK(root);
       targeter = root->GetEventTargeter();
       if (targeter) {

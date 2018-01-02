@@ -79,6 +79,7 @@ bool DisplayManager::SetDisplayConfiguration(
     int64_t primary_display_id,
     int64_t internal_display_id,
     const std::vector<display::Display>& mirrors) {
+      LOG(ERROR) << "MSW DisplayManager::SetDisplayConfiguration displays:" << displays.size() << " mirrors:" << mirrors.size(); 
   DCHECK_NE(display::kUnifiedDisplayId, internal_display_id);
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
