@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05f42e33_7fdad8f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/JavascriptInjectorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-02T02:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bf5589_fd244b6d",
+      "range": {
+        "startLine": 31,
+        "startChar": 18,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "750e50a1e3adac109f84633d102aae79587b1665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac69910a_de68aafa",
         "filename": "content/public/android/java/src/org/chromium/content/browser/JavascriptInjectorImpl.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T16:44:55Z",
       "side": 1,
       "message": "I think I have a similar question here as with the gesture listener.  We add a user data on native, so why do we need this on the java side?\n\nWhy not have a JNI method that passes the webContents down and pull the java object from there.  Having the two sided user data seems unnecessary to me.  Granted, the amount of boilerplate code to support this is very unfortunate, so that seems rather unfortunate.\n\nThis is consistent, so I won\u0027t force this now, but I do want to continue discussing this to keep the thoughts going about potentially improving this.",
+      "range": {
+        "startLine": 41,
+        "startChar": 35,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "750e50a1e3adac109f84633d102aae79587b1665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807d3771_ce6d6798",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/JavascriptInjectorImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-02T02:17:40Z",
+      "side": 1,
+      "message": "Acknowledged. Will see if UserData from both sides is avoidable in the follow up.",
+      "parentUuid": "ac69910a_de68aafa",
       "range": {
         "startLine": 41,
         "startChar": 35,
