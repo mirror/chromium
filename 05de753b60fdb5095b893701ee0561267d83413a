@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "857f9545_c5f051f8",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done. Added |SimpleURLLoaderTestHelper::SetRunLoopQuitThread(BrowserThread::ID)|.",
+      "parentUuid": "77b6b350_8d4bfffb",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e23850_a58db8ec",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -117,6 +141,30 @@
       "revId": "05de753b60fdb5095b893701ee0561267d83413a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc742102_6a31b3d7",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e23850_a58db8ec",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +203,30 @@
       "side": 1,
       "message": "Yes we are calling |url_loader_factory_getter_-\u003eFlushNetworkInterfaceOnIOThreadForTesting()| inside |partition-\u003eFlushNetworkInterfaceForTesting()|.\n\nOr do you prefer moving it out?",
       "parentUuid": "b502862e_2d9b5ec3",
+      "range": {
+        "startLine": 296,
+        "startChar": 13,
+        "endLine": 296,
+        "endChar": 44
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a1ef7d_d0a71484",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done. Moved |url_loader_factory_getter-\u003eFlushNetworkInterfaceOnIOThreadForTesting()| out.",
+      "parentUuid": "188ce238_0a0e8e4d",
       "range": {
         "startLine": 296,
         "startChar": 13,
@@ -214,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "f2ab7a14_f790d56a",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done. Changed to |content_browser_test_utils.h::NavigateToURL()|.",
+      "parentUuid": "f3b92b38_9fcbae53",
+      "range": {
+        "startLine": 306,
+        "startChar": 23,
+        "endLine": 306,
+        "endChar": 47
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b16a26_b110262b",
         "filename": "content/browser/url_loader_factory_getter.cc",
         "patchSetId": 5
@@ -261,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "e1bedb1f_4f044e88",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done. Changed to raw pointer and cleared by |StorageParititonImpl::~StorageParititonImpl()|.",
+      "parentUuid": "ff63e1b1_1553ea36",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "315c32d0_b5a1d6c9",
         "filename": "content/browser/url_loader_factory_getter.h",
         "patchSetId": 5
@@ -272,6 +392,30 @@
       "writtenOn": "2017-12-20T19:54:57Z",
       "side": 1,
       "message": "I don\u0027t think we need a weak pointer?  It\u0027s fine to just document that the partition must outlive the loader factory.  In fact, taking a WeakPtr implies this class handles the case where the partition is destroyed first.",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae147dd6_3437c851",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done. Changed to raw pointer (see the other comment).",
+      "parentUuid": "315c32d0_b5a1d6c9",
       "range": {
         "startLine": 30,
         "startChar": 30,
@@ -304,6 +448,30 @@
       "revId": "05de753b60fdb5095b893701ee0561267d83413a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e47a446_1ac27045",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-02T18:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb906da3_e5b07adf",
+      "range": {
+        "startLine": 70,
+        "startChar": 41,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
