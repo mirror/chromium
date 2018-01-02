@@ -333,32 +333,6 @@ class BrowserViewControllerTest : public BlockCleanupTest {
   UIWindow* window_;
 };
 
-// TODO(crbug.com/228714): These tests pretty much only tested that BVC passed
-// notifications on to the toolbar, and that the toolbar worked correctly. The
-// former should be an integration test, and the latter should be a toolbar
-// test.  Leaving DISABLED_ for now to remind us to move them to toolbar tests.
-TEST_F(BrowserViewControllerTest, DISABLED_TestPageLoadStarted) {
-  NSDictionary* userInfoWithThisTab =
-      [NSDictionary dictionaryWithObject:tab_ forKey:kTabModelTabKey];
-  NSNotification* notification = [NSNotification
-      notificationWithName:kTabModelTabWillStartLoadingNotification
-                    object:nil
-                  userInfo:userInfoWithThisTab];
-  [bvc_ pageLoadStarted:notification];
-  EXPECT_TRUE([bvc_ testing_isLoading]);
-}
-
-TEST_F(BrowserViewControllerTest, DISABLED_TestPageLoadComplete) {
-  NSDictionary* userInfoWithThisTab =
-      [NSDictionary dictionaryWithObject:tab_ forKey:kTabModelTabKey];
-  NSNotification* notification = [NSNotification
-      notificationWithName:kTabModelTabDidFinishLoadingNotification
-                    object:nil
-                  userInfo:userInfoWithThisTab];
-  [bvc_ pageLoadComplete:notification];
-  EXPECT_FALSE([bvc_ testing_isLoading]);
-}
-
 TEST_F(BrowserViewControllerTest, TestTabSelected) {
   id tabMock = (id)tab_;
   [[tabMock expect] wasShown];
