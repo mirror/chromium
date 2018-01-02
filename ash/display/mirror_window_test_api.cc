@@ -48,7 +48,7 @@ const aura::Window* MirrorWindowTestApi::GetCursorWindow() const {
   return Shell::Get()
       ->window_tree_host_manager()
       ->cursor_window_controller()
-      ->cursor_window_.get();
+      ->container_;
 }
 
 gfx::Point MirrorWindowTestApi::GetCursorLocation() const {

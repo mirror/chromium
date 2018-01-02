@@ -55,6 +55,9 @@ const char kAshEnableV1AppBackButton[] = "ash-enable-v1-app-back-button";
 const char kAshEnableDisplayMoveWindowAccels[] =
     "ash-enable-display-move-window-accels";
 
+// Enable cursor motion blur.
+const char kAshEnableCursorMotionBlur[] = "ash-enable-cursor-motion-blur";
+
 // Enables keyboard shortcut viewer.
 // TODO(wutao): Remove this once the feature is launched. crbug.com/768932.
 const char kAshEnableKeyboardShortcutViewer[] =
