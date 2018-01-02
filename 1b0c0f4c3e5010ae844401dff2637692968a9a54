@@ -16,6 +16,24 @@
       "revId": "1b0c0f4c3e5010ae844401dff2637692968a9a54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ca40bd_e1e50738",
+        "filename": "content/test/data/android/input/input_forms.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-02T22:35:04Z",
+      "side": 1,
+      "message": "Updated. I was trying to avoid splitting up ImeTest because ImeActivityTestRule is coupled quite closely with the test file it uses; for example, to add a separate file for autocapitalize, I had to add an \u003cinput\u003e element with the ID input_text (since it looks for that ID) and also copy over a bunch of JavaScript I don\u0027t need.\n\nI\u0027ll consider trying to clean this up in a separate CL; I\u0027m somewhat afraid to make substantial changes to ImeTest though given how prone it is to flaking.",
+      "parentUuid": "1f04f435_358215ee",
+      "revId": "1b0c0f4c3e5010ae844401dff2637692968a9a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
