@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d3362e_42696876",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-02T19:37:16Z",
+      "side": 1,
+      "message": "Do you think it\u0027s odd to intersperse pure virtuals and concrete methods? Feels like they should be separate, but maybe it\u0027s just me.",
+      "revId": "cb894e556edc0b9b11846549fd57440571c381c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
