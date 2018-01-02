@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e167a77_168e523f",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "NIT: \"for various unit tests in this file\" ?",
+      "range": {
+        "startLine": 26,
+        "startChar": 64,
+        "endLine": 26,
+        "endChar": 76
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b472b624_b02bb97b",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "Maybe pass |exp_old_labels| to:\n- Sanity check in the helper routine.\n- Make it easier to see how values are generated in  GenerateReferencesDelta test below?",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c7c4f2_2a3ef548",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "Oops, remove \"to\"?",
+      "range": {
+        "startLine": 72,
+        "startChar": 77,
+        "endLine": 72,
+        "endChar": 79
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20f0d94_f3a1d8ed",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "// Tie-breaking: Prefer longest Equivalence, and then Equivalence with min |dst_offset|.\nEXPECT_EQ(OffsetVector({11}),\n          MakeNewTargetsFromEquivalenceMap({1},\n                                           {{0, 10, 4}, {1, 21, 3}}));\nEXPECT_EQ(OffsetVector({21}),\n          MakeNewTargetsFromEquivalenceMap({1},\n                                           {{0, 10, 3}, {1, 21, 4}}));\nEXPECT_EQ(OffsetVector({11}),\n          MakeNewTargetsFromEquivalenceMap({1},\n                                           {{0, 10, 4}, {1, 21, 4}}));",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 1
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71103c27_cbf3b6df",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "... it is not \"extra\" (found as label).",
+      "range": {
+        "startLine": 155,
+        "startChar": 28,
+        "endLine": 155,
+        "endChar": 42
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56162c19_f3cfd779",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-02T21:48:31Z",
+      "side": 1,
+      "message": "// {3 - 3}.",
+      "range": {
+        "startLine": 214,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "657e825df8afae6854339004d5c2adadde3395a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
