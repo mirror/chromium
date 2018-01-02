@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5125a447_ec0a9d70",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-02T19:56:18Z",
+      "side": 1,
+      "message": "Will fix.",
+      "parentUuid": "01e9c63b_9f7714bf",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 14
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f8e8ec7_c16b740e",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0b337c78_5b2d3767",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-02T19:56:18Z",
+      "side": 1,
+      "message": "The bug will become world-readable a number of weeks after the patch lands. I\u0027ve added you to the CC list on the issue.",
+      "parentUuid": "9f8e8ec7_c16b740e",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 35
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b62346_9022479a",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-02T18:57:30Z",
       "side": 1,
       "message": "Don\u0027t you need to reenable at some point?",
+      "range": {
+        "startLine": 542,
+        "startChar": 6,
+        "endLine": 542,
+        "endChar": 51
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234df7f6_eaa46d10",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-02T19:56:18Z",
+      "side": 1,
+      "message": "Windows re-enables the button when the user selects a folder.",
+      "parentUuid": "d1b62346_9022479a",
       "range": {
         "startLine": 542,
         "startChar": 6,
