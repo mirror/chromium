@@ -149,6 +149,8 @@
          init_two_cube_map_levels_before_copyteximage)       \
   GPU_OP(INIT_VERTEX_ATTRIBUTES,                             \
          init_vertex_attributes)                             \
+  GPU_OP(MAX_MSAA_SAMPLE_COUNT_4,                             \
+         max_msaa_sample_count_4)                             \
   GPU_OP(MAX_COPY_TEXTURE_CHROMIUM_SIZE_1048576,             \
          max_copy_texture_chromium_size_1048576)             \
   GPU_OP(MAX_COPY_TEXTURE_CHROMIUM_SIZE_262144,              \
