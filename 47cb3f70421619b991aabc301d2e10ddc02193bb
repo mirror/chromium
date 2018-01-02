@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c30836ed_7c17fcab",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-02T23:00:33Z",
+      "side": 1,
+      "message": "I\u0027m curious if we want to preserve the order of the PreviewsTypes as well:\n\nmaybe preview X applies better than preview Y for domain Z. Is there any reason this might be beneficial for determining preview precedence on that site?\n\nSeems non-blocking for this CL though.",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 12
+      },
+      "revId": "47cb3f70421619b991aabc301d2e10ddc02193bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
