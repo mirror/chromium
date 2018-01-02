@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da6acf4_626152f2",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T23:11:47Z",
+      "side": 1,
+      "message": "I recently learned base::make_span will work here and doesn\u0027t require specifying the type.",
+      "range": {
+        "startLine": 159,
+        "startChar": 24,
+        "endLine": 159,
+        "endChar": 43
+      },
+      "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547d1713_208f7396",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T23:11:47Z",
+      "side": 1,
+      "message": "9000?",
+      "range": {
+        "startLine": 75,
+        "startChar": 54,
+        "endLine": 75,
+        "endChar": 59
+      },
+      "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198d0a39_b2942ffd",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T23:11:47Z",
+      "side": 1,
+      "message": "const std::vector\u003cuint8_t\u003e\u0026",
+      "range": {
+        "startLine": 356,
+        "startChar": 21,
+        "endLine": 356,
+        "endChar": 47
+      },
+      "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db174336_55e9e5a1",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-02T23:11:47Z",
+      "side": 1,
+      "message": "If SetNonce took a base::span this could be written as base::make_span(buffer).subspan(7, 8).",
+      "range": {
+        "startLine": 359,
+        "startChar": 16,
+        "endLine": 359,
+        "endChar": 78
+      },
+      "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
