@@ -3549,14 +3549,6 @@ crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-fe
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-feature-policy-same-origin.html [ Failure Pass Timeout ]
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-iframe-delegation.html [ Failure Pass Timeout ]
 
-# Double tap on modern media controls is a bit more complicated on Mac but
-# since we are not targeting Mac yet we can come back and fix this later.
-crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-backwards.html [ Skip ]
-crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-forwards.html [ Skip ]
-crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-forwards-too-short.html [ Skip ]
-crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-on-play-button.html [ Skip ]
-crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-toggle-fullscreen.html [ Skip ]
-
 # Sheriff faulures 2017-12-12
 crbug.com/794180 http/tests/devtools/layers/layer-compositing-reasons.js [ Failure Pass ]
 
@@ -3568,9 +3560,6 @@ crbug.com/779087 external/wpt/feature-policy/autoplay-disabled-by-feature-policy
 # Sheriff failures 2017-12-15
 crbug.com/795250 [ Win7 ] virtual/scroll_customization/fast/events/touch/gesture/gesture-tap-hover-state-iframe.html [ Pass Failure ]
 crbug.com/795250 [ Win7 ] virtual/mouseevent_fractional/fast/events/touch/gesture/gesture-tap-hover-state-iframe.html [ Pass Failure ]
-
-# Does not work on Mac
-crbug.com/793771 [ Mac ] virtual/modern-media-controls/media/controls/modern/scrubbing.html [ Skip ]
 
 # Slight Skia rendering change - drawing zero length line with round caps as circle
 crbug.com/796913 virtual/gpu/fast/canvas/canvas-zero-length-lineCap.html [ NeedsManualRebaseline ]
