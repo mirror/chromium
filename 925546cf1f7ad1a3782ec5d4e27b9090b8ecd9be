@@ -16,6 +16,24 @@
       "revId": "925546cf1f7ad1a3782ec5d4e27b9090b8ecd9be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ff044d_e1a495ee",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-02T21:12:29Z",
+      "side": 1,
+      "message": "No problem. After clicking \u0027Back\u0027, the login screen will call ShowUserWallpaper.",
+      "parentUuid": "abe721d4_a509222d",
+      "revId": "925546cf1f7ad1a3782ec5d4e27b9090b8ecd9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
