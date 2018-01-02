@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "548d3660_e9ff50cb",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-02T14:07:00Z",
+      "side": 1,
+      "message": "Opinions sought. I think of it as a format difference, but webrtc had called it sdp_semantics (and type SdpSemantics) before this change.",
+      "parentUuid": "207b8700_6d045852",
+      "revId": "43de41767b7a36f940f056bd08d4d5a933fabd5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1934549_8ac65d04",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-createOffer-promise.html",
         "patchSetId": 1
