@@ -90,6 +90,9 @@ TEST_F(NavigationItemTest, Copy) {
   EXPECT_NSEQ([postData0 dataUsingEncoding:NSUTF8StringEncoding],
               copy.GetPostData());
   EXPECT_NSEQ(state0, copy.GetSerializedStateObject());
+
+  // Make sure that copied object is in working condition.
+  copy.AddHttpRequestHeaders(@{});  // Test for crbug.com/798070
 }
 
 // Tests whether |NavigationItem::AddHttpRequestHeaders()| adds the passed
