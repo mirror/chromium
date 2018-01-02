@@ -44,7 +44,7 @@ using namespace Unicode;
 // (i.e, characters defined in Unicode [UNICODE] in the "open" (Ps), "close"
 // (Pe), "initial" (Pi). "final" (Pf) and "other" (Po) punctuation classes),
 // that precedes or follows the first letter should be included"
-static inline bool IsPunctuationForFirstLetter(UChar c) {
+static inline bool IsPunctuationForFirstLetter(UChar32 c) {
   CharCategory char_category = Category(c);
   return char_category == kPunctuation_Open ||
          char_category == kPunctuation_Close ||
@@ -76,8 +76,8 @@ unsigned FirstLetterPseudoElement::FirstLetterLength(const String& text) {
   while (length < text_length && IsSpaceForFirstLetter(text[length]))
     length++;
   // Now account for leading punctuation.
-  while (length < text_length && IsPunctuationForFirstLetter(text[length]))
-    length++;
+  while (length < text_length && IsPunctuationForFirstLetter(text.CharacterStartingAt(length)))
+    length += U16_LENGTH(text.CharacterStartingAt(length));
 
   // Bail if we didn't find a letter before the end of the text or before a
   // space.
@@ -89,10 +89,12 @@ unsigned FirstLetterPseudoElement::FirstLetterLength(const String& text) {
 
   // Keep looking for allowed punctuation for the :first-letter.
   for (; length < text_length; ++length) {
-    UChar c = text[length];
+    UChar32 c = text.CharacterStartingAt(length);
     if (!IsPunctuationForFirstLetter(c) &&
         !IsBetweenSurrogatePair(text, length))
       break;
+    if (U16_LENGTH(c) == 2)
+      length++;
   }
   return length;
 }
