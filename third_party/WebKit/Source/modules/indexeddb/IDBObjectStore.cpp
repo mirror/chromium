@@ -530,6 +530,8 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
 
   value_wrapper.DoneCloning();
   value_wrapper.WrapIfBiggerThan(IDBValueWrapper::kWrapThreshold);
+  value_wrapper.SerializeBundles();
+  value_wrapper.WrapIfBiggerThan(IDBValueWrapper::kWrapThreshold);
 
   request->transit_blob_handles() = value_wrapper.TakeBlobDataHandles();
   BackendDB()->Put(

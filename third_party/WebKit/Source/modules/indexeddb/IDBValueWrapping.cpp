@@ -51,6 +51,28 @@ const static uint8_t kRequiresProcessingSSVPseudoVersion = 17;
 //             (should always be the last Blob)
 const static uint8_t kReplaceWithBlob = 1;
 
+// SSV processing command that contains a bundle data stream.
+//
+// This loads an SSV's bundle list and replaces the SSV's data bytes with the
+// remainder of the sequence.
+//
+// 1) 0xFF - kVersionTag
+// 2) 0x11 - Blink wrapper version, 17
+// 3) 0x02 - kLoadBundleData
+// 4) varint - Number of bundles
+// 5) list of bundles - Each bundle has the following data:
+//     5.1) varint - Bundle type
+//     5.2) byte vector - Bundle version
+//     5.3) varint - Number of items in a bundle
+//     5.4) list of bundle items - Each bundle item has the following data
+//         5.4.1) varint - item predicate
+//         5.4.2) varint - item ID
+//         5.4.3) varint - the offset of the Blob containing the item in the
+//                         IDBValue list of Blobs
+//         5.4.4) varint - item data start within blob -- must currently be 0
+//         5.4.5) varint - item data size -- must currently match Blob size
+const static uint8_t kLoadBundleData = 2;
+
 }  // namespace
 
 IDBValueWrapper::IDBValueWrapper(
@@ -61,6 +83,7 @@ IDBValueWrapper::IDBValueWrapper(
     ExceptionState& exception_state) {
   SerializedScriptValue::SerializeOptions options;
   options.blob_info = &blob_info_;
+  options.bundles = &bundles_;
   options.for_storage = SerializedScriptValue::kForStorage;
   options.wasm_policy = wasm_policy;
 
@@ -114,6 +137,32 @@ void IDBValueWrapper::WriteBytes(const Vector<uint8_t>& bytes,
   output.Append(bytes.data(), bytes.size());
 }
 
+// static
+void IDBValueWrapper::WriteBundleItem(
+    const SerializedScriptValue::Bundle::Item& item,
+    const Vector<WebBlobInfo>& blob_info_vector,
+    Vector<char>& output) {
+  const WebBlobInfo& blob_info = blob_info_vector[item.blob_index];
+
+  IDBValueWrapper::WriteVarInt(static_cast<unsigned>(item.predicate), output);
+  IDBValueWrapper::WriteVarInt(item.id, output);
+  IDBValueWrapper::WriteVarInt(blob_info.size(), output);
+  IDBValueWrapper::WriteVarInt(item.blob_index, output);
+  IDBValueWrapper::WriteVarInt(0, output);
+  IDBValueWrapper::WriteVarInt(blob_info.size(), output);
+}
+
+// static
+void IDBValueWrapper::WriteBundle(const SerializedScriptValue::Bundle& bundle,
+                                  const Vector<WebBlobInfo>& blob_info_vector,
+                                  Vector<char>& output) {
+  IDBValueWrapper::WriteVarInt(bundle.type, output);
+  IDBValueWrapper::WriteBytes(bundle.version, output);
+  IDBValueWrapper::WriteVarInt(bundle.items.size(), output);
+  for (const SerializedScriptValue::Bundle::Item& item : bundle.items)
+    WriteBundleItem(item, blob_info_vector, output);
+}
+
 void IDBValueWrapper::DoneCloning() {
 #if DCHECK_IS_ON()
   DCHECK(!had_exception_) << __func__
@@ -126,6 +175,32 @@ void IDBValueWrapper::DoneCloning() {
   DCHECK(wire_data_.Is8Bit());
   for (const auto& kvp : serialized_value_->BlobDataHandles())
     blob_handles_.push_back(std::move(kvp.value));
+}
+
+void IDBValueWrapper::SerializeBundles() {
+#if DCHECK_IS_ON()
+  DCHECK(done_cloning_) << __func__ << " called before DoneCloning()";
+  DCHECK(!serialized_bundles_) << __func__ << " called twice";
+  serialized_bundles_ = true;
+#endif  // DCHECK_IS_ON()
+
+  if (bundles_.IsEmpty())
+    return;
+
+  Vector<char> new_wire_bytes;
+  new_wire_bytes.push_back(kVersionTag);
+  new_wire_bytes.push_back(kRequiresProcessingSSVPseudoVersion);
+  new_wire_bytes.push_back(kLoadBundleData);
+  IDBValueWrapper::WriteVarInt(bundles_.size(), new_wire_bytes);
+  for (const SerializedScriptValue::Bundle& bundle : bundles_)
+    WriteBundle(bundle, blob_info_, new_wire_bytes);
+  new_wire_bytes.Append(wire_data_.Characters8(), wire_data_.length());
+
+  wire_data_buffer_ = std::move(new_wire_bytes);
+
+  wire_data_ = StringView(wire_data_buffer_.data(), wire_data_buffer_.size());
+  DCHECK(!wire_data_buffer_.IsEmpty());
+  DCHECK(wire_data_.Is8Bit());
 }
 
 bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
@@ -170,7 +245,8 @@ bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
 
 scoped_refptr<SharedBuffer> IDBValueWrapper::TakeWireBytes() {
 #if DCHECK_IS_ON()
-  DCHECK(done_cloning_) << __func__ << " called before DoneCloning()";
+  DCHECK(serialized_bundles_)
+      << __func__ << " called before SerializeBundles()";
   DCHECK(owns_wire_bytes_) << __func__ << " called twice";
   owns_wire_bytes_ = false;
 #endif  // DCHECK_IS_ON()
@@ -204,7 +280,7 @@ bool IDBValueUnwrapper::IsWrapped(IDBValue* value) {
 
   return header[0] == kVersionTag &&
          header[1] == kRequiresProcessingSSVPseudoVersion &&
-         header[2] == kReplaceWithBlob;
+         header[2] != kVersionTag;
 }
 
 bool IDBValueUnwrapper::IsWrapped(
@@ -269,7 +345,7 @@ scoped_refptr<BlobDataHandle> IDBValueUnwrapper::WrapperBlobHandle() {
   return std::move(blob_handle_);
 }
 
-bool IDBValueUnwrapper::ReadVarInt(unsigned& value) {
+bool IDBValueUnwrapper::ReadVarInt(uint64_t& value) {
   value = 0;
   unsigned shift = 0;
   bool has_another_byte;
@@ -277,11 +353,11 @@ bool IDBValueUnwrapper::ReadVarInt(unsigned& value) {
     if (current_ >= end_)
       return false;
 
-    if (shift >= sizeof(unsigned) * 8)
+    if (shift >= sizeof(uint64_t) * 8)
       return false;
     uint8_t byte = *current_;
     ++current_;
-    value |= static_cast<unsigned>(byte & 0x7F) << shift;
+    value |= static_cast<uint64_t>(byte & 0x7F) << shift;
     shift += 7;
 
     has_another_byte = byte & 0x80;
@@ -290,11 +366,12 @@ bool IDBValueUnwrapper::ReadVarInt(unsigned& value) {
 }
 
 bool IDBValueUnwrapper::ReadBytes(Vector<uint8_t>& value) {
-  unsigned length;
-  if (!ReadVarInt(length))
+  uint64_t length64;
+  if (!ReadVarInt(length64))
     return false;
 
   DCHECK_LE(current_, end_);
+  size_t length = static_cast<size_t>(length64);
   if (end_ - current_ < static_cast<ptrdiff_t>(length))
     return false;
   Vector<uint8_t> result;
@@ -302,6 +379,61 @@ bool IDBValueUnwrapper::ReadBytes(Vector<uint8_t>& value) {
   result.Append(current_, length);
   value = std::move(result);
   current_ += length;
+  return true;
+}
+
+bool IDBValueUnwrapper::ReadBundleItem(
+    SerializedScriptValue::Bundle::Item& item) {
+  uint64_t predicate_value;
+  if (!ReadVarInt(predicate_value))
+    return false;
+  item.predicate =
+      static_cast<v8::ValueSerializer::VersionPredicate>(predicate_value);
+
+  if (!ReadVarInt(item.id))
+    return false;
+  uint64_t blob_index;
+  if (!ReadVarInt(blob_index))
+    return false;
+  // TODO(pwnall): Check index against blob list size.
+  item.blob_index = static_cast<size_t>(blob_index);
+
+  // The current implementation only supports one Bundle item per Blob, so the
+  // item must start at the beginning of the Blob.
+  uint64_t blob_offset;
+  if (!ReadVarInt(blob_offset))
+    return false;
+  if (blob_offset)
+    return false;
+
+  // The current implementation only supports one Bundle item per Blob, so the
+  // item's size must match the Blob size.
+  uint64_t item_size;
+  if (!ReadVarInt(item_size))
+    return false;
+
+  return true;
+}
+
+bool IDBValueUnwrapper::ReadBundle(SerializedScriptValue::Bundle& bundle) {
+  uint64_t bundle_type64;
+  if (!ReadVarInt(bundle_type64))
+    return false;
+  bundle.type = static_cast<uint32_t>(bundle_type64);
+
+  if (!ReadBytes(bundle.version))
+    return false;
+
+  uint64_t item_count;
+  if (!ReadVarInt(item_count))
+    return false;
+
+  bundle.items.resize(item_count);
+  for (unsigned i = 0; i < item_count; ++i) {
+    if (!ReadBundleItem(bundle.items[i]))
+      return false;
+  }
+
   return true;
 }
 
