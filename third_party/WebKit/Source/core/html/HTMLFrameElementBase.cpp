@@ -79,7 +79,9 @@ void HTMLFrameElementBase::OpenURL(bool replace_current_item) {
   if (!IsURLAllowed())
     return;
 
-  if (url_.IsEmpty())
+  // Intentionally preserve a null |url_| value here: it means that no src
+  // attribute was specified.
+  if (url_.IsEmpty() && !url_.IsNull())
     url_ = AtomicString(BlankURL().GetString());
 
   LocalFrame* parent_frame = GetDocument().GetFrame();
@@ -89,6 +91,10 @@ void HTMLFrameElementBase::OpenURL(bool replace_current_item) {
   // Support for <frame src="javascript:string">
   KURL script_url;
   KURL url = GetDocument().CompleteURL(url_);
+  // CompleteURL() currently promises to do this, but be paranoid and document
+  // that requirement here.
+  if (url_.IsNull())
+    DCHECK(url.IsNull());
   if (url.ProtocolIsJavaScript()) {
     // We'll set/execute |scriptURL| iff CSP allows us to execute inline
     // JavaScript. If CSP blocks inline JavaScript, then exit early if
@@ -199,9 +205,6 @@ void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
   if (!GetDocument().GetFrame())
     return;
 
-  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
-    return;
-
   // It's possible that we already have ContentFrame(). Arbitrary user code can
   // run between InsertedInto() and DidNotifySubtreeInsertionsToDocument().
   if (!ContentFrame())
@@ -216,6 +219,7 @@ void HTMLFrameElementBase::AttachLayoutTree(AttachContext& context) {
 }
 
 void HTMLFrameElementBase::SetLocation(const String& str) {
+  // TODO(dcheng): Don't allow |url_| to be set to a null value here.
   url_ = AtomicString(str);
 
   if (isConnected())

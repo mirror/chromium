@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Window#reuse</title>
+<script src=/resources/testharness.js></script>
+<script src=/resources/testharnessreport.js></script>
+<div id=log></div>
+<script>
+async_test(function() {
+  var iframe = document.createElement("iframe");
+  iframe.src = "about:blank";
+  document.body.appendChild(iframe);
+
+  // For same origin navigations from the about:blank Document created when the
+  // browsing context was created, the Window object should be reused.
+  window[0].testAttribute = "Hello World!";
+  window[0].location = "child-frame.html";
+
+  window.onmessage = this.step_func_done(function(e) {
+    assert_equals(e.data, undefined);
+  });
+}, "Reuse Window object");
+</script>
