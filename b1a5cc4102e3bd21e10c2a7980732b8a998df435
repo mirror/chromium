@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a379daf_666e56b9",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-03T22:05:04Z",
+      "side": 1,
+      "message": "Does it make sense to fix this the same way?  I know Mac still uses Translate infobars for now, but if it switches over I don\u0027t want it to have a similar problem.",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfb366c_a5af208a",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-03T22:05:04Z",
+      "side": 1,
+      "message": "Nit: Maybe clearer: \"Note that we can\u0027t rely on web_contents() here, as it may have been destroyed by the time we get this call.\"",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bfec7f_7c389fb6",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-03T22:05:04Z",
+      "side": 1,
+      "message": "Nit: \"content::\"",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b974924_87fb8925",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-03T22:05:04Z",
+      "side": 1,
+      "message": "Nit: \"...is dismissed on tab closure\"?",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
