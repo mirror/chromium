@@ -229,3 +229,79 @@ TEST_F(PageLoadMetricsUtilTest, QueryContainsComponentPrefix) {
         << "For query: " << test.query << " with component: " << test.component;
   }
 }
+
+TEST_F(PageLoadMetricsUtilTest, IsGoogleDocsOpenUrl) {
+  struct {
+    bool expected_result;
+    const char* url;
+  } test_cases[] = {
+      {true,
+       "https://docs.google.com/document/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/comment"},
+      {true,
+       "https://docs.google.com/document/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit"},
+      {true,
+       "https://docs.google.com/document/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/view"},
+      {true,
+       "https://docs.google.com/presentations/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit"},
+      {true,
+       "https://docs.google.com/presentations/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/"
+       "edit#heading=h.gjps02kai1kc"},
+      {true,
+       "https://docs.google.com/presentations/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/present"},
+      {true,
+       "https://docs.google.com/spreadsheets/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit"},
+      {true,
+       "https://docs.google.com/drawings/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit"},
+      {false,
+       "http://docs.google.com/document/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/comment"},
+      {false,
+       "http://docs.google.com/document/d/"
+       "1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/"},
+      {false,
+       "https://docs.google.com/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/"
+       "edit"},
+      {false, "https://docs.google.com/"},
+      {false, "https://docs.www.google.com/"},
+      {false, "https://www.docs.google.com/"},
+      {false, "https://other.docs.google.com/"},
+      {false, "https://docs.other.google.com/"},
+      {false, "https://google.com/"},
+      {false, "https://www.google.com/"},
+      {false, "https://other.google.com/"},
+      {false, "https://other.www.google.com/"},
+      {false, "https://www.other.google.com/"},
+      {false, "https://www.www.google.com/"},
+      {false, ""},
+      {false, "a"},
+      {false, "*"},
+      {false, "com"},
+      {false, "co.uk"},
+      {false, "google"},
+      {false, "google.com"},
+      {false, "www.google.com"},
+      {false, "https:///"},
+      {false, "https://a/"},
+      {false, "https://*/"},
+      {false, "https://com/"},
+      {false, "https://co.uk/"},
+      {false, "https://google/"},
+      {false, "https://*.com/"},
+      {false, "https://www.*.com/"},
+      {false, "https://www.google.appspot.com/"},
+      {false, "https://www.google.example.com/"},
+  };
+  for (const auto& test : test_cases) {
+    EXPECT_EQ(test.expected_result,
+              page_load_metrics::IsGoogleDocsOpenUrl(GURL(test.url)))
+        << "For URL: " << test.url;
+  }
+}
