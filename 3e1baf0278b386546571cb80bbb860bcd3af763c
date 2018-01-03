@@ -131,6 +131,93 @@
       "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0474fc98_b586cec4",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T17:08:11Z",
+      "side": 1,
+      "message": "Done, Misha informs me PS #1 is this.",
+      "parentUuid": "8806969e_c7811e19",
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37de9c5d_cc424671",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T17:08:11Z",
+      "side": 1,
+      "message": "This seems Android-specific.  Should we add something here to make sure we fix this for other O/Ss?  Perhaps add\n#if !defined(OS_ANDROID)\n#error Need to create proxy resolver\n#endif\n\nor make a global_state method that returns a ProxyService?",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 45
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed519a5_9e680121",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T17:08:11Z",
+      "side": 1,
+      "message": "Can we add a comment here, including mention that |delegate| must outlive Context",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361466a2_7e203b93",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T17:08:11Z",
+      "side": 1,
+      "message": "can we remove this?",
+      "range": {
+        "startLine": 162,
+        "startChar": 49,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
