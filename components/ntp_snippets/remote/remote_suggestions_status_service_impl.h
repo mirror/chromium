@@ -30,6 +30,7 @@ class RemoteSuggestionsStatusServiceImpl
 
   // RemoteSuggestionsStatusService implementation.
   void Init(const StatusChangeCallback& callback) override;
+  bool IsSignedIn() const override;
   void OnSignInStateChanged() override;
 
  private:
@@ -46,8 +47,6 @@ class RemoteSuggestionsStatusServiceImpl
   void OnSnippetsEnabledChanged();
 
   void OnStateChanged(RemoteSuggestionsStatus new_status);
-
-  bool IsSignedIn() const;
 
   // Returns whether the service is explicitly disabled, by the user or by a
   // policy for example.
