@@ -16,6 +16,24 @@
       "revId": "f5660f71e3873e31623b88d61848d323592f4013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e42984_19fe8609",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2018-01-03T23:11:15Z",
+      "side": 1,
+      "message": "Just to clarify: Do you mean |URLLoaderFactoryGetter| will never outlive |StoragePartition|?\n\nIf so do you disagree with Matt\u0027s comments about reference counted |URLLoaderFactoryGetter|?\nhttps://chromium-review.googlesource.com/c/chromium/src/+/832947/5/content/browser/url_loader_factory_getter.cc#106\n\nThanks!",
+      "parentUuid": "1478f7ea_78f208cb",
+      "revId": "f5660f71e3873e31623b88d61848d323592f4013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
