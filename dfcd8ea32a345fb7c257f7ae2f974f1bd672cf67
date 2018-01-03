@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45faf63b_e64fa988",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T21:21:22Z",
+      "side": 1,
+      "message": "Daniel?  Any thoughts on being able to call ContentClient::SetActiveURL whenever the browser received a mojo message \"associated\" with a frame (not sure what exactly \"associated\" would mean in the context of mojo;  maybe \"associated\" \u003d message for the FrameHost mojo interface or a message for one of interfaces vended via RenderFrameHost?;  for legacy IPC this is easy - we can just call SetActiveURL in RenderFrameHostImpl::OnMessageReceived.",
+      "parentUuid": "e2a79f0b_f4d2a5cb",
+      "range": {
+        "startLine": 1526,
+        "startChar": 0,
+        "endLine": 1526,
+        "endChar": 65
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fecdd70_df3b0376",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 5
