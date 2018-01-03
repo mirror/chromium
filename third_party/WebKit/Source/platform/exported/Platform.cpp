@@ -34,6 +34,7 @@
 
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "chrome/renderer/aom_ax_tree_provider.h"
 #include "platform/Histogram.h"
 #include "platform/InstanceCountersMemoryDumpProvider.h"
 #include "platform/Language.h"
@@ -296,6 +297,10 @@ std::unique_ptr<WebTrialTokenValidator> Platform::CreateTrialTokenValidator() {
 WebClipboard* Platform::Clipboard() {
   DEFINE_STATIC_LOCAL(WebClipboardImpl, clipboard, ());
   return &clipboard;
+}
+
+AomAxTreeProvider* AOMAXTreeProvider() {
+  return AomAxTreeProvider::Create();
 }
 
 }  // namespace blink

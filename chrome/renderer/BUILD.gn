@@ -38,6 +38,8 @@ grit("resources") {
 
 static_library("renderer") {
   sources = [
+    "aom_ax_tree_provider.cc",
+    "aom_ax_tree_provider.h",
     "app_categorizer.cc",
     "app_categorizer.h",
     "benchmarking_extension.cc",

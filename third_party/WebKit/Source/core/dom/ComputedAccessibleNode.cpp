@@ -3,9 +3,12 @@
 // found in the LICENSE file.
 
 #include "core/dom/ComputedAccessibleNode.h"
+
 #include "bindings/core/v8/ScriptPromise.h"
+#include "chrome/renderer/aom_ax_tree_provider.h"
 #include "core/dom/Element.h"
 #include "platform/bindings/ScriptState.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -23,6 +26,8 @@ ComputedAccessibleNode::~ComputedAccessibleNode() {}
 ScriptPromise ComputedAccessibleNode::ComputePromiseProperty(
     ScriptState* script_state) {
   if (!computed_property_) {
+    AomAxTreeProvider* tree_provider = Platform::Current()->AOMAXTreeProvider();
+    tree_provider->RequestTreeSnapshot();
     computed_property_ =
         new ComputedPromiseProperty(ExecutionContext::From(script_state), this,
                                     ComputedPromiseProperty::kReady);
