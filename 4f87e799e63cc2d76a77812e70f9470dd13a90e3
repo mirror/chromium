@@ -93,6 +93,30 @@
       "revId": "4f87e799e63cc2d76a77812e70f9470dd13a90e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7d2788_54065362",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2018-01-03T18:16:39Z",
+      "side": 1,
+      "message": "I don\u0027t know the right answer here. But this does seem like a bandaid to a more fundamental issue with how lifecycles are handled in Clank, and possibly prone to further regression. It would be good to start a thread with clank folks to see if there\u0027s a better way to know whether we can tell whether a the tabs are loaded or not.\n\nThat doesn\u0027t necessarily need to block this patch, which at least seems better than the current status quo, but I worry this will inevitably regress.",
+      "parentUuid": "9bbe7dcb_a0cfc561",
+      "range": {
+        "startLine": 1415,
+        "startChar": 40,
+        "endLine": 1416,
+        "endChar": 16
+      },
+      "revId": "4f87e799e63cc2d76a77812e70f9470dd13a90e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
