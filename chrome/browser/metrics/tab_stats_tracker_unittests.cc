@@ -9,8 +9,11 @@
 #include "base/test/scoped_task_environment.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "content/public/browser/web_contents.h"
+#include "content/public/test/web_contents_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {
@@ -21,6 +24,10 @@ using TabsStats = TabStatsDataStore::TabsStats;
 
 class TestTabStatsTracker : public TabStatsTracker {
  public:
+  using TabStatsTracker::OnInterval;
+  using TabStatsTracker::OnTabAdded;
+  using TabStatsTracker::OnTabRemoved;
+  using TabStatsTracker::TabChangedAt;
   using UmaStatsReportingDelegate = TabStatsTracker::UmaStatsReportingDelegate;
 
   explicit TestTabStatsTracker(PrefService* pref_service);
@@ -28,14 +35,24 @@ class TestTabStatsTracker : public TabStatsTracker {
 
   // Helper functions to update the number of tabs/windows.
 
-  size_t AddTabs(size_t tab_count) {
-    tab_stats_data_store()->OnTabsAdded(tab_count);
+  size_t AddTabs(size_t tab_count,
+                 ChromeRenderViewHostTestHarness* test_harness) {
+    EXPECT_TRUE(test_harness);
+    for (size_t i = 0; i < tab_count; ++i) {
+      content::WebContents* tab = test_harness->CreateTestWebContents();
+      tab_stats_data_store()->OnTabAdded(tab);
+      tabs_.push_back(base::WrapUnique(tab));
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
   size_t RemoveTabs(size_t tab_count) {
     EXPECT_LE(tab_count, tab_stats_data_store()->tab_stats().total_tab_count);
-    tab_stats_data_store()->OnTabsRemoved(tab_count);
+    EXPECT_LE(tab_count, tabs_.size());
+    for (size_t i = 0; i < tab_count; ++i) {
+      tab_stats_data_store()->OnTabRemoved(tabs_.back().get());
+      tabs_.pop_back();
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
@@ -59,7 +76,7 @@ class TestTabStatsTracker : public TabStatsTracker {
     // manually several times in the same test.
     reset_daily_event(new DailyEvent(pref_service_, prefs::kTabStatsDailySample,
                                      kTabStatsDailyEventHistogramName));
-    daily_event()->AddObserver(base::MakeUnique<TabStatsDailyObserver>(
+    daily_event()->AddObserver(std::make_unique<TabStatsDailyObserver>(
         reporting_delegate(), tab_stats_data_store()));
 
     // Update the daily event registry to the previous day and trigger it.
@@ -78,6 +95,8 @@ class TestTabStatsTracker : public TabStatsTracker {
  private:
   PrefService* pref_service_;
 
+  std::vector<std::unique_ptr<content::WebContents>> tabs_;
+
   DISALLOW_COPY_AND_ASSIGN(TestTabStatsTracker);
 };
 
@@ -95,7 +114,7 @@ class TestUmaStatsReportingDelegate
   DISALLOW_COPY_AND_ASSIGN(TestUmaStatsReportingDelegate);
 };
 
-class TabStatsTrackerTest : public testing::Test {
+class TabStatsTrackerTest : public ChromeRenderViewHostTestHarness {
  public:
   using UmaStatsReportingDelegate =
       TestTabStatsTracker::UmaStatsReportingDelegate;
@@ -112,10 +131,10 @@ class TabStatsTrackerTest : public testing::Test {
     tab_stats_tracker_.reset(new TestTabStatsTracker(&pref_service_));
   }
 
-  void TearDown() override { tab_stats_tracker_.reset(nullptr); }
-
-  // The Power Monitor requires a task environment.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  void TearDown() override {
+    tab_stats_tracker_.reset(nullptr);
+    ChromeRenderViewHostTestHarness::TearDown();
+  }
 
   // The tabs stat tracker instance, it should be created in the SetUp
   std::unique_ptr<TestTabStatsTracker> tab_stats_tracker_;
@@ -140,12 +159,21 @@ TestTabStatsTracker::TestTabStatsTracker(PrefService* pref_service)
   EXPECT_TRUE(timer()->IsRunning());
   timer()->Stop();
 
+  // Stop the usage interval timers so they don't trigger while running the
+  // tests.
+  usage_interval_timers_for_testing()->clear();
+
   reset_reporting_delegate(new TestUmaStatsReportingDelegate());
 }
 
 // Comparator for base::Bucket values.
 bool CompareHistogramBucket(const base::Bucket& l, const base::Bucket& r) {
   return l.min < r.min;
+}
+
+std::string GetIntervalMetricName(const char* base_name,
+                                  size_t interval_in_sec) {
+  return base::StringPrintf("%s_%zu", base_name, interval_in_sec);
 }
 
 }  // namespace
@@ -156,7 +184,7 @@ TEST_F(TabStatsTrackerTest, OnResume) {
       UmaStatsReportingDelegate::kNumberOfTabsOnResumeHistogramName, 0);
 
   // Creates some tabs.
-  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12);
+  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12, this);
 
   std::vector<base::Bucket> count_buckets;
   count_buckets.push_back(base::Bucket(expected_tab_count, 1));
@@ -198,7 +226,7 @@ TEST_F(TabStatsTrackerTest, StatsGetReportedDaily) {
 
   // Adds some tabs and windows, then remove some so the maximums are not equal
   // to the current state.
-  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12);
+  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12, this);
   size_t expected_window_count = tab_stats_tracker_->AddWindows(5);
   size_t expected_max_tab_per_window = expected_tab_count - 1;
   tab_stats_tracker_->data_store()->UpdateMaxTabsPerWindowIfNeeded(
@@ -256,6 +284,107 @@ TEST_F(TabStatsTrackerTest, StatsGetReportedDaily) {
   histogram_tester_.ExpectBucketCount(
       UmaStatsReportingDelegate::kMaxWindowsInADayHistogramName,
       stats.window_count_max, 1);
+}
+
+TEST_F(TabStatsTrackerTest, TabUsageGetsReported) {
+  constexpr base::TimeDelta kReallyLongInterval =
+      base::TimeDelta::FromDays(365);
+  TabStatsDataStore::TabsStateDuringIntervalMap* interval_map =
+      tab_stats_tracker_->data_store()->AddInterval();
+
+  std::vector<std::unique_ptr<content::WebContents>> web_contentses;
+  for (size_t i = 0; i < 3; ++i) {
+    web_contentses.emplace_back(base::WrapUnique(CreateTestWebContents()));
+    // Make sure that these WebContents are initially not visible.
+    web_contentses[i]->WasHidden();
+    tab_stats_tracker_->OnTabAdded(web_contentses[i].get());
+  }
+
+  tab_stats_tracker_->OnInterval(kReallyLongInterval.InSeconds(), interval_map);
+
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(UmaStatsReportingDelegate::
+                                kUnusedAndClosedInIntervalHistogramNameBase,
+                            kReallyLongInterval.InSeconds()),
+      0, 1);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      web_contentses.size(), 1);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedAndClosedInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      0, 1);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      0, 1);
+
+  // Mark one tab as visible and make sure that it get reported properly.
+  web_contentses[0]->WasShown();
+  tab_stats_tracker_->OnInterval(kReallyLongInterval.InSeconds(), interval_map);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(UmaStatsReportingDelegate::
+                                kUnusedAndClosedInIntervalHistogramNameBase,
+                            kReallyLongInterval.InSeconds()),
+      0, 2);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      web_contentses.size() - 1, 1);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedAndClosedInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      0, 2);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      1, 1);
+
+  // Mark a tab as audible and make sure that we now have 2 tabs marked as used.
+  content::WebContentsTester::For(web_contentses[1].get())
+      ->SetWasRecentlyAudible(true);
+  tab_stats_tracker_->TabChangedAt(web_contentses[1].get(), 1,
+                                   TabChangeType::kAll);
+  tab_stats_tracker_->OnInterval(kReallyLongInterval.InSeconds(), interval_map);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      web_contentses.size() - 2, 1);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedTabsInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      2, 1);
+
+  // Remove the last WebContents, which should be reported as an unused tab.
+  tab_stats_tracker_->OnTabRemoved(web_contentses.back().get());
+  web_contentses.pop_back();
+  tab_stats_tracker_->OnInterval(kReallyLongInterval.InSeconds(), interval_map);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(UmaStatsReportingDelegate::
+                                kUnusedAndClosedInIntervalHistogramNameBase,
+                            kReallyLongInterval.InSeconds()),
+      1, 1);
+
+  // Remove an active WebContents and make sure that this get reported properly.
+  tab_stats_tracker_->TabChangedAt(web_contentses[1].get(), 1,
+                                   TabChangeType::kAll);
+  tab_stats_tracker_->OnTabRemoved(web_contentses.back().get());
+  web_contentses.pop_back();
+  tab_stats_tracker_->OnInterval(kReallyLongInterval.InSeconds(), interval_map);
+  histogram_tester_.ExpectBucketCount(
+      GetIntervalMetricName(
+          UmaStatsReportingDelegate::kUsedAndClosedInIntervalHistogramNameBase,
+          kReallyLongInterval.InSeconds()),
+      1, 1);
 }
 
 }  // namespace metrics
