@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a0313aaa_14a7ed24",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-03T16:33:45Z",
+      "side": 1,
+      "message": "Talked offline. Let\u0027s land it as is, but follow up with DRP team about what the best way to handle their use case.",
+      "parentUuid": "8b995e02_bde37c7c",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac99738_37effbc5",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
