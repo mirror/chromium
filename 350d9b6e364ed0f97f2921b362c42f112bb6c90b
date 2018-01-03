@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "266532cd_bde7e35e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 1,
+      "message": "nit: rwhv_root to match rwhv_child?",
+      "range": {
+        "startLine": 445,
+        "startChar": 28,
+        "endLine": 445,
+        "endChar": 37
+      },
+      "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d3995e_78272e66",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 1,
+      "message": "Do we have a particular value we\u0027re expecting here? If so, perhaps we should be testing its value.",
+      "range": {
+        "startLine": 452,
+        "startChar": 8,
+        "endLine": 452,
+        "endChar": 20
+      },
+      "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7e7dc0_614cd068",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 1,
+      "message": "Can we use RWHVCF::TransformPointToRootCoordSpaceF() for this instead? I take it the target event position is (5, 5) ... I think running it through the transform fcn will also obviate the need for manually applying the scale (see Android-specific tests for TouchSelectionEditing elsewhere in this file for example).",
+      "range": {
+        "startLine": 465,
+        "startChar": 24,
+        "endLine": 465,
+        "endChar": 30
+      },
+      "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1802b4a_5ce27e0f",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 4
@@ -13,6 +82,52 @@
       "writtenOn": "2018-01-03T19:59:17Z",
       "side": 1,
       "message": "comment seems wrong",
+      "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5743cd_f26046ea",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 1,
+      "message": "I\u0027m guessing that (55, 55) is (5,5) in child transformed to root view? If so, can we compute that with the TransformPoint...() fcn to make this clear?",
+      "range": {
+        "startLine": 502,
+        "startChar": 14,
+        "endLine": 502,
+        "endChar": 16
+      },
+      "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb00e56_cfb3e235",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 1,
+      "message": "Again, it would clarify this to run it through transform...()",
+      "range": {
+        "startLine": 511,
+        "startChar": 24,
+        "endLine": 511,
+        "endChar": 30
+      },
       "revId": "350d9b6e364ed0f97f2921b362c42f112bb6c90b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5734af54_260a2196",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-03T20:38:03Z",
+      "side": 0,
+      "message": "Any particular reason to delete the blank line below?",
+      "range": {
+        "startLine": 170,
+        "startChar": 36,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "8dd3b3335852453406a168078af81aa04c7ec1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
