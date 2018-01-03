@@ -93,6 +93,30 @@
       "revId": "aadea13032df388805be29c871671821e5934ce1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8291418_3db320cf",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2018-01-03T09:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d5b5ed0_f5033f8d",
+      "range": {
+        "startLine": 1034,
+        "startChar": 8,
+        "endLine": 1034,
+        "endChar": 23
+      },
+      "revId": "aadea13032df388805be29c871671821e5934ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
