@@ -6,6 +6,8 @@
 
 #include <ctype.h>
 #include <stdint.h>
+
+#include <algorithm>
 #include <vector>
 
 #include "base/big_endian.h"
@@ -29,6 +31,14 @@ namespace {
 // Base class used for printer USB interfaces
 // (https://www.usb.org/developers/defined_class).
 constexpr uint8_t kPrinterInterfaceClass = 7;
+
+// Subclass used for printers
+// (http://www.usb.org/developers/docs/devclass_docs/usbprint11a021811.pdf).
+constexpr uint8_t kPrinterInterfaceSubclass = 1;
+
+// Protocol for ippusb printing.
+// (http://www.usb.org/developers/docs/devclass_docs/IPP.zip).
+constexpr uint8_t kPrinterIppusbProtocol = 4;
 
 // Escape URI strings the same way cups does it, so we end up with a URI cups
 // recognizes.  Cups hex-encodes '%', ' ', and anything not in the standard
@@ -118,6 +128,20 @@ bool UsbDeviceIsPrinter(const device::UsbDevice& usb_device) {
   auto printer_filter = device::mojom::UsbDeviceFilter::New();
   printer_filter->has_class_code = true;
   printer_filter->class_code = kPrinterInterfaceClass;
+  printer_filter->has_subclass_code = true;
+  printer_filter->subclass_code = kPrinterInterfaceSubclass;
+  return UsbDeviceFilterMatches(*printer_filter, usb_device);
+}
+
+bool UsbDeviceSupportsIppusb(const device::UsbDevice& usb_device) {
+  auto printer_filter = device::mojom::UsbDeviceFilter::New();
+  printer_filter->has_class_code = true;
+  printer_filter->class_code = kPrinterInterfaceClass;
+  printer_filter->has_subclass_code = true;
+  printer_filter->subclass_code = kPrinterInterfaceSubclass;
+  printer_filter->has_protocol_code = true;
+  printer_filter->protocol_code = kPrinterIppusbProtocol;
+
   return UsbDeviceFilterMatches(*printer_filter, usb_device);
 }
 
@@ -184,6 +208,9 @@ std::unique_ptr<Printer> UsbDeviceToPrinter(const device::UsbDevice& device) {
   printer->set_description(printer->display_name());
   printer->set_uri(UsbPrinterUri(device));
   printer->set_id(UsbPrinterId(device));
+  printer->set_vendor_id(device.vendor_id());
+  printer->set_product_id(device.product_id());
+  printer->set_supports_ippusb(UsbDeviceSupportsIppusb(device));
   return printer;
 }
 
