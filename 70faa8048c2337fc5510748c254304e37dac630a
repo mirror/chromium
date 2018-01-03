@@ -216,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "61a27970_ea25f7d5",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2018-01-03T17:31:05Z",
+      "side": 1,
+      "message": "Yes, there\u0027s probably some way that we could get a timer to reenable the button (checks if the window handle still exists, and if so, sends the message). However, this does introduce a question as to how long such a timer would need to be set-- how long do we have to wait for the user to recognize the dialog and release the key? If we guess too short, the acceptance still occurs.\n\nIf we call BFFM_ENABLEOK with TRUE, it enables the button unconditionally, even if the button would\u0027ve been disabled because an \"unselectable\" folder is selected. (This isn\u0027t disastrous, insofar as if the user selects such a folder, nothing bad seems to happen.) \n\nOne approach to consider might be looking at doing mitigations only when the enter key is down, which would limit the mitigations to scenarios where gesture-jacking might be occurring. We could add such a check in the existing approach.\n\nIt\u0027s tempting to scrap all of the code in this CL and just add:\n\n  while (GetAsyncKeyState(VK_RETURN) \u003c 0)\n    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(20));\n\n...immediately before the SHBrowseForFolder() call, but the attacker would probably just change the attack from \"Hold Enter\" to \"Press Enter five times to prove you\u0027re human.\"",
+      "parentUuid": "b8e2995a_0a4b9e61",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 35
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b62346_9022479a",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 4
