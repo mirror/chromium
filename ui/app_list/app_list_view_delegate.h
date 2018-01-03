@@ -46,7 +46,7 @@ class APP_LIST_EXPORT AppListViewDelegate {
   // Invoked to start a new search. Delegate collects query input from
   // SearchBoxModel and populates SearchResults. Both models are sub models
   // of AppListModel.
-  virtual void StartSearch() = 0;
+  virtual void StartSearch(const base::string16& raw_query) = 0;
 
   // Invoked to open the search result.
   virtual void OpenSearchResult(SearchResult* result,
