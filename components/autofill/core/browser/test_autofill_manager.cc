@@ -141,20 +141,13 @@ void TestAutofillManager::AddSeenFormStructure(
   form_structures()->push_back(std::move(form_structure));
 }
 
-void TestAutofillManager::WillSubmitForm(const FormData& form,
-                                         const TimeTicks& timestamp) {
-  ResetRunLoop();
-  if (!OnWillSubmitForm(form, timestamp))
-    return;
-
-  // Wait for the asynchronous OnWillSubmitForm() call to complete.
-  RunRunLoop();
-}
-
 void TestAutofillManager::SubmitForm(const FormData& form,
                                      const TimeTicks& timestamp) {
-  WillSubmitForm(form, timestamp);
-  OnFormSubmitted(form);
+  OnFormSubmitted(form, false, SubmissionSource::FORM_SUBMISSION, timestamp);
+}
+
+void TestAutofillManager::SubmitForm(const FormData& form) {
+  SubmitForm(form, TimeTicks::Now());
 }
 
 void TestAutofillManager::ClearFormStructures() {

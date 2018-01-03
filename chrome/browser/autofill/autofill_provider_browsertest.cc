@@ -26,29 +26,17 @@ namespace {
 const base::FilePath::CharType kDocRoot[] =
     FILE_PATH_LITERAL("chrome/test/data");
 
-// The workaround class for MSVC warning C4373
-// see
-// https://github.com/google/googlemock/blob/master/googlemock/docs/v1_5/FrequentlyAskedQuestions.md
-class MockableAutofillProvider : public TestAutofillProvider {
- public:
-  ~MockableAutofillProvider() override {}
-  bool OnWillSubmitForm(AutofillHandlerProxy* handler,
-                        const FormData& form,
-                        const base::TimeTicks timestamp) override {
-    return MockableOnWillSubmitForm(handler, form);
-  }
-
-  virtual bool MockableOnWillSubmitForm(AutofillHandlerProxy* handler,
-                                        const FormData& form) = 0;
-};
-
-class MockAutofillProvider : public MockableAutofillProvider {
+class MockAutofillProvider : public TestAutofillProvider {
  public:
   MockAutofillProvider() {}
   ~MockAutofillProvider() override {}
 
-  MOCK_METHOD2(MockableOnWillSubmitForm,
-               bool(AutofillHandlerProxy* handler, const FormData& form));
+  MOCK_METHOD5(OnFormSubmitted,
+               bool(AutofillHandlerProxy* handler,
+                    const FormData& form,
+                    bool,
+                    SubmissionSource,
+                    base::TimeTicks));
 };
 
 }  // namespace
@@ -119,7 +107,8 @@ class AutofillProviderBrowserTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(AutofillProviderBrowserTest,
                        FrameDetachedOnFormlessSubmission) {
   EXPECT_CALL(autofill_provider_,
-              MockableOnWillSubmitForm(testing::_, testing::_))
+              OnFormSubmitted(testing::_, testing::_, testing::_, testing::_,
+                              testing::_))
       .Times(1);
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL(
@@ -153,7 +142,8 @@ IN_PROC_BROWSER_TEST_F(AutofillProviderBrowserTest,
 IN_PROC_BROWSER_TEST_F(AutofillProviderBrowserTest,
                        FrameDetachedOnFormSubmission) {
   EXPECT_CALL(autofill_provider_,
-              MockableOnWillSubmitForm(testing::_, testing::_))
+              OnFormSubmitted(testing::_, testing::_, testing::_, testing::_,
+                              testing::_))
       .Times(1);
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL(
