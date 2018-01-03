@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1dfb94ec_af6f4595",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2018-01-03T23:00:28Z",
+      "side": 0,
+      "message": "Add a sleep here for the page to load completely ?",
+      "range": {
+        "startLine": 269,
+        "startChar": 6,
+        "endLine": 269,
+        "endChar": 29
+      },
+      "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b86cabd_294d39c7",
         "filename": "tools/chrome_proxy/webdriver/lite_page.py",
         "patchSetId": 3
@@ -18,6 +41,29 @@
         "startChar": 6,
         "endLine": 277,
         "endChar": 77
+      },
+      "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1023b7f_c3b7ca0e",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2018-01-03T23:00:28Z",
+      "side": 0,
+      "message": "Perhaps these checks should be part of the for loop above, so we don\u0027t lose the verification of ViaHeader and http status. You may want to add a sleep for the page to load as noted in the other comment for this work without flakiness.",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 55
       },
       "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
