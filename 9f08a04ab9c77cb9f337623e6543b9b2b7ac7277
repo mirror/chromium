@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6891f004_ffc276b4",
+        "filename": "net/http/http_basic_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "(Routing this in doesn\u0027t really do anything yet, but I don\u0027t object to putting it in now.)",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e0b548_b1ad1f0e",
+        "filename": "net/http/http_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "Is it worth adding a sentence about what can_send_early is for?",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf0333f_89a58a9c",
+        "filename": "net/quic/chromium/quic_http_stream_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "Nit: I think request_ here is left empty (so method is the empty string) which, by QUIC\u0027s current logic, would be true. I don\u0027t know off-hand if this test cares. (Probably not?)",
+      "range": {
+        "startLine": 608,
+        "startChar": 49,
+        "endLine": 608,
+        "endChar": 54
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dd1019_86e7dd52",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "true? kMethod is GET, so the old one would have allowed it.",
+      "range": {
+        "startLine": 161,
+        "startChar": 42,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9662f4e1_16f4e5df",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "It\u0027s using an empty request_info, which means the original code would have made it true, right? (Though it probably doesn\u0027t matter.)\n\nDitto throughout the entire file.",
+      "range": {
+        "startLine": 1576,
+        "startChar": 54,
+        "endLine": 1576,
+        "endChar": 59
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49614d4b_7df9fa63",
+        "filename": "net/spdy/chromium/spdy_http_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2018-01-03T00:03:54Z",
+      "side": 1,
+      "message": "Probably good to initialize this to false in the constructor.",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
