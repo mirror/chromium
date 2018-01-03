@@ -250,7 +250,8 @@ TEST_F(IdentityManagerTest, CreateAccessTokenFetcherForPrimaryAccount) {
                         const std::string& access_token) {});
   std::unique_ptr<PrimaryAccountAccessTokenFetcher> token_fetcher =
       identity_manager()->CreateAccessTokenFetcherForPrimaryAccount(
-          "dummy_consumer", scopes, std::move(callback));
+          "dummy_consumer", scopes, std::move(callback),
+          PrimaryAccountAccessTokenFetcher::Mode::kWaitForAvailability);
   EXPECT_TRUE(token_fetcher);
 }
 
