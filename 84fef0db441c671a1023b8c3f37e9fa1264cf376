@@ -16,6 +16,24 @@
       "revId": "84fef0db441c671a1023b8c3f37e9fa1264cf376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc105d11_97a0943c",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-03T05:26:55Z",
+      "side": 1,
+      "message": "It\u0027s for app_list::SpeechRecognitionState in L55.",
+      "parentUuid": "a5e52c15_05ebf730",
+      "revId": "84fef0db441c671a1023b8c3f37e9fa1264cf376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
