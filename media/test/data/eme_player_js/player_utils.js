@@ -52,15 +52,14 @@ PlayerUtils.registerEMEEventListeners = function(player) {
     function addMediaKeySessionListeners(mediaKeySession) {
       mediaKeySession.addEventListener('message', function(message) {
         player.video.receivedKeyMessage = true;
-        if (Utils.isRenewalMessage(message)) {
-          Utils.timeLog('MediaKeySession onMessage - renewal', message);
-          player.video.receivedRenewalMessage = true;
+        if (message.messageType == 'license-request' ||
+            message.messageType == 'license-renewal' ||
+            message.messageType == 'individualization-request') {
+          Utils.timeLog('MediaKeySession onMessage:', message.messageType);
+          player.video.receivedMessageTypes.add(message.messageType);
         } else {
-          if (message.messageType != 'license-request') {
-            Utils.failTest('Unexpected message type "' + message.messageType +
-                               '" received.',
-                           EME_MESSAGE_UNEXPECTED_TYPE);
-          }
+          Utils.failTest('Unexpected message type:' + message.messageType,
+                         EME_MESSAGE_UNEXPECTED_TYPE);
         }
         player.onMessage(message);
       });
@@ -180,7 +179,7 @@ PlayerUtils.registerEMEEventListeners = function(player) {
 
   this.registerDefaultEventListeners(player);
   player.video.receivedKeyMessage = false;
-  player.video.receivedRenewalMessage = false;
+  player.video.receivedMessageTypes = new Set();
   Utils.timeLog('Setting video media keys: ' + player.testConfig.keySystem);
 
   var config = {
@@ -290,7 +289,7 @@ PlayerUtils.createPlayer = function(video, testConfig) {
         return WidevinePlayer;
       case CLEARKEY:
       case EXTERNAL_CLEARKEY:
-      case EXTERNAL_CLEARKEY_RENEWAL:
+      case MESSAGE_TYPE_TEST_KEYSYSTEM:
       case CRASH_TEST_KEYSYSTEM:
         return ClearKeyPlayer;
       case FILE_IO_TEST_KEYSYSTEM:
