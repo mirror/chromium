@@ -894,7 +894,6 @@ static ScopedJavaLocalRef<jbyteArray>
 JNI_CronetUrlRequestContext_GetHistogramDeltas(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
-  DCHECK(base::StatisticsRecorder::IsActive());
   std::vector<uint8_t> data;
   if (!HistogramManager::GetInstance()->GetDeltas(&data))
     return ScopedJavaLocalRef<jbyteArray>();

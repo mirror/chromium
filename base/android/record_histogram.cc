@@ -304,9 +304,7 @@ jlong JNI_RecordHistogram_RecordCustomTimesHistogramMilliseconds(
   return reinterpret_cast<jlong>(histogram);
 }
 
-void JNI_RecordHistogram_Initialize(JNIEnv* env, const JavaParamRef<jclass>&) {
-  StatisticsRecorder::Initialize();
-}
+void JNI_RecordHistogram_Initialize(JNIEnv* env, const JavaParamRef<jclass>&) {}
 
 // This backs a Java test util for testing histograms -
 // MetricsUtils.HistogramDelta. It should live in a test-specific file, but we

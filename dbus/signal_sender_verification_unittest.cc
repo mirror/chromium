@@ -31,8 +31,6 @@ class SignalSenderVerificationTest : public testing::Test {
   }
 
   void SetUp() override {
-    base::StatisticsRecorder::Initialize();
-
     // Make the main thread not to allow IO.
     base::ThreadRestrictions::SetIOAllowed(false);
 

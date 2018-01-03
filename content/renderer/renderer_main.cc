@@ -168,9 +168,6 @@ int RendererMain(const MainFunctionParams& parameters) {
 
   bool no_sandbox = parsed_command_line.HasSwitch(switches::kNoSandbox);
 
-  // Initialize histogram statistics gathering system.
-  base::StatisticsRecorder::Initialize();
-
 #if defined(OS_ANDROID)
   // If we have any pending LibraryLoader histograms, record them.
   base::android::RecordLibraryLoaderRendererHistograms();

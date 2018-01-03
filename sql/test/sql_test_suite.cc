@@ -16,12 +16,6 @@ SQLTestSuite::~SQLTestSuite() = default;
 
 void SQLTestSuite::Initialize() {
   base::TestSuite::Initialize();
-
-  // Initialize the histograms subsystem, so that any histograms hit in tests
-  // are correctly registered with the statistics recorder and can be queried
-  // by tests.
-  base::StatisticsRecorder::Initialize();
-
   sql::test::RegisterPathProvider();
 }
 

@@ -36,11 +36,3 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
                                    &is_cld_reliable);
   return 0;
 }
-
-struct Environment {
-  Environment() {
-    base::StatisticsRecorder::Initialize();
-  }
-};
-
-Environment* env = new Environment();

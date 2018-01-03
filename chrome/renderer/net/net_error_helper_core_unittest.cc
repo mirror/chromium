@@ -173,8 +173,6 @@ class NetErrorHelperCoreTest : public testing::Test,
     EXPECT_FALSE(is_url_being_fetched());
   }
 
-  void SetUp() override { base::StatisticsRecorder::Initialize(); }
-
   void SetUpCore(bool auto_reload_enabled,
                  bool auto_reload_visible_only,
                  bool visible) {

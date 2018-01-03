@@ -22,10 +22,6 @@ class SpellcheckHostMetricsTest : public testing::Test {
   SpellcheckHostMetricsTest() {
   }
 
-  static void SetUpTestCase() {
-    base::StatisticsRecorder::Initialize();
-  }
-
   void SetUp() override { metrics_.reset(new SpellCheckHostMetrics); }
 
   SpellCheckHostMetrics* metrics() { return metrics_.get(); }
@@ -62,10 +58,6 @@ TEST_F(SpellcheckHostMetricsTest, RecordEnabledStats) {
 
 TEST_F(SpellcheckHostMetricsTest, MAYBE_CustomWordStats) {
   SpellCheckHostMetrics::RecordCustomWordCountStats(123);
-
-  // Determine if test failures are due the statistics recorder not being
-  // available or because the histogram just isn't there: crbug.com/230534.
-  EXPECT_TRUE(base::StatisticsRecorder::IsActive());
 
   base::HistogramTester histogram_tester;
 
