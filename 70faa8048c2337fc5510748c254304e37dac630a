@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "fed9de86_25be0cb1",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-03T21:57:33Z",
+      "side": 1,
+      "message": "At some point you have to trust the user though. For example, the text could say, \u0027press enter and select c:\\ to prove you\u0027re a human.\u0027 At what point are you trusting the user? It is likely possible to subclass the window created by the dialog to see key/mouse events so that you could reenable the button at some point, but this is no doubt tricky.",
+      "parentUuid": "61a27970_ea25f7d5",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 35
+      },
+      "revId": "70faa8048c2337fc5510748c254304e37dac630a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b62346_9022479a",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 4
