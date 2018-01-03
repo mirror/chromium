@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a46df2_f96599ef",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/declared/append.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-03T05:13:59Z",
+      "side": 1,
+      "message": "Nit: lines too long in this file make it harder to read.",
+      "revId": "445bc976a6e1bfe68d86daef85a7f75863482518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53524a0_f4eee652",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/declared/declared.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-03T05:13:59Z",
+      "side": 1,
+      "message": "nit: This is quite long, can it be formatted like this?\n\ndiv {\n  foo: bar;\n  baz: bam;\n}",
+      "revId": "445bc976a6e1bfe68d86daef85a7f75863482518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a9ebb4_1244ad71",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/declared/getProperties.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-03T05:13:59Z",
+      "side": 1,
+      "message": "Nit: Is the correct order alphabetical normal properties, then alphabetical custom properties? Might be worth clarifying what \"correct\" is here.",
+      "revId": "445bc976a6e1bfe68d86daef85a7f75863482518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03c70f5_9d605e14",
+        "filename": "third_party/WebKit/Source/core/css/cssom/DeclaredStylePropertyMap.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2018-01-03T05:13:59Z",
+      "side": 1,
+      "message": "Nit: this documentation seems incorrect. It should be all about DeclaredStylePropertyMap right?",
+      "revId": "445bc976a6e1bfe68d86daef85a7f75863482518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
