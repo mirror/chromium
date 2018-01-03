@@ -2346,6 +2346,61 @@ static_assert(offsetof(CreateShader, type) == 4,
 static_assert(offsetof(CreateShader, client_id) == 8,
               "offset of CreateShader client_id should be 8");
 
+struct CreateVkImage {
+  typedef CreateVkImage ValueType;
+  static const CommandId kCmdId = kCreateVkImage;
+  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
+  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+
+  typedef GLint Result;
+
+  static uint32_t ComputeSize() {
+    return static_cast<uint32_t>(sizeof(ValueType));  // NOLINT
+  }
+
+  void SetHeader() { header.SetCmd<ValueType>(); }
+
+  void Init(GLint _width,
+            GLint _height,
+            uint32_t _result_shm_id,
+            uint32_t _result_shm_offset) {
+    SetHeader();
+    width = _width;
+    height = _height;
+    result_shm_id = _result_shm_id;
+    result_shm_offset = _result_shm_offset;
+  }
+
+  void* Set(void* cmd,
+            GLint _width,
+            GLint _height,
+            uint32_t _result_shm_id,
+            uint32_t _result_shm_offset) {
+    static_cast<ValueType*>(cmd)->Init(_width, _height, _result_shm_id,
+                                       _result_shm_offset);
+    return NextCmdAddress<ValueType>(cmd);
+  }
+
+  gpu::CommandHeader header;
+  int32_t width;
+  int32_t height;
+  uint32_t result_shm_id;
+  uint32_t result_shm_offset;
+};
+
+static_assert(sizeof(CreateVkImage) == 20,
+              "size of CreateVkImage should be 20");
+static_assert(offsetof(CreateVkImage, header) == 0,
+              "offset of CreateVkImage header should be 0");
+static_assert(offsetof(CreateVkImage, width) == 4,
+              "offset of CreateVkImage width should be 4");
+static_assert(offsetof(CreateVkImage, height) == 8,
+              "offset of CreateVkImage height should be 8");
+static_assert(offsetof(CreateVkImage, result_shm_id) == 12,
+              "offset of CreateVkImage result_shm_id should be 12");
+static_assert(offsetof(CreateVkImage, result_shm_offset) == 16,
+              "offset of CreateVkImage result_shm_offset should be 16");
+
 struct CullFace {
   typedef CullFace ValueType;
   static const CommandId kCmdId = kCullFace;

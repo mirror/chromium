@@ -1409,6 +1409,26 @@ GLuint GLES2Implementation::GetMaxValueInBufferCHROMIUM(
   return result;
 }
 
+GLintptr GLES2Implementation::GetVkImageHandleHelper(GLint width,
+                                                     GLint height) {
+  typedef cmds::CreateVkImage::Result Result;
+  Result* result = GetResultAs<Result*>();
+  if (!result) {
+    return 0;
+  }
+  *result = 0;
+  helper_->CreateVkImage(width, height, GetResultShmId(), GetResultShmOffset());
+  WaitForCmd();
+  return *result;
+}
+
+GLint GLES2Implementation::CreateVkImage(GLint width, GLint height) {
+  GPU_CLIENT_SINGLE_THREAD_CHECK();
+  GLint id;
+  id = GetVkImageHandleHelper(width, height);
+  return id;
+}
+
 void GLES2Implementation::RestoreElementAndArrayBuffers(bool restore) {
   if (restore) {
     RestoreArrayBuffer(restore);

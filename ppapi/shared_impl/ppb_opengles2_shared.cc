@@ -293,6 +293,15 @@ GLuint CreateShader(PP_Resource context_id, GLenum type) {
   }
 }
 
+GLint CreateVkImage(PP_Resource context_id, GLint width, GLint height) {
+  Enter3D enter(context_id, true);
+  if (enter.succeeded()) {
+    return ToGles2Impl(&enter)->CreateVkImage(width, height);
+  } else {
+    return 0;
+  }
+}
+
 void CullFace(PP_Resource context_id, GLenum mode) {
   Enter3D enter(context_id, true);
   if (enter.succeeded()) {
@@ -1622,6 +1631,7 @@ const PPB_OpenGLES2* PPB_OpenGLES2_Shared::GetInterface() {
       &CopyTexSubImage2D,
       &CreateProgram,
       &CreateShader,
+      &CreateVkImage,
       &CullFace,
       &DeleteBuffers,
       &DeleteFramebuffers,

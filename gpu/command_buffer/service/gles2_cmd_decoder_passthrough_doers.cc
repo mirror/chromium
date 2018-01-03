@@ -4702,5 +4702,12 @@ error::Error GLES2DecoderPassthroughImpl::DoDestroyGpuFenceCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderPassthroughImpl::DoCreateVkImage(GLint width,
+                                                          GLint height,
+                                                          GLint* result) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
 }  // namespace gles2
 }  // namespace gpu

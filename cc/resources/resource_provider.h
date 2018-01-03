@@ -460,6 +460,9 @@ class CC_EXPORT ResourceProvider
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
                                        const gfx::ColorSpace& color_space);
 
+  viz::ResourceId CreateVkTexture(const gfx::Size& size,
+                                  const gfx::ColorSpace& color_space);
+
   void CreateTexture(viz::internal::Resource* resource);
 
   bool IsGLContextLost() const;

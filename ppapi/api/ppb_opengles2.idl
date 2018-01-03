@@ -189,6 +189,9 @@ interface PPB_OpenGLES2 {
   GLuint CreateProgram([in] PP_Resource context);
   GLuint CreateShader([in] PP_Resource context,
                       [in] GLenum type);
+  GLint CreateVkImage([in] PP_Resource context,
+                      [in] GLint width,
+                      [in] GLint height);
   void CullFace([in] PP_Resource context,
                 [in] GLenum mode);
   void DeleteBuffers([in] PP_Resource context,

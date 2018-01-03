@@ -641,6 +641,7 @@ struct PPB_OpenGLES2 {
                             GLsizei height);
   GLuint (*CreateProgram)(PP_Resource context);
   GLuint (*CreateShader)(PP_Resource context, GLenum type);
+  GLint (*CreateVkImage)(PP_Resource context, GLint width, GLint height);
   void (*CullFace)(PP_Resource context, GLenum mode);
   void (*DeleteBuffers)(PP_Resource context, GLsizei n, const GLuint* buffers);
   void (*DeleteFramebuffers)(PP_Resource context,

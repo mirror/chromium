@@ -72,6 +72,8 @@
 #include "gpu/command_buffer/service/transform_feedback_manager.h"
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
+#include "gpu/vulkan/vulkan_device_queue.h"
+#include "gpu/vulkan/vulkan_implementation.h"
 #include "third_party/angle/src/image_util/loadimage.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -79,6 +81,12 @@
 #include "third_party/skia/include/core/SkTypeface.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/vk/GrVkInterface.h"
+#include "third_party/skia/include/gpu/vk/GrVkTypes.h"
+#include "third_party/skia/src/gpu/vk/GrVkCommandBuffer.h"
+#include "third_party/skia/src/gpu/vk/GrVkImage.h"
+#include "third_party/skia/src/gpu/vk/GrVkMemory.h"
+#include "third_party/skia/src/gpu/vk/GrVkUtil.h"
 #include "third_party/smhasher/src/City.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
@@ -2298,6 +2306,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void UnbindTexture(TextureRef* texture_ref,
                      bool supports_separate_framebuffer_binds);
 
+  GLint DoCreateVkImage(GLint width, GLint height);
+
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
 #define GLES2_CMD_OP(name) \
@@ -2562,6 +2572,10 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   sk_sp<GrContext> gr_context_;
   sk_sp<SkSurface> sk_surface_;
 
+  scoped_refptr<viz::VulkanInProcessContextProvider> vulkan_context_provider =
+      nullptr;
+  std::map<GLint, GLintptr> vk_handle;
+  GLint id = -1;
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GLES2DecoderImpl);
@@ -8699,6 +8713,60 @@ void GLES2DecoderImpl::UnbindTexture(TextureRef* texture_ref,
                                                                texture_ref);
     }
   }
+}
+
+GLint GLES2DecoderImpl::DoCreateVkImage(GLint width, GLint height) {
+  VkFormat vk_format = VK_FORMAT_R8G8B8A8_UNORM;
+  VkImage vk_image;
+  VkMemoryAllocateInfo mem_alloc;
+  VkDeviceMemory mem;
+  VkMemoryRequirements mem_reqs;
+  VkSampleCountFlagBits vk_samples;
+  GrSampleCountToVkSampleCount(1, &vk_samples);
+  VkResult res;
+
+  if (!vulkan_context_provider && gpu::InitializeVulkan())
+    vulkan_context_provider = viz::VulkanInProcessContextProvider::Create();
+
+  const VkImageCreateInfo image = {VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
+                                   NULL,
+                                   VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT,
+                                   VK_IMAGE_TYPE_2D,
+                                   vk_format,
+                                   {width, height, 1},
+                                   1,
+                                   1,
+                                   vk_samples,
+                                   VK_IMAGE_TILING_OPTIMAL,
+                                   VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+                                   VK_SHARING_MODE_EXCLUSIVE,
+                                   0,
+                                   0,
+                                   VK_IMAGE_LAYOUT_UNDEFINED};
+
+  gpu::VulkanDeviceQueue* vk_device_queue =
+      vulkan_context_provider->GetDeviceQueue();
+
+  res = vkCreateImage(vk_device_queue->GetVulkanDevice(), &image, NULL,
+                      &vk_image);
+  if (res)
+    LOG(ERROR) << "Vk Image Creation Failed.";
+
+  vkGetImageMemoryRequirements(vk_device_queue->GetVulkanDevice(), vk_image,
+                               &mem_reqs);
+  mem_alloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  mem_alloc.pNext = NULL;
+  mem_alloc.allocationSize = mem_reqs.size;
+  mem_alloc.memoryTypeIndex = 0;
+
+  vkAllocateMemory(vk_device_queue->GetVulkanDevice(), &mem_alloc, NULL, &mem);
+
+  vkBindImageMemory(vk_device_queue->GetVulkanDevice(), vk_image, mem, 0);
+
+  id++;
+  vk_handle[id] = (long int)vk_image;
+
+  return id;
 }
 
 void GLES2DecoderImpl::EnsureRenderbufferBound() {

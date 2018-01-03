@@ -185,6 +185,8 @@ GLuint CreateProgram() override;
 
 GLuint CreateShader(GLenum type) override;
 
+GLint CreateVkImage(GLint width, GLint height) override;
+
 void CullFace(GLenum mode) override;
 
 void DeleteBuffers(GLsizei n, const GLuint* buffers) override;

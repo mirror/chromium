@@ -239,6 +239,9 @@ GLuint GL_APIENTRY GLES2CreateProgram() {
 GLuint GL_APIENTRY GLES2CreateShader(GLenum type) {
   return gles2::GetGLContext()->CreateShader(type);
 }
+GLint GL_APIENTRY GLES2CreateVkImage(GLint width, GLint height) {
+  return gles2::GetGLContext()->CreateVkImage(width, height);
+}
 void GL_APIENTRY GLES2CullFace(GLenum mode) {
   gles2::GetGLContext()->CullFace(mode);
 }
@@ -1964,6 +1967,10 @@ extern const NameToFunc g_gles2_function_table[] = {
     {
         "glCreateShader",
         reinterpret_cast<GLES2FunctionPointer>(glCreateShader),
+    },
+    {
+        "glCreateVkImage",
+        reinterpret_cast<GLES2FunctionPointer>(glCreateVkImage),
     },
     {
         "glCullFace", reinterpret_cast<GLES2FunctionPointer>(glCullFace),

@@ -194,6 +194,11 @@ GLuint GL_APIENTRY glCreateShader(GLenum type) {
   return glGetInterfacePPAPI()->CreateShader(glGetCurrentContextPPAPI(), type);
 }
 
+GLint GL_APIENTRY glCreateVkImage(GLint width, GLint height) {
+  return glGetInterfacePPAPI()->CreateVkImage(glGetCurrentContextPPAPI(), width,
+                                              height);
+}
+
 void GL_APIENTRY glCullFace(GLenum mode) {
   glGetInterfacePPAPI()->CullFace(glGetCurrentContextPPAPI(), mode);
 }

@@ -94,6 +94,8 @@ struct VIZ_COMMON_EXPORT Resource {
     return synchronization_state_;
   }
 
+  int getVkId() { return id_; }
+
   void SetSharedBitmap(SharedBitmap* bitmap);
 
   void SetLocallyUsed();
@@ -217,6 +219,8 @@ struct VIZ_COMMON_EXPORT Resource {
   gfx::ColorSpace color_space;
   // Used to track generating mipmaps for texture-backed resources.
   MipmapState mipmap_state = INVALID;
+
+  int id_;
 
  private:
   // Tracks if a sync token needs to be waited on before using the resource.

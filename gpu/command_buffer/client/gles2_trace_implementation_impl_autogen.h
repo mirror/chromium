@@ -319,6 +319,11 @@ GLuint GLES2TraceImplementation::CreateShader(GLenum type) {
   return gl_->CreateShader(type);
 }
 
+GLint GLES2TraceImplementation::CreateVkImage(GLint width, GLint height) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::CreateVkImage");
+  return gl_->CreateVkImage(width, height);
+}
+
 void GLES2TraceImplementation::CullFace(GLenum mode) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::CullFace");
   gl_->CullFace(mode);

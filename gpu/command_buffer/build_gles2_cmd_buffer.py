@@ -669,6 +669,25 @@ _STATES = {
       },
     ],
   },
+  'CreateVkImage': {
+    'type': 'Normal',
+    'func': 'CreateVkImage',
+    'no_init': True,
+    'states': [
+      {
+        'name': 'width',
+        'type': 'GLint',
+        'enum': 'GL_RENDERBUFFER_WIDTH',
+        'default': '0',
+      },
+      {
+        'name': 'height',
+        'type': 'GLint',
+        'enum': 'GL_RENDERBUFFER_HEIGHT',
+        'default': '0',
+      },
+    ],
+  },
 }
 
 # Named type info object represents a named type that is used in OpenGL call
@@ -4708,6 +4727,15 @@ _FUNCTION_INFO = {
     'cmd_args': 'GLuint gpu_fence_id',
     'extension': 'CHROMIUM_gpu_fence',
     'extension_flag': 'chromium_gpu_fence',
+  },
+  'CreateVkImage': {
+    'type': 'Is',
+    'impl_func': False,
+    'cmd_args': 'GLint width, GLint height',
+    'decoder_func': 'DoCreateVkImage',
+    'result': ['GLint'],
+    'unit_test': False,
+    'client_test': False,
   },
 }
 

@@ -560,6 +560,8 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   GLuint GetMaxValueInBufferCHROMIUMHelper(
       GLuint buffer_id, GLsizei count, GLenum type, GLuint offset);
 
+  GLintptr GetVkImageHandleHelper(GLint width, GLint height);
+
   void WaitAllAsyncTexImage2DCHROMIUMHelper();
 
   void RestoreElementAndArrayBuffers(bool restore);

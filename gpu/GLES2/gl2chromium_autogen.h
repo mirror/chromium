@@ -53,6 +53,7 @@
 #define glCopyTexSubImage3D GLES2_GET_FUN(CopyTexSubImage3D)
 #define glCreateProgram GLES2_GET_FUN(CreateProgram)
 #define glCreateShader GLES2_GET_FUN(CreateShader)
+#define glCreateVkImage GLES2_GET_FUN(CreateVkImage)
 #define glCullFace GLES2_GET_FUN(CullFace)
 #define glDeleteBuffers GLES2_GET_FUN(DeleteBuffers)
 #define glDeleteFramebuffers GLES2_GET_FUN(DeleteFramebuffers)

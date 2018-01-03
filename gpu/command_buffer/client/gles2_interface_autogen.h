@@ -147,6 +147,7 @@ virtual void CopyTexSubImage3D(GLenum target,
                                GLsizei height) = 0;
 virtual GLuint CreateProgram() = 0;
 virtual GLuint CreateShader(GLenum type) = 0;
+virtual GLint CreateVkImage(GLint width, GLint height) = 0;
 virtual void CullFace(GLenum mode) = 0;
 virtual void DeleteBuffers(GLsizei n, const GLuint* buffers) = 0;
 virtual void DeleteFramebuffers(GLsizei n, const GLuint* framebuffers) = 0;

@@ -35,6 +35,7 @@
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
+#include "gpu/vulkan/features.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
@@ -344,6 +345,10 @@ viz::ResourceId ResourceProvider::CreateResource(
     const gfx::ColorSpace& color_space) {
   DCHECK(!size.IsEmpty());
 
+#if BUILDFLAG(ENABLE_VULKAN)
+  return CreateVkTexture(size, color_space);
+#endif
+
   if (compositor_context_provider_)
     return CreateGpuTextureResource(size, hint, format, color_space);
 
@@ -426,6 +431,22 @@ viz::ResourceId ResourceProvider::CreateBitmapResource(
                                   color_space));
   resource->SetSharedBitmap(bitmap.get());
   resource->owned_shared_bitmap = std::move(bitmap);
+  return id;
+}
+
+viz::ResourceId ResourceProvider::CreateVkTexture(
+    const gfx::Size& size,
+    const gfx::ColorSpace& color_space) {
+  GLES2Interface* gl = ContextGL();
+  viz::ResourceId id = next_id_++;
+  viz::internal::Resource* resource = InsertResource(
+      id, viz::internal::Resource(size, viz::internal::Resource::INTERNAL,
+                                  viz::ResourceTextureHint::kDefault,
+                                  viz::ResourceType::kVulkan, viz::RGBA_8888,
+                                  color_space));
+
+  resource->id_ = gl->CreateVkImage(size.width(), size.height());
+
   return id;
 }
 

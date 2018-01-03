@@ -1022,6 +1022,7 @@ error::Error DoDeleteTransferCacheEntryINTERNAL(GLuint entry_type,
 error::Error DoWindowRectanglesEXT(GLenum mode,
                                    GLsizei n,
                                    const volatile GLint* box);
+error::Error DoCreateVkImage(GLint width, GLint height, GLint* result);
 error::Error DoCreateGpuFenceINTERNAL(GLuint gpu_fence_id);
 error::Error DoWaitGpuFenceCHROMIUM(GLuint gpu_fence_id);
 error::Error DoDestroyGpuFenceCHROMIUM(GLuint gpu_fence_id);

@@ -44,6 +44,7 @@ GL_APICALL void         GL_APIENTRY glCopyTexSubImage2D (GLenumTextureTarget tar
 GL_APICALL void         GL_APIENTRY glCopyTexSubImage3D (GLenumTexture3DTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
 GL_APICALL GLuint       GL_APIENTRY glCreateProgram (void);
 GL_APICALL GLuint       GL_APIENTRY glCreateShader (GLenumShaderType type);
+GL_APICALL GLint        GL_APIENTRY glCreateVkImage (GLint width, GLint height);
 GL_APICALL void         GL_APIENTRY glCullFace (GLenumFaceType mode);
 GL_APICALL void         GL_APIENTRY glDeleteBuffers (GLsizeiNotNegative n, const GLuint* buffers);
 GL_APICALL void         GL_APIENTRY glDeleteFramebuffers (GLsizeiNotNegative n, const GLuint* framebuffers);

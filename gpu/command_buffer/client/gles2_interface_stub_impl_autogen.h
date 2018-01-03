@@ -164,6 +164,9 @@ GLuint GLES2InterfaceStub::CreateProgram() {
 GLuint GLES2InterfaceStub::CreateShader(GLenum /* type */) {
   return 0;
 }
+GLint GLES2InterfaceStub::CreateVkImage(GLint /* width */, GLint /* height */) {
+  return 0;
+}
 void GLES2InterfaceStub::CullFace(GLenum /* mode */) {}
 void GLES2InterfaceStub::DeleteBuffers(GLsizei /* n */,
                                        const GLuint* /* buffers */) {}
