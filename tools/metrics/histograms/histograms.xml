@@ -35064,6 +35064,106 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Video width while remoting content.</summary>
 </histogram>
 
+<histogram name="Media.ResourceScheduler.OnFirstFrameDrawn.Right"
+    units="media players">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    The bucket size is the total number of players registered.  When any player
+    P has its first frame drawn on-screen, the count in the bucket is the number
+    of players that were lower priority than player P, but hadn't drawn their
+    first frame yet.  Equal- and higher- priority players, as well as ones that
+    were both created and displayed their first frame, before player P was
+    created aren't counted here.  The players counted here are the ones that we
+    correctly predicted, in the sense that the highest priority player was the
+    one that needed to decode a frame earliest.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnFirstFrameDrawn.Total"
+    units="list size">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    Count of the number of times a media player had its first frame drawn, when
+    there were a total number of players equal to the bucket size.  For example,
+    bucket 3 counts the number of times three media players were registered at
+    once when any of them had their first frame drawn.  This could be recorded
+    up to three times, if all three players draw a frame.  Multiply by the
+    bucket size to get the total number of players.  Note that &quot;drawn&quot;
+    includes, roughly, &quot;is on screen&quot;.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnFirstFrameDrawn.Wrong"
+    units="media players">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    The bucket size is the total number of players registered.  When any player
+    P has its first frame drawn on-screen, the count in the bucket is the number
+    of players that were higher priority than player P, but hadn't drawn their
+    first frame yet.  Equal- and lower- priority players, as well as ones that
+    were both created and displayed their first frame, before player P was
+    created aren't counted here.  The players counted here are the ones that we
+    mis-predicted, in the sense that the highest priority player wasn't the one
+    that needed to decode a frame earliest.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnPlayerLoad" units="mediaplayers">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    Number of media player instances that register with the resource scheduler.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnPlayerPlayed.Right"
+    units="media players">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    The bucket size is the total number of players registered.  When any player
+    plays, the count in the bucket is the number of players that were lower
+    priority than the one that just played, but hadn't played yet.  Equal- and
+    higher- priority players, as well as ones that already played (and thus
+    would have been adjusted in priority when they played) aren't counted here.
+    The players counted here are the ones that we correctly predicted, in the
+    sense that the first play signal we got for the group was for the highest
+    priority player.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnPlayerPlayed.Total"
+    units="list size">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    Count of the number of times a media player played when there were a total
+    number of players equal to the bucket size.  For example, bucket 3 counts
+    the number of times three media players were registered at once when any of
+    them played.  This could be recorded up to three times, if all three players
+    play.  Multiply by the bucket size to get the total number of players.
+  </summary>
+</histogram>
+
+<histogram name="Media.ResourceScheduler.OnPlayerPlayed.Wrong"
+    units="media players">
+  <owner>liberato@chromium.org</owner>
+  <owner>sandersd@chromium.org</owner>
+  <summary>
+    The bucket size is the total number of players registered.  When any player
+    plays, the count in the bucket is the number of players that were higher
+    priority than the one that just played, but hadn't played yet.  Equal- and
+    lower- priority players, as well as ones that already played (and thus would
+    have been adjusted in priority when they played) aren't counted here.  The
+    players counted here are the ones that we mis-predicted, in the sense that
+    the first play signal we got for the group wasn't for the highest priority
+    player.
+  </summary>
+</histogram>
+
 <histogram name="Media.RTCVideoDecoderError" enum="VideoDecodeAcceleratorError">
   <owner>posciak@chromium.org</owner>
   <summary>Counts of video decode errors reported to RTCVideoDecoder.</summary>
