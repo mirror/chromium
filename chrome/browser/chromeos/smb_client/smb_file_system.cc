@@ -8,6 +8,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/smb_provider_client.h"
+#include "net/base/io_buffer.h"
 
 namespace chromeos {
 
@@ -227,7 +228,11 @@ AbortCallback SmbFileSystem::ReadFile(
     int64_t offset,
     int length,
     const ReadChunkReceivedCallback& callback) {
-  NOTIMPLEMENTED();
+  GetSmbProviderClient()->ReadFile(
+      file_handle, offset, length,
+      base::BindOnce(&SmbFileSystem::HandleRequestReadFileCallback,
+                     weak_ptr_factory_.GetWeakPtr(), length,
+                     scoped_refptr<net::IOBuffer>(buffer), callback));
   return AbortCallback();
 }
 
@@ -404,6 +409,21 @@ void SmbFileSystem::HandleRequestGetMetadataEntryCallback(
   }
   // Mime types are not supported.
   callback.Run(std::move(metadata), base::File::FILE_OK);
+}
+
+void SmbFileSystem::HandleRequestReadFileCallback(
+    int length,
+    scoped_refptr<net::IOBuffer> buffer,
+    const ReadChunkReceivedCallback& callback,
+    smbprovider::ErrorType error,
+    const base::ScopedFD& fd) const {
+  if (error != smbprovider::ERROR_OK) {
+    callback.Run(0, false, TranslateError(error));
+    return;
+  }
+  int file_handle = fd.get();
+  const ssize_t bytes_read = read(file_handle, buffer->data(), length);
+  callback.Run(bytes_read, false /* has_more */, TranslateError(error));
 }
 
 base::WeakPtr<file_system_provider::ProvidedFileSystemInterface>
