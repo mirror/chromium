@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a14adf_d65b216c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T20:12:48Z",
+      "side": 1,
+      "message": "this is impossible",
+      "range": {
+        "startLine": 148,
+        "startChar": 41,
+        "endLine": 148,
+        "endChar": 59
+      },
+      "revId": "a1aa6a79452c66a2952c0bbde27f0579de7bc98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
