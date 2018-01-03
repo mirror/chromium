@@ -225,13 +225,16 @@ class SessionsSyncManager : public syncer::SyncableService,
   // changes for processing later.
   enum ReloadTabsOption { RELOAD_TABS, DONT_RELOAD_TABS };
   void AssociateWindows(ReloadTabsOption option,
+                        bool has_tabbed_window,
                         syncer::SyncChangeList* change_output);
 
   // Loads and reassociates the local tabs referenced in |tabs|.
   // |change_output| *must* be provided as a link to the SyncChange pipeline
   // that exists in the caller's context. This function will append necessary
-  // changes for processing later.
+  // changes for processing later. Will only assign a new sync id if there is
+  // a tabbed window, which results in failure for tabs without sync ids yet.
   void AssociateTab(SyncedTabDelegate* const tab,
+                    bool has_tabbed_window,
                     syncer::SyncChangeList* change_output);
 
   // Set |session_tab| from |tab_delegate| and |mtime|.
@@ -282,7 +285,7 @@ class SessionsSyncManager : public syncer::SyncableService,
   // specifics is the model type, ie us. We need to generate the tag because it
   // is not passed over the wire for remote data. The use case this function was
   // created for is detecting bad tag hashes from remote data, see
-  // crbug.com/604657.
+  // https://crbug.com/604657.
   static std::string TagHashFromSpecifics(
       const sync_pb::SessionSpecifics& specifics);
 
@@ -291,6 +294,11 @@ class SessionsSyncManager : public syncer::SyncableService,
   void TrackNavigationIds(const sessions::SerializedNavigationEntry& current);
 
   void CleanupNavigationTracking();
+
+  // On Android, it's possible to not have any tabbed windows if this is a cold
+  // start triggered for a custom tab. This means that we do not have the native
+  // tab data. See https://crbug.com/639009 for more info.
+  bool ScanForTabbedWindow();
 
   // The client of this sync sessions datatype.
   SyncSessionsClient* const sessions_client_;
