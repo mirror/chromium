@@ -70,6 +70,10 @@ class NET_EXPORT StaleHostResolver : public net::HostResolver {
   int ResolveFromCache(const RequestInfo& info,
                        net::AddressList* addresses,
                        const net::NetLogWithSource& net_log) override;
+  int ResolveStaleFromCache(const RequestInfo& info,
+                            AddressList* addresses,
+                            HostCache::EntryStaleness* stale_info,
+                            const NetLogWithSource& source_net_log) override;
   void SetDnsClientEnabled(bool enabled) override;
   net::HostCache* GetHostCache() override;
   bool HasCached(base::StringPiece hostname,
