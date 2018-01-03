@@ -34,6 +34,24 @@
       "revId": "f512217153e913023232e99becf9f8baaef2f4f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01d5b5b_2e7a4318",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2018-01-03T16:29:05Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "f16c482a_ad2cef3d",
+      "revId": "f512217153e913023232e99becf9f8baaef2f4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
