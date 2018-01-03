@@ -67,6 +67,24 @@
       "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e852dbf_d43479dd",
+        "filename": "components/sync_sessions/sessions_sync_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T00:46:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0958799f_45262b0c",
+      "revId": "89b9d884b9f024eec222ad10f64ce40cce3d0ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

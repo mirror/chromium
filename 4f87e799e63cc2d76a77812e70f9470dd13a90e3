@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "056a9a5e_32eb7e85",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T00:46:18Z",
+      "side": 1,
+      "message": "Correct. It is an unfourtunate tradeoff.\n\nPersisting the native data and sync medata atomically is exactly the solution we need. That will completely solve our problems here. Will update the comment.",
+      "parentUuid": "3e6c7e5f_22303b65",
+      "range": {
+        "startLine": 464,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 80
+      },
+      "revId": "4f87e799e63cc2d76a77812e70f9470dd13a90e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58db0e97_d18782a1",
         "filename": "components/sync_sessions/sessions_sync_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-28T19:36:51Z",
       "side": 1,
       "message": "Does this happen when we\u0027re still loading the native window, i.e. due to a loading race? I wonder if we should be checking this a different way if so, for example a flag within the window delegate denoting whether its loaded or not?",
+      "range": {
+        "startLine": 1415,
+        "startChar": 40,
+        "endLine": 1416,
+        "endChar": 16
+      },
+      "revId": "4f87e799e63cc2d76a77812e70f9470dd13a90e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbe7dcb_a0cfc561",
+        "filename": "components/sync_sessions/sessions_sync_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T00:46:18Z",
+      "side": 1,
+      "message": "It is a race, it doesn\u0027t happen every time. I opened crbug.com/797451 with steps that repro sometimes. Re-reading my repro steps, I did say to open and close chrome really quickly, but it can also happen when things seem like we\u0027re done loading, and just right as you close Chrome the first time (step 5), though often you\u0027ll still need to re-open chrome to get sync to actually send the broken data off device.\n\nI\u0027m not exactly sure what you\u0027re suggesting be changed. I tried to investigating exactly which piece is broken. It would seem that at https://cs.chromium.org/chromium/src/chrome/browser/android/tab_android.cc?l\u003d158 we can call obj.is_null() and it will claim it is not null. But that native pointer (mNativeTabAndroid) seems to have a value of 0.\n\nI\u0027m not terribly knowledgabe about JNI and how the lifecycle of this stuff is supposed to work. If you have a more concrete suggestoion I\u0027d be happy to try to do it. Or are you just thinking of like moving this method to the SyncedWindowDelegatesGetter interface and for non-android, just returning a fixed value immediately?",
+      "parentUuid": "58db0e97_d18782a1",
       "range": {
         "startLine": 1415,
         "startChar": 40,
