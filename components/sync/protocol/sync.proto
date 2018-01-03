@@ -142,6 +142,10 @@ message EntitySpecifics {
   optional PrinterSpecifics printer = 410745;
   optional ReadingListSpecifics reading_list = 411028;
   optional UserEventSpecifics user_event = 455206;
+
+  // The unencrypted metadata for a password.
+  // This is read-only, and is derived from the PasswordSpecifics data.
+  optional PasswordSpecificsMetadata password_metadata = 757103;
 }
 
 message SyncEntity {
