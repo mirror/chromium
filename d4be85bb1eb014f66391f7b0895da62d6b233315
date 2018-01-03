@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35b19086_9b02f9a5",
+        "filename": "ios/web/shell/test/plugin_placeholder_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:20:56Z",
+      "side": 1,
+      "message": "Can we add a test case to check that content without type\u003d is not blocked?",
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4f956d_2ce645e3",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:20:56Z",
+      "side": 1,
+      "message": "Is there anything we can test in common_js_unittest?",
+      "range": {
+        "startLine": 708,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 19
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17beda6_aed1d351",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:20:56Z",
+      "side": 1,
+      "message": "I\u0027m slightly puzzled by this method name. Does it return false if \"plugin does not have fallback| || \"plugin is flash\"? Would it be better to split this method into 2 methods?",
+      "range": {
+        "startLine": 714,
+        "startChar": 6,
+        "endLine": 714,
+        "endChar": 39
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34fb2e8_a448418d",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:20:56Z",
+      "side": 1,
+      "message": "API contract for this function has changed. Can we update the comments?",
+      "range": {
+        "startLine": 737,
+        "startChar": 12,
+        "endLine": 737,
+        "endChar": 13
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
