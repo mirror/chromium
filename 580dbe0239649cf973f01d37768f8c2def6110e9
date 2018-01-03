@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719e813c_1482b610",
+        "filename": "chrome/browser/resources/feedback/js/feedback.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-03T22:02:47Z",
+      "side": 1,
+      "message": "I don\u0027t see any changed related to \u0027placeholder\u0027. Who comes this?",
+      "range": {
+        "startLine": 324,
+        "startChar": 6,
+        "endLine": 324,
+        "endChar": 78
+      },
+      "revId": "580dbe0239649cf973f01d37768f8c2def6110e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
