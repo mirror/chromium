@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64f34ae_c7740614",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-03T16:45:18Z",
+      "side": 1,
+      "message": "Let\u0027s keep this list sorted.",
+      "revId": "b3d159a78fafe0ba05c09e8f6508c021ed83b001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
