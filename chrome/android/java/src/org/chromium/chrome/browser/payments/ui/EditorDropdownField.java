@@ -35,6 +35,7 @@ class EditorDropdownField implements EditorFieldView {
     private final TextView mLabel;
     private final Spinner mDropdown;
     private int mSelectedIndex;
+    private ArrayAdapter<CharSequence> mAdapter;
     @Nullable
     private EditorObserverForTest mObserverForTest;
 
@@ -62,47 +63,55 @@ class EditorDropdownField implements EditorFieldView {
                         : mFieldModel.getLabel());
 
         final List<DropdownKeyValue> dropdownKeyValues = mFieldModel.getDropdownKeyValues();
-        mSelectedIndex = getDropdownIndex(dropdownKeyValues, mFieldModel.getValue());
-
         final List<CharSequence> dropdownValues = getDropdownValues(dropdownKeyValues);
-        ArrayAdapter<CharSequence> adapter;
         if (mFieldModel.getHint() != null) {
-            // Use the AddressDropDownAdapter and pass it a hint to be displayed as default.
-            adapter = new AddressDropDownAdapter<CharSequence>(context,
-                    R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
-                    mFieldModel.getHint().toString());
+            // Pass the hint to be displayed as default. If there is a '+' icon needed, use the
+            // appropriate class to display it.
+            if (mFieldModel.isPlusIconIncluded()) {
+                mAdapter = new HintedDropDownAdapterWithPlusIcon<CharSequence>(context,
+                        R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
+                        mFieldModel.getHint().toString());
+            } else {
+                mAdapter = new HintedDropDownAdapter<CharSequence>(context,
+                        R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
+                        mFieldModel.getHint().toString());
+            }
             // Wrap the TextView in the dropdown popup around with a FrameLayout to display the text
             // in multiple lines.
             // Note that the TextView in the dropdown popup is displayed in a DropDownListView for
             // the dropdown style Spinner and the DropDownListView sets to display TextView instance
             // in a single line.
-            adapter.setDropDownViewResource(R.layout.payment_request_dropdown_item);
-
-            // If no value is selected, select the hint entry which is the last item in the adapter.
-            // Using getCount will not result in an out of bounds index because the hint value is
-            // ommited in the count.
-            if (mFieldModel.getValue() == null || mFieldModel.getValue().length() == 0) {
-                mSelectedIndex = adapter.getCount();
-            }
+            mAdapter.setDropDownViewResource(R.layout.payment_request_dropdown_item);
         } else {
-            adapter = new DropdownFieldAdapter<CharSequence>(
+            mAdapter = new DropdownFieldAdapter<CharSequence>(
                     context, R.layout.multiline_spinner_item, dropdownValues);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         }
+
+        mSelectedIndex = mAdapter.getPosition(mFieldModel.getDropdownValueByKey(
+                (mFieldModel.getValue() == null ? "" : mFieldModel.getValue().toString())));
+        // If no value is selected, or the hint is selected, the mSelectedIndex would be negative.
+        // This happens because the hint and null are not among the items in the dropdown list.
+        // Therefore, we need to adjust it by selecting the hint (which is the first item on the
+        // adapter.)
+        if (mSelectedIndex < 0) mSelectedIndex = 0;
 
         mDropdown = (Spinner) mLayout.findViewById(R.id.spinner);
         mDropdown.setTag(this);
         mDropdown.setContentDescription(mFieldModel.getLabel());
-        mDropdown.setAdapter(adapter);
+        mDropdown.setAdapter(mAdapter);
         mDropdown.setSelection(mSelectedIndex);
         mDropdown.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (mSelectedIndex != position) {
+                    String key = mFieldModel.getDropdownKeyByValue(mAdapter.getItem(position));
+                    // If the hint is selected, it means that no value is entered by the user.
+                    if (mFieldModel.getHint() != null && position == 0) {
+                        key = null;
+                    }
                     mSelectedIndex = position;
-                    mFieldModel.setDropdownKey(
-                            mFieldModel.getDropdownKeyValues().get(position).getKey(),
-                            changedCallback);
+                    mFieldModel.setDropdownKey(key, changedCallback);
                 }
                 if (mObserverForTest != null) {
                     mObserverForTest.onEditorTextUpdate();
@@ -112,7 +121,6 @@ class EditorDropdownField implements EditorFieldView {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-        final int count = adapter.getCount();
         mDropdown.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -172,15 +180,13 @@ class EditorDropdownField implements EditorFieldView {
 
     @Override
     public void update() {
-        // If the adapter supports a hint and no value was selected, select the hint.
-        if (mFieldModel.getHint() != null && mFieldModel.getValue() == null) {
-            // The hint is hidden right after the last element.
-            mSelectedIndex = mFieldModel.getDropdownKeyValues().size();
-        } else {
-            mSelectedIndex =
-                getDropdownIndex(mFieldModel.getDropdownKeyValues(), mFieldModel.getValue());
-        }
-
+        mSelectedIndex = mAdapter.getPosition(mFieldModel.getDropdownValueByKey(
+                (mFieldModel.getValue() == null ? "" : mFieldModel.getValue().toString())));
+        // If no value is selected, or the hint is selected, the mSelectedIndex would be negative.
+        // This happens because the hint and null are not among the items in the dropdown list.
+        // Therefore, we need to adjust it by selecting the hint (which is the first item on the
+        // adapter.)
+        if (mSelectedIndex < 0) mSelectedIndex = 0;
         mDropdown.setSelection(mSelectedIndex);
     }
 
@@ -190,13 +196,5 @@ class EditorDropdownField implements EditorFieldView {
             dropdownValues.add(dropdownKeyValues.get(i).getValue());
         }
         return dropdownValues;
-    }
-
-    private static int getDropdownIndex(
-            List<DropdownKeyValue> dropdownKeyValues, CharSequence value) {
-        for (int i = 0; i < dropdownKeyValues.size(); i++) {
-            if (dropdownKeyValues.get(i).getKey().equals(value)) return i;
-        }
-        return 0;
     }
 }
