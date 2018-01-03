@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31bbba2b_a96734e5",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T03:00:33Z",
+      "side": 1,
+      "message": "I would assume there is a fixed set of payload types that are understood by upstream code.  Would it be appropriate to validate that here?  Or is that the job of higher level code?\n\nIf validation is done here, maybe this should return an enum?",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ba72fb_b7be1b3d",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T03:00:33Z",
+      "side": 1,
+      "message": "It looks like output consists entirely of constants.  Could it be a string constant?",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1e202d_fa8b89d7",
+        "filename": "components/cast_channel/cast_message_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T03:00:33Z",
+      "side": 1,
+      "message": "Could this be a struct with two char[] static members, kPingType and kPongType? Or is it important to have separate enum members with integral type?",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc54a7fa_ad7ea784",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T03:00:33Z",
+      "side": 1,
+      "message": "DVLOG\nSame comment applies throughout this file",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
