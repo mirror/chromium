@@ -906,11 +906,21 @@
   };
 
   TestSuite.prototype.testWindowInitializedOnNavigateBack = function() {
+    this.takeControl();
     var messages = ConsoleModel.consoleModel.messages();
-    this.assertEquals(1, messages.length);
-    var text = messages[0].messageText;
-    if (text.indexOf('Uncaught') !== -1)
-      this.fail(text);
+    if (messages.length === 1) {
+      checkMessages();
+    } else {
+      ConsoleModel.consoleModel.addEventListener(
+          ConsoleModel.ConsoleModel.Events.MessageAdded, checkMessages.bind(this), this);
+    }
+
+    function checkMessages() {
+      var messages = ConsoleModel.consoleModel.messages();
+      this.assertEquals(1, messages.length);
+      this.assertTrue(messages[0].messageText.indexOf('Uncaught') === -1);
+      this.releaseControl();
+    }
   };
 
   TestSuite.prototype.testConsoleContextNames = function() {
