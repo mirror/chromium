@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8b995e02_bde37c7c",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-03T16:31:08Z",
+      "side": 1,
+      "message": "Regarding case 1, I agree with you.  If case 2 was not necessary, then case 1 would not be important enough to warrant a call to GetPushedStream().\n\nHowever, case 2 relates to data reduction proxy.  I cannot find any documentation for it at the moment, but https://crbug.com/778010 is related: the data reduction proxy team wants to be able to push cross-origin http resources in QUIC too.",
+      "parentUuid": "95c2fd45_d81294d5",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac99738_37effbc5",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
