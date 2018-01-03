@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7283514a_61cbd095",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T20:40:09Z",
+      "side": 1,
+      "message": "I think initially I didn\u0027t have the !connector_ check in IsNeutered(), since it seemed simpler if all the code could always assume that connector_ would be non-null. But that relies on Entangle always being called after constructing, which as it turns out unit tests don\u0027t all do. So I could either fix unit tests, add the null check to IsNeutered or refactor MessagePort to always require passing in a MessagePipeHandle to the constructor, getting rid of Entangle.\n\nBut yeah, since I have the null-check now anyway, I might as well reset this to null here indeed.",
+      "parentUuid": "d4dc887c_fe6b7da3",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b6412c3_883f36c6",
         "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T20:27:11Z",
       "side": 1,
       "message": "Can you clarify what this is trying to do? I don\u0027t understand why this is here, and since AFAICT the value never decreases this is either unreachable or undefined behavior (signed integer overflow isn\u0027t defined by the standard).",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ba0bc5_848f2ef5",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T20:40:09Z",
+      "side": 1,
+      "message": "This posts a task (to run ResetMessageCount) if this is the \"first\" Accept() call since the last call to ResetMessageCount (which reset messages_in_current_task_ to 0). And the next if block below this ensures message_in_current_task_ won\u0027t ever get higher than kMaximumMessagesPerTask (because it\u0027ll pause the connector until the ResetMessageCount task runs).\n\nAll of that is to ensure other tasks get a chance to run even if some script is synchronously posting more messages to one end of a message port in the onmessage handler of the other end (i.e. to avoid regressing https://bugs.chromium.org/p/chromium/issues/detail?id\u003d725302).\n\nBut yeah, that is non-trivial enough that I should probably add some comments.",
+      "parentUuid": "8b6412c3_883f36c6",
       "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
