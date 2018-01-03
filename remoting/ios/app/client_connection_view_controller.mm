@@ -614,8 +614,13 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
                           messageWithText:l10n_util::GetNSString(
                                               IDS_MESSAGE_SESSION_FINISHED)]];
       break;
-    case SessionCancelled:
+    case SessionFetchThirdPartyToken:
       state = ClientViewClosed;
+      [MDCSnackbarManager
+          showMessage:
+              [MDCSnackbarMessage
+                  messageWithText:l10n_util::GetNSString(
+                                      IDS_THIRD_PARTY_AUTH_NOT_SUPPORTED)]];
       break;
     default:
       LOG(ERROR) << "Unknown State for Session, " << sessionDetails.state;
