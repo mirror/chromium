@@ -143,6 +143,11 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   // Rendering media into this color space may avoid some conversions.
   virtual gfx::ColorSpace TargetColorSpace() { return gfx::ColorSpace(); }
 
+  // Retuns the player priority to be used by the Resource Scheduler, or INT_MIN
+  // if there is no such priority.  Numerically higher values indicate that the
+  // player is more important.
+  virtual int ComputePlayerPriority() { return INT_MIN; }
+
  protected:
   ~WebMediaPlayerClient() = default;
 };
