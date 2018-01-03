@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "95c2fd45_d81294d5",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-03T15:17:30Z",
+      "side": 1,
+      "message": "Ah, I see.\nFor (1), if Impl::Job doesn\u0027t find a push stream, it seems reasonable to me to not expect a second lookup attempt. Given that this is a racy case, I think it\u0027s fine to not handle it.\n\nFor (2), is there a discussion somewhere on why we are allowing push for http SpdySession that is selected by the normal pooling logic? Apologies if I am asking you questions that you answered before. I am trying to see if we can simplify the logic here. It\u0027s not exactly clear on why we need to perform lookup twice for every GET requests (since the kNoPushedStreamFound will be the majority cases).",
+      "parentUuid": "a0f18804_27e69877",
+      "revId": "8b243819311d6f763cc38af3149adc8d073f5201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac99738_37effbc5",
         "filename": "net/spdy/chromium/spdy_session.cc",
         "patchSetId": 2
