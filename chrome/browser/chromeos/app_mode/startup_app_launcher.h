@@ -135,6 +135,12 @@ class StartupAppLauncher : public extensions::InstallObserver,
   Delegate* const delegate_;
   bool network_ready_handled_ = false;
   int launch_attempt_ = 0;
+  // Set when the startup app launcher finishes app installation. At this
+  // point the kiosk app can be launched. This is similar to |ready_to_launch_|.
+  // The difference is that |ready_to_launch_| is set when the state is reported
+  // to the delegate, which is done in an async task posted when
+  // |app_installation_done_| changes.
+  bool app_installation_done_ = false;
   bool ready_to_launch_ = false;
   bool wait_for_crx_update_ = false;
   bool secondary_apps_installed_ = false;

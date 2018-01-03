@@ -1,0 +1,48 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_CHROMEOS_APP_MODE_TEST_KIOSK_EXTENSION_BUILDER_H_
+#define CHROME_BROWSER_CHROMEOS_APP_MODE_TEST_KIOSK_EXTENSION_BUILDER_H_
+
+#include <string>
+#include <vector>
+
+#include "base/memory/ref_counted.h"
+#include "base/optional.h"
+
+namespace extensions {
+class Extension;
+}
+
+namespace chromeos {
+
+// Wrapper around extensions::ExtensionBuilder for creating extension::Extension
+// instances for usage in kiosk app tests.
+class TestKioskExtensionBuilder {
+ public:
+  explicit TestKioskExtensionBuilder(const std::string& extension_id);
+  ~TestKioskExtensionBuilder();
+
+  void set_kiosk_enabled(bool enabled) { kiosk_enabled_ = enabled; }
+  void set_offline_enabled(bool enabled) { offline_enabled_ = enabled; }
+  void set_version(const std::string& version) { version_ = version; }
+
+  void AddSecondaryExtension(const std::string& extension_id);
+
+  scoped_refptr<const extensions::Extension> Build();
+
+ private:
+  const std::string extension_id_;
+
+  bool kiosk_enabled_ = true;
+  bool offline_enabled_ = true;
+  std::vector<std::string> secondary_extensions_;
+  base::Optional<std::string> version_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestKioskExtensionBuilder);
+};
+
+}  // namespace chromeos
+
+#endif  // CHROME_BROWSER_CHROMEOS_APP_MODE_TEST_KIOSK_EXTENSION_BUILDER_H_

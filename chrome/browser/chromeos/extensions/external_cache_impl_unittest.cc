@@ -74,6 +74,9 @@ class ExternalCacheImplTest : public testing::Test,
     return it != installed_extensions_.end() ? it->second : std::string();
   }
 
+  // Cache needs to provide already installed extensions otherwise they
+  // will be removed. Cache calls this function to get version of installed
+  // extension or empty string if not installed.
   base::FilePath CreateCacheDir(bool initialized) {
     EXPECT_TRUE(cache_dir_.CreateUniqueTempDir());
     if (initialized)
