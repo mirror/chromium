@@ -38,7 +38,10 @@ PasswordsPrivateDelegateImpl::PasswordsPrivateDelegateImpl(Profile* profile)
       password_manager_presenter_(
           std::make_unique<PasswordManagerPresenter>(this)),
       password_manager_porter_(std::make_unique<PasswordManagerPorter>(
-          password_manager_presenter_.get())),
+          password_manager_presenter_.get(),
+          base::BindRepeating(
+              &PasswordsPrivateDelegateImpl::OnPasswordsExportProgress,
+              base::Unretained(this)))),
       password_access_authenticator_(
           base::BindRepeating(&PasswordsPrivateDelegateImpl::OsReauthCall,
                               base::Unretained(this))),
@@ -240,6 +243,7 @@ void PasswordsPrivateDelegateImpl::ImportPasswords(
 }
 
 void PasswordsPrivateDelegateImpl::ExportPasswords(
+    base::OnceCallback<void(bool)> accepted,
     content::WebContents* web_contents) {
   // Save |web_contents| so that it can be used later when GetNativeWindow() is
   // called. Note: This is safe because the |web_contents| is used before
@@ -251,7 +255,7 @@ void PasswordsPrivateDelegateImpl::ExportPasswords(
   }
 
   password_manager_porter_->set_web_contents(web_contents);
-  password_manager_porter_->Store();
+  std::move(accepted).Run(password_manager_porter_->Store());
 }
 
 #if !defined(OS_ANDROID)
@@ -260,6 +264,35 @@ gfx::NativeWindow PasswordsPrivateDelegateImpl::GetNativeWindow() const {
   return web_contents_->GetTopLevelNativeWindow();
 }
 #endif
+
+void PasswordsPrivateDelegateImpl::OnPasswordsExportProgress(
+    password_manager::ExportProgressStatus status,
+    const std::string& message) {
+  PasswordsPrivateEventRouter* router =
+      PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
+  api::passwords_private::ExportProgressStatus api_status;
+  switch (status) {
+    case password_manager::ExportProgressStatus::NONE:
+      api_status = api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_NONE;
+      break;
+    case password_manager::ExportProgressStatus::IN_PROGRESS:
+      api_status = api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_IN_PROGRESS;
+      break;
+    case password_manager::ExportProgressStatus::COMPLETED:
+      api_status = api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_COMPLETED;
+      break;
+    case password_manager::ExportProgressStatus::FAILED:
+      api_status = api::passwords_private::ExportProgressStatus::
+          EXPORT_PROGRESS_STATUS_FAILED;
+      break;
+  }
+  if (router) {
+    router->OnPasswordsExportProgress(api_status, message);
+  }
+}
 
 void PasswordsPrivateDelegateImpl::Shutdown() {
   password_manager_presenter_.reset();

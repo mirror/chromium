@@ -155,6 +155,8 @@ class PasswordsPrivateExportPasswordsFunction
   ResponseAction Run() override;
 
  private:
+  void ExportRequestCompleted(bool accepted);
+
   DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateExportPasswordsFunction);
 };
 
