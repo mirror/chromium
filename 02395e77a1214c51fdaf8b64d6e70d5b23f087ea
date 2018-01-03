@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "266f9b7a_99405396",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T04:41:10Z",
+      "side": 1,
+      "message": "Maybe not a new bug.. but should we still do this bit, using \"Certificate (Valid)\" rather than the issuer?",
+      "revId": "02395e77a1214c51fdaf8b64d6e70d5b23f087ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
