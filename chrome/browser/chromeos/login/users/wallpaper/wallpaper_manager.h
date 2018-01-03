@@ -75,10 +75,6 @@ class WallpaperManager {
   // Adds |this| as an observer to various settings.
   void AddObservers();
 
-  // Loads wallpaper asynchronously if the current wallpaper is not the
-  // wallpaper of logged in user.
-  void EnsureLoggedInUserWallpaperLoaded();
-
   // A wrapper of |WallpaperController::IsPolicyControlled|.
   bool IsPolicyControlled(const AccountId& account_id) const;
 
