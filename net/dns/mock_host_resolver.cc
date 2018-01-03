@@ -149,6 +149,15 @@ int MockHostResolverBase::ResolveFromCache(const RequestInfo& info,
   return rv;
 }
 
+int MockHostResolverBase::ResolveStaleFromCache(
+    const RequestInfo& info,
+    AddressList* addresses,
+    HostCache::EntryStaleness* stale_info,
+    const NetLogWithSource& net_log) {
+  NOTREACHED();
+  return ERR_UNEXPECTED;
+}
+
 void MockHostResolverBase::DetachRequest(size_t id) {
   RequestMap::iterator it = requests_.find(id);
   CHECK(it != requests_.end());
