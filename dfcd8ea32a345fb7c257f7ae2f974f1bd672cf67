@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75c2b16_f3f630f9",
+        "filename": "content/browser/scoped_active_url.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:37:32Z",
+      "side": 1,
+      "message": "Doc comment for ContentClient::SetActiveURL says \"[...] Use GURL() or std::string() to clear the URL/origin. [...]\"",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e8356a4_ffa89794",
+        "filename": "content/browser/scoped_active_url.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:37:32Z",
+      "side": 1,
+      "message": "This is just an origin, because a renderer process might only know the origin of a top-level frame (e.g. if the top-level frame is an OOPIF).  We might want to consider using a full URL if it is available (it is always available in the browser process and sometimes available in the renderer process).  Is this something we would want to do in a follow-up?  What would be the best way to discuss that?",
+      "range": {
+        "startLine": 29,
+        "startChar": 61,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
