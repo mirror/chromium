@@ -33,6 +33,171 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3cd128_51ad4e5d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Just curious:  Will this ever happen more than once?  BindOnce() is probably more correct?",
+      "range": {
+        "startLine": 169,
+        "startChar": 63,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab2f863_cee75114",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Should this also be a DCHECK?  When would it be okay to not yet have the callback registered?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3cf2cd_c182929f",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Parameter name should probably be \"callback\".  And I guess this indicates that it *can* be called more than once.  Cool.",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1313a8ca_191fe28c",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Is \"on enter vr\" relevant to the model?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd19f2e_9693771e",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Toggle rather than set?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39036a33_c7fc763d",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Generally no bug/todos needed in the testapp, but sure.  The testapp is in general a giant TODO.",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949dde05_5b2e3ee5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "Are these headers used?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f31c7c_efb817d1",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "For a few elements, we\u0027ve made a new element class to get this construction logic out of scene creator.  Thoughts on doing that here?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e97f792_260b47a4",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-03T22:01:53Z",
+      "side": 1,
+      "message": "!background_loaded",
+      "range": {
+        "startLine": 854,
+        "startChar": 35,
+        "endLine": 854,
+        "endChar": 52
+      },
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
