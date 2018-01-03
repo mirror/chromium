@@ -12,7 +12,9 @@
 #include "chrome/browser/vr/controller_mesh.h"
 #include "chrome/browser/vr/elements/background.h"
 #include "chrome/browser/vr/elements/controller.h"
-#include "chrome/browser/vr/elements/grid.h"
+#include "chrome/browser/vr/elements/environment/grid.h"
+#include "chrome/browser/vr/elements/environment/sky.h"
+#include "chrome/browser/vr/elements/environment/stars.h"
 #include "chrome/browser/vr/elements/laser.h"
 #include "chrome/browser/vr/elements/reticle.h"
 #include "chrome/browser/vr/elements/shadow.h"
@@ -106,6 +108,14 @@ class UiElementRenderer {
       float opacity,
       float corner_radius);
 
+  VIRTUAL_FOR_MOCKS void DrawStars(
+      float t,
+      const gfx::Transform& model_view_proj_matrix);
+
+  VIRTUAL_FOR_MOCKS void DrawSky(const gfx::Transform& model_view_proj_matrix,
+                                 const SkyGradientColors& colors,
+                                 float opacity);
+
   VIRTUAL_FOR_MOCKS void DrawBackground(
       const gfx::Transform& model_view_proj_matrix,
       int texture_data_handle);
@@ -132,6 +142,8 @@ class UiElementRenderer {
   std::unique_ptr<Controller::Renderer> controller_renderer_;
   std::unique_ptr<Grid::Renderer> gradient_grid_renderer_;
   std::unique_ptr<Shadow::Renderer> shadow_renderer_;
+  std::unique_ptr<Stars::Renderer> stars_renderer_;
+  std::unique_ptr<Sky::Renderer> sky_renderer_;
   std::unique_ptr<Background::Renderer> background_renderer_;
 
   DISALLOW_COPY_AND_ASSIGN(UiElementRenderer);
