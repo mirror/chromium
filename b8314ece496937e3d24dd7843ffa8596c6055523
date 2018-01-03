@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1170c100_4907e4a2",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T15:33:21Z",
+      "side": 1,
+      "message": "Avoid this duplicated boiler-plate by extracting a common function: RunScriptAndWaitForNotificationAdded",
+      "range": {
+        "startLine": 1082,
+        "startChar": 0,
+        "endLine": 1097,
+        "endChar": 3
+      },
+      "revId": "b8314ece496937e3d24dd7843ffa8596c6055523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6717a57d_6d1997f4",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T15:33:21Z",
+      "side": 1,
+      "message": "bug num",
+      "revId": "b8314ece496937e3d24dd7843ffa8596c6055523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73aeb1dc_ca93db3d",
+        "filename": "content/common/notifications/notification_struct_traits_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T15:33:21Z",
+      "side": 1,
+      "message": "add one of those stack identifier macros here\n\n  SCOPED_TRACE(base::StringPrintf(\"Action index: %zd\", i));",
+      "revId": "b8314ece496937e3d24dd7843ffa8596c6055523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1288156_1bafd36d",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T15:33:21Z",
+      "side": 1,
+      "message": "s/properties/resources",
+      "revId": "b8314ece496937e3d24dd7843ffa8596c6055523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
