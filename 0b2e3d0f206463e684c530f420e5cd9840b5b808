@@ -33,6 +33,24 @@
       "revId": "0b2e3d0f206463e684c530f420e5cd9840b5b808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bffd7f_ec1e3cac",
+        "filename": "third_party/openh264/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2018-01-03T06:18:44Z",
+      "side": 1,
+      "message": "I think enabling NEON for non-chromeos device is too risky as I only tested it on chromeos devices. The corresponded team can enable it in the future when they are well tested.",
+      "parentUuid": "e4a394a2_810b9c37",
+      "revId": "0b2e3d0f206463e684c530f420e5cd9840b5b808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
