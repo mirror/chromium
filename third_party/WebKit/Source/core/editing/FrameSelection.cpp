@@ -82,6 +82,7 @@
 #include "platform/SecureTextInput.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/graphics/GraphicsContext.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/text/UnicodeUtilities.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/CString.h"
@@ -985,8 +986,8 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
   // sticky offset info available before the computation.
   GetDocument().EnsurePaintLocationDataValidForNode(start.AnchorNode());
   if (!start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
-          LayoutRect(ComputeRectToScroll(reveal_extent_option)), alignment,
-          alignment))
+          LayoutRect(ComputeRectToScroll(reveal_extent_option)),
+          {alignment, alignment}))
     return;
 
   UpdateAppearance();

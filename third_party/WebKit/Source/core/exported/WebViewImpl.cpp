@@ -135,6 +135,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/AutoReset.h"
@@ -2443,7 +2444,8 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
     LayoutObject* layout_object = element->GetLayoutObject();
     if (!layout_object)
       return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox());
+    layout_object->ScrollRectToVisible(element->BoundingBox(),
+                                       ScrollIntoViewParams());
     return true;
   }
 
