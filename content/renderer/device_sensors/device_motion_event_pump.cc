@@ -6,6 +6,7 @@
 
 #include <cmath>
 
+#include "base/logging.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/render_thread_impl.h"
@@ -38,6 +39,62 @@ void DeviceMotionEventPump::SendStartMessage() {
     return;
   }
 
+  SendStartMessageImpl();
+}
+
+void DeviceMotionEventPump::SendStopMessage() {
+  // SendStopMessage() gets called both when the page visibility changes and if
+  // all device motion event listeners are unregistered. Since removing the
+  // event listener is more rare than the page visibility changing,
+  // Sensor::Suspend() is used to optimize this case for not doing extra work.
+  //
+  // Regarding the sensor suspending when the sensor is still being
+  // initialized, refer to comments at
+  // DeviceOrientationEventPump::SendStopMessage().
+  if (accelerometer_.sensor) {
+    accelerometer_.sensor->Suspend();
+    accelerometer_.sensor_state = SensorState::SUSPENDED;
+  } else if (accelerometer_.sensor_state == SensorState::INITIALIZING) {
+    accelerometer_.sensor_state = SensorState::SHOULD_SUSPEND;
+  }
+
+  if (linear_acceleration_sensor_.sensor) {
+    linear_acceleration_sensor_.sensor->Suspend();
+    linear_acceleration_sensor_.sensor_state = SensorState::SUSPENDED;
+  } else if (linear_acceleration_sensor_.sensor_state ==
+             SensorState::INITIALIZING) {
+    linear_acceleration_sensor_.sensor_state = SensorState::SHOULD_SUSPEND;
+  }
+
+  if (gyroscope_.sensor) {
+    gyroscope_.sensor->Suspend();
+    gyroscope_.sensor_state = SensorState::SUSPENDED;
+  } else if (gyroscope_.sensor_state == SensorState::INITIALIZING) {
+    gyroscope_.sensor_state = SensorState::SHOULD_SUSPEND;
+  }
+}
+
+void DeviceMotionEventPump::SendFakeDataForTesting(void* fake_data) {
+  if (!listener())
+    return;
+
+  device::MotionData data = *static_cast<device::MotionData*>(fake_data);
+  listener()->DidChangeDeviceMotion(data);
+}
+
+void DeviceMotionEventPump::FireEvent() {
+  device::MotionData data;
+  // The device orientation spec states that interval should be in milliseconds.
+  // https://w3c.github.io/deviceorientation/spec-source-orientation.html#devicemotion
+  data.interval = kDefaultPumpDelayMicroseconds / 1000;
+
+  DCHECK(listener());
+
+  GetDataFromSharedMemory(&data);
+  listener()->DidChangeDeviceMotion(data);
+}
+
+void DeviceMotionEventPump::SendStartMessageImpl() {
   if (!accelerometer_.sensor && !linear_acceleration_sensor_.sensor &&
       !gyroscope_.sensor) {
     if (!sensor_provider_) {
@@ -68,56 +125,6 @@ void DeviceMotionEventPump::SendStartMessage() {
 
     DidStartIfPossible();
   }
-}
-
-void DeviceMotionEventPump::SendStopMessage() {
-  // SendStopMessage() gets called both when the page visibility changes and if
-  // all device motion event listeners are unregistered. Since removing the
-  // event listener is more rare than the page visibility changing,
-  // Sensor::Suspend() is used to optimize this case for not doing extra work.
-  if (accelerometer_.sensor)
-    accelerometer_.sensor->Suspend();
-
-  if (linear_acceleration_sensor_.sensor)
-    linear_acceleration_sensor_.sensor->Suspend();
-
-  if (gyroscope_.sensor)
-    gyroscope_.sensor->Suspend();
-}
-
-void DeviceMotionEventPump::SendFakeDataForTesting(void* fake_data) {
-  if (!listener())
-    return;
-
-  device::MotionData data = *static_cast<device::MotionData*>(fake_data);
-  listener()->DidChangeDeviceMotion(data);
-}
-
-void DeviceMotionEventPump::FireEvent() {
-  device::MotionData data;
-  // The device orientation spec states that interval should be in milliseconds.
-  // https://w3c.github.io/deviceorientation/spec-source-orientation.html#devicemotion
-  data.interval = kDefaultPumpDelayMicroseconds / 1000;
-
-  DCHECK(listener());
-
-  GetDataFromSharedMemory(&data);
-  listener()->DidChangeDeviceMotion(data);
-}
-
-bool DeviceMotionEventPump::SensorSharedBuffersReady() const {
-  if (accelerometer_.sensor && !accelerometer_.shared_buffer)
-    return false;
-
-  if (linear_acceleration_sensor_.sensor &&
-      !linear_acceleration_sensor_.shared_buffer) {
-    return false;
-  }
-
-  if (gyroscope_.sensor && !gyroscope_.shared_buffer)
-    return false;
-
-  return true;
 }
 
 void DeviceMotionEventPump::GetDataFromSharedMemory(device::MotionData* data) {

@@ -6,6 +6,7 @@
 
 #include <cmath>
 
+#include "base/logging.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/render_thread_impl.h"
@@ -69,36 +70,7 @@ void DeviceOrientationEventPump::SendStartMessage() {
     return;
   }
 
-  if (!absolute_orientation_sensor_.sensor &&
-      !relative_orientation_sensor_.sensor) {
-    if (!sensor_provider_) {
-      RenderFrame* const render_frame = GetRenderFrame();
-      if (!render_frame)
-        return;
-
-      CHECK(render_frame->GetRemoteInterfaces());
-
-      render_frame->GetRemoteInterfaces()->GetInterface(
-          mojo::MakeRequest(&sensor_provider_));
-      sensor_provider_.set_connection_error_handler(
-          base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
-                     base::Unretained(this)));
-    }
-    if (absolute_) {
-      GetSensor(&absolute_orientation_sensor_);
-    } else {
-      fall_back_to_absolute_orientation_sensor_ = true;
-      GetSensor(&relative_orientation_sensor_);
-    }
-  } else {
-    if (relative_orientation_sensor_.sensor)
-      relative_orientation_sensor_.sensor->Resume();
-
-    if (absolute_orientation_sensor_.sensor)
-      absolute_orientation_sensor_.sensor->Resume();
-
-    DidStartIfPossible();
-  }
+  SendStartMessageImpl();
 }
 
 void DeviceOrientationEventPump::SendStopMessage() {
@@ -106,11 +78,37 @@ void DeviceOrientationEventPump::SendStopMessage() {
   // all device orientation event listeners are unregistered. Since removing
   // the event listener is more rare than the page visibility changing,
   // Sensor::Suspend() is used to optimize this case for not doing extra work.
-  if (relative_orientation_sensor_.sensor)
+  //
+  // When the sensor needs to be suspended, and it is still in the
+  // SensorState::INITIALIZING state, the sensor creation is not affected (the
+  // SensorEntry::OnSensorCreated() callback will run as usual), but the sensor
+  // is marked as SensorState::SHOULD_SUSPEND, and when the sensor is created
+  // successfully, it will be suspended and its state will be marked as
+  // SensorState::SUSPENDED in the SensorEntry::OnSensorAddConfiguration().
+  if (relative_orientation_sensor_.sensor) {
     relative_orientation_sensor_.sensor->Suspend();
+    relative_orientation_sensor_.sensor_state = SensorState::SUSPENDED;
+  } else if (relative_orientation_sensor_.sensor_state ==
+             SensorState::INITIALIZING) {
+    relative_orientation_sensor_.sensor_state = SensorState::SHOULD_SUSPEND;
+    // This is needed for the relative orientation sensor fall back to using
+    // the absolute orientation sensor. In this case, the relative orientation
+    // sensor is marked as SensorState::SHOULD_SUSPEND, and if the relative
+    // orientation sensor is not available, the absolute orientation sensor
+    // should also be marked as SensorState::SHOULD_SUSPEND, but only after
+    // the GetSensor() is called for initializing the absolute orientation
+    // sensor in the DeviceOrientationEventPump::DidStartIfPossible().
+    if (fall_back_to_absolute_orientation_sensor_)
+      should_suspend_absolute_orientation_sensor_ = true;
+  }
 
-  if (absolute_orientation_sensor_.sensor)
+  if (absolute_orientation_sensor_.sensor) {
     absolute_orientation_sensor_.sensor->Suspend();
+    absolute_orientation_sensor_.sensor_state = SensorState::SUSPENDED;
+  } else if (absolute_orientation_sensor_.sensor_state ==
+             SensorState::INITIALIZING) {
+    absolute_orientation_sensor_.sensor_state = SensorState::SHOULD_SUSPEND;
+  }
 }
 
 void DeviceOrientationEventPump::SendFakeDataForTesting(void* fake_data) {
@@ -124,6 +122,10 @@ void DeviceOrientationEventPump::SendFakeDataForTesting(void* fake_data) {
 
 void DeviceOrientationEventPump::FireEvent() {
   device::OrientationData data;
+
+  // At most one sensor can be successfully initialized.
+  DCHECK(!relative_orientation_sensor_.sensor ||
+         !absolute_orientation_sensor_.sensor);
 
   DCHECK(listener());
 
@@ -142,27 +144,50 @@ void DeviceOrientationEventPump::DidStartIfPossible() {
     // the absolute orientation sensor but only on the first failure.
     fall_back_to_absolute_orientation_sensor_ = false;
     GetSensor(&absolute_orientation_sensor_);
+    if (should_suspend_absolute_orientation_sensor_) {
+      // The absolute orientation sensor needs to be marked as
+      // SensorState::SUSPENDED when it is successfully initialized.
+      absolute_orientation_sensor_.sensor_state = SensorState::SHOULD_SUSPEND;
+      should_suspend_absolute_orientation_sensor_ = false;
+    }
     return;
   }
   DeviceSensorEventPump::DidStartIfPossible();
 }
 
-bool DeviceOrientationEventPump::SensorSharedBuffersReady() const {
-  if (relative_orientation_sensor_.sensor &&
-      !relative_orientation_sensor_.shared_buffer) {
-    return false;
+void DeviceOrientationEventPump::SendStartMessageImpl() {
+  if (!absolute_orientation_sensor_.sensor &&
+      !relative_orientation_sensor_.sensor) {
+    if (!sensor_provider_) {
+      RenderFrame* const render_frame = GetRenderFrame();
+      if (!render_frame)
+        return;
+
+      CHECK(render_frame->GetRemoteInterfaces());
+
+      render_frame->GetRemoteInterfaces()->GetInterface(
+          mojo::MakeRequest(&sensor_provider_));
+      sensor_provider_.set_connection_error_handler(
+          base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
+                     base::Unretained(this)));
+    }
+
+    if (absolute_) {
+      GetSensor(&absolute_orientation_sensor_);
+    } else {
+      fall_back_to_absolute_orientation_sensor_ = true;
+      should_suspend_absolute_orientation_sensor_ = false;
+      GetSensor(&relative_orientation_sensor_);
+    }
+  } else {
+    if (relative_orientation_sensor_.sensor)
+      relative_orientation_sensor_.sensor->Resume();
+
+    if (absolute_orientation_sensor_.sensor)
+      absolute_orientation_sensor_.sensor->Resume();
+
+    DidStartIfPossible();
   }
-
-  if (absolute_orientation_sensor_.sensor &&
-      !absolute_orientation_sensor_.shared_buffer) {
-    return false;
-  }
-
-  // At most one sensor can be successfully initialized.
-  DCHECK(!relative_orientation_sensor_.sensor ||
-         !absolute_orientation_sensor_.sensor);
-
-  return true;
 }
 
 void DeviceOrientationEventPump::GetDataFromSharedMemory(
