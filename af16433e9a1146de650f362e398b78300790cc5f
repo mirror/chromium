@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221d03a6_7440a654",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "i think i still usually see e.g. kSourceId and kUserActivityIdValues for local consts",
+      "revId": "af16433e9a1146de650f362e398b78300790cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa0f105_54ddd4e1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "can you leave off the \"nullptr \u003d\u003d\" here? if not, please put \"\u003d\u003d nullptr\" at the end of the expression instead, as that\u0027s overwhelmingly more common in chromium.",
+      "range": {
+        "startLine": 167,
+        "startChar": 14,
+        "endLine": 167,
+        "endChar": 24
+      },
+      "revId": "af16433e9a1146de650f362e398b78300790cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e80094_d236389c",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "nit: replace \u0027\u003d\u0027 with \u0027 \u0027",
+      "range": {
+        "startLine": 61,
+        "startChar": 63,
+        "endLine": 61,
+        "endChar": 64
+      },
+      "revId": "af16433e9a1146de650f362e398b78300790cc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

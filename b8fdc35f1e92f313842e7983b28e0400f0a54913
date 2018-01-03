@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06eb907e_92904684",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "ah, i see. i think i don\u0027t understand the reason for these constants. kUserActivityEntryName is only two characters shorter than UserActivity::kEntryName. why not just use UserActivity::kEntryName instead of introducing new constants?",
+      "parentUuid": "97688728_a3556fe7",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44e9a3a1_fd443e4e",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -633,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "2ae0ec53_846de266",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "i\u0027m not sure, unfortunately. https://crbug.com/259043 has some discussion",
+      "parentUuid": "b814890e_cb31651e",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5af25dca_dfb5b707",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
         "patchSetId": 3
@@ -732,6 +768,24 @@
       "side": 1,
       "message": "This function updates the |num_entries_| map by adding |new_num_entries| to it and then calls NumEntries. So I\u0027d like to keep \"New\" here. :)",
       "parentUuid": "6d8c3839_3f6ce307",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96936b09_79b87fe1",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T00:25:16Z",
+      "side": 1,
+      "message": "i\u0027m still having a difficult time understanding how this class is used:\n\n- what\u0027s the relationship between ExpectNewEntry and ExpectNewEntries? i\u0027d expect them to do essentially the same thing, with one being a convenience wrapper around the other, but that doesn\u0027t appear to be the case -- their implementations are completely separate.\n\n- what\u0027s the baseline for WasNewEntryRecorded? \"new\" since when? it looks like it\u0027s comparing the count from ukm_recorder_ against that in num_entries_.\n\ni think that my confusion stems from not understanding the relationship between the counts in ukm_recorder_ and in num_entries_.\n\ni\u0027ll probably let michael review this since he\u0027s much more familiar with ukm. :-)",
+      "parentUuid": "a77f9ab3_83bb3640",
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
