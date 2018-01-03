@@ -424,12 +424,13 @@ bool ImageFrameGenerator::GetYUVComponentSizes(SegmentReader* data,
 
 SkISize ImageFrameGenerator::GetSupportedDecodeSize(
     const SkISize& requested_size) const {
-  for (auto& size : supported_sizes_) {
-    if (size.width() >= requested_size.width() &&
-        size.height() >= requested_size.height()) {
-      return size;
-    }
-  }
+  // TODO(vmpstr): Uncommenting the following block will enable decode to scale.
+  // for (auto& size : supported_sizes_) {
+  //  if (size.width() >= requested_size.width() &&
+  //      size.height() >= requested_size.height()) {
+  //    return size;
+  //  }
+  //}
   return full_size_;
 }
 
