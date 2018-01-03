@@ -705,14 +705,31 @@ __gCrWeb['common'] = __gCrWeb.common;
   };
 
   /**
-   * Checks whether plugin a node has fallback content.
+   * Checks whether a plugin node has fallback content that is not flash
+   * content.
    * @param {HTMLElement} node The node to check.
    * @return {boolean} Whether the node has fallback.
    * @private
    */
-  var pluginHasFallbackContent_ = function(node) {
-    return node.textContent.trim().length > 0 ||
-           node.getElementsByTagName('img').length > 0;
+  var pluginHasNonFlashFallbackContent_ = function(node) {
+    if (node.textContent.trim().length > 0) {
+      return true;
+    }
+    var childrenCount = node.children.length;
+    if (childrenCount == 0) {
+      return false;
+    }
+    for (i = 0; i < childrenCount; i++) {
+      var childNode = /** @type {!HTMLElement} */(node.children[i]);
+      if (childNode.tagName === 'EMBED' &&
+          childNode.hasAttribute('type') &&
+          (childNode.type.indexOf('application/x-shockwave-flash') != 0 ||
+           childNode.type.indexOf('application/vnd.adobe.flash-movie') != 0)) {
+        // The fallback content is also flash.
+        return false;
+      }
+    }
+    return true;
   };
 
   /**
@@ -728,7 +745,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     for (i = 0; i < objectCount; i++) {
       var object = /** @type {!HTMLElement} */(objects[i]);
       if (objectNodeIsPlugin_(object) &&
-          !pluginHasFallbackContent_(object)) {
+          !pluginHasNonFlashFallbackContent_(object)) {
         pluginNodes.push(object);
       }
     }
@@ -736,7 +753,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     var appletsCount = applets.length;
     for (i = 0; i < appletsCount; i++) {
       var applet = /** @type {!HTMLElement} */(applets[i]);
-      if (!pluginHasFallbackContent_(applet)) {
+      if (!pluginHasNonFlashFallbackContent_(applet)) {
         pluginNodes.push(applet);
       }
     }
