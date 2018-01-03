@@ -34,6 +34,24 @@
       "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd71f09_42621e5c",
+        "filename": "base/android/java/src/org/chromium/base/BaseChromiumApplication.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-03T22:04:03Z",
+      "side": 0,
+      "message": "Well, we\u0027re doing that logic (only in browser process) in ChromeApplication.attachBaseContext regardless. So perhaps just move it there?",
+      "parentUuid": "626ac1c4_82703fde",
+      "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
