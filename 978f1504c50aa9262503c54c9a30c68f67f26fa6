@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a09bc252_5b7fead3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-03T00:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "592d0198_178a53c0",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "978f1504c50aa9262503c54c9a30c68f67f26fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "940104f6_4cfbc13d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "978f1504c50aa9262503c54c9a30c68f67f26fa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a396b4_795ecf54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2018-01-03T00:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940104f6_4cfbc13d",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "978f1504c50aa9262503c54c9a30c68f67f26fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
