@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c14873_50857b1e",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-03T18:00:10Z",
+      "side": 1,
+      "message": "Are you sure you need the \"override_isolate_target\" key? I think the \"test\" key is sufficient to tell the recipe which target to build and run.",
+      "revId": "5a103c614ed30e0f38309d4f43c0997ebcb12642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
