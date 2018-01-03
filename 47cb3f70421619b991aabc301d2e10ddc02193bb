@@ -22,6 +22,30 @@
       "revId": "47cb3f70421619b991aabc301d2e10ddc02193bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3eb459_85e85637",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2018-01-03T17:24:37Z",
+      "side": 1,
+      "message": "The previews type ordering is fully up to the client in the current design. The server just says what works and what doesn\u0027t. \n\nMight revisit for v2 though.",
+      "parentUuid": "c30836ed_7c17fcab",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 12
+      },
+      "revId": "47cb3f70421619b991aabc301d2e10ddc02193bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
