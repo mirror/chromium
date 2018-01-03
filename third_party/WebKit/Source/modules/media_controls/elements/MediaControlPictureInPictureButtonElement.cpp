@@ -10,7 +10,6 @@
 #include "core/input_type_names.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "public/platform/Platform.h"
-
 namespace blink {
 
 MediaControlPictureInPictureButtonElement::
@@ -24,6 +23,12 @@ MediaControlPictureInPictureButtonElement::
 bool MediaControlPictureInPictureButtonElement::
     WillRespondToMouseClickEvents() {
   return true;
+}
+
+
+void MediaControlPictureInPictureButtonElement::UpdateDisplayType() {
+  UpdateOverflowString();
+  MediaControlInputElement::UpdateDisplayType();
 }
 
 WebLocalizedString::Name
@@ -43,7 +48,9 @@ const char* MediaControlPictureInPictureButtonElement::GetNameForHistograms()
 
 void MediaControlPictureInPictureButtonElement::DefaultEventHandler(
     Event* event) {
-  // TODO(apacible): On click, trigger picture in picture.
+  if (event->type() == EventTypeNames::click)
+    MediaElement().pictureInPicture();
+
   MediaControlInputElement::DefaultEventHandler(event);
 }
 

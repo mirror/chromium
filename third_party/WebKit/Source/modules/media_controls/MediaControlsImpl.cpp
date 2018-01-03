@@ -503,6 +503,7 @@ void MediaControlsImpl::InitializeControls() {
         new MediaControlPictureInPictureButtonElement(*this);
     button_panel->AppendChild(picture_in_picture_button_);
   }
+
   fullscreen_button_ = new MediaControlFullscreenButtonElement(*this);
   button_panel->AppendChild(fullscreen_button_);
 
@@ -535,11 +536,13 @@ void MediaControlsImpl::InitializeControls() {
   // overflow menu.
   overflow_list_->AppendChild(play_button_->CreateOverflowElement(
       new MediaControlPlayButtonElement(*this)));
+
   if (RuntimeEnabledFeatures::PictureInPictureEnabled() && !IsModern()) {
     overflow_list_->AppendChild(
         picture_in_picture_button_->CreateOverflowElement(
             new MediaControlPictureInPictureButtonElement(*this)));
   }
+
   overflow_list_->AppendChild(fullscreen_button_->CreateOverflowElement(
       new MediaControlFullscreenButtonElement(*this)));
   overflow_list_->AppendChild(download_button_->CreateOverflowElement(
@@ -1386,6 +1389,7 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
       // Exclude m_overflowMenu; we handle it specially.
       play_button_.Get(),
       fullscreen_button_.Get(),
+      picture_in_picture_button_.Get(),
       download_button_.Get(),
       timeline_.Get(),
       mute_button_.Get(),
@@ -1510,6 +1514,7 @@ void MediaControlsImpl::MaybeRecordElementsDisplayed() const {
   MediaControlElementBase* elements[] = {
       play_button_.Get(),
       fullscreen_button_.Get(),
+      picture_in_picture_button_.Get(),
       download_button_.Get(),
       timeline_.Get(),
       mute_button_.Get(),
@@ -1658,6 +1663,7 @@ void MediaControlsImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(overlay_play_button_);
   visitor->Trace(overlay_enclosure_);
   visitor->Trace(play_button_);
+  visitor->Trace(picture_in_picture_button_);
   visitor->Trace(current_time_display_);
   visitor->Trace(timeline_);
   visitor->Trace(mute_button_);

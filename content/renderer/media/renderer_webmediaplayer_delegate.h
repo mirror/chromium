@@ -24,6 +24,11 @@
 #include "base/time/time.h"
 #endif  // OS_ANDROID
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
+
 namespace media {
 
 enum class MediaContentType;
@@ -59,6 +64,11 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
   void SetIsEffectivelyFullscreen(int player_id, bool is_fullscreen) override;
   void DidPlayerSizeChange(int delegate_id, const gfx::Size& size) override;
   void DidPlayerMutedStatusChange(int delegate_id, bool muted) override;
+  void PictureInPictureSurfaceIdUpdated(int delegate_id,
+                                        viz::FrameSinkId frame_sink_id,
+                                        uint32_t parent_id,
+                                        base::UnguessableToken nonce,
+                                        const gfx::Size& size) override;
 
   // content::RenderFrameObserver overrides.
   void WasHidden() override;
@@ -88,6 +98,7 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
   void OnMediaDelegateSuspendAllMediaPlayers();
   void OnMediaDelegateVolumeMultiplierUpdate(int player_id, double multiplier);
   void OnMediaDelegateBecamePersistentVideo(int player_id, bool value);
+  void OnMediaDelegateEndPictureInPictureMode(int player_id);
 
   // Schedules UpdateTask() to run soon.
   void ScheduleUpdateTask();
