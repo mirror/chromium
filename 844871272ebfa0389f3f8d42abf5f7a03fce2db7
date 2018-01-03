@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c42461_7f1a5961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T16:54:41Z",
+      "side": 1,
+      "message": "scheduler?",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "844871272ebfa0389f3f8d42abf5f7a03fce2db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc3bfaa_67bab24b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T16:54:41Z",
+      "side": 1,
+      "message": "\"it\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "844871272ebfa0389f3f8d42abf5f7a03fce2db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132bdb16_e0747708",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T16:54:41Z",
+      "side": 1,
+      "message": "\"to give time for the server to handle history deletion\".",
+      "range": {
+        "startLine": 737,
+        "startChar": 71,
+        "endLine": 737,
+        "endChar": 72
+      },
+      "revId": "844871272ebfa0389f3f8d42abf5f7a03fce2db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7def567c_f3ce2905",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T16:54:41Z",
+      "side": 1,
+      "message": "The naming is a bit unfortunate. Without looking at the implementation, it feels like ClearHistoryDependentState deletes more than  ClearCachedSuggestions. But I don\u0027t see how it could be improved, so feel free to ignore.",
+      "range": {
+        "startLine": 738,
+        "startChar": 9,
+        "endLine": 738,
+        "endChar": 25
+      },
+      "revId": "844871272ebfa0389f3f8d42abf5f7a03fce2db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7649b05_e6adbfd0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2428,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T16:54:41Z",
+      "side": 1,
+      "message": "Just to confirm. There is a test that OnSuggestionsCleared triggers a fetch immediately. This means that the user after signing-in will likely have unpersonalized suggestions, because the fetch was before the sign in itself happened. Is this expected?",
+      "range": {
+        "startLine": 2428,
+        "startChar": 28,
+        "endLine": 2428,
+        "endChar": 48
+      },
+      "revId": "844871272ebfa0389f3f8d42abf5f7a03fce2db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
