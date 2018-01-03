@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80c7883a_80e1e6bb",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f9cf5a7_ea2e2cdd",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 143,
+        "endChar": 52
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8253bd_f7e4fd3b",
         "filename": "components/autofill/core/browser/autofill_experiments.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570e600e_11de149f",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8253bd_f7e4fd3b",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b06f3eee_0ffa804b",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f596f0cd_363d5c45",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc82b01_0fd94b98",
         "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
         "patchSetId": 15
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "bb61cd15_0e9d10b3",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc82b01_0fd94b98",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "490eb01a_e381c3f2",
         "filename": "components/autofill/core/browser/autofill_external_delegate.h",
         "patchSetId": 15
@@ -102,6 +192,24 @@
       "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b208650_f20f725d",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "It works. Just need to update the mock in autocomplete_history_manager_unittest.cc",
+      "parentUuid": "490eb01a_e381c3f2",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "6e1f2253_0a858091",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 15
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5165b2f3_3de007ff",
+      "range": {
+        "startLine": 135,
+        "startChar": 142,
+        "endLine": 135,
+        "endChar": 168
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fc7e818_4ac78b4c",
         "filename": "components/resources/default_300_percent/autofill/googlepay.png",
         "patchSetId": 15
@@ -142,6 +274,24 @@
       "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e21bd3c_5caa26c0",
+        "filename": "components/resources/default_300_percent/autofill/googlepay.png",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2018-01-03T18:17:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc7e818_4ac78b4c",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
