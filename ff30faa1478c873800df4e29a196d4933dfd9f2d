@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d24aab7_e61fc170",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3846,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T18:11:14Z",
+      "side": 1,
+      "message": "Since you\u0027re not forcing USS to be off here, what do you think of verifying that the bridge is null via GetTypedURLSyncBridge(). If someone puts a HistoryBackend::Init() call into this test\u0027s SetUp(), we\u0027d silently stop testing anything useful.",
+      "revId": "ff30faa1478c873800df4e29a196d4933dfd9f2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
