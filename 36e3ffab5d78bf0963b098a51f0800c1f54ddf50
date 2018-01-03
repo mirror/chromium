@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2633c701_fabc5ce0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-03T22:40:24Z",
+      "side": 1,
+      "message": "nit: Please update commit description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb038f42_3489d6f7",
+        "filename": "content/browser/download/download_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2018-01-03T22:40:24Z",
+      "side": 1,
+      "message": "nit: // namespace storage",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 1
+      },
+      "revId": "36e3ffab5d78bf0963b098a51f0800c1f54ddf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
