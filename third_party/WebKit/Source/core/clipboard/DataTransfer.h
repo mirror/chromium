@@ -138,11 +138,16 @@ class CORE_EXPORT DataTransfer final : public ScriptWrappable,
 
   // Returns the rect with device scale factor and page scale factor applied.
   static FloatRect DeviceSpaceRect(const FloatRect css_rect, const LocalFrame&);
+
+  // |css_rect| is the bounds of the image CSS pixels.
+  // |paint_offset| is the offset from the origin of the dragged
+  // object of the PaintRecordBuilder.
   static std::unique_ptr<DragImage> CreateDragImageForFrame(
       const LocalFrame&,
       float,
       RespectImageOrientationEnum,
-      const FloatRect&,
+      const FloatRect& css_rect,
+      const FloatPoint& paint_offset,
       PaintRecordBuilder&,
       const PropertyTreeState&);
   static std::unique_ptr<DragImage> NodeImage(const LocalFrame&, Node&);

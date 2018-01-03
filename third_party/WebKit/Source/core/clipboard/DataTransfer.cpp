@@ -103,6 +103,8 @@ class DraggedNodeImageBuilder {
       layer = layer->StackingNode()->AncestorStackingContextNode()->Layer();
     IntRect absolute_bounding_box =
         dragged_layout_object->AbsoluteBoundingBoxRectIncludingDescendants();
+    absolute_bounding_box.Intersect(
+        layer->GetLayoutObject().GetFrameView()->VisibleContentRect());
     FloatRect bounding_box =
         layer->GetLayoutObject()
             .AbsoluteToLocalQuad(FloatQuad(absolute_bounding_box),
@@ -127,10 +129,12 @@ class DraggedNodeImageBuilder {
       border_box_properties =
           *layer->GetLayoutObject().FirstFragment().LocalBorderBoxProperties();
     }
+    FloatPoint paint_offset = dragged_layout_object->LocalToAncestorPoint(
+        FloatPoint(), &layer->GetLayoutObject(), kUseTransforms);
     return DataTransfer::CreateDragImageForFrame(
         *local_frame_, 1.0f,
         LayoutObject::ShouldRespectImageOrientation(dragged_layout_object),
-        bounding_box, builder, border_box_properties);
+        bounding_box, paint_offset, builder, border_box_properties);
   }
 
  private:
@@ -378,16 +382,15 @@ std::unique_ptr<DragImage> DataTransfer::CreateDragImageForFrame(
     float opacity,
     RespectImageOrientationEnum image_orientation,
     const FloatRect& css_rect,
+    const FloatPoint& paint_offset,
     PaintRecordBuilder& builder,
     const PropertyTreeState& property_tree_state) {
   float device_scale_factor = frame.GetPage()->DeviceScaleFactorDeprecated();
   float page_scale_factor = frame.GetPage()->GetVisualViewport().Scale();
 
-  FloatRect rect_in_visual_viewport = ClipByVisualViewport(css_rect, frame);
-  FloatRect device_rect = DeviceSpaceRect(rect_in_visual_viewport, frame);
-
+  FloatRect device_rect = DeviceSpaceRect(css_rect, frame);
   AffineTransform transform;
-  transform.Translate(-device_rect.X(), -device_rect.Y());
+  transform.Translate(-paint_offset.X(), -paint_offset.Y());
   transform.Scale(device_scale_factor * page_scale_factor);
 
   // Rasterize upfront, since DragImage::create() is going to do it anyway
