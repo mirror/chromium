@@ -489,6 +489,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // includes the size attributed to the underlying socket.
   size_t DumpMemoryStats(StreamSocket::SocketMemoryStats* stats,
                          bool* is_session_active) const;
+  SpdyStreamId StreamHiWaterMarkForTesting() const {
+    return stream_hi_water_mark_;
+  }
 
  private:
   friend class test::SpdyStreamTest;
