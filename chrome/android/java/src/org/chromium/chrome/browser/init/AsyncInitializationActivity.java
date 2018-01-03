@@ -28,7 +28,9 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
 
+import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.StrictModeContext;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -291,6 +293,20 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
             super.onCreate(transformSavedInstanceStateForOnCreate(savedInstanceState));
         }
+
+        if (isActivityDestroyed()) {
+            abortLaunch();
+            return;
+        }
+
+        // If ApplicaitonStatus is still reporting this Activity as DESTROYED, then it likely has
+        // not yet received the onCreated call, which is expected in Activity#onCreate but seems
+        // inconsistent across all Android devices.  Give an external hint to the Activity tracking
+        // system to ensure all subsequent registrations work as expected.
+        if (ApplicationStatus.getStateForActivity(this) == ActivityState.DESTROYED) {
+            ApplicationStatus.hintActivityCreated(this);
+        }
+
         mOnCreateTimestampMs = SystemClock.elapsedRealtime();
         mOnCreateTimestampUptimeMs = SystemClock.uptimeMillis();
         mSavedInstanceState = savedInstanceState;
