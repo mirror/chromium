@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e09b383_98e0fdeb",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e3ee76_dfc0e25a",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 62
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ea557f_880660fc",
         "filename": "base/files/memory_mapped_file_unittest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201bd39b_6fbad30f",
+        "filename": "base/files/memory_mapped_file_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ea557f_880660fc",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 74
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "98b4aa0f_5ecd9272",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done, see base_paths_fuchsia.cc for the comments.",
+      "parentUuid": "f3bcd79e_9e3b28b3",
+      "range": {
+        "startLine": 64,
+        "startChar": 25,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aadb478d_f2feba7f",
         "filename": "base/process/launch_fuchsia.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6e6292_f904f819",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Changed this to piggyback on PathService\u0027s logic.\n\nIt\u0027s hard to know what the correct behavior is because the loader will not launch anything besides /pkg/bin/app (see https://fuchsia.atlassian.net/browse/US-390 ).\n\nSupport for unpackaged binaries will go away eventually, so perhaps this won\u0027t be an issue because we could safely assume that we are running in a packaged context.",
+      "parentUuid": "aadb478d_f2feba7f",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ad0473c3_95745be1",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9778b6ee_5c7fa297",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b854ac55_90b9c0e3",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995b8342_859d85e7",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b854ac55_90b9c0e3",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f7cf9c6f_0d87ac37",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Optional; they\u0027re automatically appended if they\u0027re missing.",
+      "parentUuid": "4686aeb4_76aa506c",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de58c3d4_d884a1d4",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4769c8_198a7e8f",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de58c3d4_d884a1d4",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0ccb2ff8_d44387cf",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33821ccb_c8438d99",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 11
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c3e755_e0101e1b",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 7
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "1da7222d_a6dfcc33",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Good catch; done",
+      "parentUuid": "b8c3e755_e0101e1b",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f83d674_dacba3e5",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 7
@@ -252,6 +492,30 @@
       "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814fcecf_f4f7cbf5",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-03T23:30:49Z",
+      "side": 1,
+      "message": "Nevarrrr! It needs to outlive the invocation of build_manifest so that the \"far\" tool can use it. But on second thought, why am I generating this? I\u0027ll just check the JSON file into the source tree instead. \u003e_\u003c",
+      "parentUuid": "4f83d674_dacba3e5",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
