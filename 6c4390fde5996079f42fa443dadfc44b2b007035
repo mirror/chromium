@@ -16,6 +16,24 @@
       "revId": "6c4390fde5996079f42fa443dadfc44b2b007035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca47d935_0b748801",
+        "filename": "third_party/openh264/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2018-01-03T06:13:47Z",
+      "side": 1,
+      "message": "The old cutting commit of v1.7.0 is the same as this commit (https://github.com/cisco/openh264/commit/46f942156f769c19c25565b3fd77ab211e561a85) in master branch. We don\u0027t have a v1.8.0 branch that contains the desired patches so I guess we need to use master branch for now.\n\nYes, it\u0027s more recent than v1.7.0. I don\u0027t know a good way to indicate the \"version\" here, and the presubmit checks only allow \u0027unknown\u0027 or number formatted version strings. Therefore, I put \u0027unknown\u0027 here and add another line to explain.",
+      "parentUuid": "a31dfdfc_3893ef51",
+      "revId": "6c4390fde5996079f42fa443dadfc44b2b007035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
