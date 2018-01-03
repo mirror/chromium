@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda215e0_78c007a7",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T17:06:11Z",
+      "side": 1,
+      "message": "This test relies on this call invoking UninitializeForTesting(), to ensure that there is no global StatisticsRecorder active.\n\nYou\u0027ll need to reintroduce UninitializeForTesting, I\u0027m afraid.",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "b86ebc88056a685ef4eaa62841cfdfff8b9aff6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
