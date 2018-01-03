@@ -268,6 +268,11 @@ class ASH_EXPORT WallpaperController
   // |locking| is true and remove it otherwise.
   void PrepareWallpaperForLockScreenChange(bool locking);
 
+  // Returns the location of the active user's wallpaper (either an URL or a
+  // file path). Returns an empty string if there's no active user, or the
+  // active user has not set a user wallpaper.
+  std::string GetActiveUserWallpaperLocation();
+
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
 

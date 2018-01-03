@@ -191,22 +191,6 @@ void WallpaperManager::InitializeWallpaper() {
       user_manager->GetActiveUser()->GetAccountId());
 }
 
-bool WallpaperManager::GetLoggedInUserWallpaperInfo(WallpaperInfo* info) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (user_manager::UserManager::Get()->IsLoggedInAsStub()) {
-    info->location = "";
-    info->layout = wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED;
-    info->type = wallpaper::DEFAULT;
-    info->date = base::Time::Now().LocalMidnight();
-    *GetCachedWallpaperInfo() = *info;
-    return true;
-  }
-
-  return GetUserWallpaperInfo(
-      user_manager::UserManager::Get()->GetActiveUser()->GetAccountId(), info);
-}
-
 void WallpaperManager::SetCustomizedDefaultWallpaperPaths(
     const base::FilePath& default_small_wallpaper_file,
     const base::FilePath& default_large_wallpaper_file) {
@@ -222,19 +206,6 @@ void WallpaperManager::AddObservers() {
           kAccountsPrefShowUserNamesOnSignIn,
           base::Bind(&WallpaperManager::InitializeRegisteredDeviceWallpaper,
                      weak_factory_.GetWeakPtr()));
-}
-
-void WallpaperManager::EnsureLoggedInUserWallpaperLoaded() {
-  WallpaperInfo info;
-  if (GetLoggedInUserWallpaperInfo(&info)) {
-    UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Type", info.type,
-                              wallpaper::WALLPAPER_TYPE_COUNT);
-    RecordWallpaperAppType();
-    if (info == *GetCachedWallpaperInfo())
-      return;
-  }
-  WallpaperControllerClient::Get()->ShowUserWallpaper(
-      user_manager::UserManager::Get()->GetActiveUser()->GetAccountId());
 }
 
 bool WallpaperManager::IsPolicyControlled(const AccountId& account_id) const {

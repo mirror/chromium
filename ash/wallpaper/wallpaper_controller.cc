@@ -799,6 +799,21 @@ void WallpaperController::PrepareWallpaperForLockScreenChange(bool locking) {
   }
 }
 
+std::string WallpaperController::GetActiveUserWallpaperLocation() {
+  // The currently active user has index 0.
+  const mojom::UserSession* const active_user_session =
+      Shell::Get()->session_controller()->GetUserSession(0 /*user index=*/);
+  if (!active_user_session)
+    return std::string();
+
+  WallpaperInfo info;
+  if (!GetUserWallpaperInfo(active_user_session->user_info->account_id, &info,
+                            !active_user_session->user_info->is_ephemeral)) {
+    return std::string();
+  }
+  return info.location;
+}
+
 void WallpaperController::OnDisplayConfigurationChanged() {
   gfx::Size max_display_size = GetMaxDisplaySizeInNative();
   if (current_max_display_size_ != max_display_size) {
