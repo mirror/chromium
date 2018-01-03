@@ -70,6 +70,30 @@
       "revId": "fa5964dc80739ce46646a0a2c7d39c8e2603a92e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e49c69dc_af914eca",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2018-01-03T18:26:32Z",
+      "side": 1,
+      "message": "I assigned \"Error bootlockboxd not ready\" \u003d 1 to keep it the same as ArcCodeRelocationResult per Yusuke\u0027s request.\n\nThanks.",
+      "parentUuid": "7119a6ab_7f2a912e",
+      "range": {
+        "startLine": 1332,
+        "startChar": 0,
+        "endLine": 1335,
+        "endChar": 34
+      },
+      "revId": "fa5964dc80739ce46646a0a2c7d39c8e2603a92e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
