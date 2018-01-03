@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/fido_attestation_statement.h"
+#include "device/u2f/fido_attestation_statement.h"
 
 #include <utility>
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "content/browser/webauth/authenticator_utils.h"
+#include "device/u2f/u2f_parsing_utils.h"
 #include "third_party/boringssl/src/include/openssl/bytestring.h"
 
-namespace content {
+namespace device {
 
 namespace {
 constexpr char kFidoFormatName[] = "fido-u2f";
@@ -29,8 +29,7 @@ FidoAttestationStatement::CreateFromU2fRegisterResponse(
   // The format of |u2f_data| is specified here:
   // https://fidoalliance.org/specs/fido-u2f-v1.2-ps-20170411/fido-u2f-raw-message-formats-v1.2-ps-20170411.html#registration-response-message-success
   uint8_t credential_length;
-  if (!CBS_skip(&response,
-                authenticator_utils::kU2fResponseKeyHandleLengthPos) ||
+  if (!CBS_skip(&response, u2f_parsing_utils::kU2fResponseKeyHandleLengthPos) ||
       !CBS_get_u8(&response, &credential_length) ||
       !CBS_skip(&response, credential_length) ||
       !CBS_get_asn1_element(&response, &cert, CBS_ASN1_SEQUENCE)) {
@@ -72,4 +71,4 @@ cbor::CBORValue::MapValue FidoAttestationStatement::GetAsCBORMap() {
 
 FidoAttestationStatement::~FidoAttestationStatement() {}
 
-}  // namespace content
+}  // namespace device
