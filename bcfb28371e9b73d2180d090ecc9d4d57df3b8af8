@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb9d2732_c1744540",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2949,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-03T00:43:29Z",
+      "side": 1,
+      "message": "I don\u0027t think this texture can be considered immutable, because it effectively changes size when the GMB is reallocated (via ResizeOffscreenFramebuffer on ResizeCHROMIUM and SwapBuffers).",
+      "revId": "bcfb28371e9b73d2180d090ecc9d4d57df3b8af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf9874c_2618c726",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18381,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-03T00:43:29Z",
+      "side": 1,
+      "message": "This can\u0027t make the texture immutable, because if we call ReleaseTexImage2DCHROMIUM and/or BindTexImage2DCHROMIUM later, it will still change size / format.",
+      "revId": "bcfb28371e9b73d2180d090ecc9d4d57df3b8af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
