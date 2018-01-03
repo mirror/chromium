@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6aba1c5_034b6ab1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-03T22:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0844345d_12d235ef",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 59
+      },
+      "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d6f516_6dbf1e21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa19d3d_44e89918",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-03T22:57:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0d6f516_6dbf1e21",
+      "range": {
+        "startLine": 413,
+        "startChar": 20,
+        "endLine": 413,
+        "endChar": 21
+      },
+      "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6fee6ea_f009ba12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-03T22:57:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fed51666_8b8cfe75",
+      "range": {
+        "startLine": 427,
+        "startChar": 20,
+        "endLine": 427,
+        "endChar": 21
+      },
+      "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c31fad8a_f795416a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2c4cf9_458a53e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2018-01-03T22:57:15Z",
+      "side": 1,
+      "message": "This sound odd to me, doesn\u0027t it?",
+      "parentUuid": "c31fad8a_f795416a",
+      "range": {
+        "startLine": 458,
+        "startChar": 19,
+        "endLine": 458,
+        "endChar": 38
+      },
+      "revId": "893bfe46b0fed366a7ef34ada7931fcd054ac4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
