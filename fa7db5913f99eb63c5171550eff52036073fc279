@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649ab921_9dc5122e",
+        "filename": "content/browser/child_process_launcher_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-03T22:19:40Z",
+      "side": 1,
+      "message": "There\u0027s a subtle behavior change here: before, LaunchProcessOnLauncherThread() would default to LAUNCH_RESULT_FAILURE if it didn\u0027t do anything, now it\u0027ll be the value returned from BeforeLaunchOnLauncherThread.\n\nTwo potential options I see:\n\n- BeforeLaunchOnLauncherThread returns just a bool and use that as the condition for calling into Launch\n- Fold this declaration into line 103, and then reset launch_result to _FAILURE before calling LaunchProcessOnLauncherThread.",
+      "revId": "fa7db5913f99eb63c5171550eff52036073fc279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8468760e_c41fe928",
+        "filename": "content/browser/child_process_launcher_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-03T22:19:40Z",
+      "side": 1,
+      "message": "It\u0027s odd that this gets called even if LaunchProcessOnLauncherThread outputs something other than success, but it doesn\u0027t pass the launch_result to this method. I suppose that the Process object won\u0027t be valid though?",
+      "revId": "fa7db5913f99eb63c5171550eff52036073fc279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb6351a_000aa8e3",
+        "filename": "sandbox/mac/seatbelt_exec.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-03T22:19:40Z",
+      "side": 1,
+      "message": "Check this fnctl too otherwise you could be OR-ing into -1.",
+      "revId": "fa7db5913f99eb63c5171550eff52036073fc279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
