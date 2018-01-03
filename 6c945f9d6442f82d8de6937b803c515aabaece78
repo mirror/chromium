@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4895e6e5_a2fb9ad6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T16:51:08Z",
+      "side": 1,
+      "message": "Thanks. One question:\n\nCVE-2010-0622 - wake_futex_pi unlocks incorrect, possible DoS.\n\nThis one doesn\u0027t mention a linux version. When was it fixed? Should we add it to the comment in the source?",
+      "revId": "6c945f9d6442f82d8de6937b803c515aabaece78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
