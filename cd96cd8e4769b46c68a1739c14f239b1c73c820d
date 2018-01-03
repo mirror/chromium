@@ -16,6 +16,24 @@
       "revId": "cd96cd8e4769b46c68a1739c14f239b1c73c820d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478d6bf1_87f9f16b",
+        "filename": "tools/gn/header_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1172047
+      },
+      "writtenOn": "2018-01-03T09:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d768f993_d99a555e",
+      "revId": "cd96cd8e4769b46c68a1739c14f239b1c73c820d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
