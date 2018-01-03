@@ -34,6 +34,24 @@
       "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1cf5da_2ce7a213",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T17:28:30Z",
+      "side": 1,
+      "message": "here\u0027s a strawman:\n\n1) NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService can have:\n  uint32_t options \u003d kURLLoadOptionSendSSLInfoWithResponse;\n  if (resource_request_-\u003eresource_type \u003d\u003d RESOURCE_TYPE_MAIN_FRAME)\n    options |\u003d mojom::kURLLoadOptionSendSSLInfoForCertificateError;\n  and pass that options to StartWithoutNetworkService and Start\n2) Start can add the other options as before (i.e. kURLLoadOptionSniffMimeType) for the network srevice path\n3) StartWithoutNetworkService can bind the options to the CreateNonNetworkServiceURLLoader callback and pass that to ResourceDispatcherHostImpl::BeginNavigationRequest which pass it to MojoAsyncResourceHandler constructor. The other creator of MojoAsyncResourceHandler can pass in 0.\n4) MojoAsyncResourceHandler can then pass the SSL data based on those flags",
+      "parentUuid": "af96d5e7_c51002e1",
+      "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
