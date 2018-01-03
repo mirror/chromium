@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ea0698_643bac2b",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T19:02:34Z",
+      "side": 1,
+      "message": "I think printer could be const auto\u0026",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4988904_3a2f46aa",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T19:02:34Z",
+      "side": 1,
+      "message": "Is the queue name always ipp/print?",
+      "range": {
+        "startLine": 383,
+        "startChar": 67,
+        "endLine": 383,
+        "endChar": 76
+      },
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51ea064_b1c873b7",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T19:02:34Z",
+      "side": 1,
+      "message": "Make (locally scoped) named constants for 7, 1, and 4?  It would be good to have some idea of what those constants mean.",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ccde9c_fe3ea929",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T19:02:34Z",
+      "side": 1,
+      "message": "For consistency with other things in this file, consider naming this UsbDeviceSupportsIpp",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "350dc013_a6404ccd",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T19:02:34Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me any of these new fields need to be in the Printer structure (as opposed to the DetectedPrinter structure).  Do we need these to actually set up the printer?",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
