@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b0f08fd_025a8b74",
+        "filename": "ash/app_list/model/app_list_item.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-03T23:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6304b74e_7b3207e9",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "e6385597f99e65835c25cef210f971934f5bbe5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3daba840_0fd00bd6",
         "filename": "ash/app_list/model/app_list_item.cc",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "e6385597f99e65835c25cef210f971934f5bbe5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9a6e07_40544f1b",
+        "filename": "ash/app_list/model/app_list_item.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-03T23:07:43Z",
+      "side": 1,
+      "message": "Actually we can do so.",
+      "parentUuid": "3daba840_0fd00bd6",
+      "revId": "e6385597f99e65835c25cef210f971934f5bbe5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
