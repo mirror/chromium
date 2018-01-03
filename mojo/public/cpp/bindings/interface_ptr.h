@@ -145,6 +145,10 @@ class InterfacePtr {
     return internal_state_.HasAssociatedInterfaces();
   }
 
+  // Raises an error on the underlying message pipe. It disconnects the pipe
+  // and notifies all interfaces running on this pipe.
+  void RaiseError() { internal_state_.RaiseError(); }
+
   // Indicates whether the message pipe has encountered an error. If true,
   // method calls made on this interface will be dropped (and may already have
   // been dropped).
