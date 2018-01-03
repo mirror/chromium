@@ -114,6 +114,10 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
     // Returns true when software mirroring mode is requested, but it does
     // not guarantee that the mode is active.
     virtual bool SoftwareMirroringEnabled() const = 0;
+
+    // Returns true if only software mirroring should be used to set mirror mode
+    // (hardware mirroring should not be used).
+    virtual bool SoftwareMirroringEnforced() const = 0;
   };
 
   // Helper class used by tests.
