@@ -8,9 +8,9 @@
   await TestRunner.loadModule('console_test_runner');
   await TestRunner.loadModule('network_test_runner');
   await TestRunner.evaluateInPagePromise(`
-      function requestHelper(method, url, callback)
+      function requestHelper(method, url, callback, verbose)
       {
-          console.log("sending a " + method + " request to " + url);
+          verbose && console.log("sending a " + method + " request to " + url);
           // Delay invoking callback to let didFinishLoading() a chance to fire and log
           // console message.
           function delayCallback()
@@ -20,7 +20,7 @@
           makeFetch(url, {method: method}).then(delayCallback);
       }
 
-      function makeRequests()
+      function makeRequests(verbose)
       {
           var callback;
           var promise = new Promise((fulfill) => callback = fulfill);
@@ -30,46 +30,53 @@
           function step1()
           {
               // Page that exists.
-              requestHelper("GET", "resources/xhr-exists.html", step2);
+              requestHelper("GET", "resources/xhr-exists.html", step2, verbose);
           }
 
           function step2()
           {
               // Page that doesn't exist.
-              requestHelper("GET", "resources/xhr-does-not-exist.html", step3);
+              requestHelper("GET", "resources/xhr-does-not-exist.html", step3, verbose);
           }
 
           function step3()
           {
               // POST to a page.
-              requestHelper("POST", "resources/post-target.cgi", step4);
+              requestHelper("POST", "resources/post-target.cgi", step4, verbose);
           }
 
           function step4()
           {
               // (Failed) cross-origin request
-              requestHelper("GET", "http://localhost:8000/devtools/resources/xhr-exists.html", callback);
+              requestHelper("GET", "http://localhost:8000/devtools/resources/xhr-exists.html", callback, verbose);
           }
       }
   `);
 
   step1();
 
-  function step1() {
+  async function step1() {
     Common.settingForTest('monitoringXHREnabled').set(true);
-    TestRunner.callFunctionInPageAsync('makeRequests').then(step2);
+    await TestRunner.callFunctionInPageAsync('makeRequests');
+
+    TestRunner.deprecatedRunAfterPendingDispatches(() => {
+      TestRunner.addResult('Fetch with logging enabled:');
+      // Sorting console messages to prevent flakiness.
+      TestRunner.addResults(ConsoleTestRunner.dumpConsoleMessagesIntoArray().sort());
+      Console.ConsoleView.clearConsole();
+      step2();
+    });
   }
 
-  function step2() {
+  async function step2() {
     Common.settingForTest('monitoringXHREnabled').set(false);
-    TestRunner.callFunctionInPageAsync('makeRequests').then(step3);
-  }
+    await TestRunner.callFunctionInPageAsync('makeRequests', [/* verbose */ true]);
 
-  function step3() {
-    function finish() {
-      ConsoleTestRunner.dumpConsoleMessages();
+    TestRunner.deprecatedRunAfterPendingDispatches(() => {
+      TestRunner.addResult('\n==========================\n');
+      TestRunner.addResult('Fetch with logging disabled:');
+      TestRunner.addResults(ConsoleTestRunner.dumpConsoleMessagesIntoArray().sort());
       TestRunner.completeTest();
-    }
-    TestRunner.deprecatedRunAfterPendingDispatches(finish);
+    });
   }
 })();
