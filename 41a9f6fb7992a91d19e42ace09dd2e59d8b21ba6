@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af96d5e7_c51002e1",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T17:03:07Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that we duplicate this logic from NavigationURLLoaderNetworkService, see https://cs.chromium.org/chromium/src/content/browser/loader/navigation_url_loader_network_service.cc?rcl\u003de8955cf2f5c6603111eb39b34990f26bc053e911\u0026l\u003d415. Since requests are initiated from that class (right?) can we share the part that sets the options? i.e. right now it also sets kURLLoadOptionSendSSLInfoForCertificateError for RESOURCE_TYPE_MAIN_FRAME which we need.",
+      "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
