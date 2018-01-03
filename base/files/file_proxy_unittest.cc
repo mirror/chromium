@@ -82,6 +82,7 @@ class FileProxyTest : public testing::Test {
                                                 weak_factory_.GetWeakPtr()));
     RunLoop().Run();
     EXPECT_TRUE(proxy->IsValid());
+    LOG(ERROR) << "Dir is " << dir_.GetPath();
   }
 
   TaskRunner* file_task_runner() const {
