@@ -69,6 +69,24 @@
       "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b24ab9a_76bb5e42",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-03T22:40:13Z",
+      "side": 1,
+      "message": "sg, can you file a tracking bug and reference it here?",
+      "parentUuid": "adb79f92_66a1223c",
+      "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
