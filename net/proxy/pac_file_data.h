@@ -41,9 +41,7 @@ class NET_EXPORT_PRIVATE ProxyResolverScriptData
   // Creates a script data for using an automatically detected PAC URL.
   static scoped_refptr<ProxyResolverScriptData> ForAutoDetect();
 
-  Type type() const {
-    return type_;
-  }
+  Type type() const { return type_; }
 
   // Returns the contents of the script as UTF16.
   // (only valid for type() == TYPE_SCRIPT_CONTENTS).
@@ -62,7 +60,6 @@ class NET_EXPORT_PRIVATE ProxyResolverScriptData
                           const GURL& url,
                           const base::string16& utf16);
   virtual ~ProxyResolverScriptData();
-
 
   const Type type_;
   const GURL url_;
