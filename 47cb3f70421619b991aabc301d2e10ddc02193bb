@@ -46,6 +46,30 @@
       "revId": "47cb3f70421619b991aabc301d2e10ddc02193bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a05eed_8dd1dcf4",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-03T18:24:01Z",
+      "side": 1,
+      "message": "Definitely a post v1 topic to have server specify priorities between techniques. Keeping it simpler for v1.",
+      "parentUuid": "ba3eb459_85e85637",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 12
+      },
+      "revId": "47cb3f70421619b991aabc301d2e10ddc02193bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
