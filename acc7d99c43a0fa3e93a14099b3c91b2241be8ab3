@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6ed082_ad31e99a",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-03T21:24:23Z",
+      "side": 1,
+      "message": "This seems quite fragile.  Is there a more direct way to do this?",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f77da55_b704e3ee",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-03T21:24:23Z",
+      "side": 1,
+      "message": "This is an awkward indirection through PaintRecord just to write an SkPicture into some backing printing context.\n\nI assume that this is all getting drawn into some top level SkiaPaintCanvas / SkCanvas? GraphicsContext itself already has some Printing() boolean.  As an alternate suggestion, could you just store this SkCanvas on the context (possibly as a part of setting Printing to true?) and then just draw your placeholder into it directly?",
+      "revId": "acc7d99c43a0fa3e93a14099b3c91b2241be8ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
