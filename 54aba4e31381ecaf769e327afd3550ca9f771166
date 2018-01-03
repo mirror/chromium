@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "1717e3fa_07651d82",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "14d7ed09_aeba1921",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1108,
+        "endChar": 17
+      },
+      "revId": "54aba4e31381ecaf769e327afd3550ca9f771166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cdd7edd_a9e56178",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 3

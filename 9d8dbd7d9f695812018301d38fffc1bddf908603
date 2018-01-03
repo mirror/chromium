@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57170b3f_3c9c8e64",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "This function clears prefs if the parameter is null.",
+      "parentUuid": "4851cf48_7c96b761",
+      "range": {
+        "startLine": 626,
+        "startChar": 0,
+        "endLine": 628,
+        "endChar": 11
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f324c8d_faea0e3f",
         "filename": "chrome/browser/chromeos/display/display_preferences.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-02T21:02:21Z",
       "side": 1,
       "message": "If it\u0027s an `in` parameter then usually it should be `const T\u0026`. If it can be null, then do the null check at the call site.",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0b1922_6b9786de",
+        "filename": "chrome/browser/chromeos/display/display_preferences.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "This function clears prefs if the parameter is null.",
+      "parentUuid": "0f324c8d_faea0e3f",
       "range": {
         "startLine": 68,
         "startChar": 47,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9ee69676_8daaa93b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a56c514_fd9dc860",
+      "range": {
+        "startLine": 1102,
+        "startChar": 9,
+        "endLine": 1103,
+        "endChar": 35
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e78064_56a6f5fc",
         "filename": "ui/display/manager/chromeos/display_configurator.h",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1cdd2060_3f1605d2",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e78064_56a6f5fc",
+      "range": {
+        "startLine": 118,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c673791e_85580b47",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-02T21:02:21Z",
       "side": 1,
       "message": "I thought you need to set `multi_display_mode_ \u003d MIRRORING` on success.",
+      "range": {
+        "startLine": 900,
+        "startChar": 11,
+        "endLine": 900,
+        "endChar": 55
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ec2d99_c04b968b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "I unified the code path of custom mirror mode and regular mirror mode. so the |multi_display_mode_| has already been set to MIRRORING if custom mirror is requested.\nIt is set in either SetMirrorMode() when API is called, or set by display configurator when hardware mirroring fails.",
+      "parentUuid": "c673791e_85580b47",
       "range": {
         "startLine": 900,
         "startChar": 11,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "171c1cd6_1f79c635",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4306afc_c54b69c1",
+      "range": {
+        "startLine": 1360,
+        "startChar": 44,
+        "endLine": 1360,
+        "endChar": 49
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50bda9d8_9f1b1ed7",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2018-01-02T21:02:21Z",
       "side": 1,
       "message": "Think about the suggestion we talked about offline.",
+      "range": {
+        "startLine": 644,
+        "startChar": 0,
+        "endLine": 645,
+        "endChar": 39
+      },
+      "revId": "9d8dbd7d9f695812018301d38fffc1bddf908603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa045ff7_1fd7407b",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-03T03:08:06Z",
+      "side": 1,
+      "message": "Thanks for the suggestion about merging state and request, and putting mirror related code into a self-contained structure. As discussed offline, we have to refactor much code to do this. We will do it when we clean up the entire display manager in the future.",
+      "parentUuid": "50bda9d8_9f1b1ed7",
       "range": {
         "startLine": 644,
         "startChar": 0,
