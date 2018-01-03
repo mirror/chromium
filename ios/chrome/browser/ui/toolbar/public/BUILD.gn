@@ -11,6 +11,7 @@ source_set("public") {
     "omnibox_focuser.h",
     "primary_toolbar_coordinator.h",
     "side_swipe_toolbar_interacting.h",
+    "toolbar.h",
     "toolbar_controller_constants.h",
     "toolbar_controller_constants.mm",
     "toolbar_utils.h",
@@ -23,6 +24,8 @@ source_set("public") {
     "//base",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/bubble",
+    "//ios/chrome/browser/ui/fullscreen:new_fullscreen_ui",
+    "//ios/chrome/browser/ui/tools_menu/public",
   ]
 }
 
