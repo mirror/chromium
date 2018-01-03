@@ -186,41 +186,6 @@ void WallpaperManager::Shutdown() {
   wallpaper_manager = nullptr;
 }
 
-void WallpaperManager::ShowUserWallpaper(const AccountId& account_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // Some unit tests come here without a UserManager or without a pref system.
-  if (!user_manager::UserManager::IsInitialized() ||
-      !g_browser_process->local_state()) {
-    return;
-  }
-
-  const user_manager::User* user =
-      user_manager::UserManager::Get()->FindUser(account_id);
-
-  // User is unknown or there is no visible wallpaper in kiosk mode.
-  if (!user || user->GetType() == user_manager::USER_TYPE_KIOSK_APP ||
-      user->GetType() == user_manager::USER_TYPE_ARC_KIOSK_APP) {
-    return;
-  }
-
-  // For a enterprise managed user, set the device wallpaper if we're at the
-  // login screen.
-  if (!user_manager::UserManager::Get()->IsUserLoggedIn() &&
-      SetDeviceWallpaperIfApplicable(account_id))
-    return;
-
-  // TODO(crbug.com/776464): Move the above to
-  // |WallpaperController::ShowUserWallpaper| after
-  // |SetDeviceWallpaperIfApplicable| is migrated.
-  WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
-}
-
-void WallpaperManager::ShowSigninWallpaper() {
-  if (SetDeviceWallpaperIfApplicable(user_manager::SignInAccountId()))
-    return;
-  WallpaperControllerClient::Get()->ShowSigninWallpaper();
-}
-
 void WallpaperManager::InitializeWallpaper() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -254,12 +219,13 @@ void WallpaperManager::InitializeWallpaper() {
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (!user_manager->IsUserLoggedIn()) {
     if (!StartupUtils::IsDeviceRegistered())
-      ShowSigninWallpaper();
+      WallpaperControllerClient::Get()->ShowSigninWallpaper();
     else
       InitializeRegisteredDeviceWallpaper();
     return;
   }
-  ShowUserWallpaper(user_manager->GetActiveUser()->GetAccountId());
+  WallpaperControllerClient::Get()->ShowUserWallpaper(
+      user_manager->GetActiveUser()->GetAccountId());
 }
 
 bool WallpaperManager::GetLoggedInUserWallpaperInfo(WallpaperInfo* info) {
@@ -309,7 +275,7 @@ void WallpaperManager::EnsureLoggedInUserWallpaperLoaded() {
     if (info == *GetCachedWallpaperInfo())
       return;
   }
-  ShowUserWallpaper(
+  WallpaperControllerClient::Get()->ShowUserWallpaper(
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId());
 }
 
@@ -392,7 +358,7 @@ void WallpaperManager::InitializeRegisteredDeviceWallpaper() {
   if ((!show_users && public_session_user_index == -1) ||
       !HasNonDeviceLocalAccounts(users)) {
     // Boot into the sign in screen.
-    ShowSigninWallpaper();
+    WallpaperControllerClient::Get()->ShowSigninWallpaper();
     return;
   }
 
@@ -401,7 +367,8 @@ void WallpaperManager::InitializeRegisteredDeviceWallpaper() {
     // Normal boot, load user wallpaper.
     // If normal boot animation is disabled wallpaper would be set
     // asynchronously once user pods are loaded.
-    ShowUserWallpaper(users[index]->GetAccountId());
+    WallpaperControllerClient::Get()->ShowUserWallpaper(
+        users[index]->GetAccountId());
   }
 }
 
