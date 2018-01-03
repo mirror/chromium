@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd180539_48c2692f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T20:20:08Z",
+      "side": 1,
+      "message": "Line 1431-1432 is actually replacing Y of the repeating fragment\u0027s PaginationOffset with Y of the \"original\" fragment\u0027s PaginationOffset:\n\n  paint_offset.MoveBy(\n      fragment_data_.PaginationOffset()\n    + original_fragment.PaginationOffset().Y()\n    - fragment_data_.PaginationOffset().Y()\n    + alignment_offset);\n\u003d\u003e\n  paint_offset.MoveBy(\n      Point(fragment_data_.X(), original_fragment.PaginationOffset().Y())\n    + alignment_offset)\n\nThus the repeating will appear in the fragment with the same Y offset as the original (adjusted by alignment_offset).",
+      "parentUuid": "f55b3184_4ebdd4c0",
+      "revId": "558c70ea95292b862b5bfda2846103ae7fed8a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec0d4a78_b5f97bce",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 6
