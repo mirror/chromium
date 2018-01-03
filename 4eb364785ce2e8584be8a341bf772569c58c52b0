@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2487fbd_3a5a7ef2",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit, clean up after yourself:\n\ndisplay_service_tester_-\u003eSetNotificationAddedClosure(base::RepeatingClosure());",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad21f15_81331dd4",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: these should probably be EXPECT_EQs",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fffcdd2_df11f43b",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: update",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92677aa_4bf2293b",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: should we duplicate the TODO from line 112 here?",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c306bf68_dabb4bfd",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "const\u0026, you\u0027re making a copy now",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27d7db7_e116f6ef",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: this can be in the header file",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976774dc_bffb8242",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "Can we remove this in favor of just using out-\u003etype directly on line 128? (It\u0027s a scalar.)",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674aec91_1d333964",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "ditto, we might be able to put this in the header file",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea479cc_34cec7a4",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: copy the TODO of line 225?",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb65bf8f_e4eeca28",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: can probably optimise this to:\n\n  Vector\u003cblink::WebNotificationAction\u003e result;\n  result.AppendRange(data.actions.begin(), data.actions.end());\n  return result;",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbcb1e5_d050f3b0",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "nit: write to |out|",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2a0da6_3f843113",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/NotificationTypes.typemap",
+        "patchSetId": 31
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "NotificationAction and NotificationActionType are missing here, but are defined in the traits file.",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0501f02_71581f73",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "Should we remove the default values for the renotify, silent and require_interaction properties? I see little benefit in mentioning them here.",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efefe99f_b588b42f",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T15:56:31Z",
+      "side": 1,
+      "message": "It\u0027s |kMaximumDeveloperDataSize| that lives in PlatformNotificationData. Maybe we should move that constant to the mojom in a future CL?",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
