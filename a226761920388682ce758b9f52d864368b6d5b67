@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "154e9eb2_32cee5e8",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "Maybe just say \"Already added\"\nor ask srahim@ for advice.",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb00b8b7_f71521c3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2124,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "Suggest s/Word//",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3aca80_f63462f0",
+        "filename": "chrome/browser/resources/settings/languages_page/edit_dictionary_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "Please add a reference (\"change also\") in spellcheck_common.h pointing to this file.",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b75d55c_3bdc3037",
+        "filename": "chrome/browser/resources/settings/languages_page/edit_dictionary_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070ea06c_16b75b50",
+        "filename": "chrome/browser/resources/settings/languages_page/edit_dictionary_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "If this is only used in one place, consider in-lining the code. (optional).",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7fcf16_4de992fa",
+        "filename": "chrome/browser/resources/settings/languages_page/edit_dictionary_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-03T02:17:40Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "a226761920388682ce758b9f52d864368b6d5b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
