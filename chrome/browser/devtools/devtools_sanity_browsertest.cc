@@ -2029,7 +2029,7 @@ class MockWebUIProvider
 // (crbug.com/627407)
 // Flaky on Windows and ChromeOS. http://crbug.com/628174#c4
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest,
-                       DISABLED_TestWindowInitializedOnNavigateBack) {
+                       TestWindowInitializedOnNavigateBack) {
   TestChromeWebUIControllerFactory test_factory;
   MockWebUIProvider mock_provider("dummyurl",
                                   "<script>\n"
