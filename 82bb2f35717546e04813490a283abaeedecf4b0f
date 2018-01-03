@@ -927,6 +927,30 @@
     },
     {
       "key": {
+        "uuid": "74947cf0_9054e2b4",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "Looks like you haven\u0027t addressed this yet?  Is this CL ready for re-review, or should I hold off?",
+      "parentUuid": "c1e17915_7245d809",
+      "range": {
+        "startLine": 396,
+        "startChar": 23,
+        "endLine": 396,
+        "endChar": 39
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c192de4_fe5a337c",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 6

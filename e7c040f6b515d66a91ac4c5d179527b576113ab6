@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00a8ead_0871d1f8",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "I believe this should be NET_EXPORT",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3204d58_7091e7d7",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "variables go after methods (With a blank space between them).",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaadf5e4_e595812c",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "const GURL\u0026 is the standard way of passing GURLs.",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161e5fcb_e673ae26",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "I\u0027d suggest not inlining this, just as a matter of consistency.",
+      "range": {
+        "startLine": 38,
+        "startChar": 33,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f876e17_9a4ff179",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "This should either be an inner class of DnsConfig or in its own file - that makes it easier to locate (The same also applies to DnsConfig, really, but that\u0027s another issue).\n\nAlso, don\u0027t use typedef to declare named structs.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3061324_de927b35",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T17:47:33Z",
+      "side": 1,
+      "message": "Mention that they\u0027re all tried sequentially, in order.",
+      "range": {
+        "startLine": 99,
+        "startChar": 10,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "e7c040f6b515d66a91ac4c5d179527b576113ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
