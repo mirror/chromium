@@ -1772,7 +1772,7 @@ void DesktopWindowTreeHostX11::DispatchMouseEvent(ui::MouseEvent* event) {
               ui::GetScaleFactorForNativeView(g_current_capture->window()));
     ConvertEventLocationToTargetWindowLocation(
         g_current_capture->GetLocationOnScreenInPixels(),
-        GetLocationOnScreenInPixels(), event->AsLocatedEvent());
+        GetLocationOnScreenInPixels(), event);
     g_current_capture->SendEventToSink(event);
   }
 }
@@ -1784,7 +1784,7 @@ void DesktopWindowTreeHostX11::DispatchTouchEvent(ui::TouchEvent* event) {
               ui::GetScaleFactorForNativeView(g_current_capture->window()));
     ConvertEventLocationToTargetWindowLocation(
         g_current_capture->GetLocationOnScreenInPixels(),
-        GetLocationOnScreenInPixels(), event->AsLocatedEvent());
+        GetLocationOnScreenInPixels(), event);
     g_current_capture->SendEventToSink(event);
   } else {
     SendEventToSink(event);
