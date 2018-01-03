@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680875b5_2e99e776",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-03T17:47:10Z",
+      "side": 1,
+      "message": "Can you give this a shorter title so that it can be properly displayed in git log? (\u003c\u003d 72 chars).\n\nMaybe \"Allow objective-c++ xctest files when generating xcode project.\"?",
+      "revId": "5da384bf1df89dbd0510d06fde506195728a3dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
