@@ -107,6 +107,52 @@
     },
     {
       "key": {
+        "uuid": "65c129d3_bd4935c1",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-03T22:08:35Z",
+      "side": 1,
+      "message": "It looks like this histogram is being deprecated.  Could you please either remove it, or add a TODO to remove it?",
+      "range": {
+        "startLine": 601,
+        "startChar": 0,
+        "endLine": 604,
+        "endChar": 74
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a2f31c_10bda8b0",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-03T22:08:35Z",
+      "side": 1,
+      "message": "nit: This looks like an accidental formatting change?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94ca8dd8_8b4e00e8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
