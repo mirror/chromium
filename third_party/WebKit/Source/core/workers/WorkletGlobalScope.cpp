@@ -9,6 +9,7 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/script/Modulator.h"
 #include "core/workers/GlobalScopeCreationParams.h"
@@ -48,6 +49,9 @@ WorkletGlobalScope::WorkletGlobalScope(
   // workletGlobalScope."
   ApplyContentSecurityPolicyFromVector(
       *creation_params->content_security_policy_parsed_headers);
+
+  OriginTrialContext::AddTokens(this,
+                                creation_params->origin_trial_tokens.get());
 }
 
 WorkletGlobalScope::~WorkletGlobalScope() = default;

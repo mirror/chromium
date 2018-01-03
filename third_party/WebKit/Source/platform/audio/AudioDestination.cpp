@@ -197,7 +197,6 @@ void AudioDestination::Start() {
 void AudioDestination::StartWithWorkletThread(
     WebThread* worklet_backing_thread) {
   DCHECK(IsMainThread());
-  DCHECK(RuntimeEnabledFeatures::AudioWorkletEnabled());
 
   if (web_audio_device_ && !is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Start");
