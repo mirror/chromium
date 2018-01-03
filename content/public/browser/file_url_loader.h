@@ -32,7 +32,8 @@ class CONTENT_EXPORT FileURLLoaderObserver
 // Helper to create a self-owned URLLoader instance which fulfills |request|
 // using the contents of the file at |path|. The URL in |request| must be a
 // file:// URL. The *optionally* supplied |observer| will be called to report
-// progress during the file loading.
+// progress during the file loading. |response_headers| may optionally be
+// provided and will set as the client response headers.
 //
 // Note that this does not restrict filesystem access *in any way*, so if the
 // file at |path| is accessible to the browser, it will be loaded and used to
@@ -45,7 +46,8 @@ CONTENT_EXPORT void CreateFileURLLoader(
     const ResourceRequest& request,
     mojom::URLLoaderRequest loader,
     mojom::URLLoaderClientPtr client,
-    std::unique_ptr<FileURLLoaderObserver> observer);
+    std::unique_ptr<FileURLLoaderObserver> observer,
+    scoped_refptr<net::HttpResponseHeaders> response_headers);
 
 }  // namespace content
 
