@@ -197,6 +197,9 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private void clearNativePtr() {
         mNativeWebContentsAndroid = 0;
         mNavigationController = null;
+        if (getUserDataMap() != null) {
+            for (WebContentsUserData userData : getUserDataMap().values()) userData.destroy();
+        }
         if (mObserverProxy != null) {
             mObserverProxy.destroy();
             mObserverProxy = null;
