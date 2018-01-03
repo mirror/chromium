@@ -4,7 +4,9 @@
 
 #include "chrome/browser/notifications/notification_platform_bridge_win.h"
 
+#include <NotificationActivationCallback.h>
 #include <activation.h>
+#include <wrl.h>
 #include <wrl/client.h>
 #include <wrl/event.h>
 #include <wrl/wrappers/corewrappers.h>
@@ -16,10 +18,13 @@
 #include "base/logging.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
+#include "base/win/scoped_winrt_initializer.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
@@ -27,6 +32,7 @@
 #include "chrome/browser/notifications/notification_image_retainer.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/shell_util.h"
 #include "components/version_info/channel.h"
@@ -88,6 +94,7 @@ void ForwardNotificationOperationOnUiThread(
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,
+    const base::Optional<int>& action_index,
     const base::Optional<bool>& by_user) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!g_browser_process)
@@ -96,8 +103,8 @@ void ForwardNotificationOperationOnUiThread(
   g_browser_process->profile_manager()->LoadProfile(
       profile_id, incognito,
       base::Bind(&ProfileLoadedCallback, operation, notification_type, origin,
-                 notification_id, base::nullopt /*action_index*/,
-                 base::nullopt /*reply*/, by_user));
+                 notification_id, action_index, base::nullopt /*reply*/,
+                 by_user));
 }
 
 }  // namespace
@@ -385,8 +392,10 @@ class NotificationPlatformBridgeWinImpl
     return value.GetAsUTF8();
   }
 
+ public:
   void HandleEvent(winui::Notifications::IToastNotification* notification,
                    NotificationCommon::Operation operation,
+                   const base::Optional<int>& action_index,
                    const base::Optional<bool>& user_cancelled) {
     NotificationHandler::Type notification_type;
     std::string notification_id;
@@ -406,12 +415,40 @@ class NotificationPlatformBridgeWinImpl
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&ForwardNotificationOperationOnUiThread, operation,
                    notification_type, origin_url, notification_id, profile_id,
-                   incognito, user_cancelled));
+                   incognito, action_index, user_cancelled));
   }
 
+  base::Optional<int> ParseActionIndex(
+      winui::Notifications::IToastActivatedEventArgs* args) {
+    HSTRING arguments;
+    HRESULT hr = args->get_Arguments(&arguments);
+    if (FAILED(hr))
+      return base::nullopt;
+
+    ScopedHString arguments_scoped(arguments);
+    std::string arguments_str = arguments_scoped.GetAsUTF8();
+    std::vector<std::string> parts = base::SplitString(
+        arguments_str, "=", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+    if (parts.size() < 2 || base::CompareCaseInsensitiveASCII(
+                                parts[0], kNotificationButtonIndex) != 0)
+      return base::nullopt;
+    int index;
+    if (!base::StringToInt(parts[1], &index))
+      return base::nullopt;
+    return index;
+  }
+
+ private:
   HRESULT OnActivated(winui::Notifications::IToastNotification* notification,
-                      IInspectable* /* inspectable */) {
-    HandleEvent(notification, NotificationCommon::CLICK,
+                      IInspectable* inspectable) {
+    base::Optional<int> action_index = base::nullopt;
+
+    winui::Notifications::IToastActivatedEventArgs* args = nullptr;
+    HRESULT hr = inspectable->QueryInterface(&args);
+    if (SUCCEEDED(hr))
+      action_index = ParseActionIndex(args);
+
+    HandleEvent(notification, NotificationCommon::CLICK, action_index,
                 /*user_cancelled=*/base::nullopt);
     return S_OK;
   }
@@ -426,7 +463,8 @@ class NotificationPlatformBridgeWinImpl
         reason == winui::Notifications::ToastDismissalReason_UserCanceled) {
       user_cancelled = true;
     }
-    HandleEvent(notification, NotificationCommon::CLOSE, user_cancelled);
+    HandleEvent(notification, NotificationCommon::CLOSE,
+                /*action_index=*/base::nullopt, user_cancelled);
     return S_OK;
   }
 
@@ -517,6 +555,15 @@ void NotificationPlatformBridgeWin::SetReadyCallback(
   PostTaskToTaskRunnerThread(
       base::BindOnce(&NotificationPlatformBridgeWinImpl::SetReadyCallback,
                      impl_, base::Passed(&callback)));
+}
+
+void NotificationPlatformBridgeWin::ForwardHandleEventForTesting(
+    NotificationCommon::Operation operation,
+    winui::Notifications::IToastNotification* notification,
+    winui::Notifications::IToastActivatedEventArgs* args,
+    const base::Optional<bool>& user_cancelled) {
+  base::Optional<int> action_index = impl_->ParseActionIndex(args);
+  impl_->HandleEvent(notification, operation, action_index, user_cancelled);
 }
 
 // static
