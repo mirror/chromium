@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "8e97bd37_cec8e3e4",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T22:43:22Z",
+      "side": 1,
+      "message": "Good call, I\u0027ve switched my function to use the \"UsbDeviceFilter\". I took a look at the USB printer specification (http://www.usb.org/developers/docs/devclass_docs/usbprint11a021811.pdf) and it looks like all USB printers have an interface subclass with the value 1, so I\u0027ve updated the UsbDeviceIsPrinter() function as well for consistency.",
+      "parentUuid": "7b32eb4d_cfead257",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9ccde9c_fe3ea929",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.h",
         "patchSetId": 1
