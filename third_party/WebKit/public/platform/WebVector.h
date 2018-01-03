@@ -42,23 +42,29 @@ namespace blink {
 //
 // Sample usage:
 //
-//   void Foo(WebVector<int>& result)
-//   {
-//       WebVector<int> data(10);
-//       for (size_t i = 0; i < data.size(); ++i)
-//           data[i] = ...
-//       result.swap(data);
+//   void Foo(WebVector<int>& result) {
+//     WebVector<int> data(10);
+//     for (size_t i = 0; i < data.size(); ++i)
+//         data[i] = ...
+//     result.Swap(data);
+//   }
+//
+// In-place element construction:
+//
+//   WebVector<WebString> Foo() {
+//     WebVector<WebString> data(10, WebVector<WebString>::empty_with_capacity);
+//     WebUChar* buffer = ....;
+//     data.emplace_back(buffer, buffer_size);
+//     return data;
 //   }
 //
 // It is also possible to assign from any container that implements begin()
 // and end().
 //
-//   void Foo(const std::vector<WTF::String>& input)
-//   {
-//       WebVector<WebString> strings = input;
-//       ...
+//   void Foo(const std::vector<WTF::String>& input) {
+//     WebVector<WebString> strings = input;
+//     ...
 //   }
-//
 template <typename T>
 class WebVector {
  public:
@@ -66,9 +72,21 @@ class WebVector {
   using iterator = typename std::vector<T>::iterator;
   using const_iterator = typename std::vector<T>::const_iterator;
 
+  // Distringuishes between the size constructor and the capacity constructor.
+  struct EmptyWithCapacityTag {};
+  constexpr static EmptyWithCapacityTag empty_with_capacity = {};
+
   ~WebVector() = default;
 
+  // Create a vector with |size| default-constructed elements.
   explicit WebVector(size_t size = 0) : data_(size) {}
+
+  // Create an empty vector with a buffer sized for |capacity| elements.
+  //
+  // The caller will fill out the vector using emplace_back.
+  WebVector(size_t capacity, EmptyWithCapacityTag) : data_() {
+    data_.reserve(capacity);
+  }
 
   template <typename U>
   WebVector(const U* values, size_t size) : data_(values, values + size) {}
@@ -119,6 +137,7 @@ class WebVector {
   }
 
   size_t size() const { return data_.size(); }
+  size_t capacity() const { return data_.capacity(); }
   bool empty() const { return data_.empty(); }
   // TODO(slangley): Remove all uses of IsEmpty.
   bool IsEmpty() const { return empty(); }
@@ -140,6 +159,12 @@ class WebVector {
   iterator end() { return data_.end(); }
   const_iterator begin() const { return data_.begin(); }
   const_iterator end() const { return data_.end(); }
+
+  template <typename... Args>
+  void emplace_back(Args&&... args) {
+    DCHECK_LT(data_.size(), data_.capacity());
+    data_.emplace_back(std::forward<Args>(args)...);
+  }
 
   void Swap(WebVector<T>& other) { data_.swap(other.data_); }
 
