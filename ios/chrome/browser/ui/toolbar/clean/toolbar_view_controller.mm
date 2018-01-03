@@ -6,7 +6,6 @@
 
 #import "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
-#import "ios/chrome/browser/ui/bubble/bubble_util.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
@@ -431,6 +430,15 @@
   UILayoutGuide* forwardButtonGuide =
       FindNamedGuide(kForwardButtonGuide, self.view);
   AddSameConstraints(self.view.forwardButton.imageView, forwardButtonGuide);
+  UILayoutGuide* toolsMenuButtonGuide =
+      FindNamedGuide(kToolsMenuGuide, self.view);
+  AddSameConstraints(self.view.toolsMenuButton, toolsMenuButtonGuide);
+  if (!IsIPadIdiom()) {
+    UILayoutGuide* tabSwitcherButtonGuide =
+        FindNamedGuide(kTabSwitcherGuide, self.view);
+    AddSameConstraints(self.view.tabSwitchStripButton.imageView,
+                       tabSwitcherButtonGuide);
+  }
 }
 
 #pragma mark - Trait Collection Changes
@@ -549,24 +557,6 @@
 
 - (UIView*)shareButtonView {
   return self.view.shareButton;
-}
-
-#pragma mark - BubbleViewAnchorPointProvider
-
-- (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction {
-  CGPoint anchorPoint = bubble_util::AnchorPoint(
-      self.view.tabSwitchStripButton.imageView.frame, direction);
-  return [self.view.tabSwitchStripButton.imageView.superview
-      convertPoint:anchorPoint
-            toView:self.view.tabSwitchStripButton.imageView.window];
-}
-
-- (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction {
-  CGPoint anchorPoint =
-      bubble_util::AnchorPoint(self.view.toolsMenuButton.frame, direction);
-  return [self.view.toolsMenuButton.superview
-      convertPoint:anchorPoint
-            toView:self.view.toolsMenuButton.window];
 }
 
 #pragma mark - FullscreenUIElement
