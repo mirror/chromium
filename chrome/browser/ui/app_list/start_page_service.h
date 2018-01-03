@@ -19,7 +19,7 @@
 #include "base/strings/string16.h"
 #include "base/time/default_clock.h"
 #include "build/build_config.h"
-#include "chrome/browser/ui/app_list/speech_recognizer_delegate.h"
+#include "chrome/browser/speech/speech_recognizer_delegate.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -40,11 +40,11 @@ class URLFetcher;
 }
 
 class Profile;
+class SpeechRecognizer;
 
 namespace app_list {
 
 class SpeechAuthHelper;
-class SpeechRecognizer;
 class StartPageObserver;
 
 // StartPageService collects data to be displayed in app list's start page

@@ -23,8 +23,8 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/search_engines/ui_thread_search_terms_data.h"
+#include "chrome/browser/speech/speech_recognizer.h"
 #include "chrome/browser/ui/app_list/speech_auth_helper.h"
-#include "chrome/browser/ui/app_list/speech_recognizer.h"
 #include "chrome/browser/ui/app_list/start_page_observer.h"
 #include "chrome/browser/ui/app_list/start_page_service_factory.h"
 #include "chrome/browser/ui/browser_navigator.h"
@@ -34,6 +34,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chromeos/audio/cras_audio_handler.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/zoom/zoom_controller.h"
@@ -58,7 +59,6 @@
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
 #include "ui/app_list/app_list_switches.h"
-#include "chromeos/audio/cras_audio_handler.h"
 
 using base::RecordAction;
 using base::UserMetricsAction;
