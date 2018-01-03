@@ -16,6 +16,24 @@
       "revId": "73678a4900d82e6d1ac8e62520a8c215603e0de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cbe33e_82186343",
+        "filename": "services/service_manager/sandbox/mac/common_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2018-01-03T21:51:05Z",
+      "side": 1,
+      "message": "It works without them, removed.",
+      "parentUuid": "f0b151d9_d7fe1beb",
+      "revId": "73678a4900d82e6d1ac8e62520a8c215603e0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
