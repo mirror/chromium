@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed54193_52c06c1a",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-03T02:25:02Z",
+      "side": 1,
+      "message": "Why do you need to use base::OnceCallback? Can we simply make Lock hold Member\u003cLockManager\u003e?",
+      "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
