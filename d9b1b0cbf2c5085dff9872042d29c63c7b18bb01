@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7cec5207_d24b1241",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-03T23:12:39Z",
+      "side": 1,
+      "message": "This like my other question is whether we should include any caveats in any of these comments.  Should we say the \"AOSP implementation\" of SystemClock.uptimeMillis() uses ... as opposed to the \"Java-side\".  We are making an assumption here and I wonder if it\u0027s better to call those out in case that ever breaks then we know we thought about it.",
+      "parentUuid": "e2f97b30_32864b0c",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0680259_94c454cf",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 5
@@ -270,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "a9fe5555_e058f6db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84157,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-03T23:12:39Z",
+      "side": 1,
+      "message": "Does desktop receive sync messages if it isn\u0027t running?  I actually think that is a case where mobile and desktop are inconsistent.  You can receive a sync message on Android, spinning up the application, and then five minutes later you click on the chrome icon that actually triggers the browser process start (so we record a 5+ min long start time).  I didn\u0027t think desktop had the concept of this sort of split startup that would cause that sort of discrepancy.\n\nThat being said it isn\u0027t any different than the previous metric as recordMainEntryPointTime logs both of the time values used.\n\nI just think that Main Entry was and still is confusing with regards to Android, but I\u0027m not sure you could describe it\u0027s oddness without a 38page novel right here with the different lifecycle timing of various android components.",
+      "parentUuid": "dd704049_f8d10962",
+      "range": {
+        "startLine": 84157,
+        "startChar": 56,
+        "endLine": 84157,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cc016ab_ef9883bc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -299,6 +347,24 @@
       "side": 1,
       "message": "My change is minor compared to the rest of the mechanics that fdoray@ is an expert in. Also there is a few similar metrics that I am planning to change soon after this one shows as good. Those we should not care about much for Android, so would not add myself to owners there, and hence did not want to add myself here .. for consistency. If you insist, I. Will. Become. An. Owner. Beware.",
       "parentUuid": "1cc016ab_ef9883bc",
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b577d1_7e9f54f0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84159,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-03T23:12:39Z",
+      "side": 1,
+      "message": "Definitely won\u0027t make you, it just looked like you were making fundamental enough changes to me to justify but I\u0027ll definitely defer to you.\n\nThis is one of those OWNERS file issues where it would be nice to say (for Android only k thx)",
+      "parentUuid": "b53b3b41_b1580079",
       "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
