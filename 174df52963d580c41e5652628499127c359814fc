@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74917369_b73335ba",
+        "filename": "content/browser/dom_storage/session_storage_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T19:32:40Z",
+      "side": 1,
+      "message": "Is this friend still needed?",
+      "revId": "174df52963d580c41e5652628499127c359814fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cee216c_c713a840",
+        "filename": "content/browser/dom_storage/session_storage_database_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T19:32:40Z",
+      "side": 1,
+      "message": "is this actually needed? Since everything in this test is running on the same sequence db_ will still be deleted synchronously when the last ref goes away, right?",
+      "revId": "174df52963d580c41e5652628499127c359814fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
