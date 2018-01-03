@@ -6,7 +6,6 @@
 
 #include <vector>
 
-#include "base/memory/ptr_util.h"
 #include "components/cryptauth/local_device_data_provider.h"
 #include "components/cryptauth/remote_beacon_seed_fetcher.h"
 #include "components/cryptauth/remote_device.h"
@@ -37,7 +36,7 @@ void BleAdvertisementGenerator::SetInstanceForTesting(
 }
 
 BleAdvertisementGenerator::BleAdvertisementGenerator()
-    : eid_generator_(base::MakeUnique<cryptauth::ForegroundEidGenerator>()) {}
+    : eid_generator_(std::make_unique<cryptauth::ForegroundEidGenerator>()) {}
 
 BleAdvertisementGenerator::~BleAdvertisementGenerator() {}
 

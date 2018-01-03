@@ -9,7 +9,6 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -24,7 +23,7 @@ class CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest
   void TestConnectionCloseWithReason(ReasonForClose reason_for_close,
                                      uint8_t expected_reason_for_close) {
     std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-        base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+        std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
     Packet packet = generator->CreateConnectionClose(reason_for_close);
 
@@ -52,7 +51,7 @@ class CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        CreateConnectionRequestTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   Packet packet = generator->CreateConnectionRequest();
 
@@ -77,7 +76,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        CreateConnectionResponseWithDefaultPacketSizeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   Packet packet = generator->CreateConnectionResponse();
 
@@ -97,7 +96,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        CreateConnectionResponseWithSelectedPacketSizeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   const uint8_t kSelectedPacketSize = 30;
   const uint16_t kResponseSize = 5;
@@ -138,7 +137,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        EncodeDataMessageWithDefaultPacketSizeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   std::string data = "abcdefghijklmnopqrstuvwxyz";
 
@@ -171,7 +170,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        EncodeDataMessageWithSelectedPacketSizeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   const uint32_t packet_size = 30;
   const uint32_t residual_packet_size = 2;
@@ -223,7 +222,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        PacketCounterForMixedPacketTypesTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   Packet packet = generator->CreateConnectionRequest();
 
@@ -242,7 +241,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketGeneratorTest,
        PacketCounterWrappedAroundTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketGenerator> generator =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketGenerator>();
+      std::make_unique<BluetoothLowEnergyWeavePacketGenerator>();
 
   const uint8_t kNumPackets = 100;
   std::string data(kNumPackets * kByteDefaultMaxPacketSize, 'a');

@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -50,7 +49,7 @@ class CryptAuthBluetoothLowEnergyWeavePacketReceiverTest
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingServerPacketsNoControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -111,7 +110,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingServerPacketsWithFullControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,
@@ -177,7 +176,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingServerPacketsWithSomeControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,    kEmptyUpperByte,
@@ -227,7 +226,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingClientPacketsNoControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   const uint8_t kSelectedPacketSize = 30;
@@ -266,7 +265,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingClientPacketsWithFullControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader,
@@ -319,7 +318,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        WellBehavingClientPacketsWithSomeControlDataTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader,
@@ -360,7 +359,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        LegacyCloseWithoutReasonTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -384,7 +383,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        OneBytePacketTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
@@ -409,7 +408,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        EmptyPacketTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0;
@@ -422,7 +421,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ServerReceivingConnectionResponseTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
                           kByteWeaveVersion, kEmptyUpperByte,
@@ -437,7 +436,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ClientReceivingConnectionRequestTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
                           kByteWeaveVersion,       kEmptyUpperByte,
@@ -453,7 +452,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ReceiveConnectionCloseInConnecting) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   // uWeave Header:
@@ -472,7 +471,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ReceiveDataInConnecting) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   // uWeave Header:
@@ -493,7 +492,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ConnectionRequestTooSmallTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
   std::vector<uint8_t> p0{kControlRequestHeader, kEmptyUpperByte,
                           kByteWeaveVersion,     kEmptyUpperByte,
@@ -508,7 +507,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ConnectionRequestTooLargeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0(kByteDefaultMaxPacketSize + 1, 0);
@@ -525,7 +524,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ConnectionResponseTooSmallTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
@@ -540,7 +539,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ConnectionResponseTooLargeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0(kByteDefaultMaxPacketSize + 1, 0);
@@ -557,7 +556,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ConnectionCloseTooLargeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -582,7 +581,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        DataPacketTooLargeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -611,7 +610,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        FirstPacketNoFirstNorLastBitTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -640,7 +639,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        FirstPacketNoFirstYesLastBitTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -669,7 +668,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        NonFirstPacketYesFirstBitTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -709,7 +708,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        OutOfOrderPacketTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -738,7 +737,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidVersionInConnectionRequestTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   const uint8_t kWrongVersion = 2;
@@ -759,7 +758,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
   const uint8_t kSmallMaxPacketSize = 19;
 
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader, kEmptyUpperByte,
@@ -776,7 +775,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidSelectedVersionInConnectionResponseTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kByteWeaveVersion,
@@ -793,7 +792,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidSelectedMaxPacketSizeInConnectionResponseTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   const uint8_t kSmallMaxPacketSize = 19;
@@ -810,7 +809,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        UnrecognizedReasonForCloseInConnectionCloseTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
@@ -836,7 +835,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        UnrecognizedControlCommandBitTwoTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   // uWeave Header:
@@ -861,7 +860,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidControlCommandBitThreeTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   // uWeave Header:
@@ -881,7 +880,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidBitOneInDataPacketHeaderTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
@@ -908,7 +907,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        InvalidBitZeroInDataPacketHeaderTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0{kControlResponseHeader, kEmptyUpperByte,
@@ -935,7 +934,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ReceivedPacketInErrorState) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::CLIENT);
 
   std::vector<uint8_t> p0;
@@ -955,7 +954,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        ReceivedPacketInConnectionClosedStateTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
@@ -993,7 +992,7 @@ TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
 TEST_F(CryptAuthBluetoothLowEnergyWeavePacketReceiverTest,
        MultipleControlPacketTest) {
   std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> receiver =
-      base::MakeUnique<BluetoothLowEnergyWeavePacketReceiver>(
+      std::make_unique<BluetoothLowEnergyWeavePacketReceiver>(
           ReceiverType::SERVER);
 
   std::vector<uint8_t> p0{kControlRequestHeader,   kEmptyUpperByte,
