@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_NETWORK_SERVICE_IMPL_H_
 
 #include "base/macros.h"
+#include "content/common/native_types.mojom.h"
 #include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -18,6 +19,15 @@ class NetworkServiceClient : public mojom::NetworkServiceClient {
   ~NetworkServiceClient() override;
 
   // mojom::NetworkServiceClient implementation:
+  void OnCertificateRequested(
+      ResourceType resource_type,
+      const GURL& url,
+      uint32_t process_id,
+      uint32_t routing_id,
+      const scoped_refptr<net::SSLCertRequestInfo>& cert_info,
+      mojom::SSLPrivateKeyRequest ssl_private_key_request,
+      mojom::NetworkServiceClient::OnCertificateRequestedCallback callback)
+      override;
   void OnSSLCertificateError(ResourceType resource_type,
                              const GURL& url,
                              uint32_t process_id,
