@@ -8,8 +8,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Window;
 
@@ -298,7 +298,22 @@ public class ApplicationStatus {
      * Asserts that initialize method has been called.
      */
     private static void assertInitialized() {
-        assert sIsInitialized;
+        if (!sIsInitialized) {
+            throw new IllegalStateException("ApplicationStatus has not been initialized yet.");
+        }
+    }
+
+    /**
+     * Provide a hint to the tracking system that an Activity has been created.
+     *
+     * Allows an Activity onCreate event to be synthesized to compensate for inconsistencies of
+     * Application lifecycle events across different Android versions.
+     *
+     * @param activity The activity being created.
+     */
+    public static void hintActivityCreated(@NonNull Activity activity) {
+        if (sActivityInfo.get(activity) != null) return;
+        onStateChange(activity, ActivityState.CREATED);
     }
 
     /**
@@ -310,6 +325,12 @@ public class ApplicationStatus {
     private static void onStateChange(Activity activity, @ActivityState int newState) {
         if (activity == null) throw new IllegalArgumentException("null activity is not supported");
 
+        // Avoid duplicate CREATED signals for Activities that called hintActivityCreated.
+        if (newState == ActivityState.CREATED
+                && getStateForActivity(activity) == ActivityState.CREATED) {
+            return;
+        }
+
         if (sActivity == null
                 || newState == ActivityState.CREATED
                 || newState == ActivityState.RESUMED
@@ -319,14 +340,7 @@ public class ApplicationStatus {
 
         int oldApplicationState = getStateForApplication();
 
-        if (newState == ActivityState.CREATED) {
-            // TODO(tedchoc): crbug/691100.  The timing of application callback lifecycles were
-            //                changed in O and the activity info may have been lazily created
-            //                on first access to avoid a crash on startup.  This should be removed
-            //                once the new lifecycle APIs are available.
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                assert !sActivityInfo.containsKey(activity);
-            }
+        if (newState == ActivityState.CREATED && !sActivityInfo.containsKey(activity)) {
             sActivityInfo.put(activity, new ActivityInfo());
         }
 
@@ -496,19 +510,17 @@ public class ApplicationStatus {
     @SuppressLint("NewApi")
     public static void registerStateListenerForActivity(ActivityStateListener listener,
             Activity activity) {
-        assert activity != null;
+        if (activity == null) {
+            throw new IllegalStateException("Attempting to register listener on a null activity.");
+        }
         ApplicationStatus.assertInitialized();
 
         ActivityInfo info = sActivityInfo.get(activity);
-        // TODO(tedchoc): crbug/691100.  The timing of application callback lifecycles were changed
-        //                in O and the activity info may need to be lazily created if the onCreate
-        //                event has not yet been received.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && info == null
-                && !activity.isDestroyed()) {
-            info = new ActivityInfo();
-            sActivityInfo.put(activity, info);
+        if (info == null) {
+            throw new IllegalStateException(
+                    "Attempting to register listener on an untracked activity.");
         }
-        assert info != null && info.getStatus() != ActivityState.DESTROYED;
+        assert info.getStatus() != ActivityState.DESTROYED;
         info.getListeners().addObserver(listener);
     }
 
