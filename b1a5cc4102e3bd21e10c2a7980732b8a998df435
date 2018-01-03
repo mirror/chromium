@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93baace6_86579b8b",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T23:43:57Z",
+      "side": 1,
+      "message": "\u003e Does it make sense to fix this the same way?  I know Mac still uses Translate infobars for now, but if it switches over I don\u0027t want it to have a similar problem.\n\nYes indeed - filed http://crbug.com/798875\n\n(I\u0027m also considering moving some of this WebContents-binding stuff up to LocationBarBubbleDelegateView or a handy subclass, but now is probably not a great time for big refactors).",
+      "parentUuid": "0a379daf_666e56b9",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bfb366c_a5af208a",
         "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cf0b69_c03a2e16",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T23:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfb366c_a5af208a",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "439e78ac_927abab2",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T23:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3bfec7f_7c389fb6",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b974924_87fb8925",
         "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c216af68_9b7a2852",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T23:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b974924_87fb8925",
+      "revId": "b1a5cc4102e3bd21e10c2a7980732b8a998df435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
