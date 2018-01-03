@@ -60,7 +60,7 @@ bool NormalizeProfileWithValidator(AutofillProfile* profile,
 void FormatPhoneNumberToE164(AutofillProfile* profile,
                              const std::string& region_code,
                              const std::string& app_locale) {
-  const std::string formatted_number = autofill::i18n::FormatPhoneForResponse(
+  const std::string formatted_number = autofill::i18n::FormatPhoneToE164(
       base::UTF16ToUTF8(
           profile->GetInfo(AutofillType(PHONE_HOME_WHOLE_NUMBER), app_locale)),
       region_code);
