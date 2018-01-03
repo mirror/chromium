@@ -47,6 +47,7 @@ SpdyHttpStream::SpdyHttpStream(const base::WeakPtr<SpdySession>& spdy_session,
       closed_stream_received_bytes_(0),
       closed_stream_sent_bytes_(0),
       request_info_(NULL),
+      can_send_early_(false),
       response_info_(NULL),
       response_headers_complete_(false),
       upload_stream_in_progress_(false),
@@ -68,6 +69,7 @@ SpdyHttpStream::~SpdyHttpStream() {
 }
 
 int SpdyHttpStream::InitializeStream(const HttpRequestInfo* request_info,
+                                     bool can_send_early,
                                      RequestPriority priority,
                                      const NetLogWithSource& stream_net_log,
                                      const CompletionCallback& callback) {
@@ -76,6 +78,7 @@ int SpdyHttpStream::InitializeStream(const HttpRequestInfo* request_info,
     return ERR_CONNECTION_CLOSED;
 
   request_info_ = request_info;
+  can_send_early_ = can_send_early;
   // TODO(bnc): Remove this condition once pushed headers are properly
   // validated.  https://crbug.com/554220.
   if (request_info_->method == "GET") {
