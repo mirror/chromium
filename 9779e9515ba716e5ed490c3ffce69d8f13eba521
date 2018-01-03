@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62580c1a_4bb27022",
+        "filename": "third_party/WebKit/LayoutTests/compositing/clip-path-with-composited-descendent.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-03T01:55:37Z",
+      "side": 0,
+      "message": "Note: the old test is deleted because the ref only forces compositing of the parent, but did not actually verify whether composited clip-path was applied correctly.",
+      "revId": "9779e9515ba716e5ed490c3ffce69d8f13eba521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
