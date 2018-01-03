@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de94cad_a0eaf8bb",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "nit: constexpr (here and below)",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fb9d85_7a5bcb4f",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "nit: mark const",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb9af0e_79e9b005",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "nit: does this have subclasses? if not, virtual can be removed and this class can be made movable.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fd66d2_2dcac2ab",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "same as for AttestationObject, could this be made movable?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea38e452_2aad1365",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd66dfb_49b34087",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "nit: sorry for the noise here. this could be inlined as well:\n\n  return *cbor::CBORWriter::Write(cbor::CBORValue(std::move(map)));",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

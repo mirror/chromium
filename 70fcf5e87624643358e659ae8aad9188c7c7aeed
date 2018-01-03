@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "d4d756e5_6ebf71ab",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "Exactly :)",
+      "parentUuid": "52c09af0_610047a4",
+      "range": {
+        "startLine": 48,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa2add2_e45e402a",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 5
@@ -1365,6 +1389,30 @@
     },
     {
       "key": {
+        "uuid": "5ccd8488_f923930c",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e2fc323_e31ce125",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e0f1ece_88a95465",
         "filename": "device/u2f/fido_attestation_statement.cc",
         "patchSetId": 5
@@ -2023,6 +2071,30 @@
       "side": 1,
       "message": "noting that we discussed this offline and agreed to leave as-is for the test data because it presents problems with the vector conversions. I moved test data to the tests that use it, where possible, and left common data here.",
       "parentUuid": "ee5b85e1_294d41c9",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd02938a_fb68a52f",
+        "filename": "device/u2f/u2f_response_test_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T18:04:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fc7c845_16f25e22",
       "range": {
         "startLine": 17,
         "startChar": 0,
