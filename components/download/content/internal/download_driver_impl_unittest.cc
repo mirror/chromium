@@ -55,6 +55,8 @@ class MockDriverClient : public DownloadDriver::Client {
   MOCK_METHOD1(OnDownloadSucceeded, void(const DriverEntry&));
   MOCK_METHOD1(OnDownloadUpdated, void(const DriverEntry&));
   MOCK_CONST_METHOD1(IsTrackingDownload, bool(const std::string&));
+  void GetUploadData(const std::string& guid,
+                     GetUploadDataCallback callback) const override {}
 };
 
 class DownloadDriverImplTest : public testing::Test {

@@ -16,9 +16,14 @@ namespace net {
 class URLRequest;
 }
 
+namespace storage {
+class BlobStorageContext;
+}
+
 namespace content {
 
 class DownloadUrlParameters;
+class ResourceContext;
 struct ResourceRequest;
 struct DownloadCreateInfo;
 struct DownloadSaveInfo;
@@ -53,6 +58,9 @@ CONTENT_EXPORT void HandleResponseHeaders(
 // Converts content::DownloadSource to download::DownloadSource.
 CONTENT_EXPORT download::DownloadSource ToDownloadSource(
     content::DownloadSource download_source);
+
+storage::BlobStorageContext* BlobStorageContextGetter(
+    ResourceContext* resource_context);
 
 }  // namespace content
 
