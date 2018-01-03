@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8badec82_f3dcfef0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2018-01-03T20:09:16Z",
+      "side": 1,
+      "message": "s/too/to/",
+      "range": {
+        "startLine": 15,
+        "startChar": 67,
+        "endLine": 15,
+        "endChar": 70
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506049e9_aa199656",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/fixup-dynamic-anonymous-inline-table-001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2018-01-03T20:09:16Z",
+      "side": 1,
+      "message": "Why is this filler required?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3893ad6_1e8d9323",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/fixup-dynamic-anonymous-table-001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2018-01-03T20:09:16Z",
+      "side": 1,
+      "message": "3 of the tests are for inline tables and 1 for block(terminology?) tables. Do inline tables need more testing? Or was it just arbitrary which one got the most testing?",
+      "range": {
+        "startLine": 2,
+        "startChar": 50,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fd87a5_a6e1d8d9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2018-01-03T20:09:16Z",
+      "side": 1,
+      "message": "Why do we need the IsTableSection() checks? They prevent trying to merge a caption (or col) and a section? I\u0027m struggling to find markup where this matters.",
+      "range": {
+        "startLine": 240,
+        "startChar": 30,
+        "endLine": 240,
+        "endChar": 44
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
