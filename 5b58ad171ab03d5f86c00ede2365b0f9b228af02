@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd1be4f_d733b7ac",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "Nix the period to match the other list items (this is just me being anal)",
+      "range": {
+        "startLine": 19,
+        "startChar": 77,
+        "endLine": 19,
+        "endChar": 78
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a139a83e_d564de7b",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "I think \"create a wide enough net\" is a perfectly comprehensible phrase, but the more idiomatic phrase is \"cast a wide enough net\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e4f3da_8f32b161",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "I think the right way to phrase this is:\n\n\"Success to us means System Health benchmarks cast a wide enough net to catch major regressions before they make it to the users.\"\n\nThis has two small changes (in addition to the create/cast change) from your sentence:\n\n- I switched \"that\" to \"to\". I spent a little while trying to think about why \"that\" sounds funny. Unfortunately, I think this is basically just another idiom: both \"that\" and \"to\" in this context indicate the purpose of the preceding noun. However, the phrase is usually \u003cadjective\u003e enough TO \u003csome objective\u003e\" (e.g. \"fit enough to run a marathon\", \"responsible enough to do her homework\") rather than \"\u003cadjective\u003e enough THAT \u003csome objective\u003e\". This shows up in this list of phrases (https://www.phrases.org.uk/cgi-bin/phrase-thesaurus/exact.cgi?w\u003denough), but I\u0027m not sure I can really say why this is.\n\n- I switched \"catches\" to \"catch\". The subject here is still \"System Health benchmarks\", which means the verb should be plural, therefore \"catch\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 70,
+        "endLine": 32,
+        "endChar": 74
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f82c66_78be6cda",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "(here and elsewhere) Even though both get thrown around, I think \"necessary\" is the more correct way to make \"need\" into an adjective\n\nhttps://english.stackexchange.com/questions/112508/difference-between-needed-and-necessary",
+      "range": {
+        "startLine": 91,
+        "startChar": 66,
+        "endLine": 91,
+        "endChar": 72
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ec78de_ba459a56",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "Two nits here:\n\n- Given that a given story tag usually applies to more than one story, I think that \"unique\" is probably the wrong word here. Maybe \"important\" would be better?\n\n- Each story can have more than one characteristic, so \"characteristics\" makes more sense than \"characteristic\"",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 14
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d269a7d3_2ba4d79d",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "nit: above, you talk about just adding a single user story, but here, we\u0027re now talking about adding multiple stories. For consistency\u0027s sake, I\u0027d change the heading (\"Should I add new System Health stories and how?\").",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb9fab1_c5e44be9",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "looks like just a typo: \"upload the .wprgo files\"",
+      "range": {
+        "startLine": 186,
+        "startChar": 63,
+        "endLine": 187,
+        "endChar": 16
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8d5118_e873172b",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2018-01-03T16:19:43Z",
+      "side": 1,
+      "message": "I think \"out for review\" is the idiomatic phrase",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 53
+      },
+      "revId": "5b58ad171ab03d5f86c00ede2365b0f9b228af02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
