@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9b77ffb_05099b57",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T14:10:39Z",
+      "side": 1,
+      "message": "The object to which we are constraining might be deeper in the view hierarchy (as for the imageView of the TabSwitcher button). But I guess it is fine.",
+      "parentUuid": "c57938e2_b7928149",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 20
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147fe874_0953160a",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b06a2943_f8265b3b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T14:10:39Z",
+      "side": 1,
+      "message": "I don\u0027t know why. The current function is using the frame of the image so I am constraining the layout guide to the image view.\nThis is something which has to do with how the bubble is implemented.\nIt is to have the tip closer to the image.",
+      "parentUuid": "147fe874_0953160a",
+      "range": {
+        "startLine": 439,
+        "startChar": 54,
+        "endLine": 439,
+        "endChar": 63
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f709984d_4c7439c1",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5688f594_1d7a0d02",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T14:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f709984d_4c7439c1",
+      "range": {
+        "startLine": 177,
+        "startChar": 48,
+        "endLine": 177,
+        "endChar": 53
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
