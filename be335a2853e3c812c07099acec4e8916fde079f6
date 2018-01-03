@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f52afc09_7bc3818f",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-03T21:35:27Z",
+      "side": 1,
+      "message": "std::move(false) -\u003e false",
+      "revId": "be335a2853e3c812c07099acec4e8916fde079f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
