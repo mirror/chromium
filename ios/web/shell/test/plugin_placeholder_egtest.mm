@@ -86,7 +86,8 @@ void LoadPage(const std::string& page_content) {
       "    codebase='http://download.macromedia.com/pub/shockwave/cabs/'"
       "flash/swflash.cab#version=6,0,0,0' width='550' height='550'>"
       "  <param name='movie' value='some.swf'>"
-      "  <embed src='some.swf' width='550' height='550'>"
+      "  <embed src='some.swf' type='application/x-shockwave-flash' "
+      "width='550' height='550'>"
       "</object>"
       "</body></html>",
       kPageDescription);
