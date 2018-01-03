@@ -1685,6 +1685,10 @@ void LayoutObject::SetStyle(scoped_refptr<ComputedStyle> style) {
 
   StyleDidChange(diff, old_style.get());
 
+  if (GetNode() && GetNode()->IsActive())
+    LOG(ERROR) << DebugName() << " is active " << ResolveColor(GetCSSPropertyColor()).Serialized();
+  if (old_style && ResolveColor(GetCSSPropertyColor()) != ResolveColor(*old_style, GetCSSPropertyColor()))
+    LOG(ERROR) << DebugName() << " color changed to " << ResolveColor(GetCSSPropertyColor()).Serialized() << " from " << ResolveColor(*old_style, GetCSSPropertyColor()).Serialized();
   // FIXME: |this| might be destroyed here. This can currently happen for a
   // LayoutTextFragment when its first-letter block gets an update in
   // LayoutTextFragment::styleDidChange. For LayoutTextFragment(s),

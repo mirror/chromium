@@ -2537,6 +2537,7 @@ void Node::SetHasFocusWithin(bool flag) {
 }
 
 void Node::SetActive(bool flag) {
+  LOG(ERROR) << DebugName() << " SetActive: " << flag;
   GetDocument().UserActionElements().SetActive(this, flag);
 }
 

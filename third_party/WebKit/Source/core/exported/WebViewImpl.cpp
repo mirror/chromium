@@ -631,6 +631,7 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
   switch (event.GetType()) {
     case WebInputEvent::kGestureShowPress:
       // Queue a highlight animation, then hand off to regular handler.
+      LOG(ERROR) << "EnableTapHighlightAtPoint";
       EnableTapHighlightAtPoint(targeted_event);
       break;
     case WebInputEvent::kGestureTapCancel:
@@ -749,9 +750,11 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
       break;
     }
     case WebInputEvent::kGestureShowPress: {
+      LOG(ERROR) << "Send to event handler";
       event_result =
           MainFrameImpl()->GetFrame()->GetEventHandler().HandleGestureEvent(
               targeted_event);
+      LOG(ERROR) << "After event handler";
       break;
     }
     case WebInputEvent::kGestureTapUnconfirmed: {

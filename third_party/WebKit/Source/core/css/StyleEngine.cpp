@@ -811,6 +811,9 @@ void StyleEngine::PseudoStateChangedForElement(
   if (ShouldSkipInvalidationFor(element))
     return;
 
+  if (pseudo_type == CSSSelector::kPseudoActive)
+    LOG(ERROR) << "PseudoActive chagned: " << element.DebugName() << " active: " << element.IsActive();
+
   InvalidationLists invalidation_lists;
   GetRuleFeatureSet().CollectInvalidationSetsForPseudoClass(
       invalidation_lists, element, pseudo_type);
