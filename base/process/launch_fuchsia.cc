@@ -19,6 +19,9 @@ namespace base {
 
 namespace {
 
+const char kPackageAppPath[] = "/pkg/bin/app";
+const char kFileUrlPrefix[] = "file://";
+
 bool GetAppOutputInternal(const CommandLine& cmd_line,
                           bool include_stderr,
                           std::string* output,
@@ -56,6 +59,17 @@ bool GetAppOutputInternal(const CommandLine& cmd_line,
   return process.WaitForExit(exit_code);
 }
 
+// Gets the path to this executable inside the current process' namespace.
+std::string GetExecutablePath(const std::string& exe_from_argv) {
+  if (exe_from_argv.find(kFileUrlPrefix) == 0) {
+    // Running as a packaged binary.
+    return kPackageAppPath;
+  } else {
+    // Running as an unpackaged binary.
+    return exe_from_argv;
+  }
+}
+
 }  // namespace
 
 Process LaunchProcess(const CommandLine& cmdline,
@@ -67,10 +81,12 @@ Process LaunchProcess(const CommandLine& cmdline,
 // unprivileged processes by default (no implicit capabilities are granted).
 Process LaunchProcess(const std::vector<std::string>& argv,
                       const LaunchOptions& options) {
+  std::string exe_path = GetExecutablePath(argv[0]);
   std::vector<const char*> argv_cstr;
   argv_cstr.reserve(argv.size() + 1);
-  for (const auto& arg : argv)
-    argv_cstr.push_back(arg.c_str());
+  argv_cstr.push_back(exe_path.c_str());
+  for (size_t i = 1; i < argv.size(); ++i)
+    argv_cstr.push_back(argv[i].c_str());
   argv_cstr.push_back(nullptr);
 
   // Note that per launchpad.h, the intention is that launchpad_ functions are
