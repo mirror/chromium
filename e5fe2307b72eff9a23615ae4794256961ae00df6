@@ -88,6 +88,24 @@
       "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c912e92c_d86df25a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T19:34:08Z",
+      "side": 1,
+      "message": "I would love to. I filed a bug for that for now but I\u0027d like to keep this change preferably to only refactoring than fixing other stuff along the way.",
+      "parentUuid": "a066fc96_0f831ae4",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
