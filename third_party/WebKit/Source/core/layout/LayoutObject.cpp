@@ -97,6 +97,7 @@
 #include "platform/graphics/paint/PropertyTreeState.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/WTFString.h"
@@ -655,19 +656,15 @@ bool LayoutObject::IsFixedPositionObjectInPagedMedia() const {
 }
 
 bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
-                                       const ScrollAlignment& align_x,
-                                       const ScrollAlignment& align_y,
-                                       ScrollType scroll_type,
-                                       bool make_visible_in_visual_viewport,
-                                       ScrollBehavior scroll_behavior) {
+                                       const ScrollIntoViewParams& params) {
   LayoutBox* enclosing_box = EnclosingBox();
   if (!enclosing_box)
     return false;
 
   GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
-  enclosing_box->ScrollRectToVisibleRecursive(
-      rect, align_x, align_y, scroll_type, make_visible_in_visual_viewport,
-      scroll_behavior, scroll_type == kProgrammaticScroll);
+  ScrollIntoViewParams new_params(params);
+  new_params.is_for_scroll_sequence = params.scroll_type == kProgrammaticScroll;
+  enclosing_box->ScrollRectToVisibleRecursive(rect, new_params);
   GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   return true;
