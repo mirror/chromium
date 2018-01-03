@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ecdb13a_408f80fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T08:17:24Z",
+      "side": 1,
+      "message": "Can you change the title to something more representative? There is no other mention of DCHECK either in the CL or the description.\nMaybe something like \"Refresh RecentTabs after sign-in completes\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 42
+      },
+      "revId": "aadea13032df388805be29c871671821e5934ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af3dcc3_44e3f958",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T08:17:24Z",
+      "side": 1,
+      "message": "Can this become required instead of optional with this CL?",
+      "range": {
+        "startLine": 1034,
+        "startChar": 8,
+        "endLine": 1034,
+        "endChar": 23
+      },
+      "revId": "aadea13032df388805be29c871671821e5934ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
