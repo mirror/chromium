@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f69298a_150e5bb8",
+        "filename": "ios/web/navigation/navigation_item_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-03T17:42:43Z",
+      "side": 1,
+      "message": "Do you need this comment referencing the bug? Maybe just add above that this enures that the http headers are mutable in the copy?",
+      "range": {
+        "startLine": 95,
+        "startChar": 36,
+        "endLine": 95,
+        "endChar": 64
+      },
+      "revId": "e5fef0d8309d68ab5815c6eda3bb0cf013861508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
