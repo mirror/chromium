@@ -2,6 +2,811 @@
   "comments": [
     {
       "key": {
+        "uuid": "c19ea0e7_8a010542",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "this could be \n\n  credential_info-\u003eclient_data_json.assign(client_data_json.begin(), client_data_json.end())\n\ninstead, in which case you wouldn\u0027t need to spell out the type. Up to you :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8653331_14711af2",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "*response_data is more common",
+      "range": {
+        "startLine": 191,
+        "startChar": 55,
+        "endLine": 191,
+        "endChar": 76
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789ecfd9_857af214",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Usually not necessary for multiple argument constructors. explicit\u0027s primary use case is to disallow implicit conversions, which are not possible for multiple arg constructors anyway.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4015928_7272e780",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Technically this is against the styleguide.\n\nYou could make this\n\n  std::vector\u003cuint8_t\u003e GetTestChallengeBytes() {\n    return std::vector\u003cuint8_t\u003e(std::begin(kTestChallengeBytes),\n                                std::end(kTestChallengeBytes));\n  }\n\ninstead",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 1
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cdabf26_3637a696",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "can be inlined",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 52
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa61336_71e8f2c8",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "std::move(type)",
+      "range": {
+        "startLine": 113,
+        "startChar": 34,
+        "endLine": 113,
+        "endChar": 38
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c418b9b_c389cc3e",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 41
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f651670d_578285c5",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "nit: auto task_runner \u003d base::MakeRefCounted\u003cbase::TestMockTimeTaskRunner\u003e(...)",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 58
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c9ec27_34f9b985",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Given that you are not taking ownership here (you simply parse it to construct |encoded_challenge|), this can be a const-ref instead (or even better, a base::span\u003cconst uint8_t\u003e)",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f6c433_a8b18262",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "base::DictionaryValue::SetString is deprecated, this should be base::Value::SetKey instead. Also applies below",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15909d7a_58bb8224",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 74,
+        "startChar": 44,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e1476d_83d1d85d",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "nit: // namespace client_data",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143e8a7d_fdb834de",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Should be moved up, given that this is a factory method",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6d3149_8d730f51",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "should be marked const.\n\nAlso, it might make sense to mark this virtual, so that subclasses can override this. Are subclasses actually intended?",
+      "range": {
+        "startLine": 48,
+        "startChar": 31,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa2add2_e45e402a",
+        "filename": "device/u2f/attestation_object.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 30,
+        "startChar": 59,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d322d324_cf74a502",
+        "filename": "device/u2f/attestation_object.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "\u003d default;\n\nmove up to match declaration order",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97fbf0a_0b4cda8d",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3ab0fe_ef698dc1",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "these can be defaulted. i.e.\n\nAttestedCredentialData::AttestedCredentialData(AttestedCredentialData\u0026\u0026 other) \u003d default;\nAttestedCredentialData\u0026 AttestedCredentialData::operator\u003d(\n    AttestedCredentialData\u0026\u0026 other) \u003d default;",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec1c1b5_f7e9ccb5",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "can be base::span\u003cconst uint8_t\u003e instead",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7076b539_75e2596d",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "destructor should come after other constructors and assignment operators",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a0f3cb_e332b0da",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "should be moved after the constructor",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a948c5e2_090a6f86",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "new code should prefer kEnumStyle: https://google.github.io/styleguide/cppguide.html#Enumerator_Names\n\nGiven that this is technically not new code you can leave this as is if you want",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b289b3c_0105ed24",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "if possible, I\u0027d drop this typedef and simply use uint8_t everywhere. `Flags` is barely shorter, and uint8_t is more explicit that there are exactly 8 bits.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e5f866_d543a9b1",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "mark const",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050ecc14_948ab6b4",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "should be base::Optional\u003cstd::vector\u003cuint8_t\u003e\u003e explicitly, since it\u0027s not obvious from this line alone",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 6
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc1721a_172ddae8",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "not necessary, cbor.value() already does a DCHECK: https://codesearch.chromium.org/chromium/src/base/optional.h?l\u003d255,260,265,270",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749fc1bd_355b7950",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "\u003d default, should go directly after the constructor",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d82a0f_e5fb9d64",
+        "filename": "device/u2f/ec_public_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "given that this is a factory-like method this should be moved up, so that its above the constructor",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a29b14_650b68f0",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Maybe \n\n  LOG(ERROR) \u003c\u003c .....;\n  return nullptr;\n\nis better?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0f1ece_88a95465",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "remove the const here, so that you can move it in the line below",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 7
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd88080_83b80c18",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 11
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5704d1_1c9bfcd5",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "std::move(array)",
+      "range": {
+        "startLine": 67,
+        "startChar": 63,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9116c101_b54d9d2d",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "\u003d default, move up",
+      "range": {
+        "startLine": 72,
+        "startChar": 54,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a698698_e40e18b5",
+        "filename": "device/u2f/fido_attestation_statement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "could be base::span\u003cconst uint8_t\u003e",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4102454_a47ffe8c",
+        "filename": "device/u2f/fido_attestation_statement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "move up, its a factory method",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 70
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df9ed950_985a8b28",
         "filename": "device/u2f/register_response_data.cc",
         "patchSetId": 5
@@ -25,6 +830,30 @@
     },
     {
       "key": {
+        "uuid": "3747f48f_919c1fb8",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "Yeah, I was gonna suggest the same ;)",
+      "parentUuid": "df9ed950_985a8b28",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83839d07_1092ed41",
         "filename": "device/u2f/register_response_data.cc",
         "patchSetId": 5
@@ -36,6 +865,144 @@
       "writtenOn": "2018-01-03T12:18:21Z",
       "side": 1,
       "message": "Note to self: remove",
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad8c1bf_95494f9a",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "these can also be defaulted, similar to attested_credential_data.cc",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c58ae4c_1e4c33f3",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f97a4a4_042f9888",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "swap order of initialization",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c6bc98_feded9bf",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "relying party should go above discoveries to match constructor order",
+      "range": {
+        "startLine": 59,
+        "startChar": 1,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620b06aa_ee3c4892",
+        "filename": "device/u2f/u2f_response_test_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "this doesnt seem to be defined anywhere?",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5b85e1_294d41c9",
+        "filename": "device/u2f/u2f_response_test_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-03T13:27:37Z",
+      "side": 1,
+      "message": "ideally this (and below) should be\n\n  extern const uint8_t kFooBar[] \u003d {...}\n\nand then defined in the corresponding cc file",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
       "revId": "70fcf5e87624643358e659ae8aad9188c7c7aeed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
