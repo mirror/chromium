@@ -16,6 +16,7 @@
 #include "tools/gn/builder.h"
 #include "tools/gn/c_include_iterator.h"
 #include "tools/gn/config.h"
+#include "tools/gn/config_values_extractors.h"
 #include "tools/gn/err.h"
 #include "tools/gn/filesystem_utils.h"
 #include "tools/gn/scheduler.h"
@@ -247,17 +248,36 @@ bool HeaderChecker::IsFileInOuputDir(const SourceFile& file) const {
   return file.value().compare(0, build_dir.size(), build_dir) == 0;
 }
 
-// This current assumes all include paths are relative to the source root
-// which is generally the case for Chromium.
-//
-// A future enhancement would be to search the include path for the target
-// containing the source file containing this include and find the file to
-// handle the cases where people do weird things with the paths.
 SourceFile HeaderChecker::SourceFileForInclude(
-    const base::StringPiece& input) const {
-  std::string str("//");
-  input.AppendToString(&str);
-  return SourceFile(str);
+    const base::StringPiece& relative_file_path,
+    const std::vector<SourceDir>& include_dirs,
+    PathExistsCallback path_exists_callback,
+    const InputFile& source_file,
+    const LocationRange& range,
+    Err* err) const {
+  using base::FilePath;
+
+  const FilePath& source_root = build_settings_->root_path();
+  auto it = std::find_if(
+      include_dirs.begin(), include_dirs.end(),
+      [relative_file_path, source_root,
+       path_exists_callback](const SourceDir& dir) -> bool {
+        FilePath path =
+            dir.Resolve(source_root)
+                .Append(FilePath::FromUTF8Unsafe(relative_file_path));
+        return path_exists_callback.Run(path);
+      });
+
+  if (it != include_dirs.end()) {
+    Value relative_file_value(nullptr, relative_file_path.as_string());
+    return it->ResolveRelativeFile(relative_file_value, err);
+  }
+
+  *err =
+      Err(CreatePersistentRange(source_file, range), "Include file not found.",
+          "The include file:\n" + relative_file_path.as_string() +
+              "\ndoesn't exits.");
+  return SourceFile();
 }
 
 bool HeaderChecker::CheckFile(const Target* from_target,
@@ -285,12 +305,23 @@ bool HeaderChecker::CheckFile(const Target* from_target,
   InputFile input_file(file);
   input_file.SetContents(contents);
 
+  std::vector<SourceDir> include_dirs;
+  for (ConfigValuesIterator iter(from_target); !iter.done(); iter.Next()) {
+    const std::vector<SourceDir>& target_include_dirs =
+        iter.cur().include_dirs();
+    include_dirs.insert(include_dirs.end(), target_include_dirs.begin(),
+                        target_include_dirs.end());
+  }
+
+  PathExistsCallback path_exists = base::BindRepeating(&base::PathExists);
   CIncludeIterator iter(&input_file);
   base::StringPiece current_include;
   LocationRange range;
   while (iter.GetNextIncludeString(&current_include, &range)) {
-    SourceFile include = SourceFileForInclude(current_include);
-    if (!CheckInclude(from_target, input_file, include, range, err))
+    SourceFile include = SourceFileForInclude(
+        current_include, include_dirs, path_exists, input_file, range, err);
+    if (include.is_null() ||
+        !CheckInclude(from_target, input_file, include, range, err))
       return false;
   }
 
