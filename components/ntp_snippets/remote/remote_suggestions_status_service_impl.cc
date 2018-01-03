@@ -64,6 +64,16 @@ void RemoteSuggestionsStatusServiceImpl::Init(
   }
 }
 
+bool RemoteSuggestionsStatusServiceImpl::IsSignedIn() const {
+  // TODO(dgn): remove the SigninManager dependency. It should be possible to
+  // replace it by passing the new state via OnSignInStateChanged().
+  return signin_manager_ && signin_manager_->IsAuthenticated();
+}
+
+void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged() {
+  OnStateChanged(GetStatusFromDeps());
+}
+
 void RemoteSuggestionsStatusServiceImpl::OnSnippetsEnabledChanged() {
   OnStateChanged(GetStatusFromDeps());
 }
@@ -76,16 +86,6 @@ void RemoteSuggestionsStatusServiceImpl::OnStateChanged(
 
   status_change_callback_.Run(status_, new_status);
   status_ = new_status;
-}
-
-bool RemoteSuggestionsStatusServiceImpl::IsSignedIn() const {
-  // TODO(dgn): remove the SigninManager dependency. It should be possible to
-  // replace it by passing the new state via OnSignInStateChanged().
-  return signin_manager_ && signin_manager_->IsAuthenticated();
-}
-
-void RemoteSuggestionsStatusServiceImpl::OnSignInStateChanged() {
-  OnStateChanged(GetStatusFromDeps());
 }
 
 bool RemoteSuggestionsStatusServiceImpl::IsExplicitlyDisabled() const {
