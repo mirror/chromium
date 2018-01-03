@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55fd7367_301a3fd9",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-03T18:19:06Z",
+      "side": 1,
+      "message": "Does tapping the field also focus it? If so, can we drop the |on-tap| handler?",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "b7556761f4e61e0ad94f2681e27480e39af35844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
