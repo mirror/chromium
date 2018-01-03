@@ -36,6 +36,8 @@
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
+namespace content {
+
 using base::Time;
 using base::TimeDelta;
 using base::TimeTicks;
@@ -47,7 +49,6 @@ using blink::WebMouseWheelEvent;
 using blink::WebTouchEvent;
 using ui::WebInputEventTraits;
 
-namespace content {
 namespace {
 
 bool WasHandled(InputEventAckState state) {
