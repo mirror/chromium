@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4b1be771_7e19d2ef",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "The code in PresentationServiceDelegateImpl that brings up the dialog also depend on chrome/browser/ui for MediaRouterDialogControllerImpl. I am not aware of ways to not have this dependency. So I think it\u0027s fine to do this as long as we keep the API surface exposed to c/b/m/r to as small as necessary.",
+      "parentUuid": "55cfb779_809bfb95",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61f5256b_7d01b9cf",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 3

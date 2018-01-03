@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea20f179_b6a4dc83",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "IMO a more typical pattern will be to inject a PresentationReceiverWindowFactory interface to this class.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61e09f6_b26e4d91",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "Can the title change callback be provided in the constructor of |receiver|? BTW, if we are going to have more than 2 callbacks then I would suggest switching to an observer pattern.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043664e0_43f0069f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "Would it be better to just run the CreateRoute callback with error for Mac?",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246a7ab5_5b5e6387",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "Display doesn\u0027t support moves, so std::move is redundant.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31055906_40113e15",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T01:59:29Z",
+      "side": 1,
+      "message": "We would not need to check title_change_callback_ here if it was set during construction.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
