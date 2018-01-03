@@ -5,6 +5,7 @@
 #include "chrome/renderer/prerender/prerender_dispatcher.h"
 
 #include <stddef.h>
+#include <utility>
 
 #include "base/logging.h"
 #include "chrome/common/prerender_messages.h"
@@ -32,11 +33,25 @@ PrerenderDispatcher::~PrerenderDispatcher() {
   WebPrerenderingSupport::Shutdown();
 }
 
+void PrerenderDispatcher::RegisterMojoInterfaces(
+    blink::AssociatedInterfaceRegistry* associated_interfaces) {
+  // Note: Unretained is safe here because this class is a leaky LazyInstance.
+  // For the same reason, UnregisterMojoInterfaces isn't required.
+  associated_interfaces->AddInterface(
+      base::Bind(&PrerenderDispatcher::OnPrerenderDispatcherRequest,
+                 base::Unretained(this)));
+}
+
+void PrerenderDispatcher::OnPrerenderDispatcherRequest(
+    chrome::mojom::PrerenderDispatcherAssociatedRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
 bool PrerenderDispatcher::IsPrerenderURL(const GURL& url) const {
   return running_prerender_urls_.count(url) >= 1;
 }
 
-void PrerenderDispatcher::OnPrerenderStart(int prerender_id) {
+void PrerenderDispatcher::PrerenderStart(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -112,7 +127,6 @@ bool PrerenderDispatcher::OnControlMessageReceived(
     const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(PrerenderDispatcher, message)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStart, OnPrerenderStart)
     IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStopLoading,
                         OnPrerenderStopLoading)
     IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderDomContentLoaded,

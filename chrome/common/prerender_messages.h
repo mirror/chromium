@@ -61,10 +61,6 @@ IPC_MESSAGE_CONTROL0(PrerenderHostMsg_PrefetchFinished)
 IPC_MESSAGE_ROUTED1(PrerenderMsg_SetIsPrerendering, prerender::PrerenderMode)
 
 // Signals to launcher that a prerender is running.
-IPC_MESSAGE_CONTROL1(PrerenderMsg_OnPrerenderStart,
-                     int /* prerender_id */)
-
-// Signals to launcher that a prerender is running.
 IPC_MESSAGE_CONTROL1(PrerenderMsg_OnPrerenderStopLoading,
                      int /* prerender_id */)
 
