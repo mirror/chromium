@@ -24,6 +24,12 @@ namespace blink {
 
 namespace {
 
+static const unsigned short descriptorStringOffsets[] = {
+{% for offset in descriptor_offsets %}
+  {{offset}},
+{% endfor %}
+};
+
 %}
 
 %struct-type
@@ -83,6 +89,13 @@ static AtRuleDescriptorID AsAtRuleDescriptorID(
 }
 
 }  // namespace
+
+const char* GetDescriptorName(AtRuleDescriptorID descriptor_id) {
+  unsigned short id = static_cast<unsigned short>(descriptor_id);
+  unsigned short offset = descriptorStringOffsets[id];
+  return &stringpool[offset];
+}
+
 
 AtRuleDescriptorID AsAtRuleDescriptorID(StringView string) {
   unsigned length = string.length();
