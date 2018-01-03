@@ -22,6 +22,23 @@
       "revId": "c91b2b80866f538a20ced12d46316acbf65150a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12452ec5_15ae4b89",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArrayBuilder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-03T14:15:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should use VectorTraits\u003cT\u003e for TerminatedArray, but it would be okay because TerminatedArray is rarely used...",
+      "revId": "c91b2b80866f538a20ced12d46316acbf65150a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
