@@ -22,6 +22,30 @@
       "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9305dc54_1890450c",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-03T22:51:52Z",
+      "side": 1,
+      "message": "I\u0027d rather do it in two steps. It is less invasive if this one needs to be reverted for one reason or another.",
+      "parentUuid": "17bb1ef1_4e499c2c",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
