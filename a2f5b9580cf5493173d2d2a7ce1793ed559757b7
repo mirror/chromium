@@ -88,6 +88,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4b28a5_79e55e3a",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-03T08:00:28Z",
+      "side": 1,
+      "message": "\u003e URLFetcher requires an in-process network stack.  The network stack is moving out-of-process, so consumers will need to switch to a new API.  Any test that relies on an old API that will go away has a much higher chance of silently regressing, and also adds overhead to migrating.\n\nI still don\u0027t get the disagreement. I am testing the old code *and* the new code. The test for the old code can be deleted when all use of URLFetcher is gone.\n\n\u003e Moreover, variations::AppendVariationHeaders is called in ResourceDispatcherHost - that call takes precedence over all others, as that one is being invoked on all web-initiated (and thus, potentially hostile) requests.  That\u0027s the case we most need to test.  I\u0027m fine with testing other paths as well, of course.\n\nRDH is covered in the TestStrippingHeadersFromResourceRequest test.",
+      "parentUuid": "4f20d678_501753d0",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
