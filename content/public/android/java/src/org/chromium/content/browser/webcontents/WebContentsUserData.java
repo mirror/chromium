@@ -46,6 +46,12 @@ public final class WebContentsUserData {
      */
     public interface UserDataFactory<T> { T create(WebContents webContents); }
 
+    /**
+     * Interface for WebContentsUserData-managed class that allows for observing
+     * |destroy| event.
+     */
+    public interface DestroyObserver { void onDestroy(); }
+
     private final Object mObject;
 
     private WebContentsUserData(Object object) {
@@ -76,5 +82,9 @@ public final class WebContentsUserData {
         }
         // Casting Object to T is safe since we make sure the object was of type T upon creation.
         return (T) data.mObject;
+    }
+
+    public void destroy() {
+        if (mObject instanceof DestroyObserver) ((DestroyObserver) mObject).onDestroy();
     }
 }
