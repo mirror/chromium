@@ -22,6 +22,30 @@
       "revId": "5b2de20541d2b08bf64e81804b538eb4d03a4e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79aaafe7_2faba393",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransfer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-03T20:21:48Z",
+      "side": 0,
+      "message": "Ah - you indeed found a bug, thanks. I fixed it and reverted the change to DataTransferTest.\nThat test covers this case.",
+      "parentUuid": "47566523_8f96030f",
+      "range": {
+        "startLine": 387,
+        "startChar": 26,
+        "endLine": 387,
+        "endChar": 41
+      },
+      "revId": "5b2de20541d2b08bf64e81804b538eb4d03a4e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
