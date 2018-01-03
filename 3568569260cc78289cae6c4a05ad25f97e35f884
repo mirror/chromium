@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "dbf6d17b_83b50f4d",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2018-01-03T06:59:28Z",
+      "side": 1,
+      "message": "As done in GLRendererTest, move to a separate file cc/test/resource_provider_test_utils.h",
+      "parentUuid": "40940cd0_d301cb2d",
+      "revId": "3568569260cc78289cae6c4a05ad25f97e35f884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e599a976_69b92aa5",
         "filename": "cc/test/render_pass_test_utils.cc",
         "patchSetId": 3
