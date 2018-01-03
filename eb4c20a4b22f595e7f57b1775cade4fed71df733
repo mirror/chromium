@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96034af7_2aa669ea",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2482,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2018-01-03T23:55:31Z",
+      "side": 1,
+      "message": "Even if this method does the right thing, display properties haven\u0027t changed so calling it here doesn\u0027t feel right. Should we have a WasResized method that we call both here and in OnSynchronizedDisplayPropertiesChanged?",
+      "revId": "eb4c20a4b22f595e7f57b1775cade4fed71df733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
