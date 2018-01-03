@@ -16,6 +16,24 @@
       "revId": "230c0d909561ade463f1679ba3c4b9ebe83216a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6835019_504ab868",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-03T23:41:41Z",
+      "side": 1,
+      "message": "There\u0027s a cache lock that we have throughout these functions that is typically acquired in the public functions (first few lines of DecodeImageInTask for example).\n\nHowever, we can\u0027t hold this lock during the actual decode process, since that would make the cache unusable from any thread while the decode is happening, so we unlock in DecodeImage (line 389 here). Most notably, any access to the cache on the compositor thread would block on any currently running decode, so clearly that\u0027s bad.\n\nHowever, once we get to this line, we\u0027ve re-acquired the lock again. The comment is saying that while our lock was released, it\u0027s feasible that we could have had another task or a raster also do the decode. In that case, the cache_entry would already be locked. If it\u0027s locked, then just release the work that\u0027we done in DecodeImage (ie, unlock decoded_entry).\n\nOne possible scenario where this can happen:\n1. We schedule a raster without the image decode, because the image decode would not fit in memory.\n2. While we\u0027re running the (say, multiframe) decode, we\u0027ve freed up some memory and now are doing another raster schedule, but this time with a predecode task.\n3. The predecode task from (2) runs and enters DecodeImage and starts decoding, or probably waiting on the decoder lock\n4. The raster task from (1) finishes the decode and locks the entry on line 358 here. \n5. The predecode task from (2) eventually finishes and hits this if condition, so it unlocks its work and exits.",
+      "parentUuid": "c8345d58_259f809a",
+      "revId": "230c0d909561ade463f1679ba3c4b9ebe83216a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
