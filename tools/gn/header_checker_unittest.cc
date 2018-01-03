@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <ostream>
 #include <vector>
 
+#include "base/bind.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/config.h"
 #include "tools/gn/header_checker.h"
@@ -66,7 +68,15 @@ class HeaderCheckerTest : public testing::Test {
   std::vector<const Target*> targets_;
 };
 
+bool PathsEqual(const base::FilePath& a, const base::FilePath& b) {
+  return a.NormalizePathSeparators() == b.NormalizePathSeparators();
+}
+
 }  // namespace
+
+void PrintTo(const SourceFile& source_file, ::std::ostream* os) {
+  *os << source_file.value();
+}
 
 TEST_F(HeaderCheckerTest, IsDependencyOf) {
   scoped_refptr<HeaderChecker> checker(
@@ -288,4 +298,76 @@ TEST_F(HeaderCheckerTest, CheckIncludeAllowCircular) {
   err = Err();
   EXPECT_TRUE(checker->CheckInclude(&b_, input_file, a_public, range, &err));
   EXPECT_FALSE(err.has_error());
+}
+
+TEST_F(HeaderCheckerTest, SourceFileForInclude) {
+  using base::FilePath;
+  const std::vector<SourceDir> kIncludeDirs = {
+      SourceDir("/c/custom_include/"), SourceDir("//"), SourceDir("//subdir")};
+  const char kIncludePath[] = "lib/header.h";
+  const FilePath kRoot = FilePath::FromUTF8Unsafe("/root/path");
+
+  InputFile dummy_input_file(SourceFile("//some_file.cc"));
+  dummy_input_file.SetContents(std::string());
+  LocationRange dummy_range;
+
+  BuildSettings build_settings;
+  build_settings.SetRootPath(kRoot);
+
+  scoped_refptr<HeaderChecker> checker(
+      new HeaderChecker(&build_settings, targets_));
+  {
+    Err err;
+    HeaderChecker::PathExistsCallback path_exists =
+        base::BindRepeating(&PathsEqual, kRoot.AppendASCII(kIncludePath));
+    SourceFile source_file =
+        checker->SourceFileForInclude(kIncludePath, kIncludeDirs, path_exists,
+                                      dummy_input_file, dummy_range, &err);
+    EXPECT_FALSE(err.has_error());
+    EXPECT_EQ(SourceFile("//lib/header.h"), source_file);
+  }
+
+  {
+    Err err;
+    HeaderChecker::PathExistsCallback path_exists = base::BindRepeating(
+        &PathsEqual,
+        FilePath::FromUTF8Unsafe("/c/custom_include/lib/header.h"));
+    SourceFile source_file =
+        checker->SourceFileForInclude(kIncludePath, kIncludeDirs, path_exists,
+                                      dummy_input_file, dummy_range, &err);
+    EXPECT_FALSE(err.has_error());
+    EXPECT_EQ(SourceFile("/c/custom_include/lib/header.h"), source_file);
+  }
+}
+
+TEST_F(HeaderCheckerTest, SourceFileForInclude_FileNotFound) {
+  using base::FilePath;
+  const char kFileContents[] = "Some dummy contents";
+  const std::vector<SourceDir> kIncludeDirs = {SourceDir("//")};
+  scoped_refptr<HeaderChecker> checker(
+      new HeaderChecker(setup_.build_settings(), targets_));
+
+  Err err;
+  {
+    // InputFile is created inside a scope so that the test can check if the
+    // range in the Err object is constructed properly.
+    InputFile input_file(SourceFile("//input.cc"));
+    input_file.SetContents(std::string(kFileContents));
+    const int kLineNumber = 10;
+    const int kColumnNumber = 16;
+    const int kLength = 8;
+    const int kByteNumber = 100;
+    LocationRange range(
+        Location(&input_file, kLineNumber, kColumnNumber, kByteNumber),
+        Location(&input_file, kLineNumber, kColumnNumber + kLength,
+                 kByteNumber));
+
+    HeaderChecker::PathExistsCallback path_doesnt_exist =
+        base::BindRepeating([](const FilePath& path) -> bool { return false; });
+    SourceFile source_file = checker->SourceFileForInclude(
+        "header.h", kIncludeDirs, path_doesnt_exist, input_file, range, &err);
+  }
+  EXPECT_TRUE(err.has_error());
+  EXPECT_EQ("Include file not found.", err.message());
+  EXPECT_EQ(kFileContents, err.location().file()->contents());
 }
