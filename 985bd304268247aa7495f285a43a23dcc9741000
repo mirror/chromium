@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2be2078d_b3e99544",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T17:40:13Z",
+      "side": 1,
+      "message": "Slice is what we usually do - it immediately suggests that we just need a copy.",
+      "revId": "985bd304268247aa7495f285a43a23dcc9741000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59848d6_c024e8e2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T17:40:13Z",
+      "side": 1,
+      "message": "How there could be no progress bar?",
+      "revId": "985bd304268247aa7495f285a43a23dcc9741000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
