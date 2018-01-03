@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110eb9ab_d6af9e24",
+        "filename": "third_party/WebKit/Source/core/fetch/RequestInit.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-03T08:27:17Z",
+      "side": 1,
+      "message": "How hot do we expect this function to be? IIUC, it is called every time a request is made (at least when there\u0027s a SW involved), which means it needs to be fast. If so (and assuming it\u0027s always on the main thread), it would be better to do these checks with a HashSet of AtomicStrings. (Seems like the attribute filter in mutation observers is a good example: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/MutationObserver.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d188)",
+      "revId": "8deab4ff963479dc1f550481da98a77eb8271764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
