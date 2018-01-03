@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f52fa8ef_b9c70cd1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T17:20:50Z",
+      "side": 1,
+      "message": "I don\u0027t really understand all this logic. Can we put it somewhere closer to input instead? I doubt we\u0027ll be able to maintain it.",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
