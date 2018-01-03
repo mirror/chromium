@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7e1cef2_27dd584c",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-03T01:52:16Z",
+      "side": 1,
+      "message": "Not easily. The polling policy is selected by the WifiDataProvider implementation so that policy params can be tuned per-platform. I don\u0027t see a straightforward way to create the policy earlier without breaking the tuning functionality.",
+      "parentUuid": "c55161ca_a0f69702",
+      "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1d9342b_89bdb277",
         "filename": "device/geolocation/wifi_polling_policy.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea2913f_a216930b",
+        "filename": "device/geolocation/wifi_polling_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-03T01:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1d9342b_89bdb277",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ea80c2df_db08268b",
+        "filename": "device/geolocation/wifi_polling_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-03T01:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16bb16ba_e9d4f5c4",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ff50d8f_5645ab84",
         "filename": "device/geolocation/wifi_polling_policy.h",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-02T23:25:00Z",
       "side": 1,
       "message": "Should |next_scan_| be recomputed if the polling interval is changed?",
+      "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d033e59_7be3b71d",
+        "filename": "device/geolocation/wifi_polling_policy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2018-01-03T01:52:16Z",
+      "side": 1,
+      "message": "No, if the polling interval is changed it should apply to the next interval. The polling interval is only changed based on the results of a just-completed wifi scan, so we will recompute next_scan_ in that situation anyway.",
+      "parentUuid": "4ff50d8f_5645ab84",
       "revId": "a25db0d076f9c1f9d404dc0228f5dc3f4266bccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
