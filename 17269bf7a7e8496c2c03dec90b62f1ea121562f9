@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4dc887c_fe6b7da3",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-03T20:27:11Z",
+      "side": 1,
+      "message": "nit: should we also \"connector_ \u003d nullptr;\" here, or is there use in the connector sitting around?",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6412c3_883f36c6",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-03T20:27:11Z",
+      "side": 1,
+      "message": "Can you clarify what this is trying to do? I don\u0027t understand why this is here, and since AFAICT the value never decreases this is either unreachable or undefined behavior (signed integer overflow isn\u0027t defined by the standard).",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
