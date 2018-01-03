@@ -304,6 +304,8 @@ void TypingCommand::InsertText(Document& document,
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
   EditingState editing_state;
+  LOG(INFO) << "  InsertText Invoked FS::SelInDOMTree: "
+            << frame->Selection().GetSelectionInDOMTree();
   InsertText(document, text, frame->Selection().GetSelectionInDOMTree(),
              options, &editing_state, composition, is_incremental_insertion);
 }
@@ -354,10 +356,14 @@ void TypingCommand::InsertText(
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
 
+  LOG(INFO) << " passed_selection_for_insertion : "
+            << passed_selection_for_insertion;
   const VisibleSelection& current_selection =
       frame->Selection().ComputeVisibleSelectionInDOMTree();
   const VisibleSelection& selection_for_insertion =
       CreateVisibleSelection(passed_selection_for_insertion);
+  LOG(INFO) << " CurrentSelection " << current_selection;
+  LOG(INFO) << " selection_for_insertion " << selection_for_insertion;
 
   String new_text = text;
   if (composition_type != kTextCompositionUpdate) {
@@ -439,6 +445,8 @@ void TypingCommand::InsertText(
   ABORT_EDITING_COMMAND_IF(!command->Apply());
 
   if (change_selection) {
+    // editing/inserting/insert-text-on-dom-change-crash.html reaches here.
+    // ABORT_EDITING_COMMAND_IF(!current_selection.IsValidFor(document));
     const SelectionInDOMTree& current_selection_as_dom =
         current_selection.AsSelection();
     command->SetEndingSelection(

@@ -1,0 +1,36 @@
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+selection_test(
+  [
+  '<object>x</object>'
+  ],
+  selection => {
+    const document = selection.document;
+    document.addEventListener("DOMNodeInserted", function() {
+      document.execCommand("SelectAll");
+    });
+
+    document.addEventListener("selectionchange", () =>
+      document.execCommand('InsertText'));
+
+    document.designMode = "on";
+    var body = document.body;
+    body.parentNode.replaceChild(
+      document.documentElement.cloneNode(true), body);
+  },
+  [
+  '<html>',
+  '<head></head>',
+  '<html>',
+  '<head></head>',
+  '<body>',
+  '^<object>x1</object>|',
+  '</body>',
+  '</html>',
+  '</html>'
+  ],
+  'Should not crash');
+</script>
