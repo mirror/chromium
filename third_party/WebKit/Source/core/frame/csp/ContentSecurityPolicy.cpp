@@ -194,6 +194,7 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
   if (require_safe_types_)
     execution_context_->GetSecurityContext().SetRequireTrustedTypes();
 
+  // Upgrade Insecure Requests: update the policy.
   if (document) {
     document->EnforceInsecureRequestPolicy(insecure_request_policy_);
   } else {
@@ -201,12 +202,19 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
         insecure_request_policy_);
   }
 
+  // Upgrade Insecure Requests: update the set of insecure URLs to upgrade.
   if (insecure_request_policy_ & kUpgradeInsecureRequests) {
     UseCounter::Count(execution_context_,
                       WebFeature::kUpgradeInsecureRequestsEnabled);
+
     if (!execution_context_->Url().Host().IsEmpty()) {
-      execution_context_->GetSecurityContext().AddInsecureNavigationUpgrade(
-          execution_context_->Url().Host().Impl()->GetHash());
+      uint32_t hash = execution_context_->Url().Host().Impl()->GetHash();
+      if (document) {
+        document->EnforceInsecureNavigationsSet({hash});
+      } else {
+        execution_context_->GetSecurityContext().AddInsecureNavigationUpgrade(
+            hash);
+      }
     }
   }
 

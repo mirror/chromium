@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upgrade Insecure Requests: top-frame navigation inside iframe (upgrade expected)</title>
+    <script>
+      if (window.testRunner) {
+        testRunner.dumpAsText();
+        testRunner.waitUntilDone();
+      }
+      function iframe_onload() {
+        var iframe = document.getElementsByTagName("iframe")[0];
+        iframe.onload = null;
+
+        // Enable upgrade-insecure-requests dynamically.
+        var meta = document.createElement('meta');
+        meta.httpEquiv = "Content-Security-Policy";
+        meta.content = "upgrade-insecure-requests";
+        document.getElementsByTagName('head')[0].appendChild(meta);
+
+        // This is a bit of a hack. UPGRADE doesn't upgrade the port number,
+        // so we specify this non-existent URL ('http' over port 8443). If
+        // UPGRADE doesn't work, it won't load. The expected behavior is that
+        // the url is upgraded and the page loads.
+        iframe.src = "https://example.test:8443/security/upgrade-insecure-requests/resources/navigate-top-frame.php?url=http://127.0.0.1:8443/misc/resources/success-notify-done.html"
+      }
+    </script>
+  </head>
+  <body>
+    <iframe
+      sandbox = "allow-scripts allow-top-navigation"
+      src = "/resources/dummy.html"
+      onload = "iframe_onload()"
+    ></iframe>
+  </body>
+</html>
