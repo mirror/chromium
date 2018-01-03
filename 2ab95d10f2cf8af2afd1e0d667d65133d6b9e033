@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "826514d1_4c696f3c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2018-01-03T10:51:51Z",
+      "side": 1,
+      "message": "nit: s/hehavior/behavior/\n\nAlso, I\u0027d probably use the word investigate in the beginning of the sentence.\n\nnit: s/Ensure/Investigate/",
+      "range": {
+        "startLine": 449,
+        "startChar": 45,
+        "endLine": 449,
+        "endChar": 54
+      },
+      "revId": "2ab95d10f2cf8af2afd1e0d667d65133d6b9e033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
