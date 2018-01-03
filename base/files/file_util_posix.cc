@@ -626,6 +626,8 @@ bool GetTempDir(FilePath* path) {
   } else {
 #if defined(OS_ANDROID)
     return PathService::Get(base::DIR_CACHE, path);
+#elif defined(OS_FUCHSIA)
+    *path = FilePath("/data");
 #else
     *path = FilePath("/tmp");
 #endif
