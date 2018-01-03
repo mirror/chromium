@@ -2,6 +2,109 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2a79f0b_f4d2a5cb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "As you mentioned offline, another followup question is what we can do for FrameHost mojo messages.  E.g., it\u0027d be useful to also set the active URL in BeginNavigation, but not sure if there\u0027s a generic way to do that.  Probably not a pressing problem until more navigation IPCs move over to mojo.",
+      "range": {
+        "startLine": 1526,
+        "startChar": 0,
+        "endLine": 1526,
+        "endChar": 65
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fecdd70_df3b0376",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "It seems that RenderWidgetHostImpl will also get here for non-OOPIF cases (https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_impl.cc?l\u003d596\u0026rcl\u003d18a58336c49686626ef4ed67b37c56aca5b1b89a), even if the RVH doesn\u0027t end up handling the message, and some of the widget messages might be latency-sensitive (e.g., input-related ones?).  It might be worth asking rsesek@ whether there might be any perf impact to setting+clearing a URL crash key on all IPCs for RFH/RVH/RWH.",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 42
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356e451d_217ac60e",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "Would it make sense to move the ScopedActiveURL until after is_swapped_out_ filtering, which would avoid unnecessarily touching the crash key, since we won\u0027t process any IPCs in that case?",
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370a23c1_24419fe2",
+        "filename": "content/browser/scoped_active_url.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "2018 :) (also below)",
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d126d5_3ad564f0",
+        "filename": "content/browser/scoped_active_url.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "nit: remove \".\" since second line continues this sentence?",
+      "range": {
+        "startLine": 23,
+        "startChar": 69,
+        "endLine": 23,
+        "endChar": 70
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a75c2b16_f3f630f9",
         "filename": "content/browser/scoped_active_url.h",
         "patchSetId": 5
@@ -36,6 +139,30 @@
       "writtenOn": "2018-01-03T17:37:32Z",
       "side": 1,
       "message": "This is just an origin, because a renderer process might only know the origin of a top-level frame (e.g. if the top-level frame is an OOPIF).  We might want to consider using a full URL if it is available (it is always available in the browser process and sometimes available in the renderer process).  Is this something we would want to do in a follow-up?  What would be the best way to discuss that?",
+      "range": {
+        "startLine": 29,
+        "startChar": 61,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f885e6c5_f707f6ab",
+        "filename": "content/browser/scoped_active_url.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-03T19:48:24Z",
+      "side": 1,
+      "message": "Ack.  It seems logical to use the full top URL from the browser process, so we could look into it in a followup.  Maybe we could split ContentClient::SetActiveURL into a browser-side version that takes in the second arg as a URL, and a renderer-side version that takes a top origin, which would also clarify that the top URL isn\u0027t available from the renderer?  The former could use a new crash key, \"top-url\", instead of \"top-origin\".",
+      "parentUuid": "6e8356a4_ffa89794",
       "range": {
         "startLine": 29,
         "startChar": 61,
