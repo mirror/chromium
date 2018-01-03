@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13cd8bd3_0cc2321e",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "On second though, I think the dependency restructuring you\u0027re doing removes the need for depfiles.\n\nPlease check whether this is true and if so remove them.",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afb567e_e8bea7b0",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0f0943_7fd39603",
+        "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "This should be pickle-specific exceptions too.",
+      "range": {
+        "startLine": 283,
+        "startChar": 9,
+        "endLine": 283,
+        "endChar": 14
+      },
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bf9726_a0b1a2f6",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Happy new year!",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d98e2b3_23caffe9",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "When does this occur?",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ac6c80_7f13bd2d",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Is the plan still to extend this to support boolean expressions?",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79a3367_69d961ff",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Does it have to be None in particular, rather than any False-like value? See https://google.github.io/styleguide/pyguide.html?showone\u003dTrue/False_evaluations#True/False_evaluations.",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1783c4b1_2072b5c8",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Could this also filter each item as well?",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b4fdf9_0ac98fe5",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Function docstrings should include a verb.",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27cf5b7b_88418cea",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "ENABLED_FLAGS \u003d frozenset({...",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573563bd_b9cec388",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Can you test for enums and constants contained within an interface or struct.",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f0b969_b527c258",
+        "filename": "mojo/public/tools/bindings/pylib/mojom_tests/parse/conditional_features_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T02:06:09Z",
+      "side": 1,
+      "message": "Test RemoveDisabledDefinitions()",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
