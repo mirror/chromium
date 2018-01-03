@@ -22,6 +22,23 @@
       "revId": "311b87158db222aaf3c1b71afce9b3fcba09c7cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaffa46e_3c6bef25",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2018-01-03T18:41:22Z",
+      "side": 1,
+      "message": "I wonder if we should remove the empty line.",
+      "revId": "311b87158db222aaf3c1b71afce9b3fcba09c7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
