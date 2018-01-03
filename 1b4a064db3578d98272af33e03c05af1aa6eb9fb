@@ -16,6 +16,24 @@
       "revId": "1b4a064db3578d98272af33e03c05af1aa6eb9fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0368b8_9f7390b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-03T22:35:34Z",
+      "side": 1,
+      "message": "I don\u0027t think so. That CL sets the right transition type in NavigationContext, but doesn\u0027t update NavigationItem.",
+      "parentUuid": "1746c87d_5ebfb210",
+      "revId": "1b4a064db3578d98272af33e03c05af1aa6eb9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
