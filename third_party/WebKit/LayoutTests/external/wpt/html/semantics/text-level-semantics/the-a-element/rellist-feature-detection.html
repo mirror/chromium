@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<title>HTMLAnchorElement relList</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+test(function() {
+  var element = document.createElement("a");
+  // Test that setting rel is also setting relList, for both
+  // valid and invalid values.
+  element.rel = "whatever";
+  assert_true(element.relList.contains("whatever"));
+  element.rel = "prefetch";
+  assert_true(element.relList.contains("prefetch"));
+  // Test that "add()" works.
+  element.relList.add("preloadwhatever");
+  assert_equals(element.rel, "prefetch preloadwhatever");
+  assert_true(element.relList.contains("preloadwhatever"));
+  // Test that "supports()" is returning true for valid values
+  // and false for invalid ones.
+  assert_false(element.relList.supports("bogus"));
+  assert_true(element.relList.supports("preload"));
+}, "Make sure that relList based feature detection is working");
+</script>
