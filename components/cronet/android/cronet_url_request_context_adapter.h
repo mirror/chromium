@@ -119,6 +119,10 @@ class CronetURLRequestContextAdapter
       const base::android::JavaParamRef<jobject>& jcaller,
       bool should);
 
+  CronetURLRequestContext* cronet_url_request_context() const {
+    return context_.get();
+  }
+
   // CronetURLRequestContext::Delegate
   void OnInitNetworkThread(CronetURLRequestContext* context) override;
 
