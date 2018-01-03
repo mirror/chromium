@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46d40657_73e5a980",
+        "filename": "content/browser/net/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-03T17:30:33Z",
+      "side": 1,
+      "message": "This is similar to other places in Chrome where NQE code lives:\nhttps://cs.chromium.org/search/?q\u003df:owners+f.*nqe.*owners\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "b2b6d9a6a529ca87e9272681f642ef4a3ba0d284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
