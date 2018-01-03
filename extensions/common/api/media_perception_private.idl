@@ -152,6 +152,11 @@ namespace mediaPerceptionPrivate {
     double? magnitude;
   };
 
+  dictionary DirectionAngles {
+    double? yaw;
+    double? pitch;
+  };
+
   enum EntityType {
     UNSPECIFIED,
     FACE,
@@ -178,6 +183,10 @@ namespace mediaPerceptionPrivate {
 
     // The estimated depth of the entity from the camera.
     Distance? depth;
+
+    long? track_id;
+    DirectionAngles? gazeAngles;
+    double? lookingAtCameraConfidence3d;
   };
 
   dictionary PacketLatency {

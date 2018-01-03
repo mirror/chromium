@@ -104,6 +104,11 @@ message FramePerception {
   repeated PacketLatency packet_latency = 6;
 }
 
+message DirectionAngles {
+  optional double yaw = 1;
+  optional double pitch = 2;
+}
+
 message Entity {
   // A unique id associated with the detected entity, which can be used to track
   // the entity over time.
@@ -130,6 +135,13 @@ message Entity {
 
   // String label for this entity.
   optional string label = 6;
+
+  // Track id
+  optional uint32 track_id = 7;
+
+  // If entity is a person, the gaze information.
+  optional DirectionAngles gaze_angles = 8;
+  optional double looking_at_camera_confidence_3d = 9;
 }
 
 message BoundingBox {

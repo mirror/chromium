@@ -91,6 +91,20 @@ void InitializeFakeFramePerception(const int index,
   mri::Entity* entity_three = frame_perception->add_entity();
   entity_three->set_type(mri::Entity::LABELED_REGION);
   entity_three->set_label(kFakeEntityLabel3);
+
+  mri::DirectionAngles* gaze_angles_one = entity_one->mutable_gaze_angles();
+  gaze_angles_one->set_yaw(16);
+  gaze_angles_one->set_pitch(17);
+
+  mri::DirectionAngles* gaze_angles_two = entity_two->mutable_gaze_angles();
+  gaze_angles_two->set_yaw(18);
+  gaze_angles_two->set_pitch(19);
+
+  entity_one->set_track_id(20);
+  entity_two->set_track_id(21);
+
+  entity_one->set_looking_at_camera_confidence_3d(22.0);
+  entity_two->set_looking_at_camera_confidence_3d(23.0);
 }
 
 void ValidateFramePerceptionResult(
@@ -177,6 +191,30 @@ void ValidateFramePerceptionResult(
   EXPECT_EQ(*entity_result_three.entity_label, kFakeEntityLabel3);
   EXPECT_EQ(entity_result_three.type,
             media_perception::ENTITY_TYPE_LABELED_REGION);
+
+  const media_perception::DirectionAngles* gaze_angles_result_one =
+      entity_result_one.gaze_angles.get();
+  ASSERT_TRUE(gaze_angles_result_one);
+  ASSERT_TRUE(gaze_angles_result_one->yaw);
+  EXPECT_EQ(*gaze_angles_result_one->yaw, 16);
+  ASSERT_TRUE(gaze_angles_result_one->pitch);
+  EXPECT_EQ(*gaze_angles_result_one->pitch, 17);
+  ASSERT_TRUE(entity_result_one.track_id);
+  EXPECT_EQ(*entity_result_one.track_id, 20);
+  ASSERT_TRUE(entity_result_one.looking_at_camera_confidence3d);
+  EXPECT_EQ(*entity_result_one.looking_at_camera_confidence3d, 22);
+
+  const media_perception::DirectionAngles* gaze_angles_result_two =
+      entity_result_two.gaze_angles.get();
+  ASSERT_TRUE(gaze_angles_result_two);
+  ASSERT_TRUE(gaze_angles_result_two->yaw);
+  EXPECT_EQ(*gaze_angles_result_two->yaw, 18);
+  ASSERT_TRUE(gaze_angles_result_two->pitch);
+  EXPECT_EQ(*gaze_angles_result_two->pitch, 19);
+  ASSERT_TRUE(entity_result_two.track_id);
+  EXPECT_EQ(*entity_result_two.track_id, 21);
+  ASSERT_TRUE(entity_result_two.looking_at_camera_confidence3d);
+  EXPECT_EQ(*entity_result_two.looking_at_camera_confidence3d, 23);
 }
 
 void InitializeFakeImageFrameData(mri::ImageFrame* image_frame) {
