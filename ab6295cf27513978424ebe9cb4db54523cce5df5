@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04934f02_3f9ff282",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T16:49:12Z",
+      "side": 1,
+      "message": "Is this comment right?",
+      "revId": "ab6295cf27513978424ebe9cb4db54523cce5df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
