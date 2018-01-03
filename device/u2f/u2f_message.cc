@@ -5,6 +5,7 @@
 #include "base/memory/ptr_util.h"
 #include "device/u2f/u2f_packet.h"
 
+#include "base/logging.h"
 #include "u2f_message.h"
 
 namespace device {
@@ -93,6 +94,8 @@ std::list<std::unique_ptr<U2fPacket>>::const_iterator U2fMessage::end() {
 std::vector<uint8_t> U2fMessage::PopNextPacket() {
   std::vector<uint8_t> data;
   if (NumPackets() > 0) {
+    if (packets_.front() == nullptr)
+      LOG(ERROR) << "\n\n\n\n ===== WRONG  ======= \n\n\n\n ";
     data = packets_.front()->GetSerializedData();
     packets_.pop_front();
   }
