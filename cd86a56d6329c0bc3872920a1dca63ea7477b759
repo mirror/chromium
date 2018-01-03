@@ -34,6 +34,24 @@
       "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0fdc60_f0eccf38",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-03T14:28:17Z",
+      "side": 1,
+      "message": "Another option, if we don\u0027t want to keep the style, is to capture what we compute in SetCurrentStyle. The values of \u0027white-space\u0027, \u0027word-break\u0027, \u0027line-break\u0027, \u0027webkit-locale\u0027, and \u0027hyphen\u0027. I\u0027m guessing the style will be kept alive by fragment or some other objects for the life time of the break token, but if this assumption is wrong, capturing necessary values might consume less memory. WDYT?",
+      "parentUuid": "8e8ea7b8_397620ec",
+      "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
