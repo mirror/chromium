@@ -2563,6 +2563,7 @@ interface WorkerNavigator
     getter appVersion
     getter budget
     getter connection
+    getter deviceMemory
     getter hardwareConcurrency
     getter locks
     getter onLine
