@@ -68,6 +68,7 @@ TEST_F(ImageIndexTest, InvalidInitialize2) {
                           {{1, 0}, {8, 1}, {10, 2}},
                           {4, TypeTag(1), PoolTag(0)}, {{3, 3}},
                           {3, TypeTag(2), PoolTag(1)}, {{11, 0}});
+
   EXPECT_FALSE(image_index_.Initialize(&disasm));
 }
 

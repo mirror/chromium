@@ -15,9 +15,7 @@ namespace zucchini {
 
 ImageIndex::ImageIndex(ConstBufferView image)
     : image_(image), type_tags_(image.size(), kNoTypeTag) {}
-
-ImageIndex::ImageIndex(ImageIndex&& that) = default;
-
+ImageIndex::ImageIndex(ImageIndex&&) = default;
 ImageIndex::~ImageIndex() = default;
 
 bool ImageIndex::Initialize(Disassembler* disasm) {
@@ -30,7 +28,7 @@ bool ImageIndex::Initialize(Disassembler* disasm) {
     target_pool.InsertTargets(std::move(*group.GetReader(disasm)));
   }
   for (const auto& group : ref_groups) {
-    // Find and store all references for each type, returns false on finding
+    // Find and store all references for current type, returns false on finding
     // any overlap, to signal error.
     if (!InsertReferences(group.traits(),
                           std::move(*group.GetReader(disasm)))) {

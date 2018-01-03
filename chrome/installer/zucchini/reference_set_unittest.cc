@@ -15,7 +15,6 @@ namespace zucchini {
 
 class ReferenceSetTest : public testing::Test {
  protected:
-  // For simplicity, |target_pool_| has no type info (not needed here).
   TargetPool target_pool_ = TargetPool{{0, 2, 3, 5}};
   ReferenceSet reference_set_ =
       ReferenceSet{{2, TypeTag(0), PoolTag(0)}, target_pool_};

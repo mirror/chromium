@@ -15,7 +15,7 @@ namespace zucchini {
 
 namespace {
 
-// Returns true if |refs| is sorted.
+// Returns true is |refs| is sorted.
 bool IsReferenceListSorted(const std::vector<IndirectReference>& refs) {
   return std::is_sorted(
       refs.begin(), refs.end(),
@@ -53,11 +53,10 @@ void ReferenceSet::InitReferences(const std::vector<Reference>& refs) {
 }
 
 IndirectReference ReferenceSet::at(offset_t offset) const {
-  auto pos =
-      std::upper_bound(references_.begin(), references_.end(), offset,
-                       [](offset_t offset, const IndirectReference& ref) {
-                         return offset < ref.location;
-                       });
+  auto pos = std::upper_bound(references_.begin(), references_.end(), offset,
+                              [](offset_t a, const IndirectReference& ref) {
+                                return a < ref.location;
+                              });
 
   DCHECK(pos != references_.begin());  // Iterators.
   --pos;

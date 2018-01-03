@@ -4,10 +4,6 @@
 
 #include "chrome/installer/zucchini/zucchini_gen.h"
 
-#include <stddef.h>
-#include <stdint.h>
-
-#include <algorithm>
 #include <memory>
 #include <utility>
 
@@ -17,7 +13,6 @@
 #include "chrome/installer/zucchini/encoded_view.h"
 #include "chrome/installer/zucchini/equivalence_map.h"
 #include "chrome/installer/zucchini/image_index.h"
-#include "chrome/installer/zucchini/label_manager.h"
 #include "chrome/installer/zucchini/patch_writer.h"
 #include "chrome/installer/zucchini/suffix_array.h"
 #include "chrome/installer/zucchini/targets_affinity.h"
@@ -33,78 +28,13 @@ constexpr size_t kNumIterations = 2;
 
 }  // namespace
 
-base::Optional<ImageIndex> MakeImageIndex(Disassembler* disasm) {
-  ImageIndex image_index(disasm->GetImage());
-  if (image_index.Initialize(disasm))
-    return image_index;
-  // An error occurs if overlapping references are found. This can be caused
-  // by malformed images or Zucchini bug, but this is not a fatal mistake.
-  // Return nullopt so caller can mitigate this (e.g., by generating raw
-  // patches instead).
-  LOG(WARNING) << "Warning: Overlapping references detected.";
-  return base::nullopt;
-}
-
-std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
-    const std::vector<offset_t>& old_targets,
-    const std::vector<Equivalence>& equivalences) {
-  auto current_equivalence = equivalences.begin();
-  std::vector<offset_t> new_targets;
-  new_targets.reserve(old_targets.size());
-  for (offset_t src : old_targets) {
-    while (current_equivalence != equivalences.end() &&
-           current_equivalence->src_end() <= src)
-      ++current_equivalence;
-
-    if (current_equivalence != equivalences.end() &&
-        current_equivalence->src_offset <= src) {
-      // Select the longest equivalence that contains |src|. In case of a tie,
-      // prefer equivalence with minimal |dst_offset|.
-      auto best_equivalence = current_equivalence;
-      for (auto next_equivalence = current_equivalence;
-           next_equivalence != equivalences.end() &&
-           src >= next_equivalence->src_offset;
-           ++next_equivalence) {
-        if (next_equivalence->length > best_equivalence->length ||
-            (next_equivalence->length == best_equivalence->length &&
-             next_equivalence->dst_offset < best_equivalence->dst_offset)) {
-          // If an |next_equivalence| is longer or equal to |best_equivalence|,
-          // it can be show that |src < next_equivalence->src_end()| i.e., |src|
-          // is inside |next_equivalence|.
-          DCHECK_LT(src, next_equivalence->src_end());
-          best_equivalence = next_equivalence;
-        }
-      }
-      new_targets.push_back(src - best_equivalence->src_offset +
-                            best_equivalence->dst_offset);
-    } else {
-      new_targets.push_back(kUnusedIndex);
-    }
-  }
-  return new_targets;
-}
-
-std::vector<offset_t> FindExtraTargets(
-    const ReferenceSet& new_references,
-    const UnorderedLabelManager& new_label_manager,
-    const EquivalenceMap& equivalence_map) {
-  auto equivalence = equivalence_map.begin();
-  std::vector<offset_t> targets;
-  for (const IndirectReference& ref : new_references) {
-    while (equivalence != equivalence_map.end() &&
-           equivalence->eq.dst_end() <= ref.location) {
-      ++equivalence;
-    }
-
-    if (equivalence == equivalence_map.end())
-      break;
-    offset_t target_offset =
-        new_references.target_pool().OffsetForKey(ref.target_key);
-    if (ref.location >= equivalence->eq.dst_offset &&
-        !new_label_manager.ContainsOffset(target_offset))
-      targets.push_back(target_offset);
-  }
-  return targets;
+std::vector<offset_t> FindExtraTargets(const TargetPool& projected_old_targets,
+                                       const TargetPool& new_targets) {
+  std::vector<offset_t> extra_targets;
+  std::set_difference(
+      new_targets.begin(), new_targets.end(), projected_old_targets.begin(),
+      projected_old_targets.end(), std::back_inserter(extra_targets));
+  return extra_targets;
 }
 
 EquivalenceMap CreateEquivalenceMap(const ImageIndex& old_image_index,
@@ -208,7 +138,8 @@ bool GenerateRawDelta(ConstBufferView old_image,
 
 bool GenerateReferencesDelta(const ReferenceSet& src_refs,
                              const ReferenceSet& dst_refs,
-                             const UnorderedLabelManager& new_label_manager,
+                             const TargetPool& projected_target_pool,
+                             const OffsetMapper& offset_mapper,
                              const EquivalenceMap& equivalence_map,
                              ReferenceDeltaSink* reference_delta_sink) {
   size_t ref_width = src_refs.width();
@@ -242,11 +173,17 @@ bool GenerateReferencesDelta(const ReferenceSet& src_refs,
       // Local offset of |src_ref| should match that of |dst_ref|.
       DCHECK_EQ(src_ref->location - equiv.src_offset,
                 dst_ref->location - equiv.dst_offset);
-      offset_t dst_index = new_label_manager.IndexOfOffset(
-          dst_refs.target_pool().OffsetForKey(dst_ref->target_key));
+      offset_t old_offset =
+          src_refs.target_pool().OffsetForKey(src_ref->target_key);
+      offset_t new_expected_offset = offset_mapper.ProjectOffset(old_offset);
+      offset_t new_expected_key =
+          projected_target_pool.KeyForOffset(new_expected_offset);
+      offset_t new_offset =
+          dst_refs.target_pool().OffsetForKey(dst_ref->target_key);
+      offset_t new_key = projected_target_pool.KeyForOffset(new_offset);
 
       reference_delta_sink->PutNext(
-          static_cast<int32_t>(dst_index - src_ref->target_key));
+          static_cast<int32_t>(new_key - new_expected_key));
     }
     if (dst_ref == dst_refs.end())
       break;  // Done.
@@ -310,51 +247,36 @@ bool GenerateExecutableElement(ExecutableType exe_type,
   }
 
   DCHECK_EQ(old_image_index.PoolCount(), new_image_index.PoolCount());
-  size_t pool_count = old_image_index.PoolCount();
 
-  EquivalenceMap equivalences =
+  EquivalenceMap equivalence_map =
       CreateEquivalenceMap(old_image_index, new_image_index);
-  std::vector<Equivalence> forward_equivalences =
-      equivalences.MakeForwardEquivalences();
+  OffsetMapper offset_mapper(equivalence_map);
 
-  std::vector<UnorderedLabelManager> new_label_managers(pool_count);
-  for (const auto& old_target_pool : old_image_index.target_pools()) {
-    const auto& new_target_pool = new_image_index.pool(old_target_pool.first);
-    // Label Projection to initialize |new_label_manager|.
-    std::vector<offset_t> new_labels = MakeNewTargetsFromEquivalenceMap(
-        old_target_pool.second.targets(), forward_equivalences);
-    new_label_managers[old_target_pool.first.value()].Init(
-        std::move(new_labels));
-
-    // Find extra targets in |new_image_index|, emit into patch, merge them to
-    // |new_labelsl_manager|, and update new references.
-    OrderedLabelManager extra_label_manager;
-    for (TypeTag type : new_target_pool.types()) {
-      extra_label_manager.InsertOffsets(FindExtraTargets(
-          new_image_index.refs(type),
-          new_label_managers[old_target_pool.first.value()], equivalences));
-    }
-    if (!GenerateExtraTargets(extra_label_manager.Labels(),
-                              old_target_pool.first, patch_writer))
-      return false;
-
-    for (offset_t offset : extra_label_manager.Labels())
-      new_label_managers[old_target_pool.first.value()].InsertNewOffset(offset);
-  }
   ReferenceDeltaSink reference_delta_sink;
-  for (const auto& old_refs : old_image_index.reference_sets()) {
-    const auto& new_refs = new_image_index.refs(old_refs.first);
-    if (!GenerateReferencesDelta(
-            old_refs.second, new_refs,
-            new_label_managers[new_refs.pool_tag().value()], equivalences,
-            &reference_delta_sink))
+  for (const auto& old_targets : old_image_index.target_pools()) {
+    PoolTag pool_tag = old_targets.first;
+    TargetPool projected_old_targets = old_targets.second;
+    projected_old_targets.Project(offset_mapper);
+    std::vector<offset_t> extra_target =
+        FindExtraTargets(projected_old_targets, new_image_index.pool(pool_tag));
+    projected_old_targets.InsertTargets(extra_target);
+
+    if (!GenerateExtraTargets(extra_target, pool_tag, patch_writer))
       return false;
+    for (TypeTag type_tag : old_targets.second.types()) {
+      if (!GenerateReferencesDelta(old_image_index.refs(type_tag),
+                                   new_image_index.refs(type_tag),
+                                   projected_old_targets, offset_mapper,
+                                   equivalence_map, &reference_delta_sink))
+        return false;
+    }
   }
   patch_writer->SetReferenceDeltaSink(std::move(reference_delta_sink));
-  return GenerateEquivalencesAndExtraData(new_image, equivalences,
+
+  return GenerateEquivalencesAndExtraData(new_image, equivalence_map,
                                           patch_writer) &&
-         GenerateRawDelta(old_image, new_image, equivalences, new_image_index,
-                          patch_writer);
+         GenerateRawDelta(old_image, new_image, equivalence_map,
+                          new_image_index, patch_writer);
 }
 
 /******** Exported Functions ********/

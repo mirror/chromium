@@ -31,13 +31,13 @@ class ImageIndex {
   ImageIndex(ImageIndex&& that);
   ~ImageIndex();
 
-  // Inserts all references read from |disasm|. This should be called
+  // Inserts all references read from |disassembler|. This should be called
   // exactly once. If overlap between any two references of any type is
   // encountered, returns false and leaves the object in an invalid state.
   // Otherwise, returns true.
   // TODO(huangs): Refactor ReaderFactory and WriterFactory so
   // |const Disassembler&| can be used here.
-  bool Initialize(Disassembler* disasm);
+  bool Initialize(Disassembler* disassembler);
 
   // Returns the number of reference type the index holds.
   size_t TypeCount() const { return reference_sets_.size(); }

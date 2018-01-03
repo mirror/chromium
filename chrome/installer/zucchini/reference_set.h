@@ -25,8 +25,8 @@ class ReferenceSet {
   // translation between offsets and indexes.
   ReferenceSet(const ReferenceTypeTraits& traits,
                const TargetPool& target_pool);
-  ReferenceSet(const ReferenceSet&) = delete;
   ReferenceSet(ReferenceSet&&);
+  ReferenceSet(const ReferenceSet&) = delete;
   ~ReferenceSet();
 
   // Either one of the initializers below should be called exactly once. These
@@ -38,8 +38,8 @@ class ReferenceSet {
   const std::vector<IndirectReference>& references() const {
     return references_;
   }
-  const ReferenceTypeTraits& traits() const { return traits_; }
   const TargetPool& target_pool() const { return target_pool_; }
+  const ReferenceTypeTraits& traits() const { return traits_; }
   TypeTag type_tag() const { return traits_.type_tag; }
   PoolTag pool_tag() const { return traits_.pool_tag; }
   offset_t width() const { return traits_.width; }
