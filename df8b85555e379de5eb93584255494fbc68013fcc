@@ -22,6 +22,30 @@
       "revId": "df8b85555e379de5eb93584255494fbc68013fcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d65d385_02267543",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-03T14:27:19Z",
+      "side": 1,
+      "message": "Good point. I had thought the symbols could differ in size between a and b, but that seems to be a confusion.",
+      "parentUuid": "bfa030f3_98c566ce",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "df8b85555e379de5eb93584255494fbc68013fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

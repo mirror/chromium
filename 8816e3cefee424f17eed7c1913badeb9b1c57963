@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "05c4d2ca_08001a6f",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-03T14:27:19Z",
+      "side": 1,
+      "message": "Right, I don\u0027t think the docstring is necessary as the file name is descriptive enough (for a private method). The docstring just adds an unnecessary maintenance burden.",
+      "parentUuid": "897d3cee_625cc066",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10db22b_9eb531df",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -262,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "dce29d50_ba7c4876",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-03T14:27:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand the objection: one doesn\u0027t have to use a glob here, this is an extension to providing a list of filenames as is done in process_profiles.",
+      "parentUuid": "faff00c2_207849d5",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eada33e_552564ec",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -321,6 +369,30 @@
       "side": 1,
       "message": "Did you change something to make it more consistent? I could not understand your response, sorry.",
       "parentUuid": "99ed1c0a_14141609",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18ce3118_5e75dbbe",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-03T14:27:19Z",
+      "side": 1,
+      "message": "Yes, can you not see the patchset?",
+      "parentUuid": "b5a1eb40_56155327",
       "range": {
         "startLine": 102,
         "startChar": 23,
@@ -509,6 +581,30 @@
       "side": 1,
       "message": "are you sure? GetReachedSymbolsFromDumpsAndMaybeWriteOffsets() is used in orderfile_generator_backend.py\n\nIt is in the lightweight instrumentation path, but still it would be good to keep it working",
       "parentUuid": "37dab25f_35977372",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4060ee1_0725b5e6",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-03T14:27:19Z",
+      "side": 1,
+      "message": "But process_profiles.main() is not called in those cases, these library names are only used when process_profiles is run on its own.\n\nThe fact that we\u0027re mixing this all together is probably an issue by itself, though.",
+      "parentUuid": "75b9a207_40f93870",
       "range": {
         "startLine": 230,
         "startChar": 60,
