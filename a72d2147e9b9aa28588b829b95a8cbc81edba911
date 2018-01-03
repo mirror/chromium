@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36a74f10_6a771783",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-03T21:41:52Z",
+      "side": 1,
+      "message": "File a tracking issue and reference it here?",
+      "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d962e63d_6f5bcf82",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-03T21:41:52Z",
+      "side": 1,
+      "message": "Can we do this in this CL, or is a lot of extra work?",
+      "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
