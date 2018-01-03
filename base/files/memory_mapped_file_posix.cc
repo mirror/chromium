@@ -124,6 +124,7 @@ bool MemoryMappedFile::MapFileRegionToMemory(
         do_manual_extension = true;
       }
 #else
+      DPLOG(ERROR) << "fallocate " << file_.GetPlatformFile();
       if (posix_fallocate(file_.GetPlatformFile(), region.offset,
                           region.size) != 0) {
         DPLOG(ERROR) << "posix_fallocate";
