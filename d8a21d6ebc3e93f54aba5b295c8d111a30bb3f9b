@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "492401d0_98da1e3e",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "In this comment you said to use \"const char\": https://chromium-review.googlesource.com/c/chromium/src/+/827576/1/content/browser/webauth/collected_client_data.h#19\nIs this a change in the style guide?",
+      "parentUuid": "2de94cad_a0eaf8bb",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47fb9d85_7a5bcb4f",
         "filename": "content/browser/webauth/collected_client_data.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5094d333_9c4aa6a8",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47fb9d85_7a5bcb4f",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bb8d36e9_453274e9",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb9af0e_79e9b005",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5fd66d2_2dcac2ab",
         "filename": "device/u2f/authenticator_data.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a331f3_b190e613",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5fd66d2_2dcac2ab",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9efa7ea4_6eef4909",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea38e452_2aad1365",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd66dfb_49b34087",
         "filename": "device/u2f/ec_public_key.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ec3ff3_8be62865",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T19:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd66dfb_49b34087",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "d8a21d6ebc3e93f54aba5b295c8d111a30bb3f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
