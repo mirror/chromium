@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e769185_199821e0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2018-01-03T14:57:58Z",
+      "side": 1,
+      "message": "question: should we reset some value to avoid calling the coordinator after this call?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "d14815c9d88c83bcf4a1809ff2a37373f29002c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
