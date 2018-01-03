@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba68119_d281a15b",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "\u003c\u003c yuv_resource_format; so you know what it was ?",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab778a77_e7a8ce7e",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "Maybe a comment what this early continue means conceptually?",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a34a0bd_92fd706c",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "^_^b nice one",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de46ee47_439edd7c",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "I normally dislike combining || and \u0026\u0026 in a single boolean statement very much. In this case it happens to line wrap kinda nicely so .. ok, but putting the 2 \u0026\u0026s into variables so this is just an || statement could help readability, esp over time. Also maybe this is why I am not 100% sure on the logic..",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6433ae5a_28d42dd8",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "Is it possible the resource_bit_depth would be !\u003d 8 in the future but still not match the bits_per_channel?",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e66da_87144bf1",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "Why does this not need conversion if the stride is different but the bpc\u003d\u003d8?",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb46a03_fd5ac72c",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T22:48:23Z",
+      "side": 1,
+      "message": "Where does R16 fall?",
+      "revId": "07480ee9598c8dccdc457b79f77f0469e5a9c347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
