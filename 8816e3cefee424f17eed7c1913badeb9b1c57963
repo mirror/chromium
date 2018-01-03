@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "283ffc19_972e33ab",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T15:10:48Z",
+      "side": 1,
+      "message": "Are you doing the s/file_list/glob_list/. I think it would only improve maintenance.\n\nMy biggest issue with your response is that you wrote \"Done\", but have not actually done what I asked for. Such imprecise responses make it difficult to communicate.\n\nDocstring objection is fine, I can live without a docstring here.",
+      "parentUuid": "05c4d2ca_08001a6f",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b10db22b_9eb531df",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -310,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "4ea2cd29_5e2ab934",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T15:10:48Z",
+      "side": 1,
+      "message": "This was not an objection, rather a style nit. I do not insist, feel free to keep the globs here.\n\nTo help better understand the opinion:\n\nwith more power comes more responsibility, thinking about potential mistakes from globs requires an extra mental load. Brought to the extreme we could allow any python/perl/regex expression to select files for extra flexibility spiced with a lambda expression for sorting/transforming the timestamps/anything in them, but I think we both agree that this would be likely overkill. My argument here is that a list of globs is overkill.",
+      "parentUuid": "dce29d50_ba7c4876",
+      "range": {
+        "startLine": 72,
+        "startChar": 51,
+        "endLine": 72,
+        "endChar": 74
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eada33e_552564ec",
         "filename": "tools/cygprofile/compare_profiles.py",
         "patchSetId": 3
@@ -393,6 +441,30 @@
       "side": 1,
       "message": "Yes, can you not see the patchset?",
       "parentUuid": "b5a1eb40_56155327",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "742cd840_8044ccb5",
+        "filename": "tools/cygprofile/compare_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T15:10:48Z",
+      "side": 1,
+      "message": "I can see everything, but the UI is not ideal. Since I trust your words, it would make a more efficient review if you could write more explicitly what you have done to address corederview comments. In such cases I would appreciate your appreciation of my time. Thanks.",
+      "parentUuid": "18ce3118_5e75dbbe",
       "range": {
         "startLine": 102,
         "startChar": 23,
@@ -605,6 +677,30 @@
       "side": 1,
       "message": "But process_profiles.main() is not called in those cases, these library names are only used when process_profiles is run on its own.\n\nThe fact that we\u0027re mixing this all together is probably an issue by itself, though.",
       "parentUuid": "75b9a207_40f93870",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "8816e3cefee424f17eed7c1913badeb9b1c57963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68eb6b49_2873a11d",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T15:10:48Z",
+      "side": 1,
+      "message": "thank you for making this unrelated change separately",
+      "parentUuid": "d4060ee1_0725b5e6",
       "range": {
         "startLine": 230,
         "startChar": 60,
