@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4807f66_5f1f0bb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-03T22:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8badec82_f3dcfef0",
+      "range": {
+        "startLine": 15,
+        "startChar": 67,
+        "endLine": 15,
+        "endChar": 70
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506049e9_aa199656",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/fixup-dynamic-anonymous-inline-table-001.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-03T20:09:16Z",
       "side": 1,
       "message": "Why is this filler required?",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72259f8e_746307f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/fixup-dynamic-anonymous-inline-table-001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-03T22:50:33Z",
+      "side": 1,
+      "message": "I tried to set the size on the cell instead, but it gave some weird baseline issues in Blink.",
+      "parentUuid": "506049e9_aa199656",
       "range": {
         "startLine": 29,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1ef240ef_49b81d56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/fixup-dynamic-anonymous-table-001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-03T22:50:33Z",
+      "side": 1,
+      "message": "It\u0027s for making sure the test will fail when the anonymous boxes are not fixed up correctly. In the cell case we can use a block level table because the cells will be stacked vertically if we have two tables, and horizontally if we have one. In the case for table-row, for instance, having them in separate tables or the same table will look the same for block level tables. Using inline-tables, the rows will stack vertically in the same table and horizontally for two different tables.",
+      "parentUuid": "a3893ad6_1e8d9323",
+      "range": {
+        "startLine": 2,
+        "startChar": 50,
+        "endLine": 2,
+        "endChar": 55
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8fd87a5_a6e1d8d9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-03T20:09:16Z",
       "side": 1,
       "message": "Why do we need the IsTableSection() checks? They prevent trying to merge a caption (or col) and a section? I\u0027m struggling to find markup where this matters.",
+      "range": {
+        "startLine": 240,
+        "startChar": 30,
+        "endLine": 240,
+        "endChar": 44
+      },
+      "revId": "62ca6c44a41a722404d05100ef08b12cb19407ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d22ed4e_efa22e67",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-03T22:50:33Z",
+      "side": 1,
+      "message": "I don\u0027t remember. It might be from an earlier iteration. Caption/col can never be anonymous so we would return from MergeAnon* before trying to move children anyway. I could skip the checks and cast the parameters to LayoutBoxModelObject instead.",
+      "parentUuid": "c8fd87a5_a6e1d8d9",
       "range": {
         "startLine": 240,
         "startChar": 30,
