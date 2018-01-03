@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc82b01_0fd94b98",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-03T05:00:56Z",
+      "side": 1,
+      "message": "Drop the curly braces from this if check since the inner block is only one line now.\nIf I didn\u0027t mention this, Mathieu would. ;)",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
