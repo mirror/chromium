@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4acd4f62_3e35bf5c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "nit: setDisplayPlusIcon? looks more straightforward.",
+      "range": {
+        "startLine": 674,
+        "startChar": 29,
+        "endLine": 674,
+        "endChar": 48
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e06e1f_889a64fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty(mFieldModel.getValue()) is better if we are not expecting valid empty key.",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21ad1bb_dcee7415",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "If that\u0027s the case then we may use assert instead of \u0027if (mSelectedIndex \u003c 0) mSelectedIndex \u003d 0\u0027. But keep comments.",
+      "range": {
+        "startLine": 95,
+        "startChar": 27,
+        "endLine": 95,
+        "endChar": 69
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17082af_48c57783",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "if position is 0, then \u0027mAdapter.getItem(position)\u0027 will return \u0027Select\u0027, then getDropdownKeyByValue will return null, right?\n\nThen below codes looks redundant. You may turn below if statement as a assertion and keep or add more comments for maintenance.",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 94
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc32b92a_d747a393",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 51
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a193e9_c60ce73d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "one space line below",
+      "range": {
+        "startLine": 413,
+        "startChar": 7,
+        "endLine": 413,
+        "endChar": 66
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51e792b_ab5a25ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "move to a new line",
+      "range": {
+        "startLine": 415,
+        "startChar": 54,
+        "endLine": 415,
+        "endChar": 56
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce169925_361b3b63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 416,
+        "startChar": 4,
+        "endLine": 416,
+        "endChar": 17
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b76c0c_bd38c767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "you may no need this if statement since setDropdownKeyValues is called in construction.\n\nFor the other input type, we assert mInputTypeHint \u003d\u003d INPUT_TYPE_HINT_DROPDOWN;",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 45
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a10d00c_8ca50908",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "one space line below",
+      "range": {
+        "startLine": 427,
+        "startChar": 7,
+        "endLine": 427,
+        "endChar": 66
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a3587c_311e1d2a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "move to a new line",
+      "range": {
+        "startLine": 429,
+        "startChar": 54,
+        "endLine": 429,
+        "endChar": 56
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0b6954_bac9d90f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 430,
+        "startChar": 4,
+        "endLine": 430,
+        "endChar": 23
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99aeb312_54cd6e66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 43
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586c5eef_5a05fd3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorFieldModel.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T19:38:33Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 545,
+        "startChar": 31,
+        "endLine": 545,
+        "endChar": 41
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
