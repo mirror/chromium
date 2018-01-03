@@ -56,6 +56,7 @@ class MediaControlPanelElement;
 class MediaControlPanelEnclosureElement;
 class MediaControlPictureInPictureButtonElement;
 class MediaControlPlayButtonElement;
+class MediaControlPictureInPictureButtonElement;
 class MediaControlRemainingTimeDisplayElement;
 class MediaControlTextTrackListElement;
 class MediaControlTimelineElement;
