@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52573443_f96ab1aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T17:48:45Z",
+      "side": 1,
+      "message": "Good point! I did not know that there is non-trivial work in attachBaseContext()s. I don\u0027t see downsides of switching to it.",
+      "parentUuid": "11d6058a_5e5ff491",
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cee182fe_0ff2c633",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-02T21:27:59Z",
       "side": 1,
       "message": "\"in theory\" OEMs could change the implementation of uptimeMillis though right?  Can we guarantee this across all versions of Android?",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f97b30_32864b0c",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T17:48:45Z",
+      "side": 1,
+      "message": "yes, OEMs could change the impl, theoretically. There is probably little incentive for OEMs to get dirty here. IMO this is because the clock_gettime() support comes packaged with the kernel (and requires no tweaks for the HW) with drivers coming from somewhere ARM/CQ .. this functionality is essential for too many things, I would not be surprised if one cannot boot without clock_gettime (though I did not verify this .. it\u0027s like booting GNU/Linux without perl). Changing uptimeMillis() to query something different than clock_gettime(CLOCK_MONOTONIC), \nis not impossible, but also looks like shooting oneself in a foot.\n\nThe elapsedRealtime() is different - it is somewhat non-standard for the kernel and may require some extra hardware beyond the main CPUs, also we are not using it for base::TimeTicks::Now().\n\nSo we are kinda doing our best? :)\n\nOne caveat: in future / weird circumstances .. tweaking CPU frequency in creative ways _could_ possibly affect the clock, but it would still be the same clock, and strictly better than what we had before.",
+      "parentUuid": "cee182fe_0ff2c633",
       "range": {
         "startLine": 32,
         "startChar": 47,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dd704049_f8d10962",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84157,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T17:48:45Z",
+      "side": 1,
+      "message": "The margin is too narrow to provide all possibilities for \"Main\" on Android. Icon clicks, CCT opens, sync messages are in. Basically, want to register the earliest time when our Java code executes as the \"main\" entry point. It is orthogonal whether to record this \"main\" timestamp in a particular UMA histogram. For this one metric, we include the sync requests, this is not ideal, but something that is easy to keep consistent with desktop. Another metric Startup.Android.Experimental.Cold.TimeToFirstContentfulPaint is intended to include only \u0027cold\u0027 starts and only cases when Chrome was foregrounded. Full roadmap of metrics is not written up comprehensibly yet - on my list.",
+      "parentUuid": "94ca8dd8_8b4e00e8",
+      "range": {
+        "startLine": 84157,
+        "startChar": 56,
+        "endLine": 84157,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cc016ab_ef9883bc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -76,6 +142,24 @@
       "writtenOn": "2018-01-02T21:27:59Z",
       "side": 1,
       "message": "Should you be an owner of this metric?",
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b3b41_b1580079",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84159,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-03T17:48:45Z",
+      "side": 1,
+      "message": "My change is minor compared to the rest of the mechanics that fdoray@ is an expert in. Also there is a few similar metrics that I am planning to change soon after this one shows as good. Those we should not care about much for Android, so would not add myself to owners there, and hence did not want to add myself here .. for consistency. If you insist, I. Will. Become. An. Owner. Beware.",
+      "parentUuid": "1cc016ab_ef9883bc",
       "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
