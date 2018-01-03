@@ -127,8 +127,11 @@
   if (linkLength != 0) {
     NSColor* linkColor =
         skia::SkColorToCalibratedNSColor(chrome_style::GetLinkColor());
+    GURL link_url = delegate->GetLinkURL();
+    NSString* url_string =
+        link_url.is_valid() ? base::SysUTF8ToNSString(link_url.spec()) : nil;
     [view addLinkRange:NSMakeRange(linkOffset, linkLength)
-               withURL:base::SysUTF8ToNSString(delegate->GetLinkURL().spec())
+               withURL:url_string
              linkColor:linkColor];
   }
 }
