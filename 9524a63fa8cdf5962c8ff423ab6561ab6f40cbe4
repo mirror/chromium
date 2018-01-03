@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b331ba18_c03c5888",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:20:05Z",
+      "side": 1,
+      "message": "nit: \n\nif ()\nelse if ()\nelse\n\nis less nesting/easier to follow than\n\nif()\nelse\n  if()\n  else",
+      "revId": "9524a63fa8cdf5962c8ff423ab6561ab6f40cbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
