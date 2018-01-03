@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f9cf5a7_ea2e2cdd",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "would recommend a new way, which is to directly inline base::FeatureList::IsEnabled(\n      kAutofillCreditCardDropdownGooglePayBranding) in the feature code and not have this function",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 143,
+        "endChar": 52
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8253bd_f7e4fd3b",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "please put new features in https://cs.chromium.org/chromium/src/components/autofill/core/common/autofill_features.h",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f596f0cd_363d5c45",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "nit /*is_all_server_suggestions\u003d*/false",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dc82b01_0fd94b98",
         "filename": "components/autofill/core/browser/autofill_external_delegate.cc",
         "patchSetId": 15
@@ -13,6 +82,63 @@
       "writtenOn": "2018-01-03T05:00:56Z",
       "side": 1,
       "message": "Drop the curly braces from this if check since the inner block is only one line now.\nIf I didn\u0027t mention this, Mathieu would. ;)",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490eb01a_e381c3f2",
+        "filename": "components/autofill/core/browser/autofill_external_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "does bool \"is_all_server_suggestions \u003d false\" work or it doesn\u0027t because this is virtual?",
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5165b2f3_3de007ff",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 15
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "nit: It is not yet deprecated, since the new path is behind a feature.",
+      "range": {
+        "startLine": 135,
+        "startChar": 142,
+        "endLine": 135,
+        "endChar": 168
+      },
+      "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc7e818_4ac78b4c",
+        "filename": "components/resources/default_300_percent/autofill/googlepay.png",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T16:11:50Z",
+      "side": 1,
+      "message": "did you pngcrush them? https://pmt.sourceforge.io/pngcrush/",
       "revId": "c78607906ed8da4cc6a0738323879ab46a156958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
