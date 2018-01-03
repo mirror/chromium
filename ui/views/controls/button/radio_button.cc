@@ -109,6 +109,14 @@ void RadioButton::NotifyClick(const ui::Event& event) {
   // be toggled on and off like a checkbox.
   if (!checked())
     SetChecked(true);
+  // Take focus only if another radio button in the group has focus.
+  Views views;
+  GetWidget()->GetRootView()->GetViewsInGroup(GetGroup(), &views);
+  if (std::find_if(views.begin(), views.end(), [](View* v) -> bool {
+        return v->HasFocus();
+      }) != views.end()) {
+    RequestFocus();
+  }
   LabelButton::NotifyClick(event);
 }
 
