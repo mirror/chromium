@@ -101,6 +101,7 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     }
 
     int pipe = seatbelt_exec_client_->SendProfileAndGetFD();
+    CHECK(pipe != -1);
 
     base::FilePath helper_executable;
     CHECK(PathService::Get(content::CHILD_PROCESS_EXE, &helper_executable));
