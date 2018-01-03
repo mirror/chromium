@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "11a21251_095aff6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-03T22:28:21Z",
+      "side": 1,
+      "message": "Naming is not consistent with getForegroundStartTime(), which also returns uptimeMillis() timestamp.",
+      "range": {
+        "startLine": 141,
+        "startChar": 23,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cee182fe_0ff2c633",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 5
@@ -84,6 +107,29 @@
     },
     {
       "key": {
+        "uuid": "b0680259_94c454cf",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-03T22:28:21Z",
+      "side": 1,
+      "message": "BTW, TimeTicks has several platform-specific \"From\" methods (e.g. FromQPCValue), we could add Android-specific FromUptimeMillis(). That way we avoid using FromInternalValue(), avoid magic *1000 thing, and overall better state our intent.",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e44ab91_0826af24",
         "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
         "patchSetId": 5
@@ -95,6 +141,30 @@
       "writtenOn": "2018-01-03T19:49:39Z",
       "side": 1,
       "message": "Why do the ticks above need lazy instance, but these ones don\u0027t?",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 48
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2f7ecf_3533dbec",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2018-01-03T22:28:21Z",
+      "side": 1,
+      "message": "Probably TimeTicks constructor wasn\u0027t constexpr at the time others were written. We should remove LazyInstance from others too (in separate CL).",
+      "parentUuid": "1e44ab91_0826af24",
       "range": {
         "startLine": 51,
         "startChar": 16,
