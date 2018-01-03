@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1eccc33d_32db559d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "If you put nothing, the strong is implicit. I don\u0027t feel strongly either way but I usually explicitly put it.\nI removed it.",
+      "parentUuid": "670eb824_99ea1020",
+      "range": {
+        "startLine": 683,
+        "startChar": 21,
+        "endLine": 683,
+        "endChar": 27
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f248dc5a_27438818",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53d78fb_2d1732e2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "AbstractPrimaryToolbar is not the same as the LegacyToolbarCoordinator. It only contains the methods which should be used by the primary toolbar only (and not the secondary toolbar), like the omnibox. So I cannot replace all uses of _toolbarCoordinator by self.primaryToolbarCoordinator.",
+      "parentUuid": "f248dc5a_27438818",
+      "range": {
+        "startLine": 1296,
+        "startChar": 9,
+        "endLine": 1296,
+        "endChar": 28
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f6a5fce_c5d7c0d6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "The return types are conflicting.\nThe idea is to have the _toolbarCoordinator which is the implementation, to implement all the different protocol. However, the uses inside BVC should all go through those properties (once all the cleanup is done). It will allow us to potentially change the implementation object (_toolbarCoordinator) without changing the call sites.",
+      "parentUuid": "41cdf2cf_99c4793a",
+      "range": {
+        "startLine": 1300,
+        "startChar": 9,
+        "endLine": 1300,
+        "endChar": 28
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f31813df_b42e6678",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d67093_69494531",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2292,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31813df_b42e6678",
+      "range": {
+        "startLine": 2292,
+        "startChar": 8,
+        "endLine": 2292,
+        "endChar": 14
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ef4da1d1_3f1fe937",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "I was following the pattern for other toolbar names (AbstractToolbar and AbstractWebToolbar) but I am not sure it makes sense, especially as this is the protocol for the coordinator, not the toolbar itself. I changed it to PrimaryToolbarCoordinator.",
+      "parentUuid": "78d16cdd_1294c784",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75da6fb6_c12406b0",
         "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-03T14:38:56Z",
       "side": 1,
       "message": "Why aren\u0027t these properties?\n\n(and if they aren\u0027t, they should be grouped with the other methods).",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17dcdc9a_bc011798",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "They are not properties because they don\u0027t have a backing ivar (they are mostly returning the toolbar controller).\nI could change it to readonly property, but I usually don\u0027t use it in public header if there is no backing ivar.",
+      "parentUuid": "75da6fb6_c12406b0",
       "range": {
         "startLine": 23,
         "startChar": 37,
@@ -160,6 +304,30 @@
       "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a569355b_aa43ebcc",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-03T15:22:22Z",
+      "side": 1,
+      "message": "Actually, this is not used.",
+      "parentUuid": "e7382f5b_335d193f",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
