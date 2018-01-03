@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cde99038_1ed9419f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3260,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "I guess I don\u0027t understand why keeping around idle textures is helping any perf tests.\n\nAs it is, any in-flight textures are kept, and then they are reused on the frame that they are returned. Why do we need more textures in the cache than we\u0027ve been using?",
+      "parentUuid": "3fa14c87_7531c3b5",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5297d9a_403ab50b",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T01:08:49Z",
       "side": 1,
       "message": "Does ResourcePool have smarter logic for resource reuse? \n\nI\u0027m concerned that if we have a render pass with 2 overlays, 1 at 64x64 and 1 at 64x128, that this logic can cause us to create a third overlay, as it might cause the 64x128 overlay to be reused for the 64x64.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbc1305_b5e131b1",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3416,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "The pool logic is not smarter tho is different. It uses area*2 instead of width and height*2, but this check here is actually smarter as it tries to re-use the same renderpass id first, and sizes should be more stable with the same renderpass id.",
+      "parentUuid": "d5297d9a_403ab50b",
       "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "be54bc5d_52e6aff8",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3429,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb758a2_39f37b5e",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1708e18_c6804f58",
         "filename": "components/viz/service/display/gl_renderer.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b54a86_d259964f",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1708e18_c6804f58",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "eda0c65f_f0a03773",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1de8a11_7d0660f9",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "902e0bb8_6a0af066",
         "filename": "components/viz/service/display/gl_renderer.h",
         "patchSetId": 12
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-03T01:08:49Z",
       "side": 1,
       "message": "what is the different between these and\n\nswapped_and_acked_overlay_resources_, swapping_overlay_resources_?",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e199b4_d7e4f04d",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "Those are locks on ResourceProvider that make it consider them in use, so they are not returned to clients. These are GL texture ids (and metadata).",
+      "parentUuid": "902e0bb8_6a0af066",
       "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ad5caf82_4af7f6b0",
+        "filename": "components/viz/service/display/scoped_gpu_memory_buffer_texture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "GenTextures does not read gl_id_, and it writes to it unconditionally.",
+      "parentUuid": "7a2b1376_68cbb9a9",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e034ba5e_cec0e367",
         "filename": "components/viz/service/display/scoped_gpu_memory_buffer_texture.h",
         "patchSetId": 12
@@ -132,6 +258,24 @@
       "writtenOn": "2018-01-03T01:08:49Z",
       "side": 1,
       "message": "Please document the lifetime semantics of this raw pointer relative to the instance of ScopedGpuMemoryBufferTexture.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b637ed9_8e12aae4",
+        "filename": "components/viz/service/display/scoped_gpu_memory_buffer_texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 1,
+      "message": "Raw pointers are unowned so it has to outlive it. I\u0027ll add a comment saying so.",
+      "parentUuid": "e034ba5e_cec0e367",
       "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -22,6 +22,30 @@
       "revId": "686dd85ea6f2b2246798356efd2df3bd6fddf7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c77af2_bae3ba5d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2832,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:38:55Z",
+      "side": 0,
+      "message": "You\u0027re right, that can happen according to Display (though, I think only on Windows). They won\u0027t leak forever though.\n\nEven if we don\u0027t swap we would have called ScheduleCALayerCHROMIUM() for each of the resources.  In FinishDrawingFrame we store them in swapping_overlay_resources_.\n\nWhat\u0027s weird then is that the next time we do draw+swap, the SwapBuffersComplete will collect only the first set of swapping_overlay_resources_, but it seems like we should collect all of them up until the last SwapBuffers? So we\u0027d end up with a larger swapping_overlay_resources_ set than we need to, and not query for in use until more frames had gone by than needed.\n\nIf we use the pending_overlay_resource_ set then we merge all resources together that we schedule until we swap, which seems good. Will restore this.",
+      "parentUuid": "81ceba93_ed6fec0e",
+      "range": {
+        "startLine": 2832,
+        "startChar": 50,
+        "endLine": 2832,
+        "endChar": 76
+      },
+      "revId": "686dd85ea6f2b2246798356efd2df3bd6fddf7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
