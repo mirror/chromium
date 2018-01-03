@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c215ba8a_2f7de83a",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T23:06:16Z",
+      "side": 1,
+      "message": "Done (although it\u0027s a bit subtle why it is safe, since it might mean destroying the Connector while the connector is in the middle of calling our Accept method. But fortunately Connector has special logic to deal with that and early exit if the Accept method ens up deleting the connector).",
+      "parentUuid": "7283514a_61cbd095",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6412c3_883f36c6",
         "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7510be8_fa9ade50",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-03T23:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ba0bc5_848f2ef5",
+      "revId": "17269bf7a7e8496c2c03dec90b62f1ea121562f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
