@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f872d4e_05fadad2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b59b8f_635ee4fa",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "c5d21811b933596c4116fd6416084f91980b7721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a76879b_8ba8490b",
         "filename": "chrome/browser/memory_details_mac.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5f117bcd_344c11be",
+        "filename": "chrome/browser/memory_details_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a76879b_8ba8490b",
+      "revId": "c5d21811b933596c4116fd6416084f91980b7721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efaaacf_99774e3e",
         "filename": "chrome/browser/metrics/metrics_memory_details.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "c5d21811b933596c4116fd6416084f91980b7721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35929791_bfdfc652",
+        "filename": "chrome/browser/metrics/metrics_memory_details.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T17:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efaaacf_99774e3e",
+      "revId": "c5d21811b933596c4116fd6416084f91980b7721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
