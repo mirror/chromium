@@ -50,6 +50,7 @@
 #include "core/layout/TextAutosizer.h"
 #include "core/page/Page.h"
 #include "platform/Timer.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebFloatRect.h"
@@ -749,8 +750,8 @@ int TextFinder::SelectFindMatch(unsigned index, WebRect* selection_rect) {
         active_match_->FirstNode()->GetLayoutObject()) {
       active_match_->FirstNode()->GetLayoutObject()->ScrollRectToVisible(
           LayoutRect(active_match_bounding_box),
-          ScrollAlignment::kAlignCenterIfNeeded,
-          ScrollAlignment::kAlignCenterIfNeeded, kUserScroll);
+          {ScrollAlignment::kAlignCenterIfNeeded,
+           ScrollAlignment::kAlignCenterIfNeeded, kUserScroll});
     }
 
     // Zoom to the active match.
