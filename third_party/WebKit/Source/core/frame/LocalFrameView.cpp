@@ -3217,6 +3217,8 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
     return;
   }
 
+  LOG(ERROR) << "Update lifecycle to " << target_state;
+
   ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
     frame_view.PerformScrollAnchoringAdjustments();
   });
@@ -3305,6 +3307,7 @@ void LocalFrameView::UpdateLifecyclePhasesInternal(
   }
 
   UpdateViewportIntersectionsForSubtree(target_state);
+  LOG(ERROR) << "End of update life cycle";
 }
 
 void LocalFrameView::EnqueueScrollAnchoringAdjustment(
