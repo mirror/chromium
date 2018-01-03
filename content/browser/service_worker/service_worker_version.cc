@@ -31,6 +31,7 @@
 #include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -200,6 +201,15 @@ CompleteProviderHostPreparation(
       provider_host->CompleteStartWorkerPreparation(process_id, version);
   context->AddProviderHost(std::move(provider_host));
   return info;
+}
+
+void ShowPaymentHandlerWindowOnUI(
+    ContentBrowserClient* browser,
+    const scoped_refptr<ServiceWorkerContextWrapper>& context_wrapper,
+    int request_id,
+    const GURL& url) {
+  browser->ShowPaymentHandlerWindow(
+      context_wrapper->storage_partition()->browser_context(), request_id, url);
 }
 
 }  // namespace
@@ -1209,7 +1219,12 @@ void ServiceWorkerVersion::OnOpenNewTab(int request_id, const GURL& url) {
 }
 
 void ServiceWorkerVersion::OnOpenNewPopup(int request_id, const GURL& url) {
-  OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_POPUP);
+  // OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_POPUP);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &ShowPaymentHandlerWindowOnUI, GetContentClient()->browser(),
+          base::WrapRefCounted(context_->wrapper()), request_id, url));
 }
 
 void ServiceWorkerVersion::OnOpenWindow(int request_id,

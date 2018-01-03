@@ -27,6 +27,8 @@ class ContentPaymentRequestDelegate : public PaymentRequestDelegate {
   // Returns the PaymentRequestDisplayManager associated with this
   // PaymentRequest's BrowserContext.
   virtual PaymentRequestDisplayManager* GetDisplayManager() = 0;
+
+  virtual void EmbedPaymentHandlerWindow(const GURL& url) = 0;
 };
 
 }  // namespace payments

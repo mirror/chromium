@@ -34,6 +34,8 @@ class PaymentRequestDialog {
       base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
           result_delegate,
       content::WebContents* web_contents) = 0;
+
+  virtual void ShowPaymentHandlerWindow(const GURL& url) = 0;
 };
 
 }  // namespace payments
