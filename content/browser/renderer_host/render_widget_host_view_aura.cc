@@ -2477,4 +2477,9 @@ void RenderWidgetHostViewAura::OnSynchronizedDisplayPropertiesChanged() {
   }
 }
 
+void RenderWidgetHostViewAura::ResizeDueToAutoResize(const gfx::Size& new_size,
+                                                     uint64_t sequence_number) {
+  OnSynchronizedDisplayPropertiesChanged();
+}
+
 }  // namespace content
