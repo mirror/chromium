@@ -7,8 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
+#include <memory>
+
 #import "base/mac/bundle_locations.h"
 #import "base/mac/scoped_nsobject.h"
+#include "ios/web/public/web_client.h"
 #import "testing/gtest_mac.h"
 
 namespace web {
@@ -19,6 +22,8 @@ class WebJsTest : public WebTestT {
  public:
   WebJsTest(NSArray* java_script_paths)
       : java_script_paths_([java_script_paths copy]) {}
+  WebJsTest(std::unique_ptr<web::WebClient> web_client)
+      : WebTestT(std::move(web_client)) {}
 
  protected:
   // Loads |html| and inject JavaScripts at |javaScriptPaths_|.
