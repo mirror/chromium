@@ -22,6 +22,30 @@
       "revId": "0dfc1d1555262ef68587fd5c27247e41a37dcc34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1470ad0f_1b739478",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-03T06:48:06Z",
+      "side": 1,
+      "message": "Ah!! You\u0027re right!! It should return false when num_palnes \u003d\u003d 0.",
+      "parentUuid": "c0345b01_e62cd3d6",
+      "range": {
+        "startLine": 511,
+        "startChar": 37,
+        "endLine": 511,
+        "endChar": 52
+      },
+      "revId": "0dfc1d1555262ef68587fd5c27247e41a37dcc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
