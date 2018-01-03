@@ -24,7 +24,7 @@ class SynchronousInputHandlerProxy;
 
 namespace content {
 
-class SynchronousCompositorProxy;
+class SynchronousCompositorProxyChromeIPC;
 struct SyncCompositorCommonRendererParams;
 
 class SynchronousCompositorFilter
@@ -79,7 +79,7 @@ class SynchronousCompositorFilter
       SynchronousLayerTreeFrameSink* layer_tree_frame_sink);
   void UnregisterObjects(int routing_id);
   void RemoveEntryIfNeeded(int routing_id);
-  SynchronousCompositorProxy* FindProxy(int routing_id);
+  SynchronousCompositorProxyChromeIPC* FindProxy(int routing_id);
   void OnSynchronizeRendererState(
       const std::vector<int>& routing_ids,
       std::vector<SyncCompositorCommonRendererParams>* out);
@@ -93,7 +93,7 @@ class SynchronousCompositorFilter
   // Compositor thread-only fields.
   using SyncCompositorMap =
       std::unordered_map<int /* routing_id */,
-                         std::unique_ptr<SynchronousCompositorProxy>>;
+                         std::unique_ptr<SynchronousCompositorProxyChromeIPC>>;
   SyncCompositorMap sync_compositor_map_;
 
   bool filter_ready_;
