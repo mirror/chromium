@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2544b36f_f7f156c5",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2487fbd_3a5a7ef2",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad21f15_81331dd4",
         "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
         "patchSetId": 31
@@ -33,6 +51,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699b34d3_7187c336",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad21f15_81331dd4",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d17d446_ea13cf2f",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fffcdd2_df11f43b",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a92677aa_4bf2293b",
         "filename": "content/common/notifications/notification_struct_traits.h",
         "patchSetId": 31
@@ -67,6 +121,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1d1d50_7d5eb4c4",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92677aa_4bf2293b",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "92767ef4_ba6a2e3a",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c306bf68_dabb4bfd",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c27d7db7_e116f6ef",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
         "patchSetId": 31
@@ -101,6 +191,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037fd37b_d282ad1c",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27d7db7_e116f6ef",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "319a7ef4_6f3d7035",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "976774dc_bffb8242",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "674aec91_1d333964",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
         "patchSetId": 31
@@ -135,6 +261,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67724dd_6f2133f7",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674aec91_1d333964",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "bd277b10_9d6358c2",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea479cc_34cec7a4",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb65bf8f_e4eeca28",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
         "patchSetId": 31
@@ -169,6 +331,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30510c44_4442dbf5",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb65bf8f_e4eeca28",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "efe3c9d1_256c4dcb",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraits.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbcb1e5_d050f3b0",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2a0da6_3f843113",
         "filename": "third_party/WebKit/public/platform/modules/notifications/NotificationTypes.typemap",
         "patchSetId": 31
@@ -203,6 +401,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bc7b6e_3f8c6d83",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/NotificationTypes.typemap",
+        "patchSetId": 31
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "As far as I can tell, only types that we explicitly pass via mojo need to be defined in the mappings here, since:\n- Removing NotificationDirection from type_mappings had no effect\n- Removing NotificationData from type_mappings caused a compile error where we try to pass the notificationData via mojo:\n\n  NotificationManager.cpp:115:62: error: no viable conversion from \u0027const blink\n::WebNotificationData\u0027 to \u0027::blink::mojom::blink::NotificationDataPtr\u0027 (aka \u0027StructPtr\u003cblink::mojom::blink::NotificationData\u003e\u0027)\n\nSo I have removed NotificationDirection from type_mappings but kept NotificationData.",
+      "parentUuid": "5a2a0da6_3f843113",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "577b1ce7_94cc87d8",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0501f02_71581f73",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efefe99f_b588b42f",
         "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
         "patchSetId": 31
@@ -237,6 +471,24 @@
       "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2238392_456713b9",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2018-01-03T17:29:39Z",
+      "side": 1,
+      "message": "Filed a bug to do that and referenced it here.",
+      "parentUuid": "efefe99f_b588b42f",
+      "revId": "4eb364785ce2e8584be8a341bf772569c58c52b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
