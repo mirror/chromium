@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d4a4838_d88fe081",
+        "filename": "third_party/WebKit/Source/core/fetch/Request.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-03T08:05:12Z",
+      "side": 1,
+      "message": "Thanks for adding the comment, but could you move it inside the code block below? Having a comment in the middle of the condition is weird...",
+      "revId": "1f92c87839903760654885687e1d39a70245e2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
