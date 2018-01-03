@@ -61,5 +61,66 @@ double TimeDeltaToMilliseconds(const base::TimeDelta& value) {
   return value.InMillisecondsF();
 }
 
+const char* TaskTypeToString(TaskType task_type) {
+  switch (task_type) {
+    case TaskType::kDOMManipulation:
+      return "DOMManipultion";
+    case TaskType::kUserInteraction:
+      return "UserInteraction";
+    case TaskType::kNetworking:
+      return "Networking";
+    case TaskType::kNetworkingControl:
+      return "NetworkingControl";
+    case TaskType::kHistoryTraversal:
+      return "HistoryTraversal";
+    case TaskType::kEmbed:
+      return "Embed";
+    case TaskType::kMediaElementEvent:
+      return "MediaElementEvent";
+    case TaskType::kCanvasBlobSerialization:
+      return "CanvasBlobSerialization";
+    case TaskType::kMicrotask:
+      return "Microtask";
+    case TaskType::kJavascriptTimer:
+      return "JavascriptTimer";
+    case TaskType::kRemoteEvent:
+      return "RemoteEvent";
+    case TaskType::kWebSocket:
+      return "WebSocket";
+    case TaskType::kPostedMessage:
+      return "PostedMessage";
+    case TaskType::kUnshippedPortMessage:
+      return "UnshipedPortMessage";
+    case TaskType::kFileReading:
+      return "FileReading";
+    case TaskType::kDatabaseAccess:
+      return "DatabaseAccess";
+    case TaskType::kPresentation:
+      return "Presentation";
+    case TaskType::kSensor:
+      return "Sensor";
+    case TaskType::kPerformanceTimeline:
+      return "PerformanceTimeline";
+    case TaskType::kWebGL:
+      return "WebGL";
+    case TaskType::kIdleTask:
+      return "IdleTask";
+    case TaskType::kMiscPlatformAPI:
+      return "MiscPlatformAPI";
+    case TaskType::kUnspecedTimer:
+      return "UnspecedTimer";
+    case TaskType::kUnspecedLoading:
+      return "UnspecedLoading";
+    case TaskType::kUnthrottled:
+      return "Unthrottled";
+    case TaskType::kInternalTest:
+      return "InternalTest";
+    case TaskType::kCount:
+      return "Count";
+  }
+  NOTREACHED();
+  return "";
+}
+
 }  // namespace scheduler
 }  // namespace blink

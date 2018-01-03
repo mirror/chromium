@@ -113,6 +113,15 @@ const char* RendererProcessTypeToString(RendererProcessType process_type) {
   return "";  // MSVC needs that.
 }
 
+const char* OptionalTaskDescriptionToString(
+    base::Optional<TaskDescriptionForTracing> opt_desc) {
+  if (!opt_desc.has_value())
+    return nullptr;
+  if (opt_desc->task_type.has_value())
+    return TaskTypeToString(opt_desc->task_type.value());
+  return MainThreadTaskQueue::NameForQueueType(opt_desc->queue_type);
+}
+
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -368,6 +377,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                    "RendererScheduler.ProcessType",
                    renderer_scheduler_impl,
                    RendererProcessTypeToString),
+      task_description_for_tracing(base::nullopt,
+                                   "RendererScheduler.MainThreadTask",
+                                   renderer_scheduler_impl,
+                                   OptionalTaskDescriptionToString),
       virtual_time_policy(VirtualTimePolicy::kAdvance),
       virtual_time_pause_count(0),
       max_virtual_time_task_starvation_count(0),
@@ -2266,6 +2279,9 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
   seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start, queue);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
+
+  TaskDescriptionForTracing desc = {task.task_type(), queue->queue_type()};
+  main_thread_only().task_description_for_tracing = desc;
 }
 
 void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
@@ -2281,6 +2297,7 @@ void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
 
   // TODO(altimin): Per-page metrics should also be considered.
   main_thread_only().metrics_helper.RecordTaskMetrics(queue, task, start, end);
+  main_thread_only().task_description_for_tracing = base::nullopt;
 }
 
 void RendererSchedulerImpl::OnBeginNestedRunLoop() {
@@ -2426,6 +2443,7 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
   main_thread_only().has_navigated.OnTraceLogEnabled();
   main_thread_only().pause_timers_for_webview.OnTraceLogEnabled();
   main_thread_only().process_type.OnTraceLogEnabled();
+  main_thread_only().task_description_for_tracing.OnTraceLogEnabled();
 
   for (WebViewSchedulerImpl* web_view_scheduler :
        main_thread_only().web_view_schedulers) {
