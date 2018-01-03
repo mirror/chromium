@@ -71,6 +71,7 @@
 #include "core/page/Page.h"
 #include "platform/Language.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/wtf/MathExtras.h"
 #include "public/platform/TaskType.h"
@@ -314,8 +315,10 @@ void HTMLInputElement::UpdateFocusAppearanceWithOptions(
     // case of RangeSelection. crbug.com/443061.
     GetDocument().EnsurePaintLocationDataValidForNode(this);
     if (!options.preventScroll()) {
-      if (GetLayoutObject())
-        GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+      if (GetLayoutObject()) {
+        GetLayoutObject()->ScrollRectToVisible(BoundingBox(),
+                                               ScrollIntoViewParams());
+      }
       if (GetDocument().GetFrame())
         GetDocument().GetFrame()->Selection().RevealSelection();
     }
