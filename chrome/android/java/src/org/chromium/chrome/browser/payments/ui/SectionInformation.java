@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.payments.ui;
 
+import android.text.TextUtils;
+
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 
@@ -162,6 +164,42 @@ public class SectionInformation {
         if (mItems == null) mItems = new ArrayList<>();
         mItems.add(0, item);
         mSelectedItem = 0;
+    }
+
+    /**
+     * Adds the given item at the head of the list and selects it if it doesn't exist, otherwise
+     * update it.
+     *
+     * @param item The item to add or update.
+     */
+    public void addAndSelectOrUpdateItem(PaymentOption item) {
+        if (mItems == null) mItems = new ArrayList<>();
+        int i = 0;
+        for (; i < mItems.size(); i++) {
+            if (TextUtils.equals(mItems.get(i).getIdentifier(), item.getIdentifier())) {
+                break;
+            }
+        }
+        if (i < mItems.size()) {
+            mItems.set(i, item);
+            return;
+        }
+        addAndSelectItem(item);
+    }
+
+    /**
+     * Remove the given item and unselect it if it is the selected item.
+     *
+     * @param identifier The identifier of the removed item.
+     */
+    public void removeAndUnselectItem(String identifier) {
+        for (int i = 0; i < mItems.size(); i++) {
+            if (TextUtils.equals(mItems.get(i).getIdentifier(), identifier)) {
+                if (mSelectedItem == i) mSelectedItem = NO_SELECTION;
+                mItems.remove(i);
+                break;
+            }
+        }
     }
 
     /**
