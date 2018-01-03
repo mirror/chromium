@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b73e48e_1df86b3e",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "This is boilerplate code; I\u0027ve seen it before. Is there a way to centralize this?",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed7b420_243e73fe",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Bolierplate comment. Do you need it?",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c7c712_7755814b",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Utility function. Please bunch these in one end of the file, if you can\u0027t get them out.",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367353c6_dfb863a7",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Utility function.",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379dc5d6_bb31e98b",
+        "filename": "chrome/test/data/webrtc/peerconnection_replacetrack.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "setTimeout(func, 0) can sometimes behave strangely, at least in other languages. Have you checked how many times you run around this loop? setTimeout(func, 1) may be better.",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88e5d6c_9db30176",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Is this reasonable? Do you have a bug filed for it?",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93483d40_b9bfbd2e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Curious (no change needed): Why do you use async_test with promise/.then/.then and not promise_test? Would seem more logical to use async_test with \"await\" style test logic.",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed70b08_38beac8d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
         "patchSetId": 7
@@ -49,6 +168,23 @@
       "side": 1,
       "message": "I *think* the weirdness of Javascript specs means that \"in parallel\" means \"in sequence, or equivalent\" - things that happen \"in parallel\" don\u0027t have visible effect until the end of execution of the current Javascript context (and the only thing it\u0027s in paralllel *with* is returning the promise - there\u0027s no race in what\u0027s done in this test, since removeTrack() is sync.\n\nSo after removeTrack, direction (not currentDirection!) is recvonly or inactive, and the negotiationNeeded flag is set.\n\nI think we need an extra sentence in replaceTrack to make the procedure make sense in this case (direction !\u003d currentDirection): \"If direction is recvonly or inactive, reject the promise with \u003cappropriate\u003e\" - I\u0027m pretty sure we didn\u0027t intend to end up after the next negotiation with a sending sender and a currentDirection of inactive; that would just be wrong.",
       "parentUuid": "4a802be2_0a8863d5",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1e2794_59fc68f4",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSender.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T21:58:35Z",
+      "side": 1,
+      "message": "Architecturally, I\u0027m a bit worried about the need to have the sender know about the PeerConnection. If we want to get to where one can use WebRTC without a PeerConnection, that\u0027s going to bite us somehow down the road.\nThe only reason to have it is that we need to check if the connection is closed before resolving the promise; that means it\u0027s a spec bug, not an implementation bug. No action needed.\n\n(I filed https://github.com/w3c/webrtc-pc/issues/1712 - might place a note here with a link)",
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
