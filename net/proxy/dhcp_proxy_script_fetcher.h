@@ -10,7 +10,7 @@
 #include "base/strings/string16.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
-#include "net/proxy/proxy_script_fetcher.h"
+#include "net/proxy/pac_file_fetcher.h"
 #include "url/gurl.h"
 
 namespace net {
