@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f593873c_3d08f9ff",
+        "filename": "third_party/WebKit/public/web/WebSurroundingText.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-03T20:25:58Z",
+      "side": 1,
+      "message": "Could we also make this a constructor, available only INSIDE_BLINK, and remove the default ctor?",
+      "revId": "ed16da60a3277e80bf9ab68af21635bd7a61f85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
