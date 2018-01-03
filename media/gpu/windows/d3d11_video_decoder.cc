@@ -53,7 +53,7 @@ D3D11VideoDecoder::D3D11VideoDecoder(
   // Note that the output callback will hop to our thread, post the video
   // frame, and along with a callback that will hop back to the impl thread
   // when it's released.
-  impl_ = base::MakeUnique<D3D11VideoDecoderImpl>(
+  impl_ = std::make_unique<D3D11VideoDecoderImpl>(
       get_stub_cb, media::BindToCurrentLoop(base::Bind(
                        &D3D11VideoDecoder::OutputWithThreadHoppingRelease,
                        weak_factory_.GetWeakPtr(), std::move(output_cb))));

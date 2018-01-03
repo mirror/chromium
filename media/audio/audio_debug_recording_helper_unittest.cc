@@ -4,10 +4,11 @@
 
 #include "media/audio/audio_debug_recording_helper.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -123,7 +124,7 @@ class AudioDebugRecordingHelperTest : public ::testing::Test {
   std::unique_ptr<AudioDebugRecordingHelper> CreateRecordingHelper(
       const AudioParameters& params,
       base::OnceClosure on_destruction_closure) {
-    return base::MakeUnique<AudioDebugRecordingHelperUnderTest>(
+    return std::make_unique<AudioDebugRecordingHelperUnderTest>(
         params, scoped_task_environment_.GetMainThreadTaskRunner(),
         std::move(on_destruction_closure));
   }
