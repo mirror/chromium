@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1746c87d_5ebfb210",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:38:18Z",
+      "side": 1,
+      "message": "Legacy NM should be fixed in crrev.com/c/846020",
+      "revId": "1b4a064db3578d98272af33e03c05af1aa6eb9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
