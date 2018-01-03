@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6788afb_44b8bd88",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-03T18:25:47Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s still useful to be able to get webkit_layout_test target building while I\u0027m working on Fuchsia support the Blink test runner script. Once we have some of the tests passing we can enable webkit_layout_tests target on the bots and start running these tests.",
+      "parentUuid": "19c42393_6bde1744",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 14
+      },
+      "revId": "daa25ebc6fbd4b9dcef4c229f62cd948b256c05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5273052b_f41de76a",
         "filename": "BUILD.gn",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-03T17:35:39Z",
       "side": 1,
       "message": "This seems to be enabling the build of content_shell, not webkit_layout_tests - is that intentional?",
+      "range": {
+        "startLine": 944,
+        "startChar": 3,
+        "endLine": 946,
+        "endChar": 5
+      },
+      "revId": "daa25ebc6fbd4b9dcef4c229f62cd948b256c05f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17508cb_ca252119",
+        "filename": "BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-03T18:25:47Z",
+      "side": 1,
+      "message": "webkit_layout_tests target is enabled with the change above (line 858). \nwebkit_layout_tests needs to depend on content_shell_fuchsia to make it possible to run content_shell.",
+      "parentUuid": "5273052b_f41de76a",
       "range": {
         "startLine": 944,
         "startChar": 3,
