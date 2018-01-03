@@ -258,6 +258,30 @@
       "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f173e0c3_10f52ffd",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-03T21:20:54Z",
+      "side": 1,
+      "message": "Sorry my bad. Done.",
+      "parentUuid": "87da2a90_90147dfa",
+      "range": {
+        "startLine": 189,
+        "startChar": 37,
+        "endLine": 189,
+        "endChar": 56
+      },
+      "revId": "7794b67f7a6671404901231cbb2777518ee3d0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

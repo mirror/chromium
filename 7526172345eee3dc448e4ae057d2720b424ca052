@@ -52,6 +52,24 @@
       "revId": "7526172345eee3dc448e4ae057d2720b424ca052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429ade2c_349c66e9",
+        "filename": "components/autofill/ios/browser/js_autofill_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-03T21:20:54Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a9442023_166f79e4",
+      "revId": "7526172345eee3dc448e4ae057d2720b424ca052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
