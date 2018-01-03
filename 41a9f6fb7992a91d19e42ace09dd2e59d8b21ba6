@@ -16,6 +16,24 @@
       "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33572a6a_4bd442da",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-03T17:25:57Z",
+      "side": 1,
+      "message": "Okay I see.\n\nIf I understand you correctly:\n1) Factorize the part that set the option in navigation_url_loader_network_service.cc\n2) Add the |option| member to the MojoAsyncResourceHandler.\n3) Use \n   *  (options_ \u0026 mojom::kURLLoadOptionSendSSLInfoWithResponse) in OnResponseStarted\n   *  (options_ \u0026 mojom::kURLLoadOptionSendSSLInfoForCertificateError) in OnComplete like it is done in in URLLoader::NotifyCompleted.\n\nI will do it tomorrow.",
+      "parentUuid": "af96d5e7_c51002e1",
+      "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
