@@ -108,10 +108,9 @@ class ChildProcessLauncherHelper :
   // Platform specific.
   std::unique_ptr<FileMappedForLaunch> GetFilesToMap();
 
-  // Platform specific.
-  void BeforeLaunchOnLauncherThread(
-      const FileMappedForLaunch& files_to_register,
-      base::LaunchOptions* options);
+  // Platform specific, returns an int that corresponds to a LAUNCH_RESULT_X.
+  int BeforeLaunchOnLauncherThread(const FileMappedForLaunch& files_to_register,
+                                   base::LaunchOptions* options);
 
   // Does the actual starting of the process.
   // |is_synchronous_launch| is set to false if the starting of the process is

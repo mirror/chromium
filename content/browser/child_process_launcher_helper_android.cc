@@ -84,9 +84,11 @@ ChildProcessLauncherHelper::GetFilesToMap() {
   return files_to_register;
 }
 
-void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
+int ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     const PosixFileDescriptorInfo& files_to_register,
-    base::LaunchOptions* options) {}
+    base::LaunchOptions* options) {
+  return LAUNCH_RESULT_SUCCESS;
+}
 
 ChildProcessLauncherHelper::Process
 ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(

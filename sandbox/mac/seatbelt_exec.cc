@@ -4,6 +4,7 @@
 
 #include "sandbox/mac/seatbelt_exec.h"
 
+#include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -22,6 +23,10 @@ namespace sandbox {
 SeatbeltExecClient::SeatbeltExecClient() {
   if (pipe(pipe_) != 0)
     logging::PFatal("SeatbeltExecClient: pipe failed");
+
+  int pipe_flags = fcntl(pipe_[1], F_GETFL);
+  if (fcntl(pipe_[1], F_SETFL, pipe_flags | O_NONBLOCK) == -1)
+    logging::PFatal("SeatbeltExecClient: fcntl failed");
 }
 
 SeatbeltExecClient::~SeatbeltExecClient() {
