@@ -36,17 +36,6 @@ struct Picture {
 };
 
 // Format specification of the picture buffer request.
-struct PictureBufferFormatDeprecated {
-  HalPixelFormat pixel_format;
-  uint32 buffer_size;
-
-  // minimal number of buffers required to process the video.
-  uint32 min_num_buffers;
-  uint32 coded_width;
-  uint32 coded_height;
-};
-
-// Format specification of the picture buffer request.
 struct PictureBufferFormat {
   // minimal number of buffers required to process the video.
   uint32 min_num_buffers;
@@ -120,17 +109,6 @@ interface VideoDecodeAccelerator {
 
   // Assigns a buffer to be used by the accelerator with specified
   // |picture_buffer_id|.
-  // In secure mode, if a new protected output buffer is allocated for the given
-  // |picture_buffer_id|. Any previously-allocated buffer with the same
-  // |picture_buffer_id| will be released.
-  // Call VDA::ImportBufferForPicture with gfx::GpuMemoryBufferHandle
-  // created from |handle_fd| and |planes|.
-  // This should be preceded by a call to AssignPictureBuffers().
-  ImportBufferForPictureDeprecated@3(int32 picture_buffer_id, handle handle_fd,
-                           array<VideoFramePlane> planes);
-
-  // Assigns a buffer to be used by the accelerator with specified
-  // |picture_buffer_id|.
   // In secure mode, a new protected output buffer will be allocated for the
   // given |picture_buffer_id|. The protected output buffer will then be
   // imported and used instead of the buffer pointed by |handle_fd|. If there
@@ -160,8 +138,6 @@ interface VideoDecodeAccelerator {
 // Next MinVersion: 2
 // Next method ID: 5
 interface VideoDecodeClient {
-  // Callback to tell client how many and what size of buffers to provide.
-  ProvidePictureBuffersDeprecated@0(PictureBufferFormatDeprecated format);
 
   // Callback to tell client how many and what size of buffers to provide.
   [MinVersion=1]
