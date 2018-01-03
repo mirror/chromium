@@ -33,6 +33,8 @@ enum UiElementName {
   kBackplane,
   kCeiling,
   kFloor,
+  kSky,
+  kStars,
   kUrlBarDmmRoot,
   kUrlBar,
   kOmniboxDmmRoot,

@@ -34,6 +34,8 @@ static const char* g_ui_element_name_strings[] = {
     "kBackplane",
     "kCeiling",
     "kFloor",
+    "kSky",
+    "kStars",
     "kUrlBarDmmRoot",
     "kUrlBar",
     "kOmniboxDmmRoot",
