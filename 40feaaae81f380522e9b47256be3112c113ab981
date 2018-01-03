@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c124ad_47373d03",
+        "filename": "services/identity/public/cpp/primary_account_access_token_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T13:58:30Z",
+      "side": 1,
+      "message": "Here and everywhere else:\ns/DCHECK_EQ(Mode::kWaitForAvailability, mode_)",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 8
+      },
+      "revId": "40feaaae81f380522e9b47256be3112c113ab981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e8e59c_99392a25",
+        "filename": "services/identity/public/cpp/primary_account_access_token_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T13:58:30Z",
+      "side": 1,
+      "message": "I think the fact that is retries once when the current request is cancelled is a trick to workaround some issues on Android. I would not expose that in the public interface.",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "40feaaae81f380522e9b47256be3112c113ab981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81287d74_fed80f97",
+        "filename": "services/identity/public/cpp/primary_account_access_token_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T13:58:30Z",
+      "side": 1,
+      "message": "Maybe (but I am not a native English speaker):\ns/kOneShot/kImmediate\ns/kWaitForAvailability/kWaitUntilAvailable or kWaitUntilReady",
+      "range": {
+        "startLine": 42,
+        "startChar": 30,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "40feaaae81f380522e9b47256be3112c113ab981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
