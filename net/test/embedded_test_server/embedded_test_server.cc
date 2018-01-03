@@ -29,6 +29,7 @@
 #include "net/socket/ssl_server_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/ssl/ssl_info.h"
 #include "net/ssl/ssl_server_config.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/embedded_test_server/default_handlers.h"
@@ -205,6 +206,12 @@ void EmbeddedTestServer::HandleRequest(HttpConnection* connection,
   DCHECK(io_thread_->task_runner()->BelongsToCurrentThread());
   request->base_url = base_url_;
 
+  net::SSLInfo ssl_info;
+  if (connection->socket_->GetSSLInfo(&ssl_info) &&
+      ssl_info.early_data_received) {
+    request->headers["Early-Data"] = "1";
+  }
+
   for (const auto& monitor : request_monitors_)
     monitor.Run(*request);
 
@@ -262,9 +269,15 @@ bool EmbeddedTestServer::GetAddressList(AddressList* address_list) const {
 
 void EmbeddedTestServer::SetSSLConfig(ServerCertificate cert,
                                       const SSLServerConfig& ssl_config) {
-  DCHECK(!Started());
   cert_ = cert;
   ssl_config_ = ssl_config;
+
+  // If we've already started the server, we'll need to re-initialize the
+  // SSLServerContext.
+  if (Started()) {
+    DCHECK(connections_.size() == 0);
+    InitializeSSLServerContext();
+  }
 }
 
 void EmbeddedTestServer::SetSSLConfig(ServerCertificate cert) {
