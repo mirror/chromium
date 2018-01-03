@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace media {
@@ -108,8 +107,8 @@ TEST(ScopedCallbackRunnerTest, SetIntegers_Destruction) {
 TEST(ScopedCallbackRunnerTest, SetIntegerFromUniquePtr_Run) {
   int a = 0;
   auto cb = ScopedCallbackRunner(base::BindOnce(&SetIntegerFromUniquePtr, &a),
-                                 base::MakeUnique<int>(1));
-  std::move(cb).Run(base::MakeUnique<int>(2));
+                                 std::make_unique<int>(1));
+  std::move(cb).Run(std::make_unique<int>(2));
   EXPECT_EQ(a, 2);
 }
 
@@ -117,7 +116,7 @@ TEST(ScopedCallbackRunnerTest, SetIntegerFromUniquePtr_Destruction) {
   int a = 0;
   {
     auto cb = ScopedCallbackRunner(base::BindOnce(&SetIntegerFromUniquePtr, &a),
-                                   base::MakeUnique<int>(1));
+                                   std::make_unique<int>(1));
   }
   EXPECT_EQ(a, 1);
 }
