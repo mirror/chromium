@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa14c87_7531c3b5",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3260,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "this prevents us from having more than 1 frames worth of overlay textures in the cache. Why the change? The previous logic used 5x, which was necessary for performance on some of our perf tests.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5297d9a_403ab50b",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3416,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "Does ResourcePool have smarter logic for resource reuse? \n\nI\u0027m concerned that if we have a render pass with 2 overlays, 1 at 64x64 and 1 at 64x128, that this logic can cause us to create a third overlay, as it might cause the 64x128 overlay to be reused for the 64x64.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb758a2_39f37b5e",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3429,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "I see, duplicate logic here minus matching render_pass_id. Could we move this all [everything involved in setting overlay_texture] into a helper function? Might help with readability.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1708e18_c6804f58",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1de8a11_7d0660f9",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "Document the meaning of the return parameter.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902e0bb8_6a0af066",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "what is the different between these and\n\nswapped_and_acked_overlay_resources_, swapping_overlay_resources_?",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2b1376_68cbb9a9",
+        "filename": "components/viz/service/display/scoped_gpu_memory_buffer_texture.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "I\u0027m surprised this doesn\u0027t cause uninitialized variable ASAN errors ... but if it works it works.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e034ba5e_cec0e367",
+        "filename": "components/viz/service/display/scoped_gpu_memory_buffer_texture.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 1,
+      "message": "Please document the lifetime semantics of this raw pointer relative to the instance of ScopedGpuMemoryBufferTexture.",
+      "revId": "6ce929f5cb139391459da1b4554c1b42ad6f74b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ceba93_ed6fec0e",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2832,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2018-01-03T01:08:49Z",
+      "side": 0,
+      "message": "this line is effectively being moved to FinishDrawingFrame. Is there any situation where that method would not be followed by SwapBuffers?\n\nIf so, would that cause the resource to be effectively leaked forever? \n\nIt seems like the code in the CL relies on an implicit assumption - is there any way for us to make that assumption more explicit, or remove the dependency on it [e.g. by moving the logic back here?]?",
+      "range": {
+        "startLine": 2832,
+        "startChar": 50,
+        "endLine": 2832,
+        "endChar": 76
+      },
+      "revId": "686dd85ea6f2b2246798356efd2df3bd6fddf7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
