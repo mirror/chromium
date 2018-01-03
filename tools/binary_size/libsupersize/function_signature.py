@@ -95,10 +95,8 @@ def _StripTemplateArgs(name):
     left_idx = _FindLastCharOutsideOfBrackets(name, '<', last_right_idx + 1)
     if left_idx == -1:
       return name
-    # Special case: std::operator<< <
-    if left_idx > 0 and name[left_idx - 1] == ' ':
-      left_idx -= 1
-    name = name[:left_idx] + name[last_right_idx + 1:]
+    # Leave in empty <>s to denote that it's a template.
+    name = name[:left_idx + 1] + name[last_right_idx:]
     last_right_idx = left_idx
 
 
