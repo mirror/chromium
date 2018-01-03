@@ -950,12 +950,10 @@ class CONTENT_EXPORT RenderFrameImpl
   bool IsLocalRoot() const;
   const RenderFrameImpl* GetLocalRoot() const;
 
-  // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(
-      blink::WebLocalFrame* frame,
-      blink::WebHistoryCommitType commit_type,
-      service_manager::mojom::InterfaceProviderRequest
-          remote_interface_provider_request);
+  // Build typical DidCommitProvisionalLoad_Params based on the frame internal
+  // state.
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+  MakeDidCommitProvisionalLoadParams(blink::WebHistoryCommitType commit_type);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
@@ -1264,6 +1262,29 @@ class CONTENT_EXPORT RenderFrameImpl
   mojom::URLLoaderFactory* custom_url_loader_factory() {
     return custom_url_loader_factory_.get();
   }
+
+  // Updates the internal commit state before notifying the FrameHost of the
+  // commit.
+  void UpdateStateBeforeCommitMessage(const blink::WebHistoryItem& item,
+                                      blink::WebHistoryCommitType commit_type);
+
+  // Updates the internal commit state after notifying the FrameHost of the
+  // commit.
+  void UpdateStateAfterCommitMessage();
+
+  // Notify render_view_ observers that a commit happend.
+  void NotifyObservers(bool is_new_navigation, bool is_same_document);
+
+  // Updates the Zoom level of the render view to match current content.
+  void UpdateZoomLevel();
+
+  // Updates the navigation history depending on the passed parameters.
+  // This could result either in the creation of a new entry or a modification
+  // in the history current offset or nothing. If a new entry was created,
+  // returns true, false otherwise.
+  bool UpdateNavigationHistory(const blink::WebHistoryItem& item,
+                               blink::WebHistoryCommitType commit_type,
+                               const RequestNavigationParams& request_params);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
