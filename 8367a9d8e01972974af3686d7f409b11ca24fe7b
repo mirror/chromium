@@ -22,6 +22,30 @@
       "revId": "8367a9d8e01972974af3686d7f409b11ca24fe7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e460858b_2c808995",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-03T18:37:13Z",
+      "side": 1,
+      "message": "I think that is easy to avoid...if we need it.  I uploaded a version that would prevent duplicate calls, but based on my comment on the bug, maybe the actual problem is that the application status hasn\u0027t be registered.",
+      "parentUuid": "219dc4db_dfeab10f",
+      "range": {
+        "startLine": 307,
+        "startChar": 30,
+        "endLine": 307,
+        "endChar": 49
+      },
+      "revId": "8367a9d8e01972974af3686d7f409b11ca24fe7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
