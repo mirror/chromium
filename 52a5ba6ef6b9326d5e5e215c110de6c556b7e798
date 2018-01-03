@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2517bdfc_5136ffaf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "Given that we have tasks without task type I suggest we do the following:\n\nIntroduce the TaskDescriptionForTracing struct with two fields: base::Optional\u003cTaskType\u003e and MainThreadTaskQueue::QueueType and use it in task_description_for_tracing member here.\n\nA conversion from base::Optional\u003cTaskDescription\u003e to const char* will look like this: return nullptr if the optional is empty, return task type name if we have task type, return name of the task queue type otherwise.",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 27
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317e5c5b_9a091de9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "We also need to set task_type_for_tracing to nullopt in OnTaskCompleted.",
+      "range": {
+        "startLine": 2273,
+        "startChar": 21,
+        "endLine": 2273,
+        "endChar": 42
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706d025b_2374932a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "nit: do not add spaces to the names to be consistent with code, just \"DOMManipulation\".",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a5d2a6_09611afd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "I don\u0027t think that these two functions belong to this file.\n\nI suggest moving TaskTypeToString to public/platform and OptionalTaskTypeToString to renderer_scheduler_impl.cc together with the rest of *ToString functions.",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 44
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d262405c_30b7ab2a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "nit: inverse the condition for early opt-out: if (!is_enabled()) return;",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38214698_c7eb8759",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "nit: a) use direct comparison (if (state_str)). b) opt-out early here too.",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f185a58_bf08383b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-03T12:31:00Z",
+      "side": 1,
+      "message": "Please add a comment describing what this member variable does. Keeping parts of the old comment might be a good idea.",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 21
+      },
+      "revId": "52a5ba6ef6b9326d5e5e215c110de6c556b7e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
