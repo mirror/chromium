@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "068083df_e6a13503",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-01-03T06:28:29Z",
+      "side": 1,
+      "message": "yes, right. I add a new test to check them I don\u0027t want escape. But the test is still initial version. More characters should be added.",
+      "parentUuid": "390aaeb6_946671af",
+      "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43345744_b5bfaa9e",
         "filename": "chrome/common/custom_handlers/protocol_handler.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1923f7b6_6de1ac32",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-01-03T06:28:29Z",
+      "side": 1,
+      "message": "ok, I fixed them from \"/search?q\" to \"/url\u003d\". Thanks.",
+      "parentUuid": "43345744_b5bfaa9e",
+      "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
