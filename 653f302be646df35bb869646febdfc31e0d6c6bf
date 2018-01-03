@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58d35442_6bc555a6",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T16:43:44Z",
+      "side": 1,
+      "message": "Yes, you should build the string in the UI and provide any information required, e.g. { status, export_folder, export_filename }.",
+      "parentUuid": "e3290c37_734ea681",
+      "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c36f4c_65a65173",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 21
