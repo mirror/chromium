@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc195a9_4a0bdc3d",
+        "filename": "tools/binary_size/libsupersize/function_signature.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-03T17:13:48Z",
+      "side": 1,
+      "message": "How about operator\u003e\u003e ?",
+      "range": {
+        "startLine": 83,
+        "startChar": 25,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "c4c6ccf81e1b299a6a18082fe490dd7316e2fdd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
