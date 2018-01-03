@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "574a7806_bfa030f5",
+        "filename": "content/common/input/synthetic_web_input_event_builders.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-03T16:35:24Z",
+      "side": 1,
+      "message": "Do we have any test that check the radius value? I think ideally this function should be able to take radius as an argument so that we can test it. \nWhat number you prefer to use here? Like 20 or 32?",
+      "parentUuid": "4057493a_c02a11b7",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4bf50de_a9009419",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d9d14676_c8c0eff8",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-03T16:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4bf50de_a9009419",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd06e985_bba17696",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-03T14:38:08Z",
       "side": 1,
       "message": "How will we use this uma metric? I\u0027d be more curious of the # of events we actually end up adjusting to be the same target as before.",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da20d71e_9a0cbfbe",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2018-01-03T16:35:24Z",
+      "side": 1,
+      "message": "We don\u0027t want to do an extra hit test to get the original target. \"same target\" means no adjustment, the distance should be 0 or close to 0.",
+      "parentUuid": "bd06e985_bba17696",
       "revId": "6375117e8035db22445aeb4880289a471d83cd78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
