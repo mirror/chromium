@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7a7507_c524b9c1",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-03T23:09:00Z",
+      "side": 1,
+      "message": "I would suggest just exposing reserve() publicly to match std::vector\u003cT\u003e. At some point, we may match std::vector\u003cT\u003e enough that we can just get rid of WebVector and use std::vector (providing some sort of conversion helper for WTF::Vector perhaps).",
+      "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
