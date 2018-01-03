@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bfb0880d_fa5e9f07",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T16:18:59Z",
+      "side": 1,
+      "message": "sorry, i don\u0027t understand \"we can have a visible browser with 2 tabs: one visible and one isn\u0027t (i.e. covered by another browser window)\". browser windows usually (always?) just display a single tab, i.e. the active one, right? if a browser is visible, won\u0027t its (single) active tab always be visible, while all of the other tabs will be inactive and not visible? see also below.",
+      "parentUuid": "f0c6bd36_3af69e43",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00592f3f_d7e2e311",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
         "patchSetId": 7
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I think \"active\" is the word that\u0027s used (e.g. active_index), maybe Michael can comment as well?\n\nThe only browser-property I\u0027m checking is is_browser_focused. The other properties (is_active and is_visible) are both tab-properties. About their relationships, I think the following holds (-/-\u003e means \"does not imply\"):\n\n(i). is_browser_focused -/-\u003e is_active or is_visible\n- A tab in the focused browser may still be invisible and/or not the active one.\n\n(ii). is_visible -/-\u003e is_browser_focused or is_active\n- A visible tab doesn\u0027t have to be the active one of its browser. Its browser should be visible, but doesn\u0027t have to be the one in focus.\n\n(iii). is_active -/-\u003e is_browser_focused\n- Another app may be running and is focused so the active tab\u0027s browser may not be in focus.\n\n(iv). is_active -/-\u003e is_visible\n- Its browser is partially visible, and so its active tab may be hidden.\n\nAs there\u0027s not much overlap and I don\u0027t think any property is redundant, I\u0027d prefer to track them separately just so that I\u0027m not missing out on any corner cases. I\u0027ll analyse these data in a post-processing pipeline.\n\nThanks.",
       "parentUuid": "00592f3f_d7e2e311",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7486e2_a380a879",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-03T16:18:59Z",
+      "side": 1,
+      "message": "i\u0027m a bit surprised that a visible tab doesn\u0027t need to be active. under what circumstances is a tab that\u0027s not the active one still visible?\n\ni also don\u0027t think that is_visible is influenced by whether a tab is obscured by another window (or possibly even by whether it\u0027s partially offscreen). visibility testing like that seems like it would be very expensive. is https://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?rcl\u003d11a328b955d3cf6c24fa96df733edda96910c7fc\u0026l\u003d1555 the underlying method that\u0027s being called here?\n\nif you haven\u0027t already, please do some manual testing of which of these are true and false in different cases and update the comment in this file to offer a detailed description of what \"visible\" means. (and if a visible tab can be completely obscured by another window, is it still a useful thing to track here?)",
+      "parentUuid": "c9bade36_eec5bc53",
       "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
