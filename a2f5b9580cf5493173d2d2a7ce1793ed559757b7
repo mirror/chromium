@@ -142,6 +142,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d798e62_a7d94b69",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T16:09:17Z",
+      "side": 1,
+      "message": "\u003e I believe that this particular header is actually added by the Chrome RDH delegate, which is not used in the LoadBasicRequest path.\n\nah, thanks for pointing that out. In that case, the patch as is should be fine?",
+      "parentUuid": "37b5f962_58944fb1",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
