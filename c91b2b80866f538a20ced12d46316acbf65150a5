@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c78206_385d822b",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-03T14:06:27Z",
+      "side": 1,
+      "message": "Still need to check whether HashMapTranslator can be a problem.",
+      "range": {
+        "startLine": 552,
+        "startChar": 6,
+        "endLine": 552,
+        "endChar": 28
+      },
+      "revId": "c91b2b80866f538a20ced12d46316acbf65150a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407cb0f6_eedb7697",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-03T14:06:27Z",
+      "side": 0,
+      "message": "This was obviously incorrect for HashTraits. The solution is to pass the traits.",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "6a6234653721a9809f9fba8f6cbb3f959fddbcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
