@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8345d58_259f809a",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-03T23:18:39Z",
+      "side": 1,
+      "message": "This code and the comment above look scary. Is there a race condition? Not\nentirely sure what it\u0027s doing.",
+      "revId": "230c0d909561ade463f1679ba3c4b9ebe83216a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
