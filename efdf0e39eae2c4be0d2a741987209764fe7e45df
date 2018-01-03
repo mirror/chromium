@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15a598b_235c30dc",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-03T18:25:59Z",
+      "side": 1,
+      "message": "Can you explain why |event| is not a located-event here?",
+      "revId": "efdf0e39eae2c4be0d2a741987209764fe7e45df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
