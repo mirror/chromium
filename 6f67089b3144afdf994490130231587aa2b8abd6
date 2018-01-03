@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3344a8a_08389575",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 11046,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ea7983_7ee6ae6f",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0baf6f6_459ae938",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f362dd57_5cbeb2ee",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 11049,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "b0baf6f6_459ae938",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7c416cfc_110d6a55",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Yep, the component can be updated multiple times.",
+      "parentUuid": "5f3cd128_51ad4e5d",
+      "range": {
+        "startLine": 169,
+        "startChar": 63,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab2f863_cee75114",
         "filename": "chrome/browser/vr/assets.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9260d70b_96e29a92",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "The component can become ready before we enter VR but we only register the callback when entering VR.",
+      "parentUuid": "3ab2f863_cee75114",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "1098adf1_68055e9b",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "I want to keep the naming in sync with void Load(OnAssetsLoadedCallback on_loaded) where the parameter is also not named callback.",
+      "parentUuid": "0a3cf2cd_c182929f",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1313a8ca_191fe28c",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f34af3_b9ab6499",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Probably not. Removed.",
+      "parentUuid": "1313a8ca_191fe28c",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "c0d0a094_35d60746",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "This only becomes true when there is a new component version. I.e. you always apply new background and not go back to an old one.",
+      "parentUuid": "6fd19f2e_9693771e",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39036a33_c7fc763d",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e249b677_faeef7e0",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "I see. I think it helps to find places where you can enable a feature once a bug is resolved?",
+      "parentUuid": "39036a33_c7fc763d",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "d0bc38fe_41c8afa1",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e07fa27e_b5eadb59",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9f31c7c_efb817d1",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -214,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "91b1732f_88bbae77",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Sounds good. Keeping it for now.",
+      "parentUuid": "851ada43_2fd9547e",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e97f792_260b47a4",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -234,6 +420,30 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0849e66c_d0a75d9f",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-03T23:05:23Z",
+      "side": 1,
+      "message": "Good idea. Doesn\u0027t compile unfortunately :/",
+      "parentUuid": "0e97f792_260b47a4",
+      "range": {
+        "startLine": 854,
+        "startChar": 35,
+        "endLine": 854,
+        "endChar": 52
+      },
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
