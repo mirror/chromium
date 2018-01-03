@@ -16,6 +16,24 @@
       "revId": "c37690baf45ead0b633bcbb40a28fed0959931f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3909d4ee_08f4c699",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T10:57:35Z",
+      "side": 1,
+      "message": "\u003e Should this comment go with the loops below, not before the common path is tried?\n\nDone.\n\n\u003e I also think other approaches might make more sense. Why match against another platform if there\u0027s no common file?\n\nThere doesn\u0027t need to be a common file - this CL doesn\u0027t add one, and requiring a common file may require some platform to be picked arbitrarily to serve as \"common\".\n\nThe presence of a common file would be saying explicitly that there should be _no_ platform differences except for those already special-cased; it doesn\u0027t count as a \"fallback\". And in cases where only some platforms differ, always putting a reference image in a platform path also serves to document where that reference image was generated.\n\n\u003e (but I do get matching against another version of the same platform, or maybe chromeos matching against linux...) I also wonder if we\u0027d ever want Win10 to match Common instead of Win7, etc. There\u0027s no clear answer and it\u0027s not worth lots of effort right now, since we just have the one test, but I think ultimately a graph/tree or set per platform might make more sense.\n\nYeah, let\u0027s see what use-cases crop up.",
+      "parentUuid": "db464ddd_c64ea946",
+      "revId": "c37690baf45ead0b633bcbb40a28fed0959931f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
