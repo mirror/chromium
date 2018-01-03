@@ -23,6 +23,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/login/localized_values_builder.h"
 #include "components/prefs/pref_service.h"
+#include "components/translate/core/common/translate_util.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/web_ui.h"
@@ -81,12 +82,13 @@ void TermsOfServiceScreenHandler::Show() {
     return;
   }
 
-  const std::string locale =
+  std::string locale =
       ProfileHelper::Get()
           ->GetProfileByUserUnsafe(
               user_manager::UserManager::Get()->GetActiveUser())
           ->GetPrefs()
           ->GetString(prefs::kApplicationLocale);
+  translate::ConvertToActualUILocale(&locale);
 
   if (locale.empty() || locale == g_browser_process->GetApplicationLocale()) {
     // If the user has not chosen a UI locale yet or the chosen locale matches

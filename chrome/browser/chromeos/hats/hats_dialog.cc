@@ -14,6 +14,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/system/version_loader.h"
 #include "components/prefs/pref_service.h"
+#include "components/translate/core/common/translate_util.h"
 #include "components/version_info/version_info.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -119,6 +120,7 @@ void HatsDialog::CreateAndShow(bool is_google_account) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   std::string user_locale =
       profile->GetPrefs()->GetString(prefs::kApplicationLocale);
+  translate::ConvertToActualUILocale(&user_locale);
   if (!user_locale.length())
     user_locale = kDefaultProfileLocale;
 

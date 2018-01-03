@@ -34,6 +34,7 @@
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #include "components/metrics/metrics_service.h"
 #include "components/prefs/pref_service.h"
+#include "components/translate/core/common/translate_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/notification_service.h"
@@ -104,8 +105,9 @@ bool SetLocaleForNextStart(PrefService* local_state) {
 
   // Login screen should show up in owner's locale.
   std::string owner_locale = local_state->GetString(prefs::kOwnerLocale);
-  if (!owner_locale.empty() &&
-      local_state->GetString(prefs::kApplicationLocale) != owner_locale &&
+  std::string pref_locale = local_state->GetString(prefs::kApplicationLocale);
+  translate::ConvertToActualUILocale(&pref_locale);
+  if (!owner_locale.empty() && pref_locale != owner_locale &&
       !local_state->IsManagedPreference(prefs::kApplicationLocale)) {
     local_state->SetString(prefs::kApplicationLocale, owner_locale);
     return true;

@@ -107,6 +107,9 @@ const base::Feature kTranslateUI2016Q2{"TranslateUI2016Q2",
 const base::Feature kImprovedLanguageSettings{
     "ImprovedLanguageSettings", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kRegionalLocalesAsDisplayUI{
+    "RegionalLocalesAsDisplayUI", base::FEATURE_ENABLED_BY_DEFAULT};
+
 const base::Feature kTranslateRecentTarget{"TranslateRecentTarget",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
