@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38cb836e_bd9522fe",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-03T12:25:16Z",
+      "side": 1,
+      "message": "Adding the TODO doesn\u0027t make much sense to me because it won\u0027t involve any changes here (so when the work is done we\u0027d have to touch this file and remove the TODO). WDYT?",
+      "parentUuid": "44d38141_e1b17956",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3a2321_3880a3aa",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T22:12:30Z",
       "side": 1,
       "message": "WDYT of using https in place of http; Or checking for IsSecure on the cookie to see if https should be used; Or adding a bug/todo about fetching icons via https?",
+      "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2b3414_b6b1c83c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2018-01-03T12:25:16Z",
+      "side": 1,
+      "message": "How complex is it to get a cookie from |url| and check isSecure on it from a chrome:// page? The favicon URL is something like chrome://favicon/\u003c|url| param here\u003e, and it\u0027s purely a guess here as to whether the site was accessed over HTTP or HTTPS in the backend favicon database.\n\nSite Details and other things with SiteSettingsBehaviour use HTTP currently, and I\u0027d say that HTTP is still the right guess the majority of the time (majority of traffic is over HTTPS but I think the majority of sites is still HTTP).",
+      "parentUuid": "0d3a2321_3880a3aa",
       "revId": "c9c94f950845e86f3008a1c0b0ef52b58fc4848d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
