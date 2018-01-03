@@ -13,7 +13,8 @@ import "third_party/WebKit/common/blob/blob.mojom";
 // ports.
 
 // This struct represents the cloneable part of messages that are sent across
-// postMessage style APIs. In particular this is used for BroadcastChannel.
+// postMessage style APIs. In particular this is used for BroadcastChannel and
+// MessageChannel.
 struct CloneableMessage {
   array<uint8> encoded_message;
   // Blob handles for any blobs being sent in this message.

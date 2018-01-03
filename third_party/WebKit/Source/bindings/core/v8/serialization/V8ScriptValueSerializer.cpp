@@ -102,6 +102,9 @@ scoped_refptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
   if (exception_state.HadException())
     return nullptr;
 
+  serialized_script_value_->CloneSharedArrayBuffers(
+      script_state_->GetIsolate(), shared_array_buffers_, exception_state);
+
   // Finalize the results.
   std::pair<uint8_t*, size_t> buffer = serializer_.Release();
   serialized_script_value_->SetData(
@@ -136,12 +139,9 @@ void V8ScriptValueSerializer::FinalizeTransfer(
 
   v8::Isolate* isolate = script_state_->GetIsolate();
 
-  // The order of ArrayBuffers and SharedArrayBuffers matters; we use the index
-  // into this array for deserialization.
   ArrayBufferArray array_buffers;
   if (transferables_)
     array_buffers.AppendVector(transferables_->array_buffers);
-  array_buffers.AppendVector(shared_array_buffers_);
 
   if (!array_buffers.IsEmpty()) {
     serialized_script_value_->TransferArrayBuffers(isolate, array_buffers,
@@ -541,9 +541,6 @@ v8::Maybe<uint32_t> V8ScriptValueSerializer::GetSharedArrayBufferId(
   if (index == kNotFound) {
     shared_array_buffers_.push_back(shared_array_buffer);
     index = shared_array_buffers_.size() - 1;
-  }
-  if (transferables_) {
-    index += transferables_->array_buffers.size();
   }
   return v8::Just<uint32_t>(index);
 }

@@ -157,6 +157,20 @@ v8::Local<v8::Value> V8ScriptValueDeserializer::Deserialize() {
   if (!version_)
     version_ = deserializer_.GetWireFormatVersion();
 
+  // Clone shared array buffers.
+  if (unpacked_value_) {
+    const auto& shared_array_buffers = unpacked_value_->SharedArrayBuffers();
+    for (unsigned i = 0; i < shared_array_buffers.size(); i++) {
+      DOMSharedArrayBuffer* shared_array_buffer = shared_array_buffers.at(i);
+      v8::Local<v8::Object> creation_context = context->Global();
+      v8::Local<v8::Value> wrapper =
+          ToV8(shared_array_buffer, creation_context, isolate);
+      DCHECK(wrapper->IsSharedArrayBuffer());
+      deserializer_.CloneSharedArrayBuffer(
+          i, v8::Local<v8::SharedArrayBuffer>::Cast(wrapper));
+    }
+  }
+
   // Prepare to transfer the provided transferables.
   Transfer();
 
