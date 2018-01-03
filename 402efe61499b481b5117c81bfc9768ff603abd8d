@@ -16,6 +16,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a802be2_0a8863d5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-03T12:01:31Z",
+      "side": 1,
+      "message": "Before I add a comment or change the test let me explain, because I see I may be mistaken.\nWe are allowed to have non-WPT testing non-spec behaviors, but any WPT tests should be spec-complaint without any assumption about implementation details. So this test must be in accordance with Unified Plan.\n\nThis is what I was thinking:\nIf removeTrack() has been called, whether that removes it (Plan B) or changes it\u0027s direction (Unified Plan), the async step \"Determine if negotiation is needed\" would result in negotiation needed because the sender is no longer sending and as such the promise is rejected.\n\nHowever, this step is under \"Run the following in parallel\", so whether or not the direction is changed would be a race? And \"Determine if negotiation is needed\" might implicitly be thread-unsafe if both threads are contesting for the same attribute(s) without any locks or making sure all-or-none of the steps occur?\n\nWould you agree that if \"Run the following in parallel\" occurs after removeTrack() the promise should be rejected but if it occurs before removeTrack() the promise should resolve?",
+      "parentUuid": "5ed70b08_38beac8d",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
