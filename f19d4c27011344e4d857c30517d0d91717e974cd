@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "626397ab_92dc81f0",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "For consistency with other presentation API routes, the route description should describe the activity/source, not the content title.\n\nSo \"Casting \u003corigin\u003e\" (origin is the origin of the presentation URL).\n\nDoes the wired display MRP have a route controller so the receiver document title can be displayed?",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9192684f_dfd18c5b",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Normally I prefer ternary expressions but I found this a little hard to follow.\nI think it could scan better as a normal if/else.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea20f179_b6a4dc83",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -64,6 +98,142 @@
       "writtenOn": "2018-01-03T01:59:29Z",
       "side": 1,
       "message": "Display doesn\u0027t support moves, so std::move is redundant.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed83d5c8_4f492ece",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Is this accurate?  We have discussed targeting a primary display from a secondary display.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b238846_e1f37d3b",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Nit: clarify in the comment this is for tests only.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6888e7a0_b4e9f71e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Super nit: \"ForTest\" is more consistent with other MR code.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e7d8d7_6bff66b9",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Prefer to use the active sense for APIs, so RemovePresentationById().",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65eeaaa7_675a5101",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "API thought:\n\nIt might make more sense for the receiver object to implement an observer API, and the Presentation add itself as an observer of the associated receiver; then the Presentation could directly update the route it owns.  But then you\u0027d have to have another callback to notify the route observers.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7338ed_eadd8f88",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Terminates all presentation receivers on |display|",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebec2b26_7abcf46e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "This sentence isn\u0027t grammatical.\nAlso, clarify that this pointer is not owned.",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee600fd4_d29620cb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T18:40:27Z",
+      "side": 1,
+      "message": "Why not have this function return a MockPresentationReceiver with |termination_callback| directly?",
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
