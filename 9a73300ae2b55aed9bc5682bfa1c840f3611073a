@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73369a00_5755497e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-03T21:43:09Z",
+      "side": 1,
+      "message": "I made a mistake in patchset 1. A mask layer needs to be created for clip path if there is any kind of child graphics layer, even if internal to the current CLM.\n\nTo be honest this looks terrible to me. The goal is to have a minimal CL for cherry-picking to M64, then I will do a follow-up CL to move clip-path to the primary mask layer. Does that SGTY?",
+      "revId": "9a73300ae2b55aed9bc5682bfa1c840f3611073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
