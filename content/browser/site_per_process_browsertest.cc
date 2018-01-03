@@ -339,8 +339,6 @@ void SurfaceHitTestTestHelper(
 
   WaitForChildFrameSurfaceReady(child_node->current_frame_host());
 
-  float scale_factor = GetPageScaleFactor(shell);
-
   // Get the view bounds of the child iframe, which should account for the
   // relative offset of its direct parent within the root frame, for use in
   // targeting the input event.
@@ -352,10 +350,8 @@ void SurfaceHitTestTestHelper(
                                    blink::WebInputEvent::kTimeStampForTesting);
   child_event.button = blink::WebPointerProperties::Button::kLeft;
   child_event.SetPositionInWidget(
-      gfx::ToCeiledInt((bounds.x() - root_view->GetViewBounds().x() + 5) *
-                       scale_factor),
-      gfx::ToCeiledInt((bounds.y() - root_view->GetViewBounds().y() + 5) *
-                       scale_factor));
+      bounds.x() - root_view->GetViewBounds().x() + 5,
+      bounds.y() - root_view->GetViewBounds().y() + 5);
   child_event.click_count = 1;
 
   // Check the renderer hit-test API return the correct frame for
@@ -364,12 +360,9 @@ void SurfaceHitTestTestHelper(
   viz::FrameSinkId received_frame_sink_id;
   base::Closure quit_closure =
       content::GetDeferredQuitTaskForRunLoop(&run_loop);
-  // TODO(crbug.com/793018): There is a confusion here about scale_factor.
   DCHECK_NE(root->current_frame_host()->GetInputTargetClient(), nullptr);
   root->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
-      gfx::ScaleToCeiledPoint(
-          gfx::ToCeiledPoint(child_event.PositionInWidget()), scale_factor,
-          scale_factor),
+      gfx::ToCeiledPoint(child_event.PositionInWidget()),
       base::BindLambdaForTesting([&](const viz::FrameSinkId& id) {
         received_frame_sink_id = id;
         quit_closure.Run();
