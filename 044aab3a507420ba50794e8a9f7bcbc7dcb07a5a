@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eadc607_fb37ec12",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "The DIAL spec (Section 5.4) implies that the app URL must not have a trailing slash.\nCould any trailing slash be removed when |sink| is constructed?",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ab2e89_3b406650",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "I assume FetchDialAppInfo is a \"foreground\" request?\nCan the comment clarify this?",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5613ea40_034fcf8d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "If ParsingError is an enum class that inherits from int then I think the static cast can be avoided.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e555b876_573b8727",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "Ditto for SinkAppStatus.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bced6083_4e64f625",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "The response code is probably the most interesting bit for debugging here.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287fa6ad_4ce5f6a5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "We may want to add some UMA histograms in a followup change tracking parsing errors and HTTP response codes.  However, it might be hard to distinguish the following cases from metrics alone:\n\n- Regression in DIAL app info\n- Weird devices that use DIAL (light bulbs) that we don\u0027t care about\n- Legitimate receivers with broken DIAL implementations\n\nLet\u0027s discuss offline before adding any metrics.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad93257_deacf534",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "Nit: s/2017/2018/ here and elsewhere",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef02633_92f80368",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "Nit: aborts",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dd16df_e132910c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "It would be better to design this class to live on any sequence, and have a sequence bound to the IO thread injected in the constructor if necessary.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bb0f66_0527fc54",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "It might be clearer to say \"MediaSink ID of the receiver that responded to the GET request.\"",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84aae505_fc6b25c7",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "DIAL app name whose status is being checked on |sink_id|.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6ff8f6_1a6b985c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "...on MediaSink with ID |sink_id|.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d79beef_0973b981",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "Nit: issuing",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2511e72_ebdb4098",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "|parsing_error|\n\nWhat is this value if there is no parsing error?\n\nParsingError would be clearer as ParsingResult if it covers both success and error cases.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8371d37_7acd9644",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "OnDialAppInfoParsed ?",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa060bc_beffe403",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "parse_completed_cb_",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b829d986_7d021aaa",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T19:21:34Z",
+      "side": 1,
+      "message": "There\u0027s no command line flag.  Just a policy.",
+      "revId": "044aab3a507420ba50794e8a9f7bcbc7dcb07a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
