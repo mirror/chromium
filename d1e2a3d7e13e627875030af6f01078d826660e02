@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c737805_55af9ab8",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2018-01-03T16:42:40Z",
+      "side": 1,
+      "message": "Perhaps LOG(ERROR) is more appropriate here?",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "d1e2a3d7e13e627875030af6f01078d826660e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
