@@ -32,7 +32,7 @@
 #include "cc/debug/debug_colors.h"
 #include "cc/paint/render_surface_filters.h"
 #include "cc/raster/scoped_gpu_raster.h"
-#include "cc/resources/resource_pool.h"
+#include "cc/resources/resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/gpu/context_provider.h"
@@ -72,6 +72,7 @@
 #include "ui/gfx/color_transform.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/skia_util.h"
 
 using gpu::gles2::GLES2Interface;
@@ -2852,23 +2853,46 @@ void GLRenderer::SwapBuffersComplete() {
       }
       swapping_overlay_resources_.pop_front();
     }
-
-    if (!swapped_and_acked_overlay_resources_.empty()) {
-      std::vector<unsigned> textures;
-      textures.reserve(swapped_and_acked_overlay_resources_.size());
-      for (auto& pair : swapped_and_acked_overlay_resources_) {
-        textures.push_back(pair.first);
-      }
-      gl_->ScheduleCALayerInUseQueryCHROMIUM(textures.size(), textures.data());
+    if (!in_flight_overlay_textures_.empty()) {
+      for (auto& overlay : in_flight_overlay_textures_.front())
+        awaiting_release_overlay_textures_.push_back(std::move(overlay));
+      in_flight_overlay_textures_.erase(in_flight_overlay_textures_.begin());
     }
-  } else if (swapping_overlay_resources_.size() > 1) {
-    cc::DisplayResourceProvider::ScopedBatchReturnResources returner(
-        resource_provider_);
 
+    size_t query_texture_count = swapped_and_acked_overlay_resources_.size() +
+                                 awaiting_release_overlay_textures_.size();
+    if (query_texture_count) {
+      std::vector<uint32_t> query_texture_ids;
+      query_texture_ids.reserve(query_texture_count);
+
+      for (auto& pair : swapped_and_acked_overlay_resources_)
+        query_texture_ids.push_back(pair.first);
+      for (auto& overlay : awaiting_release_overlay_textures_)
+        query_texture_ids.push_back(overlay->texture.id());
+
+      // We query for *all* outstanding texture ids, even if we previously
+      // queried, as we will not hear back about things becoming available
+      // until after we query again.
+      gl_->ScheduleCALayerInUseQueryCHROMIUM(query_texture_count,
+                                             query_texture_ids.data());
+    }
+  } else {
     // If a query is not needed to release the overlay buffers, we can assume
     // that once a swap buffer has completed we can remove the oldest buffers
-    // from the queue.
-    swapping_overlay_resources_.pop_front();
+    // from the queue, but only once we've swapped another frame afterward.
+    if (swapping_overlay_resources_.size() > 1) {
+      cc::DisplayResourceProvider::ScopedBatchReturnResources returner(
+          resource_provider_);
+      swapping_overlay_resources_.pop_front();
+    }
+    // If |in_flight_overlay_textures_| is non-empty that means we're sending
+    // RenderPassDrawQuads as an overlay. This is only supported for CALayers
+    // now, where |release_overlay_resources_after_gpu_query| will be true.
+    // In order to support them here, the OverlayTextures would need to move
+    // to |awaiting_release_overlay_textures_| and stay there until the
+    // ResourceFence that was in use for the frame they were submitted is
+    // passed.
+    DCHECK(in_flight_overlay_textures_.empty());
   }
 }
 
@@ -2878,8 +2902,27 @@ void GLRenderer::DidReceiveTextureInUseResponses(
   cc::DisplayResourceProvider::ScopedBatchReturnResources returner(
       resource_provider_);
   for (const gpu::TextureInUseResponse& response : responses) {
-    if (!response.in_use) {
-      swapped_and_acked_overlay_resources_.erase(response.texture);
+    if (response.in_use)
+      continue;
+
+    // Returned texture ids may be for resources from clients of the
+    // display compositor, in |swapped_and_acked_overlay_resources_|. In that
+    // case we remove the lock from the map, allowing them to be returned to the
+    // client if the resource has been deleted from the DisplayResourceProvider.
+    if (swapped_and_acked_overlay_resources_.erase(response.texture))
+      continue;
+    // If not, then they would be a RenderPass copy texture, which is held in
+    // |awaiting_release_overlay_textures_|. We move it back to the available
+    // texture list to use it for the next frame.
+    auto it = std::find_if(
+        awaiting_release_overlay_textures_.begin(),
+        awaiting_release_overlay_textures_.end(),
+        [&response](const std::unique_ptr<OverlayTexture>& overlay) {
+          return overlay->texture.id() == response.texture;
+        });
+    if (it != awaiting_release_overlay_textures_.end()) {
+      available_overlay_textures_.push_back(std::move(*it));
+      awaiting_release_overlay_textures_.erase(it);
     }
   }
   color_lut_cache_.Swap();
@@ -3141,16 +3184,26 @@ bool GLRenderer::IsContextLost() {
 }
 
 void GLRenderer::ScheduleCALayers() {
-  if (overlay_resource_pool_) {
-    overlay_resource_pool_->CheckBusyResources();
-  }
+  // The use of OverlayTextures for RenderPasses is only supported on the code
+  // paths for |release_overlay_resources_after_gpu_query| at the moment. See
+  // SwapBuffersComplete for notes on the missing support for other paths. This
+  // method uses ScheduleRenderPassDrawQuad to send RenderPass outputs as
+  // overlays, so it can only be used because this setting is true.
+  if (!settings_->release_overlay_resources_after_gpu_query)
+    return;
 
   scoped_refptr<CALayerOverlaySharedState> shared_state;
   size_t copied_render_pass_count = 0;
+
+  std::vector<std::unique_ptr<OverlayTexture>> render_pass_overlay_textures;
+
   for (const CALayerOverlay& ca_layer_overlay :
        current_frame()->ca_layer_overlay_list) {
     if (ca_layer_overlay.rpdq) {
-      ScheduleRenderPassDrawQuad(&ca_layer_overlay);
+      std::unique_ptr<OverlayTexture> overlay_texture =
+          ScheduleRenderPassDrawQuad(&ca_layer_overlay);
+      if (overlay_texture)
+        render_pass_overlay_textures.push_back(std::move(overlay_texture));
       shared_state = nullptr;
       ++copied_render_pass_count;
       continue;
@@ -3196,12 +3249,12 @@ void GLRenderer::ScheduleCALayers() {
         ca_layer_overlay.edge_aa_mask, bounds_rect, filter);
   }
 
-  // Take the number of copied render passes in this frame, and use 3 times that
-  // amount as the cache limit.
-  if (overlay_resource_pool_) {
-    overlay_resource_pool_->SetResourceUsageLimits(
-        std::numeric_limits<std::size_t>::max(), copied_render_pass_count * 5);
-  }
+  // Record RenderPass textures that have been shipped as overlays to the gpu
+  // together.
+  in_flight_overlay_textures_.push_back(
+      std::move(render_pass_overlay_textures));
+  // Drop any leftover textures that aren't in use.
+  available_overlay_textures_.clear();
 }
 
 void GLRenderer::ScheduleDCLayers() {
@@ -3303,7 +3356,7 @@ void GLRenderer::ScheduleOverlays() {
 //   5. Draw the RPDQ.
 void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
     const CALayerOverlay* ca_layer_overlay,
-    cc::Resource** resource,
+    std::unique_ptr<OverlayTexture>* overlay_texture,
     gfx::RectF* new_bounds) {
   // Don't carry over any GL state from previous RenderPass draw operations.
   ReinitializeGLState();
@@ -3343,22 +3396,22 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
   // |params.dst_rect| now contain values that reflect a potentially increased
   // size quad.
   gfx::RectF updated_dst_rect = params.dst_rect;
+  gfx::Size dst_pixel_size = gfx::ToCeiledSize(updated_dst_rect.size());
 
   // Round the size of the IOSurface to a multiple of 64 pixels. This reduces
   // memory fragmentation. https://crbug.com/146070. This also allows IOSurfaces
   // to be more easily reused during a resize operation.
-  uint32_t iosurface_multiple = 64;
-  uint32_t iosurface_width = cc::MathUtil::UncheckedRoundUp(
-      static_cast<uint32_t>(updated_dst_rect.width()), iosurface_multiple);
-  uint32_t iosurface_height = cc::MathUtil::UncheckedRoundUp(
-      static_cast<uint32_t>(updated_dst_rect.height()), iosurface_multiple);
+  int iosurface_multiple = 64;
+  int iosurface_width =
+      cc::MathUtil::CheckedRoundUp(dst_pixel_size.width(), iosurface_multiple);
+  int iosurface_height =
+      cc::MathUtil::CheckedRoundUp(dst_pixel_size.height(), iosurface_multiple);
 
-  *resource = overlay_resource_pool_->AcquireResource(
-      gfx::Size(iosurface_width, iosurface_height), ResourceFormat::RGBA_8888,
+  *overlay_texture = FindOrCreateOverlayTexture(
+      params.quad->render_pass_id, iosurface_width, iosurface_height,
       current_frame()->root_render_pass->color_space);
-  *new_bounds =
-      gfx::RectF(updated_dst_rect.x(), updated_dst_rect.y(),
-                 (*resource)->size().width(), (*resource)->size().height());
+  *new_bounds = gfx::RectF(updated_dst_rect.origin(),
+                           gfx::SizeF((*overlay_texture)->texture.size()));
 
   // Calculate new projection and window matrices for a minimally sized viewport
   // using InitializeViewport(). This requires creating a dummy DrawingFrame.
@@ -3398,14 +3451,12 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
   }
 
   // Establish destination texture.
-  cc::ResourceProvider::ScopedWriteLockGL destination(resource_provider_,
-                                                      (*resource)->id());
   GLuint temp_fbo;
-
   gl_->GenFramebuffers(1, &temp_fbo);
   gl_->BindFramebuffer(GL_FRAMEBUFFER, temp_fbo);
   gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                            destination.target(), destination.GetTexture(), 0);
+                            (*overlay_texture)->texture.target(),
+                            (*overlay_texture)->texture.id(), 0);
   DCHECK(gl_->CheckFramebufferStatus(GL_FRAMEBUFFER) ==
          GL_FRAMEBUFFER_COMPLETE);
 
@@ -3415,7 +3466,7 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
 
   UpdateRPDQTexturesForSampling(&params);
   UpdateRPDQBlendMode(&params);
-  ChooseRPDQProgram(&params, destination.color_space_for_raster());
+  ChooseRPDQProgram(&params, (*overlay_texture)->texture.color_space());
   UpdateRPDQUniforms(&params);
 
   // Prior to drawing, set up the destination framebuffer and viewport.
@@ -3430,33 +3481,67 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
   gl_->DeleteFramebuffers(1, &temp_fbo);
 }
 
-void GLRenderer::ScheduleRenderPassDrawQuad(
-    const CALayerOverlay* ca_layer_overlay) {
-  DCHECK(ca_layer_overlay->rpdq);
+std::unique_ptr<GLRenderer::OverlayTexture>
+GLRenderer::FindOrCreateOverlayTexture(const RenderPassId& render_pass_id,
+                                       int width,
+                                       int height,
+                                       const gfx::ColorSpace& color_space) {
+  // First try to use a texture for the same RenderPassId, to keep things more
+  // stable and less likely to clobber each others textures.
+  auto match_with_id = [&](const std::unique_ptr<OverlayTexture>& overlay) {
+    return overlay->render_pass_id == render_pass_id &&
+           overlay->texture.size().width() >= width &&
+           overlay->texture.size().height() >= height &&
+           overlay->texture.size().width() <= width * 2 &&
+           overlay->texture.size().height() <= height * 2;
+  };
+  auto it = std::find_if(available_overlay_textures_.begin(),
+                         available_overlay_textures_.end(), match_with_id);
+  if (it != available_overlay_textures_.end()) {
+    std::unique_ptr<OverlayTexture> result = std::move(*it);
+    available_overlay_textures_.erase(it);
 
-  if (!overlay_resource_pool_) {
-    DCHECK(current_task_runner_);
-    overlay_resource_pool_ = cc::ResourcePool::Create(
-        resource_provider_, true, current_task_runner_.get(),
-        ResourceTextureHint::kOverlay, base::TimeDelta::FromSeconds(3),
-        settings_->disallow_non_exact_resource_reuse);
+    result->render_pass_id = render_pass_id;
+    return result;
   }
 
-  cc::Resource* resource = nullptr;
+  // Then fallback to trying other textures that still match.
+  auto match = [&](const std::unique_ptr<OverlayTexture>& overlay) {
+    return overlay->texture.size().width() >= width &&
+           overlay->texture.size().height() >= height &&
+           overlay->texture.size().width() <= width * 2 &&
+           overlay->texture.size().height() <= height * 2;
+  };
+  it = std::find_if(available_overlay_textures_.begin(),
+                    available_overlay_textures_.end(), match);
+  if (it != available_overlay_textures_.end()) {
+    std::unique_ptr<OverlayTexture> result = std::move(*it);
+    available_overlay_textures_.erase(it);
+
+    result->render_pass_id = render_pass_id;
+    return result;
+  }
+
+  // Make a new texture if we could not find a match. Sadtimes.
+  auto result = std::make_unique<OverlayTexture>();
+  result->texture = ScopedGpuMemoryBufferTexture(
+      output_surface_->context_provider(),
+      settings_->resource_settings.texture_target_exception_list,
+      gfx::Size(width, height), color_space);
+  result->render_pass_id = render_pass_id;
+  return result;
+}
+
+std::unique_ptr<GLRenderer::OverlayTexture>
+GLRenderer::ScheduleRenderPassDrawQuad(const CALayerOverlay* ca_layer_overlay) {
+  DCHECK(ca_layer_overlay->rpdq);
+
+  std::unique_ptr<OverlayTexture> overlay_texture;
   gfx::RectF new_bounds;
-  CopyRenderPassDrawQuadToOverlayResource(ca_layer_overlay, &resource,
+  CopyRenderPassDrawQuadToOverlayResource(ca_layer_overlay, &overlay_texture,
                                           &new_bounds);
-  if (!resource || !resource->id())
-    return;
-
-  pending_overlay_resources_.push_back(
-      base::MakeUnique<cc::DisplayResourceProvider::ScopedReadLockGL>(
-          resource_provider_, resource->id()));
-  unsigned texture_id = pending_overlay_resources_.back()->texture_id();
-
-  // Once a resource is released, it is marked as "busy". It will be
-  // available for reuse after the ScopedReadLockGL is destroyed.
-  overlay_resource_pool_->ReleaseResource(resource);
+  if (!overlay_texture)
+    return {};
 
   GLfloat contents_rect[4] = {
       ca_layer_overlay->contents_rect.x(), ca_layer_overlay->contents_rect.y(),
@@ -3481,9 +3566,11 @@ void GLRenderer::ScheduleRenderPassDrawQuad(
   GLfloat alpha = 1;
   gl_->ScheduleCALayerSharedStateCHROMIUM(alpha, is_clipped, clip_rect,
                                           sorting_context_id, gl_transform);
-  gl_->ScheduleCALayerCHROMIUM(
-      texture_id, contents_rect, ca_layer_overlay->background_color,
-      ca_layer_overlay->edge_aa_mask, bounds_rect, filter);
+  gl_->ScheduleCALayerCHROMIUM(overlay_texture->texture.id(), contents_rect,
+                               ca_layer_overlay->background_color,
+                               ca_layer_overlay->edge_aa_mask, bounds_rect,
+                               filter);
+  return overlay_texture;
 }
 
 void GLRenderer::SetupOverdrawFeedback() {
