@@ -110,6 +110,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "chromedriver_py_tests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "chromedriver_unittests"
       },
       {
@@ -677,6 +683,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "chromedriver_py_tests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "chromedriver_unittests"
       },
       {
@@ -1216,6 +1228,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "chrome_elf_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "chromedriver_py_tests"
       },
       {
         "swarming": {
@@ -1797,6 +1815,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "chrome_elf_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "chromedriver_py_tests"
       },
       {
         "swarming": {

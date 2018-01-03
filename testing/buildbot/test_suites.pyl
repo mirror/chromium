@@ -1353,6 +1353,7 @@
     # chromium.android.fyi and chromuim.clang. Figure out whether this
     # is correct.
     'cast_unittests': {},
+    'chromedriver_py_tests': {},
     'chromedriver_unittests': {},
     'extensions_browsertests': {},
   },
