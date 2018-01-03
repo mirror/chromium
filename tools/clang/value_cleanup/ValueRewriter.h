@@ -41,7 +41,24 @@ class ValueRewriter {
     std::set<clang::tooling::Replacement>* const replacements_;
   };
 
+  class DictValueCallback
+      : public clang::ast_matchers::MatchFinder::MatchCallback {
+   public:
+    DictValueCallback(std::string method,
+                      std::set<clang::tooling::Replacement>* replacements);
+
+    void run(
+        const clang::ast_matchers::MatchFinder::MatchResult& result) override;
+
+    const std::string& method() const { return method_; }
+
+   private:
+    const std::string method_;
+    std::set<clang::tooling::Replacement>* const replacements_;
+  };
+
   std::vector<ListValueCallback> list_value_callbacks_;
+  std::vector<DictValueCallback> dict_value_callbacks_;
 };
 
 #endif  // TOOLS_CLANG_VALUE_CLEANUP_VALUE_REWRITER_H_
