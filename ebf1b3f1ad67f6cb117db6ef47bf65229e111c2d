@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7d41db_f1563a7f",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nits: \n- \"... for preventing regressions, [during] launches and ...\"\n- \"... a limited [set of] stories [] that can fit a [] budget of ...\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741bedf5_03eb2819",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: should these be a list? (i.e. start each line with `- `)",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347f3393_a6cf6407",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"performance improvement[s] to ... translate[] to ...\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a203e1_06c314cc",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"this benchmark\" -\u003e \"these benchmarks\" (?)",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0466e2e0_c23c3d9f",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: does not render correctly, should be \"[text](url)\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b94e05_eee59d59",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: I think you have one too many \"../\"s, same on all links below",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f74963e_f6080c49",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"classes\" -\u003e \"groups\" ? not to be confused with a python Class",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c9d170_844afd71",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "super nit: I think it should be fine to expand \"SH\" to \"system health\" everywhere in the doc. doesn\u0027t really save that much space, and avoiding acronyms tends to make reading easier.",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d15ebb_37c4b5af",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: add \", for example:\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9d2990_e4cba444",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"starting_url\" -\u003e \"page_name\" or just \"page\" to match the items described below.",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e38e29f_32bb9a56",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: add these others as comments in the code (i.e. with a `#` prefix somewhere)",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9af5157_42886e76",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"([but] before ...)\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc98a9c7_56237b47",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: make SystemHealthStorySet link to its code",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d919b7_219f68ba",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"Tags [are] used ...\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7669f56_c72790ff",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"distinct\" -\u003e \"distinguish\" (?)\n\nalso, maybe link to list of tags in the code?",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c07066_2eebb6c5",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "super nit: replace \"N\" with \"_n_\" (i.e. italics n, sorry my academic maths background).",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64a2107_691776bd",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: add back-ticks to `story._Login` so it shows up in code font; also `story.URL` and `story._DidLoadDocument`.",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4613df1a_7fc31452",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: maybe rephrase:\n\nIf there is a good reason for your stories to be added, please make one CL for each of the new stories so they can be landed (and reverted if needed) individually. On each CL, ...",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ca879e_5a7653bc",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: do we really need the --also-run-disabled-tests? presumably it\u0027s a new story, so it shouldn\u0027t be disabled?",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf47febc_dc01a044",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "question: is this missing a command to upload the recordings?",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8834f161_b54be3f9",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: maybe make these `system_health_desktop_MMM.wprgo`, etc., and `MMM` below.",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e67a982_33167ff0",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: [text](link)",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f5977e_021af1bf",
+        "filename": "docs/speed/benchmark_harnesses/system_health.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T13:27:28Z",
+      "side": 1,
+      "message": "nit: \"for review [in the patch that is adding the new story].\"",
+      "revId": "ebf1b3f1ad67f6cb117db6ef47bf65229e111c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
