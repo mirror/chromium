@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65729172_93da542b",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-03T13:51:58Z",
+      "side": 1,
+      "message": "nit: s/it means there is an error/the navigation was not successful.",
+      "revId": "678d2eefd5ac3c5714ce9e354b40b08e9f3d181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a09f5b_90fecadb",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-03T13:51:58Z",
+      "side": 1,
+      "message": "nit: I would rewrite \"The URLLoaderClient still lives in the browser process and the SSLInfo must be provided to it.\" as\n\"Pass the SSLInfo to the URLLoaderClient, which still lives in the browser process.\"",
+      "revId": "678d2eefd5ac3c5714ce9e354b40b08e9f3d181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676a63d4_56f77832",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-03T13:51:58Z",
+      "side": 1,
+      "message": "nit: s/In the second case/If the navigation was successful",
+      "revId": "678d2eefd5ac3c5714ce9e354b40b08e9f3d181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ede8b5_329e202e",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-03T13:51:58Z",
+      "side": 1,
+      "message": "nit: s/The SSLInfo must not be transmitted/Do not send the SSLInfo",
+      "revId": "678d2eefd5ac3c5714ce9e354b40b08e9f3d181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
