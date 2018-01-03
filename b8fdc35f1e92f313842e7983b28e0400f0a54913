@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97688728_a3556fe7",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Unfortunately constexpr doesn\u0027t work here because UserActivity::kEntryName is a const char[]. I\u0027ve put them into an anonymous namespace. Would this be ok?",
+      "parentUuid": "e649ac0d_296d4109",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44e9a3a1_fd443e4e",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T19:15:54Z",
       "side": 1,
       "message": "please make these be char arrays instead; we don\u0027t permit static class-type variables: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f02cc5a_3da2e5c0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "As they are test specific, I\u0027ve move them to a member const.",
+      "parentUuid": "44e9a3a1_fd443e4e",
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cc801344_d6c6ccce",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "This is a member const now.",
+      "parentUuid": "a32e877a_4aa72bbf",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f6dbd3_e1fd1eb9",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a17362f_f04a87a5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f6dbd3_e1fd1eb9",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f15885e3_837037b2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fd20faf_c025d230",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3947f0_fb6d0848",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ff71ff_568ef1cf",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3947f0_fb6d0848",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "5ac5d555_2dc84ace",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done, yes it\u0027s a typo but it builds because the same typo occurred in the function defn. Thanks for pointing out! :)",
+      "parentUuid": "6d83fc95_109cd0e1",
+      "range": {
+        "startLine": 102,
+        "startChar": 27,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0529cf8_16b0604c",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -141,6 +273,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aede13cd_3797f5cc",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0529cf8_16b0604c",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "5fbc4397_32b9726b",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also turned it into lower case it\u0027s a local const.",
+      "parentUuid": "bb943511_117d44e8",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f7bdf8_fbe66e29",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -181,6 +355,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e33b5f_ae82dcab",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f7bdf8_fbe66e29",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "077b8c32_d1f01431",
+        "filename": "chrome/browser/ui/tabs/tab_activity_watcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ecdc35e_842403d9",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f7a4e2_e0d0e065",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
         "patchSetId": 3
@@ -215,6 +425,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25598cd_cff38fca",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f7a4e2_e0d0e065",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "f351ade9_1ac08b51",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4137a7_0322adc7",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb0e380_2d8eb393",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
         "patchSetId": 3
@@ -249,6 +495,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f14696_7c1f9254",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb0e380_2d8eb393",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -275,6 +539,30 @@
     },
     {
       "key": {
+        "uuid": "deddae3d_82c1bb82",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e09545d8_054ab336",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 14
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdedc7d7_36186584",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
         "patchSetId": 3
@@ -289,6 +577,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fd2edd_720215ed",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdedc7d7_36186584",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -309,6 +615,24 @@
     },
     {
       "key": {
+        "uuid": "b814890e_cb31651e",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done. Is there any tool that I could use to automatically find the missing headers? I sometimes miss headers that need to be explicitly added because they are always included indirectly and so never cause any build errors.",
+      "parentUuid": "6425b33d_932fd9f3",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5af25dca_dfb5b707",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
         "patchSetId": 3
@@ -323,6 +647,24 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa2fc4d_5980cddc",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af25dca_dfb5b707",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +685,24 @@
     },
     {
       "key": {
+        "uuid": "f0686b36_98b3cfb6",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done. No particular reason, const char* was used before I refactored the code, so I didn\u0027t change the signature. I\u0027ve changed them to const string\u0026 now. Thanks.",
+      "parentUuid": "753d767b_bde0441b",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d8c3839_3f6ce307",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
         "patchSetId": 3
@@ -354,6 +714,24 @@
       "writtenOn": "2018-01-02T19:15:54Z",
       "side": 1,
       "message": "what does the \"New\" here correspond to? is this the same count that NumEntries returns? if so, consider just calling NumEntries instead and using EXPECT_EQ.\n\n(please document this in any case)",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77f9ab3_83bb3640",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "This function updates the |num_entries_| map by adding |new_num_entries| to it and then calls NumEntries. So I\u0027d like to keep \"New\" here. :)",
+      "parentUuid": "6d8c3839_3f6ce307",
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -380,6 +758,30 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e433c1b5_8fe1bb02",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done. It was a typo, but didn\u0027t cause any build error because this name was used throughout. Thanks for pointing out! :)",
+      "parentUuid": "e2faded3_d85cd0e7",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -420,6 +822,48 @@
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10556108_d81829ae",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70215e6_0586c21f",
+      "range": {
+        "startLine": 87,
+        "startChar": 11,
+        "endLine": 87,
+        "endChar": 22
+      },
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e418b14_c2e0db26",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:04:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b953064_ffa1673d",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
