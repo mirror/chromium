@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15a278fc_d6d9ce9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-03T12:34:59Z",
+      "side": 1,
+      "message": "I fixed description. What do you think about?",
+      "parentUuid": "3b996474_ce8c2749",
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7861d038_26d3db29",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5c4f77a4_28784787",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-03T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7861d038_26d3db29",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b28b73_81e77a3f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2a679d_86fc63ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-03T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b28b73_81e77a3f",
+      "revId": "8cdaf4a37b7a881cdc39804bb57a5410f36685e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

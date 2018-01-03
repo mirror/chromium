@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "449bddd0_d245f1dc",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-03T12:34:59Z",
+      "side": 1,
+      "message": "\u003e Oh, I now understand why we need this... It is for use cases like crbug.com/796493. I landed a test for the container\u003d\u003cbody\u003e case in https://chromium-review.googlesource.com/c/chromium/src/+/847513.\n\nIt seems crbug.com/796493 also good reason.",
+      "parentUuid": "c8ba5ecd_9e1eed71",
+      "range": {
+        "startLine": 1403,
+        "startChar": 0,
+        "endLine": 1405,
+        "endChar": 76
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df14ad06_ce0a7935",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 6
