@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6a83dc9_e696bd05",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-03T23:09:54Z",
+      "side": 1,
+      "message": "One more nit: Might be good to update the desc. here with the same as you have in the other place. Also may need to update enums.xml to pass cq",
+      "revId": "c90b180ee539b26e2f40417bba270ac7ff8ddb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
