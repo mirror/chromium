@@ -34,6 +34,24 @@
       "revId": "2e7e2e44ca35f3ff94f5d1c49e0cb2bfa5b65a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc0c83e_940e9f46",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-03T18:55:06Z",
+      "side": 1,
+      "message": "My code reading tells me the following:\n1) GetIsOverridingUserAgent can still return false although delegate_-\u003eGetUserAgentOverride() returns non-empty string, when switching between tablet (probably desktop mode?) and non-tablet mode.\n2) Each navigation entry may need to keep track of a separate IsOverridingUserAgent value in order to support a scenario where the user switches to tablet mode and then goes back in history.\n\nSo yes, I think we need to check entry\u0027s GetIsOverridingUserAgent() value when possible. We fall back to looking up delegate\u0027s value only when there is no navigation entry, assuming that having no current / pending entry is valid in this scenario.",
+      "parentUuid": "d96824d7_af9db1d9",
+      "revId": "2e7e2e44ca35f3ff94f5d1c49e0cb2bfa5b65a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
