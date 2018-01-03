@@ -16,6 +16,24 @@
       "revId": "be335a2853e3c812c07099acec4e8916fde079f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868056de_e38bf9ef",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-03T21:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52afc09_7bc3818f",
+      "revId": "be335a2853e3c812c07099acec4e8916fde079f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
