@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b1b0b2_8871f495",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "I suggest we take an Optional\u003cSnapContainerData\u003e as input here?\n\nThat way this check can be replaced with snap_container_date() \u003d\u003d data and\nbase::optional will correctly deal with null and non-null case.",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 332,
+        "endChar": 13
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7d5d37_15e2c2cb",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "Not sure why we need to special case this here. Probably remove.",
+      "range": {
+        "startLine": 334,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 13
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa15347_51dc4d4f",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "Again, this is conflating \"nullopt\" with a snap-align: none; concept. We should not\ndo this.",
+      "range": {
+        "startLine": 344,
+        "startChar": 6,
+        "endLine": 345,
+        "endChar": 49
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efe9a9f_92252535",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "once you change input to be a base::Optional this can be just a \n\nscroll_node-\u003esnap_container_data \u003d data.",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 55
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbceafef_159b0afa",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "nit: I think if you turn this into an early return it will be slightly more readable.",
+      "range": {
+        "startLine": 3832,
+        "startChar": 1,
+        "endLine": 3833,
+        "endChar": 28
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cfbfd5_7df8e4cd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "I don\u0027t think this explicit delete is needed. In particular we\nremove the entry via:\n\nUpdateScrollSnapMappingAfterStyleChange\n -\u003eSnapCoordinator::SnapContainerDidChange\n\nThis works if the snap type was previously non-none. \nSo, I believe, an explicit call here is being added as a side-effect of \ncreating map entry for \"none\" containers.\n\na) I am actually not sure why we are adding map entries for \"none\" containers. If\n   we don\u0027t do that then we can remove this.\nb) even if we keep adding map for \"none\" entries, then we should go an update \n   SnapContainerDidChange to handle this case as well.",
+      "range": {
+        "startLine": 484,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 49
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd49117f_ea6e3004",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "Why are we populating an entry in the map for none active containers?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 66
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17abaa46_78ee2b45",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "I believe we should use \"base::nullopt\" here.",
+      "range": {
+        "startLine": 435,
+        "startChar": 9,
+        "endLine": 435,
+        "endChar": 38
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee61b7f_5ee54f71",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "nit: s/The ScrollSnapPoint feature/The CSS scroll snap/",
+      "range": {
+        "startLine": 237,
+        "startChar": 5,
+        "endLine": 237,
+        "endChar": 33
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3165625_fccb2f63",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-03T16:52:57Z",
+      "side": 1,
+      "message": "nit: I would move this sentence first given that this is a comment about SnapContainerData.\n\ni.e., SnapContainer data contains [...] to perform scroll snapping. The CSS scroll snapping [...].",
+      "range": {
+        "startLine": 239,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 31
+      },
+      "revId": "9fc0c77df5675a2c2ef6d2614f38e01100d3f134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
