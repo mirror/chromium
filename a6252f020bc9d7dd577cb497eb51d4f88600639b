@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d6f96b8f_f1dc5c16",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-01-03T16:34:14Z",
+      "side": 1,
+      "message": "of course it doesn\u0027t build, otherwise i won\u0027t bother to look at the dependencies.\n\nTODO added",
+      "parentUuid": "f2abfd88_4229f001",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2101f5f_e55b7aaf",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
