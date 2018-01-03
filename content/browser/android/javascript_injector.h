@@ -5,24 +5,26 @@
 #ifndef CONTENT_BROWSER_ANDROID_JAVASCRIPT_INJECTOR_H_
 #define CONTENT_BROWSER_ANDROID_JAVASCRIPT_INJECTOR_H_
 
-#include "base/android/jni_android.h"
-#include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
-#include "content/public/browser/web_contents_user_data.h"
+#include "content/public/browser/web_contents.h"
 
 namespace content {
 
 class GinJavaBridgeDispatcherHost;
+class WebContents;
 
-class JavascriptInjector : public WebContentsUserData<JavascriptInjector> {
+// Native class for JavascriptInjectorImpl. Managed by Java side.
+class JavascriptInjector {
  public:
   JavascriptInjector(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& retained_objects,
       WebContents* web_contents);
-  ~JavascriptInjector() override;
+  ~JavascriptInjector();
+
+  void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   void SetAllowInspection(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,
@@ -40,9 +42,6 @@ class JavascriptInjector : public WebContentsUserData<JavascriptInjector> {
                        const base::android::JavaParamRef<jstring>& name);
 
  private:
-  // A weak reference to the Java JavascriptInjectorImpl object.
-  JavaObjectWeakGlobalRef java_ref_;
-
   // Manages injecting Java objects.
   scoped_refptr<GinJavaBridgeDispatcherHost> java_bridge_dispatcher_host_;
 

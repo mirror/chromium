@@ -15,25 +15,21 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(JavascriptInjector);
-
 JavascriptInjector::JavascriptInjector(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& retained_objects,
-    WebContents* web_contents)
-    : java_ref_(env, obj) {
+    WebContents* web_contents) {
   java_bridge_dispatcher_host_ =
       new GinJavaBridgeDispatcherHost(web_contents, retained_objects);
-  web_contents->SetUserData(UserDataKey(), base::WrapUnique(this));
 }
 
-JavascriptInjector::~JavascriptInjector() {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return;
-  Java_JavascriptInjectorImpl_onDestroy(env, j_obj);
+JavascriptInjector::~JavascriptInjector() {}
+
+void JavascriptInjector::Destroy(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  delete this;
 }
 
 void JavascriptInjector::SetAllowInspection(JNIEnv* env,
@@ -69,9 +65,7 @@ jlong JNI_JavascriptInjectorImpl_Init(
     const JavaParamRef<jobject>& retained_objects) {
   auto* web_contents = WebContents::FromJavaWebContents(jweb_contents);
   CHECK(web_contents) << "Should be created with a valid WebContents.";
-  DCHECK(!JavascriptInjector::FromWebContents(web_contents));
 
-  // Owned by |web_contents|.
   auto* injector =
       new JavascriptInjector(env, obj, retained_objects, web_contents);
   return reinterpret_cast<intptr_t>(injector);

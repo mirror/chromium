@@ -1332,11 +1332,14 @@ public class AwContents implements SmartClipProvider {
             mContentViewCore = null;
             mNativeAwContents = 0;
             mWebContents = null;
-            mWebContentsInternals = null;
             mNavigationController = null;
 
             mCleanupReference.cleanupNow();
             mCleanupReference = null;
+
+            // Remove the reference after native clean up to have an opportunity
+            // to run WebContentsUserData.DestroyObserver.
+            mWebContentsInternals = null;
         }
 
         assert mContentViewCore == null;
