@@ -52,7 +52,8 @@ public class UmaSessionStats {
         WebContents webContents = tab.getWebContents();
         boolean isDesktopUserAgent = webContents != null
                 && webContents.getNavigationController().getUseDesktopUserAgent();
-        nativeRecordPageLoaded(isDesktopUserAgent);
+        boolean isIncognito = webContents != null && webContents.isIncognito();
+        nativeRecordPageLoaded(isDesktopUserAgent, isIncognito);
         if (mKeyboardConnected) {
             nativeRecordPageLoadedWithKeyboard();
         }
@@ -213,7 +214,8 @@ public class UmaSessionStats {
             String trialName, String groupName);
     private static native void nativeRecordMultiWindowSession(int areaPercent, int instanceCount);
     private static native void nativeRecordTabCountPerLoad(int numTabsOpen);
-    private static native void nativeRecordPageLoaded(boolean isDesktopUserAgent);
+    private static native void nativeRecordPageLoaded(
+            boolean isDesktopUserAgent, boolean isIncognito);
     private static native void nativeRecordPageLoadedWithKeyboard();
 
 }

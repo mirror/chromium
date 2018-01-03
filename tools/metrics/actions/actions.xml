@@ -10542,6 +10542,12 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="LoadURLInIncognito">
+  <owner>dullweber@chromium.org</owner>
+  <owner>msramek@chromium.org</owner>
+  <description>A page was loaded in incognito mode.</description>
+</action>
+
 <action name="LocalDiscoveryNotificationsDisabled_Settings_Disable">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -12019,6 +12025,12 @@ should be able to be added at any place in this file.
 <action name="MobilePageLoadedDesktopUserAgent" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="MobilePageLoadedInIncognito" not_user_triggered="true">
+  <owner>dullweber@chromium.org</owner>
+  <owner>msramek@chromium.org</owner>
+  <description>A page was loaded in incognito mode.</description>
 </action>
 
 <action name="MobilePageLoadedWithKeyboard" not_user_triggered="true">

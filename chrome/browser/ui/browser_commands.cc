@@ -518,6 +518,8 @@ void Home(Browser* browser, WindowOpenDisposition disposition) {
 
 void OpenCurrentURL(Browser* browser) {
   base::RecordAction(UserMetricsAction("LoadURL"));
+  if (browser->profile()->IsOffTheRecord())
+    base::RecordAction(UserMetricsAction("LoadURLInIncognito"));
   LocationBar* location_bar = browser->window()->GetLocationBar();
   if (!location_bar)
     return;

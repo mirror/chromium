@@ -215,14 +215,17 @@ static void JNI_UmaSessionStats_RecordTabCountPerLoad(
   UMA_HISTOGRAM_CUSTOM_COUNTS("Tabs.TabCountPerLoad", num_tabs, 1, 200, 50);
 }
 
-static void JNI_UmaSessionStats_RecordPageLoaded(
-    JNIEnv*,
-    const JavaParamRef<jclass>&,
-    jboolean is_desktop_user_agent) {
+static void JNI_UmaSessionStats_RecordPageLoaded(JNIEnv*,
+                                                 const JavaParamRef<jclass>&,
+                                                 jboolean is_desktop_user_agent,
+                                                 jboolean is_incognito) {
   // Should be called whenever a page has been loaded.
   base::RecordAction(UserMetricsAction("MobilePageLoaded"));
   if (is_desktop_user_agent) {
     base::RecordAction(UserMetricsAction("MobilePageLoadedDesktopUserAgent"));
+  }
+  if (is_incognito) {
+    base::RecordAction(UserMetricsAction("MobilePageLoadedInIncognito"));
   }
 }
 
