@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3290c37_734ea681",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-03T15:12:02Z",
+      "side": 1,
+      "message": "Some of the information we want to show in the error message isn\u0027t enumerable. For example, our mocks show the folder name in the error message.\nhttps://docs.google.com/presentation/d/1nIm5OmaOnb85ZAwMZPSVqHT0vkFbsRYZhOzbmznWU_c/edit#slide\u003did.g2899269e51_1_42\n\nWould you prefer it if we just sent the folder name, possibly with the IN_PROGRESS status update, and only an error code at the end?",
+      "parentUuid": "40568b5e_524c9e6b",
+      "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c36f4c_65a65173",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73d0093_8b0e34e6",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2018-01-03T15:12:02Z",
+      "side": 1,
+      "message": "Done.\n\nI did not use the enum for the callback, since we would be overloading the meaning of FAILED and IN_PROGRESS, as used in the event.",
+      "parentUuid": "b5c36f4c_65a65173",
+      "revId": "653f302be646df35bb869646febdfc31e0d6c6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
