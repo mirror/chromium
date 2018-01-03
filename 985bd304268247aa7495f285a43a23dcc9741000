@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1122f67_b1ed2e88",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2be2078d_b3e99544",
+      "revId": "985bd304268247aa7495f285a43a23dcc9741000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a59848d6_c024e8e2",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "985bd304268247aa7495f285a43a23dcc9741000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270f2ff2_a9f49416",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T20:37:47Z",
+      "side": 1,
+      "message": "This also gets called as part of `this.reset()` when there feasibly could be no attached DOM yet",
+      "parentUuid": "a59848d6_c024e8e2",
+      "revId": "985bd304268247aa7495f285a43a23dcc9741000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
