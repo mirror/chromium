@@ -16,6 +16,24 @@
       "revId": "2e7e2e44ca35f3ff94f5d1c49e0cb2bfa5b65a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96824d7_af9db1d9",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T05:45:49Z",
+      "side": 1,
+      "message": "\u003e what if current_entry is true, do you want to check the delegate still?\n\nThat seems like it would be reasonable to me, though I don\u0027t know if there are cases we want to base the decision on the entry rather than the delegate (i.e., WebContents).",
+      "parentUuid": "918ca482_5ed38962",
+      "revId": "2e7e2e44ca35f3ff94f5d1c49e0cb2bfa5b65a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
