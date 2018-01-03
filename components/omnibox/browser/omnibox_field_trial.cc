@@ -41,6 +41,11 @@ namespace omnibox {
 const base::Feature kOmniboxEntitySuggestions{
     "OmniboxEntitySuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature used to enable entity suggestion images and enhanced presentation.
+// See also: kOmniboxEntitySuggestions.
+const base::Feature kOmniboxRichEntitySuggest{
+    "OmniboxRichEntitySuggest", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature used to force on the experiment of transmission of tail suggestions
 // from GWS to this client, currently testing for desktop.
 const base::Feature kOmniboxTailSuggestions{

@@ -2197,6 +2197,10 @@ const char kOmniboxEntitySuggestionsDescription[] =
     "Enable receiving entity suggestions - disambiguation descriptions - for "
     "Omnibox suggestions.";
 
+const char kOmniboxRichEntitySuggestName[] = "Omnibox rich entity suggestions";
+const char kOmniboxRichEntitySuggestDescription[] =
+    "Display entity suggestions using images and an enhanced layout.";
+
 const char kOmniboxTabSwitchSuggestionsName[] =
     "Omnibox tab switch suggestions";
 const char kOmniboxTabSwitchSuggestionsDescription[] =
