@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dc5966a_2cbd52a4",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "We discussed this offline and we decided that app_launcher prefix makes the most sense. The term \"launcher\" seemed to communicate an concept. But \"external\" did not seem to add value, given that there could not be an \"internal\" app launched.",
+      "parentUuid": "bee04f7b_0debfa94",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a084a46_22ce69c9",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
         "patchSetId": 10
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-27T18:08:04Z",
       "side": 1,
       "message": "Can we add tests for this class?",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db5407f_e0b6e3ea",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "Tests for presenters are hard to do since they test UI presentation.",
+      "parentUuid": "1a084a46_22ce69c9",
       "range": {
         "startLine": 10,
         "startChar": 12,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e833bd81_ee5f2295",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c764ea42_e67dbb96",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ca8018_1362ac79",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
         "patchSetId": 10
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-27T18:08:04Z",
       "side": 1,
       "message": "Should we use nullable annotations?",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 60
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e4a3c7_7f5d01f2",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "We haven\u0027t required this in our style guide.",
+      "parentUuid": "14ca8018_1362ac79",
       "range": {
         "startLine": 18,
         "startChar": 44,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "eef28b05_f517443d",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7fd362e_834a0d94",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d54ac61_ef60822e",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
         "patchSetId": 10
@@ -122,6 +236,30 @@
       "writtenOn": "2017-12-26T15:57:16Z",
       "side": 1,
       "message": "Can this just be nil instead of an empty dictionary?",
+      "range": {
+        "startLine": 45,
+        "startChar": 47,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58bb49c_7a54e4e7",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "UIApplication.h header file comments the behavior of passing in an empty dictionary. It does not define the behavior when passing in a nil value.",
+      "parentUuid": "7d54ac61_ef60822e",
       "range": {
         "startLine": 45,
         "startChar": 47,
@@ -148,6 +286,24 @@
       "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae1d8a1_cf47a432",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0694d9d_d3b29a61",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "87c618a3_592ad2b7",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "We could take out the \"showAlert\" portion. However, I like being more explicit that the method is doing more than opening the mail handler. I don\u0027t mind the long method names if they are descriptive. What concern do you have about the naming pattern? I don\u0027t feel strongly about it so I\u0027m happy to change to something else.",
+      "parentUuid": "3fb9c891_2369cbe9",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "383b3e02_6a8633d5",
         "filename": "ios/chrome/browser/ui/external_app/external_app_util.h",
         "patchSetId": 10
@@ -202,6 +382,30 @@
       "writtenOn": "2017-12-27T18:08:04Z",
       "side": 1,
       "message": "Can we name this file external_app_launcher_util to be consistent with existing terminology? Sorry, I missed this when reviewed the initial commit of this file.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23be3db_32827784",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "We decided offline to use the prefix \"app_launcher\", so this file is now app_launcher_util.h",
+      "parentUuid": "383b3e02_6a8633d5",
       "range": {
         "startLine": 5,
         "startChar": 8,
@@ -237,6 +441,30 @@
     },
     {
       "key": {
+        "uuid": "a0444c28_a0870df3",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf61727e_ab6ea1ce",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2b6040b_a8140fd8",
         "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
         "patchSetId": 10
@@ -257,6 +485,30 @@
       "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b14482_0e951d49",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-03T23:24:16Z",
+      "side": 1,
+      "message": "I forgot to git add the file. Fixed now.",
+      "parentUuid": "d2b6040b_a8140fd8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
