@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb9e6d0f_7095576d",
+        "filename": "third_party/WebKit/Source/core/paint/AdjustPaintOffsetScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b8b712_ca526d62",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5767ec_bc0d1487",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6da23f_442e6c96",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5767ec_bc0d1487",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6ae226cb_04ef0371",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3b9189_7f3534af",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1390003b_e50c8078",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccd2923_edde9dbc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1390003b_e50c8078",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bbce8e26_d7b64cb0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576253f2_b9749d49",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6f84ce_7e09605c",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6cacf5c1_a2f16188",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a6f84ce_7e09605c",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c63741_17d24bb0",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-02T22:48:13Z",
       "side": 1,
       "message": "Shouldn\u0027t PaginationOffset().Y() still be included?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858257df_00ba04b1",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1778,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Refactored code to make it clearer.",
+      "parentUuid": "97c63741_17d24bb0",
       "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "547ba0a9_3e15dec3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1790,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "This is to keep the current behavior for repeating-footer and vborder spacing. Added TODO(crbug.com/798153).",
+      "parentUuid": "44bf2063_7604ae53",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c8c076d_1ef38f42",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -149,6 +293,24 @@
       "writtenOn": "2018-01-02T22:48:13Z",
       "side": 1,
       "message": "PaginationOffset doesn\u0027t seem right to implement page size. Shouldn\u0027t it instead be\nthe height of the FragmentData or similar?",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0a0fd1_7f800853",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Changed to use the current method used in TableSectionPainter that assumes all pages have the same size. Added TODO(crbug.com/798638).",
+      "parentUuid": "6c8c076d_1ef38f42",
       "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -169,6 +331,24 @@
       "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea253f9_aa302cbc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-03T18:10:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260e737a_a33bfdf0",
+      "revId": "09a9ecd48fd0b9f02b4a92830e62f95f133dc5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
