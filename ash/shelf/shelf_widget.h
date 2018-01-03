@@ -112,6 +112,8 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   class DelegateView;
   friend class DelegateView;
 
+  void SetSystemTrayVisibility(bool isVisible);
+
   Shelf* shelf_;
 
   // Owned by the shelf container's window.
