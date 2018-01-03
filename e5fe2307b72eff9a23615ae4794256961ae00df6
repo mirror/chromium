@@ -52,6 +52,24 @@
       "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e09325e_1459786e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T18:58:24Z",
+      "side": 1,
+      "message": "Good. That is a usecase that I wasn\u0027t aware of. That technically can use the webtouchevents and not gestures. However, it is already broken without this change. Before this change when I move my mouse over the page it automatically highlights the devtool code in Ctrl+Shift+C mode. But for touch it only works for touchstart and doesn\u0027t work with touch moves anymore.\nAnyhow, if that is the only usecase I believe we can live with that even without this primary pointer hack. What do you think? So basically we run the logic for any touch point.",
+      "parentUuid": "511edf59_05b5ed7b",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
