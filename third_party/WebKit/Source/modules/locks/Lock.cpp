@@ -59,18 +59,22 @@ class Lock::ThenFunction final : public ScriptFunction {
 Lock* Lock::Create(ScriptState* script_state,
                    const String& name,
                    mojom::blink::LockMode mode,
-                   mojom::blink::LockHandlePtr handle) {
-  return new Lock(script_state, name, mode, std::move(handle));
+                   mojom::blink::LockHandlePtr handle,
+                   base::OnceCallback<void(Lock*)> release) {
+  return new Lock(script_state, name, mode, std::move(handle),
+                  std::move(release));
 }
 
 Lock::Lock(ScriptState* script_state,
            const String& name,
            mojom::blink::LockMode mode,
-           mojom::blink::LockHandlePtr handle)
+           mojom::blink::LockHandlePtr handle,
+           base::OnceCallback<void(Lock*)> release)
     : PausableObject(ExecutionContext::From(script_state)),
       name_(name),
       mode_(mode),
-      handle_(std::move(handle)) {
+      handle_(std::move(handle)),
+      release_(std::move(release)) {
   PauseIfNeeded();
 }
 
@@ -124,7 +128,13 @@ void Lock::Trace(blink::Visitor* visitor) {
 }
 
 void Lock::ReleaseIfHeld() {
-  handle_.reset();
+  if (handle_) {
+    // Drop the mojo pipe; this releases the lock on the back end.
+    handle_.reset();
+
+    // Let the lock manager know that this instance can be collected.
+    std::move(release_).Run(this);
+  }
 }
 
 }  // namespace blink

@@ -26,7 +26,8 @@ class Lock final : public ScriptWrappable, public PausableObject {
   static Lock* Create(ScriptState*,
                       const String& name,
                       mojom::blink::LockMode,
-                      mojom::blink::LockHandlePtr);
+                      mojom::blink::LockHandlePtr,
+                      base::OnceCallback<void(Lock*)> release);
 
   ~Lock() override;
 
@@ -53,7 +54,8 @@ class Lock final : public ScriptWrappable, public PausableObject {
   Lock(ScriptState*,
        const String& name,
        mojom::blink::LockMode,
-       mojom::blink::LockHandlePtr);
+       mojom::blink::LockHandlePtr,
+       base::OnceCallback<void(Lock*)> release);
 
   void ReleaseIfHeld();
 
@@ -61,7 +63,15 @@ class Lock final : public ScriptWrappable, public PausableObject {
 
   const String name_;
   const mojom::blink::LockMode mode_;
+
+  // An opaque handle; this one end of a mojo pipe. When this is closed,
+  // the lock is released by the back end.
   mojom::blink::LockHandlePtr handle_;
+
+  // This callback is called when the lock is released; it tells the lock
+  // manager to stop artificially keeping this instance alive. It is necessary
+  // in the case where the resolver's promise could potentially be GC'd.
+  base::OnceCallback<void(Lock*)> release_;
 };
 
 }  // namespace blink
