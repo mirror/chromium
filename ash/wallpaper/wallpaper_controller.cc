@@ -890,10 +890,10 @@ void WallpaperController::ReadAndDecodeWallpaper(
                  base::Passed(base::WrapUnique(data))));
 }
 
-void WallpaperController::OpenSetWallpaperPage() {
-  if (wallpaper_controller_client_ &&
-      Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage()) {
-    wallpaper_controller_client_->OpenWallpaperPicker();
+void WallpaperController::OpenWallpaperPicker() {
+  if (wallpaper_controller_client_) {
+    wallpaper_controller_client_->OpenWallpaperPicker(
+        IsActiveUserPolicyControlledImpl());
   }
 }
 
@@ -1334,6 +1334,11 @@ void WallpaperController::AddObserver(
 void WallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   std::move(callback).Run(prominent_colors_);
+}
+
+void WallpaperController::IsActiveUserPolicyControlled(
+    IsActiveUserPolicyControlledCallback callback) {
+  std::move(callback).Run(IsActiveUserPolicyControlledImpl());
 }
 
 void WallpaperController::OnWallpaperResized() {
@@ -1817,6 +1822,16 @@ void WallpaperController::OnDevicePolicyWallpaperDecoded(
                        wallpaper::DEVICE, base::Time::Now().LocalMidnight());
     SetWallpaperImage(image, info);
   }
+}
+
+bool WallpaperController::IsActiveUserPolicyControlledImpl() {
+  // The currently active user has index 0.
+  const mojom::UserSession* const active_user_session =
+      Shell::Get()->session_controller()->GetUserSession(0 /*user index=*/);
+  if (!active_user_session)
+    return false;
+  return IsPolicyControlled(active_user_session->user_info->account_id,
+                            !active_user_session->user_info->is_ephemeral);
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {

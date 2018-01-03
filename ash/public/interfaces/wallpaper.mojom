@@ -194,12 +194,17 @@ interface WallpaperController {
 
   // Runs to get wallpaper prominent colors.
   GetWallpaperColors() => (array<uint32> prominent_colors);
+
+  // Returns true if the currently active user (if any) is controlled by policy
+  // (excluding device policy). If there's no active user, returns false.
+  IsActiveUserPolicyControlled() => (bool controlled);
 };
 
 // Used by ash to control a Chrome client.
 interface WallpaperControllerClient {
   // Opens the wallpaper picker window.
-  OpenWallpaperPicker();
+  // |is_policy_controlled|: Whether the active user is controlled by policy.
+  OpenWallpaperPicker(bool is_policy_controlled);
 };
 
 // Used to listen for wallpaper state changed.

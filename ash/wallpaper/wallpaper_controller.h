@@ -295,8 +295,8 @@ class ASH_EXPORT WallpaperController
     wallpaper_reload_delay_ = value;
   }
 
-  // Opens the set wallpaper page in the browser.
-  void OpenSetWallpaperPage();
+  // Opens the wallpaper picker.
+  void OpenWallpaperPicker();
 
   // Wallpaper should be dimmed for login, lock, OOBE and add user screens.
   bool ShouldApplyDimming() const;
@@ -405,6 +405,8 @@ class ASH_EXPORT WallpaperController
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
   void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
+  void IsActiveUserPolicyControlled(
+      IsActiveUserPolicyControlledCallback callback) override;
 
   // WallpaperResizerObserver:
   void OnWallpaperResized() override;
@@ -542,6 +544,9 @@ class ASH_EXPORT WallpaperController
 
   // Called when the device policy controlled wallpaper has been decoded.
   void OnDevicePolicyWallpaperDecoded(const gfx::ImageSkia& image);
+
+  // Implementation of |IsActiveUserPolicyControlled|.
+  bool IsActiveUserPolicyControlledImpl();
 
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
