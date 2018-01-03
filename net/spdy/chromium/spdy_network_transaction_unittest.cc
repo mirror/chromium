@@ -6576,4 +6576,79 @@ TEST_F(SpdyNetworkTransactionTest, RequestHeadersCallback) {
   EXPECT_TRUE(raw_headers.request_line().empty());
 }
 
+// An adopted push promise that then gets cancelled should retry to request on a
+// separate stream. Regression test for
+TEST_F(SpdyNetworkTransactionTest, PushCanceledByServerAfterClaimed) {
+  const char pushed_url[] = "https://www.example.org/a.dat";
+  // Construct a request to the default URL on stream 1.
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, LOWEST, true));
+  SpdySerializedFrame req2(spdy_util_.ConstructSpdyGet(pushed_url, 3, LOWEST));
+  // Construct a priority frame for stream 2.
+  SpdySerializedFrame priority(
+      spdy_util_.ConstructSpdyPriority(2, 1, IDLE, true));
+  MockWrite writes[] = {CreateMockWrite(req, 0), CreateMockWrite(priority, 3),
+                        CreateMockWrite(req2, 6)};
+
+  // Construct a Push Promise frame, with no response.
+  SpdySerializedFrame push_promise(spdy_util_.ConstructInitialSpdyPushFrame(
+      spdy_util_.ConstructGetHeaderBlock(pushed_url), 2, 1));
+  // Construct a RST frame, canceling stream 2.
+  SpdySerializedFrame rst_server(
+      spdy_util_.ConstructSpdyRstStream(2, ERROR_CODE_CANCEL));
+  MockRead reads[] = {
+      CreateMockRead(push_promise, 1),    MockRead(ASYNC, ERR_IO_PENDING, 2),
+      CreateMockRead(rst_server, 4),      MockRead(ASYNC, ERR_IO_PENDING, 5),
+      MockRead(ASYNC, ERR_IO_PENDING, 7), MockRead(ASYNC, 0, 8)};
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+
+  NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_, nullptr);
+
+  helper.RunPreTestSetup();
+  helper.AddData(&data);
+
+  HttpNetworkTransaction* trans = helper.trans();
+
+  // First request to start the connection.
+  TestCompletionCallback callback;
+  int rv = trans->Start(&request_, callback.callback(), log_);
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+
+  data.RunUntilPaused();
+
+  // Get a SpdySession.
+  SpdySessionKey key(HostPortPair::FromURL(request_.url), ProxyServer::Direct(),
+                     PRIVACY_MODE_DISABLED);
+  HttpNetworkSession* session = helper.session();
+  base::WeakPtr<SpdySession> spdy_session =
+      session->spdy_session_pool()->FindAvailableSession(
+          key, /* enable_ip_based_pooling = */ true, log_);
+
+  // Verify that there is one unclaimed push stream.
+  EXPECT_EQ(1u, num_unclaimed_pushed_streams(spdy_session));
+
+  // Claim the pushed stream.
+  std::unique_ptr<HttpNetworkTransaction> transaction2 =
+      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session);
+  request_.url = GURL(pushed_url);
+  transaction2->Start(&request_, callback.callback(), log_);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(3u, spdy_session->StreamHiWaterMarkForTesting());
+
+  EXPECT_EQ(0u, num_unclaimed_pushed_streams(spdy_session));
+
+  // Continue reading and get the RST.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+
+  // Make sure we got the RST and retried the request.
+  EXPECT_EQ(2u, num_active_streams(spdy_session));
+  EXPECT_EQ(0u, num_unclaimed_pushed_streams(spdy_session));
+  EXPECT_EQ(5u, spdy_session->StreamHiWaterMarkForTesting());
+
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+}
+
 }  // namespace net
