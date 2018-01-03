@@ -158,6 +158,15 @@ bool DisplayInfoProvider::IsNativeTouchCalibrationActive(std::string* error) {
   return true;
 }
 
+bool DisplayInfoProvider::SetCustomMirrorMode(
+    bool mirrored,
+    const std::string& mirroring_source_id,
+    const std::vector<std::string>& mirroring_destination_ids,
+    std::string* out_error) {
+  NOTREACHED();  // Implemented on Chrome OS only in override.
+  return true;
+}
+
 DisplayInfoProvider::DisplayInfoProvider() {
 }
 

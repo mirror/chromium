@@ -24,6 +24,7 @@
 #include "ui/display/display_layout.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/manager/display_manager_export.h"
+#include "ui/display/manager/display_manager_utilities.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/mojo/dev_display_controller.mojom.h"
 #include "ui/display/types/display_constants.h"
@@ -41,8 +42,6 @@ class Rect;
 }
 
 namespace display {
-using DisplayInfoList = std::vector<ManagedDisplayInfo>;
-
 class DisplayLayoutStore;
 class DisplayObserver;
 class Screen;
@@ -341,6 +340,17 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     external_display_mirror_info_ = external_display_mirror_info;
   }
 
+  const CustomSoftwareMirroringParams* custom_software_mirroring_param() const {
+    return custom_software_mirroring_param_.get();
+  }
+
+  // Set customized software mirroring parameters. The customized mirror mode
+  // will be turned on in the next configuration.
+  void set_custom_software_mirroring_param(
+      std::unique_ptr<CustomSoftwareMirroringParams> mirroring_param) {
+    custom_software_mirroring_param_ = std::move(mirroring_param);
+  }
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -389,8 +399,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Returns true if mirror mode should be set on for the specified displays.
   bool ShouldSetMirrorModeOn(const DisplayIdList& id_list);
 
-  // Change the mirror mode.
-  void SetMirrorMode(bool mirrored);
+  // Turn on/off the mirror mode. Ignore |mirroring_param| if |mirrored| is
+  // false. Default source display will be selected and mirrored to all other
+  // displays if |mirroring_param| is not specified. Otherwise, the specified
+  // source and destination displays in |mirroring_param| will be used.
+  void SetMirrorMode(
+      bool mirrored,
+      std::unique_ptr<CustomSoftwareMirroringParams> mirroring_param = nullptr);
 
   // Used to emulate display change when run in a desktop environment instead
   // of on a device.
@@ -401,6 +416,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #if defined(OS_CHROMEOS)
   void SetSoftwareMirroring(bool enabled) override;
   bool SoftwareMirroringEnabled() const override;
+  bool SoftwareMirroringEnforced() const override;
   void SetTouchCalibrationData(
       int64_t display_id,
       const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
@@ -624,6 +640,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   base::ObserverList<DisplayObserver> observers_;
 
   display::mojom::DevDisplayControllerPtr dev_display_controller_;
+
+  std::unique_ptr<CustomSoftwareMirroringParams>
+      custom_software_mirroring_param_;
 
   // This is incremented whenever a BeginEndNotifier is created and decremented
   // when destroyed. BeginEndNotifier uses this to track when it should call

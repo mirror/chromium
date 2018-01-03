@@ -20,6 +20,7 @@ class Size;
 namespace display {
 class ManagedDisplayInfo;
 class ManagedDisplayMode;
+using DisplayInfoList = std::vector<ManagedDisplayInfo>;
 
 // Creates the display mode list for internal display
 // based on |native_mode|.
@@ -96,6 +97,34 @@ DISPLAY_MANAGER_EXPORT display::ManagedDisplayInfo CreateDisplayInfo(
 
 // Get the display id after the output index (8 bits) is masked out.
 DISPLAY_MANAGER_EXPORT int64_t GetDisplayIdWithoutOutputIndex(int64_t id);
+
+// Defines parameters needed to set customized software mirror mode.
+struct DISPLAY_MANAGER_EXPORT CustomSoftwareMirroringParams {
+  CustomSoftwareMirroringParams(int64_t src_id, const DisplayIdList& dst_ids);
+  ~CustomSoftwareMirroringParams();
+
+  int64_t source_id;  // Id of the mirroring source display
+
+  DisplayIdList destination_ids;  // Ids of the mirroring destination displays.
+};
+
+// Defines the error types of customized software mirroring parameters.
+enum class DISPLAY_MANAGER_EXPORT CustomSoftwareMirroringParamErrors {
+  kSuccess = 0,
+  kErrorSingleDisplay,
+  kErrorSourceIdNotFound,
+  kErrorDestinationIdsEmpty,
+  kErrorDestinationIdNotFound,
+  kErrorDuplicateId,
+};
+
+// Verifies whether the customized software mirroring parameters are valid.
+// |connected_display_ids| is the id list for all connected displays. Returns
+// error type for the parameters.
+DISPLAY_MANAGER_EXPORT CustomSoftwareMirroringParamErrors
+ValidateParamsForCustomSoftwareMirroring(
+    const DisplayIdList& connected_display_ids,
+    const CustomSoftwareMirroringParams& mixed_mode_param);
 
 }  // namespace display
 

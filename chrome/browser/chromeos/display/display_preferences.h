@@ -18,6 +18,7 @@ class Point;
 }
 
 namespace display {
+struct CustomSoftwareMirroringParams;
 struct TouchCalibrationData;
 }
 
@@ -61,6 +62,10 @@ void StoreLegacyTouchDataForTest(int64_t display_id,
 bool ParseTouchCalibrationStringForTest(
     const std::string& str,
     std::array<std::pair<gfx::Point, gfx::Point>, 4>* point_pair_quad);
+
+// Stores the given |mirroring_param| for tests.
+void StoreDisplayCustomSoftwareMirroringParamForTest(
+    const display::CustomSoftwareMirroringParams* mirroring_param);
 
 }  // namespace chromeos
 
