@@ -73,7 +73,6 @@ const LanguageCodePair kLanguageCodeChineseCompatiblePairs[] = {
     {"zh-TW", "zh-HK"},
     {"zh-TW", "zh-MO"},
     {"zh-CN", "zh-SG"},
-    {"zh-CN", "zh"},
 };
 
 const char kSecurityOrigin[] = "https://translate.googleapis.com/";
@@ -102,6 +101,8 @@ void ToTranslateLanguageSynonym(std::string* language) {
   // There is not a single base language, but two: traditional and simplified.
   // The kLanguageCodeChineseCompatiblePairs list contains the relation between
   // various Chinese locales.
+  // Note that "zh" does not have any mapping and as such we leave it as is. See
+  // https://crbug/798512 for more info.
   if (main_part == "zh") {
     *language = main_part + tail_part;
     return;
