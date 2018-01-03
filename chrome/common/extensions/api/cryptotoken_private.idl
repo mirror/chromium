@@ -27,5 +27,12 @@ namespace cryptotokenPrivate {
     // use its batch attestation certificate.
     static void isAppIdHashInEnterpriseContext(ArrayBuffer appIdHash,
                                                AppIdCallback callback);
+
+    // Checks whether the given appId (which has been validated for the origin,
+    // based on |canOriginAssertAppId|) can access real attestation data, or
+    // whether generic attestation data should be substituted.
+    static void canAppIdGetAttestation(DOMString appId,
+                                       long tabId,
+                                       AppIdCallback callback);
   };
 };
