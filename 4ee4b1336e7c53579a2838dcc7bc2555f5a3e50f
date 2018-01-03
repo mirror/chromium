@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42640aca_a0fa73bf",
+        "filename": "content/browser/renderer_interface_binders.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T07:07:34Z",
+      "side": 1,
+      "message": "How about GetRestrictedCookieManagerForWorker()?",
+      "range": {
+        "startLine": 90,
+        "startChar": 31,
+        "endLine": 90,
+        "endChar": 38
+      },
+      "revId": "4ee4b1336e7c53579a2838dcc7bc2555f5a3e50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
