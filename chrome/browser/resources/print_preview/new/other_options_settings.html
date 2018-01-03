@@ -1,5 +1,7 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/html/cr.html">
+<link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="checkbox_radio_css.html">
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="settings_section.html">
@@ -11,40 +13,15 @@
     <print-preview-settings-section class="multirow-controls">
       <span slot="title" id="options-label">$i18n{optionsLabel}</span>
       <div slot="controls" class="checkbox">
-        <div id="header-footer-container"
-            hidden$="[[!settings.headerFooter.available]]">
-          <label aria-live="polite">
-            <input type="checkbox">
-            <span>$i18n{optionHeaderFooter}</span>
-          </label>
-        </div>
-        <div id="duplex-container" hidden$="[[!settings.duplex.available]]">
-          <label aria-live="polite">
-            <input type="checkbox" checked="{{duplexValue_::change}}">
-            <span>$i18n{optionTwoSided}</span>
-          </label>
-        </div>
-        <div id="css-background-container"
-            hidden$="[[!settings.cssBackground.available]]">
-          <label aria-live="polite">
-            <input type="checkbox">
-            <span>$i18n{optionBackgroundColorsAndImages}</span>
-          </label>
-        </div>
-        <div id="rasterize-container"
-            hidden$="[[!settings.rasterize.available]]">
-          <label aria-live="polite">
-            <input type="checkbox">
-            <span>$i18n{optionRasterize}</span>
-          </label>
-        </div>
-        <div id="selection-only-container"
-            hidden$="[[!settings.selectionOnly.available]]">
-          <label aria-live="polite">
-            <input type="checkbox">
-            <span>$i18n{optionSelectionOnly}</span>
-          </label>
-        </div>
+        <template is="dom-repeat" items="[[options_]]">
+          <div hidden$="[[item.isHidden]]">
+            <label aria-live="polite">
+              <input type="checkbox" id="[[item.id]]"
+                  checked="[[item.checked]]" on-change="onCheckboxChange_">
+              <span>[[item.displayName]]</span>
+            </label>
+          </div>
+        </template>
       </div>
     </print-preview-settings-section>
   </template>
