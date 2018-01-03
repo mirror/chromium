@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29ae7172_b9e08b21",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T18:38:52Z",
+      "side": 1,
+      "message": "Line 46\n\n\u003e  std::set\u003cBrowser*\u003e attached_browsers_;",
+      "parentUuid": "f1650f02_bee67a87",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ecb0c9_0a240f55",
         "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9a12421_b524ad4e",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T18:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ecb0c9_0a240f55",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c089b3b8_abf3e7b1",
         "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dce972d_11a385a8",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2018-01-03T18:38:52Z",
+      "side": 1,
+      "message": "Whoops, you\u0027re right.",
+      "parentUuid": "c089b3b8_abf3e7b1",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
