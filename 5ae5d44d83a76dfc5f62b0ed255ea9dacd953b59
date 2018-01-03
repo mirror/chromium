@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b86cabd_294d39c7",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2018-01-03T22:50:02Z",
+      "side": 0,
+      "message": "Please update the description with the following:\n\"Nano pages don\u0027t request additional resources when scrolling. Both ATF and BTF content is loaded one after the other. So the scroll event and subsequent checks for responses is causing flakiness.\"",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
