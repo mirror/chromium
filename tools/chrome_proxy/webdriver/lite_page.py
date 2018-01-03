@@ -274,17 +274,6 @@ class LitePage(IntegrationTest):
              lite_page_responses = lite_page_responses + 1
       self.assertEqual(1, lite_page_responses)
 
-      # Scroll to the bottom of the window and ensure scrollHeight increases.
-      original_scroll_height = test_driver.ExecuteJavascriptStatement(
-        'document.body.scrollHeight')
-      test_driver.ExecuteJavascriptStatement(
-        'window.scrollTo(0,Math.max(document.body.scrollHeight));')
-      # Give some time for loading after scrolling.
-      time.sleep(2)
-      new_scroll_height = test_driver.ExecuteJavascriptStatement(
-        'document.body.scrollHeight')
-      self.assertGreater(new_scroll_height, original_scroll_height)
-
       # Make sure there were more requests that were proxied.
       responses = test_driver.GetHTTPResponses(override_has_logs=True)
       self.assertNotEqual(0, len(responses))
