@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5d72d26d_34f523a1",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06eb907e_92904684",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e9a3a1_fd443e4e",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
@@ -786,6 +804,24 @@
       "side": 1,
       "message": "i\u0027m still having a difficult time understanding how this class is used:\n\n- what\u0027s the relationship between ExpectNewEntry and ExpectNewEntries? i\u0027d expect them to do essentially the same thing, with one being a convenience wrapper around the other, but that doesn\u0027t appear to be the case -- their implementations are completely separate.\n\n- what\u0027s the baseline for WasNewEntryRecorded? \"new\" since when? it looks like it\u0027s comparing the count from ukm_recorder_ against that in num_entries_.\n\ni think that my confusion stems from not understanding the relationship between the counts in ukm_recorder_ and in num_entries_.\n\ni\u0027ll probably let michael review this since he\u0027s much more familiar with ukm. :-)",
       "parentUuid": "a77f9ab3_83bb3640",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6185ce7b_ba9a7af9",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T00:48:23Z",
+      "side": 1,
+      "message": "1. They are completely separate because ExpectNewEntry is used when there\u0027s one entry logged when some event happens and ExpectNewEntries is used when multiple entries are logged when an event happens. For the latter, I use source id to identify multiple events. \n\n2. Baseline is from last time when any entry was logged. |num_entries_| records number of entries up to last time we call ExpectNewEntry or ExpectNewEntries. WasEntryRecorded only checks if ukm_recorder_ has recorded additional entries since last time (num_entries_), this function doesn\u0027t update |num_entries_|. |num_entries_| is updated by ExpectNewEntry or ExpectNewEntries.\n\nPlease let me know if I\u0027m not very clear. :)",
+      "parentUuid": "96936b09_79b87fe1",
       "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
