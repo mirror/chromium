@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5798bd8a_475f05ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T15:31:07Z",
+      "side": 1,
+      "message": "This seems to affect manual history clearing when signed out.\n\nE.g. one can dismiss a couple of suggestions and clear history. Previously, the fact of dismissal would be deleted. With the new behavior, it won\u0027t.\n\nWhile dismissal of suggestions may be not that important, I am not sure that there are no other unexpected behavior changes.",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "05676156946592234be88543a00ad1828757c7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5bab23_c04ea4de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2018-01-03T15:31:07Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 12,
+        "startChar": 56,
+        "endLine": 12,
+        "endChar": 59
+      },
+      "revId": "05676156946592234be88543a00ad1828757c7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "273beb25_47f16ac9",
         "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.cc",
         "patchSetId": 1
