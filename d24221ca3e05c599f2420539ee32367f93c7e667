@@ -22,6 +22,30 @@
       "revId": "d24221ca3e05c599f2420539ee32367f93c7e667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c085843_24332cb2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-03T14:08:36Z",
+      "side": 0,
+      "message": "The style guide[1] says that \"However, any includes present in the related header do not need to be included again in the related cc (i.e., foo.cc can rely on foo.h\u0027s includes)\".\nI\u0027m not sure but I thought this file can rely on prefetch_network_request_factory_impl.h\u0027s includes. (The header file already includes \u003cmemory\u003e.)\nAlso, we can\u0027t always trust `git cl lint` but it was passed anyway.\nIf I\u0027m wrong, please correct me. Thank you!",
+      "parentUuid": "38592182_9e8472be",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d24221ca3e05c599f2420539ee32367f93c7e667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

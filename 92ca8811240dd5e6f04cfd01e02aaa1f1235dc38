@@ -16,6 +16,24 @@
       "revId": "92ca8811240dd5e6f04cfd01e02aaa1f1235dc38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a80857_66b3914a",
+        "filename": "components/offline_pages/core/model/clear_legacy_temporary_pages_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2018-01-03T14:08:36Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right.\nI wrote a simple script and used it to make this patch.\nIt seems to have a bug. So, I modified my script and then re-uploaded patch set.\nYou can see the diff between 1 and 4.\n - https://chromium-review.googlesource.com/c/chromium/src/+/846602/1..4",
+      "parentUuid": "a34124f0_b083b963",
+      "revId": "92ca8811240dd5e6f04cfd01e02aaa1f1235dc38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
