@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29a83987_509be3c7",
+        "filename": "base/strings/string_number_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-03T18:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff25f96_9a4a6f83",
+      "revId": "510849529a9818cd2ef2b1f752714515d4221646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3a012e5_1d98a66b",
         "filename": "base/strings/string_number_conversions.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-03T18:22:23Z",
       "side": 1,
       "message": "optional: This should be passed by value but for consistency with rest of this file I guess this is okay for now. Could be a nice follow-up to cleanup this file\u0027s API.\n\nFrom string_piece.h:\n\n// Prefer passing StringPieces by value:\n//   void MyFunction(StringPiece arg);\n// If circumstances require, you may also pass by const reference:\n//   void MyFunction(const StringPiece\u0026 arg);  // not preferred\n// Both of these have the same lifetime semantics.  Passing by value\n// generates slightly smaller code.  For more discussion, Googlers can see\n// the thread go/stringpiecebyvalue on c-users.",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "510849529a9818cd2ef2b1f752714515d4221646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2c518a2_a46922cc",
+        "filename": "base/strings/string_number_conversions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-03T18:42:21Z",
+      "side": 1,
+      "message": "Will do a followup patch.",
+      "parentUuid": "f3a012e5_1d98a66b",
       "range": {
         "startLine": 161,
         "startChar": 34,
