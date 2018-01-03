@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8438565c_fd83e52c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b1239e2_e4d43bc1",
+      "range": {
+        "startLine": 101,
+        "startChar": 38,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48348386_155c4b40",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 26
@@ -39,6 +63,24 @@
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3e893d_e2243f9f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Yes, we\u0027re planning to refactor this since it\u0027s confusing. I added comments in vr_shell_gl.h for the members involved and code comments in this file, and a DCHECK(!callback_) + comment in SendVSync. (It\u0027s supposed to always be nulled when entering SendVSync.)",
+      "parentUuid": "48348386_155c4b40",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "03488e05_8c2fb938",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Done. This is inconsistent with the pre-existing naming scheme in this file, should we rename the rest separately then?",
+      "parentUuid": "b2041338_f3f23483",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea81b22e_9ba9ab50",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 26
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cd8c38c5_4840a716",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "A texture handle is a platform specific object such as a DXGI handle on Windows that can be used by the receiver outside the GPU process directly. The mailbox holder is a reference to a normal mailbox texture inside the GPU process, and this still needs to be separately copied for use in a different GPU context. (The current Android implementation writes the mailbox texture to a Surface in the GPU process so that it can read it back in a local context SurfaceTexture.)\n\nThese names are already intended to be generic and are used to select a platform-appropriate strategy. The goal is to minimize platform knowledge on the Blink side. Basically the render path decisions should be made on the browser side, and the Blink code just goes along with the choices. See also the followup in https://chromium-review.googlesource.com/c/chromium/src/+/828407 where I move the transport code out of modules/vr/ to make this cleaner.\n\nDoes that help? The immediate goal is to replace the current code where the Blink side basically says \"if it\u0027s an external VR display, assume it\u0027s Windows and use the Windows texture handle path\", and to prepare for upcoming changes where the choices depend on more details than just the platform - i.e. the AHardwareBuffer requires Android O, GpuFence support, and (initially) an opt-in or feature flag while it\u0027s being rolled out.",
+      "parentUuid": "ea81b22e_9ba9ab50",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2411a8_48ae4db4",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 26
@@ -90,6 +168,24 @@
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ad4588_a784f2ae",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Setting all of them to true would technically work. There are some platform dependent semantic interactions, for example in the current implementation waiting for the render notification is redundant if also waiting for the GPU fence.\n\nAgain, the goal here is to keep the logic that chooses the render path details in one place on the browser side, and the Blink side should just go along with the choices specified in the transport options. For example, the current Windows implementation needs to wait for a transfer notification to reallocate textures after transient failures, but that\u0027s an implementation detail and a future version may not need to do this. I don\u0027t want complex logic such as \"render path choice X implies option Y\u003dtrue and Z\u003dfalse\" duplicated on the Blink side, especially in code that\u0027s supposed to be platform independent.",
+      "parentUuid": "ec2411a8_48ae4db4",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "1d6c6427_a95de718",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6b95a6_5521d5b9",
+      "range": {
+        "startLine": 158,
+        "startChar": 53,
+        "endLine": 158,
+        "endChar": 54
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b9cf40_937aa6c9",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 26
@@ -136,6 +256,30 @@
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4717eee6_a0741edb",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "I think a separate \"success\" value makes the code easier to read, for example here:\n\n  std::move(callback).Run(true, vr_shell_-\u003eGetVRDisplayFrameTransportOptions());\nvs\n  std::move(callback).Run(vr_shell_-\u003eGetVRDisplayFrameTransportOptions());\n\nIn the first case it\u0027s obvious that this is intended to be a success result, while in the second case the reader would need to think about if the Get..Options call is allowed to return null, and if it does return null it\u0027s unclear if that would be a bug or an intentionally rejected presentation attempt.",
+      "parentUuid": "82b9cf40_937aa6c9",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 69
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "9dbc7182_9d07f6e2",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "c152a400_b70f6205",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6946b6_20fcc8e1",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
@@ -173,6 +341,30 @@
       "writtenOn": "2018-01-02T23:29:54Z",
       "side": 1,
       "message": "What does this mean?",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113b64a0_2999e6ad",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "This is referring to the case where WaitForIncomingMethodCall returns false, in which case previous_frame_fence_ would remain null. I\u0027ve moved the comment down to the \"if (previous_frame_fence_)\" block.",
+      "parentUuid": "bd6946b6_20fcc8e1",
       "range": {
         "startLine": 697,
         "startChar": 38,
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "58d719d0_1e3a34cb",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "context_gl_-\u003eCreateClientGpuFenceCHROMIUM does this. This is a new feature, see https://chromium.googlesource.com/chromium/src/+/master/docs/design/gpu_synchronization.md#Cross_process-transport_GpuFence-and-GpuFenceHandle and https://cs.chromium.org/chromium/src/gpu/GLES2/extensions/CHROMIUM/CHROMIUM_gpu_fence.txt for more details.",
+      "parentUuid": "55850ac1_4fab6994",
+      "range": {
+        "startLine": 702,
+        "startChar": 0,
+        "endLine": 703,
+        "endChar": 33
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022da8ea_e773f80a",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
@@ -222,6 +438,24 @@
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da900a8f_d475d807",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-03T19:20:09Z",
+      "side": 1,
+      "message": "Done. It\u0027s the same logic as the other VRSubmitFrameClient methods - receiving the waited-for thing unblocks the corresponding WaitForThing method, including when it\u0027s inside WaitForIncomingMethodCall. See also the member comment in VRDisplay.h - I can\u0027t just check for previous_frame_fence_ being non-null since it\u0027s not supposed to wait for a fence on the first frame, hence the separate boolean.",
+      "parentUuid": "022da8ea_e773f80a",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
