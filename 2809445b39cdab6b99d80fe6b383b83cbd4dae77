@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "222ade56_93ec38b5",
+        "filename": "services/identity/public/cpp/identity_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T12:31:21Z",
+      "side": 1,
+      "message": "Is there any specific suggestion on how to order the methods in a manager interface? I would suggest either having them in alphabetical order, or grouping them by functionality and importance.\n\nIn both cases, I suggest moving RemoveAccessTokenFromCache below CreateAccessTokenFetcherForPrimaryAccount.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "2809445b39cdab6b99d80fe6b383b83cbd4dae77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
