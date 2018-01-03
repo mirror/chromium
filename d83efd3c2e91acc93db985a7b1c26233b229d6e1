@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be90b27c_4cc74e67",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-03T21:43:14Z",
+      "side": 1,
+      "message": "Do we have specifics on how the presentation is \"enhanced\"? like does it mean rich-text?, if so maybe specify that.",
+      "revId": "d83efd3c2e91acc93db985a7b1c26233b229d6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fa7a23_e8af91ae",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-03T21:43:14Z",
+      "side": 1,
+      "message": "nit: Suggest s/RichEntitySuggest/RichEntitySuggestions/ everywhere, since that\u0027s the naming we seem to use for EntitySuggestions, TailSuggestions, TabSwitchSuggestions.",
+      "revId": "d83efd3c2e91acc93db985a7b1c26233b229d6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
