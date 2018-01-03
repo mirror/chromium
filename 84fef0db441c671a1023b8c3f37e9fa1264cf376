@@ -34,6 +34,24 @@
       "revId": "84fef0db441c671a1023b8c3f37e9fa1264cf376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a0753_7e6c9390",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-03T16:43:53Z",
+      "side": 1,
+      "message": "Think we should move SpeechRecognitionState to speech_ui_model.h. It is strange that an observer interface header defines a state enum.",
+      "parentUuid": "dc105d11_97a0943c",
+      "revId": "84fef0db441c671a1023b8c3f37e9fa1264cf376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
