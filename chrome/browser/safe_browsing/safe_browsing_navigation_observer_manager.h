@@ -27,9 +27,13 @@ typedef google::protobuf::RepeatedPtrField<safe_browsing::ReferrerChainEntry>
 // User data stored in DownloadItem for referrer chain information.
 class ReferrerChainData : public base::SupportsUserData::Data {
  public:
-  explicit ReferrerChainData(std::unique_ptr<ReferrerChain> referrer_chain);
+  ReferrerChainData(std::unique_ptr<ReferrerChain> referrer_chain,
+                    int referrer_chain_length,
+                    int recent_navigation_to_collect);
   ~ReferrerChainData() override;
   ReferrerChain* GetReferrerChain();
+  int referrer_chain_length() { return referrer_chain_length_; }
+  int recent_navigations_to_collect() { return recent_navigations_to_collect_; }
 
   // Unique user data key used to get and set referrer chain data in
   // DownloadItem.
@@ -37,6 +41,9 @@ class ReferrerChainData : public base::SupportsUserData::Data {
 
  private:
   std::unique_ptr<ReferrerChain> referrer_chain_;
+  // This is the length without recent navigation events;
+  int referrer_chain_length_;
+  int recent_navigations_to_collect_;
 };
 
 // Struct that manages insertion, cleanup, and lookup of NavigationEvent
@@ -86,6 +93,11 @@ struct NavigationEventList {
 
   NavigationEvent* Get(std::size_t index) {
     return navigation_events_[index].get();
+  }
+
+  const base::circular_deque<std::unique_ptr<NavigationEvent>>&
+  navigation_events() {
+    return navigation_events_;
   }
 
  private:
@@ -196,6 +208,12 @@ class SafeBrowsingNavigationObserverManager
                             GURL target_url,
                             content::WebContents* target_web_contents,
                             bool renderer_initiated);
+
+  static int CountOfRecentNavigationsToAppend(Profile* profile,
+                                              AttributionResult result);
+
+  void AppendRecentNavigations(int recent_navigation_count,
+                               ReferrerChain* out_referrer_chain);
 
  private:
   friend class base::RefCountedThreadSafe<
