@@ -15,6 +15,7 @@
 #include "ash/app_list/model/app_list_item_list_observer.h"
 #include "ash/app_list/model/app_list_model_export.h"
 #include "ash/app_list/model/app_list_view_state.h"
+#include "ash/app_list/model/ash_app_list_model_observer.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 
@@ -135,6 +136,11 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
 
   Status status() const { return status_; }
 
+  void SetModelObserver(AshAppListModelObserver* observer) {
+    model_observer_ = observer;
+  }
+  AshAppListModelObserver* ModelObserver() { return model_observer_; }
+
  private:
   // AppListItemListObserver
   void OnListItemMoved(size_t from_index,
@@ -175,6 +181,9 @@ class APP_LIST_MODEL_EXPORT AppListModel : public AppListItemListObserver {
   // The AppListView state. Controlled by the AppListView.
   AppListViewState state_fullscreen_ = AppListViewState::CLOSED;
   base::ObserverList<AppListModelObserver, true> observers_;
+
+  // TODO(hejq): change this into a mojo pointer.
+  AshAppListModelObserver* model_observer_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(AppListModel);
 };

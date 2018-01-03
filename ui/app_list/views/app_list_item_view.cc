@@ -269,7 +269,8 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
     return;
 
   ui::MenuModel* menu_model =
-      item_weak_ ? item_weak_->GetContextMenuModel() : NULL;
+      apps_grid_view_->model()->ModelObserver()->GetContextMenuModel(
+          item_weak_->id());
   if (!menu_model)
     return;
 

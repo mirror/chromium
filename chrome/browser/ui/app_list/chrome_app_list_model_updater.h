@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 
 class ChromeAppListItem;
+class ChromeAppListModelObserver;
 class SearchModel;
 
 class ChromeAppListModelUpdater : public AppListModelUpdater {
@@ -32,6 +33,7 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   void SetState(app_list::AppListModel::State state) override;
   void HighlightItemInstalledFromUI(const std::string& id) override;
   void SetSearchEngineIsGoogle(bool is_google) override;
+  void SetAppListModelObserver(AshAppListModelObserver* observer) override;
 
   // Methods for item querying.
   ChromeAppListItem* FindItem(const std::string& id) override;
@@ -91,6 +93,7 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
 
   std::unique_ptr<app_list::AppListModel> model_;
   std::unique_ptr<app_list::SearchModel> search_model_;
+  std::unique_ptr<ChromeAppListModelObserver> observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeAppListModelUpdater);
 };

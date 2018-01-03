@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <set>
 #include <string>
 #include <tuple>
@@ -239,7 +240,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
     return activated_folder_item_view_;
   }
 
-  const AppListModel* model() const { return model_; }
+  AppListModel* model() const { return model_; }
 
   SuggestionsContainerView* suggestions_container_for_test() const {
     return suggestions_container_;

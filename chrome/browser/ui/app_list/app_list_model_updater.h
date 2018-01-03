@@ -11,6 +11,7 @@
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_model.h"
+#include "ash/app_list/model/ash_app_list_model_observer.h"
 
 class ChromeAppListItem;
 
@@ -43,6 +44,7 @@ class AppListModelUpdater {
   virtual void SetStatus(app_list::AppListModel::Status status) {}
   virtual void SetState(app_list::AppListModel::State state) {}
   virtual void HighlightItemInstalledFromUI(const std::string& id) {}
+  virtual void SetAppListModelObserver(AshAppListModelObserver* observer) {}
   // For SearchModel:
   virtual void SetSearchEngineIsGoogle(bool is_google) {}
 

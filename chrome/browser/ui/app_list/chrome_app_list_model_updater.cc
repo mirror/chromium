@@ -12,11 +12,15 @@
 #include "ash/app_list/model/app_list_model_observer.h"
 #include "ash/app_list/model/search/search_model.h"
 #include "chrome/browser/ui/app_list/chrome_app_list_item.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_model_observer.h"
 #include "extensions/common/constants.h"
 
 ChromeAppListModelUpdater::ChromeAppListModelUpdater()
     : model_(std::make_unique<app_list::AppListModel>()),
-      search_model_(std::make_unique<app_list::SearchModel>()) {}
+      search_model_(std::make_unique<app_list::SearchModel>()),
+      observer_(std::make_unique<ChromeAppListModelObserver>(this)) {
+  SetAppListModelObserver(observer_.get());
+}
 
 ChromeAppListModelUpdater::~ChromeAppListModelUpdater() = default;
 
@@ -61,6 +65,11 @@ void ChromeAppListModelUpdater::HighlightItemInstalledFromUI(
 
 void ChromeAppListModelUpdater::SetSearchEngineIsGoogle(bool is_google) {
   search_model_->SetSearchEngineIsGoogle(is_google);
+}
+
+void ChromeAppListModelUpdater::SetAppListModelObserver(
+    AshAppListModelObserver* observer) {
+  model_->SetModelObserver(observer);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
