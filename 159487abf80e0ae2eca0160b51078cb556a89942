@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73988079_dff4969d",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-03T23:34:22Z",
+      "side": 1,
+      "message": "Are these all going to be CastMessageType::kUnknown?  Maybe it should be ::kOther, and we can add additional application protocol message types over time.",
+      "revId": "159487abf80e0ae2eca0160b51078cb556a89942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
