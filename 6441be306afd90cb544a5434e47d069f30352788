@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22f85703_274ed967",
+        "filename": "chrome/browser/chromeos/hats/hats_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "I will remove the flag check and leave the call to the function.\nGiven Sylvain\u0027s comment, I don\u0027t think I need to worry about the flag at all.",
+      "parentUuid": "bb9213ff_034bb2c4",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed65ce5_4503f302",
         "filename": "chrome/browser/ui/app_list/start_page_service.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T00:45:13Z",
       "side": 1,
       "message": "This is probably (hopefully) dead code - see http://crbug.com/781407",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc09d32a_885df0a1",
+        "filename": "chrome/browser/ui/app_list/start_page_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "How do we make that \"probably\" a \"certainly\"?\nBefore I remove this change I want to be sure.",
+      "parentUuid": "3ed65ce5_4503f302",
       "revId": "6441be306afd90cb544a5434e47d069f30352788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6441be306afd90cb544a5434e47d069f30352788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f4239e_01dff33c",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "Oh yeah, I was debugging with it. :-)\nRemoved.",
+      "parentUuid": "60d83217_d5e01605",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d1402dfa_6471320a",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54dd682_3933b36c",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 14
+      },
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b114950_4bb690a3",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 9
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "9e9856d2_474ca4aa",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b114950_4bb690a3",
+      "range": {
+        "startLine": 235,
+        "startChar": 17,
+        "endLine": 235,
+        "endChar": 25
+      },
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c412b6dd_c1878be9",
         "filename": "components/translate/core/common/translate_util.h",
         "patchSetId": 9
@@ -119,6 +221,30 @@
       "revId": "6441be306afd90cb544a5434e47d069f30352788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072bbe93_0dba572c",
+        "filename": "components/translate/core/common/translate_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-03T06:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c412b6dd_c1878be9",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
