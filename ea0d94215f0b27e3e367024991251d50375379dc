@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a930a6_e3a20053",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3378,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-03T20:58:58Z",
+      "side": 0,
+      "message": "I think this still applies to the following expectation.",
+      "range": {
+        "startLine": 3378,
+        "startChar": 19,
+        "endLine": 3378,
+        "endChar": 23
+      },
+      "revId": "ea0d94215f0b27e3e367024991251d50375379dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
