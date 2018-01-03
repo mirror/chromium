@@ -84,6 +84,7 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "public/platform/Platform.h"
@@ -1862,11 +1863,7 @@ void PaintLayerScrollableArea::Resize(const IntPoint& pos,
 
 LayoutRect PaintLayerScrollableArea::ScrollIntoView(
     const LayoutRect& rect,
-    const ScrollAlignment& align_x,
-    const ScrollAlignment& align_y,
-    bool is_smooth,
-    ScrollType scroll_type,
-    bool is_for_scroll_sequence) {
+    const ScrollIntoViewParams& params) {
   LayoutRect local_expose_rect(
       Box()
           .AbsoluteToLocalQuad(FloatQuad(FloatRect(rect)), kUseTransforms)
@@ -1874,19 +1871,25 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
   local_expose_rect.Move(-Box().BorderLeft(), -Box().BorderTop());
   LayoutRect visible_rect(IntPoint(), VisibleContentRect().Size());
   LayoutRect r = ScrollAlignment::GetRectToExpose(
-      visible_rect, local_expose_rect, align_x, align_y);
+      visible_rect, local_expose_rect, params.align_x, params.align_y);
 
   ScrollOffset old_scroll_offset = GetScrollOffset();
   ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
-  if (is_for_scroll_sequence) {
-    DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
-    ScrollBehavior behavior =
-        is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
+  if (params.is_for_scroll_sequence) {
+    DCHECK(params.scroll_type == kProgrammaticScroll ||
+           params.scroll_type == kUserScroll);
+    ScrollBehavior behavior = params.scroll_behavior;
+    if (behavior == kScrollBehaviorAuto) {
+      behavior = Box().Style()->GetScrollBehavior() == kScrollBehaviorSmooth
+                     ? kScrollBehaviorSmooth
+                     : kScrollBehaviorInstant;
+    }
     GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset,
                                                behavior);
   } else {
-    SetScrollOffset(new_scroll_offset, scroll_type, kScrollBehaviorInstant);
+    SetScrollOffset(new_scroll_offset, params.scroll_type,
+                    kScrollBehaviorInstant);
   }
   ScrollOffset scroll_offset_difference =
       ClampScrollOffset(new_scroll_offset) - old_scroll_offset;

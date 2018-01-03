@@ -99,7 +99,7 @@ class WebRemotePlaybackClient;
 class WebRTCPeerConnectionHandler;
 class WebServiceWorkerProvider;
 class WebSpellCheckPanelHostClient;
-struct WebRemoteScrollProperties;
+struct ScrollIntoViewParams;
 class WebTextCheckClient;
 
 class CORE_EXPORT LocalFrameClient : public FrameClient {
@@ -380,9 +380,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   // Called when the corresponding frame should be scrolled in a remote parent
   // frame.
-  virtual void ScrollRectToVisibleInParentFrame(
-      const WebRect&,
-      const WebRemoteScrollProperties&) {}
+  virtual void ScrollRectToVisibleInParentFrame(const WebRect&,
+                                                const ScrollIntoViewParams&) {}
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}

@@ -179,7 +179,7 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
-#include "third_party/WebKit/public/platform/WebRemoteScrollProperties.h"
+#include "third_party/WebKit/public/platform/WebScrollIntoViewParams.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaCallbacks.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -7008,10 +7008,10 @@ void RenderFrameImpl::DraggableRegionsChanged() {
 
 void RenderFrameImpl::ScrollRectToVisibleInParentFrame(
     const blink::WebRect& rect_to_scroll,
-    const blink::WebRemoteScrollProperties& properties) {
+    const blink::WebScrollIntoViewParams& params) {
   DCHECK(IsLocalRoot());
   Send(new FrameHostMsg_ScrollRectToVisibleInParentFrame(
-      routing_id_, rect_to_scroll, properties));
+      routing_id_, rect_to_scroll, params));
 }
 
 blink::mojom::PageVisibilityState RenderFrameImpl::GetVisibilityState() const {

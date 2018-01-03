@@ -5,11 +5,13 @@
 #include "core/frame/RootFrameViewport.h"
 
 #include "core/frame/LocalFrameView.h"
-#include "core/layout/ScrollAlignment.h"
+#include "core/layout/LayoutBox.h"
 #include "core/layout/ScrollAnchor.h"
 #include "platform/geometry/DoubleRect.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/LayoutRect.h"
+#include "platform/scroll/ScrollAlignment.h"
+#include "platform/scroll/ScrollIntoViewParams.h"
 
 namespace blink {
 
@@ -206,12 +208,9 @@ ScrollBehavior RootFrameViewport::ScrollBehaviorStyle() const {
   return LayoutViewport().ScrollBehaviorStyle();
 }
 
-LayoutRect RootFrameViewport::ScrollIntoView(const LayoutRect& rect_in_content,
-                                             const ScrollAlignment& align_x,
-                                             const ScrollAlignment& align_y,
-                                             bool is_smooth,
-                                             ScrollType scroll_type,
-                                             bool is_for_scroll_sequence) {
+LayoutRect RootFrameViewport::ScrollIntoView(
+    const LayoutRect& rect_in_content,
+    const ScrollIntoViewParams& params) {
   // We want to move the rect into the viewport that excludes the scrollbars so
   // we intersect the visual viewport with the scrollbar-excluded frameView
   // content rect. However, we don't use visibleContentRect directly since it
@@ -229,16 +228,21 @@ LayoutRect RootFrameViewport::ScrollIntoView(const LayoutRect& rect_in_content,
   LayoutRect view_rect_in_content =
       Intersection(visual_rect_in_content, frame_rect_in_content);
   LayoutRect target_viewport = ScrollAlignment::GetRectToExpose(
-      view_rect_in_content, rect_in_content, align_x, align_y);
+      view_rect_in_content, rect_in_content, params.align_x, params.align_y);
   if (target_viewport != view_rect_in_content) {
     ScrollOffset target_offset(target_viewport.X(), target_viewport.Y());
-    if (is_for_scroll_sequence) {
-      DCHECK(scroll_type == kProgrammaticScroll);
-      ScrollBehavior behavior =
-          is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
+    if (params.is_for_scroll_sequence) {
+      DCHECK(params.scroll_type == kProgrammaticScroll);
+      ScrollBehavior behavior = params.scroll_behavior;
+      if (behavior == kScrollBehaviorAuto) {
+        behavior = GetLayoutBox()->Style()->GetScrollBehavior() ==
+                           kScrollBehaviorSmooth
+                       ? kScrollBehaviorSmooth
+                       : kScrollBehaviorInstant;
+      }
       GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
     } else {
-      SetScrollOffset(target_offset, scroll_type);
+      SetScrollOffset(target_offset, params.scroll_type);
     }
   }
 
