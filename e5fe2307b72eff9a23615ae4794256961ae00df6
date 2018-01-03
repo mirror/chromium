@@ -34,6 +34,24 @@
       "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511edf59_05b5ed7b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T17:52:26Z",
+      "side": 1,
+      "message": "Hmm... Interesting. Does the inspect mode work with touchscreen? You can try that with Ctrl+Shit+C in DevTools, and then touching on the page should reveal the element in DevTools.\n\nIf that works, I guess we can remove the handling.\nAlso note, that we do not really care about the primary pointer - any would work for us I guess.",
+      "parentUuid": "753fa8d8_94f94051",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
