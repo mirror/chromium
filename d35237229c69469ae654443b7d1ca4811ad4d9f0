@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8db8d268_4d1332eb",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T01:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9456557_07be5cd0",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0871174_c3e9143d",
         "filename": "content/browser/media/key_system_support_impl.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6401b69_36039459",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T01:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0871174_c3e9143d",
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255b6acc_f150d155",
+        "filename": "content/public/renderer/key_system_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T01:56:02Z",
+      "side": 1,
+      "message": "Moved UMA comment to browser side (content/browser/media/key_system_support_impl.cc).",
+      "parentUuid": "fd384320_01f76b4a",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "d35237229c69469ae654443b7d1ca4811ad4d9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
