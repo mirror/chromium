@@ -22,6 +22,30 @@
       "revId": "adf179604ce488ef4f9173e6cbeca72645ea96ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3b52f3_3b345106",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/requestHeadersTree.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-03T18:57:01Z",
+      "side": 1,
+      "message": "\u0027user-select: none\u0027 would also address the double-click-drag scenario correctly!  However, I prefer \u0027position: absolute\u0027 over \u0027user-select: none\u0027 because it allows Triple-click to select just the value, excluding the key.\n\nIt\u0027s not clear to me which Triple-click behavior is preferred, but I assume users who want to copy just the value will find triple-click selection more convenient.",
+      "parentUuid": "1cca9ece_8bba468d",
+      "range": {
+        "startLine": 74,
+        "startChar": 14,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "adf179604ce488ef4f9173e6cbeca72645ea96ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
