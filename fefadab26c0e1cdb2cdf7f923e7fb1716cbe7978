@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ead4ce_6b1480bf",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-03T18:30:32Z",
+      "side": 1,
+      "message": "Are you sure you want all of these parameters in this driver bug workaround? I thought vendor_id didn\u0027t work on Chrome OS because it didn\u0027t use PCI IDs, and it seems to me that limiting it to gl_renderer of \"AMD STONEY\" should be sufficient for it to take effect.",
+      "revId": "fefadab26c0e1cdb2cdf7f923e7fb1716cbe7978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
