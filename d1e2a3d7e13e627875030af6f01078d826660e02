@@ -22,6 +22,30 @@
       "revId": "d1e2a3d7e13e627875030af6f01078d826660e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9d555c_97ce2d59",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-03T17:19:15Z",
+      "side": 1,
+      "message": "I think LOG(WARNING) is appropriate since it could happen under normal conditions because it is async.",
+      "parentUuid": "5c737805_55af9ab8",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "d1e2a3d7e13e627875030af6f01078d826660e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
