@@ -161,8 +161,16 @@ std::string BuildUninstalledEventElement(const Component& component) {
 
   std::string event;
   StringAppendF(&event, "<event eventtype=\"4\" eventresult=\"1\"");
-  if (component.extra_code1())
+  if (component.extra_code1()) {
     StringAppendF(&event, " extracode1=\"%d\"", component.extra_code1());
+  }
+  base::StringAppendF(&event, " previousversion=\"%s\"",
+                      component.previous_version().GetString().c_str());
+  const base::Version& next_version = component.next_version();
+  if (next_version.IsValid()) {
+    base::StringAppendF(&event, " nextversion=\"%s\"",
+                        next_version.GetString().c_str());
+  }
   StringAppendF(&event, "/>");
   return event;
 }
@@ -387,11 +395,16 @@ std::string BuildEventPingRequest(const Configurator& config,
   // include a manifest, neither a version.
   std::string app =
       base::StringPrintf("<app appid=\"%s\"", component.id().c_str());
-  base::StringAppendF(&app, " version=\"%s\"",
-                      component.previous_version().GetString().c_str());
-  if (component.next_version().IsValid()) {
-    base::StrAppend(
-        &app, {" nextversion=\"", component.next_version().GetString(), "\""});
+  if (component.state() == ComponentState::kUninstalled) {
+    base::StringAppendF(&app, " version=\"0\"");
+  } else {
+    base::StringAppendF(&app, " version=\"%s\"",
+                        component.previous_version().GetString().c_str());
+    const base::Version& next_version = component.next_version();
+    if (next_version.IsValid()) {
+      base::StrAppend(&app,
+                      {" nextversion=\"", next_version.GetString(), "\""});
+    }
   }
   app.push_back('>');
   base::StrAppend(&app, component.events());
