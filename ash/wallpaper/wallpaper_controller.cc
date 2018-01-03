@@ -1207,7 +1207,18 @@ void WallpaperController::ShowUserWallpaper(
     mojom::WallpaperUserInfoPtr user_info) {
   current_user_ = std::move(user_info);
   const AccountId account_id = current_user_->account_id;
+  const user_manager::UserType user_type = current_user_->type;
   const bool is_persistent = !current_user_->is_ephemeral;
+
+  if (user_type == user_manager::USER_TYPE_KIOSK_APP ||
+      user_type == user_manager::USER_TYPE_ARC_KIOSK_APP) {
+    return;
+  }
+
+  if (ShouldSetDevicePolicyWallpaper()) {
+    SetDevicePolicyWallpaper();
+    return;
+  }
 
   // Guest user or regular user in ephemeral mode.
   // TODO(wzang/xdai): Check if the wallpaper info for ephemeral users should
@@ -1286,9 +1297,12 @@ void WallpaperController::ShowUserWallpaper(
 
 void WallpaperController::ShowSigninWallpaper() {
   current_user_.reset();
-  // TODO(crbug.com/791654): Call |SetDeviceWallpaperIfApplicable| from here.
-  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
-                          true /*show_wallpaper=*/);
+  if (ShouldSetDevicePolicyWallpaper()) {
+    SetDevicePolicyWallpaper();
+  } else {
+    SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
+                            true /*show_wallpaper=*/);
+  }
 }
 
 void WallpaperController::RemoveUserWallpaper(

@@ -12,8 +12,8 @@
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/ui/user_adding_screen.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
-#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -223,11 +223,11 @@ void LoginDisplayWebUI::MigrateUserData(const std::string& old_password) {
 }
 
 void LoginDisplayWebUI::LoadWallpaper(const AccountId& account_id) {
-  WallpaperManager::Get()->ShowUserWallpaper(account_id);
+  WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
 }
 
 void LoginDisplayWebUI::LoadSigninWallpaper() {
-  WallpaperManager::Get()->ShowSigninWallpaper();
+  WallpaperControllerClient::Get()->ShowSigninWallpaper();
 }
 
 void LoginDisplayWebUI::OnSigninScreenReady() {
