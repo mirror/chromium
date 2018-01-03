@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf96044_19b21911",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-03T17:55:04Z",
+      "side": 1,
+      "message": "optional: using message_center::NotificationBlocker? (might make line wrapping better below, but up to you)",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d417fb32_e90a4d6d",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-03T17:55:04Z",
+      "side": 1,
+      "message": "just MessageCenter::Get() since you\u0027re already \"using\" it",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6be6800_b8a0817b",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-03T17:55:04Z",
+      "side": 1,
+      "message": "nit: I think we prefer \u003d default now",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050fab1b_7f3d3a36",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-03T17:55:04Z",
+      "side": 1,
+      "message": "MessageCenterController is initialized in ash::Shell::Init().  Do we know at that point that we\u0027re in an ARC Kiosk session? I think SessionControllerClient -\u003e SessionController communication is async. If you\u0027re not sure, xiyuan might know. If you\u0027re sure it works, I think a comment would be good.",
+      "revId": "cb80e664946f0d9f26225858a27501fd44e1e8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
