@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74d37d69_bd2d0b61",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2018-01-03T18:59:38Z",
+      "side": 1,
+      "message": "I generally find binds cleaner if the equivalent lambda is just returning a function call, but if anything the lambda is much more expressive so I can join the lambda train :)",
+      "parentUuid": "43f5c81a_48d1ef00",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "992ba8c0_2a75ebf6",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "96e39170_2bb93d59",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2018-01-03T18:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992ba8c0_2a75ebf6",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b79b26ed_e908a578",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-02T18:14:49Z",
       "side": 1,
       "message": "Wow, this looks suspicious to me, but after peering at the documentation for the relevant APIs  I do think it\u0027s correct...I think I disagree with the authors of the the Value API about how this should be done though.  :)",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcb2cb60_3429c288",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2018-01-03T18:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79b26ed_e908a578",
       "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
