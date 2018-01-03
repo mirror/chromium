@@ -234,6 +234,30 @@
       "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3d0a3f_29d5b9a9",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-03T16:53:08Z",
+      "side": 1,
+      "message": "You would need to manually copy the span in MockHidConnection::SetNonce():\n\nvoid MockHidConnection::SetNonce(base::span\u003cuint8_t\u003e nonce) {\n  nonce_ \u003d std::vector\u003cuint8_t\u003e(nonce.begin(), nonce.end());\n}\n\nThis is similar to code which is normally written as:\n\nvoid MockHidConnection::SetNonce(const std::vector\u003cuint8_t\u003e\u0026 nonce) {\n  nonce_ \u003d nonce;\n}\n\nExcept the copy has to be written explicitly. I\u0027ve been meaning to add a base::CopySpan method to stl_util.h to make this less verbose.",
+      "parentUuid": "87056536_0618eb59",
+      "range": {
+        "startLine": 359,
+        "startChar": 16,
+        "endLine": 359,
+        "endChar": 78
+      },
+      "revId": "211fb9426cf699ffe035754078681d5ec58a1fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
