@@ -180,6 +180,9 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_E:
         model_->exiting_vr = !model_->exiting_vr;
         break;
+      case ui::DomCode::US_C:
+        model_->can_apply_new_background = true;
+        break;
       default:
         break;
     }
@@ -469,6 +472,11 @@ void VrTestContext::StartAutocomplete(const base::string16& string) {
 
 void VrTestContext::StopAutocomplete() {
   ui_->SetOmniboxSuggestions(base::MakeUnique<OmniboxSuggestions>());
+}
+
+void VrTestContext::LoadAssets() {
+  // TODO(793380): Load asset files once they are available for development.
+  model_->can_apply_new_background = false;
 }
 
 }  // namespace vr
