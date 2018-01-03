@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a07eb76_0575cd35",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-03T20:12:19Z",
+      "side": 1,
+      "message": "This is fine (ceil is better than floor/round), but ideally we\u0027d extend floating point sizing/positioning support.",
+      "revId": "cf187e97de4557f2e453ac805688ce529dfa1fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
