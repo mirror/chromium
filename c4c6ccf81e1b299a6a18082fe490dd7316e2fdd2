@@ -22,6 +22,30 @@
       "revId": "c4c6ccf81e1b299a6a18082fe490dd7316e2fdd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6c9d6e_d531ea81",
+        "filename": "tools/binary_size/libsupersize/function_signature.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-03T19:20:17Z",
+      "side": 1,
+      "message": "Added a test... and guess what? It was broken!\n\nNot needed here though, demanglers add a space between \u003c\u003cs only for operator\u003c\u003c and operator\u003c, not operator\u003e.\n\nOn that note... added operator\u003c here :P",
+      "parentUuid": "3dc195a9_4a0bdc3d",
+      "range": {
+        "startLine": 83,
+        "startChar": 25,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "c4c6ccf81e1b299a6a18082fe490dd7316e2fdd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
