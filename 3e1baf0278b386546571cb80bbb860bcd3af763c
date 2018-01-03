@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a190381_bce7c2b6",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93eb606_8cb286ca",
+      "range": {
+        "startLine": 142,
+        "startChar": 42,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5814c62_429915de",
         "filename": "components/cronet/android/cronet_library_loader.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-03T16:52:59Z",
       "side": 1,
       "message": "What\u0027s the motivation for adding another namespace here?\nI think we\u0027re not supposed to have namespaces only contain parts of files:\n\"Namespaces wrap the entire source file\"\nhttps://google.github.io/styleguide/cppguide.html#Namespaces",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d697e6_e8e890bb",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Hrm, I\u0027ve started with CronetGlobalState class with bunch of static methods, but converted it into the namespace after your similar suggestion on previous CL.\n\nShould I extract it into standalone namespace like cronet_global_state similar to https://cs.chromium.org/chromium/src/ios/web/public/global_state/ios_global_state.h?rcl\u003dee52cf0b5d6819b43c030153e8a3b0623884ba80\u0026l\u003d10?",
+      "parentUuid": "c5814c62_429915de",
       "range": {
         "startLine": 115,
         "startChar": 24,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d440f4b4_0ad631b5",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Per our discussion I\u0027ll try to think about it a bit more.",
+      "parentUuid": "c11436ee_8191edbf",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d314b29e_f71deccd",
         "filename": "components/cronet/cronet_global_state.h",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1f9a8798_6e9223e3",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d314b29e_f71deccd",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db977674_1555dbab",
         "filename": "components/cronet/cronet_global_state.h",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f9058e_b5843a43",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done. On iOS we currently perform one-time initialization to main thread: https://cs.chromium.org/chromium/src/components/cronet/ios/Cronet.mm?rcl\u003d22fe377e325765da53d58e58013894cf613f6359\u0026l\u003d360 which seems analogous to InitThread.",
+      "parentUuid": "db977674_1555dbab",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c843eb01_1ee5b509",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37de9c5d_cc424671",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 45
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ed519a5_9e680121",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 8
@@ -198,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "ce07a067_28446a33",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ed519a5_9e680121",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "361466a2_7e203b93",
         "filename": "components/cronet/cronet_url_request_context.h",
         "patchSetId": 8
@@ -218,6 +386,30 @@
       "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035da4f8_c831bfd3",
+        "filename": "components/cronet/cronet_url_request_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-03T20:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361466a2_7e203b93",
+      "range": {
+        "startLine": 162,
+        "startChar": 49,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
