@@ -22,6 +22,30 @@
       "revId": "f48221890c024c8e879ed2f4bde9a076a8530cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd67602c_b1179c7e",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2018-01-03T17:33:49Z",
+      "side": 1,
+      "message": "Wow, hot start to 2018, done.",
+      "parentUuid": "dc509a5d_eca351cf",
+      "range": {
+        "startLine": 228,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "f48221890c024c8e879ed2f4bde9a076a8530cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
