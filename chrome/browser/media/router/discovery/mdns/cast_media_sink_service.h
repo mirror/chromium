@@ -15,8 +15,10 @@
 #include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
+#include "chrome/browser/media/router/providers/cast/parsed_media_source.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service_util.h"
+#include "chrome/common/media_router/media_source.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace media_router {
@@ -54,6 +56,9 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
   // Marked virtual for tests.
   virtual void OnUserGesture();
 
+  void StartObservingMediaSinks(std::vector<std::string> app_ids);
+  void StopObservingMediaSinks(std::vector<std::string> app_ids);
+
   // Marked virtual for tests.
   virtual std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
   CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb);
@@ -82,6 +87,10 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
       const OnSinksDiscoveredCallback& sinks_discovered_cb,
       std::vector<MediaSinkInternal> sinks);
 
+  void NotifyOfExistingSinksIfRegistered(const MediaSource::Id& source_id);
+  std::vector<MediaSink> GetSinksForSource(
+      const std::vector<CastAppInfo>& app_infos) const;
+
   // DnsSdRegistry::DnsSdObserver implementation
   void OnDnsSdEvent(const std::string& service_type,
                     const DnsSdRegistry::DnsSdServiceList& services) override;
@@ -95,6 +104,9 @@ class CastMediaSinkService : public DnsSdRegistry::DnsSdObserver {
 
   // List of cast sinks found in current round of mDNS discovery.
   std::vector<MediaSinkInternal> cast_sinks_;
+
+  // MediaSources of registered sink queries.
+  base::flat_map<MediaSource::Id, ParsedMediaSource> registered_sources_;
 
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 

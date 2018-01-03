@@ -168,6 +168,22 @@ void CastMediaSinkService::OnUserGesture() {
                                 base::Unretained(impl_.get()), cast_sinks_));
 }
 
+void CastMediaSinkService::StartObservingMediaSinks(
+    std::vector<std::string> app_ids) {
+  impl_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::StartObservingMediaSinks,
+                     base::Unretained(impl_.get()), std::move(app_ids)));
+}
+
+void CastMediaSinkService::StopObservingMediaSinks(
+    std::vector<std::string> app_ids) {
+  impl_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::StopObservingMediaSinks,
+                     base::Unretained(impl_.get()), std::move(app_ids)));
+}
+
 void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
   DCHECK(!dns_sd_registry_);
   dns_sd_registry_ = registry;
