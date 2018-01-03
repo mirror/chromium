@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b838f2bb_2a6318f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "lol, done",
+      "parentUuid": "36b983bb_f66fac26",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3f0ebe_59885fd6",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T19:44:54Z",
       "side": 1,
       "message": "Why not call reset here?",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfb9f1a_353e5da2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Closure was grumpy, we went through the approaches Paul knew and all of them more arduous than just copying the initialization\n\nabsolutely open to better suggestions though :)",
+      "parentUuid": "bc3f0ebe_59885fd6",
       "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "94a878c2_57d600d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "this was to make a copy, prefer `.slice()`?",
+      "parentUuid": "902ef262_04ad132b",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c43301c1_410024fd",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "47ed2032_c4a8bb82",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43301c1_410024fd",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbcfa7c_4e71b839",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-02T19:44:54Z",
       "side": 1,
       "message": "Shouldn\u0027t you use setInterval instead?",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75603667_da1fd8bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "An interval that checks every iteration if it should stop itself felt more like a timeout that should see if it should continue :) \n\nbut I\u0027m not terribly opposed to setInterval if you think it makes more sense",
+      "parentUuid": "1bbcfa7c_4e71b839",
       "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +217,48 @@
     },
     {
       "key": {
+        "uuid": "ce3a0a61_e12e42f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be50fd31_eeb8fd05",
+      "range": {
+        "startLine": 561,
+        "startChar": 30,
+        "endLine": 561,
+        "endChar": 32
+      },
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "323e2d64_9d01433c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429841dc_c1ba0528",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959b0cef_efd5002e",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -138,6 +270,24 @@
       "writtenOn": "2018-01-02T19:44:54Z",
       "side": 1,
       "message": "Do we need this?",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eadf566_dd916393",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Not really, it was just brought over from earlier. I can nuke if you prefer?",
+      "parentUuid": "959b0cef_efd5002e",
       "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "4c282f78_ff4ee79f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d764e905_cfc7daf1",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b4dc98e_3d21f916",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a0f825_ea0096a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2018-01-03T01:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4dc98e_3d21f916",
+      "revId": "b292a5eb07e369ab38db8ed92703e578ceff3273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
