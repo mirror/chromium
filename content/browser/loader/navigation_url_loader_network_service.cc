@@ -13,6 +13,7 @@
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_request_handler.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
+#include "content/browser/download/download_stats.h"
 #include "content/browser/file_url_loader_factory.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/navigation_request_info.h"
@@ -122,16 +123,24 @@ const net::NetworkTrafficAnnotationTag kNavigationUrlLoaderTrafficAnnotation =
 // See MimeSniffingResourceHandler.
 bool IsDownload(const ResourceResponse& response,
                 const GURL& url,
+                const std::vector<GURL>& url_chain,
+                const base::Optional<url::Origin>& request_initiator,
                 const base::Optional<std::string>& suggested_filename) {
   if (response.head.headers) {
+    bool is_cross_origin =
+        (request_initiator.has_value() && !url_chain.back().SchemeIsBlob() &&
+         !url_chain.back().SchemeIs(url::kAboutScheme) &&
+         !url_chain.back().SchemeIs(url::kDataScheme) &&
+         request_initiator->GetURL() != url_chain.back().GetOrigin());
+
     std::string disposition;
-    if (suggested_filename.has_value()) {
+    if (response.head.headers->GetNormalizedHeader("content-disposition",
+                                                   &disposition) &&
+        !disposition.empty() &&
+        net::HttpContentDisposition(disposition, std::string())
+            .is_attachment()) {
       return true;
-    } else if (response.head.headers->GetNormalizedHeader("content-disposition",
-                                                          &disposition) &&
-               !disposition.empty() &&
-               net::HttpContentDisposition(disposition, std::string())
-                   .is_attachment()) {
+    } else if (suggested_filename.has_value() && !is_cross_origin) {
       return true;
     } else if (GetContentClient()->browser()->ShouldForceDownloadResource(
                    url, response.head.mime_type)) {
@@ -150,6 +159,9 @@ bool IsDownload(const ResourceResponse& response,
     return false;
 
   // TODO(qinmin): Check whether there is a plugin handler.
+
+  if (suggested_filename.has_value())
+    RecordDownloadCount(CROSS_ORIGIN_DOWNLOAD_WITHOUT_CONTENT_DISPOSITION);
 
   return (!response.head.headers ||
           response.head.headers->response_code() / 100 == 2);
@@ -341,6 +353,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       // |handler| wants to handle the request.
       DCHECK(handler);
       default_loader_used_ = false;
+      url_chain_.push_back(resource_request_->url);
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
@@ -471,6 +484,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   base::Optional<SubresourceLoaderParams> TakeSubresourceLoaderParams() {
     return std::move(subresource_loader_params_);
   }
+
+  const std::vector<GURL>& url_chain() const { return url_chain_; }
 
  private:
   // mojom::URLLoaderClient implementation:
@@ -671,6 +686,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
     : delegate_(delegate),
       allow_download_(request_info->common_params.allow_download),
       suggested_filename_(request_info->begin_params->suggested_filename),
+      request_initiator_(request_info->begin_params->initiator_origin),
       url_(request_info->common_params.url),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -838,7 +854,9 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
   // coming from the MimeSniffingResourceHandler must be used.
   DCHECK(response);
   bool is_download =
-      allow_download_ && IsDownload(*response.get(), url_, suggested_filename_);
+      allow_download_ &&
+      IsDownload(*response.get(), url_, request_controller_->url_chain(),
+                 request_initiator_, suggested_filename_);
 
   delegate_->OnResponseStarted(
       std::move(response), std::move(url_loader_client_endpoints), nullptr,
