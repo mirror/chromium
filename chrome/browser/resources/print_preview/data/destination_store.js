@@ -1008,9 +1008,17 @@ cr.define('print_preview', function() {
       if (this.selectedDestination_ &&
           (existingDestination == this.selectedDestination_ ||
            destination == this.selectedDestination_)) {
-        cr.dispatchSimpleEvent(
-            this,
-            DestinationStore.EventType.SELECTED_DESTINATION_CAPABILITIES_READY);
+        if (!loadTimeData.getBoolean('isEnterpriseManaged') &&
+            this.selectedDestination_.certificateStatus ==
+                print_preview.DestinationCertificateStatus.NO) {
+          cr.dispatchSimpleEvent(
+              this, DestinationStore.EventType.SELECTED_DESTINATION_INVALID);
+        } else {
+          cr.dispatchSimpleEvent(
+              this,
+              DestinationStore.EventType
+                  .SELECTED_DESTINATION_CAPABILITIES_READY);
+        }
       }
     }
 

@@ -145,7 +145,8 @@ cr.define('print_preview', function() {
         offlineStatusEl.textContent = offlineStatusText;
         offlineStatusEl.title = offlineStatusText;
 
-        const isOffline = destination.isOffline;
+        const isOffline =
+            destination.isOffline || destination.hasInvalidCertificate;
         destinationSettingsBoxEl.classList.toggle(
             print_preview.DestinationSettingsClasses_.STALE, isOffline);
         setIsVisible(locationEl, !isOffline);
