@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c9c787_20c70aa2",
+        "filename": "content/public/common/resource_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2018-01-03T19:07:45Z",
+      "side": 1,
+      "message": "shouldn\u0027t know, or shouldn\u0027t have known\n\n(here and below)",
+      "revId": "d8908476fb3e686d302c5ee55f7d1c5c375165b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
