@@ -5,6 +5,7 @@
 source_set("public") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "abstract_legacy_toolbar.h",
     "abstract_primary_toolbar.h",
     "abstract_toolbar.h",
     "abstract_web_toolbar.h",
@@ -21,6 +22,7 @@ source_set("public") {
     ":toolbar_base_feature",
     "//base",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui/bubble",
   ]
 }
 
