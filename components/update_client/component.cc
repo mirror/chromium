@@ -502,7 +502,8 @@ void Component::StateDownloadingDiff::DownloadComplete(
   auto& component = Component::State::component();
 
   for (const auto& metrics : crx_downloader_->download_metrics())
-    component.AppendEvent(BuildDownloadCompleteEventElement(metrics));
+    component.AppendEvent(
+        BuildDownloadCompleteEventElement(component, metrics));
 
   crx_downloader_.reset();
 
@@ -569,7 +570,8 @@ void Component::StateDownloading::DownloadComplete(
   auto& component = Component::State::component();
 
   for (const auto& metrics : crx_downloader_->download_metrics())
-    component.AppendEvent(BuildDownloadCompleteEventElement(metrics));
+    component.AppendEvent(
+        BuildDownloadCompleteEventElement(component, metrics));
 
   crx_downloader_.reset();
 
