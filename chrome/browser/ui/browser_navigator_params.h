@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/global_request_id.h"
@@ -247,6 +248,11 @@ struct NavigateParams {
 
   // If non-default, provides a hint to GetIndexOfSingleton() where to start.
   int tab_switch_hint = -1;
+
+  // If this event was triggered by an anchor element with a download
+  // attribute, |suggested_filename| will contain the (possibly empty) value of
+  // that attribute.
+  base::Optional<std::string> suggested_filename;
 
  private:
   NavigateParams();
