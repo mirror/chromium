@@ -106,6 +106,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3094bdfb_3c6da674",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T14:46:29Z",
+      "side": 1,
+      "message": "To expand: LoadBasicRequest, when the network service is disabled, does the network load in the browser process. This means that ChromeNetworkDelegate, which this change modifies, gets run.\n\nHappy to chat over VC to avoid more latency for you.",
+      "parentUuid": "6e4b28a5_79e55e3a",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
