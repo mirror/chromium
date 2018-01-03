@@ -1,0 +1,10 @@
+Tests fetching POST request body.
+Data included: true, has post data: true
+Data length: 1024
+Data included: true, has post data: true
+Data length: 128
+Data included: true, has post data: false
+No POST data was read
+Data included: true, has post data: false
+No POST data was read
+
