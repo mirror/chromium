@@ -24,13 +24,15 @@ class USER_MANAGER_EXPORT FakeUserManager : public UserManagerBase {
 
   // Create and add a new user. Created user is not affiliated with the domain,
   // that owns the device.
-  virtual const user_manager::User* AddUser(const AccountId& account_id);
+  const user_manager::User* AddUser(const AccountId& account_id);
 
   // The same as AddUser() but allows to specify user affiliation with the
   // domain, that owns the device.
-  virtual const user_manager::User* AddUserWithAffiliation(
-      const AccountId& account_id,
-      bool is_affiliated);
+  const user_manager::User* AddUserWithAffiliation(const AccountId& account_id,
+                                                   bool is_affiliated);
+
+  // Add a guest user. The account_id will be GetGuestAccountId().
+  const user_manager::User* AddGuestUser();
 
   // UserManager overrides.
   const user_manager::UserList& GetUsers() const override;
