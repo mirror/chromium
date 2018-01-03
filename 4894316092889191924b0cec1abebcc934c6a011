@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af51728_df2f859d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FilmStripView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "let\u0027s drop the x-div altogether!",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 14
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabc1b2d_daebd0f3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "setOnShown(callback) {\n}",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e05a9d_4bafbbac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "setOnHidden(callback) {\n}",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a296a70_77e8c87d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "setOnResized(callback) {\n}",
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5810d643_1973d4ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "drop this",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11346d00_3f098fbc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "remove makeFocusable (it conflicts with setDefaultFocusedElement)",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f42ce3_15fdaaf6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "assert this is ancestor of element",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f233ca13_7923a37b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-03T01:05:45Z",
+      "side": 1,
+      "message": "check that it\u0027s connected to us",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
