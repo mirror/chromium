@@ -240,6 +240,24 @@
       "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668ac8f9_2dc8abe1",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T23:34:14Z",
+      "side": 1,
+      "message": "Yes, but I think you still have the PrinterDetector::DetectedPrinter structure (which holds the Printer) at the point where you make that decision and rewrite the URL.  My suggestion is that these fields belong there instead of here.\n\nThis Printer structure is part of what is serialized and synced across user devices, so if they live here, we have to add more support code to get them synced as well; I don\u0027t think we want to do that.",
+      "parentUuid": "a8a09b62_34b73df9",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
