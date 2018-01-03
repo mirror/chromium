@@ -19,6 +19,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
@@ -33,6 +35,7 @@ class SessionStorageDatabaseTest : public testing::Test {
   SessionStorageDatabaseTest();
   ~SessionStorageDatabaseTest() override;
   void SetUp() override;
+  void TearDown() override;
 
  protected:
   typedef std::map<std::string, std::string> DataMap;
@@ -63,6 +66,7 @@ class SessionStorageDatabaseTest : public testing::Test {
                             const GURL& origin) const;
   int64_t GetMapRefCount(const std::string& map_id) const;
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir temp_dir_;
   scoped_refptr<SessionStorageDatabase> db_;
 
@@ -105,8 +109,13 @@ void SessionStorageDatabaseTest::SetUp() {
   ResetDatabase();
 }
 
+void SessionStorageDatabaseTest::TearDown() {
+  scoped_task_environment_.RunUntilIdle();
+}
+
 void SessionStorageDatabaseTest::ResetDatabase() {
-  db_ = new SessionStorageDatabase(temp_dir_.GetPath());
+  db_ = new SessionStorageDatabase(temp_dir_.GetPath(),
+                                   base::ThreadTaskRunnerHandle::Get());
   ASSERT_TRUE(db_->LazyOpen(true));
 }
 
