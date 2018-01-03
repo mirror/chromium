@@ -73,6 +73,18 @@ class ZeroSuggestProvider : public BaseSearchProvider,
 
   ~ZeroSuggestProvider() override;
 
+  // The type of service that is used by the provider.
+  enum ZeroSuggestService {
+    NONE,
+    DEFAULT_SERP_WITH_URL,     // The current URL is sent to the default search
+                               // provider for contextual suggestions.
+    DEFAULT_SERP_WITHOUT_URL,  // The default search provider is queried for
+                               // zero-suggest suggestions without using the
+                               // current URL.
+    MOST_VISITED,
+    PERSONALIZED_SUGGESTIONS
+  };
+
   // BaseSearchProvider:
   const TemplateURL* GetTemplateURL(bool is_keyword) const override;
   const AutocompleteInput GetInput(bool is_keyword) const override;
@@ -83,11 +95,10 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // net::URLFetcherDelegate:
   void OnURLFetchComplete(const net::URLFetcher* source) override;
 
-  // Optionally, cache the received |json_data| and return true if we want
-  // to stop processing results at this point. The |parsed_data| is the parsed
-  // version of |json_data| used to determine if we received an empty result.
-  bool StoreSuggestionResponse(const std::string& json_data,
-                               const base::Value& parsed_data);
+  // Checks if |results_| should be updated and, if necessary, it parses
+  // |json_data| and updates |results_|. The function returns |true| only when
+  // |results_| is updated.
+  bool UpdateResults(const std::string& json_data);
 
   // Adds AutocompleteMatches for each of the suggestions in |results| to
   // |map|.
@@ -121,19 +132,23 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   void OnContextualSuggestionsFetcherAvailable(
       std::unique_ptr<net::URLFetcher> fetcher);
 
-  // Whether we can show zero suggest suggestions that are not based on
-  // |current_page_url|. Also checks that other conditions for non-contextual
-  // zero suggest are satisfied.
-  bool ShouldShowNonContextualZeroSuggest(const GURL& current_page_url) const;
+  // Whether zero suggest suggestions are allowed in the given context.
+  bool AllowZeroSuggestSuggestions(const GURL& current_page_url) const;
 
-  // Checks whether we have a set of zero suggest results cached, and if so
-  // populates |matches_| with cached results.
   void MaybeUseCachedSuggestions();
+
+  // Returns the service that should be used to generate the results that this
+  // provider should return in the current context.
+  ZeroSuggestService ServiceToRun(const GURL& current_url,
+                                  const GURL& suggest_url);
 
   // Used for efficiency when creating the verbatim match.  Can be null.
   HistoryURLProvider* history_url_provider_;
 
   AutocompleteProviderListener* listener_;
+
+  // The service that is currently used to generate zero suggest suggestions.
+  ZeroSuggestService service_running_;
 
   // The URL for which a suggestion fetch is pending.
   std::string current_query_;
@@ -157,9 +172,6 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // Contains suggest and navigation results as well as relevance parsed from
   // the response for the most recent zero suggest input URL.
   SearchSuggestionParser::Results results_;
-
-  // Whether we are currently showing cached zero suggest results.
-  bool results_from_cache_;
 
   history::MostVisitedURLList most_visited_urls_;
 
