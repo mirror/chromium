@@ -723,7 +723,20 @@ void RemoteSuggestionsProviderImpl::ClearHistory(
   // Both time range and the filter are ignored and all suggestions are removed,
   // because it is not known which history entries were used for the suggestions
   // personalization.
-  ClearHistoryDependentState();
+
+  if (status_service_ && !status_service_->IsSignedIn()) {
+    // Only clear the local state if the user is signed-out. There is no need to
+    // delay the next fetch as the suggestions are not based on the browsing
+    // history.
+    //
+    // As history can get cleared during the sign-in flow (while the user is
+    // still signed out), this makes sure we are allowed to fetch suggestions
+    // after the sign in finishes.
+    ClearCachedSuggestions();
+  } else {
+    // Clear the local state and delay an automatic refetch for a while.
+    ClearHistoryDependentState();
+  }
 }
 
 void RemoteSuggestionsProviderImpl::OnSignInStateChanged() {

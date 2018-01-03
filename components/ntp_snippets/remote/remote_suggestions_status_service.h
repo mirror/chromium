@@ -33,6 +33,9 @@ class RemoteSuggestionsStatusService {
   // called when a significant change in state is detected.
   virtual void Init(const StatusChangeCallback& callback) = 0;
 
+  // Returns whether the user is currently signed in into Chrome.
+  virtual bool IsSignedIn() const = 0;
+
   // To be called when the signin state changed. Will compute the new
   // state considering the initialisation configuration and the preferences,
   // and notify via the registered callback if appropriate.
