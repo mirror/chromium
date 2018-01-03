@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f572c7_b81bed2c",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "nit: the previous class (line 19) was probably named ambiguously, especially with new additions. we should probably rename that one SSLErrorDelegate, and this one SSLClientAuthDelegate",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf190cb_290b92da",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "just checking, this still needs to be plumbed right?",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ff1f29_77813c53",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc23ec7_ffa0e87e",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "nit: this and url are unused, remove from method",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c46ae93_c95ae7ae",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "how about making ssl_private_key an out parameter of the mojo method, that way you don\u0027t need to store it here and use it later. instead, OnCertificateRequestedResponse can take it as an argument and then pass it directly.",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e89fa5_38bb0c6b",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T15:15:10Z",
+      "side": 1,
+      "message": "this block duplicates the first block in the file. so you can remove the other one, and change line 170 and 171 to now read as WriteParam instead of WriteCert",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
