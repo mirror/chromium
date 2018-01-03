@@ -20,6 +20,7 @@
 #include "ash/shell.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/system/tray/system_tray.h"
 #include "base/command_line.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -368,11 +369,13 @@ void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
   if (!IsUsingViewsShelf()) {
     login_shelf_view_->SetVisible(false);
     shelf_view_->SetVisible(false);
+    SetSystemTrayVisibility(false);
   } else {
     switch (state) {
       case session_manager::SessionState::ACTIVE:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(true);
+        SetSystemTrayVisibility(true);
         // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
         // in PostCreateShelf() when view-based shelf on login screen is
         // supported.
@@ -381,20 +384,44 @@ void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
       case session_manager::SessionState::LOGIN_SECONDARY:
         shelf_view_->SetVisible(false);
         login_shelf_view_->SetVisible(true);
+        SetSystemTrayVisibility(true);
         break;
       case session_manager::SessionState::OOBE:
+        login_shelf_view_->SetVisible(true);
+        shelf_view_->SetVisible(false);
+        // TODO(agawronska): Additional logic might be needed for different
+        // steps of OOBE.
+        SetSystemTrayVisibility(true);
+        break;
       case session_manager::SessionState::LOGIN_PRIMARY:
       case session_manager::SessionState::LOGGED_IN_NOT_ACTIVE:
         login_shelf_view_->SetVisible(true);
         shelf_view_->SetVisible(false);
+        SetSystemTrayVisibility(true);
         break;
       case session_manager::SessionState::UNKNOWN:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(false);
+        SetSystemTrayVisibility(false);
         break;
     }
   }
   login_shelf_view_->UpdateAfterSessionStateChange(state);
+}
+
+void ShelfWidget::SetSystemTrayVisibility(bool visible) {
+  if (!status_area_widget_)
+    return;
+
+  auto* tray = status_area_widget_->system_tray();
+  tray->SetVisible(visible);
+  tray->GetWidget()->SetOpacity(visible ? 1.f : 0.f);
+  if (visible) {
+    tray->GetWidget()->Show();
+  } else {
+    tray->CloseBubble();
+    tray->GetWidget()->Hide();
+  }
 }
 
 }  // namespace ash
