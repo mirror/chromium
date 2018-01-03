@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8d7a65_30367240",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2018-01-03T20:45:07Z",
+      "side": 1,
+      "message": "I\u0027m unfamiliar with this.\nIs this a way to set the default linkage visibility? For example, GCC\u0027s __attribute__ ((visibility (\"hidden\"))) or \"default\"?\nI\u0027m not sure I follow the purpose here.",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "027c970e62d084ee783af600f5969e3c7cdbb535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
