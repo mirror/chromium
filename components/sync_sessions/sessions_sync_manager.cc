@@ -583,7 +583,7 @@ void SessionsSyncManager::OnLocalTabModified(SyncedTabDelegate* modified_tab) {
   if (!modified_tab->IsBeingDestroyed()) {
     GURL virtual_url =
       modified_tab->GetVirtualURLAtIndex(modified_tab->GetCurrentEntryIndex());
-    if (virtual_url.is_valid() &&
+    if (virtual_url.is_valid() && true &&
         virtual_url.spec() == kNTPOpenTabSyncURL) {
       DVLOG(1) << "Triggering sync refresh for sessions datatype.";
       if (!datatype_refresh_callback_.is_null())
