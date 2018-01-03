@@ -14,8 +14,11 @@
 @optional
 // Returns either the top-middle or bottom-middle of the tab switcher button
 // based on |direction|. Point is in window-coordinates.
+// TODO(crbug.com/788705): This method can probably becomes required if it is
+// the only one. It would allow to remove the DCHECK.
 - (CGPoint)anchorPointForTabSwitcherButton:(BubbleArrowDirection)direction;
 
+// TODO(crbug.com/788705): Removes this methods during old toolbar cleanup.
 // Returns either the top-middle or bottom-middle of the tools menu button
 // based on |direction|. Point is in window-coordinates.
 - (CGPoint)anchorPointForToolsMenuButton:(BubbleArrowDirection)direction;

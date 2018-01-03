@@ -14,6 +14,8 @@
 GuideName* const kOmniboxGuide = @"kOmniboxGuide";
 GuideName* const kBackButtonGuide = @"kBackButtonGuide";
 GuideName* const kForwardButtonGuide = @"kForwardButtonGuide";
+GuideName* const kTabSwitcherGuide = @"kTabSwitcherGuide";
+GuideName* const kToolsMenuGuide = @"kToolsMenuGuide";
 
 UILayoutGuide* FindNamedGuide(GuideName* name, UIView* view) {
   while (view) {

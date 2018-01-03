@@ -19,6 +19,11 @@ extern GuideName* const kOmniboxGuide;
 extern GuideName* const kBackButtonGuide;
 // A guide that is constrained to match the frame of the forward button's image.
 extern GuideName* const kForwardButtonGuide;
+// A guide that is constrained to match the frame of the TabSwitcher button's
+// image.
+extern GuideName* const kTabSwitcherGuide;
+// A guide that is constrained to match the frame of the ToolsMenu button.
+extern GuideName* const kToolsMenuGuide;
 
 //
 //////////////////////////////////////////
