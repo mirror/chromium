@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e8a53975_03913884",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-03T06:24:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "57dab775_59b1f2e5",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "d49821c7a8c3107a0f2bd788f805fc52a2ac8c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86c95a90_584b0d3b",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-02T19:50:47Z",
       "side": 1,
       "message": "I don\u0027t quite parse this comment. Can you remind me where |picture_buffer_id| comes from for the protected output buffer path?\n\nPerhaps it\u0027d be useful to have a struct-level comment that documents the overall control flow for the non-protected and the protected path.\n\ni.e.\n\nFor protected playback, clients must first call Initialize(). Once that succeeds, clients should do \u003cx\u003e, \u003cy\u003e, and \u003cz\u003e. During decoding, a picture buffer is allocated by \u003csomething\u003e. The video decoder writes the decoded output into \u003csomething else\u003e and notifies the client to consume it with \u003cyet another thing\u003e.\n\nSomething like that?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "d49821c7a8c3107a0f2bd788f805fc52a2ac8c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f931dfd_0052c52b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-03T06:24:36Z",
+      "side": 1,
+      "message": "The |picture_buffer_id| is an ID chosen by the client to identify an output buffer. I have updated the comment here and try to explain it better, as well as added struct-level comment to documents the overall control flow.",
+      "parentUuid": "86c95a90_584b0d3b",
       "range": {
         "startLine": 110,
         "startChar": 0,
