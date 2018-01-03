@@ -34,6 +34,24 @@
       "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62932310_247b1bd5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-replaceTrack.https.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-03T15:10:20Z",
+      "side": 1,
+      "message": "I *think* the weirdness of Javascript specs means that \"in parallel\" means \"in sequence, or equivalent\" - things that happen \"in parallel\" don\u0027t have visible effect until the end of execution of the current Javascript context (and the only thing it\u0027s in paralllel *with* is returning the promise - there\u0027s no race in what\u0027s done in this test, since removeTrack() is sync.\n\nSo after removeTrack, direction (not currentDirection!) is recvonly or inactive, and the negotiationNeeded flag is set.\n\nI think we need an extra sentence in replaceTrack to make the procedure make sense in this case (direction !\u003d currentDirection): \"If direction is recvonly or inactive, reject the promise with \u003cappropriate\u003e\" - I\u0027m pretty sure we didn\u0027t intend to end up after the next negotiation with a sending sender and a currentDirection of inactive; that would just be wrong.",
+      "parentUuid": "4a802be2_0a8863d5",
+      "revId": "402efe61499b481b5117c81bfc9768ff603abd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
