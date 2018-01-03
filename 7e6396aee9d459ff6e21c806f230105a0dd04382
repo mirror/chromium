@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670eb824_99ea1020",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "I\u0027m sure there have been debates about this, but I don\u0027t see a need for \u0027strong\u0027 on a private readonly property.",
+      "range": {
+        "startLine": 683,
+        "startChar": 21,
+        "endLine": 683,
+        "endChar": 27
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f248dc5a_27438818",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "Optional:\n\nRename the ivar from _toolbarCoordinator to _primaryToolbarCoordinator. Synthesize this getter. Globally replace direct use of _toolbarCoordinator with self.primaryToolbarCoordinator.",
+      "range": {
+        "startLine": 1296,
+        "startChar": 9,
+        "endLine": 1296,
+        "endChar": 28
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cdf2cf_99c4793a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "Even if you don\u0027t make the changes above, this should probably just return self.primaryToolbarCoordinator.",
+      "range": {
+        "startLine": 1300,
+        "startChar": 9,
+        "endLine": 1300,
+        "endChar": 28
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31813df_b42e6678",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2292,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "Can you use a local variable to make this condition easier to read?",
+      "range": {
+        "startLine": 2292,
+        "startChar": 8,
+        "endLine": 2292,
+        "endChar": 14
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d16cdd_1294c784",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "By definition all protocols are abstract, and the usual reading of a typical class declaration like \u0027@interface Foo : Base\u003cBazDelegate\u003e\u0027 is \"Foo is a BazDelegate Base\". So I\u0027d prefer this is just \"PrimaryToolbar\" unless that would collide horribly with some other planned name.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75da6fb6_c12406b0",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "Why aren\u0027t these properties?\n\n(and if they aren\u0027t, they should be grouped with the other methods).",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7382f5b_335d193f",
+        "filename": "ios/chrome/browser/ui/toolbar/public/abstract_primary_toolbar.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 1,
+      "message": "readwrite property here as well?",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "7e6396aee9d459ff6e21c806f230105a0dd04382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0421ebe2_684a4f12",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T14:38:56Z",
+      "side": 0,
+      "message": "Have you verified that it\u0027s safe to no longer subtract zero from this value?\n\n(Thanks for catching this).",
+      "range": {
+        "startLine": 2095,
+        "startChar": 10,
+        "endLine": 2095,
+        "endChar": 13
+      },
+      "revId": "f3969c1b50a0c7336fb9e1faa38025f8282c733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
