@@ -17,6 +17,7 @@
 #include "chrome/browser/prerender/prerender_handle.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
+#include "chrome/common/prerender.mojom.h"
 #include "chrome/common/prerender_messages.h"
 #include "chrome/common/prerender_types.h"
 #include "content/public/browser/render_process_host.h"
@@ -24,6 +25,7 @@
 #include "content/public/browser/session_storage_namespace.h"
 #include "content/public/common/referrer.h"
 #include "extensions/features/features.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "ui/gfx/geometry/size.h"
 #include "url/gurl.h"
 
@@ -471,8 +473,16 @@ void PrerenderLinkManager::OnPrerenderStart(
   LinkPrerender* prerender = FindByPrerenderHandle(prerender_handle);
   if (!prerender)
     return;
-  Send(prerender->launcher_child_id,
-       new PrerenderMsg_OnPrerenderStart(prerender->prerender_id));
+
+  IPC::ChannelProxy* channel =
+      content::RenderProcessHost::FromID(prerender->launcher_child_id)
+          ->GetChannel();
+  // channel might be NULL in tests.
+  if (channel) {
+    chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+    channel->GetRemoteAssociatedInterface(&client);
+    client->PrerenderStart(prerender->prerender_id);
+  }
 }
 
 void PrerenderLinkManager::OnPrerenderStopLoading(

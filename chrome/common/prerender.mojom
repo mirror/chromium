@@ -10,3 +10,11 @@ interface PrerenderCanceler {
   // only when the renderer is prerendering.
   CancelPrerenderForPrinting();
 };
+
+// PrerenderDispatcher Messages
+// These are messages sent from the browser to the renderer in relation to
+// running prerenders.
+interface PrerenderDispatcher {
+  // Signals to launcher that a prerender is running.	
+  PrerenderStart(int32 prerender_id);
+};
