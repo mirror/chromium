@@ -38,6 +38,8 @@ gfx::PointF EventLocationInWindow(ui::TouchEvent* event, aura::Window* window) {
   return point.AsPointF();
 }
 
+gfx::Point g_last_touch_pressed_location_in_root;
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +73,7 @@ void Touch::OnTouchEvent(ui::TouchEvent* event) {
   const int touch_pointer_id = event->pointer_details().id;
   switch (event->type()) {
     case ui::ET_TOUCH_PRESSED: {
+      g_last_touch_pressed_location_in_root = event->root_location();
       // Early out if event doesn't contain a valid target for touch device.
       Surface* target = GetEffectiveTargetForEvent(event);
       if (!target)
@@ -197,6 +200,11 @@ Surface* Touch::GetEffectiveTargetForEvent(ui::Event* event) const {
     return nullptr;
 
   return delegate_->CanAcceptTouchEventsForSurface(target) ? target : nullptr;
+}
+
+// static
+gfx::Point Touch::GetLastTouchPressedLocationInRoot() {
+  return g_last_touch_pressed_location_in_root;
 }
 
 }  // namespace exo
