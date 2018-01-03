@@ -37,6 +37,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <utility>
 
 #include "base/at_exit.h"
@@ -50,7 +51,6 @@
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -391,7 +391,7 @@ void RunSimulation(const base::FilePath& source_path,
   // Cast receiver.
   std::unique_ptr<CastTransport> transport_receiver(new CastTransportImpl(
       &testing_clock, base::TimeDelta::FromSeconds(1),
-      base::MakeUnique<TransportClient>(receiver_env->logger(), &packet_proxy),
+      std::make_unique<TransportClient>(receiver_env->logger(), &packet_proxy),
       base::WrapUnique(receiver_to_sender), task_runner));
   std::unique_ptr<CastReceiver> cast_receiver(
       CastReceiver::Create(receiver_env, audio_receiver_config,
@@ -402,7 +402,7 @@ void RunSimulation(const base::FilePath& source_path,
   // Cast sender and transport sender.
   std::unique_ptr<CastTransport> transport_sender(new CastTransportImpl(
       &testing_clock, base::TimeDelta::FromSeconds(1),
-      base::MakeUnique<TransportClient>(sender_env->logger(), nullptr),
+      std::make_unique<TransportClient>(sender_env->logger(), nullptr),
       base::WrapUnique(sender_to_receiver), task_runner));
   std::unique_ptr<CastSender> cast_sender(
       CastSender::Create(sender_env, transport_sender.get()));
