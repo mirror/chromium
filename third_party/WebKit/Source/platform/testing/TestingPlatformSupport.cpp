@@ -228,7 +228,6 @@ ScopedUnittestsEnvironmentSetup::ScopedUnittestsEnvironmentSetup(int argc,
       WTF::WrapUnique(new base::TestDiscardableMemoryAllocator);
   base::DiscardableMemoryAllocator::SetInstance(
       discardable_memory_allocator_.get());
-  base::StatisticsRecorder::Initialize();
 
   dummy_platform_ = WTF::WrapUnique(new DummyPlatform);
   Platform::SetCurrentPlatformForTesting(dummy_platform_.get());
