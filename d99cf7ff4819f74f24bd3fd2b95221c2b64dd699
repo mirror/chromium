@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "184d6694_d7c2f747",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed2e81a_0fefcb6f",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "nit: invert and early exit",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936223c1_5dec09cb",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "nit: GetUpdateLocationFilePath",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f691e5_882fb29c",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "nit: s/error/timed_out/ would make this a bit more clear I think.",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179ad0b1_4118a6cb",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "// Cancels timeout",
+      "range": {
+        "startLine": 148,
+        "startChar": 43,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb124d3_dc8c7ccd",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "This is subtle. Can we just pass |callback| to the AvailabilityChecker constructor and make it self deleting (i.e. use \u0027new\u0027 instead of make_unique)? I think that would actually be more clear.",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3a407d_449a831e",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:09:46Z",
+      "side": 1,
+      "message": "base::TimeDelta() ?",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
