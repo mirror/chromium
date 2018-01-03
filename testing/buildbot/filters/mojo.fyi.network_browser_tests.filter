@@ -17,7 +17,6 @@
 -BrowsingDataRemoverBrowserTest.Cache
 -BrowsingDataRemoverBrowserTest.CookieDeletion
 -BrowsingDataRemoverTransportSecurityStateBrowserTest.ClearTransportSecurityState
--CaptivePortalBrowserTest.RequestFailsFastTimout
 -CertVerifierBrowserTest.MockCertVerifierSmokeTest
 -ChromeSecurityExploitBrowserTest.CreateFilesystemURLInExtensionOrigin
 -ChromeSitePerProcessTest.LaunchExternalProtocolFromSubframe
@@ -293,29 +292,6 @@
 -BrowserCloseManagerWithDownloadsBrowserTest/BrowserCloseManagerWithDownloadsBrowserTest.TestWithOffTheRecordDownloads/1
 -BrowserCloseManagerWithDownloadsBrowserTest/BrowserCloseManagerWithDownloadsBrowserTest.TestWithOffTheRecordWindowAndRegularDownload/0
 -BrowserCloseManagerWithDownloadsBrowserTest/BrowserCloseManagerWithDownloadsBrowserTest.TestWithOffTheRecordWindowAndRegularDownload/1
--CaptivePortalBrowserTest.AbortLoad
--CaptivePortalBrowserTest.CloseLoginTab
--CaptivePortalBrowserTest.Disabled
--CaptivePortalBrowserTest.GoBack
--CaptivePortalBrowserTest.GoBackToTimeout
--CaptivePortalBrowserTest.HstsLogin
--CaptivePortalBrowserTest.HttpToHttpsRedirectLogin
--CaptivePortalBrowserTest.InternetConnected
--CaptivePortalBrowserTest.InterstitialTimerCertErrorAfterSlowLoad
--CaptivePortalBrowserTest.Login
--CaptivePortalBrowserTest.LoginExtraNavigations
--CaptivePortalBrowserTest.LoginFastTimeout
--CaptivePortalBrowserTest.LoginIncognito
--CaptivePortalBrowserTest.LoginSlow
--CaptivePortalBrowserTest.NavigateBrokenTab
--CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutSingleSite
--CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutThreeSites
--CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutTwoSites
--CaptivePortalBrowserTest.RedirectSSLCertError
--CaptivePortalBrowserTest.ReloadTimeout
--CaptivePortalBrowserTest.RequestFails
--CaptivePortalBrowserTest.Status511
--CaptivePortalBrowserTest.TwoBrokenTabs
 -ClientHintsBrowserTest.ClientHintsLifetimeNotAttachedCookiesBlocked
 -CommonNameMismatchBrowserTest.CheckWWWSubdomainMismatchInverse/0
 -CommonNameMismatchBrowserTest.CheckWWWSubdomainMismatchInverse/1
@@ -703,20 +679,10 @@
 -PrerenderBrowserTest.FirstContentfulPaintTimingNoCommit
 -PrerenderBrowserTest.FirstContentfulPaintTimingReuse
 -PrerenderBrowserTest.PrerenderBeforeUnload
--PrerenderBrowserTest.PrerenderCancelSubresourceRedirectUnsupportedScheme
--PrerenderBrowserTest.PrerenderCancelSubresourceUnsupportedScheme
--PrerenderBrowserTest.PrerenderDeferredImage
--PrerenderBrowserTest.PrerenderDeferredImageAfterRedirect
--PrerenderBrowserTest.PrerenderDeferredSynchronousXHR
--PrerenderBrowserTest.PrerenderLocationReplaceGWSHistograms
 -PrerenderBrowserTest.PrerenderNoCommitNoSwap
 -PrerenderBrowserTest.PrerenderNoCommitNoSwap2
 -PrerenderBrowserTest.PrerenderPing
 -PrerenderBrowserTest.PrerenderUnload
--PrerenderBrowserTest.PrerenderXhrDelete
--PrerenderBrowserTest.PrerenderXhrPut
--PrerenderBrowserTest.ResourcePriority
--PrerenderBrowserTest.ResourcePriorityOverlappingSwap
 -PrerenderBrowserTestWithExtensions.WebNavigation
 
 # Finish ServiceWorker networking glue rewrite.
@@ -809,18 +775,43 @@
 # Failing NoStatePrefetch tests
 # https://crbug.com/792776
 #
-# Depends on the prerender's ResourceThrottle which updates the histogram the
-# test monitors (PrerenderResourceThrottle).
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchHistograms/0
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchHistograms/1
-# TODO(jam): switch the tests to hook in via URLLoaderFactory to check load flags.
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.IssuesIdlePriorityRequests/0
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.IssuesIdlePriorityRequests/1
 # Crashing.
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookie/1
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookie/0
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookieCrossDomain/0
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookieCrossDomain/1
+
+# Depends on captive portal component making requests through URLLoader instead of
+# URLLoaderFetcher, which is blocked on moving content/network to services/network
+# so that it can be used on ios. https://crbug.com/753658
+-CaptivePortalBrowserTest.AbortLoad
+-CaptivePortalBrowserTest.CloseLoginTab
+-CaptivePortalBrowserTest.Disabled
+-CaptivePortalBrowserTest.GoBack
+-CaptivePortalBrowserTest.GoBackToTimeout
+-CaptivePortalBrowserTest.HstsLogin
+-CaptivePortalBrowserTest.HttpToHttpsRedirectLogin
+-CaptivePortalBrowserTest.InternetConnected
+-CaptivePortalBrowserTest.InterstitialTimerCertErrorAfterSlowLoad
+-CaptivePortalBrowserTest.Login
+-CaptivePortalBrowserTest.LoginExtraNavigations
+-CaptivePortalBrowserTest.LoginFastTimeout
+-CaptivePortalBrowserTest.LoginIncognito
+-CaptivePortalBrowserTest.LoginSlow
+-CaptivePortalBrowserTest.NavigateBrokenTab
+-CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutSingleSite
+-CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutThreeSites
+-CaptivePortalBrowserTest.NavigateLoadingTabToTimeoutTwoSites
+-CaptivePortalBrowserTest.RedirectSSLCertError
+-CaptivePortalBrowserTest.ReloadTimeout
+-CaptivePortalBrowserTest.RequestFails
+-CaptivePortalBrowserTest.Status511
+-CaptivePortalBrowserTest.TwoBrokenTabs
+-CaptivePortalBrowserTest.RequestFailsFastTimout
+-CaptivePortalBrowserTest.SSLCertErrorLogin
+-CaptivePortalBrowserTest.ShowCaptivePortalInterstitialOnCertError
+-CaptivePortalBrowserTest.InterstitialTimerNavigateAwayWhileLoading
+-CaptivePortalBrowserTest.InterstitialTimerNavigateWhileLoading_EndWithCaptivePortalInterstitial
 
 # Add support of download_to_file for URLLoader.
 # http://crbug.com/791702
@@ -856,18 +847,6 @@
 
 # Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F69105%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FPopupsOnlyUiDelegateTest.ManyPopupNotifications%2F0
 -PopupsOnlyUiDelegateTest.ManyPopupNotifications
-
-# Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F69117%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FCaptivePortalBrowserTest.SSLCertErrorLogin%2F0
--CaptivePortalBrowserTest.SSLCertErrorLogin
-
-# Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F69108%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FCaptivePortalBrowserTest.ShowCaptivePortalInterstitialOnCertError%2F0
--CaptivePortalBrowserTest.ShowCaptivePortalInterstitialOnCertError
-
-# Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F69112%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FCaptivePortalBrowserTest.InterstitialTimerNavigateAwayWhileLoading%2F0
--CaptivePortalBrowserTest.InterstitialTimerNavigateAwayWhileLoading
-
-# Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests__dbg__1_%2F69110%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FCaptivePortalBrowserTest.InterstitialTimerNavigateWhileLoading_EndWithCaptivePortalInterstitial%2F0
--CaptivePortalBrowserTest.InterstitialTimerNavigateWhileLoading_EndWithCaptivePortalInterstitial
 
 # Flakes https://logs.chromium.org/v/?s=chromium%2Fbb%2Fchromium.linux%2FLinux_Tests%2F65814%2F%2B%2Frecipes%2Fsteps%2Fnetwork_service_browser_tests%2F0%2Flogs%2FDeclarativeContentApiTest.NotBookmarkedRulesEvaluatedOnBookmarkEvents%2F0
 -DeclarativeContentApiTest.NotBookmarkedRulesEvaluatedOnBookmarkEvents
