@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c8ba5ecd_9e1eed71",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-03T12:01:31Z",
+      "side": 1,
+      "message": "Imagine following situation:\n\u003ca\u003e - child of scrollable area, offscreen, focused element\n\u003cb\u003e - outside element of scrollable area, focusable\n\u003cscrollable area\u003e\n\nIf we use focused element\u0027s rect, then focus will moved to \u003cb\u003e when we hit down arrow key. I think this is unintuitve behavior.",
+      "parentUuid": "c982e40a_4ffcac26",
+      "range": {
+        "startLine": 1403,
+        "startChar": 0,
+        "endLine": 1405,
+        "endChar": 76
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df14ad06_ce0a7935",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 6
