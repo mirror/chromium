@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7811c2e_005d78a6",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-03T21:34:08Z",
+      "side": 1,
+      "message": "Maybe \"report.html\"? We use word \"coverage\" everywhere...",
+      "range": {
+        "startLine": 111,
+        "startChar": 39,
+        "endLine": 111,
+        "endChar": 47
+      },
+      "revId": "a265d0a06883433105ea1b03dbbb9d2c9f5324cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cb115b_706ec290",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-03T21:34:08Z",
+      "side": 1,
+      "message": "Let\u0027s rename this method into \"Get\" and use it directly on lines 143 and 144",
+      "range": {
+        "startLine": 141,
+        "startChar": 43,
+        "endLine": 141,
+        "endChar": 63
+      },
+      "revId": "a265d0a06883433105ea1b03dbbb9d2c9f5324cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3832bd00_b358ea49",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-03T21:34:08Z",
+      "side": 1,
+      "message": "Wouldn\u0027t something like:\n\n  for feature in self._summary.keys():\n\nwork here?",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 50
+      },
+      "revId": "a265d0a06883433105ea1b03dbbb9d2c9f5324cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68ddc60_5be40693",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-03T21:34:08Z",
+      "side": 1,
+      "message": "same here, can we use summary_dict.keys() instead?",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "a265d0a06883433105ea1b03dbbb9d2c9f5324cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162dfc92_1abdc4e0",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-03T21:34:08Z",
+      "side": 1,
+      "message": "Hmmm, should we sort it alphabetically instead?",
+      "range": {
+        "startLine": 210,
+        "startChar": 14,
+        "endLine": 210,
+        "endChar": 63
+      },
+      "revId": "a265d0a06883433105ea1b03dbbb9d2c9f5324cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
