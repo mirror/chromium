@@ -5,6 +5,7 @@
 #include "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
@@ -17,6 +18,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/utils.h"
+#include "components/safe_browsing/features.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -90,8 +92,12 @@ const char ReferrerChainData::kDownloadReferrerChainDataKey[] =
     "referrer_chain_data_key";
 
 ReferrerChainData::ReferrerChainData(
-    std::unique_ptr<ReferrerChain> referrer_chain)
-    : referrer_chain_(std::move(referrer_chain)) {}
+    std::unique_ptr<ReferrerChain> referrer_chain,
+    int referrer_chain_length,
+    int recent_navigations_to_collect)
+    : referrer_chain_(std::move(referrer_chain)),
+      referrer_chain_length_(referrer_chain_length),
+      recent_navigations_to_collect_(recent_navigations_to_collect) {}
 
 ReferrerChainData::~ReferrerChainData() {}
 
@@ -474,6 +480,34 @@ void SafeBrowsingNavigationObserverManager::RecordNewWebContents(
   }
 
   navigation_event_list_.RecordNavigationEvent(std::move(nav_event));
+}
+
+// static
+int SafeBrowsingNavigationObserverManager::CountOfRecentNavigationsToAppend(
+    Profile* profile,
+    AttributionResult result) {
+  if (!IsExtendedReportingEnabled(*profile->GetPrefs()) ||
+      profile->IsOffTheRecord() || result == SUCCESS_LANDING_REFERRER ||
+      !base::FeatureList::IsEnabled(kAppendRecentNavigationEvents)) {
+    return 0;
+  }
+  return base::GetFieldTrialParamByFeatureAsInt(kAppendRecentNavigationEvents,
+                                                "recent_navigation_count", 0);
+}
+
+void SafeBrowsingNavigationObserverManager::AppendRecentNavigations(
+    int recent_navigation_count,
+    ReferrerChain* out_referrer_chain) {
+  if (recent_navigation_count <= 0)
+    return;
+  auto it = navigation_event_list_.navigation_events().rbegin();
+  while (it != navigation_event_list_.navigation_events().rend() &&
+         recent_navigation_count > 0) {
+    AddToReferrerChain(out_referrer_chain, it->get(), GURL(),
+                       ReferrerChainEntry::RECENT_NAVIGATION);
+    recent_navigation_count--;
+    it++;
+  }
 }
 
 void SafeBrowsingNavigationObserverManager::CleanUpNavigationEvents() {

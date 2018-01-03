@@ -27,9 +27,13 @@ typedef google::protobuf::RepeatedPtrField<safe_browsing::ReferrerChainEntry>
 // User data stored in DownloadItem for referrer chain information.
 class ReferrerChainData : public base::SupportsUserData::Data {
  public:
-  explicit ReferrerChainData(std::unique_ptr<ReferrerChain> referrer_chain);
+  ReferrerChainData(std::unique_ptr<ReferrerChain> referrer_chain,
+                    int referrer_chain_length,
+                    int recent_navigation_to_collect);
   ~ReferrerChainData() override;
   ReferrerChain* GetReferrerChain();
+  int referrer_chain_length() { return referrer_chain_length_; }
+  int recent_navigations_to_collect() { return recent_navigations_to_collect_; }
 
   // Unique user data key used to get and set referrer chain data in
   // DownloadItem.
@@ -37,6 +41,13 @@ class ReferrerChainData : public base::SupportsUserData::Data {
 
  private:
   std::unique_ptr<ReferrerChain> referrer_chain_;
+  // This is the actual referrer chain length before appending recent navigation
+  // events;
+  int referrer_chain_length_;
+  // |recent_navigations_to_collect_| is controlled by finch parameter. If the
+  // user is incognito mode or hasn't enabled extended reporting, this value is
+  // always 0.
+  int recent_navigations_to_collect_;
 };
 
 // Struct that manages insertion, cleanup, and lookup of NavigationEvent
@@ -86,6 +97,11 @@ struct NavigationEventList {
 
   NavigationEvent* Get(std::size_t index) {
     return navigation_events_[index].get();
+  }
+
+  const base::circular_deque<std::unique_ptr<NavigationEvent>>&
+  navigation_events() {
+    return navigation_events_;
   }
 
  private:
@@ -188,7 +204,7 @@ class SafeBrowsingNavigationObserverManager
       int user_gesture_count_limit,
       ReferrerChain* out_referrer_chain);
 
-  // Record the creation of a new WebContents by |source_web_contents|. This is
+  // Records the creation of a new WebContents by |source_web_contents|. This is
   // used to detect cross-frame and cross-tab navigations.
   void RecordNewWebContents(content::WebContents* source_web_contents,
                             int source_render_process_id,
@@ -196,6 +212,16 @@ class SafeBrowsingNavigationObserverManager
                             GURL target_url,
                             content::WebContents* target_web_contents,
                             bool renderer_initiated);
+
+  // Based on user state, attribution result and finch parameter, calculates the
+  // number of recent navigations we want to append to the referrer chain.
+  static int CountOfRecentNavigationsToAppend(Profile* profile,
+                                              AttributionResult result);
+
+  // Appends |recent_navigation_count| number of recent navigation events to
+  // referrer chain in reverse chronological order.
+  void AppendRecentNavigations(int recent_navigation_count,
+                               ReferrerChain* out_referrer_chain);
 
  private:
   friend class base::RefCountedThreadSafe<
