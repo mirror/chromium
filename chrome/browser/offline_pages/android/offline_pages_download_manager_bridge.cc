@@ -17,7 +17,7 @@ namespace offline_pages {
 namespace android {
 
 // Returns true if ADM is available on this phone.
-bool OfflinePagesDownloadManagerBridge::IsAndroidDownloadManagerInstalled() {
+bool OfflinePagesDownloadManagerBridge::IsDownloadManagerInstalled() {
   JNIEnv* env = base::android::AttachCurrentThread();
   jboolean is_installed =
       Java_OfflinePagesDownloadManagerBridge_isAndroidDownloadManagerInstalled(
