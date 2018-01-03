@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1650f02_bee67a87",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-03T18:31:26Z",
+      "side": 1,
+      "message": "Why do you need this include?",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ecb0c9_0a240f55",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-03T18:31:26Z",
+      "side": 1,
+      "message": "[nit] \"is the new one\"",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c089b3b8_abf3e7b1",
+        "filename": "chrome/browser/sync/sessions/browser_list_router_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-03T18:31:26Z",
+      "side": 1,
+      "message": "[nit] I think this should be underscore_cased ?",
+      "revId": "d4ef1ae0ca0882774fe470ecabe47d26a37e680d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
