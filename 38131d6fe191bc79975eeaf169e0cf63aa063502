@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "420437d7_0471aebd",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "As the only code change adds code inside the #if block, should this include be inside the block below?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec5320c_73aaf33f",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "These values are tested on both sides. I think it would be better if this class didn\u0027t bother checking values (except for the final result in OnMediaCryptoSessionCreated()). Then these first 2 would simply be if (status !\u003d kOk) fail; cdm_proxy_-\u003e... .\n\nOr if you want to check, simply use CHECK_EQ(crypto_session_id, ...); But I think that\u0027s wasted as Process() will check the passed crypto_session_id anyway.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bb0ba2_fab64f0b",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "This is the same data passed to Process(). Is that a good idea? Why not pass |output_data| to CreateMediaCryptoSession()? Or have completely different data, and rename the constexpr\u0027s to kClearKeyCdmProxyInputProcessData and kClearKeyCdmProxyOutputProcessedData, and add kClearKeyCdmProxyInputSessionData?\n\nI guess if you pass |output_data| then there is no needed for kClearKeyCdmProxyInputSessionData, and no need to validate |output_data| here.",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdba4cc4_de34377e",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "If doing the previous comment, just test for !\u003d kOk above, and make this OnTestComplete(crypto_session_id \u003d\u003d kClearKeyCdmProxyMediaCryptoSessionId).",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727a7a05_a1918612",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d4b82f_281ccfd3",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "Should you use the 4 argument version of std::equal (here and below) so that the length is also checked?",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0d9b58_f2ebd7ae",
+        "filename": "media/mojo/services/gpu_mojo_media_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-03T22:42:34Z",
+      "side": 1,
+      "message": "Seems strange to have the constructor require a CdmProxyFactoryCB (and save it), yet the function to use it may not exist. However, it saves a few bytes of code, so I guess it\u0027s worth it. Is it worth conditionally including |cdm_proxy_factory_cb_|?",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
