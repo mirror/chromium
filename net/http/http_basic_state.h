@@ -18,6 +18,12 @@
 #include "net/base/request_priority.h"
 #include "url/gurl.h"
 
+// zlib renames "read_buf" with a macro so to make sure to get the
+// same name everywhere we need to let zlib rename read_buf in this
+// class always. Otherwise it will depend on include order and luck
+// what different translation units get as name for read_buf.
+#include "third_party/zlib/zlib.h"
+
 namespace net {
 
 class ClientSocketHandle;
