@@ -343,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "3b5cb7ca_38d79f6a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-03T00:27:30Z",
+      "side": 1,
+      "message": "Actually, it\u0027s fine to be top-center of the video element. I forgot that any \"fallback from remoting\" scenario will maintain the fullscreened video element. So, this way is simple and should work. :)",
+      "parentUuid": "baef7ea4_79918c34",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 13
+      },
+      "revId": "b41c8ecf780b72bd5ea57a83b50444732ec1051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26fdcdb9_1f721288",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
         "patchSetId": 2
