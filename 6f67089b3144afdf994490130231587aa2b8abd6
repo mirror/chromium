@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ea7983_7ee6ae6f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 11046,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-03T21:32:45Z",
+      "side": 1,
+      "message": "nit: how about \"a VR component update\" rather than \"the component\"?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0baf6f6_459ae938",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 11049,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-03T21:32:45Z",
+      "side": 1,
+      "message": "What apply button?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
