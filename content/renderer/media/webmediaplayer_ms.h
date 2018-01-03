@@ -97,6 +97,7 @@ class CONTENT_EXPORT WebMediaPlayerMS
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
+  void PictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -159,6 +160,7 @@ class CONTENT_EXPORT WebMediaPlayerMS
   void OnSeekBackward(double seconds) override;
   void OnVolumeMultiplierUpdate(double multiplier) override;
   void OnBecamePersistentVideo(bool value) override;
+  void OnPictureInPictureModeEnded() override;
 
   bool CopyVideoTextureToPlatformTexture(
       gpu::gles2::GLES2Interface* gl,
