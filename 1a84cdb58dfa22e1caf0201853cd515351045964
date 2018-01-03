@@ -16,6 +16,24 @@
       "revId": "1a84cdb58dfa22e1caf0201853cd515351045964",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5349ea1c_57e8aaab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2018-01-03T02:59:32Z",
+      "side": 1,
+      "message": "Now I am trying to set --use-zoom-for-dsf as default in Android and this CL is part of it.\n\nWhen I set IsUseZoomForDSFEnabledByDefault() returns true for Android,\n\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testAbsolutePositionContributesToContentSize\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testViewIsNotBlankInWrapContentsMode\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testViewSizedCorrectlyInWrapContentModeWithDynamicContents\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testReceivingSizeAfterLoadUpdatesLayout\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testViewSizedCorrectlyInWrapContentMode\norg.chromium.android_webview.test.AndroidViewIntegrationTest#testSizeUpdateWhenDetached\n\nfailed related to this CL.",
+      "parentUuid": "83851e13_7de7040b",
+      "revId": "1a84cdb58dfa22e1caf0201853cd515351045964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
