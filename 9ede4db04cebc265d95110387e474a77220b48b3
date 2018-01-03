@@ -16,6 +16,24 @@
       "revId": "9ede4db04cebc265d95110387e474a77220b48b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c999e30_2d3543d1",
+        "filename": "chrome/browser/loader/safe_browsing_resource_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2018-01-03T00:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a99fadc8_f0c88d50",
+      "revId": "9ede4db04cebc265d95110387e474a77220b48b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
