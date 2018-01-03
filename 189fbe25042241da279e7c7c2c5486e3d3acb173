@@ -22,6 +22,30 @@
       "revId": "189fbe25042241da279e7c7c2c5486e3d3acb173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77755be0_8132099d",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-03T18:29:39Z",
+      "side": 1,
+      "message": "Oops! Thanks!",
+      "parentUuid": "ee5dc9b8_25c5a4a0",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 215,
+        "endChar": 67
+      },
+      "revId": "189fbe25042241da279e7c7c2c5486e3d3acb173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
