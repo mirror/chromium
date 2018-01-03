@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "016c74f4_7cdff39a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/chromium-waiting-promise-gc.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-03T15:36:33Z",
+      "side": 1,
+      "message": "nit: How about initializing \"lock\" to a value that makes it clear whether it\u0027s been assigned to in the acquire callback? (\"uninitialized\" / \"should be overwritten\" are what I came up with)",
+      "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ed54193_52c06c1a",
         "filename": "third_party/WebKit/Source/modules/locks/Lock.h",
         "patchSetId": 1
@@ -13,6 +30,58 @@
       "writtenOn": "2018-01-03T02:25:02Z",
       "side": 1,
       "message": "Why do you need to use base::OnceCallback? Can we simply make Lock hold Member\u003cLockManager\u003e?",
+      "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def29f06_19e1a2c0",
+        "filename": "third_party/WebKit/Source/modules/locks/Lock.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-03T15:36:33Z",
+      "side": 1,
+      "message": "I also like having a reference to LockManager and calling LockManager::OnLockReleased() explicitly, because it makes the control flow a bit easier to follow.",
+      "parentUuid": "0ed54193_52c06c1a",
+      "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99980cb_14d4e1c9",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-03T15:36:33Z",
+      "side": 1,
+      "message": "nit:\n, or when the context -\u003e and/or when the context\nso this is idempotent -\u003e so this must be idempotent\n\n(if that\u0027s incorrect, I\u0027m afraid I didn\u0027t understand the comment)",
+      "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc1daca_59a0e77a",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-03T15:36:33Z",
+      "side": 1,
+      "message": "nit: How about \"handle the case in https://crbug.com/798500 where \" ...",
       "revId": "b313453d0c700a4935332ba32a18dbae6739b9ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
