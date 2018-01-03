@@ -84,6 +84,29 @@
     },
     {
       "key": {
+        "uuid": "1e44ab91_0826af24",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2018-01-03T19:49:39Z",
+      "side": 1,
+      "message": "Why do the ticks above need lazy instance, but these ones don\u0027t?",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 48
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94ca8dd8_8b4e00e8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
