@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91ccf9be_521b279e",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T00:06:13Z",
+      "side": 1,
+      "message": "Correct! I think we should switch to some Mojo primitive instead of manually chunking, I\u0027ll leave a TODO. Didn\u0027t look into that yet.",
+      "parentUuid": "5f1b43f6_b88b5215",
+      "range": {
+        "startLine": 673,
+        "startChar": 61,
+        "endLine": 673,
+        "endChar": 65
+      },
+      "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbd86eaf_6b5be7ba",
         "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-02T23:49:16Z",
       "side": 1,
       "message": "Given that public/platform already uses gfx.mojom, maybe we should just use it here as well?",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa36f7a_317bc3cb",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T00:06:13Z",
+      "side": 1,
+      "message": "That did not work for some reason:\nhttps://logs.chromium.org/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.win%2Fwin_chromium_compile_dbg_ng%2F567550%2F%2B%2Frecipes%2Fsteps%2Fcompile__with_patch_%2F0%2Fstdout\n\nAny ideas? My understanding was that I cannot use gfx::Point from core/exported.",
+      "parentUuid": "fbd86eaf_6b5be7ba",
       "range": {
         "startLine": 84,
         "startChar": 17,
