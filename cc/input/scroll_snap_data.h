@@ -93,6 +93,14 @@ struct SnapAreaData {
   SnapAreaData(SnapAxis axis, gfx::ScrollOffset position, bool msnap)
       : snap_axis(axis), snap_position(position), must_snap(msnap) {}
 
+  bool operator==(const SnapAreaData& other) const {
+    return (other.snap_axis == snap_axis) &&
+           (other.snap_position == snap_position) &&
+           (other.must_snap == must_snap);
+  }
+
+  bool operator!=(const SnapAreaData& other) const { return !(*this == other); }
+
   // The axes along which the area has specified snap positions.
   SnapAxis snap_axis;
 
@@ -122,6 +130,20 @@ struct CC_EXPORT SnapContainerData {
   SnapContainerData(ScrollSnapType type, gfx::ScrollOffset max);
   SnapContainerData(const SnapContainerData& other);
   ~SnapContainerData();
+
+  bool operator==(const SnapContainerData& other) const {
+    return (other.scroll_snap_type == scroll_snap_type) &&
+           (other.max_position == max_position) &&
+           (other.snap_area_list == snap_area_list);
+  }
+
+  bool operator!=(const SnapContainerData& other) const {
+    return !(*this == other);
+  }
+
+  gfx::ScrollOffset FindSnapPosition(const gfx::ScrollOffset& current_position,
+                                     bool should_snap_on_x,
+                                     bool should_snap_on_y);
 
   void AddSnapAreaData(SnapAreaData snap_area_data);
 
