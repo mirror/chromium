@@ -38,6 +38,9 @@ struct SkBitmap_Data {
   bool InitSkBitmapFromData(SkBitmap* bitmap,
                             const char* pixels,
                             size_t pixels_size) const {
+    if (color_type > kLastEnum_SkColorType ||
+        alpha_type > kLastEnum_SkAlphaType)
+      return false;
     if (!bitmap->tryAllocPixels(
             SkImageInfo::Make(width, height, color_type, alpha_type)))
       return false;
