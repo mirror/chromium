@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "e07fa27e_b5eadb59",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-03T22:12:02Z",
+      "side": 1,
+      "message": "The case conversion one, yse, but not this one. It was for converting my test strings.",
+      "parentUuid": "949dde05_5b2e3ee5",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9f31c7c_efb817d1",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 4
@@ -172,6 +190,24 @@
       "writtenOn": "2018-01-03T22:01:53Z",
       "side": 1,
       "message": "For a few elements, we\u0027ve made a new element class to get this construction logic out of scene creator.  Thoughts on doing that here?",
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ada43_2fd9547e",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-03T22:12:02Z",
+      "side": 1,
+      "message": "I prefer to have creation methods and fewer, primitive elements. Avoiding new elements avoids the risk of them accumulating functionality. This file may become unwieldy, eventually, but my long-term hope is that we either a) ideally move to a more concise, declarative format or b) put the imperative implementation into separate .cc files.",
+      "parentUuid": "d9f31c7c_efb817d1",
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
