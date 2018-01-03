@@ -517,7 +517,7 @@ void ExpireHistoryBackend::DoExpireIteration() {
     work_queue_.push(reader);
   } else {
     // Otherwise do a final clean-up - remove old favicons not bound to visits.
-    ClearOldOnDemandFaviconsIfPossible(
+    ClearOldOnDemandFavicons(
         base::Time::Now() -
         base::TimeDelta::FromDays(internal::kOnDemandFaviconIsOldAfterDays));
   }
@@ -525,11 +525,8 @@ void ExpireHistoryBackend::DoExpireIteration() {
   ScheduleExpire();
 }
 
-void ExpireHistoryBackend::ClearOldOnDemandFaviconsIfPossible(
+void ExpireHistoryBackend::ClearOldOnDemandFavicons(
     base::Time expiration_threshold) {
-  if (!thumb_db_)
-    return;
-
   if (!base::FeatureList::IsEnabled(internal::kClearOldOnDemandFavicons))
     return;
 
