@@ -55,6 +55,13 @@ const user_manager::User* FakeUserManager::AddUserWithAffiliation(
   return user;
 }
 
+const user_manager::User* FakeUserManager::AddGuestUser() {
+  user_manager::User* user =
+      user_manager::User::CreateGuestUser(GetGuestAccountId());
+  users_.push_back(user);
+  return user;
+}
+
 void FakeUserManager::OnProfileInitialized(User* user) {
   user->set_profile_ever_initialized(true);
 }
@@ -221,7 +228,7 @@ bool FakeUserManager::IsUserLoggedIn() const {
 }
 
 bool FakeUserManager::IsLoggedInAsUserWithGaiaAccount() const {
-  return true;
+  return active_user_ && active_user_->HasGaiaAccount();
 }
 
 bool FakeUserManager::IsLoggedInAsPublicAccount() const {
@@ -229,7 +236,7 @@ bool FakeUserManager::IsLoggedInAsPublicAccount() const {
 }
 
 bool FakeUserManager::IsLoggedInAsGuest() const {
-  return false;
+  return active_user_ && active_user_->GetType() == USER_TYPE_GUEST;
 }
 
 bool FakeUserManager::IsLoggedInAsSupervisedUser() const {

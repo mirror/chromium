@@ -32,6 +32,9 @@ class USER_MANAGER_EXPORT FakeUserManager : public UserManagerBase {
       const AccountId& account_id,
       bool is_affiliated);
 
+  // Add a guest user. The account_id will be GetGuestAccountId().
+  virtual const user_manager::User* AddGuestUser();
+
   // UserManager overrides.
   const user_manager::UserList& GetUsers() const override;
   user_manager::UserList GetUsersAllowedForMultiProfile() const override;
