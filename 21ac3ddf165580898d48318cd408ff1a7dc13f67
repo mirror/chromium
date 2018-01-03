@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9620014e_7ffb819c",
+        "filename": "components/signin/core/browser/signin_error_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T12:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6101f591_26ba14ff",
+      "range": {
+        "startLine": 61,
+        "startChar": 25,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "21ac3ddf165580898d48318cd408ff1a7dc13f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08cc4b44_8b420aa4",
         "filename": "components/signin/core/browser/signin_error_controller.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8a38335_0981ec04",
+        "filename": "components/signin/core/browser/signin_error_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T12:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08cc4b44_8b420aa4",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 23
+      },
+      "revId": "21ac3ddf165580898d48318cd408ff1a7dc13f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "295b061e_37bdcc9c",
         "filename": "components/signin/core/browser/signin_manager_base.h",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-03T12:23:05Z",
       "side": 1,
       "message": "The primary account id must be reset when the user signs out. That is done here: https://cs.chromium.org/chromium/src/components/signin/core/browser/signin_manager.cc?rcl\u003d7cd3aa1df66f0df0256977c286b964488ffd9f07\u0026l\u003d221 (Note that on ChromeOS, the user cannot sign out of Chrome).\n\nHere is the code search for clear_authenticated_user:\nhttps://cs.chromium.org/search/?q\u003dclear_authenticated_user\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nWe have 2 options:\n1. call signin_error_controller from clear_authenticated_user (but that is not what this method what intended for initially)\n2. call signin_error_controller from the SigninManagerBase after https://cs.chromium.org/chromium/src/components/signin/core/browser/signin_manager.cc?rcl\u003d7cd3aa1df66f0df0256977c286b964488ffd9f07\u0026l\u003d221\n\nI would prefer option 2 as it keeps the correct semantics of the clear_authenticated_user method.",
+      "range": {
+        "startLine": 197,
+        "startChar": 36,
+        "endLine": 197,
+        "endChar": 61
+      },
+      "revId": "21ac3ddf165580898d48318cd408ff1a7dc13f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9e32ab_70e0dba6",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T12:58:13Z",
+      "side": 1,
+      "message": "Option 2 exposes the SigninErrorController to subclasses, and then they have to ensure that they call it appropriately.\n\nI would propose Option 1, but changing the comment:\n// Clears the authenticated user.\n// This method is not public because SigninManagerBase does not allow signing\n// out by default. Subclasses implementing a Signout functionality need to call\n// this.\n\nThe comment was wrong anyway, because SetAuthenticatedAccountId() is not part of the public API.",
+      "parentUuid": "295b061e_37bdcc9c",
       "range": {
         "startLine": 197,
         "startChar": 36,
