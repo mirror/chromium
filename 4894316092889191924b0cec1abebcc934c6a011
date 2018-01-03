@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3e29df2_adb8cf7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FilmStripView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "We\u0027ll try.",
+      "parentUuid": "8af51728_df2f859d",
+      "range": {
+        "startLine": 217,
+        "startChar": 11,
+        "endLine": 217,
+        "endChar": 14
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eabc1b2d_daebd0f3",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4894316092889191924b0cec1abebcc934c6a011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b91e8c0_0b10986f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabc1b2d_daebd0f3",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf49712e_81aa4ede",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e05a9d_4bafbbac",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a296a70_77e8c87d",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "4894316092889191924b0cec1abebcc934c6a011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ed42ca_11d08229",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a296a70_77e8c87d",
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8114b03b_2c4b44f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5810d643_1973d4ac",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11346d00_3f098fbc",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "4894316092889191924b0cec1abebcc934c6a011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31758056_e0cc62f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11346d00_3f098fbc",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "d1d2ef9b_7a178b1d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f42ce3_15fdaaf6",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f233ca13_7923a37b",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "4894316092889191924b0cec1abebcc934c6a011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6884c7_9f8529ee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T18:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f233ca13_7923a37b",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "4894316092889191924b0cec1abebcc934c6a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
