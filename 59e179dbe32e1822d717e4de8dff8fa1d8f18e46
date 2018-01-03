@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e55345d_8266e026",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-03T09:53:40Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment somewhere that explains what happens here. It\u0027s not obvious why only the \"passXXX\" log messages are executed.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 0,
+        "endLine": 1210,
+        "endChar": 41
+      },
+      "revId": "59e179dbe32e1822d717e4de8dff8fa1d8f18e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0846e098_db8b9d6f",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-03T09:53:40Z",
+      "side": 1,
+      "message": "pass256, same below",
+      "range": {
+        "startLine": 1227,
+        "startChar": 29,
+        "endLine": 1227,
+        "endChar": 33
+      },
+      "revId": "59e179dbe32e1822d717e4de8dff8fa1d8f18e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d317bb04_cf960393",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-03T09:53:40Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 1228,
+        "startChar": 0,
+        "endLine": 1228,
+        "endChar": 38
+      },
+      "revId": "59e179dbe32e1822d717e4de8dff8fa1d8f18e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
