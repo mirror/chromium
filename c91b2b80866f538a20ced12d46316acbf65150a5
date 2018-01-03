@@ -39,6 +39,24 @@
       "revId": "c91b2b80866f538a20ced12d46316acbf65150a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ded6ae_55f01b4b",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArrayBuilder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-03T14:51:17Z",
+      "side": 1,
+      "message": "We already refer to VectorTraits in TerminatedArray. I think this is fine for now.",
+      "parentUuid": "12452ec5_15ae4b89",
+      "revId": "c91b2b80866f538a20ced12d46316acbf65150a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
