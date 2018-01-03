@@ -108,8 +108,8 @@ class CreditCardSaveManagerTest : public testing::Test {
                                       payments_client_, &personal_data_);
     autofill_manager_.reset(new TestAutofillManager(
         autofill_driver_.get(), &autofill_client_, &personal_data_,
-        credit_card_save_manager_, payments_client_));
-    autofill_manager_->SetExpectedObservedSubmission(true);
+        std::unique_ptr<CreditCardSaveManager>(credit_card_save_manager_),
+        payments_client_));
   }
 
   void TearDown() override {
@@ -146,8 +146,7 @@ class CreditCardSaveManagerTest : public testing::Test {
     scoped_feature_list_.InitWithFeatures(
         {kAutofillUpstreamRequestCvcIfMissing,
          kAutofillUpstreamSendDetectedValues},  // Enabled
-        {}                                      // Disabled
-        );
+        {});                                    // Disabled
   }
 
   void EnableAutofillUpstreamSendPanFirstSixExperiment() {
