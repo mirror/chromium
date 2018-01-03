@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffa6f7f_9e6a1edf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T23:25:12Z",
+      "side": 1,
+      "message": "nit: The comments looks need update now. The first item could be a real option or hint depends on whether there is a hint?\n\nSimply say: Select the first item if there is no item has been selected (the first item could be hint) ?",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 65
+      },
+      "revId": "9fe22c3e7a32829086527a9d83eafeedc26be640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0120b6_e6aadb28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T23:25:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 65
+      },
+      "revId": "9fe22c3e7a32829086527a9d83eafeedc26be640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
