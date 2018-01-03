@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af87c4b3_b40e514f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T15:50:42Z",
+      "side": 1,
+      "message": "\"this function\" is maybe a lil ambiguous, cuz it doesn\u0027t mean the function here right?",
+      "revId": "bba7949d2bbc0137e0f8d92accec51a65b9d3055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd9fc5d_da67a348",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T15:50:42Z",
+      "side": 1,
+      "message": "nit: ContextProvider is more greppable. When we split type names with spaces we inevitably miss them when the type names change.",
+      "revId": "bba7949d2bbc0137e0f8d92accec51a65b9d3055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
