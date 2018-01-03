@@ -40,7 +40,6 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/dom_storage/dom_storage_types.h"
@@ -100,6 +99,7 @@
 #include "media/media_features.h"
 #include "media/renderers/audio_renderer_impl.h"
 #include "media/video/gpu_video_accelerator_factories.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "net/base/data_url.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
@@ -2311,16 +2311,42 @@ bool RenderViewImpl::DidTapMultipleTargets(
     case TAP_MULTIPLE_TARGETS_STRATEGY_POPUP: {
       gfx::Size canvas_size =
           gfx::ScaleToCeiledSize(zoom_rect.size(), new_total_scale);
-      viz::SharedBitmapManager* manager =
-          RenderThreadImpl::current()->shared_bitmap_manager();
-      std::unique_ptr<viz::SharedBitmap> shared_bitmap =
-          manager->AllocateSharedBitmap(canvas_size);
-      CHECK(shared_bitmap);
+
+      SkImageInfo info =
+          SkImageInfo::MakeN32Premul(canvas_size.width(), canvas_size.height());
+      size_t buffer_size =
+          canvas_size.width() * canvas_size.height() * info.bytesPerPixel();
+
+      mojo::ScopedSharedBufferHandle handle =
+          mojo::SharedBufferHandle::Create(buffer_size);
+      if (!handle.is_valid()) {
+        DLOG(ERROR) << "AllocateAndMapSharedMemory: Create failed "
+                    << buffer_size;
+        return false;
+      }
+
+      base::SharedMemoryHandle platform_handle;
+      size_t shared_memory_size;
+      bool readonly;
+      MojoResult result = mojo::UnwrapSharedMemoryHandle(
+          std::move(handle), &platform_handle, &shared_memory_size, &readonly);
+      if (result != MOJO_RESULT_OK) {
+        DLOG(ERROR) << "AllocateAndMapSharedMemory: Unwrap failed";
+        return false;
+      }
+      DCHECK_EQ(shared_memory_size, buffer_size);
+      DCHECK(!readonly);
+
+      auto shm =
+          std::make_unique<base::SharedMemory>(platform_handle, readonly);
+      if (!shm->Map(buffer_size)) {
+        DLOG(ERROR) << "AllocateAndMapSharedMemory: Map failed";
+        return false;
+      }
+
       {
         SkBitmap bitmap;
-        SkImageInfo info = SkImageInfo::MakeN32Premul(canvas_size.width(),
-                                                      canvas_size.height());
-        bitmap.installPixels(info, shared_bitmap->pixels(), info.minRowBytes());
+        bitmap.installPixels(info, shm->memory(), info.minRowBytes());
         cc::SkiaPaintCanvas canvas(bitmap);
 
         // TODO(trchen): Cleanup the device scale factor mess.
@@ -2343,11 +2369,12 @@ bool RenderViewImpl::DidTapMultipleTargets(
       gfx::Rect physical_window_zoom_rect = gfx::ToEnclosingRect(
           ClientRectToPhysicalWindowRect(gfx::RectF(zoom_rect_in_screen)));
 
+      uint32_t bitmap_id = next_bitmap_id_++;
       Send(new ViewHostMsg_ShowDisambiguationPopup(
-          GetRoutingID(), physical_window_zoom_rect, canvas_size,
-          shared_bitmap->id()));
-      viz::SharedBitmapId id = shared_bitmap->id();
-      disambiguation_bitmaps_[id] = std::move(shared_bitmap);
+          GetRoutingID(), physical_window_zoom_rect, canvas_size, bitmap_id,
+          platform_handle.Duplicate()));
+
+      disambiguation_bitmaps_[bitmap_id] = std::move(shm);
       handled = true;
       break;
     }
@@ -2443,9 +2470,8 @@ void RenderViewImpl::DisableAutoResizeForTesting(const gfx::Size& new_size) {
   OnDisableAutoResize(new_size);
 }
 
-void RenderViewImpl::OnReleaseDisambiguationPopupBitmap(
-    const viz::SharedBitmapId& id) {
-  size_t erased_count = disambiguation_bitmaps_.erase(id);
+void RenderViewImpl::OnReleaseDisambiguationPopupBitmap(uint32_t bitmap_id) {
+  size_t erased_count = disambiguation_bitmaps_.erase(bitmap_id);
   DCHECK_EQ(1U, erased_count);
 }
 

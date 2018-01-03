@@ -514,7 +514,7 @@ IPC_MESSAGE_ROUTED1(ViewMsg_PpapiBrokerPermissionResult,
 // An acknowledgement to ViewHostMsg_ShowDisambiguationPopup to notify the
 // renderer process to release the magnified image.
 IPC_MESSAGE_ROUTED1(ViewMsg_ReleaseDisambiguationPopupBitmap,
-                    viz::SharedBitmapId /* id */)
+                    uint32_t /* bitmap_id */)
 
 // If the ViewHostMsg_ShowDisambiguationPopup resulted in the user tapping
 // inside the popup, instruct the renderer to generate a synthetic tap at that
@@ -755,10 +755,11 @@ IPC_MESSAGE_ROUTED0(ViewHostMsg_UnlockMouse)
 
 // Notifies that multiple touch targets may have been pressed, and to show
 // the disambiguation popup.
-IPC_MESSAGE_ROUTED3(ViewHostMsg_ShowDisambiguationPopup,
+IPC_MESSAGE_ROUTED4(ViewHostMsg_ShowDisambiguationPopup,
                     gfx::Rect, /* Border of touched targets */
                     gfx::Size, /* Size of zoomed image */
-                    viz::SharedBitmapId /* id */)
+                    uint32_t /* bitmap_id */,
+                    base::SharedMemoryHandle /* handle */)
 
 // Message sent from renderer to the browser when the element that is focused
 // has been touched. A bool is passed in this message which indicates if the
