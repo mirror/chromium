@@ -160,6 +160,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574f9c4d_5d956535",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T16:36:19Z",
+      "side": 1,
+      "message": "If we end up hooking removing variations headers to network service consumers (Which is the path I assume we want), this seems very likely to regress for at least some consumers, but I don\u0027t see a way around that.  So yea, I think this is the best we can do.\n\nHave you already looked at the code?  I don\u0027t think we both need to review the details of the CL, just the approach.  I\u0027m happy to do that, if you haven\u0027t, but if you have, I\u0027ll defer to you - I don\u0027t think we both need to do full reviews.",
+      "parentUuid": "1d798e62_a7d94b69",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
