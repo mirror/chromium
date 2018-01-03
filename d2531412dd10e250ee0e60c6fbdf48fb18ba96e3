@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "9a8b85f9_b91dd69b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2018-01-03T22:34:51Z",
+      "side": 1,
+      "message": "I mentioned similar issue in your previous CL :-), it might be better to mention this in the comments.",
+      "parentUuid": "2f5308d5_f28effba",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 94
+      },
+      "revId": "d2531412dd10e250ee0e60c6fbdf48fb18ba96e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc32b92a_d747a393",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
         "patchSetId": 15
