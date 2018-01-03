@@ -299,6 +299,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   // base::RunLoop::NestingObserver:
   void OnBeginNestedRunLoop() override;
+  void OnExitNestedRunLoop() override;
 
   // Called by the task queue to register a new pending task.
   void DidQueueTask(const internal::TaskQueueImpl::Task& pending_task);
@@ -326,7 +327,6 @@ class PLATFORM_EXPORT TaskQueueManager
   // set (not guaranteed), sampling |real_time_domain()->Now()| immediately
   // after running the task.
   ProcessTaskResult ProcessTaskFromWorkQueue(internal::WorkQueue* work_queue,
-                                             bool is_nested,
                                              LazyNow time_before_task,
                                              base::TimeTicks* time_after_task);
 
@@ -419,6 +419,23 @@ class PLATFORM_EXPORT TaskQueueManager
   const struct AnyThread& any_thread() const {
     any_thread_lock_.AssertAcquired();
     return any_thread_;
+  }
+
+  // TODO(alexclarke): Move more things into MainThreadOnly
+  struct MainThreadOnly {
+    MainThreadOnly();
+
+    bool is_nested;  // Whether or not the message loop is currently nested.
+  };
+
+  MainThreadOnly main_thread_only_;
+  MainThreadOnly& main_thread_only() {
+    DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
+    return main_thread_only_;
+  }
+  const MainThreadOnly& main_thread_only() const {
+    DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
+    return main_thread_only_;
   }
 
   NextDelayedDoWork next_delayed_do_work_;

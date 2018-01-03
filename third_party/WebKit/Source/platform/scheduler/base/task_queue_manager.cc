@@ -94,6 +94,8 @@ std::unique_ptr<TaskQueueManager> TaskQueueManager::TakeOverCurrentThread() {
           base::DefaultTickClock::GetInstance())));
 }
 
+TaskQueueManager::MainThreadOnly::MainThreadOnly() : is_nested(false) {}
+
 void TaskQueueManager::RegisterTimeDomain(TimeDomain* time_domain) {
   time_domains_.insert(time_domain);
   time_domain->OnRegisterWithTaskQueueManager(this);
@@ -175,10 +177,21 @@ void TaskQueueManager::OnBeginNestedRunLoop() {
     any_thread().immediate_do_work_posted_count++;
     any_thread().is_nested = true;
   }
+  main_thread_only().is_nested = true;
   if (observer_)
     observer_->OnBeginNestedRunLoop();
 
   controller_->ScheduleWork();
+}
+
+void TaskQueueManager::OnExitNestedRunLoop() {
+  {
+    base::AutoLock lock(any_thread_lock_);
+    any_thread().is_nested = false;
+  }
+  main_thread_only().is_nested = false;
+  if (observer_)
+    observer_->OnExitNestedRunLoop();
 }
 
 void TaskQueueManager::OnQueueHasIncomingImmediateWork(
@@ -270,7 +283,6 @@ void TaskQueueManager::DoWork(WorkType work_type) {
                work_type == WorkType::kDelayed);
 
   LazyNow lazy_now(real_time_domain()->CreateLazyNow());
-  bool is_nested = controller_->IsNested();
 
   // This must be done before running any tasks because they could invoke a
   // nested run loop and we risk having a stale |next_delayed_do_work_|.
@@ -280,7 +292,6 @@ void TaskQueueManager::DoWork(WorkType work_type) {
   for (int i = 0; i < work_batch_size_; i++) {
     IncomingImmediateWorkMap queues_to_reload;
 
-    bool was_nested = false;
     {
       base::AutoLock lock(any_thread_lock_);
       if (i == 0) {
@@ -290,21 +301,9 @@ void TaskQueueManager::DoWork(WorkType work_type) {
           any_thread().immediate_do_work_posted_count--;
           DCHECK_GE(any_thread().immediate_do_work_posted_count, 0);
         }
-      } else {
-        // Ideally we'd have an OnNestedMessageloopExit observer, but in it's
-        // absence we may need to clear this flag after running a task (which
-        // ran a nested messageloop).
-        // TODO(altimin): Add OnNestedMessageLoopExit observer.
-        if (any_thread().is_nested && !is_nested)
-          was_nested = true;
-        any_thread().is_nested = is_nested;
       }
-      DCHECK_EQ(any_thread().is_nested, controller_->IsNested());
       std::swap(queues_to_reload, any_thread().has_incoming_immediate_work);
     }
-
-    if (observer_ && was_nested)
-      observer_->OnExitNestedRunLoop();
 
     // It's important we call ReloadEmptyWorkQueues out side of the lock to
     // avoid a lock order inversion.
@@ -318,8 +317,7 @@ void TaskQueueManager::DoWork(WorkType work_type) {
 
     // NB this may unregister |work_queue|.
     base::TimeTicks time_after_task;
-    switch (ProcessTaskFromWorkQueue(work_queue, is_nested, lazy_now,
-                                     &time_after_task)) {
+    switch (ProcessTaskFromWorkQueue(work_queue, lazy_now, &time_after_task)) {
       case ProcessTaskResult::kDeferred:
         // If a task was deferred, try again with another task.
         continue;
@@ -334,18 +332,17 @@ void TaskQueueManager::DoWork(WorkType work_type) {
 
     // Only run a single task per batch in nested run loops so that we can
     // properly exit the nested loop when someone calls RunLoop::Quit().
-    if (is_nested)
+    if (main_thread_only().is_nested)
       break;
   }
 
-  if (!is_nested)
+  if (!main_thread_only().is_nested)
     CleanUpQueues();
 
   // TODO(alexclarke): Consider refactoring the above loop to terminate only
   // when there's no more work left to be done, rather than posting a
   // continuation task.
 
-  bool was_nested = false;
   {
     MoveableAutoLock lock(any_thread_lock_);
     base::Optional<NextTaskDelay> next_delay =
@@ -354,16 +351,8 @@ void TaskQueueManager::DoWork(WorkType work_type) {
     any_thread().do_work_running_count--;
     DCHECK_GE(any_thread().do_work_running_count, 0);
 
-    if (any_thread().is_nested && !is_nested)
-      was_nested = true;
-    any_thread().is_nested = is_nested;
-    DCHECK_EQ(any_thread().is_nested, controller_->IsNested());
-
     PostDoWorkContinuationLocked(next_delay, &lazy_now, std::move(lock));
   }
-
-  if (observer_ && was_nested)
-    observer_->OnExitNestedRunLoop();
 }
 
 void TaskQueueManager::PostDoWorkContinuationLocked(
@@ -469,7 +458,6 @@ void TaskQueueManager::DidQueueTask(
 
 TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     internal::WorkQueue* work_queue,
-    bool is_nested,
     LazyNow time_before_task,
     base::TimeTicks* time_after_task) {
   DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
@@ -488,7 +476,8 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   if (queue->GetQuiescenceMonitored())
     task_was_run_on_quiescence_monitored_queue_ = true;
 
-  if (pending_task.nestable == base::Nestable::kNonNestable && is_nested) {
+  if (pending_task.nestable == base::Nestable::kNonNestable &&
+      main_thread_only().is_nested) {
     // Defer non-nestable work to the main task runner.  NOTE these tasks can be
     // arbitrarily delayed so the additional delay should not be a problem.
     // TODO(skyostil): Figure out a way to not forget which task queue the
@@ -552,7 +541,7 @@ void TaskQueueManager::NotifyWillProcessTaskObservers(
     queue->NotifyWillProcessTask(pending_task);
   }
 
-  bool notify_time_observers = !controller_->IsNested() &&
+  bool notify_time_observers = !main_thread_only().is_nested &&
                                (task_time_observers_.might_have_observers() ||
                                 queue->RequiresTaskTiming());
   if (!notify_time_observers)
