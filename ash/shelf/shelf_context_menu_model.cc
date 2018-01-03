@@ -245,7 +245,7 @@ void ShelfContextMenuModel::ExecuteCommand(int command_id, int event_flags) {
       SetShelfAlignmentPref(prefs, display_id_, SHELF_ALIGNMENT_BOTTOM);
       break;
     case MENU_CHANGE_WALLPAPER:
-      Shell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
+      Shell::Get()->wallpaper_controller()->OpenWallpaperPicker();
       break;
     default:
       // Have the shelf item delegate execute the context menu command.
