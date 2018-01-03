@@ -22,6 +22,30 @@
       "revId": "a96418ceedc9c5df5c732549421fd4461bf6d38e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389eb404_65c4b41c",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3185,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-03T06:54:37Z",
+      "side": 1,
+      "message": "root_window()-\u003eGetFrameSinkId() is not the expected value here; we want to validate Window::GetFrameSinkId() is returning the correct value, where the expected value is the frame-sink-id of the compositor.",
+      "parentUuid": "4dd556a4_96551980",
+      "range": {
+        "startLine": 3185,
+        "startChar": 12,
+        "endLine": 3185,
+        "endChar": 49
+      },
+      "revId": "a96418ceedc9c5df5c732549421fd4461bf6d38e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
