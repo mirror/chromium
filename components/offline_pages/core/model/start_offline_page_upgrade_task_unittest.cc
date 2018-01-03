@@ -4,8 +4,8 @@
 
 #include "components/offline_pages/core/model/start_offline_page_upgrade_task.h"
 
+#include <memory>
 #include "base/files/scoped_temp_dir.h"
-#include "base/memory/ptr_util.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/model/offline_page_item_generator.h"
@@ -84,7 +84,7 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeSuccess) {
   original_page.digest = kTestDigest;
   store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
       store(), original_page.offline_id, temp_dir.GetPath(), callback());
   runner()->RunTask(std::move(task));
 
@@ -99,7 +99,7 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeSuccess) {
 }
 
 TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeItemMissing) {
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
       store(), 42, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
@@ -113,7 +113,7 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeFileMissing) {
   original_page.upgrade_attempt = 3;
   store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
       store(), original_page.offline_id, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
@@ -136,7 +136,7 @@ TEST_F(StartOfflinePageUpgradeTaskTest, StartUpgradeNotEnoughSpace) {
   original_page.upgrade_attempt = 3;
   store_test_util()->InsertItem(original_page);
 
-  auto task = base::MakeUnique<StartOfflinePageUpgradeTask>(
+  auto task = std::make_unique<StartOfflinePageUpgradeTask>(
       store(), original_page.offline_id, base::FilePath(), callback());
   runner()->RunTask(std::move(task));
 
