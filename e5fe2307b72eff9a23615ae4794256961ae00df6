@@ -16,6 +16,24 @@
       "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753fa8d8_94f94051",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T17:42:31Z",
+      "side": 1,
+      "message": "I really don\u0027t like this myself either. Actually if I remove this whole block that usecase you mentioned (e.g. pausing the debugger and tap on continue button) works just fine. Reason being that all these use cases only use the gesture event path (in particular gesture tab) and they don\u0027t need the touch events. Is that alright if I remove handling of this altogether?",
+      "parentUuid": "f52fa8ef_b9c70cd1",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
