@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/network/upload_progress_tracker.h"
+#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
@@ -91,6 +92,12 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   void OnUploadProgressACK();
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
                                      int net_error);
+
+  void OnCertificateRequestedResponse(
+      const scoped_refptr<net::X509Certificate>& x509_certificate,
+      const std::vector<uint16_t>& algorithm_preferences);
+
+  mojom::SSLPrivateKeyPtr ssl_private_key_ptr_;
 
   NetworkContext* context_;
   int32_t options_;
