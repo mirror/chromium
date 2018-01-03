@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c16e7cf_2e9c293e",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:16:16Z",
+      "side": 1,
+      "message": "{} for both of these",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb5e426_9f46c8f1",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:16:16Z",
+      "side": 1,
+      "message": "nit: single space between sentences (here and below)",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc463f2_ebac5665",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-03T19:16:16Z",
+      "side": 1,
+      "message": "{} for both",
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43f5c81a_48d1ef00",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
