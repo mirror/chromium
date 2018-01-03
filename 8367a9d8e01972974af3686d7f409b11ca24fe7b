@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219dc4db_dfeab10f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-03T17:55:19Z",
+      "side": 1,
+      "message": "yeesh. but if we do this, couldn\u0027t we end up with double onCreate calls? Or rather two onStateChange(CREATED) for a single activity?",
+      "range": {
+        "startLine": 307,
+        "startChar": 30,
+        "endLine": 307,
+        "endChar": 49
+      },
+      "revId": "8367a9d8e01972974af3686d7f409b11ca24fe7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
