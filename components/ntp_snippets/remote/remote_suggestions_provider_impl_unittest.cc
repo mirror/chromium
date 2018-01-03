@@ -316,6 +316,7 @@ class MockRemoteSuggestionsStatusService
   ~MockRemoteSuggestionsStatusService() override = default;
 
   MOCK_METHOD1(Init, void(const StatusChangeCallback& callback));
+  MOCK_CONST_METHOD0(IsSignedIn, bool());
   MOCK_METHOD0(OnSignInStateChanged, void());
 };
 
@@ -409,8 +410,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     } else {
       remote_suggestions_status_service =
           std::make_unique<RemoteSuggestionsStatusServiceImpl>(
-              utils_.fake_signin_manager(), utils_.pref_service(),
-              std::string());
+              fake_signin_manager(), utils_.pref_service(), std::string());
     }
     remote_suggestions_status_service_ =
         remote_suggestions_status_service.get();
@@ -529,6 +529,9 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   NiceMock<MockImageFetcher>* image_fetcher() { return image_fetcher_; }
   FakeImageDecoder* image_decoder() { return &image_decoder_; }
   PrefService* pref_service() { return utils_.pref_service(); }
+  SigninManagerForTest* fake_signin_manager() {
+    return utils_.fake_signin_manager();
+  }
   RemoteSuggestionsDatabase* database() { return database_; }
   MockScheduler* scheduler() { return scheduler_.get(); }
   FakeBreakingNewsListener* fake_breaking_news_listener() {
@@ -2413,17 +2416,37 @@ TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenDisabled) {
   provider->EnterState(RemoteSuggestionsProviderImpl::State::DISABLED);
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenHistoryCleared) {
+TEST_F(RemoteSuggestionsProviderImplTest,
+       CallsSchedulerWhenHistoryClearedWhileSignedOut) {
   auto provider =
       MakeSuggestionsProviderWithoutInitializationWithStrictScheduler();
   // Initiate the provider so that it is already READY.
   EXPECT_CALL(*scheduler(), OnProviderActivated());
   WaitForSuggestionsProviderInitialization(provider.get());
 
+  // The scheduler should be notified only of clearing the cache.
+  EXPECT_CALL(*scheduler(), OnSuggestionsCleared());
+  provider->ClearHistory(GetDefaultCreationTime(), GetDefaultExpirationTime(),
+                         base::RepeatingCallback<bool(const GURL& url)>());
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       CallsSchedulerWhenHistoryClearedWhileSignedIn) {
+  auto provider =
+      MakeSuggestionsProviderWithoutInitializationWithStrictScheduler();
+  // Initiate the provider so that it is already READY.
+  EXPECT_CALL(*scheduler(), OnProviderActivated());
+  WaitForSuggestionsProviderInitialization(provider.get());
+
+#if defined(OS_CHROMEOS)
+  fake_signin_manager()->SignIn("foo@bar.com");
+#else
+  fake_signin_manager()->SignIn("foo@bar.com", "user", "pass");
+#endif
   // The scheduler should be notified of clearing the history.
   EXPECT_CALL(*scheduler(), OnHistoryCleared());
   provider->ClearHistory(GetDefaultCreationTime(), GetDefaultExpirationTime(),
-                         base::Callback<bool(const GURL& url)>());
+                         base::RepeatingCallback<bool(const GURL& url)>());
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenSignedIn) {
