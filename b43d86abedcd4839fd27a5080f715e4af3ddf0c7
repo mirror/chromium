@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad42d8a7_e87e6a26",
+        "filename": "third_party/WebKit/Source/core/css/CSSGradientValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T16:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c055828_1249f67a",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6189ec_e5ecc73b",
         "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-19T18:52:14Z",
       "side": 1,
       "message": "Not new to this CL, but it seems strange for GetImage to take a less precise rect than what ImageSize returns.\n\nE.g. NinePieceImagePainter::Paint() does something like this\n\n  IntSize image_size \u003d RoundedIntSize(style_image-\u003eImageSize(...));\n   \n  scoped_refptr\u003cImage\u003e image \u003d style_image-\u003eGetImage(..., LayoutSize(image_size));\n\nDoesn\u0027t this pattern defeat the (size * multiplier) / multiplier \u003d\u003d size paint-time invariant?",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 22
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee715d7f_f732c21b",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T16:02:27Z",
+      "side": 1,
+      "message": "The container size is from the layout objects post-layout snapped size. While you could make it a float, it doesn\u0027t carry any additional information and I\u0027m reluctant to change it, at least right now.\n\nThe NinePieceImagePainter code was something I tried to change, but it broke horribly because borders are snapped in non-obvious ways. The FIXME in NinePieceImagePainter implies that there is something to do here, but I would like to leave it for later.",
+      "parentUuid": "6b6189ec_e5ecc73b",
       "range": {
         "startLine": 111,
         "startChar": 12,
@@ -122,6 +164,54 @@
     },
     {
       "key": {
+        "uuid": "cebd11bf_6b33e83d",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T16:02:27Z",
+      "side": 1,
+      "message": "This is an override of Image::Size which returns an IntSize. I went along a path to change that but it requires touching code all over chromium and seems like a bad idea right now. The key distinction here is that an Image is always at its native size, but a StyleImage can be at any size due to zoom or other effects. For generated images used directly as Image, we want integer size. When used as StyleImage backing this size is not used.",
+      "parentUuid": "5cc23835_85a92919",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2efceb_24f77448",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T16:02:27Z",
+      "side": 1,
+      "message": "Because I figure it\u0027s better to make calling code think the image is smaller than it actually is, rather than have callers try to use parts of an image that don\u0027t exist. Still, this might be why the SVG viewbox test is failing, so I\u0027ll look into it.",
+      "parentUuid": "ea5aabb1_cd80d1f0",
+      "range": {
+        "startLine": 42,
+        "startChar": 41,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcf9076a_4e6d642c",
         "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
         "patchSetId": 2
@@ -133,6 +223,30 @@
       "writtenOn": "2017-12-19T18:52:14Z",
       "side": 1,
       "message": "Let\u0027s not leak layout types into graphics.  FloatSize insted?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ba4bfb_461d2307",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T16:02:27Z",
+      "side": 1,
+      "message": "I think I left it LayoutSize for a reason but now I can\u0027t recall. I\u0027ll see what happens when I change it.",
+      "parentUuid": "bcf9076a_4e6d642c",
       "range": {
         "startLine": 68,
         "startChar": 2,
