@@ -617,6 +617,11 @@ cr.define('cloudprint', function() {
               JSON.stringify(printerJson));
           return;
         }
+        if (printer.certificateStatus !=
+            print_preview.DestinationCertificateStatus.YES) {
+          console.warn(
+              'Warning: Printer ' + printer.id + ' may not pass 2018 cert!');
+        }
         const printerDoneEvent =
             new Event(CloudPrintInterfaceEventType.PRINTER_DONE);
         printerDoneEvent.printer = printer;
