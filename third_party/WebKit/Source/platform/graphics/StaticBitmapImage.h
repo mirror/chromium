@@ -29,7 +29,6 @@ class GLES2Interface;
 
 namespace blink {
 
-class WebGraphicsContext3DProvider;
 class WebGraphicsContext3DProviderWrapper;
 
 class PLATFORM_EXPORT StaticBitmapImage : public Image {
@@ -73,13 +72,15 @@ class PLATFORM_EXPORT StaticBitmapImage : public Image {
   virtual scoped_refptr<StaticBitmapImage> MakeUnaccelerated() { return this; }
 
   // Methods overridden by AcceleratedStaticBitmapImage only
-  virtual void CopyToTexture(WebGraphicsContext3DProvider*,
+  virtual bool CopyToTexture(gpu::gles2::GLES2Interface*,
                              GLenum,
                              GLuint,
+                             bool,
                              bool,
                              const IntPoint&,
                              const IntRect&) {
     NOTREACHED();
+    return false;
   }
   // TODO: Merge CopyImageToPlatformTexture function with CopyToTexture
   // function above and probably with CopyToPlatformTexture in DrawingBuffer
