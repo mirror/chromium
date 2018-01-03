@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7836137_632e83cb",
+        "filename": "cc/paint/paint_texture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T18:49:19Z",
+      "side": 1,
+      "message": "These structures names and fields are all extremely general, but are for a very specific use case as function arguments.\n\nMaybe they could be nested inside the WebMediaPlayer class?",
+      "parentUuid": "45a8f1c1_edb30cbc",
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c70985e_2974a33f",
         "filename": "content/renderer/media/webmediaplayer_ms.h",
         "patchSetId": 2
