@@ -22,6 +22,30 @@
       "revId": "2801dafecc0a1f4864bdb419739776e5d0791011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3eea750_75c7803f",
+        "filename": "ui/views/controls/button/radio_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2018-01-03T23:36:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e88b19a7_db128f92",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 3
+      },
+      "revId": "2801dafecc0a1f4864bdb419739776e5d0791011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
