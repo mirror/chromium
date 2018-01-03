@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e151fa42_7c301120",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-03T14:53:41Z",
+      "side": 1,
+      "message": "this is grabbing the main frame\u0027s interface pointer and calling it n times, one for each render frame. So only the main frame will get notified, which isn\u0027t what you want.\n\nYou\u0027ll want to move the GetRemoteAssociatedInterfaces()-\u003eGetInterface call into the SetAllowRunningInsecureContent method",
+      "revId": "58df91501d942a8ca25680c3b9e113f3e159df8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
