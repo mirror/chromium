@@ -37,6 +37,11 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
       const GetDisplayedNotificationsCallback& callback) const override;
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
 
+  void ForwardHandleEventForTesting(
+      NotificationCommon::Operation operation,
+      ABI::Windows::UI::Notifications::IToastNotification* notification,
+      ABI::Windows::UI::Notifications::IToastActivatedEventArgs* args);
+
  private:
   friend class NotificationPlatformBridgeWinImpl;
   friend class NotificationPlatformBridgeWinTest;

@@ -170,6 +170,27 @@ void StubNotificationDisplayService::GetDisplayed(
   callback.Run(std::move(notifications), true /* supports_synchronization */);
 }
 
+void StubNotificationDisplayService::ProcessNotificationOperation(
+    NotificationCommon::Operation operation,
+    NotificationCommon::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id,
+    const base::Optional<int>& action_index,
+    const base::Optional<base::string16>& reply,
+    const base::Optional<bool>& by_user) {
+  last_operation_ = operation;
+  last_notification_type_ = notification_type;
+  last_origin_ = origin;
+  last_notification_id_ = notification_id;
+  last_action_index_ = action_index;
+  last_reply_ = reply;
+  last_by_user_ = by_user;
+
+  NotificationDisplayService::ProcessNotificationOperation(
+      operation, notification_type, origin, notification_id, action_index,
+      reply, by_user);
+}
+
 StubNotificationDisplayService::NotificationData::NotificationData(
     NotificationCommon::Type type,
     const message_center::Notification& notification,
