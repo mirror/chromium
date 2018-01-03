@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "53bdcaca_5f0cdda0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "I should change crc32c -\u003e crc32 herein.",
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7718fad_ae8fb4a2",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "I should move this code into crc32() for now, to better match my upcoming ARM crc patch.\n\nAlso, users of zlib (and inflate and deflate) call crc32(0, Z_NULL, 0) to init/get/set the initial crc32 value.  We can use this fact to do the cpu feature check when that call happens, this to minimize x86_check_features() overhead.",
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c71e1a0_bc1131bf",
         "filename": "third_party/zlib/crc32_simd.c",
         "patchSetId": 4
@@ -19,6 +53,98 @@
         "endLine": 17,
         "endChar": 62
       },
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "404a1eee_333c4171",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "Glad it helped explain the algorithm.  I have used it to implement crc32 on ARM using pmull as well.\n\nI should format this code to use 4 space indent for consistency ...",
+      "parentUuid": "0c71e1a0_bc1131bf",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b235611c_a55c199d",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "I should remove x11, x12, x13, x14, and rewrite so I do not need them.",
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a931174b_4fe86dee",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "e.g. these 4 lines can then go away.",
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5338bb42_ea2faf33",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "I can get rid of this extra \"x5 \u003d x1\" instruction step, both here and elsewhere below where I used it.",
+      "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418844d0_3b74cafc",
+        "filename": "third_party/zlib/crc32_simd.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-03T13:44:11Z",
+      "side": 1,
+      "message": "Ditto this x2 \u003d x1 instruction here and below: they can both go away.",
       "revId": "42f1a5aaaee96d3c14fe73d7101341e1d904c15b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
