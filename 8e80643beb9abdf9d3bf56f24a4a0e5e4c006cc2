@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08553c31_466023f2",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-03T14:52:49Z",
+      "side": 1,
+      "message": "Changed name but |context_provider| can\u0027t be const since ContextProvider::ContextGL() isn\u0027t const.",
+      "parentUuid": "892a2aad_6956564a",
+      "revId": "8e80643beb9abdf9d3bf56f24a4a0e5e4c006cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e74378_1d0eb647",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8e80643beb9abdf9d3bf56f24a4a0e5e4c006cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b2bb8d_ca3cd759",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-03T14:52:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e74378_1d0eb647",
+      "revId": "8e80643beb9abdf9d3bf56f24a4a0e5e4c006cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

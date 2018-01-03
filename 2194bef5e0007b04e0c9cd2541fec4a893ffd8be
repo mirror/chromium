@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "7c681685_3575d80f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-03T14:52:49Z",
+      "side": 1,
+      "message": "I added a comment here for why we don\u0027t need to observer context loss on worker.",
+      "parentUuid": "384dec54_5712d851",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "223dc5df_89e30bf3",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 4
