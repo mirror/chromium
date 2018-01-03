@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15eae81_b0ebd0d5",
+        "filename": "components/suggestions/suggestions_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2018-01-03T21:55:54Z",
+      "side": 1,
+      "message": "neat!",
+      "revId": "609ef95865dd9525f50d12fd144e3d27b2cbde9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
