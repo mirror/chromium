@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4057493a_c02a11b7",
+        "filename": "content/common/input/synthetic_web_input_event_builders.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-03T14:38:08Z",
+      "side": 1,
+      "message": "I\u0027d actually prefer something that wasn\u0027t the default that gets filled in as the default. As this essentially removes tests that check the value is indeed propagated correctly.",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bf50de_a9009419",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-03T14:38:08Z",
+      "side": 1,
+      "message": "Can you initialize touch_adjustment_result_.unique_event_id_ to 0?",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd06e985_bba17696",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-03T14:38:08Z",
+      "side": 1,
+      "message": "How will we use this uma metric? I\u0027d be more curious of the # of events we actually end up adjusting to be the same target as before.",
+      "revId": "6375117e8035db22445aeb4880289a471d83cd78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
