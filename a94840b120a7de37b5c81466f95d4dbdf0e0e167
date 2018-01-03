@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4cd694a_a9f7d913",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8737,
+      "author": {
+        "id": 1257327
+      },
+      "writtenOn": "2018-01-03T15:59:57Z",
+      "side": 1,
+      "message": "Removed the creation of vkImage using Skia\u0027s internal helpers. Now,vkImages are created using native vulkan API\u0027s.",
+      "parentUuid": "4f901c82_ea672faa",
+      "range": {
+        "startLine": 8718,
+        "startChar": 1,
+        "endLine": 8737,
+        "endChar": 60
+      },
+      "revId": "a94840b120a7de37b5c81466f95d4dbdf0e0e167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c444049c_3f578d24",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-02T19:10:05Z",
       "side": 1,
       "message": "I don\u0027t think this command makes sense. This returns a VkImage pointer, that lives in the GPU process, to the renderer.",
+      "revId": "a94840b120a7de37b5c81466f95d4dbdf0e0e167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c866aa5c_bda4c06a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8742,
+      "author": {
+        "id": 1257327
+      },
+      "writtenOn": "2018-01-03T15:59:57Z",
+      "side": 1,
+      "message": "The modified patchset does not return vkImage pointer to renderer. It returns only an id to renderer process. This way only the GPU process will have access to VkImage pointer.",
+      "parentUuid": "c444049c_3f578d24",
       "revId": "a94840b120a7de37b5c81466f95d4dbdf0e0e167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
