@@ -75,6 +75,9 @@ Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
 }
 
 String CSSStyleValue::toString() const {
+  if (!css_text_.IsEmpty())
+    return css_text_;
+
   const CSSValue* result = ToCSSValue();
   // TODO(crbug.com/782103): Remove this once all CSSStyleValues
   // support toCSSValue().

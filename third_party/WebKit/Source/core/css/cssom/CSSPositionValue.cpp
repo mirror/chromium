@@ -116,6 +116,7 @@ void CSSPositionValue::setX(CSSNumericValue* x,
     return;
   }
   x_ = x;
+  ClearCSSText();
 }
 
 void CSSPositionValue::setY(CSSNumericValue* y,
@@ -126,6 +127,7 @@ void CSSPositionValue::setY(CSSNumericValue* y,
     return;
   }
   y_ = y;
+  ClearCSSText();
 }
 
 const CSSValue* CSSPositionValue::ToCSSValue() const {

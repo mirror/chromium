@@ -117,6 +117,10 @@ CSSStyleValueVector StyleValueFactory::FromString(
   CSSStyleValueVector style_value_vector =
       StyleValueFactory::CssValueToStyleValueVector(property_id, *value);
   DCHECK(!style_value_vector.IsEmpty());
+  // FIXME
+  if (style_value_vector.size() == 1) {
+    style_value_vector[0]->SetCSSText(css_text);
+  }
   return style_value_vector;
 }
 
