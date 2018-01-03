@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9770072_a11de5c7",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2018-01-03T17:04:34Z",
+      "side": 1,
+      "message": "It is odd to have a \"public\" file depend on non public headers.",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "4bbbc44e3922a74cfddce1dca973032e1e86cd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
