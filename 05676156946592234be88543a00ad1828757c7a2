@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273beb25_47f16ac9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_status_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-03T15:13:20Z",
+      "side": 1,
+      "message": "This change only makes the order consistent with the .h file.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "05676156946592234be88543a00ad1828757c7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
