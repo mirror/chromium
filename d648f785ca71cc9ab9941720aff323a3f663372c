@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db99ed6f_86ad10d3",
+        "filename": "content/browser/bad_message.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:22:26Z",
+      "side": 1,
+      "message": "These replace RecordAction(base::UserMetricsAction(\"...\")) in \n1. WebContentsImpl::CreateNewWidget\n2. RenderViewHostImpl::SetWebUIProperty\n\nUsing ReceivedBadMessage is preferrable (BadMessageReason is better exposed through UMA + ReceivedBadMessage triggers a DwoC exposed via Crash).\n\n\nThis change is slightly unrelated, but I\u0027ve noticed the legacy kill system when introducing BadMessageReason checks into tests, and I thought I can also fix this while I am here.",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 40
+      },
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f63266a7_f950fe88",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:22:26Z",
+      "side": 1,
+      "message": "This works as expected (for the case when Wait returns base::nullopt and for the case when Wait returns an unexpected value).  OTOH, note that gmock is not able to pretty-print base::Optional\u003cT\u003e (so if the test fails, the error message just dumps bytes of base::Optional\u003cT\u003e in hex).  I tried working on pretty-printing in a follow-up, but this is surprisingly difficult (have to support the case when T supports \u003c\u003c or PrintTo or none of these - quite a few of templates that should be generalized and not just added in an ad-hoc manner inside base/optional.h).",
+      "range": {
+        "startLine": 368,
+        "startChar": 2,
+        "endLine": 368,
+        "endChar": 50
+      },
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c69eb294_29414428",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:22:26Z",
+      "side": 1,
+      "message": "Without this edit, we would get another kill - 188 / RFH_INTERFACE_PROVIDER_MISSING.  This discovery is what prompted this whole CL :-)",
+      "range": {
+        "startLine": 552,
+        "startChar": 0,
+        "endLine": 555,
+        "endChar": 73
+      },
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

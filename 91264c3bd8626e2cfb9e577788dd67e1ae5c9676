@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b33fbff_d1b608ff",
+        "filename": "content/browser/frame_host/render_frame_message_filter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T17:22:26Z",
+      "side": 0,
+      "message": "The new RenderProcessHostKillWaiter does something more-or-less equivalent to this old test.",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 71
+      },
+      "revId": "91264c3bd8626e2cfb9e577788dd67e1ae5c9676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
