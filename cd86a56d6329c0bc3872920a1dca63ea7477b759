@@ -16,6 +16,24 @@
       "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8ea7b8_397620ec",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2018-01-03T14:24:00Z",
+      "side": 1,
+      "message": "Added comments and commit message; example:\n  \u003cp\u003e....\u003cspan\u003e....\u003c/span\u003e\u003c/p\u003e\nWhen line wraps in \u003cspan\u003e, the initial style of the 2nd line is the style of the \u003cspan\u003e.\n\nA new test (pre-br.html) is one case that demonstrate this.",
+      "parentUuid": "45d217b8_953d075b",
+      "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
