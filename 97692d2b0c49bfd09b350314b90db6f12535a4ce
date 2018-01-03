@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0ab78e3_02c58866",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:36:07Z",
+      "side": 1,
+      "message": "Do we need to pass webState given that webState \u003d\u003d webState_ ?",
+      "range": {
+        "startLine": 826,
+        "startChar": 23,
+        "endLine": 826,
+        "endChar": 31
+      },
+      "revId": "97692d2b0c49bfd09b350314b90db6f12535a4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2740bf_89405639",
+        "filename": "components/autofill/ios/browser/autofill_agent_unittests.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:36:07Z",
+      "side": 1,
+      "message": "Do we still need this class?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "97692d2b0c49bfd09b350314b90db6f12535a4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf64de78_589c77ef",
+        "filename": "components/autofill/ios/browser/js_autofill_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:36:07Z",
+      "side": 1,
+      "message": "I think this will be a global variable. We need parenthesis to make it ivar.",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "97692d2b0c49bfd09b350314b90db6f12535a4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31d4335_89c570a5",
+        "filename": "ios/chrome/browser/autofill/autofill_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:36:07Z",
+      "side": 1,
+      "message": "Optional: It would be better to use testing::WaitUntilConditionOrTimeout. WaitForCondition uses deprecated base::test::ios::WaitUntilCondition.",
+      "range": {
+        "startLine": 570,
+        "startChar": 2,
+        "endLine": 570,
+        "endChar": 18
+      },
+      "revId": "97692d2b0c49bfd09b350314b90db6f12535a4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e1a76a_f02ac423",
+        "filename": "ios/chrome/browser/autofill/js_autofill_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-03T21:36:07Z",
+      "side": 1,
+      "message": "I think you can use |ExecuteJavaScript(@\"typeof __gCrWeb.autofill\")| here, which is shorter.",
+      "revId": "97692d2b0c49bfd09b350314b90db6f12535a4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
