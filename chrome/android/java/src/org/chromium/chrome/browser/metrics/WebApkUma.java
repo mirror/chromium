@@ -18,6 +18,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.preferences.website.SiteSettingsCategory;
 import org.chromium.chrome.browser.preferences.website.Website;
 import org.chromium.chrome.browser.preferences.website.WebsitePermissionsFetcher;
+import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
 import org.chromium.webapk.lib.common.WebApkConstants;
 
 import java.io.File;
@@ -329,7 +330,9 @@ public class WebApkUma {
         }
         long minimumFreeBytes = getLowSpaceLimitBytes(partitionTotalBytes);
 
-        return partitionAvailableBytes - minimumFreeBytes;
+        long webApkExtraSpace = ChromeWebApkHost.getWebApkExtraInstallationSpace();
+
+        return partitionAvailableBytes - minimumFreeBytes + webApkExtraSpace;
     }
 
     /**

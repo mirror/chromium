@@ -37,6 +37,11 @@ public class ChromeWebApkHost {
         return LibraryLoader.isInitialized() && nativeCanLaunchRendererInWebApkProcess();
     }
 
+    /* Returns the size below device low-space threshold that can be used to install WebApk. */
+    public static long getWebApkExtraInstallationSpace() {
+        return nativeWebApkExtraInstallationSpace();
+    }
+
     /**
      * Checks whether Chrome is the runtime host of the WebAPK asynchronously. Accesses the
      * ApplicationStateListener needs to be called on UI thread.
@@ -70,4 +75,6 @@ public class ChromeWebApkHost {
     }
 
     private static native boolean nativeCanLaunchRendererInWebApkProcess();
+
+    private static native long nativeWebApkExtraInstallationSpace();
 }
