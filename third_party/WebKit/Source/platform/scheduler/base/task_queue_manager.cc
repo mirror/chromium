@@ -189,8 +189,19 @@ void TaskQueueManager::OnExitNestedRunLoop() {
   }
   main_thread_only().nesting_depth--;
   DCHECK_GE(main_thread_only().nesting_depth, 0);
-  if (observer_ && main_thread_only().nesting_depth == 0)
-    observer_->OnExitNestedRunLoop();
+  if (main_thread_only().nesting_depth == 0) {
+    // While we were nested some non-nestable tasks may have become eligible to
+    // run. We push them back onto the front of their original work queues.
+    while (!main_thread_only().non_nestable_task_queue.empty()) {
+      NonNestableTask& non_nestable_task =
+          *main_thread_only().non_nestable_task_queue.begin();
+      non_nestable_task.task_queue->RequeueDeferredNonNestableTask(
+          std::move(non_nestable_task.task));
+      main_thread_only().non_nestable_task_queue.pop_front();
+    }
+    if (observer_)
+      observer_->OnExitNestedRunLoop();
+  }
 }
 
 void TaskQueueManager::OnQueueHasIncomingImmediateWork(
@@ -477,12 +488,21 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   if (pending_task.nestable == base::Nestable::kNonNestable &&
       main_thread_only().nesting_depth > 0) {
-    // Defer non-nestable work to the main task runner.  NOTE these tasks can be
-    // arbitrarily delayed so the additional delay should not be a problem.
-    // TODO(skyostil): Figure out a way to not forget which task queue the
-    // task is associated with. See http://crbug.com/522843.
-    controller_->PostNonNestableTask(pending_task.posted_from,
-                                     std::move(pending_task.task));
+    // Defer non-nestable work. NOTE these tasks can be arbitrarily delayed so
+    // the additional delay should not be a problem.
+    // Note because we don't delete queues while nested, it's perfectly OK to
+    // store the raw pointer for |queue| here.
+    DCHECK(
+        (work_queue->queue_type() == internal::WorkQueue::QueueType::kDelayed &&
+         !pending_task.delayed_run_time.is_null()) ||
+        (work_queue->queue_type() ==
+             internal::WorkQueue::QueueType::kImmediate &&
+         pending_task.delayed_run_time.is_null()));
+    NonNestableTask deferred_task{std::move(pending_task), queue};
+    // We push these tasks onto the front to make sure that when requeued they
+    // are pushed in the right order.
+    main_thread_only().non_nestable_task_queue.push_front(
+        std::move(deferred_task));
     return ProcessTaskResult::kDeferred;
   }
 
