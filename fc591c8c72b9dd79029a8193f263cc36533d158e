@@ -22,6 +22,30 @@
       "revId": "fc591c8c72b9dd79029a8193f263cc36533d158e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229fb9e6_a99e16c6",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-03T17:42:27Z",
+      "side": 0,
+      "message": "Register and Sign have their own unique callbacks now, so I moved them out of the parent class.",
+      "parentUuid": "c0dc2af9_14cb55f9",
+      "range": {
+        "startLine": 30,
+        "startChar": 53,
+        "endLine": 30,
+        "endChar": 78
+      },
+      "revId": "fc591c8c72b9dd79029a8193f263cc36533d158e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
