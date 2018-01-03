@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b3b77d_73de1d60",
+        "filename": "chrome/browser/printing/print_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "What\u0027s the outcome of sending the IPC, in this test and below?  Is there anything we can verify in the test (or comment if not)?",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e376b3c_9e2d2889",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "nit: identified",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d384b5a8_96693a9e",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "nit: \"Frame ID\" is an ambiguous term, which could mean RFH routing ID, FrameTreeNode ID, or something else (e.g. extension frame ID, frame_guid above, etc).  Saying \"RenderFrame routing ID\" is clearer.",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 65
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f9ccdc_bba23722",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "What happens if some of these frames detach before we hear from them?  May be worth covering that in the comment.",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b4618b_08baa564",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "Why is this jumping to the main frame?",
+      "range": {
+        "startLine": 390,
+        "startChar": 24,
+        "endLine": 390,
+        "endChar": 44
+      },
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb9096c_3d43f510",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-03T06:09:52Z",
+      "side": 1,
+      "message": "This doesn\u0027t sound like it belongs on WebContentsObserver, which is about notifying observers of events that have happened rather than requesting some action be taken.  There\u0027s a huge list of observers already.\n\nDoes any other class know about the PrintCompositeClient?  I\u0027m wondering if this should be a WebContentsDelegate method, or a ContentBrowserClient method.",
+      "revId": "4e194eebe044fefb5b2d93302b7c84e0e33df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
