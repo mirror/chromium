@@ -22,6 +22,30 @@
       "revId": "a29a88f60eaf9259661a953872dce18cb1e1bc9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f5a763_bbccc004",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-03T00:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6240d635_f6489d07",
+      "range": {
+        "startLine": 253,
+        "startChar": 25,
+        "endLine": 253,
+        "endChar": 26
+      },
+      "revId": "a29a88f60eaf9259661a953872dce18cb1e1bc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
