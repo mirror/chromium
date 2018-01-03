@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "985a0817_0e804d8f",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T21:33:44Z",
+      "side": 1,
+      "message": "You\u0027re right, I\u0027m not sure what I was thinking.",
+      "parentUuid": "148507ae_db751774",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4988904_3a2f46aa",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
         "patchSetId": 1
@@ -116,6 +134,24 @@
       "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b32eb4d_cfead257",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-03T21:33:44Z",
+      "side": 1,
+      "message": "Couple small things here.\n\nUsbDeviceIsPrinter and this function do similar things, but are implemented in very different ways (UsbDeviceIsPrinter uses UsbDeviceFilterMatches() while this does it more manually).  \n\nI marginally prefer using the existing library code as UsbDeviceIsPrinter does, just because I assume there\u0027s a reason that was made a library in the first place, but OTOH the manual check is reasonably simple.  Can you pick one approach and make these functions consistent about how they do what they are doing?\n\nAt the same time, we should make UsbDeviceIsPrinter consistent with this function vis-a-vis whether kPrinterInterfaceSubclass is part of the check.  I don\u0027t know offhand whether or not usb Printer class *must* imply usb Printer subclass.",
+      "parentUuid": "c6edb151_9cab6030",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
