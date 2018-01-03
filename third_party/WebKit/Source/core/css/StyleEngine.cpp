@@ -297,6 +297,18 @@ bool StyleEngine::ShouldUpdateShadowTreeStyleSheetCollection() const {
   return all_tree_scopes_dirty_ || !dirty_tree_scopes_.IsEmpty();
 }
 
+bool StyleEngine::UserStyleMediaQueryAffectingValueChanged() {
+  bool needs_active_style_update = false;
+  for (unsigned i = 0; i < active_user_style_sheets_.size(); ++i) {
+    CSSStyleSheet* sheet = active_user_style_sheets_[i].first;
+    if (sheet->Contents()->HasMediaQueries()) {
+      needs_active_style_update = true;
+      sheet->Contents()->ClearRuleSet();
+    }
+  }
+  return needs_active_style_update;
+}
+
 void StyleEngine::MediaQueryAffectingValueChanged(
     UnorderedTreeScopeSet& tree_scopes) {
   for (TreeScope* tree_scope : tree_scopes) {
@@ -310,6 +322,8 @@ void StyleEngine::MediaQueryAffectingValueChanged(
 }
 
 void StyleEngine::MediaQueryAffectingValueChanged() {
+  if (UserStyleMediaQueryAffectingValueChanged())
+    MarkUserStyleDirty();
   if (GetDocumentStyleSheetCollection().MediaQueryAffectingValueChanged())
     SetNeedsActiveStyleUpdate(GetDocument());
   MediaQueryAffectingValueChanged(active_tree_scopes_);
@@ -656,6 +670,18 @@ CSSStyleSheet* StyleEngine::ParseSheet(Element& element,
                                             GetDocument().Encoding());
   style_sheet->Contents()->ParseStringAtPosition(text, start_position);
   return style_sheet;
+}
+
+void StyleEngine::CollectUserStyleFeaturesTo(RuleFeatureSet& features) const {
+  for (unsigned i = 0; i < active_user_style_sheets_.size(); ++i) {
+    CSSStyleSheet* sheet = active_user_style_sheets_[i].first;
+    features.ViewportDependentMediaQueryResults().AppendVector(
+        sheet->ViewportDependentMediaQueryResults());
+    features.DeviceDependentMediaQueryResults().AppendVector(
+        sheet->DeviceDependentMediaQueryResults());
+    DCHECK(sheet->Contents()->HasRuleSet());
+    features.Add(sheet->Contents()->GetRuleSet().Features());
+  }
 }
 
 void StyleEngine::CollectScopedStyleFeaturesTo(RuleFeatureSet& features) const {
