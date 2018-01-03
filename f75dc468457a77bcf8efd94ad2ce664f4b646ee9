@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1e1f61c_d69bb794",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-03T00:06:32Z",
+      "side": 1,
+      "message": "nit: Could you point out that this is for first-letter handling?",
+      "revId": "f75dc468457a77bcf8efd94ad2ce664f4b646ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3e7540_73531ad7",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-03T00:06:32Z",
+      "side": 1,
+      "message": "nit: Could you point out that this is for first-letter handling?",
+      "revId": "f75dc468457a77bcf8efd94ad2ce664f4b646ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
