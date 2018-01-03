@@ -263,7 +263,6 @@ jumbo_source_set("unit_tests") {
     "indexeddb/MockWebIDBDatabase.cpp",
     "indexeddb/MockWebIDBDatabase.h",
     "media_controls/MediaControlsImplTest.cpp",
-    "media_controls/MediaControlsOrientationLockDelegateTest.cpp",
     "media_controls/MediaControlsRotateToFullscreenDelegateTest.cpp",
     "media_controls/elements/MediaControlInputElementTest.cpp",
     "media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
@@ -298,6 +297,7 @@ jumbo_source_set("unit_tests") {
     "push_messaging/PushManagerTest.cpp",
     "push_messaging/PushMessageDataTest.cpp",
     "remoteplayback/RemotePlaybackTest.cpp",
+    "screen_orientation/ScreenOrientationDelegateTest.cpp",
     "serviceworkers/ServiceWorkerContainerTest.cpp",
     "serviceworkers/WebEmbeddedWorkerImplTest.cpp",
     "wake_lock/ScreenWakeLockTest.cpp",
@@ -324,6 +324,7 @@ jumbo_source_set("unit_tests") {
   deps = [
     ":modules",
     ":modules_testing",
+    "//device/screen_orientation/public/interfaces:interfaces_blink",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",

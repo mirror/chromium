@@ -18,6 +18,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/shell/test_runner/layout_and_paint_async_then.h"
 #include "content/shell/test_runner/layout_dump.h"
 #include "content/shell/test_runner/mock_content_settings_client.h"
@@ -39,6 +40,7 @@
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
 #include "gin/wrappable.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/platform/WebCanvas.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
@@ -2271,6 +2273,16 @@ void TestRunner::SetMockScreenOrientation(const std::string& orientation_str) {
     if (main_frame->IsWebLocalFrame()) {
       mock_screen_orientation_client_->UpdateDeviceOrientation(
           main_frame->ToWebLocalFrame(), orientation);
+      content::RenderFrame* render_frame =
+          content::RenderFrame::FromWebFrame(main_frame->ToWebLocalFrame());
+      render_frame->GetRemoteAssociatedInterfaces()->OverrideBinderForTesting(
+          device::mojom::ScreenOrientation::Name_,
+          base::BindRepeating(
+              &MockScreenOrientationClient::AddBinding,
+              // The |mock_screen_orientation_client_| is owned by TestRunner.
+              // So it should always be alive when bind-requests are sent out
+              // from blink.
+              base::Unretained(mock_screen_orientation_client_.get())));
     }
   }
 }

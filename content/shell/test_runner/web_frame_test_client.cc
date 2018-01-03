@@ -10,6 +10,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/test/test_runner_support.h"
 #include "content/shell/test_runner/accessibility_controller.h"
 #include "content/shell/test_runner/event_sender.h"
@@ -211,11 +212,6 @@ bool WebFrameTestClient::RunModalBeforeUnloadDialog(bool is_reload) {
   if (test_runner()->ShouldDumpJavaScriptDialogs())
     delegate_->PrintMessage(std::string("CONFIRM NAVIGATION\n"));
   return !test_runner()->shouldStayOnPageAfterHandlingBeforeUnload();
-}
-
-blink::WebScreenOrientationClient*
-WebFrameTestClient::GetWebScreenOrientationClient() {
-  return test_runner()->getMockScreenOrientationClient();
 }
 
 void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
@@ -695,6 +691,14 @@ bool WebFrameTestClient::RunFileChooser(
 blink::WebEffectiveConnectionType
 WebFrameTestClient::GetEffectiveConnectionType() {
   return test_runner()->effective_connection_type();
+}
+
+blink::AssociatedInterfaceProvider*
+WebFrameTestClient::GetRemoteNavigationAssociatedInterfaces() {
+  blink::WebLocalFrame* frame = web_frame_test_proxy_base_->web_frame();
+  content::RenderFrame* render_frame =
+      content::RenderFrame::FromWebFrame(frame);
+  return render_frame->GetRemoteAssociatedInterfaces();
 }
 
 TestRunner* WebFrameTestClient::test_runner() {
