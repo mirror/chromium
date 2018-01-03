@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55eb7cc0_ee2fd245",
+        "filename": "media/gpu/vaapi/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2018-01-03T03:25:58Z",
+      "side": 1,
+      "message": "Some functions have DVLOGF(4) to indicate the entering of the function while others have VLOGF(2). How is it decided?",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 7
+      },
+      "revId": "ae2ef5f48769c443d09081295f36f84afa96a3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81007c9_fc02b530",
+        "filename": "media/gpu/vaapi/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2018-01-03T03:25:58Z",
+      "side": 1,
+      "message": "Remove the space.\ns/video_frame_id\u003d /video_frame_id\u003d/\nAnd all the following occurrences.",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 31
+      },
+      "revId": "ae2ef5f48769c443d09081295f36f84afa96a3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
