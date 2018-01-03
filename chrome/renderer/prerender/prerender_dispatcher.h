@@ -31,6 +31,9 @@ class PrerenderDispatcher : public content::RenderThreadObserver,
 
   bool IsPrerenderURL(const GURL& url) const;
 
+  void IncrementPrefetchCount();
+  void DecrementPrefetchCount();
+
  private:
   friend class PrerenderDispatcherTest;
 
@@ -57,6 +60,9 @@ class PrerenderDispatcher : public content::RenderThreadObserver,
   // From the browser process, which prerenders are running, indexed by URL.
   // Updated by the browser processes as aliases are discovered.
   std::multiset<GURL> running_prerender_urls_;
+
+  int prefetch_count_ = 0;
+  bool prefetch_finished_ = false;
 };
 
 }  // namespace prerender

@@ -36,6 +36,15 @@ bool PrerenderDispatcher::IsPrerenderURL(const GURL& url) const {
   return running_prerender_urls_.count(url) >= 1;
 }
 
+void PrerenderDispatcher::IncrementPrefetchCount() {
+  prefetch_count_++;
+}
+
+void PrerenderDispatcher::DecrementPrefetchCount() {
+  if (!--prefetch_count_ && prefetch_finished_)
+    content::RenderThread::Get()->Send(new PrerenderHostMsg_PrefetchFinished());
+}
+
 void PrerenderDispatcher::OnPrerenderStart(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
@@ -175,7 +184,11 @@ void PrerenderDispatcher::Abandon(const WebPrerender& prerender) {
 }
 
 void PrerenderDispatcher::PrefetchFinished() {
-  content::RenderThread::Get()->Send(new PrerenderHostMsg_PrefetchFinished());
+  if (prefetch_count_) {
+    prefetch_finished_ = true;
+  } else {
+    content::RenderThread::Get()->Send(new PrerenderHostMsg_PrefetchFinished());
+  }
 }
 
 }  // namespace prerender
