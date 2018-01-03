@@ -16,6 +16,24 @@
       "revId": "f512217153e913023232e99becf9f8baaef2f4f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16c482a_ad2cef3d",
+        "filename": "base/optional_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-03T16:24:15Z",
+      "side": 1,
+      "message": "You mean `void* operator new(size_t, void*) \u003d delete;` ?",
+      "parentUuid": "4c48eeae_621c8682",
+      "revId": "f512217153e913023232e99becf9f8baaef2f4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
