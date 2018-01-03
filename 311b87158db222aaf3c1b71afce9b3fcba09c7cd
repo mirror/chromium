@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaef29ee_424478f3",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-03T18:39:53Z",
+      "side": 1,
+      "message": "Nit: _WINDOWS_ (ditto elsewhere)",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "311b87158db222aaf3c1b71afce9b3fcba09c7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
