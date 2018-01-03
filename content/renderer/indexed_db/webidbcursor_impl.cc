@@ -19,6 +19,7 @@ using blink::WebBlobInfo;
 using blink::WebData;
 using blink::WebIDBCallbacks;
 using blink::WebIDBKey;
+using blink::WebIDBKeyView;
 using blink::WebIDBValue;
 using indexed_db::mojom::CallbacksAssociatedPtrInfo;
 using indexed_db::mojom::CursorAssociatedPtrInfo;
@@ -100,8 +101,8 @@ void WebIDBCursorImpl::Advance(unsigned long count,
                      base::Passed(&callbacks_impl)));
 }
 
-void WebIDBCursorImpl::Continue(const WebIDBKey& key,
-                                const WebIDBKey& primary_key,
+void WebIDBCursorImpl::Continue(WebIDBKeyView key,
+                                WebIDBKeyView primary_key,
                                 WebIDBCallbacks* callbacks_ptr) {
   std::unique_ptr<WebIDBCallbacks> callbacks(callbacks_ptr);
 
@@ -171,10 +172,11 @@ void WebIDBCursorImpl::PostSuccessHandlerCallback() {
 void WebIDBCursorImpl::SetPrefetchData(
     const std::vector<IndexedDBKey>& keys,
     const std::vector<IndexedDBKey>& primary_keys,
-    const std::vector<WebIDBValue>& values) {
+    std::vector<WebIDBValue> values) {
   prefetch_keys_.assign(keys.begin(), keys.end());
   prefetch_primary_keys_.assign(primary_keys.begin(), primary_keys.end());
-  prefetch_values_.assign(values.begin(), values.end());
+  prefetch_values_.assign(std::make_move_iterator(values.begin()),
+                          std::make_move_iterator(values.end()));
 
   used_prefetches_ = 0;
   pending_onsuccess_callbacks_ = 0;
@@ -204,7 +206,7 @@ void WebIDBCursorImpl::CachedContinue(WebIDBCallbacks* callbacks) {
 
   IndexedDBKey key = prefetch_keys_.front();
   IndexedDBKey primary_key = prefetch_primary_keys_.front();
-  WebIDBValue value = prefetch_values_.front();
+  WebIDBValue value = std::move(prefetch_values_.front());
 
   prefetch_keys_.pop_front();
   prefetch_primary_keys_.pop_front();
@@ -222,7 +224,7 @@ void WebIDBCursorImpl::CachedContinue(WebIDBCallbacks* callbacks) {
   }
 
   callbacks->OnSuccess(WebIDBKeyBuilder::Build(key),
-                       WebIDBKeyBuilder::Build(primary_key), value);
+                       WebIDBKeyBuilder::Build(primary_key), std::move(value));
 }
 
 void WebIDBCursorImpl::ResetPrefetchCache() {
@@ -236,10 +238,8 @@ void WebIDBCursorImpl::ResetPrefetchCache() {
 
   // Ack any unused blobs.
   std::vector<std::string> uuids;
-  for (const auto& value : prefetch_values_) {
-    for (size_t i = 0, size = value.web_blob_info.size(); i < size; ++i)
-      uuids.push_back(value.web_blob_info[i].Uuid().Latin1());
-  }
+  for (const auto& value : prefetch_values_)
+    value.AppendBlobUuidsTo(uuids);
 
   // Reset the back-end cursor.
   io_runner_->PostTask(
