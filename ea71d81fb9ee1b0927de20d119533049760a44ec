@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf252aeb_f808bc45",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2018-01-03T13:25:33Z",
+      "side": 1,
+      "message": "We want to test that the difference between the two scores are recorded (so from 66.7 to 50).  Should this be 17 with a count of 1 here?",
+      "range": {
+        "startLine": 379,
+        "startChar": 73,
+        "endLine": 379,
+        "endChar": 74
+      },
+      "revId": "ea71d81fb9ee1b0927de20d119533049760a44ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98302c9_8bff2bff",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2018-01-03T13:25:33Z",
+      "side": 1,
+      "message": "Should this be 50 with a count of 1?",
+      "range": {
+        "startLine": 409,
+        "startChar": 73,
+        "endLine": 409,
+        "endChar": 79
+      },
+      "revId": "ea71d81fb9ee1b0927de20d119533049760a44ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
