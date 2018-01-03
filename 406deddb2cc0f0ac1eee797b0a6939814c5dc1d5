@@ -16,6 +16,24 @@
       "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649427fa_66925996",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-03T23:24:37Z",
+      "side": 1,
+      "message": "Do you think it makes sense to keep the DCHECK_LT in emplace_back (force API users to reserve before emplacing), or is it preferable to just match std::vector?",
+      "parentUuid": "4c7a7507_c524b9c1",
+      "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
