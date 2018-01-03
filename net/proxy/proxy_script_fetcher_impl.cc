@@ -35,7 +35,16 @@ const int kDefaultMaxResponseBytes = 1048576;  // 1 megabyte
 
 // The maximum duration (in milliseconds) allowed for fetching the PAC script.
 // Responses exceeding this will fail with ERR_TIMED_OUT.
-const int kDefaultMaxDurationMs = 300000;  // 5 minutes
+//
+// This timeout applies to both scripts fetched in the course of WPAD, as well
+// as explicitly configured ones.
+//
+// If the default timeout is too high, auto-detect can stall for a long time,
+// and if it is too low then slow loading scripts may be skipped.
+//
+// 30 seconds is a compromise between those competing goals. This value also
+// appears to match Microsoft Edge (based on testing).
+const int kDefaultMaxDurationMs = 30000;  // 30 seconds
 
 // Returns true if |mime_type| is one of the known PAC mime type.
 bool IsPacMimeType(const std::string& mime_type) {
