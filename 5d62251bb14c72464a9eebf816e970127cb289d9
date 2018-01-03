@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6d1be1_381da728",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "I wonder if we should invalidate |weak_factory_| first.",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddcbcdd_46061578",
+        "filename": "mojo/public/cpp/bindings/interface_invalidator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "Happy new year!",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335cc1cb_6e958085",
+        "filename": "mojo/public/cpp/bindings/interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "It seems a bit unfortunate to have to expose this. Could WeakInterfacePtr use internal_state() instead?",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb81028_f5d4a3de",
+        "filename": "mojo/public/cpp/bindings/tests/interface_invalidator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "I think you can cover some more of the WeakInterfacePtr semantics with these tests:\n- Call Ping() and synchronously invalidate\n- What is the state of |wptr| after invalidation (encountered_error(), is_bound())\n- When are connection error handlers invoked?\n- Moving an invalidated |wptr| into new WeakInterfacePtr",
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068bd02f_2c4d92b3",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "No explicit needed here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d76312_c822392c",
+        "filename": "mojo/public/cpp/bindings/weak_interface_ptr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-03T04:23:05Z",
+      "side": 1,
+      "message": "This should be pass-by-value.",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 41
+      },
+      "revId": "5d62251bb14c72464a9eebf816e970127cb289d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
