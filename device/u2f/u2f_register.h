@@ -10,27 +10,37 @@
 #include <string>
 #include <vector>
 
+#include "base/optional.h"
 #include "device/u2f/u2f_request.h"
 
 namespace device {
 
+class RegisterResponseData;
 class U2fDiscovery;
 
 class U2fRegister : public U2fRequest {
  public:
+  // Response is optional, depending on the status and
+  // the type of request being served.
+  using RegisterResponseCallback = base::RepeatingCallback<void(
+      U2fReturnCode status_code,
+      base::Optional<RegisterResponseData> response_data)>;
+
   U2fRegister(const std::vector<std::vector<uint8_t>>& registered_keys,
               const std::vector<uint8_t>& challenge_hash,
               const std::vector<uint8_t>& app_param,
+              std::string relying_party_id,
               std::vector<U2fDiscovery*> discoveries,
-              const ResponseCallback& cb);
+              const RegisterResponseCallback& cb);
   ~U2fRegister() override;
 
   static std::unique_ptr<U2fRequest> TryRegistration(
       const std::vector<std::vector<uint8_t>>& registered_keys,
       const std::vector<uint8_t>& challenge_hash,
       const std::vector<uint8_t>& app_param,
+      std::string relying_party_id,
       std::vector<U2fDiscovery*> discoveries,
-      const ResponseCallback& cb);
+      const RegisterResponseCallback& cb);
 
  private:
   void TryDevice() override;
@@ -57,6 +67,8 @@ class U2fRegister : public U2fRequest {
   const std::vector<std::vector<uint8_t>> registered_keys_;
   // List of authenticators that did not create any of the key handles in the
   // exclude list.
+  RegisterResponseCallback cb_;
+
   std::set<std::string> checked_device_id_list_;
   base::WeakPtrFactory<U2fRegister> weak_factory_;
 };
