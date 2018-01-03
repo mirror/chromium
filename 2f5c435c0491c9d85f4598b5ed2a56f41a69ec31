@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fe6fc29_c33edadb",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3254,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T19:42:08Z",
+      "side": 1,
+      "message": "Oh, this has the same behaviour thing you pointed out. Sp I moved this collection into the swapped texture set into SwapBuffers too. PTAL.\n\n(I will add a test for this in the meantime.)",
+      "revId": "2f5c435c0491c9d85f4598b5ed2a56f41a69ec31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
