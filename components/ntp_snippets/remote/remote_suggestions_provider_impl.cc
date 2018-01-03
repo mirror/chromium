@@ -1333,6 +1333,14 @@ void RemoteSuggestionsProviderImpl::ClearHistoryDependentState() {
     return;
   }
 
+  if (!status_service_->IsSignedIn()) {
+    // No need to clear suggestions if the user is not signed-in as they are not
+    // based on the browsing history. As history can get cleared during the
+    // sign-in flow (while the user is still signed out), this makes sure we are
+    // allowed to fetch suggestions after the sign in finishes.
+    return;
+  }
+
   NukeAllSuggestions();
   remote_suggestions_scheduler_->OnHistoryCleared();
 }
