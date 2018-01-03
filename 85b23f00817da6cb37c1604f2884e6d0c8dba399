@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcc860b9_31b22c05",
+        "filename": "device/geolocation/wifi_polling_policy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-03T02:21:43Z",
+      "side": 1,
+      "message": "Globals are defined as being initialized to nullptr so this is unnecessary.",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "85b23f00817da6cb37c1604f2884e6d0c8dba399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
