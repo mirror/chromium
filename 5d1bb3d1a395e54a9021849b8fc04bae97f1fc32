@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f303a69d_12b6e1e6",
+        "filename": "content/browser/net/network_quality_observer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-03T17:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79a122cc_4ad40f34",
+      "revId": "5d1bb3d1a395e54a9021849b8fc04bae97f1fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e13be9c4_2c702a06",
         "filename": "content/browser/net/network_quality_observer_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5d1bb3d1a395e54a9021849b8fc04bae97f1fc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8c23ac_5d3b7833",
+        "filename": "content/browser/net/network_quality_observer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2018-01-03T17:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e13be9c4_2c702a06",
+      "revId": "5d1bb3d1a395e54a9021849b8fc04bae97f1fc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
