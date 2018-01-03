@@ -75,18 +75,11 @@ std::vector<OverlayCheckReturn_Params> DrmOverlayValidator::TestPageFlip(
       continue;
     }
 
-    uint32_t original_format =
-        params[i].plane_z_order
-            ? GetFourCCFormatFromBufferFormat(params[i].format)
-            : GetFourCCFormatForOpaqueFramebuffer(params[i].format);
-    if (!controller->IsFormatSupported(original_format,
-                                       params[i].plane_z_order)) {
-      returns[i].status = OVERLAY_STATUS_NOT;
-      continue;
-    }
+    uint32_t fourcc_format =
+        ui::GetFourCCFormatFromBufferFormat(params[i].format);
 
     scoped_refptr<ScanoutBuffer> buffer =
-        GetBufferForPageFlipTest(drm, params[i].buffer_size, original_format,
+        GetBufferForPageFlipTest(drm, params[i].buffer_size, fourcc_format,
                                  buffer_generator_, &reusable_buffers);
 
     OverlayPlane plane(buffer, params[i].plane_z_order, params[i].transform,
