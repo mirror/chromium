@@ -70,6 +70,7 @@ TEST_F(DownloadTest, SucessfullDownload) {
 
   // Wait until download task is created.
   ASSERT_TRUE(WaitUntilConditionOrTimeout(testing::kWaitForDownloadTimeout, ^{
+    base::RunLoop().RunUntilIdle();
     return !delegate_.alive_download_tasks().empty();
   }));
   ASSERT_EQ(1U, delegate_.alive_download_tasks().size());

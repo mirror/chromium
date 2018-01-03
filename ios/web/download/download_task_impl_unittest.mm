@@ -164,11 +164,32 @@ class DownloadTaskImplTest : public PlatformTest {
   // C-string that represents the downloaded data.
   void SimulateDataDownload(CRWFakeNSURLSessionTask* session_task,
                             const char data_str[]) {
+    // Allows waiting for DownloadTaskObserver::OnDownloadUpdated callback.
+    class OnDownloadUpdatedWaiter : public DownloadTaskObserver {
+     public:
+      bool Wait() {
+        return WaitUntilConditionOrTimeout(kWaitForDownloadTimeout, ^{
+          base::RunLoop().RunUntilIdle();
+          return download_updated_;
+        });
+      }
+
+     private:
+      void OnDownloadUpdated(DownloadTask* task) override {
+        download_updated_ = true;
+      }
+      bool download_updated_ = false;
+    };
+
+    OnDownloadUpdatedWaiter callback_waiter;
+    task_->AddObserver(&callback_waiter);
     session_task.countOfBytesReceived += strlen(data_str);
     NSData* data = [NSData dataWithBytes:data_str length:strlen(data_str)];
     [session_delegate() URLSession:session()
                           dataTask:session_task
                     didReceiveData:data];
+    EXPECT_TRUE(callback_waiter.Wait());
+    task_->RemoveObserver(&callback_waiter);
   }
 
   // Sets NSURLSessionTask.state to NSURLSessionTaskStateCompleted and calls
