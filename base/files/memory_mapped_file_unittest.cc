@@ -42,6 +42,7 @@ class MemoryMappedFileTest : public PlatformTest {
   void TearDown() override { EXPECT_TRUE(DeleteFile(temp_file_path_, false)); }
 
   void CreateTemporaryTestFile(size_t size) {
+    LOG(ERROR) << "Creating temp file " << temp_file_path_.MaybeAsASCII();
     File file(temp_file_path_,
               File::FLAG_CREATE_ALWAYS | File::FLAG_READ | File::FLAG_WRITE);
     EXPECT_TRUE(file.IsValid());
