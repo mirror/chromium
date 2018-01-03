@@ -16,6 +16,24 @@
       "revId": "9a73300ae2b55aed9bc5682bfa1c840f3611073a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55a41b2_34b92516",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-03T22:48:19Z",
+      "side": 1,
+      "message": "I vote for deleting lines 789-790 in this patch, to reduce problems of correctness.\n\nAs for the future, how about we try to ignore the issue about overwritten mask layers?",
+      "parentUuid": "73369a00_5755497e",
+      "revId": "9a73300ae2b55aed9bc5682bfa1c840f3611073a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
