@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50719409_fc441aeb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-03T22:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a74f10_6a771783",
+      "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d962e63d_6f5bcf82",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T21:41:52Z",
       "side": 1,
       "message": "Can we do this in this CL, or is a lot of extra work?",
+      "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb79f92_66a1223c",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2018-01-03T22:26:47Z",
+      "side": 1,
+      "message": "The visibility of buttons depends on OOBE state (ex. Guest Mode button shows up after user accepted ToS and chose network), so I though it will be better to wait for handling web view in views based login (it should partially surface access to this information). WDYT?",
+      "parentUuid": "d962e63d_6f5bcf82",
       "revId": "a72d2147e9b9aa28588b829b95a8cbc81edba911",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
