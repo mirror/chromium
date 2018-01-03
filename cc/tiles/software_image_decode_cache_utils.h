@@ -5,6 +5,9 @@
 #ifndef CC_TILES_SOFTWARE_IMAGE_DECODE_CACHE_UTILS_H_
 #define CC_TILES_SOFTWARE_IMAGE_DECODE_CACHE_UTILS_H_
 
+#include <cstddef>
+#include <memory>
+
 #include "base/memory/discardable_memory.h"
 #include "base/memory/scoped_refptr.h"
 #include "cc/cc_export.h"
@@ -21,7 +24,7 @@
 
 namespace cc {
 
-class SoftwareImageDecodeCacheUtils {
+class CC_EXPORT SoftwareImageDecodeCacheUtils {
  private:
   // The following should only be accessed by the software image cache.
   friend class SoftwareImageDecodeCache;
@@ -91,7 +94,7 @@ class SoftwareImageDecodeCacheUtils {
              ProcessingType type,
              bool is_nearest_neighbor,
              const gfx::Rect& src_rect,
-             const gfx::Size& size,
+             const gfx::Size& target_size,
              const gfx::ColorSpace& target_color_space);
 
     PaintImage::FrameKey frame_key_;
@@ -111,49 +114,48 @@ class SoftwareImageDecodeCacheUtils {
   // construct an image out of SkImageInfo and stored discardable memory.
   class CC_EXPORT CacheEntry {
    public:
+    enum class TaskType { kInRaster, kOutOfRaster };
+
     CacheEntry();
     CacheEntry(const SkImageInfo& info,
                std::unique_ptr<base::DiscardableMemory> memory,
                const SkSize& src_rect_offset);
     ~CacheEntry();
 
-    void MoveImageMemoryTo(CacheEntry* entry);
-
-    sk_sp<SkImage> image() const {
-      if (!memory)
-        return nullptr;
-      DCHECK(is_locked);
-      return image_;
-    }
-    const SkSize& src_rect_offset() const { return src_rect_offset_; }
-
     bool Lock();
     void Unlock();
+    void TakeMemoryFromEntry(CacheEntry* entry);
 
-    // An ID which uniquely identifies this CacheEntry within the image decode
-    // cache. Used in memory tracing.
+    // Usage functionality.
+    void set_used() { usage_stats_.used = true; }
+    void set_cached() { usage_stats_.cached = true; }
+    void set_out_of_raster() { usage_stats_.first_lock_out_of_raster = true; }
+    void set_decode_failed() { decode_failed_ = true; }
+    void set_budgeted(bool flag) { is_budgeted_ = flag; }
+
+    // State queries.
+    bool decode_failed() const { return decode_failed_; }
+    const SkSize& src_rect_offset() const { return src_rect_offset_; }
     uint64_t tracing_id() const { return tracing_id_; }
-    // Mark this image as being used in either a draw or as a source for a
-    // scaled image. Either case represents this decode as being valuable and
-    // not wasted.
-    void mark_used() { usage_stats_.used = true; }
-    void mark_cached() { cached_ = true; }
-    void mark_out_of_raster() { usage_stats_.first_lock_out_of_raster = true; }
+    bool is_locked() const { return is_locked_; }
+    bool is_budgeted() const { return is_budgeted_; }
+    const sk_sp<SkImage>& image() const { return image_; }
+    base::DiscardableMemory* memory_for_tracing() { return memory_.get(); }
 
-    // Since this is an inner class, we expose these variables publicly for
-    // simplicity.
-    // TODO(vmpstr): A good simple clean-up would be to rethink this class
-    // and its interactions to instead expose a few functions which would also
-    // facilitate easier DCHECKs.
-    int ref_count = 0;
-    bool decode_failed = false;
-    bool is_locked = false;
-    bool is_budgeted = false;
+    // Ref counting.
+    int ref() { return ++ref_count_; }
+    int unref() { return --ref_count_; }
+    bool has_refs() const { return ref_count_ != 0; }
 
-    scoped_refptr<TileTask> in_raster_task;
-    scoped_refptr<TileTask> out_of_raster_task;
-
-    std::unique_ptr<base::DiscardableMemory> memory;
+    // Tasks associated with the entry.
+    const scoped_refptr<TileTask>& task(TaskType type) const {
+      return type == TaskType::kInRaster ? in_raster_task_
+                                         : out_of_raster_task_;
+    }
+    scoped_refptr<TileTask>& task(TaskType type) {
+      return const_cast<scoped_refptr<TileTask>&>(
+          static_cast<const CacheEntry*>(this)->task(type));
+    }
 
    private:
     struct UsageStats {
@@ -164,23 +166,37 @@ class SoftwareImageDecodeCacheUtils {
       bool last_lock_failed = false;
       bool first_lock_wasted = false;
       bool first_lock_out_of_raster = false;
+      // Indicates whether this entry was ever in the cache.
+      bool cached = false;
     };
 
-    SkImageInfo image_info_;
+    void ResetMemory();
+
     sk_sp<SkImage> image_;
+    int ref_count_ = 0;
+    bool decode_failed_ = false;
+    bool is_locked_ = false;
+    bool is_budgeted_ = false;
+    scoped_refptr<TileTask> in_raster_task_;
+    scoped_refptr<TileTask> out_of_raster_task_;
+    std::unique_ptr<base::DiscardableMemory> memory_;
     SkSize src_rect_offset_;
-    uint64_t tracing_id_;
+    uint64_t tracing_id_ = 0;
     UsageStats usage_stats_;
-    // Indicates whether this entry was ever in the cache.
-    bool cached_ = false;
   };
 
-  static std::unique_ptr<CacheEntry> DoDecodeImage(const CacheKey& key,
-                                                   const PaintImage& image,
-                                                   SkColorType color_type);
-  static std::unique_ptr<CacheEntry> GenerateCacheEntryFromCandidate(
+  // Generate a cache entry from the given key and image. Returns nullptr in
+  // case of failure.
+  static std::unique_ptr<CacheEntry> Decode(const CacheKey& key,
+                                            const PaintImage& image,
+                                            SkColorType color_type);
+
+  // Use the given decoded candidate to produce a cache entry for the key. This
+  // involves scaling and possibly extracting a subset. The subset is extracted
+  // if so requested by the caller.
+  static std::unique_ptr<CacheEntry> ScaleCandidateEntry(
       const CacheKey& key,
-      const DecodedDrawImage& candidate,
+      const CacheEntry* candidate,
       bool needs_extract_subset,
       SkColorType color_type);
 };
