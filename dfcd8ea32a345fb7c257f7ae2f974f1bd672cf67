@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da2d383c_29f1770f",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-03T21:23:46Z",
+      "side": 1,
+      "message": "Robert?  WDYT?\n\nFWIW, we already call SetActiveURL for every IPC message received by RenderFrameImpl::OnMessageReceived (i.e. on the renderer side).  So - I think that calling it on the browser side shouldn\u0027t be much worse in terms of performance impact.",
+      "parentUuid": "7fecdd70_df3b0376",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 42
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "356e451d_217ac60e",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 5
