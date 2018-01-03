@@ -15,6 +15,9 @@
     "use_goma=true",
     "use_xcode_clang=true"
   ],
+  "compiler flags": [
+    "-v"
+  ],
   "env": {
     "IOS_TOOLCHAIN_REVISION": "9M214v-1"
   },
