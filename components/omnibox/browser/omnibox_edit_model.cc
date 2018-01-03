@@ -395,7 +395,7 @@ void OmniboxEditModel::StartAutocomplete(bool has_selected_text,
   // of the form "<keyword> <query>", where our query is |user_text_|.
   // So we need to adjust the cursor position forward by the length of
   // any keyword added by MaybePrependKeyword() above.
-  if (is_keyword_selected())
+  if (is_keyword_selected() && !user_text_.empty())
     cursor_position += input_text.length() - user_text_.length();
 
   input_ = AutocompleteInput(input_text, cursor_position, ClassifyPage(),
