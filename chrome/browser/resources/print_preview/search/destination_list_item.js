@@ -197,10 +197,16 @@ cr.define('print_preview', function() {
       setIsVisible(extensionIndicatorEl, this.destination_.isExtension);
 
       // Initialize the element which renders the destination's offline status.
-      this.getElement().classList.toggle('stale', this.destination_.isOffline);
+      this.getElement().classList.toggle(
+          'stale',
+          this.destination_.isOffline ||
+              this.destination_.hasInvalidCertificate);
       const offlineStatusEl = this.getChildElement('.offline-status');
       offlineStatusEl.textContent = this.destination_.offlineStatusText;
-      setIsVisible(offlineStatusEl, this.destination_.isOffline);
+      setIsVisible(
+          offlineStatusEl,
+          this.destination_.isOffline ||
+              this.destination_.hasInvalidCertificate);
 
       // Initialize registration promo element for Privet unregistered printers.
       setIsVisible(
