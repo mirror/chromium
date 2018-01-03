@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6c522e_3acd7305",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-03T15:18:17Z",
+      "side": 1,
+      "message": "nit: I\u0027d move the implementation of this function to line 253 so the impl are in the same order as the declarations.",
+      "range": {
+        "startLine": 285,
+        "startChar": 43,
+        "endLine": 285,
+        "endChar": 46
+      },
+      "revId": "fcf3233c8e383722d0d4525ef11669e38f03bf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
