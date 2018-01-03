@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "3805a5f2_1e1192fa",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:00:04Z",
+      "side": 1,
+      "message": "When would this produce an exception?  It\u0027s a little weird to use v8 types here, couldn\u0027t we just use the overload of QuerySelectorAll without ExceptionState?  I assume if no elements match it just returns an empty list?",
+      "range": {
+        "startLine": 487,
+        "startChar": 22,
+        "endLine": 487,
+        "endChar": 34
+      },
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c20ad9_d42049b5",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:00:04Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem used or defined?",
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2934f992_38c9ac99",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -13,6 +53,24 @@
       "writtenOn": "2018-01-02T23:32:28Z",
       "side": 1,
       "message": "Should this be an enum with different failure reasons maybe?",
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebef8c34_4863c9f7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31464,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:00:04Z",
+      "side": 1,
+      "message": "\u003e Should this be an enum with different failure reasons maybe?\n\nIf you envision multiple failure reasons, that sounds reasonable.  There are lots of status types in enums.xml where 0 is \"Success\" and the other values are various kinds of failure.",
+      "parentUuid": "2934f992_38c9ac99",
       "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
