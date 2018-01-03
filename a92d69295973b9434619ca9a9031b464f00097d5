@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57938e2_b7928149",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T10:35:17Z",
+      "side": 1,
+      "message": "Feel free to add a utility function to the named guides file that sets a named guide to have the same constraints as an existing view -- something like:\n\nConstrainNamedGuideToView(kGuideName, someView)\n\n(the FindNameGuide() search can start at someView.superview)",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 20
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147fe874_0953160a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T10:35:17Z",
+      "side": 1,
+      "message": "Why is this guide set to the image and not the button as a whole? A comment at least would be helpful.",
+      "range": {
+        "startLine": 439,
+        "startChar": 54,
+        "endLine": 439,
+        "endChar": 63
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f709984d_4c7439c1",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_adapter.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-03T10:35:17Z",
+      "side": 1,
+      "message": "nit: named layout guides.",
+      "range": {
+        "startLine": 177,
+        "startChar": 48,
+        "endLine": 177,
+        "endChar": 53
+      },
+      "revId": "a92d69295973b9434619ca9a9031b464f00097d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
