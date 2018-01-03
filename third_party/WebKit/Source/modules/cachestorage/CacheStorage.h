@@ -16,6 +16,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Noncopyable.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
+#include "public/platform/modules/serviceworker/service_worker_cache_storage.mojom-blink.h"
 
 namespace blink {
 
@@ -58,9 +59,12 @@ class CacheStorage final : public ScriptWrappable {
   ScriptPromise MatchImpl(ScriptState*,
                           const Request*,
                           const CacheQueryOptions&);
+  mojom::blink::CacheStorage* GetService();
+  void ServiceConnectionError();
 
   Member<GlobalFetch::ScopedFetcher> scoped_fetcher_;
   std::unique_ptr<WebServiceWorkerCacheStorage> web_cache_storage_;
+  mojom::blink::CacheStoragePtr service_;
 };
 
 }  // namespace blink

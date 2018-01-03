@@ -4,6 +4,7 @@
 
 #include "platform/mojo/FetchAPIRequestStructTraits.h"
 
+#include "mojo/common/common_custom_types_struct_traits.h"
 #include "mojo/public/cpp/bindings/map_traits_wtf_hash_map.h"
 #include "mojo/public/cpp/bindings/string_traits_wtf.h"
 #include "platform/blob/BlobData.h"
@@ -18,6 +19,7 @@ namespace mojo {
 using blink::mojom::FetchRedirectMode;
 using blink::mojom::RequestContextType;
 
+PLATFORM_EXPORT
 FetchRedirectMode
 EnumTraits<FetchRedirectMode, blink::WebURLRequest::FetchRedirectMode>::ToMojom(
     blink::WebURLRequest::FetchRedirectMode input) {
@@ -34,6 +36,7 @@ EnumTraits<FetchRedirectMode, blink::WebURLRequest::FetchRedirectMode>::ToMojom(
   return FetchRedirectMode::ERROR_MODE;
 }
 
+PLATFORM_EXPORT
 bool EnumTraits<FetchRedirectMode, blink::WebURLRequest::FetchRedirectMode>::
     FromMojom(FetchRedirectMode input,
               blink::WebURLRequest::FetchRedirectMode* out) {
@@ -52,6 +55,7 @@ bool EnumTraits<FetchRedirectMode, blink::WebURLRequest::FetchRedirectMode>::
   return false;
 }
 
+PLATFORM_EXPORT
 RequestContextType
 EnumTraits<RequestContextType, blink::WebURLRequest::RequestContext>::ToMojom(
     blink::WebURLRequest::RequestContext input) {
@@ -130,6 +134,7 @@ EnumTraits<RequestContextType, blink::WebURLRequest::RequestContext>::ToMojom(
   return RequestContextType::UNSPECIFIED;
 }
 
+PLATFORM_EXPORT
 bool EnumTraits<RequestContextType, blink::WebURLRequest::RequestContext>::
     FromMojom(RequestContextType input,
               blink::WebURLRequest::RequestContext* out) {
@@ -332,7 +337,6 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   WTF::String method;
   WTF::HashMap<WTF::String, WTF::String> headers;
   WTF::String blobUuid;
-  blink::mojom::blink::BlobPtr blob;
   blink::Referrer referrer;
   network::mojom::FetchCredentialsMode credentialsMode;
   blink::WebURLRequest::FetchRedirectMode redirectMode;
@@ -357,8 +361,10 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetMethod(method);
   for (const auto& pair : headers)
     out->SetHeader(pair.key, pair.value);
-  out->SetBlob(blobUuid, static_cast<long long>(data.blob_size()),
-               data.TakeBlob<blink::mojom::blink::BlobPtr>().PassInterface());
+  if (data.blob_size()) {
+    out->SetBlob(blobUuid, static_cast<long long>(data.blob_size()),
+                 data.TakeBlob<blink::mojom::blink::BlobPtr>().PassInterface());
+  }
   out->SetReferrer(referrer.referrer, static_cast<blink::WebReferrerPolicy>(
                                           referrer.referrer_policy));
   out->SetCredentialsMode(credentialsMode);
