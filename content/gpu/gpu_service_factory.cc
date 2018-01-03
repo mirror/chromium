@@ -8,6 +8,7 @@
 
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/public/gpu/content_gpu_client.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/shape_detection_service.h"
 
@@ -34,10 +35,18 @@ GpuServiceFactory::~GpuServiceFactory() {}
 
 void GpuServiceFactory::RegisterServices(ServiceMap* services) {
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
+  media::CdmProxyFactoryCB cdm_proxy_factory_cb;
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  cdm_proxy_factory_cb =
+      base::BindRepeating(&ContentGpuClient::CreateCdmProxy,
+                          base::Unretained(GetContentClient()->gpu()));
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
+
   service_manager::EmbeddedServiceInfo info;
   info.factory =
-      base::Bind(&media::CreateGpuMediaService, gpu_preferences_, task_runner_,
-                 media_gpu_channel_manager_, android_overlay_factory_cb_);
+      base::BindRepeating(&media::CreateGpuMediaService, gpu_preferences_,
+                          task_runner_, media_gpu_channel_manager_,
+                          android_overlay_factory_cb_, cdm_proxy_factory_cb);
   // This service will host audio/video decoders, and if these decoding
   // operations are blocked, user may hear audio glitch or see video freezing,
   // hence "user blocking".
@@ -45,7 +54,7 @@ void GpuServiceFactory::RegisterServices(ServiceMap* services) {
   info.task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
       {base::TaskPriority::USER_BLOCKING});
   services->insert(std::make_pair("media", info));
-#endif
+#endif  // BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
 
   service_manager::EmbeddedServiceInfo shape_detection_info;
   shape_detection_info.factory =
