@@ -1011,6 +1011,7 @@ public class LocationBarLayout extends FrameLayout
      */
     protected void setUrlFocusChangeInProgress(boolean inProgress) {
         mUrlFocusChangeInProgress = inProgress;
+        mUrlBar.setFocusAnimationInProgress(inProgress);
         if (!inProgress) {
             updateButtonVisibility();
         }
