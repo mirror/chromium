@@ -73,6 +73,13 @@ bool Assets::ComponentReady() {
   return component_ready_;
 }
 
+void Assets::SetOnComponentReadyCallback(
+    const base::RepeatingCallback<void()>& callback) {
+  DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
+  DCHECK(!on_component_ready_callback_);
+  on_component_ready_callback_ = callback;
+}
+
 // static
 void Assets::LoadAssetsTask(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -150,6 +157,9 @@ void Assets::OnComponentReadyInternal(const base::Version& version,
   component_version_ = version;
   component_install_dir_ = install_dir;
   component_ready_ = true;
+  if (on_component_ready_callback_) {
+    on_component_ready_callback_.Run();
+  }
   GetMetricsHelper()->OnComponentReady(version);
 }
 
