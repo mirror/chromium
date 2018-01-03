@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b58d77_34f08960",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-03T12:49:08Z",
+      "side": 1,
+      "message": "Could you split this CL into two? One CL for the refactoring (remove recursions) and in the second CL the new logic that fixes the bug? I think that can help in case we accidentally cause regressions. I think this will be last request before I give my green light ;)",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93514da4_1934fd6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-03T12:49:08Z",
+      "side": 1,
+      "message": "Where does this CL change the start rect logic?",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
