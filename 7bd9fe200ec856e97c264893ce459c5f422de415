@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e484807c_35a06ea1",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-03T14:28:39Z",
+      "side": 1,
+      "message": "I\u0027d like to clean this up entirely while we\u0027re here. Can we get rid of nextversion in app altogether? (Always move it into the event ping.)",
+      "range": {
+        "startLine": 405,
+        "startChar": 22,
+        "endLine": 406,
+        "endChar": 39
+      },
+      "revId": "7bd9fe200ec856e97c264893ce459c5f422de415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
