@@ -354,4 +354,18 @@ SystemDisplayClearTouchCalibrationFunction::Run() {
   return RespondNow(NoArguments());
 }
 
+ExtensionFunction::ResponseAction SystemDisplaySetMirrorModeFunction::Run() {
+  std::unique_ptr<display::SetMirrorMode::Params> params(
+      display::SetMirrorMode::Params::Create(*args_));
+
+  std::string error;
+  if (!DisplayInfoProvider::Get()->SetMirrorMode(
+          params->enabled, params->mixed, params->mirroring_source_id,
+          params->mirroring_destination_ids, &error)) {
+    return RespondNow(Error(error));
+  }
+
+  return RespondNow(NoArguments());
+}
+
 }  // namespace extensions
