@@ -16,6 +16,12 @@
     "use_goma=true",
     "use_xcode_clang=true"
   ],
+  "compiler flags": [
+    "-v"
+  ],
+  "env": {
+    "FORCE_MAC_TOOLCHAIN": ""
+  },
   "additional_compile_targets": [
     "all"
   ],
