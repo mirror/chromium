@@ -11,6 +11,8 @@ class WebContents;
 
 namespace resource_coordinator {
 
+class TabLifecycleObserver;
+
 // Interface to control the lifecycle of a tab exposed outside of
 // chrome/browser/resource_coordinator/.
 class TabLifecycleUnitExternal {
@@ -19,6 +21,11 @@ class TabLifecycleUnitExternal {
   // nullptr if the WebContents is not associated with a tab.
   static TabLifecycleUnitExternal* FromWebContents(
       content::WebContents* web_contents);
+
+  // Adds / removes an observer that is notified when the discarded or auto-
+  // discardable state of a tab changes.
+  static void AddObserver(TabLifecycleObserver* observer);
+  static void RemoveObserver(TabLifecycleObserver* observer);
 
   virtual ~TabLifecycleUnitExternal() = default;
 
@@ -36,7 +43,7 @@ class TabLifecycleUnitExternal {
   virtual void SetAutoDiscardable(bool auto_discardable) = 0;
 
   // Discards the tab.
-  virtual void DiscardTab() = 0;
+  virtual bool DiscardTab() = 0;
 
   // Returns true if the tab is discarded.
   virtual bool IsDiscarded() const = 0;
