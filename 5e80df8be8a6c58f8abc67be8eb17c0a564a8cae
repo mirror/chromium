@@ -34,6 +34,24 @@
       "revId": "5e80df8be8a6c58f8abc67be8eb17c0a564a8cae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c991c6d2_c26b5a66",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-03T02:31:57Z",
+      "side": 1,
+      "message": "\u003e How about add a command line, like switches::kTraceStartup? if this flag (i.e. kIgnoreCreatingTaskScheduler) is on, just skip it?\n\u003e \n\u003e Thanks!\n\nNo, command line switches are for things that you legitimately want to change at run time. This doesn\u0027t fall into that case.",
+      "parentUuid": "ee04c68b_0e934d0c",
+      "revId": "5e80df8be8a6c58f8abc67be8eb17c0a564a8cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
