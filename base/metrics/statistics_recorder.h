@@ -36,10 +36,9 @@ class HistogramSnapshotManager;
 
 // In-memory recorder of usage statistics (aka metrics, aka histograms).
 //
-// Most of the methods are static and act on a global recorder. This global
-// recorder must first be initialized using Initialize() before being used. This
-// global recorder is internally synchronized and all the static methods are
-// thread safe.
+// All the public methods are static and act on a global recorder. This global
+// recorder is internally synchronized and all the static methods are thread
+// safe.
 //
 // StatisticsRecorder doesn't have any public constructor. For testing purpose,
 // you can create a temporary recorder using the factory method
@@ -68,16 +67,6 @@ class BASE_EXPORT StatisticsRecorder {
   //
   // Precondition: The recorder being deleted is the current global recorder.
   ~StatisticsRecorder();
-
-  // Initializes the global recorder. Safe to call multiple times.
-  //
-  // This method is thread safe.
-  static void Initialize();
-
-  // Finds out if histograms can now be registered into our list.
-  //
-  // This method is thread safe.
-  static bool IsActive();
 
   // Registers a provider of histograms that can be called to merge those into
   // the global recorder. Calls to ImportProvidedHistograms() will fetch from
@@ -248,6 +237,12 @@ class BASE_EXPORT StatisticsRecorder {
 
   friend class StatisticsRecorderTest;
   FRIEND_TEST_ALL_PREFIXES(StatisticsRecorderTest, IterationTest);
+
+  // Initializes the global recorder if it doesn't already exist. Safe to call
+  // multiple times.
+  //
+  // Precondition: The global lock is already acquired.
+  static void EnsureGlobalRecorder();
 
   // Fetches set of existing histograms. Ownership of the individual histograms
   // remains with the StatisticsRecorder.

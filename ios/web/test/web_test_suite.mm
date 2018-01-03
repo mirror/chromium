@@ -27,11 +27,6 @@ WebTestSuite::~WebTestSuite() {}
 void WebTestSuite::Initialize() {
   base::TestSuite::Initialize();
 
-  // Initialize the histograms subsystem, so that any histograms hit in tests
-  // are correctly registered with the statistics recorder and can be queried
-  // by tests.
-  base::StatisticsRecorder::Initialize();
-
   RegisterWebSchemes(false);
 
   // Force unittests to run using en-US so if testing string output will work

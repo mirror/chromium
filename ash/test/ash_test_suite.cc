@@ -30,8 +30,6 @@ AshTestSuite::~AshTestSuite() = default;
 
 void AshTestSuite::Initialize() {
   base::TestSuite::Initialize();
-  // Ensure histograms hit during tests are registered properly.
-  base::StatisticsRecorder::Initialize();
   gl::GLSurfaceTestSupport::InitializeOneOff();
 
   gfx::RegisterPathProvider();
