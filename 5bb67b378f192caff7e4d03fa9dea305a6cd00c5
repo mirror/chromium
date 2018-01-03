@@ -93,6 +93,30 @@
       "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055b588e_714bdccc",
+        "filename": "third_party/WebKit/public/web/devtools_agent.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-03T00:32:06Z",
+      "side": 1,
+      "message": "I think (for now) we would want to typemap it to the blink Point type in the Blink variant. So I bet if it were specified in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/mojo/Geometry.typemap, it might work?",
+      "parentUuid": "4aa36f7a_317bc3cb",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "5bb67b378f192caff7e4d03fa9dea305a6cd00c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
