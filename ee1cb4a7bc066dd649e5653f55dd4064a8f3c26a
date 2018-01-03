@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aace1cea_f7f4cd0a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "nit: ParseActionIndex",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbdd40d_dbf995b5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "Should this read base::SplitString()?",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b16bc6_a5a5f4fd",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "Should we pass in user_cancelled as an argument to ForwardHandleEventForTesting? It can be significant. (E.g. when closing a notification.)",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a018e9d_934f3632",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "nit: ++docs. It would be good to clarify what the ownership model of |notification| and |args| is. Any way we could make this private and `friend` the test?",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3755a212_f1cff0fe",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "nit: s/BrowserTest/UITest/",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22503abe_1ccfabc1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "What you\u0027re trying to do here is use `MockIInspectable` as a trait instead of as a base class. It implements part of the functionality that the IToastNotification base class expects (as that expects IInspectable), but it can\u0027t know that because of how inheritance in C++ works. What\u0027s happening is the following:\n\n                 IInspectable\n              /                \\\n    MockIInspectable        IToastNotification\n            |                    |\n MockIToastNotification  MockIToastNotification\n\n\nWhat you want instead, is an inheritance pattern like the following:\n\n               IInspectable\n            /                \\\n    MockIInspectable        IToastNotification\n            \\                /\n           MockIToastNotification\n\nThis is called the diamond problem.\nhttps://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem\n\nThe issue here is that we don\u0027t have control over IToastNotification: afaik the Windows SDK defines this as a struct that does not virtually inherit from IInspectable. Please try opening the header file that defines it and see what its relation to IInsepctable is.\n\nAs such, the only thing that comes to mind that you could try is to change MockIInspectable to inherit IInspectable as \"virtual public\" instead of just \"public\", and change MockIToastNotification and MockIToastActivatedEventArgs to inherit their winui::Notifications::* ancestors as \"virtual public\" as well, *before* extending MockIInspectable as you usually would.\n\n\n  class MockIInspectable : virtual public IInspectable { ... };\n  class MockIToastNotification\n      : virtual public winui::Notifications::IToastNotification,\n        public MockIInspectable { ... };\n\n  class MockIToastActivatedEventArgs\n      : virtual public winui::Notifications::IToastActivatedEventArgs,\n        public MockIInspectable { ... };\n\nIf that doesn\u0027t work, then we\u0027ll have to copy the bits twice :(.",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b670823_eafdc3be",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-03T14:25:05Z",
+      "side": 1,
+      "message": "Instead of adding all these members here, could we do something like the following?\n\n  void SetProcessNotificationOperationDelegate(base::Callback\u003c...\u003e delegate);\n  void ProcessNotificationOperation(...) override {\n    if (p_n_op_delegate_)\n      p_n_op_delegate_.Run(...)\n    else\n      NotificationDisplayService::ProcessNotificationOperation(...)\n  }\n\nThat will enable the test to do whatever it sees fit, for any number of notifications.",
+      "revId": "ee1cb4a7bc066dd649e5653f55dd4064a8f3c26a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
