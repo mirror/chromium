@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include "base/json/json_writer.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -13,6 +14,7 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "base/timer/mock_timer.h"
+#include "base/values.h"
 #include "components/cast_channel/cast_test_util.h"
 #include "net/base/net_errors.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -26,6 +28,21 @@ namespace {
 
 const int64_t kTestPingTimeoutMillis = 1000;
 const int64_t kTestLivenessTimeoutMillis = 10000;
+
+CastMessage CreateNonKeepAliveMessage(const std::string& message_type) {
+  CastMessage output;
+  output.set_protocol_version(CastMessage::CASTV2_1_0);
+  output.set_source_id("source");
+  output.set_destination_id("receiver");
+  output.set_namespace_("some.namespace");
+  output.set_payload_type(
+      CastMessage::PayloadType::CastMessage_PayloadType_STRING);
+
+  base::DictionaryValue type_dict;
+  type_dict.SetString("type", message_type);
+  CHECK(base::JSONWriter::Write(type_dict, output.mutable_payload_utf8()));
+  return output;
+}
 
 // Extends MockTimer with a mockable method ResetTriggered() which permits
 // test code to set GMock expectations for Timer::Reset().
@@ -99,10 +116,11 @@ TEST_F(KeepAliveDelegateTest, TestErrorHandledBeforeStarting) {
 }
 
 TEST_F(KeepAliveDelegateTest, TestPing) {
-  EXPECT_CALL(*socket_.mock_transport(),
-              SendMessage(EqualsProto(KeepAliveDelegate::CreateKeepAliveMessage(
-                              KeepAliveDelegate::kHeartbeatPingType)),
-                          _, _))
+  EXPECT_CALL(
+      *socket_.mock_transport(),
+      SendMessage(
+          EqualsProto(CreateKeepAliveMessage(KeepAliveMessageType::kPing)), _,
+          _))
       .WillOnce(PostCompletionCallbackTask<1>(net::OK));
   EXPECT_CALL(*inner_delegate_, Start());
   EXPECT_CALL(*ping_timer_, ResetTriggered()).Times(2);
@@ -113,17 +131,17 @@ TEST_F(KeepAliveDelegateTest, TestPing) {
   ping_timer_->Fire();
   EXPECT_FALSE(ping_timer_->IsRunning());
 
-  keep_alive_->OnMessage(KeepAliveDelegate::CreateKeepAliveMessage(
-      KeepAliveDelegate::kHeartbeatPongType));
+  keep_alive_->OnMessage(CreateKeepAliveMessage(KeepAliveMessageType::kPong));
   RunPendingTasks();
   EXPECT_TRUE(ping_timer_->IsRunning());
 }
 
 TEST_F(KeepAliveDelegateTest, TestPingFailed) {
-  EXPECT_CALL(*socket_.mock_transport(),
-              SendMessage(EqualsProto(KeepAliveDelegate::CreateKeepAliveMessage(
-                              KeepAliveDelegate::kHeartbeatPingType)),
-                          _, _))
+  EXPECT_CALL(
+      *socket_.mock_transport(),
+      SendMessage(
+          EqualsProto(CreateKeepAliveMessage(KeepAliveMessageType::kPing)), _,
+          _))
       .WillOnce(PostCompletionCallbackTask<1>(net::ERR_CONNECTION_RESET));
   EXPECT_CALL(*inner_delegate_, Start());
   EXPECT_CALL(*inner_delegate_, OnError(ChannelError::CAST_SOCKET_ERROR));
@@ -142,10 +160,11 @@ TEST_F(KeepAliveDelegateTest, TestPingFailed) {
 }
 
 TEST_F(KeepAliveDelegateTest, TestPingAndLivenessTimeout) {
-  EXPECT_CALL(*socket_.mock_transport(),
-              SendMessage(EqualsProto(KeepAliveDelegate::CreateKeepAliveMessage(
-                              KeepAliveDelegate::kHeartbeatPingType)),
-                          _, _))
+  EXPECT_CALL(
+      *socket_.mock_transport(),
+      SendMessage(
+          EqualsProto(CreateKeepAliveMessage(KeepAliveMessageType::kPing)), _,
+          _))
       .WillOnce(PostCompletionCallbackTask<1>(net::OK));
   EXPECT_CALL(*inner_delegate_, OnError(ChannelError::PING_TIMEOUT));
   EXPECT_CALL(*inner_delegate_, Start());
@@ -161,8 +180,7 @@ TEST_F(KeepAliveDelegateTest, TestPingAndLivenessTimeout) {
 }
 
 TEST_F(KeepAliveDelegateTest, TestResetTimersAndPassthroughAllOtherTraffic) {
-  CastMessage other_message =
-      KeepAliveDelegate::CreateKeepAliveMessage("NEITHER_PING_NOR_PONG");
+  CastMessage other_message = CreateNonKeepAliveMessage("someMessageType");
 
   EXPECT_CALL(*inner_delegate_, OnMessage(EqualsProto(other_message)));
   EXPECT_CALL(*inner_delegate_, Start());
@@ -175,12 +193,11 @@ TEST_F(KeepAliveDelegateTest, TestResetTimersAndPassthroughAllOtherTraffic) {
 }
 
 TEST_F(KeepAliveDelegateTest, TestPassthroughMessagesAfterError) {
-  CastMessage message =
-      KeepAliveDelegate::CreateKeepAliveMessage("NEITHER_PING_NOR_PONG");
+  CastMessage message = CreateNonKeepAliveMessage("someMessageType");
   CastMessage message_after_error =
-      KeepAliveDelegate::CreateKeepAliveMessage("ANOTHER_NOT_PING_NOR_PONG");
-  CastMessage late_ping_message = KeepAliveDelegate::CreateKeepAliveMessage(
-      KeepAliveDelegate::kHeartbeatPingType);
+      CreateNonKeepAliveMessage("someMessageType2");
+  CastMessage late_ping_message =
+      CreateKeepAliveMessage(KeepAliveMessageType::kPing);
 
   EXPECT_CALL(*inner_delegate_, Start()).Times(1);
   EXPECT_CALL(*ping_timer_, ResetTriggered()).Times(2);
@@ -241,10 +258,11 @@ TEST_F(KeepAliveDelegateTest, TestLivenessTimerResetAfterSendingMessage) {
   EXPECT_CALL(*inner_delegate_, Start());
   keep_alive_->Start();
 
-  EXPECT_CALL(*socket_.mock_transport(),
-              SendMessage(EqualsProto(KeepAliveDelegate::CreateKeepAliveMessage(
-                              KeepAliveDelegate::kHeartbeatPingType)),
-                          _, _))
+  EXPECT_CALL(
+      *socket_.mock_transport(),
+      SendMessage(
+          EqualsProto(CreateKeepAliveMessage(KeepAliveMessageType::kPing)), _,
+          _))
       .WillOnce(PostCompletionCallbackTask<1>(net::OK));
   // Forward 1s, at time 1, fire ping timer.
   mock_time_task_runner->FastForwardBy(
