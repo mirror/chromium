@@ -11,9 +11,9 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/stub_notification_display_service.h"
 
 class Profile;
-class StubNotificationDisplayService;
 
 namespace message_center {
 class Notification;
@@ -57,6 +57,10 @@ class NotificationDisplayServiceTester {
 
   // Removes all notifications of the given |type|.
   void RemoveAllNotifications(NotificationCommon::Type type, bool by_user);
+
+  void SetProcessNotificationOperationDelegate(
+      const StubNotificationDisplayService::
+          ProcessNotificationOperationCallback& delegate);
 
  private:
   Profile* profile_;

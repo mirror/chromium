@@ -28,6 +28,15 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   static std::unique_ptr<KeyedService> FactoryForTests(
       content::BrowserContext* browser_context);
 
+  typedef base::Callback<void(NotificationCommon::Operation operation,
+                              NotificationCommon::Type notification_type,
+                              const GURL& origin,
+                              const std::string& notification_id,
+                              const base::Optional<int>& action_index,
+                              const base::Optional<base::string16>& reply,
+                              const base::Optional<bool>& by_user)>
+      ProcessNotificationOperationCallback;
+
   explicit StubNotificationDisplayService(Profile* profile);
   ~StubNotificationDisplayService() override;
 
@@ -59,6 +68,9 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   void RemoveAllNotifications(NotificationCommon::Type notification_type,
                               bool by_user);
 
+  void SetProcessNotificationOperationDelegate(
+      const ProcessNotificationOperationCallback& delegate);
+
   // NotificationDisplayService implementation:
   void Display(NotificationCommon::Type notification_type,
                const message_center::Notification& notification,
@@ -66,6 +78,14 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   void Close(NotificationCommon::Type notification_type,
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
+  void ProcessNotificationOperation(
+      NotificationCommon::Operation operation,
+      NotificationCommon::Type notification_type,
+      const GURL& origin,
+      const std::string& notification_id,
+      const base::Optional<int>& action_index,
+      const base::Optional<base::string16>& reply,
+      const base::Optional<bool>& by_user) override;
 
  private:
   // Data to store for a notification that's being shown through this service.
@@ -86,6 +106,8 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   base::RepeatingClosure notification_added_closure_;
   std::vector<NotificationData> notifications_;
   Profile* profile_;
+
+  ProcessNotificationOperationCallback process_notification_operation_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(StubNotificationDisplayService);
 };

@@ -59,13 +59,14 @@ class NotificationDisplayService : public KeyedService {
   // The events are received and dispatched to the right consumer depending on
   // the type of notification. Consumers include, service workers, pages,
   // extensions...
-  void ProcessNotificationOperation(NotificationCommon::Operation operation,
-                                    NotificationCommon::Type notification_type,
-                                    const GURL& origin,
-                                    const std::string& notification_id,
-                                    const base::Optional<int>& action_index,
-                                    const base::Optional<base::string16>& reply,
-                                    const base::Optional<bool>& by_user);
+  virtual void ProcessNotificationOperation(
+      NotificationCommon::Operation operation,
+      NotificationCommon::Type notification_type,
+      const GURL& origin,
+      const std::string& notification_id,
+      const base::Optional<int>& action_index,
+      const base::Optional<base::string16>& reply,
+      const base::Optional<bool>& by_user);
 
   // Returns the notification handler that was registered for the given type.
   // May return null.
