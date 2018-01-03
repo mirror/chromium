@@ -127,7 +127,8 @@ bool AdjustNavigateParamsForURL(NavigateParams* params) {
 // Returns a Browser that can host the navigation or tab addition specified in
 // |params|. This might just return the same Browser specified in |params|, or
 // some other if that Browser is deemed incompatible.
-Browser* GetBrowserForDisposition(NavigateParams* params) {
+void GetBrowserAndTabForDisposition(NavigateParams* params,
+                                    int* singleton_index) {
   // If no source WebContents was specified, we use the selected one from
   // the target browser. This must happen first, before
   // GetBrowserForDisposition() has a chance to replace |params->browser| with
@@ -151,8 +152,8 @@ Browser* GetBrowserForDisposition(NavigateParams* params) {
           int index = GetIndexOfExistingTab(params);
           if (index >= 0) {
             params->browser = current_browser;
-            params->tab_switch_hint = index;
-            return browser;
+            *singleton_index = index;
+            return;
           }
         }
       }
@@ -161,19 +162,23 @@ Browser* GetBrowserForDisposition(NavigateParams* params) {
     // fall through
     case WindowOpenDisposition::CURRENT_TAB:
       if (params->browser)
-        return params->browser;
+        return;
       // Find a compatible window and re-execute this command in it. Otherwise
       // re-run with NEW_WINDOW.
-      return GetOrCreateBrowser(profile, params->user_gesture);
+      params->browser = GetOrCreateBrowser(profile, params->user_gesture);
+      return;
     case WindowOpenDisposition::SINGLETON_TAB:
     case WindowOpenDisposition::NEW_FOREGROUND_TAB:
     case WindowOpenDisposition::NEW_BACKGROUND_TAB:
       // See if we can open the tab in the window this navigator is bound to.
-      if (params->browser && WindowCanOpenTabs(params->browser))
-        return params->browser;
+      if (params->browser && WindowCanOpenTabs(params->browser)) {
+        *singleton_index = GetIndexOfExistingTab(params);
+        return;
+      }
       // Find a compatible window and re-execute this command in it. Otherwise
       // re-run with NEW_WINDOW.
-      return GetOrCreateBrowser(profile, params->user_gesture);
+      params->browser = GetOrCreateBrowser(profile, params->user_gesture);
+      return;
     case WindowOpenDisposition::NEW_POPUP: {
       // Make a new popup window.
       // Coerce app-style if |source| represents an app.
@@ -198,29 +203,34 @@ Browser* GetBrowserForDisposition(NavigateParams* params) {
                                              params->user_gesture);
         browser_params.trusted_source = params->trusted_source;
         browser_params.initial_bounds = params->window_bounds;
-        return new Browser(browser_params);
+        params->browser = new Browser(browser_params);
+        return;
       }
 
-      return new Browser(Browser::CreateParams::CreateForApp(
+      params->browser = new Browser(Browser::CreateParams::CreateForApp(
           app_name, params->trusted_source, params->window_bounds, profile,
           params->user_gesture));
+      return;
     }
     case WindowOpenDisposition::NEW_WINDOW: {
       // Make a new normal browser window.
-      return new Browser(Browser::CreateParams(profile, params->user_gesture));
+      params->browser =
+          new Browser(Browser::CreateParams(profile, params->user_gesture));
+      return;
     }
     case WindowOpenDisposition::OFF_THE_RECORD:
       // Make or find an incognito window.
-      return GetOrCreateBrowser(profile->GetOffTheRecordProfile(),
-                                params->user_gesture);
+      params->browser = GetOrCreateBrowser(profile->GetOffTheRecordProfile(),
+                                           params->user_gesture);
+      return;
     // The following types result in no navigation.
     case WindowOpenDisposition::SAVE_TO_DISK:
     case WindowOpenDisposition::IGNORE_ACTION:
-      return NULL;
+      params->browser = nullptr;
+      return;
     default:
       NOTREACHED();
   }
-  return NULL;
 }
 
 // Fix disposition and other parameter values depending on prevailing
@@ -472,7 +482,8 @@ void Navigate(NavigateParams* params) {
     params->disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
 
-  params->browser = GetBrowserForDisposition(params);
+  int singleton_index = -1;
+  GetBrowserAndTabForDisposition(params, &singleton_index);
   if (!params->browser)
     return;
 
@@ -550,9 +561,6 @@ void Navigate(NavigateParams* params) {
                                    ui::PAGE_TRANSITION_RELOAD) ||
       ui::PageTransitionCoreTypeIs(params->transition,
                                    ui::PAGE_TRANSITION_KEYWORD);
-
-  // Check if this is a singleton tab that already exists
-  int singleton_index = GetIndexOfExistingTab(params);
 
   // Did we use a prerender?
   bool swapped_in_prerender = false;
