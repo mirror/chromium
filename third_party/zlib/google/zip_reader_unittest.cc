@@ -109,6 +109,7 @@ class MockWriterDelegate : public zip::WriterDelegate {
  public:
   MOCK_METHOD0(PrepareOutput, bool());
   MOCK_METHOD2(WriteBytes, bool(const char*, int));
+  MOCK_METHOD1(SetTimeModified, void(const base::Time&));
 };
 
 }   // namespace
@@ -682,6 +683,7 @@ TEST_F(ZipReaderTest, ExtractCurrentEntrySuccess) {
       .WillOnce(Return(true));
   EXPECT_CALL(mock_writer, WriteBytes(_, _))
       .WillRepeatedly(Return(true));
+  EXPECT_CALL(mock_writer, SetTimeModified(_));
 
   base::FilePath target_path(FILE_PATH_LITERAL("foo/bar/quux.txt"));
   ZipReader reader;
