@@ -102,6 +102,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
     : ResourceHandler(request),
       rdh_(rdh),
       binding_(this, std::move(mojo_request)),
+      resource_type_(resource_type),
       defer_on_response_started_(defer_on_response_started),
       handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       url_loader_client_(std::move(url_loader_client)),
@@ -113,7 +114,7 @@ MojoAsyncResourceHandler::MojoAsyncResourceHandler(
   binding_.set_connection_error_handler(base::BindOnce(
       &MojoAsyncResourceHandler::Cancel, base::Unretained(this)));
 
-  if (IsResourceTypeFrame(resource_type)) {
+  if (IsResourceTypeFrame(resource_type_)) {
     GetRequestInfo()->set_on_transfer(base::Bind(
         &MojoAsyncResourceHandler::OnTransfer, weak_factory_.GetWeakPtr()));
   } else {
@@ -184,7 +185,11 @@ void MojoAsyncResourceHandler::OnResponseStarted(
                                      response->head.download_file_path);
   }
 
-  url_loader_client_->OnReceiveResponse(response->head, base::nullopt,
+  base::Optional<net::SSLInfo> ssl_info;
+  if (IsResourceTypeFrame(resource_type_))
+    ssl_info = request()->ssl_info();
+
+  url_loader_client_->OnReceiveResponse(response->head, std::move(ssl_info),
                                         std::move(downloaded_file_ptr));
 
   net::IOBufferWithSize* metadata = GetResponseMetadata(request());
@@ -463,6 +468,21 @@ void MojoAsyncResourceHandler::OnResponseCompleted(
   loader_status.encoded_data_length = request()->GetTotalReceivedBytes();
   loader_status.encoded_body_length = request()->GetRawBodyBytes();
   loader_status.decoded_body_length = total_written_bytes_;
+
+  // Send the SSLInfo for navigations.
+  if (IsResourceTypeFrame(resource_type_)) {
+    // If |OnResponseCompleted| is received before |OnResponseStarted|, the
+    // navigation was not successful. Pass the SSLInfo to the URLLoaderClient,
+    // which still lives in the browser process.
+    // If the navigation was successfull, the URLLoaderClient now lives in the
+    // renderer process. Do not send the SSLInfo to a (potentially) compromised
+    // renderer.
+    if (!sent_received_response_message_) {
+      DCHECK_NE(net::OK, request_status.error());
+      if (net::IsCertStatusError(request()->ssl_info().cert_status))
+        loader_status.ssl_info = request()->ssl_info();
+    }
+  }
 
   url_loader_client_->OnComplete(loader_status);
   controller->Resume();
