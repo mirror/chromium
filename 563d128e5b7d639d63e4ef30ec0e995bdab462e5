@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d947f86_e9ae0082",
+        "filename": "components/signin/core/browser/signin_manager_base.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T16:08:08Z",
+      "side": 1,
+      "message": "s/authenticated_account_id_/\"\"",
+      "range": {
+        "startLine": 235,
+        "startChar": 50,
+        "endLine": 235,
+        "endChar": 75
+      },
+      "revId": "563d128e5b7d639d63e4ef30ec0e995bdab462e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008d69f8_99d0c356",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T16:08:08Z",
+      "side": 1,
+      "message": "s/user/user\u0027s account id.",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "563d128e5b7d639d63e4ef30ec0e995bdab462e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afe09eb_1e9e4264",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2018-01-03T16:08:08Z",
+      "side": 1,
+      "message": "s/ClearAuthenticatedUser/ClearAuthenticatedAccountId",
+      "range": {
+        "startLine": 200,
+        "startChar": 7,
+        "endLine": 200,
+        "endChar": 29
+      },
+      "revId": "563d128e5b7d639d63e4ef30ec0e995bdab462e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
