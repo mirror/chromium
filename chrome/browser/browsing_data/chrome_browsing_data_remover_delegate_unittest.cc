@@ -82,6 +82,7 @@
 #include "net/http/http_transaction_factory.h"
 #include "net/reporting/reporting_browsing_data_remover.h"
 #include "net/reporting/reporting_service.h"
+#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -916,11 +917,11 @@ class RemoveAutofillTester : public autofill::PersonalDataManagerObserver {
 
 class MockReportingService : public net::ReportingService {
  public:
-  MockReportingService() {}
+  MockReportingService() = default;
 
   // net::ReportingService implementation:
 
-  ~MockReportingService() override {}
+  ~MockReportingService() override = default;
 
   void QueueReport(const GURL& url,
                    const std::string& group,
@@ -966,7 +967,7 @@ class ClearReportingCacheTester {
   ClearReportingCacheTester(TestingProfile* profile, bool create_service)
       : profile_(profile) {
     if (create_service)
-      service_ = base::MakeUnique<MockReportingService>();
+      service_ = std::make_unique<MockReportingService>();
 
     net::URLRequestContext* request_context =
         profile_->GetRequestContext()->GetURLRequestContext();
@@ -995,6 +996,60 @@ class ClearReportingCacheTester {
   TestingProfile* profile_;
   std::unique_ptr<MockReportingService> service_;
   net::ReportingService* old_service_;
+};
+
+class MockNetworkErrorLoggingDelegate
+    : public net::NetworkErrorLoggingDelegate {
+ public:
+  MockNetworkErrorLoggingDelegate() = default;
+
+  // net::NetworkErrorLoggingDelegate implementation:
+
+  ~MockNetworkErrorLoggingDelegate() override = default;
+
+  void OnHeader(const url::Origin& origin, const std::string& value) override {
+    NOTREACHED();
+  }
+
+  void OnNetworkError(const ErrorDetails& details) override { NOTREACHED(); }
+
+  void RemoveBrowsingData(const base::RepeatingCallback<bool(const GURL&)>&
+                              origin_filter) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SetReportingService(net::ReportingService* reporting_service) override {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockNetworkErrorLoggingDelegate);
+};
+
+class ClearNetworkErrorLoggingTester {
+ public:
+  ClearNetworkErrorLoggingTester(TestingProfile* profile, bool create_service)
+      : profile_(profile) {
+    if (create_service)
+      delegate_ = std::make_unique<MockNetworkErrorLoggingDelegate>();
+
+    net::URLRequestContext* request_context =
+        profile_->GetRequestContext()->GetURLRequestContext();
+
+    request_context->set_network_error_logging_delegate(delegate_.get());
+  }
+
+  ~ClearNetworkErrorLoggingTester() {
+    net::URLRequestContext* request_context =
+        profile_->GetRequestContext()->GetURLRequestContext();
+    DCHECK_EQ(delegate_.get(),
+              request_context->network_error_logging_delegate());
+    request_context->set_network_error_logging_delegate(nullptr);
+  }
+
+ private:
+  TestingProfile* profile_;
+  std::unique_ptr<MockNetworkErrorLoggingDelegate> delegate_;
+
+  DISALLOW_COPY_AND_ASSIGN(ClearNetworkErrorLoggingTester);
 };
 
 // Implementation of the TestingProfile that provides an SSLHostStateDelegate
@@ -2613,6 +2668,21 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest,
   EXPECT_TRUE(
       ProbablySameFilters(builder->BuildGeneralFilter(), origin_filter));
 }
+
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, NetworkErrorLogging_NoDelegate) {
+  ClearNetworkErrorLoggingTester tester(GetProfile(), false);
+
+  BlockUntilBrowsingDataRemoved(
+      base::Time(), base::Time::Max(),
+      content::BrowsingDataRemover::DATA_TYPE_COOKIES |
+          ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY,
+      true);
+
+  // Nothing to check, since there's no mock service; we're just making sure
+  // nothing crashes without a service.
+}
+
+// TODO(juliatuttle): More NEL test cases.
 
 // Test that all WebsiteSettings are getting deleted by creating a
 // value for each of them and removing data.
