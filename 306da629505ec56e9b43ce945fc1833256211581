@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925c8f67_c995f198",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "It\u0027s tough as a reader of this test to tell where these numbers come from, and verify that they\u0027re right. Or if it failed one day, to tell why it should be these. Can you help make this more clear?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f444db_498182c9",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "It\u0027s the same problem for me as a reader with these that are defined at the top, it\u0027s tough to verify them. Can we make this test more obvious to a reader?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb98375_4f7244ec",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "These 2 are used with different transforms in the test, but both say \"the transform\" leaving this less clear than it could be for the reader on what the relationships are, and why these numbers are chosen. Can we improve it?",
+      "range": {
+        "startLine": 1075,
+        "startChar": 50,
+        "endLine": 1075,
+        "endChar": 51
+      },
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7d3055_b9ebd760",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "nit: \"transform\"",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81204ce_a08727f9",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "nit: \"cut\"",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc2f207_33bd27f5",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "Sorry, just not clear what this diagram is explaining",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234ecd97_8d8be04f",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "The quad list seems to size 2, if that\u0027s what this means?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea98b879_a8ac8a89",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "nit: \"intersect\"",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6998d4_b6dab89f",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "did you mean  - |rect4| ?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff522a9_348d3444",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2079,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "did you mean  - |rect5|?\n\nbut from the diagram above (rect1+rect2) - rect3  would not be a rect, so I actually got a bit lost here?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d81f09_5ee1d76c",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2331,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "It seems to not be reduced? It\u0027s still 2 below",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9523e2c_4c796a89",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2583,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "This is a lot of rects that read somewhat arbitrarily, so it\u0027s hard to know what they are for or how they relate. Maybe just putting them closer to where they are used/explained would help? And/Or maybe you can related them to other rects with some EXPECT clauses?",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda6589c_f65af979",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "nit: \"DrawQuads\" is more greppable",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdbefbb_d90a6308",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-03T00:47:45Z",
+      "side": 1,
+      "message": "nit: \"DrawQuads\"",
+      "revId": "306da629505ec56e9b43ce945fc1833256211581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
