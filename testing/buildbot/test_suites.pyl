@@ -327,6 +327,15 @@
     },
   },
 
+  'chromedriver_py_tests_isolated_scripts': {
+    'chromedriver_py_tests': {
+      'swarming': {
+        'hard_timeout': 960,
+        'shards': 12,
+      },
+    }
+  },
+
   'chromium_android_asan_gtests': {
     # TODO(kbr): reduce duplication among these tests, and with other
     # test suites.
@@ -1960,6 +1969,7 @@
   ],
 
   'chromium_linux_isolated_scripts': [
+    'chromedriver_py_tests_isolated_scripts',
     'desktop_chromium_isolated_scripts',
     'linux_specific_chromium_isolated_scripts',
     'telemetry_perf_unittests_isolated_scripts',
