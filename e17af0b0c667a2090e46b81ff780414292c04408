@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28012623_278a8d71",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-03T22:28:53Z",
+      "side": 1,
+      "message": "super nit: place SUSPENDED directly under SHUT_DOWN",
+      "range": {
+        "startLine": 394,
+        "startChar": 9,
+        "endLine": 394,
+        "endChar": 18
+      },
+      "revId": "e17af0b0c667a2090e46b81ff780414292c04408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acea0a9_937e20ea",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-03T22:28:53Z",
+      "side": 1,
+      "message": "Great catch, this will make the metric much more meaningful.",
+      "range": {
+        "startLine": 548,
+        "startChar": 5,
+        "endLine": 548,
+        "endChar": 18
+      },
+      "revId": "e17af0b0c667a2090e46b81ff780414292c04408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13f5d29b_1cb8e55d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22702,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2018-01-03T22:28:53Z",
+      "side": 1,
+      "message": "Should this also be marked as deprecated?",
+      "range": {
+        "startLine": 22702,
+        "startChar": 29,
+        "endLine": 22702,
+        "endChar": 33
+      },
+      "revId": "e17af0b0c667a2090e46b81ff780414292c04408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
