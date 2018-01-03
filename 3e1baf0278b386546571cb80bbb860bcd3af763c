@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b93eb606_8cb286ca",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "is this target unused now?",
+      "range": {
+        "startLine": 142,
+        "startChar": 42,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5814c62_429915de",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "What\u0027s the motivation for adding another namespace here?\nI think we\u0027re not supposed to have namespaces only contain parts of files:\n\"Namespaces wrap the entire source file\"\nhttps://google.github.io/styleguide/cppguide.html#Namespaces",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11436ee_8191edbf",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "I\u0027m confused by this destruction sequence:\n1. ~CronetURLRequestContextAdapter()\n2. then calls ~CronetURLRequestContext()\n3. then calls CronetURLRequestContextAdapter::OnDestroyNetworkThread()\n4. then calls ~CronetURLRequestContextAdapter()\nCan we avoid this recursion into ~CronetURLRequestContextAdapter()?\nCan we simplify this?  Can the Adapter contain an instance of Context, rather than a unique_ptr to one?",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d314b29e_f71deccd",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "#include \"base/memory/scoped_refptr.h\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db977674_1555dbab",
+        "filename": "components/cronet/cronet_global_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "Please add a comment here.  Is there an iOS counterpart to the Init thread?",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8806969e_c7811e19",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-03T16:52:59Z",
+      "side": 1,
+      "message": "Could you upload a patch set where the original adapter is moved to the context, so I can diff this file against the original adapter file?",
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
