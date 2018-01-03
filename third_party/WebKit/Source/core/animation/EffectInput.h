@@ -7,12 +7,12 @@
 
 #include "core/CoreExport.h"
 #include "core/animation/EffectModel.h"
+#include "core/animation/KeyframeEffectModel.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
 
-class KeyframeEffectModelBase;
 class Dictionary;
 class Element;
 class ExceptionState;
@@ -30,20 +30,22 @@ class CORE_EXPORT EffectInput {
                                           EffectModel::CompositeOperation,
                                           ScriptState*,
                                           ExceptionState&);
-
- private:
-  static KeyframeEffectModelBase* ConvertArrayForm(
-      Element&,
-      const Vector<Dictionary>& keyframes,
-      EffectModel::CompositeOperation,
-      ExecutionContext*,
-      ExceptionState&);
-  static KeyframeEffectModelBase* ConvertObjectForm(
-      Element&,
-      const Dictionary& keyframe,
-      EffectModel::CompositeOperation,
+  static StringKeyframeVector ParseKeyframesArgument(
+      Element*,
+      const ScriptValue& keyframes,
       ScriptState*,
       ExceptionState&);
+
+ private:
+  static StringKeyframeVector ConvertArrayForm(
+      Element&,
+      const Vector<Dictionary>& keyframes,
+      ExecutionContext*,
+      ExceptionState&);
+  static StringKeyframeVector ConvertObjectForm(Element&,
+                                                const Dictionary& keyframe,
+                                                ScriptState*,
+                                                ExceptionState&);
 };
 
 }  // namespace blink

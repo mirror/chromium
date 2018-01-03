@@ -54,13 +54,13 @@ PropertyHandleSet KeyframeEffectModelBase::Properties() const {
   return result;
 }
 
-void KeyframeEffectModelBase::SetFrames(KeyframeVector& keyframes) {
-  // TODO(samli): Should also notify/invalidate the animation
-  keyframes_ = keyframes;
-  keyframe_groups_ = nullptr;
-  interpolation_effect_.Clear();
-  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
-}
+// void KeyframeEffectModelBase::SetFrames(KeyframeVector& keyframes) {
+//  // TODO(samli): Should also notify/invalidate the animation
+//  keyframes_ = keyframes;
+//  keyframe_groups_ = nullptr;
+//  interpolation_effect_.Clear();
+//  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
+//}
 
 bool KeyframeEffectModelBase::Sample(
     int iteration,
@@ -357,6 +357,16 @@ bool KeyframeEffectModelBase::PropertySpecificKeyframeGroup::
   }
 
   return added_synthetic_keyframe;
+}
+
+template <>
+void StringKeyframeEffectModel::SetFrames(StringKeyframeVector& keyframes) {
+  // TODO(samli): Should also notify/invalidate the animation
+  keyframes_.clear();
+  keyframes_.AppendVector(keyframes);
+  keyframe_groups_ = nullptr;
+  interpolation_effect_.Clear();
+  last_fraction_ = std::numeric_limits<double>::quiet_NaN();
 }
 
 }  // namespace blink

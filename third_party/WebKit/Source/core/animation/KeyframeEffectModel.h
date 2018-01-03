@@ -81,7 +81,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   using KeyframeVector = Vector<scoped_refptr<Keyframe>>;
   const KeyframeVector& GetFrames() const { return keyframes_; }
   bool HasFrames() const { return !keyframes_.IsEmpty(); }
-  void SetFrames(KeyframeVector& keyframes);
+  // void SetFrames(KeyframeVector& keyframes);
 
   CompositeOperation Composite() const { return composite_; }
   void SetComposite(CompositeOperation composite) { composite_ = composite; }
@@ -181,6 +181,8 @@ class KeyframeEffectModel final : public KeyframeEffectModelBase {
     return new KeyframeEffectModel(keyframes, composite,
                                    std::move(default_keyframe_easing));
   }
+
+  void SetFrames(KeyframeVector& keyframes);
 
  private:
   KeyframeEffectModel(const KeyframeVector& keyframes,

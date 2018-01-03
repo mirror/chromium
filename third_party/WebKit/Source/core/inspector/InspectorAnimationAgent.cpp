@@ -387,13 +387,13 @@ Response InspectorAnimationAgent::setTiming(const String& animation_id,
     // structure of transitions.
     const KeyframeVector& frames = old_model->GetFrames();
     DCHECK(frames.size() == 3);
-    KeyframeVector new_frames;
-    for (int i = 0; i < 3; i++)
-      new_frames.push_back(ToTransitionKeyframe(frames[i]->Clone().get()));
-    // Update delay, represented by the distance between the first two
-    // keyframes.
-    new_frames[1]->SetOffset(delay / (delay + duration));
-    effect->Model()->SetFrames(new_frames);
+    // KeyframeVector new_frames;
+    // for (int i = 0; i < 3; i++)
+    //  new_frames.push_back(ToTransitionKeyframe(frames[i]->Clone().get()));
+    //// Update delay, represented by the distance between the first two
+    //// keyframes.
+    // new_frames[1]->SetOffset(delay / (delay + duration));
+    // effect->Model()->SetFrames(new_frames);
 
     AnimationEffectTiming* timing = effect->timing();
     UnrestrictedDoubleOrString unrestricted_duration;
