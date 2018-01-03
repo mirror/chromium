@@ -16,6 +16,24 @@
       "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626ac1c4_82703fde",
+        "filename": "base/android/java/src/org/chromium/base/BaseChromiumApplication.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-03T01:10:54Z",
+      "side": 0,
+      "message": "I think the thinking here was that we don\u0027t want ApplicationStatus.initialize() to be called for renderer processes and calling it from the content provider was a convenient way to make it browser-process-only without needing to use reflection.",
+      "parentUuid": "eea9acfc_04ef7e48",
+      "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
