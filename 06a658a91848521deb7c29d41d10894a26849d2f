@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938c9c1a_d9005a5a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:19:59Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8288605b_ea9d07c9",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:19:59Z",
+      "side": 1,
+      "message": "Should IsValidImplicit call IsValidRootScroller (i.e. valid implicit root scrollers are a subset of valid root scrollers)?",
+      "range": {
+        "startLine": 168,
+        "startChar": 29,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e67067c_abde523b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2018-01-03T21:19:59Z",
+      "side": 1,
+      "message": "Should we use IsValidImplicit here?",
+      "range": {
+        "startLine": 302,
+        "startChar": 27,
+        "endLine": 302,
+        "endChar": 36
+      },
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
