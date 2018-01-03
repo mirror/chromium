@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dec5aea_197f63b9",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/HTMLAnchorElement/rellist-feature-detection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2018-01-03T09:59:33Z",
+      "side": 1,
+      "message": "May be we can add this test in wpt itself? Whereever possible it is recommended to write wpt tests.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "074f14ee61c287d8219733b0bb0bc43e1629fe43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
