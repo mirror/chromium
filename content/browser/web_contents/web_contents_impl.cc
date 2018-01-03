@@ -4017,6 +4017,15 @@ void WebContentsImpl::SubresourceResponseStarted(const GURL& url,
   SetNotWaitingForResponse();
 }
 
+void WebContentsImpl::PrintSubframe(const gfx::Rect& rect,
+                                    uint64_t content_id,
+                                    RenderFrameHost* target_rfh) {
+  base::ObserverList<WebContentsObserver>& observers =
+      GetOuterWebContents() ? GetOuterWebContents()->observers_ : observers_;
+  for (auto& observer : observers)
+    observer.PrintSubframe(rect, content_id, target_rfh);
+}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 WebContentsImpl::GetJavaRenderFrameHostDelegate() {
