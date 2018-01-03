@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d142df7_299933ae",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-03T05:45:40Z",
+      "side": 1,
+      "message": "const CacheEntry\u0026 ?",
+      "revId": "b91f9bdbacf6277e0b1602c9fa128ab1f73b4631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
