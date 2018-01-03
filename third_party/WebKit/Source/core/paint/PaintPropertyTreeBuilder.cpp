@@ -11,6 +11,8 @@
 #include "core/frame/Settings.h"
 #include "core/layout/FragmentainerIterator.h"
 #include "core/layout/LayoutInline.h"
+#include "core/layout/LayoutTableRow.h"
+#include "core/layout/LayoutTableSection.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/svg/LayoutSVGResourceMasker.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
@@ -1307,36 +1309,92 @@ void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
   }
 }
 
+static LayoutRect BorderBoxRectInPaginationContainer(
+    const LayoutBox& box,
+    const PaintLayer& enclosing_pagination_layer) {
+  auto rect = box.BorderBoxRect();
+  TransformState transform_state(TransformState::kApplyTransformDirection,
+                                 FloatPoint(rect.Location()));
+  box.MapLocalToAncestor(&enclosing_pagination_layer.GetLayoutObject(),
+                         transform_state, kApplyContainerFlip);
+  transform_state.Flatten();
+  return LayoutRect(LayoutPoint(transform_state.LastPlanarPoint()),
+                    rect.Size());
+}
+
 static LayoutRect BoundingBoxInPaginationContainer(
     const LayoutObject& object,
-    const PaintLayer& enclosing_pagination_layer) {
+    const PaintLayer& enclosing_pagination_layer,
+    bool& should_repeat_in_fragments) {
   // Non-boxes that have no layer paint in the space of their containing block.
   if (!object.IsBox() && !object.HasLayer()) {
     return BoundingBoxInPaginationContainer(*object.ContainingBlock(),
-                                            enclosing_pagination_layer);
+                                            enclosing_pagination_layer,
+                                            should_repeat_in_fragments);
   }
 
-  LayoutRect object_bounding_box_in_flow_thread;
-  if (object.HasLayer()) {
-    PaintLayer* paint_layer = ToLayoutBoxModelObject(object).Layer();
-    object_bounding_box_in_flow_thread =
-        paint_layer->PhysicalBoundingBox(&enclosing_pagination_layer);
-  } else {
-    // Compute the bounding box without transforms.
-    // The object is guaranteed to be a box due to the logic above.
-    DCHECK(object.IsBox());
-    object_bounding_box_in_flow_thread = ToLayoutBox(object).BorderBoxRect();
-    TransformState transform_state(
-        TransformState::kApplyTransformDirection,
-        FloatPoint(object_bounding_box_in_flow_thread.Location()));
-    object.MapLocalToAncestor(&enclosing_pagination_layer.GetLayoutObject(),
-                              transform_state, kApplyContainerFlip);
-    transform_state.Flatten();
-    object_bounding_box_in_flow_thread.SetLocation(
-        LayoutPoint(transform_state.LastPlanarPoint()));
+  should_repeat_in_fragments = false;
+
+  // The special path for layers ensures that the bounding box also covers
+  // overflows, so that the fragments will cover all fragments of contents,
+  // because we initiate fragment painting of contents from the layer.
+  // Table section may repeat, and doesn't need the special layer path because
+  // it doesn't have layout overflow.
+  if (object.HasLayer() && !object.IsTableSection()) {
+    return ToLayoutBoxModelObject(object).Layer()->PhysicalBoundingBox(
+        &enclosing_pagination_layer);
   }
 
-  return object_bounding_box_in_flow_thread;
+  // Compute the bounding box without transforms.
+  // The object is guaranteed to be a box due to the logic above.
+  auto bounding_box = BorderBoxRectInPaginationContainer(
+      ToLayoutBox(object), enclosing_pagination_layer);
+
+  if (!object.IsTableSection())
+    return bounding_box;
+  const auto& section = ToLayoutTableSection(object);
+  if (!section.IsRepeatingHeaderGroup() && !section.IsRepeatingFooterGroup())
+    return bounding_box;
+
+  const auto& table = *section.Table();
+  should_repeat_in_fragments = true;
+
+  if (section.IsRepeatingHeaderGroup()) {
+    // Now bounding_box covers the original header. Expand it to intersect
+    // with all fragments containing the original and repeatings, i.e. to
+    // intersect any fragment containing any row.
+    if (const auto* bottom_section = table.BottomNonEmptySection()) {
+      bounding_box.Unite(BorderBoxRectInPaginationContainer(
+          *bottom_section, enclosing_pagination_layer));
+    }
+    return bounding_box;
+  }
+
+  DCHECK(section.IsRepeatingFooterGroup());
+  // Similar to repeating header, expand bounding_box to intersect any
+  // fragment containing any row first.
+  const auto* top_section = table.TopNonEmptySection();
+  if (top_section) {
+    bounding_box.Unite(BorderBoxRectInPaginationContainer(
+        *top_section, enclosing_pagination_layer));
+    // However, the first fragment intersecting the expanded bounding_box may
+    // not have enough space to contain the repeating footer. Exclude the
+    // total height of the first row and repeating footers from the top of
+    // bounding_box to exclude the first fragment without enough space.
+    auto top_exclusion = table.RowOffsetFromRepeatingFooter();
+    if (const auto* top_section = table.TopNonEmptySection()) {
+      // Otherwise the footer should not repeating.
+      DCHECK(top_section != section);
+      top_exclusion +=
+          top_section->FirstRow()->LogicalHeight() + table.VBorderSpacing();
+    }
+    // Subtract 1 to ensure overlap of 1 px for a fragment that has exactly
+    // one row plus space for the footer.
+    if (top_exclusion)
+      top_exclusion -= 1;
+    bounding_box.ShiftYEdgeTo(bounding_box.Y() + top_exclusion);
+  }
+  return bounding_box;
 }
 
 static LayoutPoint PaintOffsetInPaginationContainer(
@@ -1371,6 +1429,7 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         PaintOffsetInPaginationContainer(object_, *enclosing_pagination_layer);
 
     paint_offset.MoveBy(fragment_data_.PaginationOffset());
+    paint_offset.Move(context_.repeating_paint_offset_adjustment);
     paint_offset.MoveBy(
         VisualOffsetFromPaintOffsetRoot(context_, enclosing_pagination_layer));
 
@@ -1672,9 +1731,12 @@ void ObjectPaintPropertyTreeBuilder::UpdateCompositedLayerPaginationOffset() {
        !parent_composited_layer->EnclosingPaginationLayer())) {
     // |object_| establishes the top level composited layer under the
     // pagination layer.
+    bool should_repeat_in_fragments = false;
     FragmentainerIterator iterator(
         ToLayoutFlowThread(enclosing_pagination_layer->GetLayoutObject()),
-        BoundingBoxInPaginationContainer(object_, *enclosing_pagination_layer));
+        BoundingBoxInPaginationContainer(object_, *enclosing_pagination_layer,
+                                         should_repeat_in_fragments));
+    DCHECK(!should_repeat_in_fragments);
     if (!iterator.AtEnd()) {
       first_fragment.SetPaginationOffset(
           ToLayoutPoint(iterator.PaginationOffset()));
@@ -1687,6 +1749,106 @@ void ObjectPaintPropertyTreeBuilder::UpdateCompositedLayerPaginationOffset() {
             .FirstFragment()
             .PaginationOffset());
   }
+}
+
+void ObjectPaintPropertyTreeBuilder::UpdateRepeatingPaintOffsetAdjustment() {
+  if (!context_.is_repeating_in_fragments)
+    return;
+
+  if (object_.IsTableSection()) {
+    if (ToLayoutTableSection(object_).IsRepeatingHeaderGroup())
+      UpdateRepeatingTableHeaderPaintOffsetAdjustment();
+    else if (ToLayoutTableSection(object_).IsRepeatingFooterGroup())
+      UpdateRepeatingTableFooterPaintOffsetAdjustment();
+  }
+
+  // Otherwise the object is a descendant of the object which initiated the
+  // repeating. It just uses repeating_paint_offset_adjustment in its fragment
+  // contexts inherited from the initiating object.
+}
+
+void ObjectPaintPropertyTreeBuilder::CalculateRepeatingPaintOffsetAdjustment(
+    const FragmentData& original_fragment,
+    LayoutUnit alignment_offset) {
+  const auto* fragment = &object_.FirstFragment();
+  for (auto& fragment_context : context_.fragments) {
+    DCHECK(fragment);
+    fragment_context.repeating_paint_offset_adjustment = LayoutSize();
+    // Don't adjust the original.
+    if (fragment != &original_fragment) {
+      // Adjust the repeating to the same fragment-relative location as the
+      // original.
+      auto adjustment = original_fragment.PaginationOffset().Y() -
+                        fragment->PaginationOffset().Y();
+      // Then adjust for repeating alignment.
+      adjustment += alignment_offset;
+      fragment_context.repeating_paint_offset_adjustment.SetHeight(adjustment);
+    }
+    fragment = fragment->NextFragment();
+  }
+}
+
+void ObjectPaintPropertyTreeBuilder::
+    UpdateRepeatingTableHeaderPaintOffsetAdjustment() {
+  const auto& section = ToLayoutTableSection(object_);
+  DCHECK(section.IsRepeatingHeaderGroup());
+  const auto& table = *section.Table();
+  // TODO(crbug.com/798481): Currently we assume all fragments are of the same
+  // height, but this is not always true.
+  auto page_height = table.PageLogicalHeightForOffset(LayoutUnit());
+
+  // For a repeating table header, the original location (which may be in the
+  // middle of the fragment) and repeated locations (which should be always,
+  // together with repeating headers of outer tables, aligned to the top of
+  // the fragments) may be different. Therefore, for fragments other than the
+  // first, adjust by |alignment_offset|.
+  auto original_offset_in_fragment =
+      IntMod(context_.repeating_bounding_box_in_flow_thread.Y(), page_height);
+  // This is total height of repeating headers seen by the table -
+  // height of this header (which is the lowest repeating header seen by this
+  // table.
+  auto repeating_offset_in_fragment =
+      table.RowOffsetFromRepeatingHeader() - section.LogicalHeight();
+  auto alignment_offset =
+      repeating_offset_in_fragment - original_offset_in_fragment;
+
+  CalculateRepeatingPaintOffsetAdjustment(section.FirstFragment(),
+                                          alignment_offset);
+}
+
+void ObjectPaintPropertyTreeBuilder::
+    UpdateRepeatingTableFooterPaintOffsetAdjustment() {
+  const auto& section = ToLayoutTableSection(object_);
+  DCHECK(section.IsRepeatingFooterGroup());
+  const auto& table = *section.Table();
+  // TODO(crbug.com/798481): Currently we assume all fragments are of the same
+  // height, but this is not always true.
+  auto page_height = table.PageLogicalHeightForOffset(LayoutUnit());
+
+  // Calculate paint offset adjustment for repeating table footers, similar to
+  // repeating table headers.
+  auto original_offset_in_fragment =
+      IntMod(context_.repeating_bounding_box_in_flow_thread.MaxY() -
+                 section.LogicalHeight(),
+             page_height);
+  // TODO(crbug.com/798153): This keeps the existing behavior of repeating
+  // footer painting in TableSectionPainter. Should change both places when
+  // tweaking border-spacing for repeating footers.
+  auto repeating_offset_in_fragment =
+      page_height -
+      (table.RowOffsetFromRepeatingFooter() + table.VBorderSpacing());
+  // We should show the whole bottom border instead of half if the table
+  // collapses borders.
+  if (table.ShouldCollapseBorders())
+    repeating_offset_in_fragment -= table.BorderBottom();
+  auto alignment_offset =
+      repeating_offset_in_fragment - original_offset_in_fragment;
+
+  const auto* last_fragment = &section.FirstFragment();
+  while (const auto* next_fragment = last_fragment->NextFragment())
+    last_fragment = next_fragment;
+
+  CalculateRepeatingPaintOffsetAdjustment(*last_fragment, alignment_offset);
 }
 
 // Limit the maximum number of fragments, to avoid pathological situations.
@@ -1705,6 +1867,7 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
   if (!NeedsFragmentation(object_, *context_.painting_layer)) {
     InitSingleFragmentFromParent(needs_paint_properties);
     UpdateCompositedLayerPaginationOffset();
+    context_.is_repeating_in_fragments = false;
   } else {
     // We need at least the fragments for all fragmented objects, which store
     // their local border box properties and paint invalidation data (such
@@ -1713,10 +1876,26 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
     PaintLayer* enclosing_pagination_layer =
         paint_layer->EnclosingPaginationLayer();
 
-    LayoutRect object_bounding_box_in_flow_thread =
-        BoundingBoxInPaginationContainer(object_, *enclosing_pagination_layer);
-    const LayoutFlowThread& flow_thread =
+    const auto& flow_thread =
         ToLayoutFlowThread(enclosing_pagination_layer->GetLayoutObject());
+    LayoutRect object_bounding_box_in_flow_thread;
+    if (context_.is_repeating_in_fragments) {
+      // The object is a descendant of a repeating object. It should use the
+      // repeating bounding box to repeat in the same fragments as its
+      // repeating ancestor.
+      object_bounding_box_in_flow_thread =
+          context_.repeating_bounding_box_in_flow_thread;
+    } else {
+      bool should_repeat_in_fragments = false;
+      object_bounding_box_in_flow_thread = BoundingBoxInPaginationContainer(
+          object_, *enclosing_pagination_layer, should_repeat_in_fragments);
+      if (should_repeat_in_fragments) {
+        context_.is_repeating_in_fragments = true;
+        context_.repeating_bounding_box_in_flow_thread =
+            object_bounding_box_in_flow_thread;
+      }
+    }
+
     FragmentainerIterator iterator(flow_thread,
                                    object_bounding_box_in_flow_thread);
 
@@ -1762,7 +1941,6 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
           ContextForFragment(fragment_clip, context_.fragments));
       // 5. Save off PaginationOffset (which allows us to adjust
       // logical paint offsets into the space of the current fragment later.
-
       current_fragment_data->SetPaginationOffset(
           ToLayoutPoint(iterator.PaginationOffset()));
     }
@@ -1790,6 +1968,8 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
 
     object_.GetMutableForPainting().FirstFragment().ClearNextFragment();
   }
+
+  UpdateRepeatingPaintOffsetAdjustment();
 }
 
 static inline bool ObjectTypeMightNeedPaintProperties(
