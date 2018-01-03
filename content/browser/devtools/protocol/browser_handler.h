@@ -27,6 +27,8 @@ class BrowserHandler : public DevToolsDomainHandler, public Browser::Backend {
                       std::string* user_agent,
                       std::string* js_version) override;
 
+  Response GetMetrics(std::string* metrics) override;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserHandler);
 };

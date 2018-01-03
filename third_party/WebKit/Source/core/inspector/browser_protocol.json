@@ -1028,6 +1028,17 @@
                     ]
                 },
                 {
+                    "name": "getMetrics",
+                    "description": "Gets Chrome metrics.",
+                    "returns": [
+                        {
+                            "name": "metrics",
+                            "description": "Chrome metrics as JSON string.",
+                            "type": "string"
+                        }
+                    ]
+                },
+                {
                     "name": "getWindowBounds",
                     "description": "Get position and size of the browser window.",
                     "experimental": true,

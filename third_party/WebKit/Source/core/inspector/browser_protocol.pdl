@@ -491,6 +491,12 @@ domain Browser
       # V8 version.
       string jsVersion
 
+  # Gets Chrome metrics.
+  command getMetrics
+    returns
+      # Chrome metrics as JSON string.
+      string metrics
+
   # Get position and size of the browser window.
   experimental command getWindowBounds
     parameters
