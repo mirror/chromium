@@ -172,7 +172,7 @@ std::unique_ptr<OfflinePageTestArchiver> CreateArchiveTaskTest::BuildArchiver(
 void CreateArchiveTaskTest::CreateArchiveWithParams(
     const SavePageParams& save_page_params,
     OfflinePageArchiver* archiver) {
-  task_ = base::MakeUnique<CreateArchiveTask>(
+  task_ = std::make_unique<CreateArchiveTask>(
       archives_dir(), save_page_params, archiver,
       base::Bind(&CreateArchiveTaskTest::OnCreateArchiveDone, AsWeakPtr()));
   task_->Run();
