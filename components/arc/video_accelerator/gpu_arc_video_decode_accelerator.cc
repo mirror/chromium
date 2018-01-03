@@ -195,8 +195,7 @@ void GpuArcVideoDecodeAccelerator::ProvidePictureBuffers(
   } else {
     auto pbf = mojom::PictureBufferFormat::New();
     pbf->min_num_buffers = requested_num_of_buffers;
-    pbf->coded_width = dimensions.width();
-    pbf->coded_height = dimensions.height();
+    pbf->coded_size = dimensions;
     client_->ProvidePictureBuffers(std::move(pbf));
   }
 }
