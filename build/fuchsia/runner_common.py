@@ -143,7 +143,8 @@ def _GetSymbolsMapping(dry_run, file_mapping):
     if file_tag != '\x7fELF':
       continue
 
-    symbols_mapping[os.path.basename(target)] = source
+    binary_name = os.path.basename(target)
+    symbols_mapping[binary_name] = source
     symbols_mapping[target] = source
 
     if dry_run:
