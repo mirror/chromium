@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0c6bd36_3af69e43",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T01:56:29Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t very clear, I actually meant for the tab to be visible, i.e. painted and visible to users. I think we can have a visible browser with 2 tabs: one visible and one isn\u0027t (i.e. covered by another browser window). So this field is to record whether a tab is visible.",
+      "parentUuid": "274578ba_4296c520",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00592f3f_d7e2e311",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T14:17:23Z",
       "side": 1,
       "message": "could this be changed?\n\n  // Whether the tab is the selected tab in its browser.\n  bool is_selected;\n\n(or s/selected/active/ if \"active\" is the word that chrome uses for this concept.)\n\n\"is_active\" feels a bit confusing to me on its own, since this apparently actually means \"is_tab_active_and_browser_visible\".\n\nwhat i was trying to get at before is that this seems like it overlaps with is_browser_visible, e.g. is_selected will never be true in a TabProperty if is_browser_visible is false. if that\u0027s correct, would it be strictly better to only track the tab\u0027s active/selected state here instead of mixing in information about the browser?",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bade36_eec5bc53",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-03T01:56:29Z",
+      "side": 1,
+      "message": "I think \"active\" is the word that\u0027s used (e.g. active_index), maybe Michael can comment as well?\n\nThe only browser-property I\u0027m checking is is_browser_focused. The other properties (is_active and is_visible) are both tab-properties. About their relationships, I think the following holds (-/-\u003e means \"does not imply\"):\n\n(i). is_browser_focused -/-\u003e is_active or is_visible\n- A tab in the focused browser may still be invisible and/or not the active one.\n\n(ii). is_visible -/-\u003e is_browser_focused or is_active\n- A visible tab doesn\u0027t have to be the active one of its browser. Its browser should be visible, but doesn\u0027t have to be the one in focus.\n\n(iii). is_active -/-\u003e is_browser_focused\n- Another app may be running and is focused so the active tab\u0027s browser may not be in focus.\n\n(iv). is_active -/-\u003e is_visible\n- Its browser is partially visible, and so its active tab may be hidden.\n\nAs there\u0027s not much overlap and I don\u0027t think any property is redundant, I\u0027d prefer to track them separately just so that I\u0027m not missing out on any corner cases. I\u0027ll analyse these data in a post-processing pipeline.\n\nThanks.",
+      "parentUuid": "00592f3f_d7e2e311",
       "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
