@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300f64ca_ca007bc8",
+        "filename": "chrome/browser/chromeos/login/lock/views_screen_locker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-03T21:38:56Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "f5805e68f7a5fa61690c00e8b9659bb47a59d6a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
