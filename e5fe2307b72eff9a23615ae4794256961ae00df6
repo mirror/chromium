@@ -70,6 +70,24 @@
       "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a066fc96_0f831ae4",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-03T19:05:56Z",
+      "side": 1,
+      "message": "Yep, sounds good. If you see an easy way to make the touch move work as well, you are welcome to contribute :)",
+      "parentUuid": "6e09325e_1459786e",
+      "revId": "e5fe2307b72eff9a23615ae4794256961ae00df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
