@@ -37,6 +37,7 @@ GFX_EXPORT RectF SkRectToRectF(const SkRect& rect);
 GFX_EXPORT SkSize SizeFToSkSize(const SizeF& size);
 GFX_EXPORT SizeF SkSizeToSizeF(const SkSize& size);
 GFX_EXPORT Size SkISizeToSize(const SkISize& size);
+GFX_EXPORT SkISize SizeToSkISize(const Size& size);
 
 GFX_EXPORT void QuadFToSkPoints(const gfx::QuadF& quad, SkPoint points[4]);
 

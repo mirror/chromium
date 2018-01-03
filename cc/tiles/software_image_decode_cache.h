@@ -93,17 +93,8 @@ class CC_EXPORT SoftwareImageDecodeCache
   using ImageMRUCache = base::
       HashingMRUCache<CacheKey, std::unique_ptr<CacheEntry>, CacheKeyHash>;
 
-  // Actually decode the image. Note that this function can (and should) be
-  // called with no lock acquired, since it can do a lot of work. Note that it
-  // can also return nullptr to indicate the decode failed.
-  std::unique_ptr<CacheEntry> DecodeImageInternal(const CacheKey& key,
-                                                  const DrawImage& draw_image);
-
   // Get the decoded draw image for the given key and paint_image. Note that
-  // this function has to be called with no lock acquired, since it will acquire
-  // its own locks and might call DecodeImageInternal above. Note that
-  // when used internally, we still require that DrawWithImageFinished() is
-  // called afterwards.
+  // this function has to be called with the lock acquired.
   DecodedDrawImage GetDecodedImageForDrawInternal(
       const CacheKey& key,
       const PaintImage& paint_image);
@@ -125,10 +116,24 @@ class CC_EXPORT SoftwareImageDecodeCache
   CacheEntry* AddCacheEntry(const CacheKey& key);
 
   void DecodeImageIfNecessary(const CacheKey& key,
-                              const PaintImage& paint_image,
+                              const PaintImage& image,
                               CacheEntry* cache_entry);
+  bool NeedsDecode(const CacheKey& key, CacheEntry* cache_entry) const;
+  std::unique_ptr<CacheEntry> DecodeImage(const CacheKey& key,
+                                          const PaintImage& paint_image);
   void AddBudgetForImage(const CacheKey& key, CacheEntry* entry);
   void RemoveBudgetForImage(const CacheKey& key, CacheEntry* entry);
+
+  // Given a |key|, this function finds any cached lockable decode, called
+  // candidate decode, for this image that is at least as large as the needed
+  // size (as dictated by the key). If multiple decodes match the criteria, then
+  // the decode with size closest to the needed size is selected.
+  //
+  // If a candidate decode is found, it is locked, *|entry| is populated with
+  // the candidate decode, and the key for the candidate decode is returned.
+  // Otherwise, base::nullopt is returned.
+  base::Optional<CacheKey> FindCandidateDecodedImageAndLock(const CacheKey& key,
+                                                            CacheEntry** entry);
 
   void UnrefImage(const CacheKey& key);
 
@@ -146,7 +151,7 @@ class CC_EXPORT SoftwareImageDecodeCache
   // Decoded images and ref counts (predecode path).
   ImageMRUCache decoded_images_;
 
-  // A map of PaintImage::FrameKey to the ImageKeys for cached decodes of this
+  // A map of PaintImage::FrameKey to the CacheKeys for cached decodes of this
   // PaintImage.
   std::unordered_map<PaintImage::FrameKey,
                      std::vector<CacheKey>,
