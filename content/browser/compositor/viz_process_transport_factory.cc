@@ -10,7 +10,6 @@
 #include "base/single_thread_task_runner.h"
 #include "cc/raster/single_thread_task_graph_runner.h"
 #include "components/viz/client/client_layer_tree_frame_sink.h"
-#include "components/viz/client/client_shared_bitmap_manager.h"
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/features.h"
 #include "components/viz/common/gpu/context_provider.h"
@@ -475,8 +474,6 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
   viz::ClientLayerTreeFrameSink::InitParams params;
   params.compositor_task_runner = compositor->task_runner();
   params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
-  // TODO(crbug.com/730660): Make a ClientSharedBitmapManager to pass here.
-  params.shared_bitmap_manager = shared_bitmap_manager_.get();
   params.pipes.compositor_frame_sink_associated_info = std::move(sink_info);
   params.pipes.client_request = std::move(client_request);
   params.local_surface_id_provider =
