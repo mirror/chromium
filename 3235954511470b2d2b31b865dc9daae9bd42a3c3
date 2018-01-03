@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "498501b0_1f35cc3a",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2018-01-03T14:35:13Z",
+      "side": 1,
+      "message": "nit: Instructions",
+      "revId": "3235954511470b2d2b31b865dc9daae9bd42a3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
