@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60e3ee76_dfc0e25a",
+        "filename": "base/files/memory_mapped_file_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Some dev logging crept in?",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 62
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ea557f_880660fc",
+        "filename": "base/files/memory_mapped_file_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: Looks like some error-logging crept in to the latest patch?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 74
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bcd79e_9e3b28b3",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Can we clarify here why the file URL prefix indicates that we\u0027re running un-packaged?",
+      "range": {
+        "startLine": 64,
+        "startChar": 25,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadb478d_f2feba7f",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "This assumes that the |exe_from_argv| must refer to the same binary as the calling process, which is not generally the case.  What is the mechanism for having a package containing both the initial binary and one or more \"helper\" binaries?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9778b6ee_5c7fa297",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: Move this down to immediately before it is used.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b854ac55_90b9c0e3",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: Suggest \"directory paths\"",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4686aeb4_76aa506c",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: These examples include a trailing slash, which was not present in the original examples - is it required now, or optional?",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de58c3d4_d884a1d4",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33821ccb_c8438d99",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: Suggest |relative_path|",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 11
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c3e755_e0101e1b",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Will this actually be correct if e.g. we have a root out/Debug and a library at out/Debug/wibble/libwibble.so?  In that case wouldn\u0027t we want to put the binary at lib/libwibble.so, i.e. just use the basename()?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f83d674_dacba3e5",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "When will this temporary be deleted?",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "331f9b44d07b8a36951e9cf2718cfbd0be67411a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

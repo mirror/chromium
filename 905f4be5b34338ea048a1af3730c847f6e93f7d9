@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "30976bcd_a6aff79b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "nit: I think the point is that the package system allows us to deploy the binaries on top of a stock bootfs, rather than building a full bootfs for every one.  It\u0027s about making things more modular, really.",
+      "parentUuid": "b6bf2a24_484eb876",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e19ed4d_70edb5b4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6332ef80_d36d54a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72987bd0_3b27d5fe",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +282,30 @@
       "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01b6cd8c_5de25b00",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "I don\u0027t see any change to the wording of this, or the following path params.",
+      "parentUuid": "a9478fe5_323c5eef",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -472,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "77744d6a_eb95b533",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d95472b_225bc9f2",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36c89450_494946b2",
         "filename": "testing/test.gni",
         "patchSetId": 2
@@ -507,6 +603,30 @@
       "side": 1,
       "message": "That\u0027s right. This is similar to Android, where \"base_unittests\" resolves to a test_runner_script() action; the test executable and APK packages are indirectly pulled in via dependency rules.\n\nIt\u0027s better for cross-platform consistency if we maintain the binding between the GN target name and the ninja target name.",
       "parentUuid": "36c89450_494946b2",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 5
+      },
+      "revId": "905f4be5b34338ea048a1af3730c847f6e93f7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a82f0763_bbffc69e",
+        "filename": "testing/test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-03T20:57:21Z",
+      "side": 1,
+      "message": "Isn\u0027t the GN target name always \u003d\u003d the ninja target name?\n\nThe name of the actual output of a given rule doesn\u0027t need to match the target\u0027s name, e.g. when we build dynamic library target \"foo\" we get a \"libfoo.so\". Similarly, we can have \"foo_exe\" generate the binary as \"foo\" rather than \"foo_exe\", can\u0027t we?",
+      "parentUuid": "59a9bc25_8e6f737c",
       "range": {
         "startLine": 234,
         "startChar": 0,
