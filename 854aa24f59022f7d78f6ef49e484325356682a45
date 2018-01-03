@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "148507ae_db751774",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T19:56:12Z",
+      "side": 1,
+      "message": "I don\u0027t think I can make this constant since I need to change the URI and set the autoconf flag. Also I believe I need a copy since \"detected\" is marked const so I wouldn\u0027t be able to change any of its members.",
+      "parentUuid": "08ea0698_643bac2b",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4988904_3a2f46aa",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "127e23f2_991284c1",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T19:56:12Z",
+      "side": 1,
+      "message": "Yes the ippusb spec requires this.",
+      "parentUuid": "f4988904_3a2f46aa",
+      "range": {
+        "startLine": 383,
+        "startChar": 67,
+        "endLine": 383,
+        "endChar": 76
+      },
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51ea064_b1c873b7",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6edb151_9cab6030",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T19:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51ea064_b1c873b7",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e1ff4138_c2667629",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T19:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ccde9c_fe3ea929",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350dc013_a6404ccd",
         "filename": "chromeos/printing/printer_configuration.h",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2018-01-03T19:02:34Z",
       "side": 1,
       "message": "It\u0027s not clear to me any of these new fields need to be in the Printer structure (as opposed to the DetectedPrinter structure).  Do we need these to actually set up the printer?",
+      "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a09b62_34b73df9",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2018-01-03T19:56:12Z",
+      "side": 1,
+      "message": "The vid/pid information is only stored in the UsbDevice class, which is used in order to create a Printer object and then is no longer used.\n\nIn order to be able to wait until after checking for whether or not we have a PPD for printer before falling back on the ippusb scheme, we need to store the vid/pid in the Printer object to change the URI at a later time.",
+      "parentUuid": "350dc013_a6404ccd",
       "revId": "854aa24f59022f7d78f6ef49e484325356682a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
