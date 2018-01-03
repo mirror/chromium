@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad64a5ab_141e58d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-03T19:33:56Z",
+      "side": 1,
+      "message": "nit: Also",
+      "revId": "91f26c6ccc4cd7896dac23de1a7c582216c0b051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca553f26_03bd8f54",
+        "filename": "gpu/command_buffer/service/mailbox_manager_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2018-01-03T19:33:56Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "revId": "91f26c6ccc4cd7896dac23de1a7c582216c0b051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
