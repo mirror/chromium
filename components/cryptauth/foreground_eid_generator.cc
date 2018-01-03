@@ -58,7 +58,7 @@ std::string ForegroundEidGenerator::EidData::DataInHex() const {
 }
 
 ForegroundEidGenerator::ForegroundEidGenerator()
-    : ForegroundEidGenerator(base::MakeUnique<RawEidGeneratorImpl>(),
+    : ForegroundEidGenerator(std::make_unique<RawEidGeneratorImpl>(),
                              base::DefaultClock::GetInstance()) {}
 
 ForegroundEidGenerator::ForegroundEidGenerator(
