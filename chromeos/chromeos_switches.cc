@@ -80,6 +80,10 @@ const char kArcAvailability[] = "arc-availability";
 // Signals the availability of the ARC instance on this device.
 const char kArcAvailable[] = "arc-available";
 
+// Used in autotest to disable initial packages cache setup during the first
+// ARC boot.
+const char kArcSkipPackagesCacheSetup[] = "arc-skip-packages-cache-setup";
+
 // Defines how to start ARC. This can take one of the following values:
 // - always-start automatically start with Play Store UI support.
 // - always-start-with-no-play-store automatically start without Play Store UI.

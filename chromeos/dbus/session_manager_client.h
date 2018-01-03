@@ -298,6 +298,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
                                 bool skip_boot_completed_broadcast,
                                 bool scan_vendor_priv_app,
                                 bool native_bridge_experiment,
+                                bool skip_packages_cache_setup,
                                 StartArcInstanceCallback callback) = 0;
 
   // Asynchronously stops the ARC instance.  Upon completion, invokes

@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/task_scheduler/post_task.h"
@@ -409,12 +410,16 @@ void ArcSessionImpl::SendStartArcInstanceDBusMessage(
       chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
   const bool native_bridge_experiment =
       base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature);
+  const bool skip_packages_cache_setup =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kArcSkipPackagesCacheSetup);
+
   if (target_mode == ArcInstanceMode::MINI_INSTANCE) {
     session_manager_client->StartArcInstance(
         chromeos::SessionManagerClient::ArcStartupMode::LOGIN_SCREEN,
         // All variables below except |callback| will be ignored.
         cryptohome::Identification(), false, false, native_bridge_experiment,
-        std::move(callback));
+        skip_packages_cache_setup, std::move(callback));
     return;
   }
   DCHECK_EQ(ArcInstanceMode::FULL_INSTANCE, target_mode);
@@ -435,7 +440,7 @@ void ArcSessionImpl::SendStartArcInstanceDBusMessage(
   session_manager_client->StartArcInstance(
       chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
       skip_boot_completed_broadcast, scan_vendor_priv_app,
-      native_bridge_experiment, std::move(callback));
+      native_bridge_experiment, skip_packages_cache_setup, std::move(callback));
 }
 
 void ArcSessionImpl::OnMojoConnected(

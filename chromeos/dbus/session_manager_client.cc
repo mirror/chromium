@@ -400,6 +400,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
                         bool skip_boot_completed_broadcast,
                         bool scan_vendor_priv_app,
                         bool native_bridge_experiment,
+                        bool skip_packages_cache_setup,
                         StartArcInstanceCallback callback) override {
     DCHECK(!callback.is_null());
 
@@ -410,6 +411,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
 
     login_manager::StartArcInstanceRequest request;
     request.set_native_bridge_experiment(native_bridge_experiment);
+    request.set_skip_packages_cache_setup(skip_packages_cache_setup);
     switch (startup_mode) {
       case ArcStartupMode::FULL:
         request.set_account_id(cryptohome_id.id());
@@ -1030,6 +1032,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
                         bool disable_boot_completed_broadcast,
                         bool enable_vendor_privileged,
                         bool native_bridge_experiment,
+                        bool skip_packages_cache_setup,
                         StartArcInstanceCallback callback) override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
