@@ -61,7 +61,7 @@ class DownloadTest : public WebTestWithWebState {
 };
 
 // Tests sucessfull download flow.
-TEST_F(DownloadTest, SucessfullDownload) {
+TEST_F(DownloadTest, DISABLED_SucessfullDownload) {
   // Load download URL.
   ASSERT_TRUE(server_.Start());
   GURL url(server_.GetURL("/"));
@@ -70,6 +70,7 @@ TEST_F(DownloadTest, SucessfullDownload) {
 
   // Wait until download task is created.
   ASSERT_TRUE(WaitUntilConditionOrTimeout(testing::kWaitForDownloadTimeout, ^{
+    base::RunLoop().RunUntilIdle();
     return !delegate_.alive_download_tasks().empty();
   }));
   ASSERT_EQ(1U, delegate_.alive_download_tasks().size());
