@@ -16,6 +16,24 @@
       "revId": "ab6295cf27513978424ebe9cb4db54523cce5df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef69b7b_8cef3f5b",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-03T18:13:18Z",
+      "side": 1,
+      "message": "Oops, no, it isn\u0027t, redacted.",
+      "parentUuid": "04934f02_3f9ff282",
+      "revId": "ab6295cf27513978424ebe9cb4db54523cce5df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
