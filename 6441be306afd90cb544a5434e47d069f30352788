@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3ed65ce5_4503f302",
+        "filename": "chrome/browser/ui/app_list/start_page_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-03T00:45:13Z",
+      "side": 1,
+      "message": "This is probably (hopefully) dead code - see http://crbug.com/781407",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60d83217_d5e01605",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 9
