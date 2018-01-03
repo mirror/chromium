@@ -15,6 +15,10 @@ class ProxyConfigService;
 namespace cronet {
 namespace global_state {
 
+void EnsureInitialized();
+
+void InitializeOnInitThread();
+
 bool IsOnInitThread();
 
 // Creates a proxy config service appropriate for this platform that fetches the
