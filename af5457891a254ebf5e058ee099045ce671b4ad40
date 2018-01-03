@@ -1,0 +1,312 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753d3c15_e0919619",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9d88a8_7e8a7b3f",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Could we add:\nDCHECK(delegate_);",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9636583b_f38209ec",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Remove ; and re-run \"git cl format\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffde9ff5_8f439663",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Remove ; and re-run \"git cl format\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdd57de_35996f95",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Can we rename this to AsWeakPtr() or GetWeakPtr()?",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a29e81e_8adcfb08",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "skip a line after this include.\n\nSee:\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4705e2aa_3fb4aa41",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "I think this is leaking memory.\nCould we use something like std::array instead?",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2077138_d995b56b",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Nit: do this in the constructor and remove the SetUp() function.\n\nSee:\nhttps://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d1eb7c_8c54728b",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "I think the recommended style is to avoid using \"new\" when possible:\ndelegate_ \u003d std::make_unique\u003cMockChunkedDataStreamUploaderDelegate\u003e();",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e54cc7_25792ee9",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d762ec_959eb62d",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "optional: use lambda capture, probably something like this:\nbase::BindRepeating([](int){})\n\nNot sure this is clearer though, it\u0027s up to your preference.",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 72
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa1252f_0b342fce",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Can we delete this line?",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c365f59_275838fb",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "const char kTestData[] \u003d \"Hello world!\";\n\n(and same everywhere)\n\nSee naming conventions here:\nhttps://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf07ea0b_2e4873be",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "methods",
+      "range": {
+        "startLine": 166,
+        "startChar": 41,
+        "endLine": 166,
+        "endChar": 47
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9778cf3a_1377e536",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "I think this should be nil rather than nullptr, because it\u0027s an objective-C object.",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37082cd_387a720e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2018-01-03T14:00:10Z",
+      "side": 1,
+      "message": "Nit: maybe don\u0027t duplicate this code.\n\nCould we do:\n\nif ([request_ HTTPBodyStream]) {\n  ...\n} else if ([request_ HTTPBody])\n  ...\n}\n\nnet_request_-\u003eStart();\nif (tracker_)\n  tracker_-\u003eStartRequest(net_request_);",
+      "range": {
+        "startLine": 723,
+        "startChar": 6,
+        "endLine": 725,
+        "endChar": 45
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
