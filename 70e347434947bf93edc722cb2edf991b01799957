@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4efa005_9aa1e4c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-03T00:35:02Z",
+      "side": 1,
+      "message": "Give ScopedResource a LayerTreeResourceProvider?",
+      "revId": "70e347434947bf93edc722cb2edf991b01799957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
