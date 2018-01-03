@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "692d672c_a638dee1",
+        "filename": "net/http/http_basic_state.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6891f004_ffc276b4",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5e0b548_b1ad1f0e",
         "filename": "net/http/http_stream.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca59fcf_a2f93834",
+        "filename": "net/http/http_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e0b548_b1ad1f0e",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "91fc997d_e01a8788",
+        "filename": "net/quic/chromium/quic_http_stream_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "I don\u0027t believe QUIC cares in this case, and was defaulting to not doing early data in the default case.",
+      "parentUuid": "bcf0333f_89a58a9c",
+      "range": {
+        "startLine": 608,
+        "startChar": 49,
+        "endLine": 608,
+        "endChar": 54
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31dd1019_86e7dd52",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f76d065_057cf586",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31dd1019_86e7dd52",
+      "range": {
+        "startLine": 161,
+        "startChar": 42,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "51a7112f_4479ee97",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "See other comment, defaulting to not doing early, especially since we\u0027ll eventually moving to defaulting to not doing early (as per thread).",
+      "parentUuid": "9662f4e1_16f4e5df",
+      "range": {
+        "startLine": 1576,
+        "startChar": 54,
+        "endLine": 1576,
+        "endChar": 59
+      },
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49614d4b_7df9fa63",
         "filename": "net/spdy/chromium/spdy_http_stream.h",
         "patchSetId": 1
@@ -119,6 +227,24 @@
       "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b653b18b_0eda4e4d",
+        "filename": "net/spdy/chromium/spdy_http_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2018-01-03T15:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49614d4b_7df9fa63",
+      "revId": "9f08a04ab9c77cb9f337623e6543b9b2b7ac7277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
