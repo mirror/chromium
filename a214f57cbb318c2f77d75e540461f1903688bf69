@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e13efb2_a18e6fa7",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0a07ce_f8d37480",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "nit: while here, maybe make these methods consistently use `result` or `copy`",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122742e8_19492d2e",
+        "filename": "content/renderer/indexed_db/indexed_db_key_builders.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2051f6b2_0779843e",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCursor.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Maybe comment somewhere that a cursor gets views rather than taking ownership since the cursor is backed by an object that actually owns the data?",
+      "revId": "a214f57cbb318c2f77d75e540461f1903688bf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

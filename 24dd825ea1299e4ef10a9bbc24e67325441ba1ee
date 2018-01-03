@@ -1,0 +1,390 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e342c6_c39e834e",
+        "filename": "content/renderer/indexed_db/webidbdatabase_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Lifetime of the temporary WebIDBKey seems sketchy. If there is a guarantee that it won\u0027t be destructed while the values are being copied out via the View it\u0027s subtle.\n\nMaybe make it explicitly held?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6072a42_363b17fd",
+        "filename": "content/renderer/indexed_db/webidbdatabase_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cfc7df_06aadf8c",
+        "filename": "third_party/WebKit/Source/modules/exported/WebIDBKey.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Any reason not to use String() here? (this probably comes from when \u0027string()\u0027 would have been disallowed)",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b1b4ed_ceee4558",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBAny.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "FYI, https://bugs.chromium.org/p/chromium/issues/detail?id\u003d798819 - although I\u0027m sure we\u0027ve discussed this in the past. Anyway, not this CL.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d61d9a_0b1c47a3",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBCursor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "nit: add blank line before comment",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce7ec0e_5c39c3eb",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Obviously, this bit violates blink style guide currently, so will need dcheng etc. to approve.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c69e5d2_d83f38c6",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Is this comment still valid?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7c5c68_460ca2ab",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "wording nit: maybe replace \"to object store values\" with \"as object store record values\"; not sure that\u0027s really an improvement, though.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1093fb0_b8df3e14",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Should these all move into the impl?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2530b70d_6b6ed018",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKey.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Maybe mention where this is used.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b465877_8800c0c9",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKeyRange.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Maybe expand with: ; either upper_if_distinct_, lower_, or nullptr.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91f5269_78d5d2f6",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBKeyRange.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8390370a_b9ddc4ba",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Noting the use of std::vector here. Will need dcheng etc. to approve.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c00b1d_266f9bdb",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "DCHECK(!key_path_key) ?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05216f9b_111813e2",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "DCHECK(!key_path_key) ?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703f3a5b_262d5723",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "maybe \"if block\" to make it easier to read.\n\nAlso, do we need the `else`? Can this be unconditional?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13175fca_555b8de7",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Noting the use of std::vector here. Will need dcheng etc. to approve.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55e23d4_4e32a791",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Noting the use of std::vector here. Will need dcheng etc. to approve.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee876927_61bb5f35",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Are there legitimate cases where we have an IDBValue and no isolate? Wondering if we can DCHECK(isolate_) here.",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd1dd13_44e54b98",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBKey.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "\"WebIDBView\" ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6172a48e_8b45e82a",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "Maybe add: TODO(pwnall): Remove as part of https://crbug.com/611900\n\n(just because it\u0027s saying \"this code is not ideal...\" point at the long term plan)",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2aa4a3_b1cf454b",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-03T21:56:25Z",
+      "side": 1,
+      "message": "s/Release/Take/ ?",
+      "revId": "24dd825ea1299e4ef10a9bbc24e67325441ba1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
