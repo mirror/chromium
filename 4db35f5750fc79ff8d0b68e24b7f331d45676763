@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3dc704b_b3fd5a1d",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransfer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T18:56:48Z",
+      "side": 1,
+      "message": "As far as I can tell this only uses the width and height, so should be FloatSize to avoid confusion. Will require changes to DeviceSpaceRect, but more on that below.",
+      "range": {
+        "startLine": 149,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 21
+      },
+      "revId": "4db35f5750fc79ff8d0b68e24b7f331d45676763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

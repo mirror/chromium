@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47566523_8f96030f",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransfer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-03T18:56:48Z",
+      "side": 0,
+      "message": "This moves the rect location when it scales the rect. And that scaled location is used to construct the translate below. The new code does not apply the Device Scale to the paint_offset. Is it already included? Either way I think the test should be expanded to verify the behavior with non-identity device scale factor and page zoom scale factor.",
+      "range": {
+        "startLine": 387,
+        "startChar": 26,
+        "endLine": 387,
+        "endChar": 41
+      },
+      "revId": "5b2de20541d2b08bf64e81804b538eb4d03a4e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
