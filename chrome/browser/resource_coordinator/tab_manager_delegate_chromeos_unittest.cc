@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "chrome/browser/resource_coordinator/time.h"
 #include "chromeos/dbus/fake_debug_daemon_client.h"
@@ -16,6 +17,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace resource_coordinator {
+namespace {
 
 class TabManagerDelegateTest : public testing::Test {
  public:
@@ -26,9 +28,33 @@ class TabManagerDelegateTest : public testing::Test {
   content::TestBrowserThreadBundle thread_bundle_;
 };
 
-namespace {
+class DummyLifecycleUnit : public LifecycleUnit {
+ public:
+  explicit DummyLifecycleUnit(base::TimeTicks last_focused_time)
+      : last_focused_time_(last_focused_time) {}
+
+  // LifecycleUnit:
+  base::string16 GetTitle() const override { return base::string16(); }
+  std::string GetIconURL() const override { return std::string(); }
+  TabLifecycleUnitExternal* AsTabLifecycleUnitExternal() override {
+    return nullptr;
+  }
+  SortKey GetSortKey() const override { return SortKey(last_focused_time_); }
+  State GetState() const override { return State::LOADED; }
+  int GetEstimatedMemoryFreedOnDiscardKB() const override { return 0; }
+  bool CanPurge() const override { return false; }
+  bool CanDiscard(DiscardReason reason) const override { return false; }
+  bool Discard(DiscardReason discard_reason) override { return false; }
+
+ private:
+  base::TimeTicks last_focused_time_;
+
+  DISALLOW_COPY_AND_ASSIGN(DummyLifecycleUnit);
+};
+
 constexpr bool kIsFocused = true;
 constexpr bool kNotFocused = false;
+
 }  // namespace
 
 TEST_F(TabManagerDelegateTest, CandidatesSorted) {
@@ -42,58 +68,43 @@ TEST_F(TabManagerDelegateTest, CandidatesSorted) {
   arc_processes.emplace_back(4, 40, "visible2", arc::mojom::ProcessState::TOP,
                              kNotFocused, 150);
 
-  TabStats tab1, tab2, tab3, tab4, tab5;
-  tab1.id = 100;
-  tab1.is_pinned = true;
-
-  tab2.id = 200;
-  tab2.is_internal_page = true;
-
-  tab3.id = 300;
-  tab3.is_pinned = true;
-  tab3.is_media = true;
-
-  tab4.id = 400;
-  tab4.is_media = true;
-
-  tab5.id = 500;
-  tab5.is_app = true;
-  TabStatsList tab_list = {tab1, tab2, tab3, tab4, tab5};
+  DummyLifecycleUnit focused_lifecycle_unit(base::TimeTicks::Max());
+  DummyLifecycleUnit non_focused_lifecycle_unit(
+      base::TimeTicks() + base::TimeDelta::FromSeconds(1));
+  DummyLifecycleUnit other_non_focused_lifecycle_unit(
+      base::TimeTicks() + base::TimeDelta::FromSeconds(2));
+  LifecycleUnitVector lifecycle_units{&focused_lifecycle_unit,
+                                      &non_focused_lifecycle_unit,
+                                      &other_non_focused_lifecycle_unit};
 
   std::vector<TabManagerDelegate::Candidate> candidates;
 
-  candidates = TabManagerDelegate::GetSortedCandidates(tab_list, arc_processes);
-  ASSERT_EQ(9U, candidates.size());
+  candidates =
+      TabManagerDelegate::GetSortedCandidates(lifecycle_units, arc_processes);
+  ASSERT_EQ(7U, candidates.size());
 
+  // focused LifecycleUnit
+  ASSERT_TRUE(candidates[0].lifecycle_unit());
+  EXPECT_EQ(candidates[0].lifecycle_unit(), &focused_lifecycle_unit);
   // focused app.
-  ASSERT_TRUE(candidates[0].app());
+  ASSERT_TRUE(candidates[1].app());
   EXPECT_EQ("focused", candidates[0].app()->process_name());
   // visible app 1, last_activity_time larger than visible app 2.
-  ASSERT_TRUE(candidates[1].app());
+  ASSERT_TRUE(candidates[2].app());
   EXPECT_EQ("visible1", candidates[1].app()->process_name());
   // visible app 2, last_activity_time less than visible app 1.
-  ASSERT_TRUE(candidates[2].app());
+  ASSERT_TRUE(candidates[3].app());
   EXPECT_EQ("visible2", candidates[2].app()->process_name());
   // background service.
-  ASSERT_TRUE(candidates[3].app());
+  ASSERT_TRUE(candidates[4].app());
   EXPECT_EQ("service", candidates[3].app()->process_name());
-  // pinned and media.
-  ASSERT_TRUE(candidates[4].tab());
-  EXPECT_EQ(300, candidates[4].tab()->id);
-  // media.
-  ASSERT_TRUE(candidates[5].tab());
-  EXPECT_EQ(400, candidates[5].tab()->id);
-  // pinned.
-  ASSERT_TRUE(candidates[6].tab());
-  EXPECT_EQ(100, candidates[6].tab()->id);
-  // chrome app.
-  ASSERT_TRUE(candidates[7].tab());
-  EXPECT_EQ(500, candidates[7].tab()->id);
-  // internal page.
-  ASSERT_TRUE(candidates[8].tab());
-  EXPECT_EQ(200, candidates[8].tab()->id);
+  // non-focused LifecycleUnits, sorted by last focused time.
+  ASSERT_TRUE(candidates[5].lifecycle_unit());
+  EXPECT_EQ(candidates[5].lifecycle_unit(), &other_non_focused_lifecycle_unit);
+  ASSERT_TRUE(candidates[6].lifecycle_unit());
+  EXPECT_EQ(candidates[6].lifecycle_unit(), &non_focused_lifecycle_unit);
 }
-
+/*
 // Occasionally, Chrome sees both FOCUSED_TAB and FOCUSED_APP at the same time.
 // Test that Chrome treats the former as a more important process.
 TEST_F(TabManagerDelegateTest, CandidatesSortedWithFocusedAppAndTab) {
@@ -444,5 +455,5 @@ TEST_F(TabManagerDelegateTest, KillMultipleProcesses) {
   EXPECT_EQ(1U, processes_map.count("service"));
   EXPECT_EQ(1U, processes_map.count("not-visible"));
 }
-
+*/
 }  // namespace resource_coordinator
