@@ -149,6 +149,15 @@ int MockHostResolverBase::ResolveFromCache(const RequestInfo& info,
   return rv;
 }
 
+int MockHostResolverBase::ResolveStaleFromCache(
+    const RequestInfo& info,
+    AddressList* addresses,
+    HostCache::EntryStaleness* stale_info,
+    const NetLogWithSource& net_log) {
+  NOTREACHED();
+  return ERR_UNEXPECTED;
+}
+
 void MockHostResolverBase::DetachRequest(size_t id) {
   RequestMap::iterator it = requests_.find(id);
   CHECK(it != requests_.end());
@@ -508,6 +517,14 @@ int HangingHostResolver::Resolve(const RequestInfo& info,
 int HangingHostResolver::ResolveFromCache(const RequestInfo& info,
                                           AddressList* addresses,
                                           const NetLogWithSource& net_log) {
+  return ERR_DNS_CACHE_MISS;
+}
+
+int HangingHostResolver::ResolveStaleFromCache(
+    const RequestInfo& info,
+    AddressList* addresses,
+    HostCache::EntryStaleness* stale_info,
+    const NetLogWithSource& net_log) {
   return ERR_DNS_CACHE_MISS;
 }
 
