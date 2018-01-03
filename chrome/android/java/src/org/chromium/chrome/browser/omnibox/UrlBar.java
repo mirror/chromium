@@ -96,6 +96,8 @@ public class UrlBar extends AutocompleteEditText {
     private final KeyboardHideHelper mKeyboardHideHelper;
 
     private boolean mFocused;
+    private boolean mFocusAnimationInProgress;
+    private boolean mSuppressingTouchMoveEventsUntilNextTouchDown;
     private boolean mAllowFocus = true;
 
     private boolean mPendingScrollTLD;
@@ -301,6 +303,13 @@ public class UrlBar extends AutocompleteEditText {
         super.setIgnoreTextChangesForAutocomplete(ignoreAutocomplete);
     }
 
+    public void setFocusAnimationInProgress(boolean inProgress) {
+        mFocusAnimationInProgress = inProgress;
+        if (inProgress) {
+            mSuppressingTouchMoveEventsUntilNextTouchDown = true;
+        }
+    }
+
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         mFocused = focused;
@@ -393,18 +402,28 @@ public class UrlBar extends AutocompleteEditText {
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             getLocationInWindow(mCachedLocation);
             mDownEventViewTop = mCachedLocation[1];
+            if (!mFocusAnimationInProgress) {
+                mSuppressingTouchMoveEventsUntilNextTouchDown = false;
+            }
         }
 
-        if (!mFocused) {
+        if (mFocused) {
+            Tab currentTab = mUrlBarDelegate.getCurrentTab();
+            if (event.getAction() == MotionEvent.ACTION_DOWN && currentTab != null) {
+                // Make sure to hide the current ContentView ActionBar.
+                ContentViewCore viewCore = currentTab.getContentViewCore();
+                if (viewCore != null) viewCore.destroySelectActionMode();
+            }
+        } else {
             mGestureDetector.onTouchEvent(event);
-            return true;
         }
 
-        Tab currentTab = mUrlBarDelegate.getCurrentTab();
-        if (event.getAction() == MotionEvent.ACTION_DOWN && currentTab != null) {
-            // Make sure to hide the current ContentView ActionBar.
-            ContentViewCore viewCore = currentTab.getContentViewCore();
-            if (viewCore != null) viewCore.destroySelectActionMode();
+        if (mSuppressingTouchMoveEventsUntilNextTouchDown
+                && event.getActionMasked() == MotionEvent.ACTION_MOVE) {
+            // If we allowed ACTION_MOVE events to propagate to the parent EditText widget, it would
+            // think the user is trying to perform a drag selection when the URL focus animation
+            // moves the UrlBar to the side.
+            return true;
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
