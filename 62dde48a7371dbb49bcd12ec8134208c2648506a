@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa1495d5_549c5b9c",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T22:09:18Z",
+      "side": 1,
+      "message": "Yeah, the \"type\" field is part of the Cast protocol response payload. We should be able to validate here.",
+      "parentUuid": "31bbba2b_a96734e5",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46ba72fb_b7be1b3d",
         "filename": "components/cast_channel/cast_message_util.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T03:00:33Z",
       "side": 1,
       "message": "It looks like output consists entirely of constants.  Could it be a string constant?",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8933c2e_81d0be4a",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T22:09:18Z",
+      "side": 1,
+      "message": "I think it would be less error prone to use base::JSONWriter here. I am not too concerned about the performance hit since this only get called twice per KeepAliveDelegate.",
+      "parentUuid": "46ba72fb_b7be1b3d",
       "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2d2cb1de_a16f8c86",
+        "filename": "components/cast_channel/cast_message_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T22:09:18Z",
+      "side": 1,
+      "message": "The purpose of the enum is so that it\u0027s impossible for callers of CreateKeepAliveMessage to specify something other than PING or PONG. I think it\u0027s a bit nicer than passing in raw string pointers. Incorporating other comments, I have changed it to two functions to generate ping and pong messages respectively.",
+      "parentUuid": "fa1e202d_fa8b89d7",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc54a7fa_ad7ea784",
         "filename": "components/cast_channel/keep_alive_delegate.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d75aab_31c55675",
+        "filename": "components/cast_channel/keep_alive_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2018-01-03T22:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc54a7fa_ad7ea784",
+      "revId": "62dde48a7371dbb49bcd12ec8134208c2648506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
