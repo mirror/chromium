@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e88b19a7_db128f92",
+        "filename": "ui/views/controls/button/radio_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-03T00:34:26Z",
+      "side": 1,
+      "message": "I would expect the focus change to happen when handling the event, not in a function that is expected to notify the observer of a click. How about adding the virtual function RequestFocusFromEvent(). This function would be:\n\n  if (request_focus_on_press_)\n    RequestFocus();\n\nand RadioButton would override to have the logic you have here.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 3
+      },
+      "revId": "2801dafecc0a1f4864bdb419739776e5d0791011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
