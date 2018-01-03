@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8faed52c_e91a83ad",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-text-on-dom-change-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-03T13:37:23Z",
+      "side": 1,
+      "message": "If the actual and expected text are similar then the insertText was not invoked. So text difference to reproduce the crash.",
+      "revId": "ad20d04521bc205073bd723cbaaf09a8176c121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78140f5_60821395",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-03T13:37:23Z",
+      "side": 1,
+      "message": "This is same as SelectionInDOMTree.",
+      "revId": "ad20d04521bc205073bd723cbaaf09a8176c121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888edcf7_eeebd76d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-03T13:37:23Z",
+      "side": 1,
+      "message": "CurrentSelection and selection_for_insertion should be same ?",
+      "revId": "ad20d04521bc205073bd723cbaaf09a8176c121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b657b4ad_a1d7dc50",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2018-01-03T13:37:23Z",
+      "side": 1,
+      "message": "Removed Abort to reproduce the crash",
+      "revId": "ad20d04521bc205073bd723cbaaf09a8176c121b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
