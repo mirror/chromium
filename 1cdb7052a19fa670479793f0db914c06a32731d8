@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "337af49e_ac9683f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "Clarification: I\u0027m not very familiar with the test, but is it expected behavior that the real AudioManager is called in the test, instead of a Mock? In general, \"the test sets up a mock but it is unused\" sounds a bit weird and confusing to me...???",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f343c98_dc31581e",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "Could you avoid using a global var?\nYou can declare a member variable (std::unique_ptr) in KioskVirtualKeyboardTest, instead.\nThen, you can delete Create() and Delete() below, too, I think.",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba151cf0_823be203",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "nit/optional/style: Could you keep one-empty line to split methods? Ditto for below.",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c591dd8_8b7b0ae5",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2317,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "nit: let\u0027s avoid searching twice.\n\nauto iter \u003d sound_data_.find(key);\nif (iter \u003d\u003d sound_data_.end()) {\n  ...\n}\nauto handler \u003d std::unique_ptr\u003cmedia::AudioStreamHandler\u003e(iter-\u003esecond);\n...",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9ba9cd_66a78ed1",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2322,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "optional: could you use std::make_unique as C++14 is allowed now?",
+      "range": {
+        "startLine": 2322,
+        "startChar": 8,
+        "endLine": 2322,
+        "endChar": 24
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd2e4b4_5a06db66",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "NOTREACHED() or NOTIMPLEMENTED() ?",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084f0ecc_b0db85bd",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2222755_aeab7a1e",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "clarification: is it safe to keep StringPiece, i.e. is it ensured that the content referred by the |data| of Initialize() is alive during this class is alive?\nIf so, could you comment the reason? If not, maybe std::string?",
+      "range": {
+        "startLine": 2362,
+        "startChar": 21,
+        "endLine": 2362,
+        "endChar": 38
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac43d02a_d1531bb9",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "For consistency, could you delete the instance after KioskTest::TearDown() (regardless of my suggestion above)? (TearDown should be the reverse order of SetUp() in general).\nIf it is impossible for some reason, could you comment?",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e94734a_372afcd2",
+        "filename": "chromeos/dbus/fake_session_manager_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "optional: How about using base::Optional? like;\n\nvoid StorePolicyWithKey(\n    const base::FilePath\u0026 owner_key_path,\n    const base::Optional\u003cstd::string\u003e new_public_key,\n    const base::FilePath\u0026 policy_path,\n    const std::string\u0026 policy_blob) {\n  if (new_public_key.has_value())\n    StoreFile(owner_key_path, new_public_key.value());\n  ...\n}\n\nthen you don\u0027t need to pass whole |policy|.",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

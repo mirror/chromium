@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f2abfd88_4229f001",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-03T14:55:24Z",
+      "side": 1,
+      "message": "The dependency is,\n//chrome/test:browser_tests -\u003e //chrome/browser/chromeos:test_support (iff is_chromeos) -\u003e //chromeos\nso, it looks to have the dependency to me.\nIf removing these causes a build failure, could you add TODO to get rid of them, at least?",
+      "parentUuid": "ce3e0317_10fccc28",
+      "revId": "a6252f020bc9d7dd577cb497eb51d4f88600639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2101f5f_e55b7aaf",
         "filename": "chromeos/dbus/fake_session_manager_client.cc",
         "patchSetId": 4
