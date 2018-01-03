@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <iostream>
 #include <limits>
 #include <memory>
 #include <set>
@@ -667,6 +668,30 @@ pp::MouseInputEvent NormalizeMouseEvent(pp::Instance* instance,
   }
 #endif
   return normalized_event;
+}
+
+std::string ConvertViewIntToView(unsigned long viewInt) {
+  switch (viewInt) {
+    case PDFDEST_VIEW_XYZ:
+      return "XYZ";
+    case PDFDEST_VIEW_FIT:
+      return "Fit";
+    case PDFDEST_VIEW_FITH:
+      return "FitH";
+    case PDFDEST_VIEW_FITV:
+      return "FitV";
+    case PDFDEST_VIEW_FITR:
+      return "FitR";
+    case PDFDEST_VIEW_FITB:
+      return "FitB";
+    case PDFDEST_VIEW_FITBH:
+      return "FitBH";
+    case PDFDEST_VIEW_FITBV:
+      return "FitBV";
+    default:
+      return "";
+  }
+  return "";
 }
 
 }  // namespace
@@ -2645,6 +2670,7 @@ pp::VarDictionary PDFiumEngine::TraverseBookmarks(FPDF_BOOKMARK bookmark,
 
   FPDF_DEST dest = FPDFBookmark_GetDest(doc_, bookmark);
   // Some bookmarks don't have a page to select.
+
   if (dest) {
     unsigned long page_index = FPDFDest_GetPageIndex(doc_, dest);
     if (page_index < pages_.size() &&
@@ -2692,19 +2718,41 @@ pp::VarDictionary PDFiumEngine::TraverseBookmarks(FPDF_BOOKMARK bookmark,
   return dict;
 }
 
-int PDFiumEngine::GetNamedDestinationPage(const std::string& destination) {
+PDFEngine::NamedDestination PDFiumEngine::GetNamedDestinationPage(
+    const std::string& destination) {
+  PDFEngine::NamedDestination result;
+  std::cerr << "PDFiumEngine::GetNamedDestinationPage " << destination
+            << std::endl;
   // Look for the destination.
   FPDF_DEST dest = FPDF_GetNamedDestByName(doc_, destination.c_str());
   if (!dest) {
+    std::cerr << "  no dest, look for bookmark" << std::endl;
     // Look for a bookmark with the same name.
     base::string16 destination_wide = base::UTF8ToUTF16(destination);
     FPDF_WIDESTRING destination_pdf_wide =
         reinterpret_cast<FPDF_WIDESTRING>(destination_wide.c_str());
     FPDF_BOOKMARK bookmark = FPDFBookmark_Find(doc_, destination_pdf_wide);
-    if (bookmark)
+    if (bookmark) {
+      std::cerr << "  there was a bookmark" << std::endl;
       dest = FPDFBookmark_GetDest(doc_, bookmark);
+    }
   }
-  return dest ? FPDFDest_GetPageIndex(doc_, dest) : -1;
+  if (dest) {
+    result.page = FPDFDest_GetPageIndex(doc_, dest);
+    std::cerr << "  there is then a dest" << std::endl;
+    unsigned long viewInt =
+        FPDFDest_GetView(doc_, dest, &result.num_params, result.params);
+    result.view = ConvertViewIntToView(viewInt);
+    std::cerr << "  and its view is " << result.view << std::endl;
+    std::cerr << "  and its numParams is " << result.num_params << std::endl;
+    std::cerr << "  and the params are" << std::endl;
+    for (unsigned long i = 0; i < result.num_params; ++i)
+      std::cerr << "    " << result.params[i] << std::endl;
+  } else {
+    std::cerr << "  no dest" << std::endl;
+    result.page = -1;
+  }
+  return result;
 }
 
 int PDFiumEngine::GetMostVisiblePage() {

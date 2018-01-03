@@ -69,6 +69,8 @@ class PDFEngine {
     kCount = 4,
   };
 
+  static constexpr size_t kMaxViewParams = 4;
+
   // Features in a document that are relevant to measure.
   struct DocumentFeatures {
     // Number of pages in document.
@@ -83,6 +85,13 @@ class PDFEngine {
     bool is_tagged = false;
     // What type of form the document contains.
     FormType form_type = FormType::kNone;
+  };
+
+  struct NamedDestination {
+    int page;
+    std::string view;
+    unsigned long num_params;
+    float params[kMaxViewParams];
   };
 
   // Features in a page that are relevant to measure.
@@ -300,7 +309,8 @@ class PDFEngine {
   // Gets the number of pages in the document.
   virtual int GetNumberOfPages() = 0;
   // Gets the 0-based page number of |destination|, or -1 if it does not exist.
-  virtual int GetNamedDestinationPage(const std::string& destination) = 0;
+  virtual PDFEngine::NamedDestination GetNamedDestinationPage(
+      const std::string& destination) = 0;
   // Gets the index of the most visible page, or -1 if none are visible.
   virtual int GetMostVisiblePage() = 0;
   // Gets the rectangle of the page including shadow.
