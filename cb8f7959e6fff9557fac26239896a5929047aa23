@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a49975_f8b2c17a",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T18:04:17Z",
+      "side": 1,
+      "message": "optional:  Suggest calling this OnStorageParitionDestroyed instead.  That way, no need to rename if if we later discover there\u0027s more we want to do when that happens, also, it means the consumer doesn\u0027t need to know exactly what we do in this case.",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "cb8f7959e6fff9557fac26239896a5929047aa23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618ad5b1_bd9e50d3",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T18:04:17Z",
+      "side": 1,
+      "message": "Any reason we can\u0027t just DCHECK that we\u0027re on the UI thread instead?",
+      "range": {
+        "startLine": 84,
+        "startChar": 48,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "cb8f7959e6fff9557fac26239896a5929047aa23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de48864_866aecce",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T18:04:17Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);?  Looks like this is not intended for use when the factory is used on any other thread.",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 27
+      },
+      "revId": "cb8f7959e6fff9557fac26239896a5929047aa23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36f64ab_75a827f3",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-03T18:04:17Z",
+      "side": 1,
+      "message": "hold -\u003e held",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 11
+      },
+      "revId": "cb8f7959e6fff9557fac26239896a5929047aa23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
