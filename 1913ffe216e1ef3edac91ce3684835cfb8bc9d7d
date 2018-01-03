@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e0fb57_329ffb9a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-03T13:57:56Z",
+      "side": 1,
+      "message": "this isn\u0027t guaranteed to happen because of the null check above. rearranging order of calls in AwContents.destroyNatives doesn\u0027t change anything, because in the problematic case, AwContents.destroyNatives isn\u0027t called either",
+      "revId": "1913ffe216e1ef3edac91ce3684835cfb8bc9d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
