@@ -8,7 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "device/ctap/ctap_request_command.h"
+#include "device/ctap/ctap_constants.h"
 
 namespace device {
 
@@ -16,7 +16,9 @@ CTAPGetAssertionRequestParam::CTAPGetAssertionRequestParam(
     std::string rp_id,
     std::vector<uint8_t> client_data_hash)
     : rp_id_(std::move(rp_id)),
-      client_data_hash_(std::move(client_data_hash)) {}
+      client_data_hash_(std::move(client_data_hash)),
+      user_verification_(false),
+      user_presence_(true) {}
 
 CTAPGetAssertionRequestParam::CTAPGetAssertionRequestParam(
     CTAPGetAssertionRequestParam&& that) = default;
@@ -48,14 +50,25 @@ CTAPGetAssertionRequestParam::SerializeToCBOR() const {
     cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(*pin_protocol_);
   }
 
+  auto user_presence = user_presence_
+                           ? cbor::CBORValue::SimpleValue::TRUE_VALUE
+                           : cbor::CBORValue::SimpleValue::FALSE_VALUE;
+  auto user_verification = user_verification_
+                               ? cbor::CBORValue::SimpleValue::TRUE_VALUE
+                               : cbor::CBORValue::SimpleValue::FALSE_VALUE;
+
+  cbor::CBORValue::MapValue option_map;
+  option_map[cbor::CBORValue("up")] = cbor::CBORValue(user_presence);
+  option_map[cbor::CBORValue("uv")] = cbor::CBORValue(user_verification);
+  cbor_map[cbor::CBORValue(7)] = cbor::CBORValue(std::move(option_map));
+
   auto serialized_param =
       cbor::CBORWriter::Write(cbor::CBORValue(std::move(cbor_map)));
-  if (!serialized_param) {
+  if (!serialized_param)
     return base::nullopt;
-  }
 
   std::vector<uint8_t> cbor_request({base::strict_cast<uint8_t>(
-      CTAPRequestCommand::kAuthenticatorGetAssertion)});
+      constants::CTAPRequestCommand::kAuthenticatorGetAssertion)});
   cbor_request.insert(cbor_request.end(), serialized_param->begin(),
                       serialized_param->end());
   return cbor_request;
@@ -76,6 +89,18 @@ CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetPinAuth(
 CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetPinProtocol(
     uint8_t pin_protocol) {
   pin_protocol_ = pin_protocol;
+  return *this;
+}
+
+CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetUserVerification(
+    bool user_verification) {
+  user_verification_ = user_verification;
+  return *this;
+}
+
+CTAPGetAssertionRequestParam& CTAPGetAssertionRequestParam::SetUserPresence(
+    bool user_presence) {
+  user_presence_ = user_presence;
   return *this;
 }
 

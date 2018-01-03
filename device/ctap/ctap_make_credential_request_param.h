@@ -39,6 +39,9 @@ class CTAPMakeCredentialRequestParam : public CTAPRequestParam {
       std::vector<PublicKeyCredentialDescriptor> exclude_list);
   CTAPMakeCredentialRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);
   CTAPMakeCredentialRequestParam& SetPinProtocol(uint8_t pin_protocol);
+  CTAPMakeCredentialRequestParam& SetUserVerification(
+      const bool user_verfication);
+  CTAPMakeCredentialRequestParam& SetResidentKey(bool resident_key);
 
  private:
   std::vector<uint8_t> client_data_hash_;
@@ -48,6 +51,8 @@ class CTAPMakeCredentialRequestParam : public CTAPRequestParam {
   base::Optional<std::vector<PublicKeyCredentialDescriptor>> exclude_list_;
   base::Optional<std::vector<uint8_t>> pin_auth_;
   base::Optional<uint8_t> pin_protocol_;
+  bool user_verification_;
+  bool resident_key_;
 
   DISALLOW_COPY_AND_ASSIGN(CTAPMakeCredentialRequestParam);
 };

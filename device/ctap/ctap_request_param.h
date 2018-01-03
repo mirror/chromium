@@ -10,7 +10,6 @@
 
 #include "base/optional.h"
 #include "components/cbor/cbor_values.h"
-#include "device/ctap/ctap_response_code.h"
 
 namespace device {
 
