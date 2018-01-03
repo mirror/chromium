@@ -6,6 +6,8 @@
 
 #include <ctype.h>
 #include <stdint.h>
+
+#include <algorithm>
 #include <vector>
 
 #include "base/big_endian.h"
@@ -29,6 +31,14 @@ namespace {
 // Base class used for printer USB interfaces
 // (https://www.usb.org/developers/defined_class).
 constexpr uint8_t kPrinterInterfaceClass = 7;
+
+// Subclass used for printers
+// (http://www.usb.org/developers/docs/devclass_docs/usbprint11a021811.pdf).
+constexpr uint8_t kPrinterInterfaceSubclass = 1;
+
+// Protocol for ippusb printing.
+// (http://www.usb.org/developers/docs/devclass_docs/IPP.zip).
+constexpr uint8_t kPrinterIppusbProtocol = 4;
 
 // Escape URI strings the same way cups does it, so we end up with a URI cups
 // recognizes.  Cups hex-encodes '%', ' ', and anything not in the standard
@@ -121,6 +131,24 @@ bool UsbDeviceIsPrinter(const device::UsbDevice& usb_device) {
   return UsbDeviceFilterMatches(*printer_filter, usb_device);
 }
 
+// Searches through the interfaces corresponding to |usb_device| and checks to
+// see if any of the interfaces support ipp-over-usb.
+bool UsbSupportsIppusb(const device::UsbDevice& usb_device) {
+  auto ippusb_check = [](const device::UsbInterfaceDescriptor& d) {
+    return d.interface_class == kPrinterInterfaceClass &&
+           d.interface_subclass == kPrinterInterfaceSubclass &&
+           d.interface_protocol == kPrinterIppusbProtocol;
+  };
+
+  for (const auto& configuration : usb_device.configurations()) {
+    const auto& interfaces = configuration.interfaces;
+    if (std::any_of(interfaces.begin(), interfaces.end(), ippusb_check))
+      return true;
+  }
+
+  return false;
+}
+
 std::string UsbPrinterDeviceDetailsAsString(const device::UsbDevice& device) {
   return base::StringPrintf(
       " guid:                %s\n"
@@ -184,6 +212,9 @@ std::unique_ptr<Printer> UsbDeviceToPrinter(const device::UsbDevice& device) {
   printer->set_description(printer->display_name());
   printer->set_uri(UsbPrinterUri(device));
   printer->set_id(UsbPrinterId(device));
+  printer->set_vendor_id(device.vendor_id());
+  printer->set_product_id(device.product_id());
+  printer->set_supports_ippusb(UsbDeviceSupportsIppusb(device));
   return printer;
 }
 
