@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "168b5751_d918bf97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-03T16:38:16Z",
+      "side": 1,
+      "message": "I changed the implementation to reflect this comment.",
+      "parentUuid": "5798bd8a_475f05ce",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "05676156946592234be88543a00ad1828757c7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5bab23_c04ea4de",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "05676156946592234be88543a00ad1828757c7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beafbd58_0c74a333",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-03T16:38:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5bab23_c04ea4de",
+      "range": {
+        "startLine": 12,
+        "startChar": 56,
+        "endLine": 12,
+        "endChar": 59
+      },
+      "revId": "05676156946592234be88543a00ad1828757c7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
