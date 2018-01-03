@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "36fdfea8_b5ca9f97",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-03T21:47:11Z",
+      "side": 1,
+      "message": "There may be some perf impact for doing that on Breakpad-using platforms (Linux, Android, CrOS), but there shouldn\u0027t be on Crashpad platforms (Win, Mac). Repeatedly setting without clearing should be fairly fast due to some internal optimizations I added recently, but set-clear-set will cause Breakpad\u0027s crash key storage to do a linear scan of the entire crash key table. There\u0027s always the string-copy in either case, though.\n\nYou could always land and then wait a few days to see if the perf bots pick up anything.",
+      "parentUuid": "da2d383c_29f1770f",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 42
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "356e451d_217ac60e",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 5
