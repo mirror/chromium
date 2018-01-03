@@ -16,6 +16,24 @@
       "revId": "8d788bad1e7c11d8e5f1b4f02bd791fc0165698f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c49d7d7_a19ffe19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118699
+      },
+      "writtenOn": "2018-01-03T23:45:35Z",
+      "side": 1,
+      "message": "Done. While adding the tests I also found that the extra \"\u0027\" check in SanitizeEndpoint is unnecessary, so I have undone the change (and added a test that shows that the check would indeed be unnecessary).",
+      "parentUuid": "00c6cec2_abca5e89",
+      "revId": "8d788bad1e7c11d8e5f1b4f02bd791fc0165698f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
