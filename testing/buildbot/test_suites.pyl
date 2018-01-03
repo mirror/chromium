@@ -1153,6 +1153,13 @@
       },
       'test': 'content_browsertests',
     },
+    'mus_unit_tests': {
+      'args': [
+        '--mus',
+      ],
+      'override_isolate_target': 'unit_tests',
+      'test': 'unit_tests',
+    },
   },
 
   'network_service_gtests': {
@@ -2232,7 +2239,7 @@
     'viz_fyi_gtests',
   ],
 
-  'mojo_chromiumos_gtests': [
+  'mojo_chromiumos_fyi_gtests': [
     'aura_non_clang_gtests',
     'mash_chromium_gtests',
     'mojo_chromiumos_specific_gtests',

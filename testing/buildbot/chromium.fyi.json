@@ -4491,6 +4491,17 @@
         "test": "keyboard_unittests"
       },
       {
+        "args": [
+          "--mus"
+        ],
+        "name": "mus_unit_tests",
+        "override_isolate_target": "unit_tests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "unit_tests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
