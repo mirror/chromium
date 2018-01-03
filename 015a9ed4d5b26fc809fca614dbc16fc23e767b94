@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cba30427_c9598c3e",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T16:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b080bd7_3ad81093",
+      "range": {
+        "startLine": 305,
+        "startChar": 20,
+        "endLine": 305,
+        "endChar": 37
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ef862e_e0bdd36f",
         "filename": "third_party/WebKit/Source/core/events/WebInputEventConversionTest.cpp",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec43c08_11383e24",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversionTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T16:49:03Z",
+      "side": 1,
+      "message": "I understand the confusion here since you are comparing the old code with the new. But looking only at the new code, we are creating a pointerevent with witdh\u003d10.6 and with the page scale \u003d 2 we expect the new width to become 5.3. So there is no concept of radius vs with at this point. But I changed the page scale just to make it a little more clearer.",
+      "parentUuid": "d2ef862e_e0bdd36f",
+      "range": {
+        "startLine": 328,
+        "startChar": 20,
+        "endLine": 328,
+        "endChar": 24
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "eb7e1bc4_1c3abdfd",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T16:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846ac3d1_de40cd6a",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3820977e_f87d5fef",
         "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.h",
         "patchSetId": 6
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8b30da0f_731c0c08",
+        "filename": "third_party/WebKit/Source/core/page/PageWidgetDelegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T16:49:03Z",
+      "side": 1,
+      "message": "Correct. Forgot to remove it.",
+      "parentUuid": "3820977e_f87d5fef",
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c45082b6_8a8805a4",
         "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0e2b02_b31587aa",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2018-01-03T16:49:03Z",
+      "side": 1,
+      "message": "I moved the content of this ctor to the static create function.",
+      "parentUuid": "c45082b6_8a8805a4",
+      "revId": "015a9ed4d5b26fc809fca614dbc16fc23e767b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
