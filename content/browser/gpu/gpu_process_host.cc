@@ -494,7 +494,7 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
 GpuProcessHost::~GpuProcessHost() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  SendOutstandingReplies(EstablishChannelStatus::GPU_HOST_INVALID);
+  SendOutstandingReplies(EstablishChannelStatus::GPU_ACCESS_DENIED);
 
   if (status_ == UNKNOWN) {
     RunRequestGPUInfoCallbacks(gpu::GPUInfo());
@@ -517,6 +517,12 @@ GpuProcessHost::~GpuProcessHost() {
   UMA_HISTOGRAM_COUNTS_100("GPU.AtExitSurfaceCount",
                            gpu::GpuSurfaceTracker::Get()->GetSurfaceCount());
 #endif
+
+  // Synchronously stop any in-process GPU thread early. Otherwise,
+  // under rare timings where the thread is still in Init(),
+  // it could crash as it fails to find a message pipe to the host.
+  if (in_process_)
+    in_process_gpu_thread_->Stop();
 
   std::string message;
   bool block_offscreen_contexts = true;
