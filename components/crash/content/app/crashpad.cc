@@ -26,13 +26,13 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "components/crash/content/app/crash_reporter_client.h"
+#include "components/crash/core/common/crash_key.h"
 #include "third_party/crashpad/crashpad/client/annotation.h"
 #include "third_party/crashpad/crashpad/client/annotation_list.h"
 #include "third_party/crashpad/crashpad/client/crash_report_database.h"
 #include "third_party/crashpad/crashpad/client/crashpad_client.h"
 #include "third_party/crashpad/crashpad/client/crashpad_info.h"
 #include "third_party/crashpad/crashpad/client/settings.h"
-#include "third_party/crashpad/crashpad/client/simple_string_dictionary.h"
 #include "third_party/crashpad/crashpad/client/simulate_crash.h"
 
 #if defined(OS_POSIX)
@@ -47,7 +47,6 @@ namespace crash_reporter {
 
 namespace {
 
-crashpad::SimpleStringDictionary* g_simple_string_dictionary;
 crashpad::CrashReportDatabase* g_database;
 
 bool LogMessageHandler(int severity,
@@ -81,7 +80,8 @@ bool LogMessageHandler(int severity,
   CHECK_LE(message_start, string.size());
   std::string message = base::StringPrintf("%s:%d: %s", file, line,
                                            string.c_str() + message_start);
-  SetCrashKeyValue("LOG_FATAL", message);
+  static CrashKeyString<512> crash_key("LOG_FATAL");
+  crash_key.Set(message);
 
   // Rather than including the code to force the crash here, allow the caller to
   // do it.
@@ -143,21 +143,17 @@ void InitializeCrashpadImpl(bool initial_client,
   }
 #endif  // OS_MACOSX
 
-  g_simple_string_dictionary = new crashpad::SimpleStringDictionary();
-  crashpad_info->set_simple_annotations(g_simple_string_dictionary);
-
   crashpad::AnnotationList::Register();
 
-  // TODO(rsesek): Remove this test annotation.
-  static crashpad::StringAnnotation<8> test_annotation("annotation-v2-test");
-  test_annotation.Set("it works");
+  static CrashKeyString<24> ptype_key("ptype");
+  ptype_key.Set(browser_process ? base::StringPiece("browser")
+                                : base::StringPiece(process_type));
 
-  SetCrashKeyValue("ptype", browser_process ? base::StringPiece("browser")
-                                            : base::StringPiece(process_type));
+  static CrashKeyString<12> pid_key("pid");
 #if defined(OS_POSIX)
-  SetCrashKeyValue("pid", base::IntToString(getpid()));
+  pid_key.Set(base::IntToString(getpid()));
 #elif defined(OS_WIN)
-  SetCrashKeyValue("pid", base::IntToString(::GetCurrentProcessId()));
+  pid_key.Set(base::IntToString(::GetCurrentProcessId()));
 #endif
 
   logging::SetLogMessageHandler(LogMessageHandler);
@@ -188,15 +184,6 @@ void InitializeCrashpadImpl(bool initial_client,
 }
 
 }  // namespace
-
-void SetCrashKeyValue(const base::StringPiece& key,
-                      const base::StringPiece& value) {
-  g_simple_string_dictionary->SetKeyValue(key, value);
-}
-
-void ClearCrashKey(const base::StringPiece& key) {
-  g_simple_string_dictionary->RemoveKey(key);
-}
 
 void InitializeCrashpad(bool initial_client, const std::string& process_type) {
   InitializeCrashpadImpl(initial_client, process_type, std::string(), false);
