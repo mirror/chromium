@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "52dcfd42_3dfaa356",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T12:54:45Z",
+      "side": 1,
+      "message": "While I agree that it\u0027s technically not needed, I think it makes the code more readable: it codifies the intention that we do expect |response_data| to have a value at this point. So if the CHECK in base::optional ever fails, it\u0027s clear that it\u0027s not an if (response_data) statement that is missing.",
+      "parentUuid": "fde3eb7e_f0f61e03",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d53c4f7_02ee794f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 7
