@@ -80,6 +80,24 @@
       "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288cbea2_11c3e6a5",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-04T19:07:59Z",
+      "side": 1,
+      "message": "\u003e Can we implement LoginDisplayHostViews::SetStatusAreaVisible instead?\n\nIf we can get away by not implementing this it\u0027d be great since that would move some of the UI logic out of the browser process.",
+      "parentUuid": "ae98d448_a5cf87e6",
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
