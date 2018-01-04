@@ -425,7 +425,7 @@ void Button::VisibilityChanged(View* starting_from, bool visible) {
 }
 
 void Button::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {
-  if (!details.is_add && state_ != STATE_DISABLED)
+  if (!details.is_add && state_ != STATE_DISABLED && !IsHotTracked())
     SetState(STATE_NORMAL);
 }
 
