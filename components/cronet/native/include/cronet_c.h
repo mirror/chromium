@@ -14,7 +14,9 @@
 extern "C" {
 #endif
 
-// TODO(mef): Remove this file if it is not needed.
+CRONET_EXPORT void Cronet_Engine_SetMockCertVerifierForTesting(
+    Cronet_EnginePtr engine,
+    void* raw_mock_cert_verifier);
 
 #ifdef __cplusplus
 }
