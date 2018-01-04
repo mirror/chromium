@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3d254b_04e53013",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Optional: \"HTTP/2 pushed stream\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8655e0a_1a8d7920",
+        "filename": "net/base/net_error_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Nit: \"RST\" does not read like a past participle.  Maybe write \"reset\" or \"RST_STREAM frame was sent\" instead.",
+      "range": {
+        "startLine": 732,
+        "startChar": 41,
+        "endLine": 732,
+        "endChar": 44
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244231ca_fd30648d",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Optional: Since https://crrev.com/c/829993 just landed, the request can be retried on SPDY_PUSHED_STREAM_NOT_AVAILABLE as well.  If you have free cycles to write a unittest for that case too, then please include this value in the retry logic.  If not, then I can do it in a subsequent CL.",
+      "range": {
+        "startLine": 1565,
+        "startChar": 9,
+        "endLine": 1565,
+        "endChar": 55
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9228eb3_82cb4480",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6579,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Nit: reword this sentence.  Instead of \"promise should retry to request\", maybe \"A request that is matched ... should be retried on a new stream.\" or something like that.",
+      "range": {
+        "startLine": 6579,
+        "startChar": 0,
+        "endLine": 6579,
+        "endChar": 80
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c039ab_5cf187ed",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6580,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Regression test for https://crbug.com/798508.",
+      "range": {
+        "startLine": 6580,
+        "startChar": 20,
+        "endLine": 6580,
+        "endChar": 39
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be59f105_a0a45c98",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6598,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Also create response headers and data:\nSpdySerializedFrame resp1(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));\nSpdySerializedFrame body1(spdy_util_.ConstructSpdyDataFrame(1, true));\nSpdySerializedFrame resp2(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 3));\nSpdySerializedFrame body2(spdy_util_.ConstructSpdyDataFrame(3, true));",
+      "range": {
+        "startLine": 6598,
+        "startChar": 0,
+        "endLine": 6598,
+        "endChar": 63
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b5fdc8_8337a139",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6602,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Remove the last two items and instead add the response headers and data and a final EOF with a different sequence number:\n    CreateMockRead(resp1, 7),        CreateMockRead(body1, 8),\n    CreateMockRead(resp2, 9),        CreateMockRead(body2, 10),\n    MockRead(ASYNC, 0, 11)};",
+      "range": {
+        "startLine": 6602,
+        "startChar": 6,
+        "endLine": 6602,
+        "endChar": 63
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55b63c9_cf5303ee",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6614,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Call this callback1 instead and only use it for the first transaction.  This ensures that TestCompletionCallback::WaitForResult() can be called and the return value can be queried independently for the two transactions.",
+      "range": {
+        "startLine": 6614,
+        "startChar": 25,
+        "endLine": 6614,
+        "endChar": 33
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c5c30b_62b191fb",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6632,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "There is no reason for this HttpNetworkTransaction to live on the heap, move it to the stack instead:\nHttpNetworkTransaction transaction2(DEFAULT_PRIORITY, session);",
+      "range": {
+        "startLine": 6632,
+        "startChar": 42,
+        "endLine": 6632,
+        "endChar": 54
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb168ab_d38f0914",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6634,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Instead of reusing |request_|, create a new HttpRequestInfo:\nHttpRequestInfo request2;\nrequest2.method \u003d \"GET\";\nrequest2.url \u003d GURL(pushed_url);\nThis is necessary because HttpNetworkTransaction::Start() saves the HttpRequestInfo* argument and later HttpNetworkTransaction can access it or make modifications to it.  It is thus much clearer if each HttpNetworkTransaction has its own HttpRequestInfo.",
+      "range": {
+        "startLine": 6634,
+        "startChar": 2,
+        "endLine": 6634,
+        "endChar": 10
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475a44cb_ba21f6db",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6635,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Create a new TestCompletionCallback callback2 for this transaction.",
+      "range": {
+        "startLine": 6635,
+        "startChar": 33,
+        "endLine": 6635,
+        "endChar": 41
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ab80e0_15aa2a93",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6650,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Test that both transaction succeed after this line, either before or after the RunUntilIdle():\n\nrv \u003d callback1.WaitForResult();\nASSERT_THAT(rv, IsOk());\n\nrv \u003d callback2.WaitForResult();\nASSERT_THAT(rv, IsOk());\n\nOptional: add comment for RunUntilIdle.  If WaitForResult() calls are done before RunUntilIdle, then comment can be \"Read EOF.\".  If they are done after, then comment can be \"Read responses and EOF.\".",
+      "range": {
+        "startLine": 6650,
+        "startChar": 0,
+        "endLine": 6650,
+        "endChar": 16
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102403a4_45be7f1a",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6652,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Verify that all mock data are read/written before the end of the test:\nhelper.VerifyDataConsumed();",
+      "range": {
+        "startLine": 6652,
+        "startChar": 0,
+        "endLine": 6652,
+        "endChar": 1
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6770b7a_15029a96",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Since SpdyNetworkTransactionTest is a friend of SpdySession, instead of adding a test-only method here, add a (possibly static) SpdyNetworkTransactionTest method, possibly around around line 531, in spdy_network_transaction_unittest.cc.",
+      "range": {
+        "startLine": 492,
+        "startChar": 15,
+        "endLine": 492,
+        "endChar": 42
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b0e89a_d02136b9",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T03:05:05Z",
+      "side": 1,
+      "message": "Maybe reorder like this:\n\"Retry if the stream is a pushed stream, has been claimed, but did not yet receive response headers.\"",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 79
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
