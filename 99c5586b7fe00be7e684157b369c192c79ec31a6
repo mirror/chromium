@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "728a520c_c5157252",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-04T01:42:39Z",
+      "side": 1,
+      "message": "Can you remove {} to make it consistent with line 145?",
+      "revId": "99c5586b7fe00be7e684157b369c192c79ec31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e03842e_e31b9a85",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-04T01:42:39Z",
+      "side": 1,
+      "message": "Can you remove this?",
+      "revId": "99c5586b7fe00be7e684157b369c192c79ec31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
