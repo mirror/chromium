@@ -105,6 +105,24 @@
       "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49942d71_ef5b69f2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:56:49Z",
+      "side": 1,
+      "message": "Jia, are you by chance looking at the TabStripImpl\u0027s idea of \"visible\" tabs? Those are referring to the UI for the tab itself in the tab strip.\n\nI don\u0027t know when a tab (meaning the tab\u0027s root WebContents) could be visible when the tab isn\u0027t the active one in its browser.\n\nAs far as whether a tab is obscured by another window, the only check I know of for that is a new method in TabManager that checks browser window occlusion for the purposes of tab management. I wouldn\u0027t worry about that here, I think we\u0027re just using the IsVisible method Dan linked above.",
+      "parentUuid": "bb7486e2_a380a879",
+      "revId": "cbc0505d91967300cfa04a0cdd70a641aa0e3596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
