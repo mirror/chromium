@@ -48,9 +48,7 @@ class AXARIAGridRow final : public AXTableRow {
   ~AXARIAGridRow() override;
 
   void HeaderObjectsForRow(AXObjectVector&) override;
-  bool CanSetSelectedAttribute() const final {
-    return Restriction() != kDisabled;
-  }
+  bool SupportsARIASelected() const final { return Restriction() != kDisabled; }
   AXObject* ParentTable() const final;
 
   void AddChildren() final;
