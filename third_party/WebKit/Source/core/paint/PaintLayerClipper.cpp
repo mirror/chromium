@@ -294,7 +294,40 @@ void PaintLayerClipper::CalculateRectsWithGeometryMapper(
       offset.MoveBy(enclosing_pagination_layer->VisualOffsetFromAncestor(
           context.root_layer));
     } else {
-      layer_.ConvertToLayerCoords(context.root_layer, offset);
+      const auto* current_transform =
+          fragment_data.PreEffectProperties().Transform();
+      const auto& root_fragment =
+          context.root_layer->GetLayoutObject().FirstFragment();
+      const auto* root_transform =
+          root_fragment.LocalBorderBoxProperties()->Transform();
+      if (&layer_ == context.root_layer ||
+          current_transform == root_transform) {
+        offset.MoveBy(fragment_data.PaintOffset());
+        offset.MoveBy(-root_fragment.PaintOffset());
+      } else {
+        FloatRect test_layer_bounds(FloatPoint(context.sub_pixel_accumulation),
+                                    FloatSize(layer_.Size()));
+        GeometryMapper::SourceToDestinationRect(
+            current_transform, root_transform, test_layer_bounds);
+        test_layer_bounds.MoveBy(-FloatPoint(root_fragment.PaintOffset()));
+
+        offset = LayoutPoint(test_layer_bounds.Location());
+      }
+      //  layer_.ConvertToLayerCoords(context.root_layer, offset);
+      // if (offset != test_offset) {
+      //    LOG(ERROR) << "layer_: " << layer_.GetLayoutObject().DebugName() <<
+      //    " paint_offset: " << fragment_data.PaintOffset().ToString();
+      // //   fprintf(stderr, " transform tree: %s\n",
+      // current_transform->ToTreeString().Utf8().data());
+      //    LOG(ERROR) << "root_layer: " <<
+      //    context.root_layer->GetLayoutObject().DebugName() << " paint_offset:
+      //    " << root_fragment.PaintOffset().ToString();
+      // //   fprintf(stderr, " transform tree: %s\n",
+      // root_transform->ToTreeString().Utf8().data());
+      //    LOG(ERROR) << "offset: " << offset.ToString() << " test_offset: " <<
+      //    test_offset.ToString();
+      //  }
+      // DCHECK(offset == test_offset);
     }
   }
   layer_bounds = LayoutRect(offset, LayoutSize(layer_.PixelSnappedSize()));
