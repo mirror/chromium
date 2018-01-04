@@ -377,6 +377,14 @@ void ClearKeyCdm::Initialize(bool allow_distinctive_identifier,
   // Implementation doesn't use distinctive identifier and will only need
   // to check persistent state permission.
   allow_persistent_state_ = allow_persistent_state;
+
+  cdm_host_proxy_->OnInitialized(true);
+}
+
+void ClearKeyCdm::Initialize(bool allow_distinctive_identifier,
+                             bool allow_persistent_state,
+                             bool use_hw_secure_codecs) {
+  Initialize(allow_distinctive_identifier, allow_persistent_state);
 }
 
 void ClearKeyCdm::GetStatusForPolicy(uint32_t promise_id,
