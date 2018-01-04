@@ -466,7 +466,6 @@ bool X509Certificate::VerifyHostname(
     const std::vector<std::string>& cert_san_dns_names,
     const std::vector<std::string>& cert_san_ip_addrs,
     bool allow_common_name_fallback) {
-  DCHECK(!hostname.empty());
   // Perform name verification following http://tools.ietf.org/html/rfc6125.
   // The terminology used in this method is as per that RFC:-
   // Reference identifier == the host the local user/agent is intending to
