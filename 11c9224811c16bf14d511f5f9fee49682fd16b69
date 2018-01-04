@@ -193,6 +193,24 @@
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a5a854_03581d60",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:45:43Z",
+      "side": 1,
+      "message": "Hmm.  For SINGLETON_TAB, we don\u0027t even really want to be checking WindowCanOpenTabs() in the case where we\u0027re going to switch tabs rather than open a new one -- that could cause us to discard valid results currently.  Instead we want something more like what SWITCH_TO_TAB is currently doing, just without the loop (or with it, if you change the semantics).\n\nI think what this suggests is that hoisting the loop to scan different browsers into GetIndexOfExistingTab(), then merging SINGLETON_TAB\u0027s handling with SWITCH_TO_TAB (and moving it out of here), may fix obscure corner-case bugs in addition to making the code simpler.",
+      "parentUuid": "ba04dfc7_a12dd650",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
