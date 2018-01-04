@@ -1,6 +1,6 @@
 Name: Metrics Protos
-Version: 171200293
-Date: 2017/10/02
+Version: 180814448
+Date: 2018/01/04
 License: BSD
 Security Critical: Yes
 
@@ -10,4 +10,4 @@ Updates to this code should be made by changing the internal copies, and then
 running the export script.
 
 Local Modifications:
-Unchanged from the output of the export script.
+ukm/source.proto held back to version 171200293 to avoid deprecation warnings.
