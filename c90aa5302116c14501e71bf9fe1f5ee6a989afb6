@@ -81,6 +81,30 @@
       "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660c8e24_f1a7ee72",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T23:10:43Z",
+      "side": 1,
+      "message": "This reasoning makes sense. As long as the compiler is happy to implicitly cast it to an int then you can leave it alone.",
+      "parentUuid": "efbc8b01_3d776410",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
