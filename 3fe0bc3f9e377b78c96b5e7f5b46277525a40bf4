@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1c0af60_764f2953",
+        "filename": "components/cronet/android/test/javaperftests/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T13:33:03Z",
+      "side": 1,
+      "message": "should we just remove this?",
+      "range": {
+        "startLine": 237,
+        "startChar": 49,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "3fe0bc3f9e377b78c96b5e7f5b46277525a40bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
