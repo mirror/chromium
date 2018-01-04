@@ -80,12 +80,14 @@ static const char kXhrBreakpoints[] = "xhrBreakpoints";
 static const char kEnabled[] = "enabled";
 }
 
-static void CollectEventListeners(v8::Isolate* isolate,
-                                  EventTarget* target,
-                                  v8::Local<v8::Value> target_wrapper,
-                                  Node* target_node,
-                                  bool report_for_all_contexts,
-                                  V8EventListenerInfoList* event_information) {
+// static
+void InspectorDOMDebuggerAgent::CollectEventListeners(
+    v8::Isolate* isolate,
+    EventTarget* target,
+    v8::Local<v8::Value> target_wrapper,
+    Node* target_node,
+    bool report_for_all_contexts,
+    V8EventListenerInfoList* event_information) {
   if (!target->GetExecutionContext())
     return;
 

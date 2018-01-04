@@ -4,6 +4,8 @@
 
 #include "core/inspector/InspectorDOMSnapshotAgent.h"
 
+#include "bindings/core/v8/ScriptEventListener.h"
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/AttributeCollection.h"
@@ -25,6 +27,7 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorDOMAgent.h"
+#include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "core/layout/line/InlineTextBox.h"
@@ -45,6 +48,36 @@ std::unique_ptr<protocol::DOM::Rect> BuildRectForFloatRect(
       .setWidth(rect.Width())
       .setHeight(rect.Height())
       .build();
+}
+
+std::unique_ptr<protocol::DOMDebugger::EventListener>
+BuildObjectForEventListener(v8::Local<v8::Context> context,
+                            const V8EventListenerInfo& info) {
+  if (info.handler.IsEmpty())
+    return nullptr;
+
+  v8::Isolate* isolate = context->GetIsolate();
+  v8::Local<v8::Function> function =
+      EventListenerEffectiveFunction(isolate, info.handler);
+  if (function.IsEmpty())
+    return nullptr;
+
+  String script_id;
+  int line_number;
+  int column_number;
+  GetFunctionLocation(function, script_id, line_number, column_number);
+
+  std::unique_ptr<protocol::DOMDebugger::EventListener> value =
+      protocol::DOMDebugger::EventListener::create()
+          .setType(info.event_type)
+          .setUseCapture(info.use_capture)
+          .setPassive(info.passive)
+          .setOnce(info.once)
+          .setScriptId(script_id)
+          .setLineNumber(line_number)
+          .setColumnNumber(column_number)
+          .build();
+  return value;
 }
 
 }  // namespace
@@ -92,6 +125,7 @@ InspectorDOMSnapshotAgent::~InspectorDOMSnapshotAgent() {}
 
 Response InspectorDOMSnapshotAgent::getSnapshot(
     std::unique_ptr<protocol::Array<String>> style_whitelist,
+    protocol::Maybe<bool> get_dom_listeners,
     std::unique_ptr<protocol::Array<protocol::DOMSnapshot::DOMNode>>* dom_nodes,
     std::unique_ptr<protocol::Array<protocol::DOMSnapshot::LayoutTreeNode>>*
         layout_tree_nodes,
@@ -122,7 +156,7 @@ Response InspectorDOMSnapshotAgent::getSnapshot(
   }
 
   // Actual traversal.
-  VisitNode(document);
+  VisitNode(document, get_dom_listeners.fromMaybe(false));
 
   // Extract results from state and reset.
   *dom_nodes = std::move(dom_nodes_);
@@ -133,7 +167,7 @@ Response InspectorDOMSnapshotAgent::getSnapshot(
   return Response::OK();
 }
 
-int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
+int InspectorDOMSnapshotAgent::VisitNode(Node* node, bool get_listeners) {
   if (node->IsDocumentNode()) {
     // Update layout tree before traversal of document so that we inspect a
     // current and consistent state of all trees.
@@ -172,6 +206,41 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
   if (node->WillRespondToMouseClickEvents())
     value->setIsClickable(true);
 
+  if (get_listeners && node->GetDocument().GetFrame()) {
+    ScriptState* script_state =
+        ToScriptStateForMainWorld(node->GetDocument().GetFrame());
+    ScriptState::Scope scope(script_state);
+    v8::Local<v8::Context> context = script_state->GetContext();
+    V8EventListenerInfoList event_information;
+    InspectorDOMDebuggerAgent::CollectEventListeners(
+        script_state->GetIsolate(), node, v8::Local<v8::Value>(), node, true,
+        &event_information);
+    if (!event_information.IsEmpty()) {
+      std::unique_ptr<protocol::Array<protocol::DOMDebugger::EventListener>>
+          listeners_array(
+              new protocol::Array<protocol::DOMDebugger::EventListener>());
+      // Make sure listeners with |use_capture| true come first because they
+      // have precedence.
+      for (const auto& info : event_information) {
+        if (!info.use_capture)
+          continue;
+        std::unique_ptr<protocol::DOMDebugger::EventListener> listener_object =
+            BuildObjectForEventListener(context, info);
+        if (listener_object)
+          listeners_array->addItem(std::move(listener_object));
+      }
+      for (const auto& info : event_information) {
+        if (info.use_capture)
+          continue;
+        std::unique_ptr<protocol::DOMDebugger::EventListener> listener_object =
+            BuildObjectForEventListener(context, info);
+        if (listener_object)
+          listeners_array->addItem(std::move(listener_object));
+      }
+      value->setEventListeners(std::move(listeners_array));
+    }
+  }
+
   if (node->IsElementNode()) {
     Element* element = ToElement(node);
     value->setAttributes(BuildArrayForElementAttributes(element));
@@ -186,7 +255,7 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
         value->setFrameId(IdentifiersFactory::FrameId(frame));
       }
       if (Document* doc = frame_owner->contentDocument()) {
-        value->setContentDocumentIndex(VisitNode(doc));
+        value->setContentDocumentIndex(VisitNode(doc, get_listeners));
       }
     }
 
@@ -200,12 +269,15 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
       if (link_element->IsImport() && link_element->import() &&
           InspectorDOMAgent::InnerParentNode(link_element->import()) ==
               link_element) {
-        value->setImportedDocumentIndex(VisitNode(link_element->import()));
+        value->setImportedDocumentIndex(
+            VisitNode(link_element->import(), get_listeners));
       }
     }
 
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*element))
-      value->setTemplateContentIndex(VisitNode(template_element->content()));
+    if (auto* template_element = ToHTMLTemplateElementOrNull(*element)) {
+      value->setTemplateContentIndex(
+          VisitNode(template_element->content(), get_listeners));
+    }
 
     if (auto* textarea_element = ToHTMLTextAreaElementOrNull(*element))
       value->setTextValue(textarea_element->value());
@@ -228,7 +300,8 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
         value->setPseudoType(pseudo_type);
       }
     } else {
-      value->setPseudoElementIndexes(VisitPseudoElements(element));
+      value->setPseudoElementIndexes(
+          VisitPseudoElements(element, get_listeners));
     }
   } else if (node->IsDocumentNode()) {
     Document* document = ToDocument(node);
@@ -246,13 +319,14 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
   }
 
   if (node->IsContainerNode())
-    value->setChildNodeIndexes(VisitContainerChildren(node));
+    value->setChildNodeIndexes(VisitContainerChildren(node, get_listeners));
 
   return index;
 }
 
 std::unique_ptr<protocol::Array<int>>
-InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
+InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container,
+                                                  bool get_listeners) {
   auto children = protocol::Array<int>::create();
 
   if (!FlatTreeTraversal::HasChildren(*container))
@@ -260,7 +334,7 @@ InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
 
   Node* child = FlatTreeTraversal::FirstChild(*container);
   while (child) {
-    children->addItem(VisitNode(child));
+    children->addItem(VisitNode(child, get_listeners));
     child = FlatTreeTraversal::NextSibling(*child);
   }
 
@@ -268,7 +342,8 @@ InspectorDOMSnapshotAgent::VisitContainerChildren(Node* container) {
 }
 
 std::unique_ptr<protocol::Array<int>>
-InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent) {
+InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent,
+                                               bool get_listeners) {
   if (!parent->GetPseudoElement(kPseudoIdBefore) &&
       !parent->GetPseudoElement(kPseudoIdAfter)) {
     return nullptr;
@@ -278,11 +353,11 @@ InspectorDOMSnapshotAgent::VisitPseudoElements(Element* parent) {
 
   if (parent->GetPseudoElement(kPseudoIdBefore)) {
     pseudo_elements->addItem(
-        VisitNode(parent->GetPseudoElement(kPseudoIdBefore)));
+        VisitNode(parent->GetPseudoElement(kPseudoIdBefore), get_listeners));
   }
   if (parent->GetPseudoElement(kPseudoIdAfter)) {
     pseudo_elements->addItem(
-        VisitNode(parent->GetPseudoElement(kPseudoIdAfter)));
+        VisitNode(parent->GetPseudoElement(kPseudoIdAfter), get_listeners));
   }
 
   return pseudo_elements;
