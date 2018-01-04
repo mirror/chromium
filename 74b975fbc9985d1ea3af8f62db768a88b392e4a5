@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df3fb599_cb3bedaf",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T08:55:06Z",
+      "side": 1,
+      "message": "nit: i think KEY_QUERY_VALUE is all you need here",
+      "range": {
+        "startLine": 104,
+        "startChar": 30,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb39b7e_b47992f3",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T08:55:06Z",
+      "side": 1,
+      "message": "nit: these urls can be shortened by omitting the language and version info like so\nhttps://msdn.microsoft.com/library/windows/desktop/aa384253.aspx",
+      "range": {
+        "startLine": 185,
+        "startChar": 5,
+        "endLine": 185,
+        "endChar": 84
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03b8c37_4e2bebbe",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T08:55:06Z",
+      "side": 1,
+      "message": "nit: static constexpr",
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b920c3d8_19ceb6da",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T08:55:06Z",
+      "side": 1,
+      "message": "nit: use 0 here since there\u0027s no need for an override for a shared key.",
+      "range": {
+        "startLine": 187,
+        "startChar": 26,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "74b975fbc9985d1ea3af8f62db768a88b392e4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
