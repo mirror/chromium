@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918ee44d_b31c4115",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17914,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2018-01-04T17:14:43Z",
+      "side": 1,
+      "message": "nit: there is a tab here, please replace it with whitespaces.",
+      "range": {
+        "startLine": 17914,
+        "startChar": 0,
+        "endLine": 17914,
+        "endChar": 1
+      },
+      "revId": "041e24ccc8445d224d2f256300c193f1ac2fa7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
