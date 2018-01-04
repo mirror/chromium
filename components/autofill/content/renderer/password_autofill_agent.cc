@@ -1738,7 +1738,9 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
 
   base::string16 current_username;
   if (!username_element->IsNull()) {
-    current_username = username_element->Value().Utf16();
+    current_username = username_element->Value().IsEmpty()
+                           ? fill_data.username_field.value
+                           : username_element->Value().Utf16();
   }
 
   // username and password will contain the match found if any.
@@ -1762,9 +1764,11 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   // Input matches the username, fill in required values.
   if (!username_element->IsNull() &&
       IsElementAutocompletable(*username_element)) {
-    // TODO(crbug.com/507714): Why not setSuggestedValue?
-    if (username_element->Value().Utf16() != username)
-      username_element->SetAutofillValue(blink::WebString::FromUTF16(username));
+    if (username_element->Value().Utf16() != username) {
+      username_element->SetSuggestedValue(
+          blink::WebString::FromUTF16(username));
+      registration_callback.Run(username_element);
+    }
     UpdateFieldValueAndPropertiesMaskMap(*username_element, &username,
                                          FieldPropertiesFlags::AUTOFILLED,
                                          field_value_and_properties_map);
@@ -1821,40 +1825,6 @@ bool PasswordAutofillAgent::FillFormOnPasswordReceived(
   // If we can't modify the password, don't try to set the username
   if (!IsElementAutocompletable(password_element))
     return false;
-
-  bool form_contains_fillable_username_field =
-      FillDataContainsFillableUsername(fill_data);
-  bool ambiguous_or_empty_names =
-      DoesFormContainAmbiguousOrEmptyNames(fill_data);
-  base::string16 username_field_name;
-  if (form_contains_fillable_username_field)
-    username_field_name =
-        FieldName(fill_data.username_field, ambiguous_or_empty_names);
-
-  // If the form contains an autocompletable username field, try to set the
-  // username to the preferred name, but only if:
-  //   (a) The fill-on-account-select flag is not set, and
-  //   (b) The username element isn't prefilled
-  //
-  // If (a) is false, then just mark the username element as autofilled if the
-  // user is not in the "no highlighting" group and return so the fill step is
-  // skipped.
-  //
-  // If there is no autocompletable username field, and (a) is false, then the
-  // username element cannot be autofilled, but the user should still be able to
-  // select to fill the password element, so the password element must be marked
-  // as autofilled and the fill step should also be skipped if the user is not
-  // in the "no highlighting" group.
-  //
-  // In all other cases, do nothing.
-  bool form_has_fillable_username = !username_field_name.empty() &&
-                                    IsElementAutocompletable(username_element);
-
-  if (form_has_fillable_username && username_element.Value().IsEmpty()) {
-    // TODO(tkent): Check maxlength and pattern.
-    username_element.SetAutofillValue(
-        blink::WebString::FromUTF16(fill_data.username_field.value));
-  }
 
   bool exact_username_match =
       username_element.IsNull() || IsElementEditable(username_element);
