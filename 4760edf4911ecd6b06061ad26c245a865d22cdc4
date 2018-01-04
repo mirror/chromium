@@ -70,6 +70,30 @@
       "revId": "4760edf4911ecd6b06061ad26c245a865d22cdc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebb13198_f69a562d",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 1,
+      "message": "Sure. Changed it to true then.",
+      "parentUuid": "fdee056a_fe50c287",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "4760edf4911ecd6b06061ad26c245a865d22cdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
