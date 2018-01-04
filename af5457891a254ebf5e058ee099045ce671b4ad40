@@ -36,6 +36,144 @@
     },
     {
       "key": {
+        "uuid": "4e8ccb1f_0c6c519c",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "What will happen if the input stream accumulated more data than |pending_read_buffer_length_|? Should we check that there is no data in the stream before setting |pending_stream_data_| to false?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa6a44a_1c150e0b",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "nit:Capital \u0027S\u0027",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b182f5_1d07247a",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "If the above comment is true, can there be a situation when there is no future progress because the input stream waits for the client to read data from the stream but the client waits for another NSStreamEventHasBytesAvailable event that may never happen? Is that behavior reproducible?",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd42e45_e19939b4",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "In practice, NSInputStream can return an error on reading, i.e. return \u0027-1\u0027. I think we should fail the request in that case.\n\nIt happened that \u0027-1\u0027 is also the value of net::ERR_IO_PENDING. If that value is returned, the request can stall.",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1423951d_d287f239",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "nit: not in alphabetical order.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2a6700_cefb1bc3",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "nit: capital \u0027S\u0027",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9636583b_f38209ec",
         "filename": "ios/net/chunked_data_stream_uploader.h",
         "patchSetId": 5
@@ -281,6 +419,52 @@
       "writtenOn": "2018-01-03T14:00:10Z",
       "side": 1,
       "message": "I think this should be nil rather than nullptr, because it\u0027s an objective-C object.",
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd78c71_c5237cc4",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "It may be redundant but can we add a DCHECK that the current |pending_stream_| is either \u0027nil\u0027 or equal to |stream|?",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2108a5f2_3a44fe7a",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2018-01-04T00:40:52Z",
+      "side": 1,
+      "message": "This comment belongs to the \u0027return\u0027 statement below. It explains why the request is not started in this particular case.",
+      "range": {
+        "startLine": 714,
+        "startChar": 4,
+        "endLine": 714,
+        "endChar": 65
+      },
       "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
