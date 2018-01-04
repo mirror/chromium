@@ -290,6 +290,9 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitivesOutsideBlockingScope {
       ThreadRestrictionsTest,
       ScopedAllowBaseSyncPrimitivesOutsideBlockingScopeResetsState);
   friend class ::KeyStorageLinux;
+  friend class content::SynchronousCompositor;
+  friend class content::SynchronousCompositorBrowserFilter;
+  friend class content::SynchronousCompositorHost;
 
   ScopedAllowBaseSyncPrimitivesOutsideBlockingScope()
       EMPTY_BODY_IF_DCHECK_IS_OFF;
@@ -391,9 +394,6 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::NestedMessagePumpAndroid;
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
-  friend class content::SynchronousCompositor;
-  friend class content::SynchronousCompositorBrowserFilter;
-  friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
   friend class internal::TaskTracker;
   friend class cc::CompletionEvent;
