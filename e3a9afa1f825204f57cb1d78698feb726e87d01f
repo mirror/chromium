@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "9d85c89c_59fe3df9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8268949c_b3b5374f",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d33698e6_6923439b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
         "patchSetId": 7
@@ -763,6 +787,24 @@
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873901f7_4674b5d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe41919c_a417da57",
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f24194c_4256e1e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "nit: This by default false.",
+      "range": {
+        "startLine": 95,
+        "startChar": 35,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d22f1fd_6f005ffb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "Ideally prepareBeforeShow() should just be called once before showing. Maybe you can add a check in prepareBeforeShow() to early return if mViewIsReady is true.",
+      "range": {
+        "startLine": 183,
+        "startChar": 27,
+        "endLine": 183,
+        "endChar": 44
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e222022_6e269cf0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "Why do we need to wrap mView to another LinearLayout here? Does p.customView \u003d mView not work?",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d1e3cf_65bed01b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-04T23:50:39Z",
+      "side": 1,
+      "message": "Just wondering: Why do we need a fixed width of 1200 px?\n\nAnd should we consider setting the width to a fixed width in dp so that the dialog\u0027s width looks similar across devices with different dpi?",
+      "range": {
+        "startLine": 95,
+        "startChar": 46,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
