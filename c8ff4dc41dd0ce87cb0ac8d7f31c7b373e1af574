@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a95797_843fdf98",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1179484
+      },
+      "writtenOn": "2018-01-04T10:16:26Z",
+      "side": 1,
+      "message": "Hi. This causes an unwanted directory to appear in WebRTC checkout, which messes up our automated systems besides being annoying. Could we not have references to //chrome in //build (which is supposed to be mostly generic)?\n\n$ tree chrome\nchrome\n└── android\n    └── profiles\n        └── chrome-profile-3309-text.prof -\u003e ../../../.cipd/pkgs/19/_current/chrome-profile-3309-text.prof\n\n$ git status\nUntracked files:\n  (use \"git add \u003cfile\u003e...\" to include in what will be committed)\n\n        chrome/",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "c8ff4dc41dd0ce87cb0ac8d7f31c7b373e1af574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
