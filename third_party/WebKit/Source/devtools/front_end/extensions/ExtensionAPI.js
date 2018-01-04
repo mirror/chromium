@@ -192,7 +192,8 @@ function injectedExtensionAPI(extensionInfo, inspectedTabId, themeName, testHook
 
   Network.prototype = {
     getHAR: function(callback) {
-      function callbackWrapper(result) {
+      async function callbackWrapper(promise) {
+        var result = await promise;
         var entries = (result && result.entries) || [];
         for (var i = 0; i < entries.length; ++i) {
           entries[i].__proto__ = new Request(entries[i]._requestId);
