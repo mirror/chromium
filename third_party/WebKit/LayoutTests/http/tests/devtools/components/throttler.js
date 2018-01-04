@@ -272,7 +272,11 @@
         'Throttler is in TIMEOUT state. Scheduled timers timeouts: [' + timeouts.sort().join(', ') + ']');
   }
 
-  function logSchedule(operation, asSoonAsPossible) {
+  function logSchedule(operation, asSoonAsPossible, returnValue) {
+    if (returnValue === undefined) {
+      asSoonAsPossible = returnValue;
+      asSoonAsPossible = undefined;
+    }
     TestRunner.addResult('SCHEDULED: \'' + operation.processName + '\' asSoonAsPossible: ' + asSoonAsPossible);
   }
 })();
