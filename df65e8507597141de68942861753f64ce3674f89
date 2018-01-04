@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b972c0df_d965c653",
+        "filename": "content/browser/child_process_launcher_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T22:22:57Z",
+      "side": 1,
+      "message": "Please expand the docs a little more:\n\n\"If failure is returned, LaunchProcessOnLauncherThread and AfterLaunchOnLauncherThread will not be called, and the launch_result will be reported as LAUNCH_RESULT_FAILURE.\"",
+      "revId": "df65e8507597141de68942861753f64ce3674f89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
