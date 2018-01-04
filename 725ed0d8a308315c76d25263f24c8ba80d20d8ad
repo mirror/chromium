@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a117fe7_eda6f1f2",
+        "filename": "content/browser/service_worker/service_worker_client_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-04T02:18:12Z",
+      "side": 1,
+      "message": "Done, this should be deleted in this patchset.",
+      "parentUuid": "a4422003_d88e2c73",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "725ed0d8a308315c76d25263f24c8ba80d20d8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91b9e159_62b0088f",
         "filename": "content/common/service_worker/service_worker_utils.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "725ed0d8a308315c76d25263f24c8ba80d20d8ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74df0bb_fff2d723",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-04T02:18:12Z",
+      "side": 1,
+      "message": "Done, this is useful in previous commit, and should be deleted in this one.",
+      "parentUuid": "91b9e159_62b0088f",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 81
+      },
+      "revId": "725ed0d8a308315c76d25263f24c8ba80d20d8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b23ae928_849cd036",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-04T02:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8371cc5a_d5de9821",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 53
+      },
+      "revId": "725ed0d8a308315c76d25263f24c8ba80d20d8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1ceeb7_b9a4de29",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-02T09:08:27Z",
       "side": 1,
       "message": "I think you missed the following comment from Matt.\n\u0027\nUsing kLast for the default values seems a bit weird to me. It\u0027s pretty arbitrary which the last enum type is and it can easily change. Can we choose a specific value instead? What happens if we don\u0027t set a default?\n\u0027\n\nThis is also available against the \u0027kLast\u0027 at line37 and line43.",
+      "range": {
+        "startLine": 33,
+        "startChar": 64,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "725ed0d8a308315c76d25263f24c8ba80d20d8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a219cc0_b6289c11",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2018-01-04T02:18:12Z",
+      "side": 1,
+      "message": "Thanks, it seems ok not set a default now.",
+      "parentUuid": "0e1ceeb7_b9a4de29",
       "range": {
         "startLine": 33,
         "startChar": 64,
