@@ -176,6 +176,30 @@
       "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291158eb_b3e23335",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T15:34:12Z",
+      "side": 1,
+      "message": "I just replaced this\n      if (!AdvanceFocusDirectionallyInContainer(\n              ToLocalFrame(frame_element-\u003eContentFrame())-\u003eGetDocument(), rect,\n              type)) {\n        // The new frame had nothing interesting, need to find another\n        // candidate.\n        return AdvanceFocusDirectionallyInContainer(\n            container,\n            NodeRectInAbsoluteCoordinates(focus_candidate.visible_node, true),\n            type);\n      }\n\nAs you can see, this is very heuristic and hard to understand.\n\n\u003e Maybe splitting 781326\u0027s Patch Set 10 was more complicated than I expected.\n\nHow about squash again if you don\u0027t want this CL?",
+      "parentUuid": "c58a1c1f_0393b895",
+      "range": {
+        "startLine": 1452,
+        "startChar": 14,
+        "endLine": 1452,
+        "endChar": 42
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
