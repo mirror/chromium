@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "bd54d489_c9128c27",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "I suggested to turn these into const-refs on the previous patch set. The reason being that this operation can fail fast at which point avoiding the copies is a net win. Also we never really move out of u2f_data, but simply copy slices in local variables.",
+      "parentUuid": "c372860e_da27f663",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa2d438f_e1c6912d",
         "filename": "device/u2f/sign_response_data.cc",
         "patchSetId": 3
@@ -65,6 +89,53 @@
     },
     {
       "key": {
+        "uuid": "4a8c2762_221bdf71",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I meant with my previous comment. Sorry I wasn\u0027t more explicit about it.",
+      "parentUuid": "aa2d438f_e1c6912d",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b79d887_39e3b0d3",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "also here",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "629fe07e_522a47af",
         "filename": "device/u2f/sign_response_data.cc",
         "patchSetId": 3
@@ -76,6 +147,29 @@
       "writtenOn": "2018-01-04T17:51:19Z",
       "side": 1,
       "message": "nit: Can we use the Extract() method for all this slicing here to avoid length checking and indexing?",
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef47296_43742c2b",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 63
+      },
       "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "24b9ad05_a72579dd",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "Yeah, either a short link or the full url on one line works better with editors and code search.",
+      "parentUuid": "1e9710f5_0261675d",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad02d600_9ec759b6",
         "filename": "device/u2f/sign_response_data.h",
         "patchSetId": 3
@@ -116,6 +234,29 @@
       "writtenOn": "2018-01-04T17:51:19Z",
       "side": 1,
       "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2765bb_24381492",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "apparently this include breaks the analyze step which seems odd. are we missing a dependency in the BUILD.gn file?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 26
+      },
       "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +279,29 @@
         "startChar": 2,
         "endLine": 122,
         "endChar": 16
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382a1488_cb4e40d8",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:09:38Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 333,
+        "startChar": 10,
+        "endLine": 333,
+        "endChar": 63
       },
       "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
