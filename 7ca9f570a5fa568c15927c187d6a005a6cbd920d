@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "057900b2_e5f29070",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-04T15:29:51Z",
+      "side": 1,
+      "message": "I was reading the code base but actually confused :)\n\nWould you help me understand the relationship between Trace(), TraceInCollection(), kNoWeakHandlingInCollections and kWeakHandlingInCollections? What does each combination do and when is it used?",
+      "parentUuid": "5dced5c0_eecca4ef",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537fa3c7_9cb759ea",
         "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
         "patchSetId": 2
