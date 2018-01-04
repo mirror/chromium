@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca793a3e_1ae9ebe4",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-04T23:04:17Z",
+      "side": 1,
+      "message": "Nit: how about using ChildThreadImpl::AllocateSharedMemory(size) ?",
+      "revId": "538c900ae813ae33511cbd96f89d729e9cfc8af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
