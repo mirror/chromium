@@ -1,0 +1,34 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef EXTENSIONS_RENDERER_GET_PER_CONTEXT_DATA_H_
+#define EXTENSIONS_RENDERER_GET_PER_CONTEXT_DATA_H_
+
+#include "gin/per_context_data.h"
+#include "v8/include/v8.h"
+
+namespace extensions {
+
+template <typename PerContextData>
+PerContextData* GetPerContextData(v8::Local<v8::Context> context,
+                                  bool should_create) {
+  gin::PerContextData* per_context_data = gin::PerContextData::From(context);
+  if (!per_context_data)
+    return nullptr;
+  auto* data = static_cast<PerContextData*>(
+      per_context_data->GetUserData(PerContextData::kPerContextDataKey));
+
+  if (!data && should_create) {
+    auto created_data = std::make_unique<PerContextData>();
+    data = created_data.get();
+    per_context_data->SetUserData(PerContextData::kPerContextDataKey,
+                                  std::move(created_data));
+  }
+
+  return data;
+}
+
+}  // namespace extensions
+
+#endif  // EXTENSIONS_RENDERER_GET_PER_CONTEXT_DATA_H_
