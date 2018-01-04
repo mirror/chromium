@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "3a2c6503_c20995b5",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "does this mean the setting to enable automatic time zone resolution, or the method of time zone resolution, or both? (If both, \"time zone resolution settings\" or something like that)",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 59
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0baa823f_74987043",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
         "patchSetId": 3
@@ -64,6 +87,46 @@
       "writtenOn": "2018-01-04T18:25:59Z",
       "side": 1,
       "message": "namespace api \u003d api::settings_private (or be explicit and don\u0027t namespace this).",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedc0af1_ed992ea6",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "similarly, s/Metod/Method everywhere",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d283c66_9db73dbf",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "Class-level comment describing what the generated pref represents.",
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +201,23 @@
     },
     {
       "key": {
+        "uuid": "a781eeb8_d10fd89c",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "Class-level comment describing what the generated pref represents.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "911a922c_dbbbf22b",
         "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
         "patchSetId": 3
@@ -189,6 +269,40 @@
     },
     {
       "key": {
+        "uuid": "2ae326ea_f4422720",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_time_zone_manager_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "IIUC, this is the base class for GeneratedPrefImplBase implementations for timezone-related generated prefs? I think having Observer in the name is confusing -- \"GeneratedTimeZonePrefBase\" seems more intuitive to me.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17eff1cf_887f600f",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "Function definition order should match declaration order.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc5c23fe_f8ba441b",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 3
@@ -200,6 +314,92 @@
       "writtenOn": "2018-01-04T18:25:59Z",
       "side": 1,
       "message": "namespace settings_private\n\n(Here in particular, extensions::GeneratedPrefs is very unclear)",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abc9b7a_c8b00ccf",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "Add a class-level comment explaining what a GeneratedPrefs is and why it exists.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5ba495_78d64f51",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "PrefChangeCallback? or PrefChangeObserverCallback?",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1412992a_396a693a",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "nit: end comment with period, also maybe mention this returns |nullptr| if not found.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23870173_c46eaa9a",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "could we just call this GeneratedPref? It isn\u0027t Impl-ing anything, it\u0027s just the base class of classes that Impl it -- like all base classes :-)",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 27
+      },
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -251,6 +451,41 @@
       "writtenOn": "2018-01-04T18:25:59Z",
       "side": 1,
       "message": "Return a const\u0026 or a non-const *, depending on which is required (preferably the former). Is this needed outside of tests? If not name this \u0027generated_prefs_for_test()\u0027",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ffe553_d0dfcaf9",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "It\u0027s used by SettingsPrivateEventRouter, but see my comment below suggesting we move ownership of GeneratedPrefs there instead of surfacing it here.",
+      "parentUuid": "7f98b729_dce4695e",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d24e30_ea7ded6e",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T19:35:45Z",
+      "side": 1,
+      "message": "Currently PrefsUtil is a \"utility\"/helper class that\u0027s used for lookup and pref manipulation helpers. It doesn\u0027t own anything itself, and the Profile pointer seems to just be a convenience -- the whole class could really be static.\n\nSo, there are implications to giving PrefsUtil full-fledged ownership over another class that changes its role. Would it be simpler to keep it as a utility class, and make this a weak pointer? Since SettingsPrivateEventRouter owns the PrefsUtil, it could own the GeneratedPrefs as well.\n\nI think that\u0027s easier to reason about because SettingsPrivateEventRouter adds itself as an observer to the GeneratedPrefs; I\u0027m not sure we gain anything by having SettingsPrivateEventRouter go through PrefsUtil to do that.",
       "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
