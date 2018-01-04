@@ -1,0 +1,17 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+$VerifiedPlatform linux-386 linux-amd64 linux-arm64 linux-armv6l linux-mips64
+$VerifiedPlatform linux-ppc64 linux-ppc64le linux-s390x
+$VerifiedPlatform mac-amd64
+$VerifiedPlatform windows-386 windows-amd64
+
+# vpython.
+infra/tools/luci/vpython/${platform}  git_revision:08e35087eaf8ee95207450d2a2e33152a2f245be
+
+# LUCI editor
+infra/tools/luci/led/${platform}  git_revision:54b6b3102fbb15ca3e3bd762ff3df7b08057d653
+
+# Mac toolchain installer
+infra/tools/mac_toolchain/${os=mac}-${arch} git_revision:2b69be6203f56a970202d9b5984557c0453b4eb0
