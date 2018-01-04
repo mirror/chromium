@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd766ff_f15d313c",
+        "filename": "components/previews/content/previews_optimization_guide.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-04T17:59:36Z",
+      "side": 1,
+      "message": "nit: Can you do\nif (first_match \u003d\u003d matches.end())\n  return false;\n\ninstead\n\nsame below with whitelist_iter",
+      "revId": "2e9a2804464483c976ccb3e7b50788400c791685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
