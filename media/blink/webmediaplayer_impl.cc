@@ -41,6 +41,7 @@
 #include "media/base/text_renderer.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
+#include "media/blink/resource_scheduler_metrics.h"
 #include "media/blink/texttrack_impl.h"
 #include "media/blink/video_decode_stats_reporter.h"
 #include "media/blink/watch_time_reporter.h"
@@ -249,6 +250,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   DCHECK(client_);
   DCHECK(delegate_);
 
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerCreated(this);
+
   if (surface_layer_for_video_enabled_)
     bridge_ = params->create_bridge_callback().Run(this);
 
@@ -258,6 +261,20 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
                               base::Unretained(compositor_.get()),
                               bridge_->GetFrameSinkId()));
   }
+
+  // Notify the compositor that we'd like to be notified when the first frame is
+  // drawn.  Setting the callback with Unretained is safe, because we post
+  // destruction of the compositor there as well.  The callback might happen
+  // after we're destroyed, but that's okay.
+  vfc_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &VideoFrameCompositor::SetFirstFrameCallback,
+          base::Unretained(compositor_.get()),
+          BindToCurrentLoop(base::BindOnce(
+              &ResourceSchedulerMetrics::OnFirstFrameDrawn,
+              base::Unretained(ResourceSchedulerMetrics::GetInstance()),
+              this))));
 
   // If we're supposed to force video overlays, then make sure that they're
   // enabled all the time.
@@ -305,6 +322,8 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerDestroyed(this);
+
   if (set_cdm_result_) {
     DVLOG(2) << "Resolve pending SetCdm() when media player is destroyed.";
     set_cdm_result_->Complete();
@@ -349,6 +368,7 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   blink::WebURL url = source.GetAsURL();
   DVLOG(1) << __func__ << "(" << load_type << ", " << GURL(url) << ", "
            << cors_mode << ")";
+
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
                                   load_type, url, cors_mode));
@@ -537,6 +557,28 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
                                       frame_ == frame_->Top(),
                                       frame_->Top()->GetSecurityOrigin());
 
+  CompleteDoLoad(load_type, url, cors_mode, 2);
+}
+
+void WebMediaPlayerImpl::CompleteDoLoad(LoadType load_type,
+                                        const blink::WebURL url,
+                                        CORSMode cors_mode,
+                                        int retries) {
+  // Defer network loading untli the player priority is known.
+  int priority = client_->ComputePlayerPriority();
+  // If we didn't get a priority, then retry if we have any left.  On our first
+  // invocation, it's likely that blink's document lifecycle won't let us query
+  // for the player priority.  Quite often, simply posting to the next stable
+  // state will let blink stabilize.
+  if (priority == INT_MIN && retries > 0) {
+    main_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&WebMediaPlayerImpl::CompleteDoLoad, AsWeakPtr(),
+                       load_type, url, cors_mode, retries - 1));
+    return;
+  }
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerLoadStarted(this, priority);
+
   // Media source pipelines can start immediately.
   if (load_type == kLoadTypeMediaSource) {
     StartPipeline();
@@ -563,6 +605,8 @@ void WebMediaPlayerImpl::Play() {
   // User initiated play unlocks background video playback.
   if (blink::WebUserGestureIndicator::IsProcessingUserGesture(frame_))
     video_locked_when_paused_when_hidden_ = false;
+
+  ResourceSchedulerMetrics::GetInstance()->OnPlayerPlayed(this);
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   if (IsRemote()) {
