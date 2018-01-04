@@ -229,6 +229,9 @@ GURL SafeBrowsingNavigationObserverManager::ClearURLRef(const GURL& url) {
 // static
 bool SafeBrowsingNavigationObserverManager::IsEnabledAndReady(
     Profile* profile) {
+  LOG(ERROR) << "SafeBrowsingNavigationObserverManager::IsEnabledAndReady"
+             << profile->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled)
+             << " " << !!g_browser_process->safe_browsing_service();
   return profile->GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled) &&
          g_browser_process->safe_browsing_service() &&
          g_browser_process->safe_browsing_service()
