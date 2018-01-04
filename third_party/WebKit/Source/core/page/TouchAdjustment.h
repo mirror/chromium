@@ -21,6 +21,7 @@
 #define TouchAdjustment_h
 
 #include "base/memory/scoped_refptr.h"
+#include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
@@ -46,6 +47,11 @@ bool FindBestZoomableArea(Node*& target_node,
                           const IntRect& touch_area,
                           const HeapVector<Member<Node>>&);
 // FIXME: Implement the similar functions for other gestures here as well.
+
+struct TouchAdjustmentResult {
+  uint32_t unique_event_id;
+  FloatPoint adjusted_point;
+};
 
 }  // namespace blink
 
