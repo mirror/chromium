@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "411544a6_708e0ee5",
+        "filename": "components/password_manager/core/browser/hash_password_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T18:16:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "009d50ef_8b9df061",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "e020c66a396dc628008330eb722113b48686e602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e80689d_9a9ad6e3",
         "filename": "components/password_manager/core/browser/password_store.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "e020c66a396dc628008330eb722113b48686e602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4e1c16_980a131d",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T18:16:20Z",
+      "side": 1,
+      "message": "This is because base::Bind is deprecating. Any new code should use either base::BindOnce or base::Repeating (which is equivalence to base::Bind). Otherwise, the following presubmit warning will be triggered:\n\"Please consider using base::Bind{Once,Repeating} instead of base::Bind. (crbug.com/714018)\"",
+      "parentUuid": "7e80689d_9a9ad6e3",
+      "range": {
+        "startLine": 367,
+        "startChar": 21,
+        "endLine": 367,
+        "endChar": 34
+      },
+      "revId": "e020c66a396dc628008330eb722113b48686e602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
