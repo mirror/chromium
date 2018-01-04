@@ -46,6 +46,8 @@ class MetricsHelper {
   base::Optional<base::Time> enter_web_vr_time_;
   base::Optional<base::Time> chrome_start_time_;
   bool logged_ready_duration_on_chrome_start_ = false;
+  base::Optional<base::Time> component_register_time_;
+  bool logged_ready_duration_on_component_register_ = false;
   bool component_ready_ = false;
 
   SEQUENCE_CHECKER(sequence_checker_);
