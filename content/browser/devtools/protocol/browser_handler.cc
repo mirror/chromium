@@ -4,6 +4,8 @@
 
 #include "content/browser/devtools/protocol/browser_handler.h"
 
+#include "base/metrics/histogram_base.h"
+#include "base/metrics/statistics_recorder.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/user_agent.h"
@@ -31,6 +33,25 @@ Response BrowserHandler::GetVersion(std::string* protocol_version,
   *product = GetContentClient()->GetProduct();
   *user_agent = GetContentClient()->GetUserAgent();
   *js_version = V8_VERSION_STRING;
+  return Response::OK();
+}
+
+namespace Browser {
+
+using Histograms = Array<Histogram>;
+
+}  // namespace Browser
+
+Response BrowserHandler::GetHistograms(
+    std::unique_ptr<Browser::Histograms>* const out_histograms) {
+  *out_histograms = std::make_unique<Browser::Histograms>();
+  base::StatisticsRecorder::Histograms histograms;
+  base::StatisticsRecorder::GetHistograms(&histograms);
+  for (const base::HistogramBase* const h : histograms) {
+    (*out_histograms)
+        ->addItem(
+            Browser::Histogram::Create().SetName(h->histogram_name()).Build());
+  }
   return Response::OK();
 }
 
