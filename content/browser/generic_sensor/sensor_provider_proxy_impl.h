@@ -30,13 +30,17 @@ class SensorProviderProxyImpl final : public device::mojom::SensorProvider {
   void GetSensor(device::mojom::SensorType type,
                  GetSensorCallback callback) override;
 
-  bool CheckPermission(device::mojom::SensorType type) const;
   void OnConnectionError();
+  void OnRequestPermissionsResponse(
+      device::mojom::SensorType type,
+      GetSensorCallback callback,
+      const std::vector<blink::mojom::PermissionStatus>& result);
 
   mojo::BindingSet<device::mojom::SensorProvider> binding_set_;
   PermissionManager* permission_manager_;
   RenderFrameHost* render_frame_host_;
   device::mojom::SensorProviderPtr sensor_provider_;
+  base::WeakPtrFactory<SensorProviderProxyImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SensorProviderProxyImpl);
 };

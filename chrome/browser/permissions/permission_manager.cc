@@ -109,6 +109,10 @@ ContentSettingsType PermissionTypeToContentSetting(PermissionType permission) {
     case PermissionType::FLASH:
       return CONTENT_SETTINGS_TYPE_PLUGINS;
     case PermissionType::SENSORS:
+    case PermissionType::AMBIENT_LIGHT_SENSOR:
+    case PermissionType::ACCELEROMETER:
+    case PermissionType::GYROSCOPE:
+    case PermissionType::MAGNETOMETER:
       return CONTENT_SETTINGS_TYPE_SENSORS;
     case PermissionType::ACCESSIBILITY_EVENTS:
       return CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS;

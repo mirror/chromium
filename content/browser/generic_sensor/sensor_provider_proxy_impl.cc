@@ -16,13 +16,17 @@
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 
+using blink::mojom::PermissionStatus;
+using device::mojom::SensorType;
+
 namespace content {
 
 SensorProviderProxyImpl::SensorProviderProxyImpl(
     PermissionManager* permission_manager,
     RenderFrameHost* render_frame_host)
     : permission_manager_(permission_manager),
-      render_frame_host_(render_frame_host) {
+      render_frame_host_(render_frame_host),
+      weak_factory_(this) {
   DCHECK(permission_manager);
   DCHECK(render_frame_host);
 }
@@ -34,13 +38,63 @@ void SensorProviderProxyImpl::Bind(
   binding_set_.AddBinding(this, std::move(request));
 }
 
+namespace {
+
+std::vector<PermissionType> GetPermissionTypes(SensorType type) {
+  switch (type) {
+    case SensorType::AMBIENT_LIGHT:
+      return {PermissionType::AMBIENT_LIGHT_SENSOR};
+    case SensorType::ACCELEROMETER:
+    case SensorType::LINEAR_ACCELERATION:
+      return {PermissionType::ACCELEROMETER};
+    case SensorType::GYROSCOPE:
+      return {PermissionType::GYROSCOPE};
+    case SensorType::MAGNETOMETER:
+      return {PermissionType::MAGNETOMETER};
+    case SensorType::ABSOLUTE_ORIENTATION_EULER_ANGLES:
+    case SensorType::ABSOLUTE_ORIENTATION_QUATERNION:
+      return {PermissionType::ACCELEROMETER, PermissionType::GYROSCOPE,
+              PermissionType::MAGNETOMETER};
+    case SensorType::RELATIVE_ORIENTATION_EULER_ANGLES:
+    case SensorType::RELATIVE_ORIENTATION_QUATERNION:
+      return {PermissionType::ACCELEROMETER, PermissionType::GYROSCOPE};
+    default:
+      NOTREACHED() << "Unknown sensor type " << type;
+      return {};
+  }
+}
+
+}  // namespace
+
 void SensorProviderProxyImpl::GetSensor(
     device::mojom::SensorType type,
     GetSensorCallback callback) {
+  const std::vector<PermissionType>& permission_types =
+      GetPermissionTypes(type);
+  if (permission_types.empty()) {
+    std::move(callback).Run(nullptr);
+    return;
+  }
+  const GURL& requesting_origin = render_frame_host_->GetLastCommittedURL();
+  auto permissions_callback = base::BindRepeating(
+      &SensorProviderProxyImpl::OnRequestPermissionsResponse,
+      weak_factory_.GetWeakPtr(), type, base::Passed(std::move(callback)));
+  permission_manager_->RequestPermissions(
+      permission_types, render_frame_host_, requesting_origin,
+      false /*user_gesture*/, permissions_callback);
+}
+
+void SensorProviderProxyImpl::OnRequestPermissionsResponse(
+    device::mojom::SensorType type,
+    GetSensorCallback callback,
+    const std::vector<PermissionStatus>& result) {
   ServiceManagerConnection* connection =
       ServiceManagerConnection::GetForProcess();
 
-  if (!connection || !CheckPermission(type)) {
+  if (!connection ||
+      std::any_of(result.begin(), result.end(), [](PermissionStatus status) {
+        return status != PermissionStatus::GRANTED;
+      })) {
     std::move(callback).Run(nullptr);
     return;
   }
@@ -54,27 +108,13 @@ void SensorProviderProxyImpl::GetSensor(
   sensor_provider_->GetSensor(type, std::move(callback));
 }
 
-bool SensorProviderProxyImpl::CheckPermission(
-    device::mojom::SensorType type) const {
-  content::WebContents* web_contents =
-      content::WebContents::FromRenderFrameHost(render_frame_host_);
-  if (!web_contents)
-    return false;
-
-  const GURL& embedding_origin = web_contents->GetLastCommittedURL();
-  const GURL& requesting_origin = render_frame_host_->GetLastCommittedURL();
-
-  blink::mojom::PermissionStatus permission_status =
-      permission_manager_->GetPermissionStatus(
-          PermissionType::SENSORS, requesting_origin, embedding_origin);
-  return permission_status == blink::mojom::PermissionStatus::GRANTED;
-}
-
 void SensorProviderProxyImpl::OnConnectionError() {
   // Close all the upstream bindings to notify them of this failure as the
   // GetSensorCallbacks will never be called.
   binding_set_.CloseAllBindings();
   sensor_provider_.reset();
+  // Invalidate pending callbacks.
+  weak_factory_.InvalidateWeakPtrs();
 }
 
 }  // namespace content
