@@ -360,6 +360,7 @@
 
   // Stop button.
   self.view.stopButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  self.view.stopButton.hiddenInCurrentState = YES;
   [self addStandardActionsForButton:self.view.stopButton];
 
   // Voice Search button.
