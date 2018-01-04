@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf3f8c5_90358bd3",
+        "filename": "components/safe_browsing/db/v4_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-04T18:48:28Z",
+      "side": 1,
+      "message": "How about annotating these (comments?) so we remove them later, or convert to dchecks, once this bug is tracked down?",
+      "revId": "963c6513380de20d6acfddf9e5b9e6041f5fd2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af7d42d9_fbc95582",
+        "filename": "components/safe_browsing/db/v4_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-04T18:48:28Z",
+      "side": 1,
+      "message": "I wonder what %0 does.... would it crash here, with a div-by-zero signal?",
+      "range": {
+        "startLine": 504,
+        "startChar": 28,
+        "endLine": 504,
+        "endChar": 39
+      },
+      "revId": "963c6513380de20d6acfddf9e5b9e6041f5fd2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
