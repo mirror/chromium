@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60912075_7d5a1bf9",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-04T22:43:22Z",
+      "side": 1,
+      "message": "I\u0027ve adjusted this around. Removed ViewHostMsg_DidNotProduceFrame into a sync compositor message.",
+      "parentUuid": "4863e3af_be4dd177",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f3bf00b_61d79669",
         "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-04T18:34:30Z",
       "side": 1,
       "message": "this class shouldn\u0027t need a sender anymore, and should talk everything through the client now?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16f6c30_eadf8455",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-04T22:43:22Z",
+      "side": 1,
+      "message": "It requires a sender because of the queued gpu messages.",
+      "parentUuid": "4f3bf00b_61d79669",
       "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca7c4fe4_fc889393",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-04T22:43:22Z",
+      "side": 1,
+      "message": "Yes it is an IPC message sender. It is needed to send the queued gpu messages.",
+      "parentUuid": "948c90aa_d175ca83",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0781c869_2d648617",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "07ce6188_c9d0211a",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-04T22:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0781c869_2d648617",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d73f02_a6259d81",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2018-01-04T18:34:30Z",
       "side": 1,
       "message": "why is this check needed?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ae1cd6_9505bb34",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2018-01-04T22:43:22Z",
+      "side": 1,
+      "message": "What do you want to do?",
+      "parentUuid": "b3d73f02_a6259d81",
       "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
