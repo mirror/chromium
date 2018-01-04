@@ -46,6 +46,30 @@
       "revId": "b7556761f4e61e0ad94f2681e27480e39af35844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f40e229_89dc0973",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-04T20:33:45Z",
+      "side": 1,
+      "message": "Just tried the patch locally and removing the on-tap binding still calls |onInputTapOrFocus| because the paper-input has a tabindex of 0 so it\u0027s focused event though it\u0027s readonly.\n\nLet\u0027s get rid of the binding and rename to |onInputFocus_|",
+      "parentUuid": "af1a8586_0cb0a6ce",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "b7556761f4e61e0ad94f2681e27480e39af35844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
