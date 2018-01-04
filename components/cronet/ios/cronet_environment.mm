@@ -437,7 +437,6 @@ std::string CronetEnvironment::user_agent() {
 }
 
 std::vector<uint8_t> CronetEnvironment::GetHistogramDeltas() {
-  DCHECK(base::StatisticsRecorder::IsActive());
   std::vector<uint8_t> data;
   if (!HistogramManager::GetInstance()->GetDeltas(&data))
     return std::vector<uint8_t>();

@@ -50,9 +50,6 @@ bool VerifyBuildIsTimely() {
 }  // namespace
 
 int main(int argc, char** argv) {
-  // Record histograms, so we can get histograms data in tests.
-  base::StatisticsRecorder::Initialize();
-
   if (!VerifyBuildIsTimely())
     return 1;
 

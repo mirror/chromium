@@ -48,11 +48,6 @@ class ComponentsTestSuite : public base::TestSuite {
 
     mojo::edk::Init();
 
-    // Initialize the histograms subsystem, so that any histograms hit in tests
-    // are correctly registered with the statistics recorder and can be queried
-    // by tests.
-    base::StatisticsRecorder::Initialize();
-
 #if !defined(OS_IOS)
     gl::GLSurfaceTestSupport::InitializeOneOff();
 
