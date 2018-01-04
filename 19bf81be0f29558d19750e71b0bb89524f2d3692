@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f002a9ca_1bdd3e9c",
+        "filename": "components/unzip_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "more specifically \"mojo/public\" please",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534f87a9_430466c0",
+        "filename": "components/unzip_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "nit: i think this comment can be ommitted",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4d2f98_5427a55b",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "nit: auto+base::MakeRefCounted instead of type+new?",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da992486_b25ab907",
+        "filename": "components/unzip_service/public/interfaces/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "missing a dependency on components/filesystem/public/interfaces",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29fd5d0_449c7b41",
+        "filename": "components/unzip_service/public/interfaces/unzipper.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "nit: I think this should be:\n\n  Unzip(mojo.common.mojom.File zip_file, filesystem.mojom.Directory output_dir)\n      \u003d\u003e (bool result);\n\ni.e. args can fit on one line, wrap at response operator",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d94deb_23779c4e",
+        "filename": "components/update_client/test_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-04T15:58:01Z",
+      "side": 1,
+      "message": "Please consider using TestConnectorFactory[1] instead. You can create one for each service. It wires a Connector impl directly to a Service impl for testing.\n\n[1] https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/test/test_connector_factory.h?rcl\u003d569dd0ccbd64a2311aaf6df9f90cec997ddd30f0\u0026l\u003d39",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
