@@ -56,7 +56,7 @@ std::unique_ptr<Value> JSONReader::Read(StringPiece json, int options) {
 
 // static
 std::unique_ptr<Value> JSONReader::ReadAndReturnError(
-    const StringPiece& json,
+    StringPiece json,
     int options,
     int* error_code_out,
     std::string* error_msg_out,
