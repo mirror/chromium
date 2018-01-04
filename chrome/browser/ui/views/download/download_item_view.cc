@@ -665,17 +665,18 @@ void DownloadItemView::DrawFilename(gfx::Canvas* canvas) {
   // Note that in dangerous mode we use a label (as the text is multi-line).
   base::string16 filename;
   if (!disabled_while_opening_) {
-    filename = gfx::ElideFilename(download()->GetFileNameToReportUser(),
-                                  font_list_, kTextWidth);
+    filename =
+        gfx::ElideFilename(download()->GetFileNameToReportUser(), font_list_,
+                           kTextWidth, gfx::Typesetter::HARFBUZZ);
   } else {
     // First, Calculate the download status opening string width.
     base::string16 status_string = l10n_util::GetStringFUTF16(
         IDS_DOWNLOAD_STATUS_OPENING, base::string16());
     int status_string_width = gfx::GetStringWidth(status_string, font_list_);
     // Then, elide the file name.
-    base::string16 filename_string =
-        gfx::ElideFilename(download()->GetFileNameToReportUser(), font_list_,
-                           kTextWidth - status_string_width);
+    base::string16 filename_string = gfx::ElideFilename(
+        download()->GetFileNameToReportUser(), font_list_,
+        kTextWidth - status_string_width, gfx::Typesetter::HARFBUZZ);
     // Last, concat the whole string.
     filename = l10n_util::GetStringFUTF16(IDS_DOWNLOAD_STATUS_OPENING,
                                           filename_string);

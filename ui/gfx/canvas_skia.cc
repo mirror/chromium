@@ -97,9 +97,11 @@ void UpdateRenderText(const Rect& rect,
 // static
 void Canvas::SizeStringFloat(const base::string16& text,
                              const FontList& font_list,
-                             float* width, float* height,
+                             float* width,
+                             float* height,
                              int line_height,
-                             int flags) {
+                             int flags,
+                             Typesetter typesetter) {
   DCHECK_GE(*width, 0);
   DCHECK_GE(*height, 0);
 
@@ -116,6 +118,7 @@ void Canvas::SizeStringFloat(const base::string16& text,
     Rect rect(base::saturated_cast<int>(*width), INT_MAX);
 
     // This needs to match the instance used in ElideRectangleText.
+    DCHECK_EQ(Typesetter::PLATFORM, typesetter);
     auto render_text = RenderText::CreateInstanceDeprecated();
 
     UpdateRenderText(rect, base::string16(), font_list, flags, 0,
@@ -135,10 +138,7 @@ void Canvas::SizeStringFloat(const base::string16& text,
     *width = w;
     *height = h;
   } else {
-    // This is mostly used by calls from GetStringWidth(), which doesn't have
-    // the required drawing context. TODO(tapted): Ensure Cocoa UI never calls
-    // this method and change the next line to CreateHarfBuzzInstance().
-    auto render_text = RenderText::CreateInstanceDeprecated();
+    auto render_text = RenderText::CreateFor(typesetter);
 
     Rect rect(base::saturated_cast<int>(*width),
               base::saturated_cast<int>(*height));
