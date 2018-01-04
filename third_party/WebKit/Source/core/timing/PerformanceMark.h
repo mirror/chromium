@@ -27,6 +27,9 @@
 #define PerformanceMark_h
 
 #include "core/timing/PerformanceEntry.h"
+#include "core/timing/PerformanceMarkOptions.h"
+#include "platform/bindings/ScriptWrappable.h"
+#include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -36,19 +39,44 @@ class CORE_EXPORT PerformanceMark final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static PerformanceMark* Create(const String& name, double start_time) {
-    return new PerformanceMark(name, start_time);
+  static PerformanceMark* Create(const String& name,
+                                 double start_time,
+                                 const ScriptValue& detail) {
+    return new PerformanceMark(name, start_time, detail);
+  }
+
+  ScriptValue detail(ScriptState* script_state) const {
+    v8::Isolate* isolate = script_state->GetIsolate();
+    if (detail_.IsEmpty()) {
+      return ScriptValue(script_state, v8::Null(isolate));
+    }
+    // Todo: do we need to return a clone of |detail_| if the world is
+    // different?
+    return ScriptValue(script_state, detail_.NewLocal(isolate));
   }
 
   virtual void Trace(blink::Visitor* visitor) {
     PerformanceEntry::Trace(visitor);
   }
 
+  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+    visitor->TraceWrappers(detail_);
+  }
+
  private:
-  PerformanceMark(const String& name, double start_time)
-      : PerformanceEntry(name, "mark", start_time, start_time) {}
+  PerformanceMark(const String& name,
+                  double start_time,
+                  const ScriptValue& detail)
+      : PerformanceEntry(name, "mark", start_time, start_time), detail_(this) {
+    if (detail.IsEmpty() || detail.IsNull() || detail.IsUndefined()) {
+      return;
+    }
+    detail_.Set(detail.GetIsolate(), detail.V8Value());
+  }
 
   ~PerformanceMark() override {}
+
+  TraceWrapperV8Reference<v8::Value> detail_;
 };
 
 }  // namespace blink
