@@ -16,6 +16,24 @@
       "revId": "04ee9d7c4dda0d9ccbd2a0d561fe07c0dbc047ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f74530f_73d5a0b9",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T23:20:57Z",
+      "side": 1,
+      "message": "I used USE_AURA to match the build files:\n\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/BUILD.gn?type\u003dcs\u0026q\u003dtranslate_infobar_delegate%5C.cc\u0026sq\u003dpackage:chromium\u0026l\u003d71\n\nI\u0027d prefer not to vary from what those are doing... if they\u0027re incorrect, we should fix both.",
+      "parentUuid": "c49289ef_cb02d4a5",
+      "revId": "04ee9d7c4dda0d9ccbd2a0d561fe07c0dbc047ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
