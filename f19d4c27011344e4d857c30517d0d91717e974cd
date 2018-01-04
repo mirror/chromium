@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a29b1e39_e119766f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T23:03:37Z",
+      "side": 1,
+      "message": "Sounds good. Filed a bug: crbug.com/799265",
+      "parentUuid": "70130162_820b4b9c",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9192684f_dfd18c5b",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -522,6 +540,24 @@
       "side": 1,
       "message": "It should be okay to static_cast to the mock receiver in a unit test.\n\nI guess I don\u0027t see why it\u0027s important to mock out the behavior of the mock receiver creator, when that mock is used to create and return a mock receiver object.  Maybe I\u0027m missing something.",
       "parentUuid": "87a18dab_52f47899",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc9004d_090aaa27",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T23:03:37Z",
+      "side": 1,
+      "message": "In EXPECT_CALL() on line 282, we need a reference to the receiver that gets returned by CreateReceiver().\n\nI think a possible different way to do this would be to have MockReceiverCreator create a receiver at initialization and have a getter to get a raw pointer to it.",
+      "parentUuid": "9f7b49d2_6985b98e",
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
