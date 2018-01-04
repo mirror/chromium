@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e14d49be_74ee37a1",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-04T08:15:56Z",
+      "side": 1,
+      "message": "DCHECK that this is, in fact, a dictionary. DHCEK(dict.is_dict())",
+      "range": {
+        "startLine": 176,
+        "startChar": 65,
+        "endLine": 176,
+        "endChar": 69
+      },
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c16e7cf_2e9c293e",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -34,6 +57,29 @@
       "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25f7ccc3_d982d792",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-04T08:15:56Z",
+      "side": 1,
+      "message": "This isn\u0027t in a class body, but can we use class declaration order for these structs?\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "11c6788afff68d44f56b6b5bd1f2794af45f5d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
