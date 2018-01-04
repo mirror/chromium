@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "76cdc5d4_b2f4c7e9",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T11:37:38Z",
+      "side": 1,
+      "message": "Hmm... this seems a bit subtle. I\u0027d mention that in a comment (Read can immediately invoke the result callback, so always force a post task).\n\nFWIW, another way to write this might be to just track how many frames have been read (instead of using is_reading_) and explicitly post task for the OnInputTaskComplete continuation once we exceed some threshhold. I personally think this is a bit nicer than creating two new callback objects per frame that\u0027s read.",
+      "parentUuid": "b9e8515e_47eb817e",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1995fb3_9279f9a6",
         "filename": "chrome/browser/media/cast_remoting_sender.cc",
         "patchSetId": 5
