@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9d1522_4a440ad2",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-04T19:38:20Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion here, but have a few suggestions. We can discuss it and decide later, current implementation looks good.\n\n1) index.html file shows per directory coverage, but also has a link at the top, something like \"Click here to see coverage report for all source files\" (needs a better phrasing I guess)\n\n2) index.html file shows per source file coverage, but has a link at the top, something like \"Click here to see per directory coverage\". I like this less than the 1st, as coverage per directory seems to be more useful in a general case\n\n3) index.html file has two links to different pages: to per directory coverage and to per file",
+      "range": {
+        "startLine": 830,
+        "startChar": 75,
+        "endLine": 831,
+        "endChar": 19
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae266bf5_fa21a522",
+        "filename": "tools/code_coverage/html_templates/footer.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-04T19:38:20Z",
+      "side": 1,
+      "message": "It would be great to have a TOTAL row at the bottom of the table. I think we have necessary information calculated already (i.e. we know totals for each directory, and the overall total should be known / easy to calculate).\n\nNot a blocker, can be done in a separate CL since this one is always quite large.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
