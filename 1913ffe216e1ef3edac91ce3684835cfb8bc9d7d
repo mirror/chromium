@@ -16,6 +16,24 @@
       "revId": "1913ffe216e1ef3edac91ce3684835cfb8bc9d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b36c8f_1d6206e2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-04T11:55:17Z",
+      "side": 1,
+      "message": "Oh it\u0027s the CleanupReference triggered at gc that uses ReferenceQueue you mentioned... I only checked the \u0027ordinary\u0027 case where the AwContents.destroyNatives is called then.\n\nFor the problematic case, GestureStateListener.destroy() won\u0027t be called but the code before the patch would work in the same way, since GestureListenereManager would already be gone when its native dtor is invoked. I think the only problem with this CL (in the problematic case) is JavascriptInjector native not being deleted as the flow assumes the Java side (WebContents/WebContentInternals) is not still gc\u0027ed.\n\nI reverted JavascriptInjector so that it still uses native WebContentsUserData to own it. GestureListerManager does not have to use WCUD since its native is owned and destroyed approriately by WebContentsViewAndroid. Not sure if it\u0027s still worth the change at this point. Let me know what you think. What I can is that for the upcoming classes to be migrated to WebContentsUserData from CVC, they don\u0027t have to have native WCUD as long as their lifetime can be managed in other way like GestureListenerManager.",
+      "parentUuid": "42e0fb57_329ffb9a",
+      "revId": "1913ffe216e1ef3edac91ce3684835cfb8bc9d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
