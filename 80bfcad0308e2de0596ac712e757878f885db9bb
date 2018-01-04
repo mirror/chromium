@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a762a78_fc9ecd61",
+        "filename": "media/audio/audio_debug_file_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3be27eef_ea2392c8",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f91ed43_895e8ec3",
         "filename": "media/audio/audio_debug_recording_helper.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2b71a3_85af2e95",
+        "filename": "media/audio/audio_debug_recording_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f91ed43_895e8ec3",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76a38ae3_22a79516",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done.\nNot sure if to keep the aliases because in the style guide it says: \"Don\u0027t put an alias in your public API just to save typing in the implementation; do so only if you intend it to be used by your clients.\" Should I not create these alias at all since they are not used by any clients?",
+      "parentUuid": "eb0affd3_bfb65112",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "893b6c7f_1941cffb",
         "filename": "media/audio/audio_debug_recording_helper.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71b86da_8e2ca473",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893b6c7f_1941cffb",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d9f1971a_a86d3f0c",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "669895a1_b51a4326",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caaa2305_76e6dc92",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc13192_9fdbd63b",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caaa2305_76e6dc92",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5e425fa5_7c71ceb3",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703c1ebd_bdd64559",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e178ccce_68d1365f",
         "filename": "media/audio/audio_debug_recording_manager.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d88b2b0_81aa4c35",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e178ccce_68d1365f",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7a18f42a_4ab586f9",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "856d89fa_2025938b",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c76a83_b5cf1943",
         "filename": "media/audio/audio_debug_recording_manager.h",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2709f65e_480dedd7",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25c76a83_b5cf1943",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "06cde579_e9fc61b7",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "It is recommended this way in the documentation\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/threading_and_tasks.md#TaskRunner-ownership-encourage-no-dependency-injection",
+      "parentUuid": "23a8421c_da120d64",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d441904c_4afb8780",
         "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
         "patchSetId": 8
@@ -203,6 +401,24 @@
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc571f99_436d1568",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Reverting after PS8 callback changes - EnableDebugRecording takes a FilePath again.",
+      "parentUuid": "d441904c_4afb8780",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "b87cafe7_5647781d",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Reverting after PS8 callback changes - EnableDebugRecording takes a FilePath again.",
+      "parentUuid": "858f54ea_0db38835",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f494f233_77a4d6eb",
         "filename": "media/audio/audio_input_controller_unittest.cc",
         "patchSetId": 8
@@ -234,6 +468,24 @@
       "writtenOn": "2017-12-20T14:08:17Z",
       "side": 1,
       "message": "Not relevant to this CL?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c123fe3_1545cfe4",
+        "filename": "media/audio/audio_input_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Needed because it would no longer compile after updating audio manager unittest. I think there\u0027s a dependency there, I haven\u0027t figured out yet which.",
+      "parentUuid": "f494f233_77a4d6eb",
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "36809405_5fa012ad",
+        "filename": "media/audio/audio_input_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Needed because it would no longer compile after updating audio manager unittest. I think there\u0027s a dependency there, I haven\u0027t figured out yet which.",
+      "parentUuid": "0e0bd4f2_c23cf338",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8236fa92_106d9a0c",
         "filename": "media/audio/audio_output_controller_unittest.cc",
         "patchSetId": 8
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "1b1d3ac2_3b921fa3",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Needed because it would no longer compile after updating audio manager unittest. I think there\u0027s a dependency there, I haven\u0027t figured out yet which.",
+      "parentUuid": "8236fa92_106d9a0c",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5431d651_8a8f9c06",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 8
@@ -285,6 +573,24 @@
       "writtenOn": "2017-12-20T14:08:17Z",
       "side": 1,
       "message": "Please remove not relevant changes from the CL.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b048863_52198773",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2018-01-04T10:42:25Z",
+      "side": 1,
+      "message": "Needed because it would no longer compile after updating audio manager unittest. I think there\u0027s a dependency there, I haven\u0027t figured out yet which.",
+      "parentUuid": "5431d651_8a8f9c06",
       "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
