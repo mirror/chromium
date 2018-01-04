@@ -12,6 +12,8 @@
 #include "ash/accelerators/magnifier_key_scroller.h"
 #include "ash/accelerators/spoken_feedback_toggler.h"
 #include "ash/accessibility/accessibility_delegate.h"
+#include "ash/display/display_configuration_observer.h"
+#include "ash/display/display_preferences.h"
 #include "ash/public/cpp/accessibility_types.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_controller.h"
@@ -30,8 +32,6 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_url_util.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/background/ash_wallpaper_delegate.h"
-#include "chrome/browser/chromeos/display/display_configuration_observer.h"
-#include "chrome/browser/chromeos/display/display_preferences.h"
 #include "chrome/browser/chromeos/policy/display_rotation_default_handler.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -302,19 +302,10 @@ void ChromeShellDelegate::PreInit() {
   if (chromeos::GetAshConfig() == ash::Config::MASH)
     return;
 
-  bool first_run_after_boot = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kFirstExecAfterBoot);
-  chromeos::LoadDisplayPreferences(first_run_after_boot);
-  // Object owns itself, and deletes itself when Observer::OnShutdown is called:
+  // Object owns itself and deletes itself in OnWindowTreeHostManagerShutdown().
+  // Setup is done in OnShellInitialized() so this needs to be constructed after
+  // Shell is constructed but before OnShellInitialized() is called.
   new policy::DisplayRotationDefaultHandler();
-  // Set the observer now so that we can save the initial state
-  // in Shell::Init.
-  display_configuration_observer_.reset(
-      new chromeos::DisplayConfigurationObserver());
-}
-
-void ChromeShellDelegate::PreShutdown() {
-  display_configuration_observer_.reset();
 }
 
 void ChromeShellDelegate::OpenUrlFromArc(const GURL& url) {
