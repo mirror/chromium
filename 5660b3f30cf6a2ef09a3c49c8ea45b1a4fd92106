@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555ddda8_bcce307b",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-04T19:50:14Z",
+      "side": 1,
+      "message": "Need a | character to separate each item.",
+      "range": {
+        "startLine": 654,
+        "startChar": 40,
+        "endLine": 654,
+        "endChar": 42
+      },
+      "revId": "5660b3f30cf6a2ef09a3c49c8ea45b1a4fd92106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742b9287_603aeab1",
+        "filename": "chrome/test/chromedriver/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2018-01-04T19:50:14Z",
+      "side": 1,
+      "message": "nit: the backup reviewer list is suppose to be alphabetized.\n\nYou might want to update third_party/webdriver/OWNERS as well.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "5660b3f30cf6a2ef09a3c49c8ea45b1a4fd92106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
