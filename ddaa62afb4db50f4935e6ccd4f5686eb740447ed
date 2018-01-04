@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "3312fcfb_46009596",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T22:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dd078ca_f81204c8",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fa029c_095d934c",
         "filename": "components/omnibox/browser/omnibox_client.h",
         "patchSetId": 2
