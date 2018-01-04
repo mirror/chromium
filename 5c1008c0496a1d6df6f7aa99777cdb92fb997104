@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32220fe2_ea5c1176",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/web-animations/interfaces/Animatable/animate-expected.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c0488a3c_86987051",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 25
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad0cdb1b_ffbdb964",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/web-animations/interfaces/KeyframeEffect/processing-a-keyframes-argument-001-expected.txt",
         "patchSetId": 24
@@ -45,6 +69,30 @@
       "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c1166d_db27b27a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/web-animations/interfaces/KeyframeEffect/processing-a-keyframes-argument-001-expected.txt",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Because the element in this test is null, which we (incorrectly) do not support (see http://crbug.com/772014). This patch changes the point at which the input \u0027keyframes\u0027 object is parsed, from IDL time (see e.g. https://chromium-review.googlesource.com/c/chromium/src/+/760542/24/third_party/WebKit/Source/core/animation/KeyframeEffect.idl) to EffectInput::Convert (which is more correct).\n\nIn short, if the early-exit for null element wasn\u0027t in our code we would correctly throw for this test.",
+      "parentUuid": "ad0cdb1b_ffbdb964",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 4
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3c9da346_e648a287",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/BUILD.gn",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Yep. Checked with jbroman@, this was a reasonable move.",
+      "parentUuid": "7b306182_7158280b",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 61
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e20186f_ab1a0c71",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 24
@@ -91,6 +163,30 @@
       "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86123ad_c02c865f",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e20186f_ab1a0c71",
+      "range": {
+        "startLine": 229,
+        "startChar": 5,
+        "endLine": 229,
+        "endChar": 7
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c56a9f86_9f720429",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Turns out that the various GetAs methods all have internal DCHECKs, so actually removed the one I had above.",
+      "parentUuid": "a8e262c4_7ae80c28",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 6
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a6f371_cb0f6f5b",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 24
@@ -137,6 +257,30 @@
       "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b767fe49_47331f80",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-04T14:53:56Z",
+      "side": 1,
+      "message": "Turns out that the various GetAs methods all have internal DCHECKs, so actually removed the one I had above.",
+      "parentUuid": "e9a6f371_cb0f6f5b",
+      "range": {
+        "startLine": 401,
+        "startChar": 2,
+        "endLine": 401,
+        "endChar": 6
+      },
+      "revId": "5c1008c0496a1d6df6f7aa99777cdb92fb997104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
