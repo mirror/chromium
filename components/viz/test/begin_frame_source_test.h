@@ -84,6 +84,8 @@ class MockBeginFrameObserver : public BeginFrameObserver {
   MOCK_CONST_METHOD0(LastUsedBeginFrameArgs, const BeginFrameArgs&());
   MOCK_METHOD1(OnBeginFrameSourcePausedChanged, void(bool));
 
+  bool WantsSideEffectsOnlyBeginFrames() const override { return false; }
+
   virtual void AsValueInto(base::trace_event::TracedValue* dict) const;
 
   // A value different from the normal default returned by a

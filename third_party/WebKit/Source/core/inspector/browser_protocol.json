@@ -5100,6 +5100,12 @@
                             "type": "number"
                         },
                         {
+                            "name": "updateDisplay",
+                            "description": "Whether updates should be committed and drawn onto the display. True by default. If false,\nonly side effects of the BeginFrame will be run, such as layout and animations, but any\nvisual updates will not be visible on the display or in screenshots.",
+                            "optional": true,
+                            "type": "boolean"
+                        },
+                        {
                             "name": "screenshot",
                             "description": "If set, a screenshot of the frame will be captured and returned in the response. Otherwise,\nno screenshot will be captured.",
                             "optional": true,

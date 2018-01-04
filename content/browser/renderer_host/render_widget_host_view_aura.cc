@@ -627,6 +627,11 @@ void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
   UpdateNeedsBeginFramesInternal();
 }
 
+void RenderWidgetHostViewAura::SetWantsSideEffectsOnlyBeginFrames() {
+  if (delegated_frame_host_)
+    delegated_frame_host_->SetWantsSideEffectsOnlyBeginFrames();
+}
+
 void RenderWidgetHostViewAura::OnBeginFrame(base::TimeTicks frame_time) {
   host_->ProgressFling(frame_time);
   UpdateNeedsBeginFramesInternal();

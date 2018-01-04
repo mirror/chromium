@@ -870,6 +870,7 @@ void HeadlessDevToolsManagerDelegate::BeginFrame(
   base::TimeTicks frame_timeticks;
   base::TimeTicks deadline;
   base::TimeDelta interval;
+  bool update_display = true;
 
   if (const base::Value* frame_time_value = params->FindKey("frameTime")) {
     frame_time = base::Time::FromJsTime(frame_time_value->GetDouble());
@@ -902,6 +903,11 @@ void HeadlessDevToolsManagerDelegate::BeginFrame(
     deadline = frame_timeticks + delta;
   } else {
     deadline = frame_timeticks + interval;
+  }
+
+  if (const base::Value* update_display_value =
+          params->FindKey("updateDisplay")) {
+    update_display = update_display_value->GetBool();
   }
 
   bool capture_screenshot = false;
@@ -951,7 +957,7 @@ void HeadlessDevToolsManagerDelegate::BeginFrame(
   }
 
   headless_contents->BeginFrame(frame_timeticks, deadline, interval,
-                                capture_screenshot,
+                                update_display, capture_screenshot,
                                 base::Bind(&OnBeginFrameFinished, command_id,
                                            callback, encoding, quality));
 }
