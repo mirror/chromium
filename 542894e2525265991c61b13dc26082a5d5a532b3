@@ -46,6 +46,30 @@
       "revId": "542894e2525265991c61b13dc26082a5d5a532b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1391ae31_e5a21970",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-04T18:14:32Z",
+      "side": 1,
+      "message": "Just tested both under is_official_build \u003d true, the entire array seems to be aliased (available in Locals in WinDBG after simulated crash) regardless of \u0026 (I\u0027ll keep it anyways as I think it better represents what we\u0027re after).",
+      "parentUuid": "533a9487_25370916",
+      "range": {
+        "startLine": 339,
+        "startChar": 9,
+        "endLine": 339,
+        "endChar": 14
+      },
+      "revId": "542894e2525265991c61b13dc26082a5d5a532b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
