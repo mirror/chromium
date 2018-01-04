@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "e402567e_ff39f6de",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-04T20:48:07Z",
+      "side": 1,
+      "message": "maybe it\u0027s not a huge deal in tests. i know there was a big push to get rid of static objects in chrome a while back due to the impact on startup, but that probably doesn\u0027t apply in unit tests. i\u0027ve never heard of the ordering issue alluded to in the google style guide causing bugs in tests, either.\n\nso on further reflection, i don\u0027t care much either way. :-P",
+      "parentUuid": "b82d23fd_662182c6",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32e877a_4aa72bbf",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
