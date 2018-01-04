@@ -234,9 +234,10 @@ bool PepperGraphics2DHost::Init(
   // image-backed textures for direct scanout (for use in overlays).
   RenderThreadImpl* rti = RenderThreadImpl::current();
   if (rti && rti->IsGpuMemoryBufferCompositorResourcesEnabled()) {
-    const auto& list = rti->GetTextureTargetExceptionList();
+    const auto& list = main_thread_context_->ContextCapabilities()
+                           .texture_target_exception_list;
     if (base::ContainsValue(
-            list, viz::BufferUsageAndFormat(gfx::BufferUsage::SCANOUT,
+            list, gfx::BufferUsageAndFormat(gfx::BufferUsage::SCANOUT,
                                             gfx::BufferFormat::BGRA_8888))) {
       scanout_texture_target_bgra_ = gpu::GetPlatformSpecificTextureTarget();
     } else {
@@ -244,7 +245,7 @@ bool PepperGraphics2DHost::Init(
     }
 
     if (base::ContainsValue(
-            list, viz::BufferUsageAndFormat(gfx::BufferUsage::SCANOUT,
+            list, gfx::BufferUsageAndFormat(gfx::BufferUsage::SCANOUT,
                                             gfx::BufferFormat::RGBA_8888))) {
       scanout_texture_target_rgba_ = gpu::GetPlatformSpecificTextureTarget();
     } else {

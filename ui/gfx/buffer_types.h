@@ -5,6 +5,8 @@
 #ifndef UI_GFX_BUFFER_TYPES_H_
 #define UI_GFX_BUFFER_TYPES_H_
 
+#include <utility>
+
 namespace gfx {
 
 // The format needs to be taken into account when mapping a buffer into the
@@ -57,6 +59,8 @@ enum class BufferUsage {
 
   LAST = GPU_READ_CPU_READ_WRITE_PERSISTENT
 };
+
+using BufferUsageAndFormat = std::pair<BufferUsage, BufferFormat>;
 
 }  // namespace gfx
 
