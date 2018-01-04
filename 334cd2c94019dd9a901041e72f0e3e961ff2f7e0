@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff551ad_07312ce1",
+        "filename": "chrome/browser/component_updater/vr_assets_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T15:42:52Z",
+      "side": 1,
+      "message": "nit: why no param name?",
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
