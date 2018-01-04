@@ -158,6 +158,17 @@ void TestDataReductionProxyConfig::SetIsFetchInFlight(bool fetch_in_flight) {
   fetch_in_flight_ = fetch_in_flight;
 }
 
+size_t TestDataReductionProxyConfig::GetPreviousAttemptCounts() const {
+  if (!previous_attempt_counts_)
+    return DataReductionProxyConfig::GetPreviousAttemptCounts();
+  return previous_attempt_counts_.value();
+}
+
+void TestDataReductionProxyConfig::SetPreviousAttemptCounts(
+    base::Optional<size_t> previous_attempt_counts) {
+  previous_attempt_counts_ = previous_attempt_counts;
+}
+
 MockDataReductionProxyConfig::MockDataReductionProxyConfig(
     std::unique_ptr<DataReductionProxyConfigValues> config_values,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,

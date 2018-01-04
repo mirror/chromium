@@ -118,6 +118,10 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
 
   void SetIsFetchInFlight(bool fetch_in_flight);
 
+  size_t GetPreviousAttemptCounts() const override;
+
+  void SetPreviousAttemptCounts(base::Optional<size_t> previous_attempt_counts);
+
   using DataReductionProxyConfig::UpdateConfigForTesting;
   using DataReductionProxyConfig::HandleWarmupFetcherResponse;
 
@@ -125,6 +129,8 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
   bool GetIsCaptivePortal() const override;
 
   base::TickClock* tick_clock_;
+
+  base::Optional<size_t> previous_attempt_counts_;
 
   base::Optional<bool> was_data_reduction_proxy_used_;
   base::Optional<int> proxy_index_;

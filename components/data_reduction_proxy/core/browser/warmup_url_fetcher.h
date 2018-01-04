@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/timer/timer.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
 class GURL;
@@ -39,7 +40,7 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   ~WarmupURLFetcher() override;
 
   // Creates and starts a URLFetcher that fetches the warmup URL.
-  void FetchWarmupURL();
+  void FetchWarmupURL(size_t previous_attempt_counts);
 
   // Returns true if a warmup URL fetch is currently in-flight.
   bool IsFetchInFlight() const;
@@ -49,8 +50,16 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   // query params to the warmup URL.
   void GetWarmupURLWithQueryParam(GURL* warmup_url_with_query_params) const;
 
+  virtual base::TimeDelta GetFetchWaitTime(
+      size_t previous_attempt_counts) const;
+
  private:
+  // Creates and starts a URLFetcher that fetches the warmup URL.
+  void FetchWarmupURLNow();
+
   void OnURLFetchComplete(const net::URLFetcher* source) override;
+
+  base::OneShotTimer fetch_delay_timer_;
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 

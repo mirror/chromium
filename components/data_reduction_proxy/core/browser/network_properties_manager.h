@@ -85,6 +85,8 @@ class NetworkPropertiesManager {
   // has been initiated.
   void OnWarmupFetchInitiated(bool secure_proxy, bool is_core_proxy);
 
+  size_t GetAttemptCount(bool secure_proxy, bool is_core_proxy) const;
+
  private:
   // Map from network IDs to network properties.
   typedef std::map<std::string, NetworkProperties> NetworkPropertiesContainer;

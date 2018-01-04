@@ -186,6 +186,7 @@ void NetworkPropertiesManager::ShutdownOnUIThread() {
 void NetworkPropertiesManager::OnChangeInNetworkID(
     const std::string& network_id) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!network_id.empty());
 
   has_warmup_url_succeded_secure_core_ = false;
   has_warmup_url_succeded_secure_non_core_ = false;
@@ -379,6 +380,29 @@ void NetworkPropertiesManager::OnWarmupFetchInitiated(bool secure_proxy,
     ++warmup_url_fetch_attempt_counts_insecure_non_core_;
     DCHECK_GE(kMaxWarmupURLFetchAttempts,
               warmup_url_fetch_attempt_counts_insecure_non_core_);
+  }
+}
+
+size_t NetworkPropertiesManager::GetAttemptCount(bool secure_proxy,
+                                                 bool is_core_proxy) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (secure_proxy && is_core_proxy) {
+    DCHECK_GT(kMaxWarmupURLFetchAttempts,
+              warmup_url_fetch_attempt_counts_secure_core_);
+    return warmup_url_fetch_attempt_counts_secure_core_;
+  } else if (secure_proxy && !is_core_proxy) {
+    DCHECK_GT(kMaxWarmupURLFetchAttempts,
+              warmup_url_fetch_attempt_counts_secure_non_core_);
+    return warmup_url_fetch_attempt_counts_secure_non_core_;
+  } else if (!secure_proxy && is_core_proxy) {
+    DCHECK_GT(kMaxWarmupURLFetchAttempts,
+              warmup_url_fetch_attempt_counts_insecure_core_);
+    return warmup_url_fetch_attempt_counts_insecure_core_;
+  } else {
+    DCHECK_GT(kMaxWarmupURLFetchAttempts,
+              warmup_url_fetch_attempt_counts_insecure_non_core_);
+    return warmup_url_fetch_attempt_counts_insecure_non_core_;
   }
 }
 
