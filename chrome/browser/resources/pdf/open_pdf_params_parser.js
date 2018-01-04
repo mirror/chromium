@@ -174,13 +174,22 @@ OpenPDFParamsParser.prototype = {
   /**
    * This is called when a named destination is received and the page number
    * corresponding to the request for which a named destination is passed.
-   * @param {number} pageNumber The page corresponding to the named destination
-   *    requested.
+   * @param {Object} namedDestination Object containing the page corresponding
+   *    to the named destination and optionally the view type for that
+   *    destination.
    */
-  onNamedDestinationReceived: function(pageNumber) {
+  onNamedDestinationReceived: function(namedDestination) {
     var outstandingRequest = this.outstandingRequests_.shift();
-    if (pageNumber != -1)
-      outstandingRequest.params.page = pageNumber;
+
+    if (namedDestination.pageNumber != -1)
+      outstandingRequest.params.page = namedDestination.pageNumber;
+
+    if (namedDestination.viewType) {
+      Object.assign(
+          outstandingRequest.params,
+          this.parseViewParam_(namedDestination.viewType));
+    }
+
     outstandingRequest.callback(outstandingRequest.params);
   },
 };

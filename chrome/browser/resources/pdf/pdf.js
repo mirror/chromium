@@ -227,7 +227,7 @@ function PDFViewer(browserApi) {
   document.body.addEventListener('change-page', e => {
     this.viewport_.goToPage(e.detail.page);
     if (e.detail.origin == 'bookmark')
-      this.metrics.onBookmarkFollowed();
+      this.metrics.onFollowBookmark();
     else if (e.detail.origin == 'pageselector')
       this.metrics.onPageSelectorNavigation();
   });
@@ -710,7 +710,7 @@ PDFViewer.prototype = {
           this.toolbar_.docTitle = document.title;
         break;
       case 'getNamedDestinationReply':
-        this.paramsParser_.onNamedDestinationReceived(message.data.pageNumber);
+        this.paramsParser_.onNamedDestinationReceived(message.data);
         break;
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;
