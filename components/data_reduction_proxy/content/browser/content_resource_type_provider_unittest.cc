@@ -19,6 +19,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/previews_state.h"
+#include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/socket/socket_test_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -61,7 +62,9 @@ const std::string kBody = "response body";
 class ContentResourceProviderTest : public testing::Test {
  public:
   ContentResourceProviderTest()
-      : context_(true), content_resource_type_provider_(nullptr) {}
+      : context_(true), content_resource_type_provider_(nullptr) {
+    context_.set_network_quality_estimator(&estimator_);
+  }
 
   void Init(const std::vector<DataReductionProxyServer> proxy_servers) {
     test_context_ = DataReductionProxyTestContext::Builder()
@@ -128,6 +131,7 @@ class ContentResourceProviderTest : public testing::Test {
 
  protected:
   base::MessageLoopForIO message_loop_;
+  net::TestNetworkQualityEstimator estimator_;
   net::TestURLRequestContext context_;
   net::MockClientSocketFactory mock_socket_factory_;
   net::TestDelegate delegate_;
