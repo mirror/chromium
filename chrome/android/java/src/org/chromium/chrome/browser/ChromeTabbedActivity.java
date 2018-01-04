@@ -112,9 +112,12 @@ import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
+import org.chromium.chrome.browser.tabmodel.IncognitoTabModel;
+import org.chromium.chrome.browser.tabmodel.TabList;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
+import org.chromium.chrome.browser.tabmodel.TabModelImpl;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorImpl;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
@@ -2134,6 +2137,8 @@ public class ChromeTabbedActivity
                 ((StackLayout) activeLayout).commitOutstandingModelState(LayoutManager.time());
             }
             if (getCurrentTabModel().getCount() != 0) {
+                showPreviousTab(activeLayout, currentTab);
+
                 // Don't hide overview if current tab stack is empty()
                 mLayoutManager.hideOverview(true);
 
@@ -2145,6 +2150,31 @@ public class ChromeTabbedActivity
                     contentViewCore.setAccessibilityState(true);
                 }
             }
+        }
+    }
+
+    /**
+     * Shows the last tab selected. If the last tab is closed, this will show the backmost tab of
+     * the stack.
+     * @param activeLayout The stack layout containing the overview of tabs.
+     * @param currentTab The tab last selected before entering overview mode.
+     */
+    private void showPreviousTab(Layout activeLayout, Tab currentTab) {
+        boolean isIncognito = currentTab.isIncognito();
+        TabModel model = mTabModelSelectorImpl.getModelForTabId(currentTab.getId());
+        int previousTabId;
+
+        if (isIncognito) {
+            previousTabId = ((IncognitoTabModel) (model)).getPreviousTabId();
+        } else {
+            previousTabId = ((TabModelImpl) (model)).getPreviousTabId();
+        }
+
+        if (mTabModelSelectorImpl.getTabById(previousTabId) == null) {
+            previousTabId = TabList.INVALID_TAB_INDEX;
+        }
+        if (previousTabId != TabList.INVALID_TAB_INDEX && activeLayout instanceof StackLayout) {
+            ((StackLayout) activeLayout).onTabSelecting(LayoutManager.time(), previousTabId);
         }
     }
 
