@@ -131,8 +131,13 @@ void ScrollManager::RecomputeScrollChain(const Node& start_node,
           cur_element == document_element)
         break;
 
-      if (!CanPropagate(scroll_state, *cur_element))
+      if (!CanPropagate(scroll_state, *cur_element)) {
+        if (scroll_chain.empty() ||
+            scroll_chain.front() != (int)DOMNodeIds::IdForNode(cur_element)) {
+          scroll_chain.push_front(DOMNodeIds::IdForNode(cur_element));
+        }
         break;
+      }
     }
 
     cur_box = cur_box->ContainingBlock();
