@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "203ac481_cff92a62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T08:20:12Z",
+      "side": 1,
+      "message": "First one is here: https://chromium-review.googlesource.com/c/chromium/src/+/848438\n\nI don\u0027t know why second CL doesn\u0027t depend on first CL in code review. Anyway, we should merge first above CL, then merge this :)",
+      "parentUuid": "f9b58d77_34f08960",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93514da4_1934fd6a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T12:49:08Z",
       "side": 1,
       "message": "Where does this CL change the start rect logic?",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef347548_1bb5274d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T08:20:12Z",
+      "side": 1,
+      "message": "This line is removed:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/781326/12/third_party/WebKit/Source/core/page/FocusController.cpp#b1502",
+      "parentUuid": "93514da4_1934fd6a",
       "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
