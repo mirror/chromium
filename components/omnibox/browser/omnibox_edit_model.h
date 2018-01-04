@@ -118,7 +118,7 @@ class OmniboxEditModel {
   // this is the match corresponding to the permanent text. Returns the
   // alternate nav URL, if |alternate_nav_url| is non-NULL and there is such a
   // URL.
-  AutocompleteMatch CurrentMatch(GURL* alternate_nav_url) const;
+  virtual AutocompleteMatch CurrentMatch(GURL* alternate_nav_url) const;
 
   // Called when the user wants to export the entire current text as a URL.
   // Sets the url, and if known, the title and favicon.
@@ -377,7 +377,7 @@ class OmniboxEditModel {
 
   // Returns true if the popup exists and is open.  (This is a convenience
   // wrapper for the benefit of test code, which may not have a popup model.)
-  bool PopupIsOpen() const;
+  virtual bool PopupIsOpen() const;
 
   // Called whenever user_text_ should change.
   void InternalSetUserText(const base::string16& text);
