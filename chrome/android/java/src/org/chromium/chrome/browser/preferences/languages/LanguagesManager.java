@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.preferences.languages;
 
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * Manages languages details for languages settings.
  *
- * The LanguagesManager is responsible for fetching languages details from native.
+ *The LanguagesManager is responsible for fetching languages details from native.
  */
 class LanguagesManager {
     /**
@@ -27,6 +28,25 @@ class LanguagesManager {
          */
         void onDataUpdated();
     }
+
+    // Constants used to log UMA enum histogram, must stay in sync with
+    // LanguageSettingsActionType. Further actions can only be appended, existing
+    // entries must not be overwritten.
+    static final int ACTION_CLICK_ON_ADD_LANGUAGE = 1;
+    static final int ACTION_LANGUAGE_ADDED = 2;
+    static final int ACTION_LANGUAGE_REMOVED = 3;
+    static final int ACTION_DISABLE_TRANSLATE_GLOBALLY = 4;
+    static final int ACTION_ENABLE_TRANSLATE_GLOBALLY = 5;
+    static final int ACTION_DISABLE_TRANSLATE_FOR_SINGLE_LANGUAGE = 6;
+    static final int ACTION_ENABLE_TRANSLATE_FOR_SINGLE_LANGUAGE = 7;
+    static final int ACTION_BOUNDARY = 8;
+
+    // Constants used to log UMA enum histogram, must stay in sync with
+    // LanguageSettingsPageType. Further actions can only be appended, existing
+    // entries must not be overwritten.
+    static final int PAGE_MAIN = 0;
+    static final int PAGE_ADD_LANGUAGE = 1;
+    static final int PAGE_BOUNDARY = 2;
 
     private static LanguagesManager sManager;
 
@@ -119,5 +139,21 @@ class LanguagesManager {
      */
     public static void recycle() {
         sManager = null;
+    }
+
+    /**
+     * Record language settings page impression.
+     */
+    public static void recordImpression(int pageType) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "LanguageSettings.PageImpression", pageType, PAGE_BOUNDARY);
+    }
+
+    /**
+     * Record actions taken on language settings page.
+     */
+    public static void recordAction(int actionType) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "LanguageSettings.Actions", actionType, ACTION_BOUNDARY);
     }
 }
