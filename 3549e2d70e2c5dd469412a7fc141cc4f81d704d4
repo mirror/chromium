@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "403ace6f_c3adaa38",
+        "filename": "components/autofill/core/browser/phone_number_i18n.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2018-01-04T18:37:36Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "83dc8268_8180b71a",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 33
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a70983e7_0999f0ea",
         "filename": "components/autofill/core/browser/phone_number_i18n.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2485190f_97e16b00",
+        "filename": "components/autofill/core/browser/phone_number_i18n.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2018-01-04T18:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70983e7_0999f0ea",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 48
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bedca051_c29ba938",
         "filename": "components/autofill/core/browser/phone_number_i18n.h",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cab7133_73723e4b",
+        "filename": "components/autofill/core/browser/phone_number_i18n.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2018-01-04T18:37:36Z",
+      "side": 1,
+      "message": "This one is a result of spliting the original FormatForResponse method because it\u0027s used by autofill in somewhere it shouldn\u0027t. I don\u0027t have a strong opinion whether to have a ToE164 or just expose the underlying utility..slightly inclined to keep it this way because 1) easier for the calling code, and 2) it\u0027s already changed this way and i am lazy.\n\nWDYT?",
+      "parentUuid": "bedca051_c29ba938",
+      "range": {
+        "startLine": 107,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
