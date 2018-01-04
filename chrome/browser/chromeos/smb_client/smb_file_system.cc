@@ -6,6 +6,8 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chromeos/file_system_provider/service.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/smb_provider_client.h"
 
@@ -65,8 +67,11 @@ storage::DirectoryEntry::DirectoryEntryType MapEntryType(bool is_directory) {
 using file_system_provider::AbortCallback;
 
 SmbFileSystem::SmbFileSystem(
-    const file_system_provider::ProvidedFileSystemInfo& file_system_info)
-    : file_system_info_(file_system_info), weak_ptr_factory_(this) {}
+    const file_system_provider::ProvidedFileSystemInfo& file_system_info,
+    SmbService* smb_service)
+    : file_system_info_(file_system_info),
+      smb_service_(smb_service),
+      weak_ptr_factory_(this) {}
 
 SmbFileSystem::~SmbFileSystem() {}
 
@@ -144,6 +149,11 @@ AbortCallback SmbFileSystem::RequestUnmount(
 void SmbFileSystem::HandleRequestUnmountCallback(
     const storage::AsyncFileUtil::StatusCallback& callback,
     smbprovider::ErrorType error) const {
+  if (TranslateError(error) == base::File::FILE_OK) {
+    callback.Run(smb_service_->Unmount(
+        file_system_info_.provider_id(), file_system_info_.file_system_id(),
+        file_system_provider::Service::UNMOUNT_REASON_USER));
+  }
   callback.Run(TranslateError(error));
 }
 

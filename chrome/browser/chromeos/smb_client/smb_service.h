@@ -57,6 +57,12 @@ class SmbService : public KeyedService {
                        smbprovider::ErrorType error,
                        int32_t mount_id);
 
+  // Calls file_system_provider::Service::UnmountFileSystem().
+  base::File::Error Unmount(
+      const ProviderId& provider_id,
+      const std::string& file_system_id,
+      file_system_provider::Service::UnmountReason reason);
+
  private:
   Service* GetProviderService() const;
 

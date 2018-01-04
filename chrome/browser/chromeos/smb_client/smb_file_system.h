@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/watcher.h"
+#include "chrome/browser/chromeos/smb_client/smb_service.h"
 #include "chromeos/dbus/smb_provider_client.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/watcher_manager.h"
@@ -42,7 +43,8 @@ class RequestManager;
 class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
  public:
   explicit SmbFileSystem(
-      const file_system_provider::ProvidedFileSystemInfo& file_system_info);
+      const file_system_provider::ProvidedFileSystemInfo& file_system_info,
+      SmbService* smb_service);
   ~SmbFileSystem() override;
 
   static base::File::Error TranslateError(smbprovider::ErrorType);
@@ -198,6 +200,8 @@ class SmbFileSystem : public file_system_provider::ProvidedFileSystemInterface {
   file_system_provider::OpenedFiles opened_files_;
   storage::AsyncFileUtil::EntryList entry_list_;
   file_system_provider::Watchers watchers_;
+
+  SmbService* smb_service_;  // Not owned.
 
   base::WeakPtrFactory<SmbFileSystem> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(SmbFileSystem);
