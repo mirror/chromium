@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b905106_7cf55b90",
+        "filename": "media/cast/test/simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-04T21:01:19Z",
+      "side": 1,
+      "message": "This is in ptr_util.h, so the header file still needs to be included.",
+      "range": {
+        "startLine": 406,
+        "startChar": 6,
+        "endLine": 406,
+        "endChar": 22
+      },
+      "revId": "8b75d6c5f9b05242cc91b71476d1b3e17152acdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
