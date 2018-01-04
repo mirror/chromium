@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 # Defines a static library corresponding to the output of schema compiler tools
 # over a set of extensions API schemas (IDL or JSON format.) The library target
 # has implicit hard dependencies on all schema files listed by the invoker and
@@ -238,7 +240,7 @@ template("json_schema_api") {
     lib_deps += invoker.deps
   }
 
-  static_library(target_name) {
+  jumbo_static_library(target_name) {
     sources = lib_sources
     deps = lib_deps
     public_deps = lib_public_deps
