@@ -52,6 +52,24 @@
       "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fbcaeb_f80e64de",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-04T21:10:09Z",
+      "side": 0,
+      "message": "Right, no idea why the warning started to appear, maybe passing by value changes the optimisation a bit and this is now caught...\n\nEither way, your solution is fine to me.",
+      "parentUuid": "67989e7d_0b345e6d",
+      "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
