@@ -116,6 +116,8 @@ void HistoryTabHelper::DidFinishNavigation(
   }
 #endif
 
+  is_loading_ = true;
+
   history::RedirectList redirects;
   const GURL& original_url = visible_item->GetOriginalRequestURL();
   const GURL& referrer_url = visible_item->GetReferrer().url;
@@ -168,17 +170,26 @@ void HistoryTabHelper::DidFinishNavigation(
   }
 }
 
+void HistoryTabHelper::PageLoaded(
+    WebState* web_state,
+    PageLoadCompletionStatus load_completion_status) {
+  is_loading_ = false;
+  last_load_completion_ = base::TimeTicks::Now();
+}
+
 void HistoryTabHelper::TitleWasSet(web::WebState* web_state) {
   DCHECK_EQ(web_state_, web_state);
   if (delay_notification_) {
     return;
   }
 
-  web::NavigationItem* last_committed_item =
-      web_state_->GetNavigationManager()->GetLastCommittedItem();
-
-  if (last_committed_item) {
-    UpdateHistoryPageTitle(*last_committed_item);
+  constexpr base::TimeDelta kTitleSetWindow = base::TimeDelta::FromSeconds(5);
+  if (is_loading_ ||
+      (base::TimeTicks::Now() - last_load_completion_ < kTitleSetWindow)) {
+    web::NavigationItem* last_committed_item =
+        web_state_->GetNavigationManager()->GetLastCommittedItem();
+    if (last_committed_item)
+      UpdateHistoryPageTitle(*last_committed_item);
   }
 }
 
