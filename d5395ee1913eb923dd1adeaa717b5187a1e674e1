@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4eafe27_c031d356",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2160,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:24:50Z",
+      "side": 1,
+      "message": "Please correct me if I\u0027m wrong, but according to my understanding of https://codesearch.chromium.org/chromium/src/device/bluetooth/bluetooth_adapter.h?l\u003d138-157,171-172\u0026rcl\u003dd7d410b60bca5187014f34741479fc836567d9fc GattServicesDiscovered should be called exactly once, namely when the discovery of all services, characteristics and descriptors is done. This means that adding a characteristic should not trigger this event. This is why I disabled the test on Windows, and it probably should be removed completely.",
+      "range": {
+        "startLine": 2159,
+        "startChar": 0,
+        "endLine": 2160,
+        "endChar": 51
+      },
+      "revId": "d5395ee1913eb923dd1adeaa717b5187a1e674e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5623e1f9_a7d68229",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:24:50Z",
+      "side": 1,
+      "message": "I moved this up because running the callbacks can result in another characteristic read or write. At that point this flag should be false, as otherwise the r/w operation is rejected with GATT_ERROR_IN_PROGRESS",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 337,
+        "endChar": 58
+      },
+      "revId": "d5395ee1913eb923dd1adeaa717b5187a1e674e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbfbdff_cf433525",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_characteristic_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:24:50Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 58
+      },
+      "revId": "d5395ee1913eb923dd1adeaa717b5187a1e674e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

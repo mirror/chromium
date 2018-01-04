@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fff00ae_66cecc17",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T18:24:50Z",
+      "side": 0,
+      "message": "OnGetIncludedCharacteristics can be called before GattCharacteristicDiscoveryComplete is called, which is why signaling a complete discovery here is not correct.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 46
+      },
+      "revId": "83207456d4dfab26c85c014c1e7db381d9e27b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
