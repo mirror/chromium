@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21940299_5770589c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/SharedWorkerPerformanceNow.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-04T21:04:56Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "05739a5ae0c645cc6cef55c7a96bbda55533b740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e57dca5_81be703a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/WorkerPerformanceNow.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-04T21:04:56Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 5
+      },
+      "revId": "05739a5ae0c645cc6cef55c7a96bbda55533b740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e03c10_00d9d452",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/support/WorkerSendingPerformanceNow.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-04T21:04:56Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "05739a5ae0c645cc6cef55c7a96bbda55533b740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c34f969_2b8c43c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/support/WorkerSendingPerformanceNow.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-04T21:04:56Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "05739a5ae0c645cc6cef55c7a96bbda55533b740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
