@@ -7,6 +7,7 @@
 #include "chrome/browser/ui/app_list/app_context_menu_delegate.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 #include "chrome/grit/generated_resources.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace app_list {
@@ -37,11 +38,24 @@ void AppContextMenu::BuildMenu(ui::SimpleMenuModel* menu_model) {
   // Show Pin/Unpin option if shelf is available.
   if (controller_->GetPinnable(app_id()) != AppListControllerDelegate::NO_PIN) {
     menu_model_->AddSeparator(ui::NORMAL_SEPARATOR);
-    menu_model_->AddItemWithStringId(
-        TOGGLE_PIN,
-        controller_->IsAppPinned(app_id_) ?
-            IDS_APP_LIST_CONTEXT_MENU_UNPIN :
-            IDS_APP_LIST_CONTEXT_MENU_PIN);
+    /*
+     *
+     *  The block below will stay removed until assets are delivered.
+     *
+     * if (app_list::features::IsTouchableAppContextMenuEnabled())
+        menu_model_->AddButtonWithStringId(TOGGLE_PIN,
+                                           controller_->IsAppPinned(app_id_)
+                                               ? IDS_APP_LIST_CONTEXT_MENU_UNPIN
+                                               : IDS_APP_LIST_CONTEXT_MENU_PIN,
+                                           app_list::kIcGoogleBlackIcon);
+      else
+
+
+*/
+    menu_model_->AddItemWithStringId(TOGGLE_PIN,
+                                     controller_->IsAppPinned(app_id_)
+                                         ? IDS_APP_LIST_CONTEXT_MENU_UNPIN
+                                         : IDS_APP_LIST_CONTEXT_MENU_PIN);
   }
 }
 

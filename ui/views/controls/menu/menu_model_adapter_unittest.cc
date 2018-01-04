@@ -212,6 +212,12 @@ TEST_F(MenuModelAdapterTest, BasicTest) {
       case ui::MenuModel::TYPE_SUBMENU:
         EXPECT_EQ(views::MenuItemView::SUBMENU, item->GetType());
         break;
+      case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+        EXPECT_EQ(views::MenuItemView::BUTTON, item->GetType());
+        break;
+      case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+        EXPECT_EQ(views::MenuItemView::CHECKBUTTON, item->GetType());
+        break;
     }
 
     // Check activation.
@@ -258,6 +264,12 @@ TEST_F(MenuModelAdapterTest, BasicTest) {
         break;
       case ui::MenuModel::TYPE_SUBMENU:
         EXPECT_EQ(views::MenuItemView::SUBMENU, item->GetType());
+        break;
+      case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+        EXPECT_EQ(views::MenuItemView::BUTTON, item->GetType());
+        break;
+      case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+        EXPECT_EQ(views::MenuItemView::CHECKBUTTON, item->GetType());
         break;
     }
 

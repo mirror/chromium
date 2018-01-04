@@ -32,6 +32,10 @@ struct EnumTraits<ash::mojom::MenuItemType, ui::MenuModel::ItemType> {
         return ash::mojom::MenuItemType::COMMAND;
       case ui::MenuModel::TYPE_SUBMENU:
         return ash::mojom::MenuItemType::SUBMENU;
+      case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+      case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+        NOTREACHED() << "TYPE_TOUCHABLE_* is not yet supported.";
+        break;
     }
     NOTREACHED();
     return ash::mojom::MenuItemType::COMMAND;

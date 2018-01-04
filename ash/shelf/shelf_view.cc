@@ -49,6 +49,7 @@
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/menu/menu_model_adapter.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/menu/touchable_menu_root_view.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/view_model.h"
 #include "ui/views/view_model_utils.h"
@@ -1890,7 +1891,18 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
 
   views::MenuAnchorPosition menu_alignment = views::MENU_ANCHOR_TOPLEFT;
   gfx::Rect anchor = gfx::Rect(click_point, gfx::Size());
+  if (app_list::features::IsTouchableAppContextMenuEnabled()) {
+    gfx::NativeWindow parent = GetWidget()->GetNativeWindow();
+    views::TouchableMenuRootView* touchable_context_menu_view =
+        new views::TouchableMenuRootView(parent, menu_model_.get(), source);
+    touchable_context_menu_view->Show();
+    touchable_context_menu_view->SetAlignment(
+        views::BubbleBorder::ALIGN_ARROW_TO_MID_ANCHOR);
 
+    // get ref to widget.
+    // add an observer to the widget.
+    return;
+  }
   if (!context_menu) {
     DCHECK(source) << "Application lists require a source button view.";
     // Application lists use a bubble.

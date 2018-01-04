@@ -99,6 +99,13 @@ MenuItemView* MenuModelAdapter::AddMenuItemFromModelAt(ui::MenuModel* model,
       sublabel = model->GetSublabelAt(model_index);
       minor_text = model->GetMinorTextAt(model_index);
       break;
+    case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+    case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+      type = MenuItemView::BUTTON;
+      label = model->GetLabelAt(model_index);
+      sublabel = model->GetSublabelAt(model_index);
+      minor_text = model->GetMinorTextAt(model_index);
+      break;
     default:
       NOTREACHED();
       type = MenuItemView::NORMAL;

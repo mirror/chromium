@@ -13,6 +13,7 @@
 #include "base/strings/string16.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/models/menu_model.h"
+#include "ui/gfx/paint_vector_icon.h"
 
 namespace gfx {
 class Image;
@@ -77,7 +78,19 @@ class UI_BASE_EXPORT SimpleMenuModel : public MenuModel {
 
   // Methods for adding items to the model.
   void AddItem(int command_id, const base::string16& label);
+  void AddButton(int command_id,
+                 const base::string16& label,
+                 const gfx::VectorIcon& icon);
   void AddItemWithStringId(int command_id, int string_id);
+  void AddButtonWithStringId(int command_id,
+                             int string_id,
+                             const gfx::VectorIcon& icon);
+  void AddCheckButton(int command_id,
+                      const base::string16& label,
+                      const gfx::VectorIcon& icon);
+  void AddCheckButtonWithStringId(int command_id,
+                                  int string_id,
+                                  const gfx::VectorIcon& icon);
   void AddCheckItem(int command_id, const base::string16& label);
   void AddCheckItemWithStringId(int command_id, int string_id);
   void AddRadioItem(int command_id, const base::string16& label, int group_id);

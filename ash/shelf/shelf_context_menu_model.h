@@ -57,6 +57,7 @@ class ASH_EXPORT ShelfContextMenuModel : public ui::SimpleMenuModel,
   ShelfItemDelegate* delegate_;
   std::vector<std::unique_ptr<ui::MenuModel>> submenus_;
   const int64_t display_id_;
+  const bool is_touchable_app_context_menu_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfContextMenuModel);
 };

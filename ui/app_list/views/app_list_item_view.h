@@ -23,6 +23,7 @@ class ImageView;
 class Label;
 class MenuRunner;
 class ProgressBar;
+class TouchableMenuRootView;
 }
 
 namespace app_list {
@@ -85,6 +86,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   // views::Button overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;
+  void OnMouseEvent(ui::MouseEvent* event) override;
 
   // views::View overrides:
   bool GetTooltipText(const gfx::Point& p,
@@ -92,6 +94,8 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   // ImageShadowAnimator::Delegate overrides:
   void ImageShadowAnimationProgressed(ImageShadowAnimator* animator) override;
+
+  bool IsTouchableContextMenuShowingForTest();
 
  private:
   enum UIState {
@@ -163,6 +167,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   views::Label* title_;               // Strongly typed child view.
   views::ProgressBar* progress_bar_;  // Strongly typed child view.
 
+  std::unique_ptr<views::TouchableMenuRootView> touchable_context_menu_;
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
   UIState ui_state_ = UI_STATE_NORMAL;

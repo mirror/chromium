@@ -148,6 +148,12 @@ class AppsGridViewTest : public views::ViewsTestBase,
 
     test_api_.reset(new AppsGridViewTestApi(apps_grid_view_));
   }
+
+  void EnableTouchableContextMenus() {
+    scoped_feature_list_.InitAndEnableFeature(
+        app_list::features::kEnableTouchableAppContextMenu);
+  }
+
   void TearDown() override {
     app_list_view_->GetWidget()->Close();
     views::ViewsTestBase::TearDown();
@@ -1113,6 +1119,33 @@ TEST_F(AppsGridViewTest,
   apps_grid_view_->OnGestureEvent(&scroll_update);
   ASSERT_FALSE(app_list_view_->is_in_drag());
   ASSERT_NE(0, GetPaginationModel()->transition().progress);
+}
+
+TEST_F(AppsGridViewTest, CreateTwoTouchableContextMenus) {
+  EnableTouchableContextMenus();
+  const size_t kTotalItems = 4;
+  model_->PopulateApps(kTotalItems);
+  EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
+  AppListItemView* item_view = GetItemViewAt(0);
+  EXPECT_FALSE(item_view->IsTouchableContextMenuShowingForTest());
+  gfx::Point location = gfx::Point(GetItemRectOnCurrentPageAt(0, 0).origin());
+
+  // delete me if true
+  DCHECK_EQ(GetItemViewForPoint(location), item_view);
+
+  gfx::Point root_location(location);
+  views::View::ConvertPointToWidget(apps_grid_view_, &root_location);
+  gfx::NativeWindow window = app_list_view_->GetWidget()->GetNativeWindow();
+  aura::Window::ConvertPointToTarget(window, window->GetRootWindow(),
+                                     &root_location);
+  // Ensure that the |root_location| point is correct if RTL.
+  root_location.set_x(apps_grid_view_->GetMirroredXInView(root_location.x()));
+  // ui::MouseEvent event(ui::ET_MOUSE_PRESSED, location, root_location,
+  // ui::EventTimeForNow(), ui::EF_RIGHT_MOUSE_BUTTON, ui::EF_NONE);
+
+  item_view->ShowContextMenu(gfx::Point(),
+                             ui::MenuSourceType::MENU_SOURCE_MOUSE);
+  EXPECT_TRUE(item_view->IsTouchableContextMenuShowingForTest());
 }
 
 }  // namespace test
