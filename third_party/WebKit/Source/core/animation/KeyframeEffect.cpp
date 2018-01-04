@@ -76,10 +76,11 @@ KeyframeEffect* KeyframeEffect::Create(
     return nullptr;
   }
 
-  return Create(element,
-                EffectInput::Convert(element, keyframes, composite,
-                                     script_state, exception_state),
-                timing);
+  KeyframeEffectModelBase* model = EffectInput::Convert(
+      element, keyframes, composite, script_state, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  return Create(element, model, timing);
 }
 
 KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
@@ -92,11 +93,12 @@ KeyframeEffect* KeyframeEffect::Create(ScriptState* script_state,
         element->GetDocument(),
         WebFeature::kAnimationConstructorKeyframeListEffectNoTiming);
   }
-  return Create(
-      element,
+  KeyframeEffectModelBase* model =
       EffectInput::Convert(element, keyframes, EffectModel::kCompositeReplace,
-                           script_state, exception_state),
-      Timing());
+                           script_state, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  return Create(element, model, Timing());
 }
 
 KeyframeEffect::KeyframeEffect(Element* target,
@@ -112,6 +114,23 @@ void KeyframeEffect::setComposite(String composite_string) {
   EffectModel::CompositeOperation composite;
   if (EffectModel::StringToCompositeOperation(composite_string, composite))
     Model()->SetComposite(composite);
+}
+
+void KeyframeEffect::setKeyframes(ScriptState* script_state,
+                                  const ScriptValue& keyframes,
+                                  ExceptionState& exception_state) {
+  // TODO(smcgruer): This has to work for TransitionKeyframes too?
+  if (!Model()->IsStringKeyframeEffectModel())
+    return;
+  StringKeyframeVector new_keyframes = EffectInput::ParseKeyframesArgument(
+      Target(), keyframes, script_state, exception_state);
+  if (exception_state.HadException())
+    return;
+
+  // TODO(smcgruer): Find a way to do this without copying.
+  KeyframeVector tmp;
+  tmp.AppendVector(new_keyframes);
+  Model()->SetFrames(tmp);
 }
 
 AnimationEffectTiming* KeyframeEffect::timing() {
