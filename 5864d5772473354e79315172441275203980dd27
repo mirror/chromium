@@ -16,6 +16,24 @@
       "revId": "5864d5772473354e79315172441275203980dd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fb625d_c1ddff8c",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-04T06:54:25Z",
+      "side": 1,
+      "message": "Oh, that makes more sense - thanks Trent!",
+      "parentUuid": "1817ebc9_a240584d",
+      "revId": "5864d5772473354e79315172441275203980dd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
