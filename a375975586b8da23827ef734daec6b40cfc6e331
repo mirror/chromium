@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196377b6_1be5467a",
+        "filename": "net/disk_cache/blockfile/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-04T15:00:01Z",
+      "side": 1,
+      "message": "Is it an issue that there is no execution order guarantee between read and write tasks? Is the caller responsible for waiting for a write to complete before issuing a read?",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 66
+      },
+      "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca240a4_a406db80",
+        "filename": "net/disk_cache/blockfile/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-04T15:00:01Z",
+      "side": 1,
+      "message": "A BACKGROUND task can take an arbitrarily long time to complete https://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?l\u003d23\u0026rcl\u003d2abb5574c7b89c95ce7d295edc467a9edcab7769 during normal Chrome execution. During Chrome shutdown, all BACKGROUND tasks become USER_VISIBLE.\n\nBACKGROUND is usually an appropriate priority for disk writes, since the user is not actively waiting for this. Is it correct here?",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "a375975586b8da23827ef734daec6b40cfc6e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
