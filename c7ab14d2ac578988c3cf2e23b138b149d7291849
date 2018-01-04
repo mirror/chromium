@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29b04b38_f6ec43e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T17:14:38Z",
+      "side": 1,
+      "message": "this seems unrelated to metrics right?",
+      "range": {
+        "startLine": 56,
+        "startChar": 66,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "c7ab14d2ac578988c3cf2e23b138b149d7291849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43785e20_094aa016",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T17:14:38Z",
+      "side": 1,
+      "message": "Can you add an @IntDef for this set and the one below and then annotate the various usages and methods?",
+      "revId": "c7ab14d2ac578988c3cf2e23b138b149d7291849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
