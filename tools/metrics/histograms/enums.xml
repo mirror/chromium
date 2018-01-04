@@ -9458,6 +9458,7 @@ Called by update_net_error_codes.py.-->
   <int value="24" label="No bytes received after content length mismatch"/>
   <int value="25" label="Target determination requeted"/>
   <int value="26" label="Target determination completed"/>
+  <int value="27" label="Download attemps before sending the request"/>
 </enum>
 
 <enum name="DownloadDatabaseRecordDroppedType">
@@ -9922,9 +9923,13 @@ Called by update_net_error_codes.py.-->
   <int value="2" label="Finished"/>
   <int value="3" label="Write to already completed file"/>
   <int value="4" label="Write to already failed file"/>
+  <int value="5" label="Use download API for non HTML files"/>
 </enum>
 
 <enum name="DownloadSource">
+  <obsolete>
+    Deprecated 12/2017.
+  </obsolete>
   <int value="0" label="Initiated by Save Package on Non-HTML content"/>
   <int value="1" label="Initiated by Drag-and-drop"/>
   <int value="2" label="Initiated by RPC from Renderer"/>

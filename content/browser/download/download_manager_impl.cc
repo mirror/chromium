@@ -153,11 +153,7 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
   // ResourceLoader.
   if (params->render_process_host_id() >= 0) {
     DownloadInterruptReason reason = DownloadManagerImpl::BeginDownloadRequest(
-        std::move(url_request), params->referrer(), resource_context,
-        params->content_initiated(), params->render_process_host_id(),
-        params->render_view_host_routing_id(),
-        params->render_frame_host_routing_id(),
-        params->do_not_prompt_for_login());
+        std::move(url_request), resource_context, params.get());
 
     // If the download was accepted, the DownloadResourceHandler is now
     // responsible for driving the request to completion.
@@ -171,7 +167,7 @@ DownloadManagerImpl::UniqueUrlDownloadHandlerPtr BeginDownload(
 
   return DownloadManagerImpl::UniqueUrlDownloadHandlerPtr(
       UrlDownloader::BeginDownload(download_manager, std::move(url_request),
-                                   params->referrer(), false)
+                                   params.get(), false)
           .release());
 }
 
@@ -700,23 +696,18 @@ void DownloadManagerImpl::AddUrlDownloadHandler(
 // static
 DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
     std::unique_ptr<net::URLRequest> url_request,
-    const Referrer& referrer,
     ResourceContext* resource_context,
-    bool is_content_initiated,
-    int render_process_id,
-    int render_view_route_id,
-    int render_frame_route_id,
-    bool do_not_prompt_for_login) {
+    DownloadUrlParameters* params) {
   if (ResourceDispatcherHostImpl::Get()->is_shutdown())
     return DOWNLOAD_INTERRUPT_REASON_USER_SHUTDOWN;
 
   // The URLRequest needs to be initialized with the referrer and other
   // information prior to issuing it.
   ResourceDispatcherHostImpl::Get()->InitializeURLRequest(
-      url_request.get(), referrer,
+      url_request.get(), params->referrer(),
       true,  // download.
-      render_process_id, render_view_route_id, render_frame_route_id,
-      PREVIEWS_OFF, resource_context);
+      params->render_process_host_id(), params->render_view_host_routing_id(),
+      params->render_frame_host_routing_id(), PREVIEWS_OFF, resource_context);
 
   // We treat a download as a main frame load, and thus update the policy URL on
   // redirects.
@@ -730,7 +721,7 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   const GURL& url = url_request->original_url();
 
   // Check if the renderer is permitted to request the requested URL.
-  if (!CanRequestURLFromRenderer(render_process_id, url))
+  if (!CanRequestURLFromRenderer(params->render_process_host_id(), url))
     return DOWNLOAD_INTERRUPT_REASON_NETWORK_INVALID_REQUEST;
 
   const net::URLRequestContext* request_context = url_request->context();
@@ -745,11 +736,13 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   // TODO(ananta)
   // Find a better way to create the DownloadResourceHandler instance.
   std::unique_ptr<ResourceHandler> handler(
-      DownloadResourceHandler::Create(url_request.get()));
+      DownloadResourceHandler::CreateForNewRequest(url_request.get(),
+                                                   params->download_source()));
 
   ResourceDispatcherHostImpl::Get()->BeginURLRequest(
       std::move(url_request), std::move(handler), true,  // download
-      is_content_initiated, do_not_prompt_for_login, resource_context);
+      params->content_initiated(), params->do_not_prompt_for_login(),
+      resource_context);
   return DOWNLOAD_INTERRUPT_REASON_NONE;
 }
 
@@ -814,6 +807,8 @@ void DownloadManagerImpl::DownloadUrl(
     DCHECK_EQ("POST", params->method());
   }
 
+  RecordDownloadCountWithSource(DownloadCountTypes::DOWNLOAD_TRIGGERED_COUNT,
+                                params->download_source());
   BeginDownloadInternal(std::move(params), content::DownloadItem::kInvalidId);
 }
 
