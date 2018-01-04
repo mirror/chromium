@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4863e3af_be4dd177",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T18:34:30Z",
+      "side": 1,
+      "message": "did this get replaced with something?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3bf00b_61d79669",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T18:34:30Z",
+      "side": 1,
+      "message": "this class shouldn\u0027t need a sender anymore, and should talk everything through the client now?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948c90aa_d175ca83",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T18:34:30Z",
+      "side": 1,
+      "message": "is this needed when mojo is enabled?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0781c869_2d648617",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T18:34:30Z",
+      "side": 1,
+      "message": "nit: reverse direction to avoid negative",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d73f02_a6259d81",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T18:34:30Z",
+      "side": 1,
+      "message": "why is this check needed?",
+      "revId": "a992710f8c27a51f89ec2965c780fd68286c0879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
