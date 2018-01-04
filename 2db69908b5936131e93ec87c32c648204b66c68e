@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a433497_b06ff7df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T20:05:33Z",
+      "side": 1,
+      "message": "makes?",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b816ff_853911d9",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T20:05:33Z",
+      "side": 1,
+      "message": "This isn\u0027t totally convincing, but it does look like a lot of calls funnel into SetStatus(). I guess the question is: is there a sequence of events that could cause a newly-visible window (or space switch) to have its status bubble stuck hidden?",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8c52fa_5d778bf7",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T20:05:33Z",
+      "side": 1,
+      "message": "// If the bubble is not attached, the window is not currently visible. ?",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271a4d1a_152a92ce",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T20:05:33Z",
+      "side": 1,
+      "message": "This needs a comment.",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
