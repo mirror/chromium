@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f88d609_73f0daac",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/base-url-data.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2018-01-04T17:41:34Z",
+      "side": 1,
+      "message": "nit: 80 cols.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "8b849884ccae72a6d269806ec9d7ab6a10891fe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
