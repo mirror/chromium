@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21f0350e_3ba92dad",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Ah yeah sorry - it\u0027s implicit in the algorithm, but I\u0027ve added DCHECKs to make it explicit that this is the case.",
+      "parentUuid": "0e9ca596_dccb4600",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c14e7cd_9f383a4d",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3d55ca6f_f754029f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah that can (should?) never happen.\n\nBasically we can never add an opportunity above the first one added.",
+      "parentUuid": "8c14e7cd_9f383a4d",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f16478_ab2cbc02",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e8e6d7_0c42372f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f16478_ab2cbc02",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "b56b2b20_1385ce77",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4158219_95950e49",
+      "range": {
+        "startLine": 164,
+        "startChar": 57,
+        "endLine": 164,
+        "endChar": 68
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c39971_6a0ab04d",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "53d913eb_a498fa6b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c39971_6a0ab04d",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23d89e3a_55548567",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -104,6 +200,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "I\u0027m not sure (really! I\u0027m not sure. Maybe I\u0027m wrong...) if we need all the examples here, as long as we have unit tests discussing them. We obviously *do* want the explanatory comments, though.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50b9d9e_2ec1d3cd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Part of this was me coming back to my 3mo+ old prototype code, and having no idea what it was doing after the fact. :)\n\nAnd after re-constructing it with diagrams and examples, figured that for anyone else trying to debug this in the future, would find this helpful.",
+      "parentUuid": "23d89e3a_55548567",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "2919fe8a_ac1b6ec5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Hmmm.... so is_intersecting is used for reducing the shelf size.\n\nThe way I was thinking about it was, if  exclusion-\u003erect.BlockStartOffset() \u003d\u003d shelf.block_offset it is impossible for a new layout opportunity to be created between them, and the size of the shelf should be reduced.",
+      "parentUuid": "d528636f_7c2c7a4b",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bb9484e_2db303db",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -138,6 +270,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Just a slightly more limiting test than the one below. Maybe you could push this inside of it?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21591393_acb7422c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "It needs the slight more limiting test to work.\n\nIf the exclusion aligns with a previous exclusion, it doesn\u0027t move the shelf in, but does add it to the shelves \"edges\".\n\nDoes that make sense?",
+      "parentUuid": "9bb9484e_2db303db",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "e0b042b9_16ef20c0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "0bef8d7a_56030388",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83c263d9_e82bf10e",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "dfe84221_cb6c9947",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yes - but the wrap around works. The two places that access this are [i + 1] below, and (++i) for the loop.\n\nThoughts on a better way to do this?",
+      "parentUuid": "83c263d9_e82bf10e",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ba81487_1893542d",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -189,6 +375,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Maybe that suggests that |shelf| should no longer be in scope here?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e661ef_4d222092",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah... I could move the above into a new empty block {}, but would need to pull one variable out.\n\nDone. PTAL.",
+      "parentUuid": "2ba81487_1893542d",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -247,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "23a42f33_8460edeb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah I thought the explict-ness here was better. Shows more directly how the edges work.",
+      "parentUuid": "4111c5be_191c6a60",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35440078_cfd89ca0",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -261,6 +483,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde17632_dd79c770",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35440078_cfd89ca0",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +527,30 @@
     },
     {
       "key": {
+        "uuid": "d1e50b35_5668fcb8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da37082_9f74778a",
+      "range": {
+        "startLine": 370,
+        "startChar": 18,
+        "endLine": 370,
+        "endChar": 24
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c11166_cd4cbda5",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -310,6 +574,30 @@
     },
     {
       "key": {
+        "uuid": "c29c19ab_4cc82af7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c11166_cd4cbda5",
+      "range": {
+        "startLine": 395,
+        "startChar": 44,
+        "endLine": 395,
+        "endChar": 70
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33593645_d2881aa4",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -321,6 +609,30 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Not sure if this is foolproof, but I suppose it will improve when we address the TODO above?",
+      "range": {
+        "startLine": 397,
+        "startChar": 9,
+        "endLine": 397,
+        "endChar": 63
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4faf7e_eacf0c2f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "So because there is always an \"infinite\" shelf at the bottom there has to be at least one shelf which will produce a valid opportunity.",
+      "parentUuid": "33593645_d2881aa4",
       "range": {
         "startLine": 397,
         "startChar": 9,
@@ -350,6 +662,24 @@
     },
     {
       "key": {
+        "uuid": "186784d4_4bff657d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "This case is where we want to create an opportunity which starts at opportunity.rect.BlockStartOffset() or shelf.block_offset.\n\nWe prefer the opportunity first, hence the \u003d\u003d.",
+      "parentUuid": "c1f804f1_f1be11a6",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "444535a4_ef6ed879",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
         "patchSetId": 10
@@ -361,6 +691,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Is this really strictly related to floats? Just wondering about putting this under ng/floats/ . What about CSS shapes and exclusions?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9c2722_228ea821",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah good point, changed to ng/exclusions (?)",
+      "parentUuid": "444535a4_ef6ed879",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -384,6 +732,24 @@
     },
     {
       "key": {
+        "uuid": "7c5eb2d8_7361c8de",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e03f9b5_2e49f980",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9df65cf_85b93908",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
         "patchSetId": 10
@@ -395,6 +761,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Would this be a good place for elaborating on what \"solid\" means? I found some documentation in the .cc file, but this looks like a good place to me.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5b7fd8_b4f700d3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Added a paragraph above.",
+      "parentUuid": "f9df65cf_85b93908",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -418,6 +802,24 @@
     },
     {
       "key": {
+        "uuid": "fa3f69cb_d5a6c583",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yes, a shelf is only added for the bottom offset of a float.",
+      "parentUuid": "26f7714a_07261171",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da2d6fe_19d4b3e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
         "patchSetId": 10
@@ -429,6 +831,24 @@
       "writtenOn": "2017-12-26T17:58:44Z",
       "side": 1,
       "message": "Does it really pay off to use ref-pointers here? NGExclusion is a very simple object.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3124901_c4c9a998",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah not sure of the payoff - eventually it\u0027ll have a NGBfcRect \u0026 LayoutObject.\n\nOne issue is the inline capacity for the line_left_edges above, which require a default ctor, and it seemed safer to use a scoped_refptr here. If you think it\u0027s better without the scoped_refptr I\u0027ll remove.",
+      "parentUuid": "0da2d6fe_19d4b3e4",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -452,6 +872,24 @@
     },
     {
       "key": {
+        "uuid": "bd59a3c7_f073c7ab",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Yeah initially i had everything as offset and size. Removed this.",
+      "parentUuid": "f879bb91_a41710e5",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa5c7f8_e538ffa7",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_layout_opportunity.h",
         "patchSetId": 10
@@ -466,6 +904,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c46140_a0e7d18e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_layout_opportunity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caa5c7f8_e538ffa7",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -486,6 +942,24 @@
     },
     {
       "key": {
+        "uuid": "20a984a8_69547894",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_layout_opportunity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77dcfe62_714993fe",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db590165_8d3681aa",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.cc",
         "patchSetId": 10
@@ -503,6 +977,24 @@
     },
     {
       "key": {
+        "uuid": "2f15cf38_683e82cf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db590165_8d3681aa",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2131f832_dbeaa10b",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.h",
         "patchSetId": 10
@@ -517,6 +1009,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376b2e8b_808e3a0e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_bfc_rect.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T00:05:38Z",
+      "side": 1,
+      "message": "Done, sorry relic of converting things over slowly.",
+      "parentUuid": "2131f832_dbeaa10b",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
