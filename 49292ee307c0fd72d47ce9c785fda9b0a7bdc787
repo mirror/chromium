@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a7f733_3c675128",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCConfiguration.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1250340
+      },
+      "writtenOn": "2018-01-04T18:20:57Z",
+      "side": 1,
+      "message": "On the native side we have 3 options: default, plan-b and unified-plan. The idea being that most clients would not be affected one way or the other and would leave it as the default. Clients which would be affected and cannot use Unified Plan yet would explicitly choose Plan B. Clients which have updated and wish to use Unified Plan can explicitly choose that too.\n\nI think the main difference is that we can switch the default for everyone sooner without having to wait for every client to update to Unified Plan. What do you think about exposing those same semantics here?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "49292ee307c0fd72d47ce9c785fda9b0a7bdc787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
