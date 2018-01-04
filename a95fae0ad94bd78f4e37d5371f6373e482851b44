@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "59025cfe_e2cfbd3c",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "Sorry, I meant tests for ExternalAppCoordinator. We do have coordinators tests and many things from this class can actually be tested.",
+      "parentUuid": "1db5407f_e0b6e3ea",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c764ea42_e67dbb96",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
         "patchSetId": 10
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "We haven\u0027t required this in our style guide.",
       "parentUuid": "14ca8018_1362ac79",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 60
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1239c45d_2dca2ade",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "Sure, but there is a value in using nullable annotations. And seems like there is no downside. Many things are not included into Style Guide to keep it small, so people actually read it. I will not push, but using nullability annotations is a good way to document the code.",
+      "parentUuid": "33e4a3c7_7f5d01f2",
       "range": {
         "startLine": 18,
         "startChar": 44,
@@ -359,6 +407,30 @@
       "side": 1,
       "message": "We could take out the \"showAlert\" portion. However, I like being more explicit that the method is doing more than opening the mail handler. I don\u0027t mind the long method names if they are descriptive. What concern do you have about the naming pattern? I don\u0027t feel strongly about it so I\u0027m happy to change to something else.",
       "parentUuid": "3fb9c891_2369cbe9",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e4db22_3f0a2778",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "I\u0027m concerned about \"Then\" word. I can not recall a method from iOS SDK which has Then word. iOS SDK is very mature library and if something is not there, then it probably should not exist in Objective-C world. WDYT?",
+      "parentUuid": "87c618a3_592ad2b7",
       "range": {
         "startLine": 137,
         "startChar": 8,

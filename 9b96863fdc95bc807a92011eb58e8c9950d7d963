@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c544e2b_406e2428",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "I had to look at the call side to understand what does |accept| actually mean. Would it be better to wrap whole |[self showAlertWithMessage:prompt| call into a helper method to avoid awkward |accept| argument and |LaunchApp| method name, which sometimes does not even launch the app?",
+      "range": {
+        "startLine": 30,
+        "startChar": 39,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a924d75_7407c97b",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "Optional nit: s/gURL/URL \n\ng prefix does not really add anything.",
+      "range": {
+        "startLine": 130,
+        "startChar": 58,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6ec5b5_b151b9e5",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "nit: Can we move this variable closer to the call site? Or even drop it completely, so we don\u0027t have to use g prefix for GURL?",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912a20cf_a2562400",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "nit: Is this really UI code? Should this be in ios/chrome/browser/app_launcher/app_launcher_util.h ?",
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ee8ddc_0cfc6dbd",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "Is there a reason why this is called AppLauncherPresenter and not AppLauncherTabHelperDelegate? \n TabHelperDelegate seems to be a common pattern. Presenter word means something different in New Architecture.\n\nAlso per Coding Guidelines for Cocoa:\n\n\"Most protocols group related methods that aren’t associated with any class in particular. This type of protocol should be named so that the protocol won’t be confused with a class. A common convention is to use a gerund (“...ing”) form\"\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingBasics.html#//apple_ref/doc/uid/20001281-1002242-BBCIJGDB",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff0f0eb_79db71f9",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "nit: s/gurl/URL ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813a95d8_133c4c07",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "nit: Is there a value in using this typedef? Block typedefs optimize for \"writing\" the code, while Style Guide advocates to optimize for \"reading\".\n\nhttp://go/objc-style#optimize-for-the-reader-not-the-writer",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abe1d47_dcc7b00d",
+        "filename": "ios/chrome/browser/web/app_launcher_tab_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T00:00:59Z",
+      "side": 1,
+      "message": "Can we add tests for this class now?",
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
