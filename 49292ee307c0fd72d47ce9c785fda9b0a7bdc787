@@ -22,6 +22,30 @@
       "revId": "49292ee307c0fd72d47ce9c785fda9b0a7bdc787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65105c99_d7c79ec6",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCConfiguration.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-04T23:01:21Z",
+      "side": 1,
+      "message": "After thinking about it for a while, I think this is a good idea.\nThat allows the default behavior to be set in one place (WebRTC implementation).\nNote: I think we should adopt the principle that this parameter ONLY affects one thing: The format of the first CreateOffer if no previous SetRemoteDescription(remote offer) has been done. If the first SDP to be set has Unified Plan, the PC needs to go into UP mode no matter what, and if the first SDP has Plan B, it needs to go into Plan B mode.\nBut we should take that discussion to the transition plan document.",
+      "parentUuid": "96a7f733_3c675128",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "49292ee307c0fd72d47ce9c785fda9b0a7bdc787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
