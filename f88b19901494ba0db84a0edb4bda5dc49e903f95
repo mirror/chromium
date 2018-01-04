@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4af73c1_c889e176",
+        "filename": "tools/binary_size/libsupersize/html_report.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-04T14:50:03Z",
+      "side": 1,
+      "message": "nit: --min-symbol-size ? Makes the \u003d\u003d 0 comparisons easier to grok.",
+      "range": {
+        "startLine": 174,
+        "startChar": 25,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "f88b19901494ba0db84a0edb4bda5dc49e903f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a33fdc8_a059fdae",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-04T14:50:03Z",
+      "side": 1,
+      "message": "s/symbols/raw_symbols/",
+      "range": {
+        "startLine": 162,
+        "startChar": 34,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "f88b19901494ba0db84a0edb4bda5dc49e903f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
