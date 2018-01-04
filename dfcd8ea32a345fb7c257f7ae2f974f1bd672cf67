@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e21563e2_29aaa207",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T07:23:59Z",
+      "side": 1,
+      "message": "I guess mojo::Binding itself also has a notion of a filter for messages, but again, it\u0027s a pre-dispatch hook (so we\u0027d need someway to unwind the scoper once dispatch completes). I\u0027m not sure how much overhead adding that post dispatch hook would be. We could certainly experiment with it in followups (and it might work nicely with some of the capability broker to associate a RenderFrameHost with interfaces).",
+      "parentUuid": "bbd0f34a_f70ac94c",
+      "range": {
+        "startLine": 1526,
+        "startChar": 0,
+        "endLine": 1526,
+        "endChar": 65
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fecdd70_df3b0376",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 5
