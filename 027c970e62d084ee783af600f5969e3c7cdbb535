@@ -22,6 +22,30 @@
       "revId": "027c970e62d084ee783af600f5969e3c7cdbb535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c68f56a_32cb50d3",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2018-01-04T00:54:47Z",
+      "side": 1,
+      "message": "Nope, it\u0027s a GN thing.  It makes the zlib_x86_simd target private to this BUILD file.\n\nTargets in this BUILD file can use it, but external BUILD files are not allowed to directly depend on it.",
+      "parentUuid": "af8d7a65_30367240",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "027c970e62d084ee783af600f5969e3c7cdbb535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
