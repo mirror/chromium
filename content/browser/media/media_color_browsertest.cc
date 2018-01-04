@@ -94,7 +94,13 @@ IN_PROC_BROWSER_TEST_F(MediaColorTest, MAYBE_Yuv420pRec709H264) {
 
 // Android devices usually only support baseline, main and high.
 #if !defined(OS_ANDROID)
-IN_PROC_BROWSER_TEST_F(MediaColorTest, Yuv420pHighBitDepth) {
+// Fails in Linux for the same reasons as http://crbug.com/767926
+#if defined(OS_LINUX)
+#define MAYBE_Yuv420pHighBitDepth DISABLED_Yuv420pHighBitDepth
+#else
+#define MAYBE_Yuv420pHighBitDepth Yuv420pHighBitDepth
+#endif
+IN_PROC_BROWSER_TEST_F(MediaColorTest, MAYBE_Yuv420pHighBitDepth) {
   RunColorTest("yuv420p_hi10p.mp4");
 }
 

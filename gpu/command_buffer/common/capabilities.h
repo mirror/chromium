@@ -145,6 +145,7 @@ struct GPU_EXPORT Capabilities {
   bool image_ycbcr_420v = false;
   bool image_ycbcr_420v_disabled_for_video_frames = false;
   bool render_buffer_format_bgra8888 = false;
+  bool supports_hdr_rendering = false;
   bool occlusion_query = false;
   bool occlusion_query_boolean = false;
   bool timer_queries = false;

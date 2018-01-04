@@ -48,6 +48,10 @@
 #include "ui/gl/gl_image_shared_memory.h"
 #include "ui/gl/gl_surface.h"
 
+#if defined(OS_WIN)
+#include "gpu/ipc/service/direct_composition_surface_win.h"
+#endif
+
 namespace gpu {
 namespace {
 
@@ -647,6 +651,10 @@ void GpuChannel::OnCreateCommandBuffer(
 
   *result = ContextResult::kSuccess;
   *capabilities = stub->decoder()->GetCapabilities();
+#if defined(OS_WIN)
+  capabilities->supports_hdr_rendering =
+      gpu::DirectCompositionSurfaceWin::IsHDRSupported();
+#endif
   stubs_[route_id] = std::move(stub);
 }
 
