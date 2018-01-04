@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea6dcb8_9f3cf5b8",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:15:07Z",
+      "side": 1,
+      "message": "Is this still used? Or planning to use this in follow up CL?",
+      "range": {
+        "startLine": 780,
+        "startChar": 8,
+        "endLine": 780,
+        "endChar": 36
+      },
+      "revId": "4e7b4c7b8ccad4aa25dbd37662e4968c1559fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b84efd2_48b619da",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:15:07Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 781,
+        "startChar": 7,
+        "endLine": 781,
+        "endChar": 62
+      },
+      "revId": "4e7b4c7b8ccad4aa25dbd37662e4968c1559fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
