@@ -69,20 +69,20 @@ static_assert(static_cast<int>(Launchd::System) ==
               static_cast<int>(NSSystemDomainMask),
               "NSSystemDomainMask value changed");
 
-Launchd* Launchd::g_instance_ = NULL;
+Launchd* Launchd::g_launchd_instance_ = NULL;
 
 Launchd* Launchd::GetInstance() {
-  if (!g_instance_) {
-    g_instance_ = base::Singleton<Launchd>::get();
+  if (!g_launchd_instance_) {
+    g_launchd_instance_ = base::Singleton<Launchd>::get();
   }
-  return g_instance_;
+  return g_launchd_instance_;
 }
 
 void Launchd::SetInstance(Launchd* instance) {
   if (instance) {
-    CHECK(!g_instance_);
+    CHECK(!g_launchd_instance_);
   }
-  g_instance_ = instance;
+  g_launchd_instance_ = instance;
 }
 
 Launchd::~Launchd() { }
