@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "70130162_820b4b9c",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T21:48:20Z",
+      "side": 1,
+      "message": "In the current plan, the language depends on the source and not the sink.  Adding a dependency on the sink type would require rethinking the logic around route descriptions.\n\nFor Presentation API usage I don\u0027t feel strongly between \"casting\" and \"presenting,\" if John is okay with \"presenting\" let\u0027s change that here too.\n\nIt sounds like we will need a route controller to set the page title.  Do you mind filing a followup bug on that?",
+      "parentUuid": "82c4470e_8dac59b7",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9192684f_dfd18c5b",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -486,6 +504,24 @@
       "side": 1,
       "message": "This was to allow the test to have a reference to the returned receiver object.",
       "parentUuid": "ee600fd4_d29620cb",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7b49d2_6985b98e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T21:48:20Z",
+      "side": 1,
+      "message": "It should be okay to static_cast to the mock receiver in a unit test.\n\nI guess I don\u0027t see why it\u0027s important to mock out the behavior of the mock receiver creator, when that mock is used to create and return a mock receiver object.  Maybe I\u0027m missing something.",
+      "parentUuid": "87a18dab_52f47899",
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
