@@ -16,6 +16,24 @@
       "revId": "6ebc067fa9eb21e59ec6994b12aad1f0408e4666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa83b19_78e1f408",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2018-01-04T19:48:14Z",
+      "side": 1,
+      "message": "Switched to a StrongBinding.",
+      "parentUuid": "4a4727d8_e2e607f8",
+      "revId": "6ebc067fa9eb21e59ec6994b12aad1f0408e4666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
