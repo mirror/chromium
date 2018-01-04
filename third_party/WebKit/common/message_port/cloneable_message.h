@@ -40,6 +40,10 @@ struct BLINK_COMMON_EXPORT CloneableMessage {
   // Blob handles for any blobs being sent in this message.
   std::vector<mojo::StructPtr<mojom::SerializedBlob>> blobs;
 
+  uint64_t stack_trace_id;
+  int64_t stack_trace_debugger_id_first;
+  int64_t stack_trace_debugger_id_second;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(CloneableMessage);
 };

@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "core/messaging/BlinkCloneableMessage.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
