@@ -1,0 +1,647 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9dc336_b5f4648e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "More general comment, for lack of a better place to put it:\n\nHave you thought about captive portals?  Some captive portals blockhole SSL requests, while letting DNS through, which seems like a really bad failure case here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911f298c_7a8a5750",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Link to RFC?",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b2eb03_c56e8236",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Please add a bug number here (filing a new one, if needed)",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba184a3_8ffdddf9",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Should we DCHECK or fail somewhere if they\u0027re HTTP URLs?  I\u0027m not sure how strict about how HTTPS-centric the DNS over HTTPS spec is (Though obviously the protocol works over HTTP, not sure if we want to support it over HTTP)",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618cc39a_e5629120",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Link to latest draft spec?",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 100,
+        "endChar": 38
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c12254_9bd6b915",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Is using a server index of 0 going to cause us problems if we fall back on an error to using a normal DnsUDPAttempt?  Maybe it will make us consider the wrong server as bad?  Should we extend the bad server case to include these servers, to avoid users getting stuck trying servers that don\u0027t work for them for every request?\n\nIT might be best to create a merged list of Dns over HTTP servers and DNS servers, and use shared bad-server logic (Or keep the lists physically separate, but use a single index value for both lists).",
+      "range": {
+        "startLine": 341,
+        "startChar": 23,
+        "endLine": 341,
+        "endChar": 40
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ea64bb_b275d677",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8a939f_ebffbd60",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "We should add a Content-Type: application/dns-udpwireformat request header in the POST case, right?",
+      "range": {
+        "startLine": 368,
+        "startChar": 36,
+        "endLine": 368,
+        "endChar": 52
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec54c185_b2c7ab7a",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "optional nit:  Not needed, as GET is the default method.",
+      "range": {
+        "startLine": 370,
+        "startChar": 34,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410a6f9e_742cc531",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "nit:\n\n// DnsAttempt:\n\nor\n\n// DnsAttempt overrides / implementation / etc",
+      "range": {
+        "startLine": 382,
+        "startChar": 17,
+        "endLine": 382,
+        "endChar": 18
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3cacc8_de12e7a4",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Does seem a bit silly that we have 3 exact copies of this method.  Fine for now, but we may want to clean up these classes.",
+      "range": {
+        "startLine": 398,
+        "startChar": 3,
+        "endLine": 398,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332dcf32_486e063d",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "I think the code would be clearer if this method were just inlined.",
+      "range": {
+        "startLine": 403,
+        "startChar": 6,
+        "endLine": 403,
+        "endChar": 28
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ede0c0_99320de2",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "else not needed after a return (The preferred Google, or at least Chrome, style is not to have unnecessary else\u0027s in this case).  Can then also move content_type down below the first if.",
+      "range": {
+        "startLine": 422,
+        "startChar": 11,
+        "endLine": 422,
+        "endChar": 14
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7c0792_dd9fd4a5",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Why are we requiring a content length?  The HTTP protocol itself does not, and I don\u0027t want to add non-standard requirements to HTTP that are likely to lead to incompatibilities down the line.",
+      "range": {
+        "startLine": 424,
+        "startChar": 39,
+        "endLine": 424,
+        "endChar": 53
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0124df1_4bcbc964",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "BUG:  Content-Length is the size of the compressed response body.  The actual size may be larger (Or smaller), after decompression.",
+      "range": {
+        "startLine": 431,
+        "startChar": 39,
+        "endLine": 431,
+        "endChar": 55
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ffe19e_7f849344",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Is there a reason for using HttpStreamParser::kMaxBufSize here?  2 MB seems a bit large for a DNS response.  Doesn\u0027t look like DnsTcpAttempt has a size limit, or I\u0027d suggest using it.",
+      "range": {
+        "startLine": 433,
+        "startChar": 45,
+        "endLine": 433,
+        "endChar": 61
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bb244c_2450edfb",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "I suggest instead making a DnsResponse constructor that takes ownership of an IOBuffer, and just using that when the response is complete, making DnsResponse store size separately from its IOBuffer, and having this class use a GrowableIOBuffer() (Which we can initially make 64k, and grow it whenever we have \u003c\u003d 16k bytes left or something).  I think it\u0027s a bit more straightforward, and avoids all this concern about knowing response size in advance.\n\nAlso, new code should use std::make_unique.",
+      "range": {
+        "startLine": 437,
+        "startChar": 24,
+        "endLine": 437,
+        "endChar": 35
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c13048_411bd4f1",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "In general, we shouldn\u0027t check for things that can\u0027t happen, so I think we can just remove this check (We crash on allocation failures, rather than allocating less memory).  If we want a DCHECK here for documentation purposes, I\u0027m fine with that.",
+      "range": {
+        "startLine": 440,
+        "startChar": 44,
+        "endLine": 440,
+        "endChar": 59
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72914f30_c59a9061",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "nit:  enough",
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38448068_ccaa9544",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Do we need the is_continuation pattern here?  I imagine that responses are generally short enough that blocking the thread isn\u0027t a major concern.  My concern is just keeping the complexity down, as I think it makes the code harder to read, with unclear benefits, in this case.",
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0522e6b3_f6931896",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "BUG:  buffer_-\u003eDidConsume(bytes_read).  Make sure we have a test that catches that.  In particular, we should have tests for both sync and async reads, for both the first and subsequent reads.",
+      "range": {
+        "startLine": 486,
+        "startChar": 38,
+        "endLine": 486,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69b1a72_2791a62e",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "nit:  All of the non-override methods should be in the private section, other than the constructor.",
+      "range": {
+        "startLine": 495,
+        "startChar": 7,
+        "endLine": 495,
+        "endChar": 24
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150da776_19bcbf0e",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Early return is preferred over else/if when paths are mutually exclusive (And likely to remain so).",
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad3e2f5_21816d6b",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "Is always returning ERR_DNS_MALFORMED_RESPONSE correct?  It seems weird mapping, say, ERR_CONNECTION_RESET to ERR_MALFORMED_RESPONSE.  Most other errors that may make sense with, actually, given that no proxy is in use and we\u0027ve already received the headers by this point.\n\nI suppose we map all errors here to ERR_NAME_NOT_RESOLVED, anyways.",
+      "range": {
+        "startLine": 502,
+        "startChar": 20,
+        "endLine": 502,
+        "endChar": 46
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8128ab_03aac3e4",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "\"kContentType\" is a bit confusing, since we\u0027ll often do something like: const char kContentType[] \u003d \"Content-Type\"l\n\nI suggest calling it kDnsOverHttpResponseContentType.",
+      "range": {
+        "startLine": 506,
+        "startChar": 31,
+        "endLine": 506,
+        "endChar": 44
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8a8c50_25363b47",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "nit:  Blank line between static/const members and others variables, just for readability.",
+      "range": {
+        "startLine": 506,
+        "startChar": 59,
+        "endLine": 506,
+        "endChar": 62
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18815b7_08570f93",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "nit:  We generally use [] when declaring character arrays instead of *, to prevent the value being pointed at from changing, and I don\u0027t think we need the const.",
+      "range": {
+        "startLine": 506,
+        "startChar": 9,
+        "endLine": 506,
+        "endChar": 19
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee76fb77_70ea7d10",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "\"total\" is confusing (Does this include the headers? Is this compressed or uncompressed bytes?).  I think we can just remove this, and use buffer_-\u003eBytesConsumed instead?  Though if you follow my suggestion about switching to a GrowableIOBuffer, maybe just rename it to something like used_buffer_bytes_?",
+      "range": {
+        "startLine": 507,
+        "startChar": 24,
+        "endLine": 507,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7c419e_535dfedb",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T20:50:33Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 513,
+        "startChar": 39,
+        "endLine": 513,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
