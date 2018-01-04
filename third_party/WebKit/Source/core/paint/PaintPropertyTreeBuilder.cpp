@@ -1690,7 +1690,7 @@ void ObjectPaintPropertyTreeBuilder::UpdateCompositedLayerPaginationOffset() {
 }
 
 // Limit the maximum number of fragments, to avoid pathological situations.
-static const int kMaxNumFragments = 2000;
+static const int kMaxNumFragments = 500;
 
 void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
   bool needs_paint_properties =
