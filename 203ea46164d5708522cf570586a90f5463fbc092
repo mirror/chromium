@@ -16,6 +16,24 @@
       "revId": "203ea46164d5708522cf570586a90f5463fbc092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2404fe10_6f8a71d2",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/object-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-04T23:22:15Z",
+      "side": 1,
+      "message": "Done, looks like property-suite already tests css-wide keywords automatically.",
+      "parentUuid": "2f3a3d91_c73b46be",
+      "revId": "203ea46164d5708522cf570586a90f5463fbc092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
