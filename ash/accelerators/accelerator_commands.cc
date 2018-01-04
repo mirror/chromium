@@ -30,13 +30,15 @@ bool ZoomInternalDisplay(bool up) {
     base::RecordAction(base::UserMetricsAction("Accel_Scale_Ui_Down"));
 
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  return display_manager->ZoomInternalDisplay(up);
+  return display_manager->ZoomInternalDisplay(
+      up, display::Display::ModeChangeSource::kAccelerator);
 }
 
 void ResetInternalDisplayZoom() {
   base::RecordAction(base::UserMetricsAction("Accel_Scale_Ui_Reset"));
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  display_manager->ResetInternalDisplayZoom();
+  display_manager->ResetInternalDisplayZoom(
+      display::Display::ModeChangeSource::kAccelerator);
 }
 
 bool ToggleMinimized() {

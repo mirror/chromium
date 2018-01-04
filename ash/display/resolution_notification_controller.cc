@@ -163,7 +163,9 @@ bool ResolutionNotificationController::PrepareNotificationAndSetDisplayMode(
   if (display::Display::IsInternalDisplayId(display_id)) {
     // We don't show notifications to confirm/revert the resolution change in
     // the case of an internal display.
-    return display_manager->SetDisplayMode(display_id, new_resolution);
+    return display_manager->SetDisplayMode(
+        display_id, display::Display::ModeChangeSource::kSettingsUI,
+        new_resolution);
   }
 
   // If multiple resolution changes are invoked for the same display,
@@ -188,7 +190,9 @@ bool ResolutionNotificationController::PrepareNotificationAndSetDisplayMode(
   if (!original_resolution.size().IsEmpty())
     change_info_->old_resolution = original_resolution;
 
-  if (!display_manager->SetDisplayMode(display_id, new_resolution)) {
+  if (!display_manager->SetDisplayMode(
+          display_id, display::Display::ModeChangeSource::kSettingsUI,
+          new_resolution)) {
     // Discard the prepared notification data since we failed to set the new
     // resolution.
     change_info_.reset();
@@ -301,7 +305,9 @@ void ResolutionNotificationController::RevertResolutionChange(
     Shell::Get()->display_manager()->SetSelectedModeForDisplayId(
         display_id, old_resolution);
   } else {
-    Shell::Get()->display_manager()->SetDisplayMode(display_id, old_resolution);
+    Shell::Get()->display_manager()->SetDisplayMode(
+        display_id, display::Display::ModeChangeSource::kSettingsUI,
+        old_resolution);
   }
 }
 
