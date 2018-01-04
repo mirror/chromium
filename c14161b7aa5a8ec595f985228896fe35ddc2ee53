@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c23c223c_e90335b3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 10961,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-04T19:07:36Z",
+      "side": 1,
+      "message": "Decided to remove \"Chrome\" to not confuse the user.",
+      "parentUuid": "2a0b161f_e215d22c",
+      "revId": "c14161b7aa5a8ec595f985228896fe35ddc2ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f9e375_de3ef4b6",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c14161b7aa5a8ec595f985228896fe35ddc2ee53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6a7ed7_99aed654",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-04T19:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f9e375_de3ef4b6",
+      "revId": "c14161b7aa5a8ec595f985228896fe35ddc2ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
