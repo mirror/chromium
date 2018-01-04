@@ -9,6 +9,7 @@ import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.PopupWindow.OnDismissListener;
 
+import org.chromium.base.Log;
 import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
 import org.chromium.chrome.browser.infobar.InfoBarContainerLayout.Item;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
@@ -22,6 +23,8 @@ import org.chromium.components.feature_engagement.FeatureConstants;
  */
 class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAnimationListener,
                                    InfoBarContainerObserver {
+    private static final String TAG = "IPHInfoBar";
+
     /** Helper class to hold all relevant display parameters for an in-product help window. */
     public static class TrackerParameters {
         public TrackerParameters(
@@ -153,7 +156,10 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
     @Override
     public void onDismiss() {
         // Helper for crbug.com/786916 to catch why we are getting two dismiss calls in a row.
-        if (mCurrentState == null) throw new IllegalStateException(mLastDismissStack);
+        if (mCurrentState == null) {
+            Log.e(TAG, "Unexpected call to onDismiss", mLastDismissStack);
+            throw new IllegalStateException(mLastDismissStack);
+        }
         mLastDismissStack = new Exception();
         assert mCurrentState != null;
         mDelegate.onPopupDismissed(mCurrentState);
