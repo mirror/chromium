@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "56bb2e99_ab48bcf4",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T17:08:30Z",
+      "side": 1,
+      "message": "Right right, can you drop a comment on the true to remind us of this, like you did for trivially copyable etc?",
+      "parentUuid": "5292f843_feda972d",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1a7b345_1e7f8f01",
         "filename": "base/optional.h",
         "patchSetId": 1
