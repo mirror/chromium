@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+This is a regression test for https://crbug.com/776407.
+Repro steps in executed by the test:
+- navigate to a1(b(a2)):
+  - a1: this file
+  - b : misc/resources/frame-detached-in-animationstart-event-oopif.html
+  - a2: misc/resources/frame-detached-in-animationstart-event-samesiteframe.html
+- register an animationstart event handler in a2
+- from the event handler:
+  - synchronously delete b from a1 (before the fix, this led to a crash)
+  - finish the test if no renderer crash happened
+-->
+<iframe
+  id="oopif"
+  src="http://localhost:8000/misc/resources/frame-detached-in-animationstart-event-oopif.html">
+</iframe>
+<script>
+testRunner.logToStderr("frame-detached-in-animationstart-event.html:5: " + window.location.href);
+testRunner.waitUntilDone();
+// TODO / DO NOT SUBMIT: Need to call testRunner.notifyDone() when
+// the iframe element above is removed.
+</script>
