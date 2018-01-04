@@ -87,6 +87,7 @@ class WEBVIEW_EXPORT WebView : public View,
 
   // Overridden from View:
   const char* GetClassName() const override;
+  bool HasFocus() const override;
 
   NativeViewHost* holder() { return holder_; }
 

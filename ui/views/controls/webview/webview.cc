@@ -293,6 +293,10 @@ void WebView::AttachWebContents() {
   OnWebContentsAttached();
 }
 
+bool WebView::HasFocus() const {
+  return web_contents() && View::HasFocus();
+}
+
 void WebView::DetachWebContents() {
   if (web_contents())
     holder_->Detach();
