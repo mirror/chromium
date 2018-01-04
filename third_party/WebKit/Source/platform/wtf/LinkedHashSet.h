@@ -424,8 +424,6 @@ struct LinkedHashSetTranslator {
                         NodeBase* anchor) {
     anchor->InsertBefore(location);
     location.value_ = std::forward<IncomingValueType>(key);
-    ConstructTraits<typename Traits::ValueTraits::TraitType, Traits,
-                    Allocator>::NotifyNewElements(&location.value_, 1);
   }
 
   // Empty (or deleted) slots have the next_ pointer set to null, but we
