@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c15d6e7_9b919260",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-04T22:44:02Z",
+      "side": 1,
+      "message": "Why is this needed?\n\nShould the .reset() call be sufficient? This seems like it would be destroying another StatisticsRecorder instance - which seems wrong to me? If this is really the right way to do this, then it definitely needs a comment with an explanation.",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "b6bfde65f7be19f7a30e04099bbb68f6f84d7624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
