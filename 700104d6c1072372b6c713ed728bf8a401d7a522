@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f64a4e4_f519e41a",
+        "filename": "chrome/browser/plugins/flash_download_interception_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T19:15:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a GET?",
+      "revId": "700104d6c1072372b6c713ed728bf8a401d7a522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6614d4c_6a9cf7a9",
+        "filename": "chrome/browser/plugins/flash_download_interception_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T19:15:18Z",
+      "side": 1,
+      "message": "Is this line necessary?",
+      "revId": "700104d6c1072372b6c713ed728bf8a401d7a522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
