@@ -202,11 +202,16 @@ TEST_F(PerformanceTest, EnsureEntryListOrder) {
   DummyExceptionStateForTesting exception_state;
   timer.AdvanceTimer(2);
   for (int i = 0; i < 8; i++) {
-    performance_->mark(String::Number(i), exception_state);
+    // Todo: Add testcases for details.
+    performance_->mark(String::Number(i),
+                       *base::Optional<PerformanceMarkOptions>(),
+                       exception_state);
   }
   timer.AdvanceTimer(2);
   for (int i = 8; i < 17; i++) {
-    performance_->mark(String::Number(i), exception_state);
+    performance_->mark(String::Number(i),
+                       *base::Optional<PerformanceMarkOptions>(),
+                       exception_state);
   }
   PerformanceEntryVector entries = performance_->getEntries();
   EXPECT_EQ(17U, entries.size());

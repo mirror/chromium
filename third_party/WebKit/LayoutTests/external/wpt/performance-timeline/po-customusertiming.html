@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<meta charset=utf-8>
+<title>Custom User Timing</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="performanceobservers.js"></script>
+<h1>Custom User Timing</h1>
+<p>
+Custom User Timing
+</p>
+<div id="log"></div>
+<script>
+  async_test(function (t) {
+    var mark_entries = [];
+    var observer = new PerformanceObserver(
+        t.step_func(function (entryList, obs) {
+          mark_entries =
+            mark_entries.concat(entryList.getEntries());
+          if (mark_entries.length >= 5) {
+            checkEntries(mark_entries,
+              [{ entryType: "mark", name: "mark1", detail: null},
+              { entryType: "mark", name: "mark2", detail: null},
+              { entryType: "mark", name: "mark3", detail: null},
+              { entryType: "mark", name: "mark4", detail: null},
+              { entryType: "mark", name: "mark5", detail: {count: 1}}]);
+            observer.disconnect();
+            t.done();
+          }
+        })
+      );
+    observer.observe({entryTypes: ["mark"]});
+    self.performance.mark("mark1");
+    self.performance.mark("mark2", {});
+    self.performance.mark("mark3", {detail: null});
+    self.performance.mark("mark4", {detail: {}});
+    self.performance.mark("mark5", {detail: {count: 1}});
+  }, "mark entries' details are observable");
+</script>

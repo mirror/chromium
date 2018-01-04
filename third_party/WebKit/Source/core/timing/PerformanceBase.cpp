@@ -441,11 +441,27 @@ void PerformanceBase::AddLongTaskTiming(
   NotifyObserversOfEntry(*entry);
 }
 
-void PerformanceBase::mark(const String& mark_name,
-                           ExceptionState& exception_state) {
+void PerformanceBase::mark(
+    const String& mark_name,
+    base::Optional<PerformanceMarkOptions> startOrPerformanceMeasureOptions,
+    ExceptionState& exception_state) {
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
-  if (PerformanceEntry* entry = user_timing_->Mark(mark_name, exception_state))
+  ScriptValue detail;
+  if (!startOrPerformanceMeasureOptions) {
+    printf("!startOrPerformanceMeasureOptions\n");
+  } else if (!startOrPerformanceMeasureOptions->hasDetail()) {
+    printf("!startOrPerformanceMeasureOptions->hasDetail()\n");
+  }
+
+  // Todo: Add a test for passing null, undefined, {} and omitting.
+  if (startOrPerformanceMeasureOptions &&
+      startOrPerformanceMeasureOptions->hasDetail()) {
+    detail = startOrPerformanceMeasureOptions->detail();
+  }
+  // Pass in an empty ScriptValue if the mark's detail doesn't exist.
+  if (PerformanceEntry* entry =
+          user_timing_->Mark(mark_name, detail, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 
