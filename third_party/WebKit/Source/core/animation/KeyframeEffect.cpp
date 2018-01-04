@@ -101,6 +101,16 @@ KeyframeEffect* KeyframeEffect::Create(
                 Timing());
 }
 
+KeyframeEffect* KeyframeEffect::Create(ExecutionContext* execution_context,
+                                       KeyframeEffectReadOnly* source,
+                                       ExceptionState& exception_state) {
+  Timing new_timing = source->SpecifiedTiming();
+  KeyframeEffectModelBase* model = source->Model()->Clone();
+  // TODO(smcgruer): EventDelegate
+  return new KeyframeEffect(source->Target(), model, new_timing,
+                            source->GetPriority(), nullptr);
+}
+
 KeyframeEffect::KeyframeEffect(Element* target,
                                KeyframeEffectModelBase* model,
                                const Timing& timing,

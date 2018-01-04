@@ -86,6 +86,17 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
                 Timing());
 }
 
+KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
+    ExecutionContext* execution_context,
+    KeyframeEffectReadOnly* source,
+    ExceptionState& exception_state) {
+  Timing new_timing = source->SpecifiedTiming();
+  KeyframeEffectModelBase* model = source->Model()->Clone();
+  // TODO(smcgruer): EventDelegate
+  return new KeyframeEffectReadOnly(source->Target(), model, new_timing,
+                                    source->GetPriority(), nullptr);
+}
+
 KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
                                                KeyframeEffectModelBase* model,
                                                const Timing& timing,
