@@ -22,6 +22,30 @@
       "revId": "9fc32d6fa2a2f18a4f924a3c4663d650238a5eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d57271f_531311e1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-04T20:04:44Z",
+      "side": 0,
+      "message": "I see your point, but AudioWorkletGlobalScope is already guarded by Origin Trial and AudioWorkletProcessor can only be instantiated within the scope. I think fixing the underlying issue should be done in a separate CL because should be transparent to AudioWorklet changes.\n\nThe problem here is Worklet infra does not support Origin Trial correctly.",
+      "parentUuid": "60ba975f_3a29e6d5",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "9fc32d6fa2a2f18a4f924a3c4663d650238a5eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
