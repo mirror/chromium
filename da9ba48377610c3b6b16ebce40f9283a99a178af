@@ -16,6 +16,24 @@
       "revId": "da9ba48377610c3b6b16ebce40f9283a99a178af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54795d11_cba4b606",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-04T16:08:16Z",
+      "side": 1,
+      "message": "phoglund@ isn\u0027t on the team maintaining this (any longer?) and guidou@ is the right owner.",
+      "parentUuid": "8e000de9_349021f6",
+      "revId": "da9ba48377610c3b6b16ebce40f9283a99a178af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
