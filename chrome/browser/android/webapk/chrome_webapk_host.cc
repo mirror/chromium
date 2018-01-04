@@ -5,8 +5,9 @@
 #include "chrome/browser/android/webapk/chrome_webapk_host.h"
 
 #include "base/feature_list.h"
+#include "base/metrics/field_trial_params.h"
+#include "base/strings/string_number_conversions.h"
 #include "chrome/browser/android/chrome_feature_list.h"
-#include "components/variations/variations_associated_data.h"
 #include "jni/ChromeWebApkHost_jni.h"
 
 namespace {
@@ -14,6 +15,14 @@ namespace {
 // Variations flag to enable launching Chrome renderer in WebAPK process.
 const char* kLaunchRendererInWebApkProcess =
     "launch_renderer_in_webapk_process";
+
+// Trial name for lower device low space threshold for WebAPK installation.
+const char* kAdjustWebApkInstallationSpaceTrial =
+    "AdjustWebApkInstallationSpace";
+
+// Extra space allowed to install WebApk from play store.
+const char* kWebapkExtraInstallationSpace =
+    "webapk_extra_installation_space_mb";
 
 }  // anonymous namespace
 
@@ -26,7 +35,19 @@ bool ChromeWebApkHost::CanInstallWebApk() {
 jboolean JNI_ChromeWebApkHost_CanLaunchRendererInWebApkProcess(
     JNIEnv* env,
     const base::android::JavaParamRef<jclass>& clazz) {
-  return variations::GetVariationParamValueByFeature(
+  return base::GetFieldTrialParamValueByFeature(
              chrome::android::kImprovedA2HS, kLaunchRendererInWebApkProcess) ==
          "true";
+}
+
+// static
+jlong JNI_ChromeWebApkHost_WebApkExtraInstallationSpace(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jclass>& clazz) {
+  int result_mb = 0;
+  base::StringToInt(
+      base::GetFieldTrialParamValue(kAdjustWebApkInstallationSpaceTrial,
+                                    kWebapkExtraInstallationSpace),
+      &result_mb);
+  return result_mb * 1024 * 1024;  // byte
 }

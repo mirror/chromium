@@ -156,6 +156,7 @@ const base::Feature* FindFeatureExposedToJava(const std::string& feature_name) {
 }  // namespace
 
 // Alphabetical:
+
 const base::Feature kAllowReaderForAccessibility = {
     "AllowReaderForAccessibility", base::FEATURE_DISABLED_BY_DEFAULT};
 
