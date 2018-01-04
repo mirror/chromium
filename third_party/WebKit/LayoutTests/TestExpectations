@@ -1899,6 +1899,7 @@ crbug.com/751952 http/tests/devtools/console/console-uncaught-promise.js [ Pass 
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/html/form-elements/the-textarea-element/multiline-placeholder-cr.html [ Failure ]
 crbug.com/626703 external/wpt/svg/path/bearing/zero.svg [ Failure ]
 crbug.com/626703 external/wpt/svg/path/bearing/relative.svg [ Failure ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/string-compilation-integrity-classic.html [ Skip ]
@@ -3196,7 +3197,6 @@ crbug.com/757165 [ Win ] compositing/culling/filter-occlusion-blur.html [ Skip ]
 crbug.com/757165 [ Win ] css3/blending/mix-blend-mode-with-filters.html [ Skip ]
 crbug.com/757165 [ Win ] external/wpt/preload/download-resources.html [ Skip ]
 crbug.com/757165 [ Win ] external/wpt/preload/preload-default-csp.sub.html [ Skip ]
-crbug.com/757165 [ Win ] external/wpt/service-workers/service-worker/navigation-redirect.https.html [ Skip ]
 crbug.com/757165 [ Win ] fast/forms/file/recover-file-input-in-unposted-form.html [ Skip ]
 crbug.com/757165 [ Win ] fast/spatial-navigation/snav-1st-stop.html [ Pass Failure Timeout Crash ]
 crbug.com/757165 [ Win ] fast/spatial-navigation/snav-aligned-not-aligned.html [ Pass Failure Timeout Crash ]
