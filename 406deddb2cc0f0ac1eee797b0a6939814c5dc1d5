@@ -52,6 +52,24 @@
       "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70c81ba_90248180",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2018-01-04T04:54:08Z",
+      "side": 1,
+      "message": "Makes sense! Thank you very much for the quick reply!",
+      "parentUuid": "375a9a41_80c86184",
+      "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
