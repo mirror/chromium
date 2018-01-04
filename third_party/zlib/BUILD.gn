@@ -282,3 +282,20 @@ static_library("minizip") {
 
   public_configs = [ ":zlib_config" ]
 }
+
+executable("zlib_bench") {
+  include_dirs = [ "." ]
+
+  sources = [
+    "contrib/bench/zlib_bench.cc",
+  ]
+
+  if (!is_debug) {
+    configs -= [ "//build/config/compiler:default_optimization" ]
+    configs += [ "//build/config/compiler:optimize_speed" ]
+  }
+
+  deps = [
+    ":zlib",
+  ]
+}
