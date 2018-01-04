@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "43a1238f_34d41d24",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-01-04T16:50:14Z",
+      "side": 1,
+      "message": "I am unable to reproduce this, I set it to 1 and it works as expected on my machine. What platform are you seeing this on?",
+      "parentUuid": "7b97bb60_a45ca124",
+      "range": {
+        "startLine": 824,
+        "startChar": 72,
+        "endLine": 824,
+        "endChar": 73
+      },
+      "revId": "7fed0e797c10d95938e20ab85681fd43e2293432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad094e84_d3bfd04c",
         "filename": "chrome/test/chromedriver/window_commands.cc",
         "patchSetId": 17
@@ -82,6 +106,30 @@
       "writtenOn": "2017-12-22T21:46:57Z",
       "side": 1,
       "message": "front",
+      "range": {
+        "startLine": 1056,
+        "startChar": 41,
+        "endLine": 1056,
+        "endChar": 45
+      },
+      "revId": "7fed0e797c10d95938e20ab85681fd43e2293432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dd5721_49e4f7ff",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2018-01-04T16:50:14Z",
+      "side": 1,
+      "message": "I use back here to avoid doing a possibly expensive pop from the front if there are lots of actions. On line 1028 I push to back so I don\u0027t think using front will result in correct behaviour unless I change line 1028 as well.",
+      "parentUuid": "d2395754_3ee1ce2c",
       "range": {
         "startLine": 1056,
         "startChar": 41,
