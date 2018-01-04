@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d857aea_a4531153",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-04T19:05:08Z",
+      "side": 1,
+      "message": "bikeshedding: Could I propose animate_only as something that conveys more information? (I\u0027m also not sure why you need to run layout.)",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237fb620_bb015714",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-04T19:05:08Z",
+      "side": 1,
+      "message": "I think this code makes sense to me, but it definitely needs some tests.  Could you add some  (maybe in layer_tree_host_unittest?) for these deferring changes?",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
