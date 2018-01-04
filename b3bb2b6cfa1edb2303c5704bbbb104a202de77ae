@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d34b35_695e022c",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2018-01-04T18:16:09Z",
+      "side": 1,
+      "message": "You\u0027ll want to merge with the corresponding lifecycle implementation of this concept. TabManager is going away.",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "b3bb2b6cfa1edb2303c5704bbbb104a202de77ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
