@@ -56,7 +56,7 @@ void NavigationURLLoaderImplCore::Start(
         upload_file_system_context, *request_info,
         std::move(navigation_ui_data), this, mojom::URLLoaderClientPtr(),
         mojom::URLLoaderRequest(), service_worker_handle_core,
-        appcache_handle_core);
+        appcache_handle_core, 0 /* mojom::kURLLoadOptionNone */);
   }
 
   // Careful, |this| could be destroyed at this point. Don't notify start if
