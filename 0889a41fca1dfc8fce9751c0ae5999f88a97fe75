@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef335979_a7e77b91",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-04T20:27:21Z",
+      "side": 1,
+      "message": "\"first might visit\" looks like a typo",
+      "revId": "0889a41fca1dfc8fce9751c0ae5999f88a97fe75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
