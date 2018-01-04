@@ -367,7 +367,7 @@ Console.ConsoleViewMessage = class {
 
     var messageElement = this._buildMessage();
     var icon = UI.Icon.create('smallicon-triangle-right', 'console-message-expand-icon');
-    var clickableElement = contentElement.createChild('div');
+    var clickableElement = contentElement.createChild('div', 'console-message-stack-trace-message');
     clickableElement.appendChild(icon);
 
     clickableElement.appendChild(messageElement);
@@ -808,6 +808,7 @@ Console.ConsoleViewMessage = class {
     }
 
     function isWhitelistedProperty(property) {
+      // Make sure that allowed properties do not interfere with link visibility.
       var prefixes = [
         'background', 'border', 'color', 'font', 'line', 'margin', 'padding', 'text', '-webkit-background',
         '-webkit-border', '-webkit-font', '-webkit-margin', '-webkit-padding', '-webkit-text'
@@ -844,8 +845,10 @@ Console.ConsoleViewMessage = class {
           var wrapper = createElement('span');
           wrapper.appendChild(toAppend);
           applyCurrentStyle(wrapper);
-          for (var i = 0; i < wrapper.children.length; ++i)
-            applyCurrentStyle(wrapper.children[i]);
+          for (var child of wrapper.children) {
+            if (!child.classList.contains('devtools-link'))
+              applyCurrentStyle(child);
+          }
           toAppend = wrapper;
         }
         a.appendChild(toAppend);

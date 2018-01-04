@@ -189,6 +189,7 @@
 .console-message-wrapper {
     display: flex;
     border-bottom: 1px solid rgb(240, 240, 240);
+    overflow: hidden;
 }
 
 .console-message-wrapper.console-adjacent-user-command-result {
@@ -269,20 +270,33 @@
     background-color: rgb(255, 250, 224);
 }
 
-#console-messages .link {
-    text-decoration: underline;
-}
-
-#console-messages .link,
 #console-messages .devtools-link {
-    color: rgb(33%, 33%, 33%);
+    -webkit-text-stroke: 0 !important;
+    background-color: white !important;
+    color: rgb(33%, 33%, 33%) !important;
     cursor: pointer;
+    text-decoration: underline !important;
     word-break: break-all;
 }
 
-#console-messages .link:hover,
+#console-messages .console-error-level .devtools-link {
+    background-color: hsl(0, 100%, 97%) !important;
+}
+
+.-theme-with-dark-background #console-messages .console-error-level .devtools-link {
+    background-color: hsl(0, 100%, 8%) !important;
+}
+
+#console-messages .console-warning-level .devtools-link {
+    background-color: hsl(50, 100%, 95%) !important;
+}
+
+.-theme-with-dark-background #console-messages .console-warning-level .devtools-link {
+    background-color: hsl(50, 100%, 10%) !important;
+}
+
 #console-messages .devtools-link:hover {
-    color: rgb(15%, 15%, 15%);
+    color: rgb(15%, 15%, 15%) !important;
 }
 
 .console-group-messages .section {
@@ -411,6 +425,10 @@
 
 .console-message-stack-trace-wrapper > * {
     flex: none;
+}
+
+.console-message-stack-trace-message {
+    overflow: hidden;
 }
 
 .console-message-expand-icon {
