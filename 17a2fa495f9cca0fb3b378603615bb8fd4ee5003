@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ddbd204_ec75bec7",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c675e0d_8ab3694c",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 6
+      },
+      "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5f4b78_251b03e5",
         "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1f1548_41bce5ff",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f5f4b78_251b03e5",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 6
+      },
+      "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "29a55aea_0259235a",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "338b7bd3_d9c98cc5",
+      "range": {
+        "startLine": 408,
+        "startChar": 9,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a32cbc2_4e41b87e",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "78f34484_aaa8ef43",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a32cbc2_4e41b87e",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 7
+      },
+      "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58e272a_83fd80f5",
         "filename": "components/safe_browsing/features.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71613da_ec621185",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2018-01-04T23:16:39Z",
+      "side": 1,
+      "message": "Ah, I forgot this one again. Thanks for pointing this out!",
+      "parentUuid": "a58e272a_83fd80f5",
+      "range": {
+        "startLine": 57,
+        "startChar": 20,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "17a2fa495f9cca0fb3b378603615bb8fd4ee5003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
