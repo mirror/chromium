@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84455162_3314fb3c",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-04T20:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02199efb_241a852a",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 22
+      },
+      "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123b529d_92c723d3",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779b1e70_8e02f3e3",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-04T20:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123b529d_92c723d3",
+      "range": {
+        "startLine": 353,
+        "startChar": 23,
+        "endLine": 353,
+        "endChar": 48
+      },
+      "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6a6791b0_e06267b0",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-04T20:25:04Z",
+      "side": 1,
+      "message": "I\u0027ve now forced the lifetime of |media_task_runner_| by including it as a task parameter (and it is a scoped_refptr), so DemuxerDestructionHelper shouldn\u0027t race this OnMemoryPressure task on the media task runner, nor should DemuxerDestructionHelper\u0027s execution be prevented by loss of refptr on media_task_runner_ if WMPI or other owners (besides this task) drop their refs to that runner.\n\nDone.",
+      "parentUuid": "5ff3a9fe_fca53c8f",
+      "range": {
+        "startLine": 1416,
+        "startChar": 2,
+        "endLine": 1417,
+        "endChar": 30
+      },
+      "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c83aa42b_e692b3c7",
         "filename": "media/filters/chunk_demuxer_unittest.cc",
         "patchSetId": 5
@@ -115,6 +187,30 @@
       "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9adf11_6313fd3f",
+        "filename": "media/filters/chunk_demuxer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2018-01-04T20:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83aa42b_e692b3c7",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "1337ea22d8e6afb23810cedf33d364b6e31d5092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
