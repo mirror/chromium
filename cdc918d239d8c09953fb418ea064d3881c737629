@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3f7941_1b12b48f",
+        "filename": "third_party/WebKit/Source/platform/TimeClamper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-04T10:55:58Z",
+      "side": 1,
+      "message": "please move the comment from the implementation to header (about what this method does)",
+      "revId": "cdc918d239d8c09953fb418ea064d3881c737629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
