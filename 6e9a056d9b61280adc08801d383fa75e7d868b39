@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41664e6f_a9d98663",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T12:16:42Z",
+      "side": 1,
+      "message": "Nit: consider reserving capacity here.",
+      "revId": "6e9a056d9b61280adc08801d383fa75e7d868b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
