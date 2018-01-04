@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7446819c_8c273051",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_update_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T18:24:41Z",
+      "side": 1,
+      "message": "nit: Would this worth doing a\n\n  DLOG(WARNING) \u003c\u003c \"Running multiple update check is not supported.\";\n\n?",
+      "revId": "5eff55e5c5a4fe2153438ea324f53cf78c109585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820705a4_83de5c0e",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_update_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T18:24:41Z",
+      "side": 1,
+      "message": "This looks like the case (the callback\nrecipient deletes the object the callback is a member of) to use base::ResetAndReturn.\n\nhttps://cs.chromium.org/chromium/src/docs/callback.md?rcl\u003dae8b3cc8acdcbd2bdfd940d984cfc00875426c01\u0026l\u003d156",
+      "revId": "5eff55e5c5a4fe2153438ea324f53cf78c109585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
