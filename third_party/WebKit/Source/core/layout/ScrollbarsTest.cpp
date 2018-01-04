@@ -978,13 +978,17 @@ TEST_P(ScrollbarsTest,
 
 // Make sure native scrollbar can change by Emulator.
 // Disable on Android since Android always enable OverlayScrollbar.
-// TODO(https://crbug.com/795645): This test is failing on the ChromeOS bot.
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_ANDROID)
 TEST_P(ScrollbarsTest, DISABLED_NativeScrollbarChangeToMobileByEmulator) {
 #else
 TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
 #endif
+
+// ChromeOS uses AuraOverlayScrollbar as default.
+#if !defined(OS_CHROMEOS)
   ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+#endif
+
   ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebView().Resize(WebSize(200, 200));
 
@@ -1027,14 +1031,22 @@ TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
 
   DCHECK(root_scrollable->VerticalScrollbar());
   DCHECK(!root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+#if defined(OS_CHROMEOS)
+  DCHECK(root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#else
   DCHECK(!root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#endif
   DCHECK(!root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
 
   DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
 
   DCHECK(div_scrollable->VerticalScrollbar());
   DCHECK(!div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
+#if defined(OS_CHROMEOS)
+  DCHECK(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#else
   DCHECK(!div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#endif
   DCHECK(!div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
 
   // Turn on mobile emulator.
@@ -1058,22 +1070,28 @@ TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
 
   EXPECT_TRUE(root_scrollable->VerticalScrollbar());
   EXPECT_FALSE(root_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  EXPECT_FALSE(root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#if defined(OS_CHROMEOS)
+  DCHECK(root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#else
+  DCHECK(!root_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#endif
   EXPECT_FALSE(root_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
 
   DCHECK(!viewport.LayerForHorizontalScrollbar()->Parent());
 
   EXPECT_TRUE(div_scrollable->VerticalScrollbar());
   EXPECT_FALSE(div_scrollable->VerticalScrollbar()->IsCustomScrollbar());
-  EXPECT_FALSE(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#if defined(OS_CHROMEOS)
+  DCHECK(div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#else
+  DCHECK(!div_scrollable->VerticalScrollbar()->IsOverlayScrollbar());
+#endif
   EXPECT_FALSE(div_scrollable->VerticalScrollbar()->GetTheme().IsMockTheme());
 }
 
 // Make sure root custom scrollbar can change by Emulator but div custom
 // scrollbar not.
 TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
-  ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebView().Resize(WebSize(200, 200));
 
   SimRequest request("https://example.com/test.html", "text/html");
@@ -1158,8 +1176,6 @@ TEST_P(ScrollbarsTest, CustomScrollbarChangeToMobileByEmulator) {
 
 // Ensure custom scrollbar recreate when style owner change,
 TEST_P(ScrollbarsTest, CustomScrollbarWhenStyleOwnerChange) {
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
-  ScrollbarTheme::SetMockScrollbarsEnabled(false);
   WebView().Resize(WebSize(200, 200));
 
   SimRequest request("https://example.com/test.html", "text/html");
