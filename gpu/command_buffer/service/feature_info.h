@@ -124,6 +124,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool chromium_texture_storage_image = false;
     bool ext_window_rectangles = false;
     bool chromium_gpu_fence = false;
+    bool hdr_rendering = false;
   };
 
   FeatureInfo();

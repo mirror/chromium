@@ -4003,7 +4003,6 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
       feature_info_->oes_texture_half_float_linear_available();
   caps.color_buffer_half_float_rgba =
       feature_info_->ext_color_buffer_float_available() ||
-      feature_info_->ext_color_buffer_half_float_available();
   caps.image_ycbcr_422 =
       feature_info_->feature_flags().chromium_image_ycbcr_422;
   caps.image_ycbcr_420v =
@@ -4011,10 +4010,11 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   caps.image_ycbcr_420v_disabled_for_video_frames =
       group_->gpu_preferences()
           .disable_biplanar_gpu_memory_buffers_for_video_frames;
-  caps.max_copy_texture_chromium_size =
-      workarounds().max_copy_texture_chromium_size;
+  caps.image_ycbcr_420v =
+      feature_info_->feature_flags().chromium_image_ycbcr_420v;
   caps.render_buffer_format_bgra8888 =
       feature_info_->feature_flags().ext_render_buffer_format_bgra8888;
+  caps.supports_hdr_rendering = feature_info_->feature_flags().hdr_rendering;
   caps.occlusion_query = feature_info_->feature_flags().occlusion_query;
   caps.occlusion_query_boolean =
       feature_info_->feature_flags().occlusion_query_boolean;
