@@ -516,16 +516,16 @@ config("compiler") {
       cxx11_override = use_cxx11
     }
 
-    # gnu11/gnu++11 instead of c11/c++11 is needed because some code uses typeof()
-    # (a GNU extension).
+    # gnu11 instead of c11 is needed because some third_party code uses GNU
+    # extensions.
     # TODO(thakis): Eventually switch this to c++11 instead,
     # http://crbug.com/427584
     cflags_c += [ "-std=gnu11" ]
     if (cxx11_override) {
       # Override Chromium's default for projects that wish to stay on C++11.
-      cflags_cc += [ "-std=gnu++11" ]
+      cflags_cc += [ "-std=c++11" ]
     } else {
-      cflags_cc += [ "-std=gnu++14" ]
+      cflags_cc += [ "-std=c++14" ]
     }
   } else if (!is_win && !is_nacl) {
     if (target_os == "android") {
