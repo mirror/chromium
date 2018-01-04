@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a0b161f_e215d22c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 10961,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-04T12:08:22Z",
+      "side": 1,
+      "message": "this should be \u003cph name\u003d\"PRODUCT_NAME\"\u003e$1\u003cex\u003eGoogle Chrome\u003c/ex\u003e and you need to replace this parameter when reading the string",
+      "revId": "c14161b7aa5a8ec595f985228896fe35ddc2ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f9e375_de3ef4b6",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-04T12:08:22Z",
+      "side": 1,
+      "message": "WiFi",
+      "revId": "c14161b7aa5a8ec595f985228896fe35ddc2ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
