@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95bcab9a_90ca2168",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-04T15:58:36Z",
+      "side": 1,
+      "message": "At some point, we WebAudio have decided to use {} even for a single line statement. l.145 was written a while ago so we did not touch the part.",
+      "parentUuid": "728a520c_c5157252",
+      "revId": "99c5586b7fe00be7e684157b369c192c79ec31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e03842e_e31b9a85",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "99c5586b7fe00be7e684157b369c192c79ec31a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62aaacb_d5684535",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2018-01-04T15:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e03842e_e31b9a85",
+      "revId": "99c5586b7fe00be7e684157b369c192c79ec31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
