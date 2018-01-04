@@ -5,8 +5,11 @@
 #ifndef CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 #define CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 
+#include <map>
 #include <memory>
+#include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/power_monitor/power_observer.h"
 #include "base/sequence_checker.h"
@@ -15,6 +18,7 @@
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "components/metrics/daily_event.h"
+#include "content/public/browser/web_contents_observer.h"
 
 class PrefRegistrySimple;
 class PrefService;
@@ -75,6 +79,21 @@ class TabStatsTracker : public TabStripModelObserver,
     DISALLOW_COPY_AND_ASSIGN(TabStatsDailyObserver);
   };
 
+  // Observer used to be notified when a WebContents becomes visible or audible.
+  class WebContentsUsageObserver : public content::WebContentsObserver {
+   public:
+    WebContentsUsageObserver(content::WebContents* web_contents,
+                             TabStatsDataStore* data_store)
+        : content::WebContentsObserver(web_contents), data_store_(data_store) {}
+
+    // content::WebContentsObserver:
+    void DidGetUserInteraction(const blink::WebInputEvent::Type type) override;
+    void WasShown() override;
+
+   private:
+    TabStatsDataStore* data_store_;
+  };
+
   // Accessors, exposed for unittests:
   TabStatsDataStore* tab_stats_data_store() {
     return tab_stats_data_store_.get();
@@ -83,6 +102,10 @@ class TabStatsTracker : public TabStripModelObserver,
   DailyEvent* daily_event() { return daily_event_.get(); }
   UmaStatsReportingDelegate* reporting_delegate() {
     return reporting_delegate_.get();
+  }
+  std::vector<std::unique_ptr<base::RepeatingTimer>>*
+      usage_interval_timers_for_testing() {
+    return &usage_interval_timers_;
   }
 
   // Reset the |reporting_delegate_| object to |reporting_delegate|, for testing
@@ -94,6 +117,10 @@ class TabStatsTracker : public TabStripModelObserver,
   // Reset the DailyEvent object to |daily_event|, for testing purposes.
   void reset_daily_event(DailyEvent* daily_event) {
     daily_event_.reset(daily_event);
+  }
+
+  void reset_data_store(TabStatsDataStore* data_store) {
+    tab_stats_data_store_.reset(data_store);
   }
 
   // BrowserListObserver:
@@ -108,9 +135,26 @@ class TabStatsTracker : public TabStripModelObserver,
   void TabClosingAt(TabStripModel* model,
                     content::WebContents* web_contents,
                     int index) override;
+  void TabDetachedAt(content::WebContents* contents, int index) override;
+  void TabChangedAt(content::WebContents* web_contents,
+                    int index,
+                    TabChangeType change_type) override;
+  void TabReplacedAt(TabStripModel* tab_strip_model,
+                     content::WebContents* old_contents,
+                     content::WebContents* new_contents,
+                     int index) override;
 
   // base::PowerObserver:
   void OnResume() override;
+
+  // Callback when an interval timer triggers.
+  void OnInterval(size_t interval_time_in_sec,
+                  TabStatsDataStore::TabsStateDuringIntervalMap* interval_map);
+
+  // Functions to call when a tab gets added/removed, notify the data store and
+  // add the observers to track the tab events.
+  void OnTabAdded(content::WebContents* web_contents);
+  void OnTabRemoved(content::WebContents* web_contents);
 
   // The name of the histogram used to report that the daily event happened.
   static const char kTabStatsDailyEventHistogramName[];
@@ -128,6 +172,18 @@ class TabStatsTracker : public TabStripModelObserver,
   // The timer used to periodically check if the daily event should be
   // triggered.
   base::RepeatingTimer timer_;
+
+  // The timers used to analyze how tabs are used during a given interval of
+  // time.
+  std::vector<std::unique_ptr<base::RepeatingTimer>> usage_interval_timers_;
+
+  // The observers that tracks how the tabs are used.
+  std::map<content::WebContents*, std::unique_ptr<WebContentsUsageObserver>>
+      web_contents_usage_observers_;
+
+  // The tabs that are currently in a detached state (exists but don't belong
+  // to any tab strip).
+  base::flat_set<content::WebContents*> detached_tabs_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -153,6 +209,14 @@ class TabStatsTracker::UmaStatsReportingDelegate {
   // opened in a day.
   static const char kMaxWindowsInADayHistogramName[];
 
+  // The name of the histograms that records how tabs have been used during a
+  // given period of time. Will be appended with '_T' with T being the interval
+  // window (in seconds).
+  static const char kUnusedAndClosedInIntervalHistogramNameBase[];
+  static const char kUnusedTabsInIntervalHistogramNameBase[];
+  static const char kUsedAndClosedInIntervalHistogramNameBase[];
+  static const char kUsedTabsInIntervalHistogramNameBase[];
+
   UmaStatsReportingDelegate() {}
   virtual ~UmaStatsReportingDelegate() {}
 
@@ -161,6 +225,12 @@ class TabStatsTracker::UmaStatsReportingDelegate {
 
   // Called once per day to report the metrics.
   void ReportDailyMetrics(const TabStatsDataStore::TabsStats& tab_stats);
+
+  // Report some information about how tabs have been used during a given
+  // interval of time.
+  void ReportUsageDuringInterval(
+      const TabStatsDataStore::TabsStateDuringIntervalMap& interval_map,
+      size_t interval_time_in_sec);
 
  protected:
   // Checks if Chrome is running in background with no visible windows, virtual

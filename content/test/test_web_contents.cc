@@ -389,4 +389,18 @@ void TestWebContents::SetIsCurrentlyAudible(bool audible) {
   audio_stream_monitor()->set_is_currently_audible_for_testing(audible);
 }
 
+void TestWebContents::TestOnUserInteraction(
+    RenderWidgetHostImpl* render_widget_host,
+    const blink::WebInputEvent::Type type) {
+  // If no |render_widget_host| has been specified then use the first one from
+  // the frame tree to make sure that the interaction doesn't get ignored.
+  if (!render_widget_host) {
+    DCHECK(frame_tree_.Nodes().begin() != frame_tree_.Nodes().end());
+    render_widget_host = (*frame_tree_.Nodes().begin())
+                             ->current_frame_host()
+                             ->GetRenderWidgetHost();
+  }
+  OnUserInteraction(render_widget_host, type);
+}
+
 }  // namespace content
