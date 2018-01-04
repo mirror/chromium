@@ -70,6 +70,24 @@
       "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624789c_1913e703",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T12:16:23Z",
+      "side": 1,
+      "message": "Can we also check in MojoAsyncResourceHandler that kURLLoadOptionSendSSLInfoWithResponse is only set for navigations, and not subresources? (maybe if the option is renamed kURLLoadOptionSendSSLInfoWithNavigationResponse?) - we can restrict that requirement later if some other user of the network service needs to use it, but for now I think it\u0027d be better to preserve this.",
+      "parentUuid": "d85ab204_2600c63f",
+      "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
