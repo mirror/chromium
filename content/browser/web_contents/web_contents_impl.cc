@@ -5768,8 +5768,8 @@ void WebContentsImpl::CreateBrowserPluginEmbedderIfNecessary() {
 }
 
 gfx::Size WebContentsImpl::GetSizeForNewRenderView() {
-  gfx::Size size;
-  if (delegate_)
+  gfx::Size size = device_emulation_size_;
+  if (size.IsEmpty() && delegate_)
     size = delegate_->GetSizeForNewRenderView(this);
   if (size.IsEmpty())
     size = GetContainerBounds().size();
@@ -5903,6 +5903,10 @@ void WebContentsImpl::SetForceDisableOverscrollContent(bool force_disable) {
   force_disable_overscroll_content_ = force_disable;
   if (view_)
     view_->SetOverscrollControllerEnabled(CanOverscrollContent());
+}
+
+void WebContentsImpl::SetDeviceEmulationSize(const gfx::Size& size) {
+  device_emulation_size_ = size;
 }
 
 void WebContentsImpl::MediaStartedPlaying(

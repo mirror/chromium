@@ -251,6 +251,8 @@ Response EmulationHandler::SetDeviceMetricsOverride(
       if (original_view_size_.IsEmpty())
         original_view_size_ = widget_host->GetView()->GetViewBounds().size();
       widget_host->GetView()->SetSize(new_size);
+      if (GetWebContents())
+        GetWebContents()->SetDeviceEmulationSize(new_size);
       size_changed = true;
     }
   }
@@ -284,6 +286,8 @@ Response EmulationHandler::ClearDeviceMetricsOverride() {
   if (original_view_size_.width())
     widget_host->GetView()->SetSize(original_view_size_);
   original_view_size_ = gfx::Size();
+  if (GetWebContents())
+    GetWebContents()->SetDeviceEmulationSize(gfx::Size());
   UpdateDeviceEmulationState();
   // Renderer should answer after emulation was disabled, so that the response
   // is only sent to the client once updates were applied.
@@ -300,7 +304,10 @@ Response EmulationHandler::SetVisibleSize(int width, int height) {
   if (!widget_host)
     return Response::Error("Target does not support setVisibleSize");
 
-  widget_host->GetView()->SetSize(gfx::Size(width, height));
+  gfx::Size new_size(width, height);
+  widget_host->GetView()->SetSize(new_size);
+  if (GetWebContents())
+    GetWebContents()->SetDeviceEmulationSize(new_size);
   return Response::OK();
 }
 

@@ -840,6 +840,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // Forces overscroll to be disabled (used by touch emulation).
   void SetForceDisableOverscrollContent(bool force_disable);
 
+  void SetDeviceEmulationSize(const gfx::Size& size);
+
   AudioStreamMonitor* audio_stream_monitor() {
     return &audio_stream_monitor_;
   }
@@ -1515,6 +1517,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   // Size set by a top-level frame with auto-resize enabled. This is needed by
   // out-of-process iframes for their visible viewport size.
   gfx::Size auto_resize_size_;
+
+  // When device emulation is enabled, override the size of newly created
+  // render views/widgets.
+  gfx::Size device_emulation_size_;
 
 #if defined(OS_ANDROID)
   // Date time chooser opened by this tab.
