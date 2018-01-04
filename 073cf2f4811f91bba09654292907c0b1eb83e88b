@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6baa1890_2532ee6f",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-04T00:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5976bd78_0c425da0",
+      "range": {
+        "startLine": 46,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "073cf2f4811f91bba09654292907c0b1eb83e88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf21e728_401cb914",
         "filename": "ui/app_list/views/app_list_main_view.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-04T00:13:34Z",
       "side": 1,
       "message": "I wonder whether we should use the trimmed version instead and get rid of the base::TrimWhitespace() call in SearchController.\n\nThe existing behavior does not feel 100% correct and maybe worth checking out later. Let\u0027s leave a TODO here to follow up later since it is relevant to this CL.",
+      "revId": "073cf2f4811f91bba09654292907c0b1eb83e88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6875a6_6b41ed5e",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-04T00:59:56Z",
+      "side": 1,
+      "message": "OK added comments. Currently the raw string is only used in History.",
+      "parentUuid": "bf21e728_401cb914",
       "revId": "073cf2f4811f91bba09654292907c0b1eb83e88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
