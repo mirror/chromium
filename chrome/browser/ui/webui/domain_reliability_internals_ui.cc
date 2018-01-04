@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/domain_reliability/service.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -22,12 +23,12 @@ DomainReliabilityInternalsUI::DomainReliabilityInternalsUI(
     : content::WebUIController(web_ui) {
   content::WebUIDataSource* html_source = content::WebUIDataSource::Create(
       chrome::kChromeUIDomainReliabilityInternalsHost);
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->AddResourcePath("domain_reliability_internals.css",
       IDR_DOMAIN_RELIABILITY_INTERNALS_CSS);
   html_source->AddResourcePath("domain_reliability_internals.js",
       IDR_DOMAIN_RELIABILITY_INTERNALS_JS);
   html_source->SetDefaultResource(IDR_DOMAIN_RELIABILITY_INTERNALS_HTML);
-  html_source->UseGzip();
 
   web_ui->RegisterMessageCallback("updateData",
       base::Bind(&DomainReliabilityInternalsUI::UpdateData,

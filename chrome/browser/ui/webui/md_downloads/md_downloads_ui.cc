@@ -20,6 +20,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
@@ -40,6 +41,7 @@ namespace {
 content::WebUIDataSource* CreateDownloadsUIHTMLSource(Profile* profile) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIDownloadsHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   source->AddLocalizedString("title", IDS_DOWNLOAD_TITLE);
   source->AddLocalizedString("searchResultsFor", IDS_SEARCH_RESULTS);
@@ -103,9 +105,6 @@ content::WebUIDataSource* CreateDownloadsUIHTMLSource(Profile* profile) {
                           IDR_MD_DOWNLOADS_2X_NO_DOWNLOADS_PNG);
 
 #if BUILDFLAG(OPTIMIZE_WEBUI)
-  source->UseGzip({"1x/incognito_marker.png", "1x/no_downloads.png",
-                   "2x/incognito_marker.png", "2x/no_downloads.png"});
-
   source->AddResourcePath("crisper.js", IDR_MD_DOWNLOADS_CRISPER_JS);
   source->SetDefaultResource(IDR_MD_DOWNLOADS_VULCANIZED_HTML);
 #else

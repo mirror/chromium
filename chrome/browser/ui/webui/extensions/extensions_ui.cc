@@ -23,6 +23,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/extensions_resources.h"
 #include "chrome/grit/extensions_resources_map.h"
@@ -362,10 +363,10 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddBoolean(kInDevModeKey, in_dev_mode);
   source->AddString(kLoadTimeClassesKey, GetLoadTimeClasses(in_dev_mode));
 
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   source->AddResourcePath("crisper.js", IDR_MD_EXTENSIONS_CRISPER_JS);
   source->SetDefaultResource(IDR_MD_EXTENSIONS_VULCANIZED_HTML);
-  source->UseGzip();
 #else
   // Add all MD Extensions resources.
   for (size_t i = 0; i < kExtensionsResourcesSize; ++i) {
@@ -383,6 +384,7 @@ content::WebUIDataSource* CreateExtensionsHTMLSource() {
       content::WebUIDataSource::Create(chrome::kChromeUIExtensionsHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("extensions.js", IDR_EXTENSIONS_JS);
   source->AddResourcePath("extension_command_list.js",
                           IDR_EXTENSION_COMMAND_LIST_JS);
