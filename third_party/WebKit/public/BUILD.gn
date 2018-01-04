@@ -475,8 +475,6 @@ source_set("blink_headers") {
     "web/WebDateTimeChooserParams.h",
     "web/WebDateTimeInputType.h",
     "web/WebDateTimeSuggestion.h",
-    "web/WebDevToolsAgent.h",
-    "web/WebDevToolsAgentClient.h",
     "web/WebDeviceEmulationParams.h",
     "web/WebDocument.h",
     "web/WebDocumentLoader.h",
@@ -903,9 +901,11 @@ mojom("core_mojo_bindings") {
   ]
   sources = [
     "platform/modules/broadcastchannel/broadcast_channel.mojom",
+    "web/devtools_agent.mojom",
   ]
   public_deps = [
     "//third_party/WebKit/common:mojo_bindings",
+    "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_origin",
   ]
 
