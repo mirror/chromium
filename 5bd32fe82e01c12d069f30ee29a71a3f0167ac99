@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "838a30da_63c8e2d1",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T16:50:26Z",
+      "side": 1,
+      "message": "I would expect the transient window to be in the mru list. In your test, what is the parent of the transient window? I\u0027m pretty sure we typically make the transient window share the same parent. In other words, typically the window and transient window are siblings, in which case the mru list contains the transient window.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 38
+      },
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e23aaa3f_f29d0565",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2018-01-04T08:03:08Z",
       "side": 1,
       "message": "Is it possible to have transient window parented to root window?",
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cabc400_8c20092a",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T16:50:26Z",
+      "side": 1,
+      "message": "There is nothing in code that prevents that, but in practice that should never happen.",
+      "parentUuid": "e23aaa3f_f29d0565",
       "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
