@@ -10,6 +10,6 @@ public_headers = [
 traits_headers =
     [ "//third_party/WebKit/common/quota/quota_types_struct_traits.h" ]
 type_mappings = [
-  "blink.mojom.QuotaStatusCode=blink::QuotaStatusCode",
-  "blink.mojom.StorageType=blink::StorageType",
+  "blink.mojom.QuotaStatusCode=blink::mojom::QuotaStatusCode",
+  "blink.mojom.StorageType=blink::mojom::StorageType",
 ]
