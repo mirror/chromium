@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ed4dc4_3d916c20",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T06:48:16Z",
+      "side": 1,
+      "message": "I\u0027d suggest logically grouping this with SetCustomWallpaper; it feels a bit out of place here.",
+      "revId": "15f569fc77d0485d47e417c5b89f2df29700f26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
