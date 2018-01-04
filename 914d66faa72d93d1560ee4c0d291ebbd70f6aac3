@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1542cae9_2db612fa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-04T23:23:45Z",
+      "side": 1,
+      "message": "do links work? e.g. background: url(...);",
+      "range": {
+        "startLine": 2309,
+        "startChar": 6,
+        "endLine": 2309,
+        "endChar": 36
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9438d4d1_cc905fce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements_test_runner/ElementsTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2018-01-04T23:23:45Z",
+      "side": 1,
+      "message": "why setImmediate? looks flaky!",
+      "range": {
+        "startLine": 273,
+        "startChar": 89,
+        "endLine": 273,
+        "endChar": 101
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
