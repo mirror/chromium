@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dced5c0_eecca4ef",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-04T08:47:37Z",
+      "side": 1,
+      "message": "kNoWeakHandlingInCollection means that we will call to Trace() instead of TraceInCollection() which means that only strong fields will be traced.\n\nThere are already tests for each container that test WeakMember handling. (Tests with \"ExpectNoWriteBarrier\" in IncrementalMarkingTest.cpp)",
+      "parentUuid": "28b95abf_bb3e7133",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537fa3c7_9cb759ea",
         "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee8ac02_0735ca00",
+        "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-04T08:47:37Z",
+      "side": 1,
+      "message": "The fact that all hashing containers use HashTable at some level (their impl_) makes all of this fall out.\n\nThat said, I am still double-checking that we didn\u0027t miss anything and add further tests.",
+      "parentUuid": "537fa3c7_9cb759ea",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
