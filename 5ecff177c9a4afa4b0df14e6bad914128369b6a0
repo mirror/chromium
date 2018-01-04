@@ -46,6 +46,30 @@
       "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdfe8e2b_fb8e10de",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-04T20:29:48Z",
+      "side": 1,
+      "message": "Generally, we don\u0027t leave around internal deprecated APIs in Chromium like this if they can easily be cleaned up in the same CL. Exceptions are when there\u0027s a ton of users of the API (e.g. ~100 files). In this case, I think it\u0027s just a handful of files, right? So it would be better to do it in the same CL.",
+      "parentUuid": "9305dc54_1890450c",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
