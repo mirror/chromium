@@ -975,22 +975,6 @@
             ]
         }
     ],
-    "DataCompressionProxyDevRollout": [
-        {
-            "platforms": [
-                "android",
-                "ios"
-            ],
-            "experiments": [
-                {
-                    "name": "Control"
-                },
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "DataCompressionProxyLoFi": [
         {
             "platforms": [
@@ -1578,21 +1562,6 @@
                     "name": "Enabled",
                     "enable_features": [
                         "HttpFormWarning"
-                    ]
-                }
-            ]
-        }
-    ],
-    "IOSurfaceClearYosemite": [
-        {
-            "platforms": [
-                "mac"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "IOSurfaceClearYosemite"
                     ]
                 }
             ]
@@ -2814,21 +2783,6 @@
             ]
         }
     ],
-    "ReaderModeUIFeedback": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Show"
-                },
-                {
-                    "name": "DoNotShow"
-                }
-            ]
-        }
-    ],
     "RefreshTokenDeviceId": [
         {
             "platforms": [
@@ -3772,21 +3726,6 @@
                     "enable_features": [
                         "TranslateUI2016Q2"
                     ]
-                }
-            ]
-        }
-    ],
-    "TranslateUiLangTrial": [
-        {
-            "platforms": [
-                "mac"
-            ],
-            "experiments": [
-                {
-                    "name": "DefaultTranslateLanguage"
-                },
-                {
-                    "name": "EnabledTranslateLanguage"
                 }
             ]
         }
