@@ -51,9 +51,7 @@ class AXARIAGridCell final : public AXTableCell {
       std::pair<unsigned, unsigned>& column_range) const override;
   AccessibilityRole ScanToDecideHeaderRole() final;
   AXRestriction Restriction() const final;
-  bool CanSetSelectedAttribute() const final {
-    return Restriction() != kDisabled;
-  }
+  bool SupportsARIASelected() const final { return Restriction() != kDisabled; }
 
  protected:
   bool IsAriaColumnHeader() const;

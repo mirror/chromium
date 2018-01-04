@@ -233,11 +233,11 @@ void WebAXObject::GetSparseAXAttributes(
   private_->GetSparseAXAttributes(adapter);
 }
 
-bool WebAXObject::CanSetSelectedAttribute() const {
+bool WebAXObject::SupportsARIASelected() const {
   if (IsDetached())
     return false;
 
-  return private_->CanSetSelectedAttribute();
+  return private_->SupportsARIASelected();
 }
 
 bool WebAXObject::IsAnchor() const {
@@ -366,11 +366,11 @@ bool WebAXObject::IsRequired() const {
   return private_->IsRequired();
 }
 
-bool WebAXObject::IsSelected() const {
+WebAXSelectedState WebAXObject::IsSelected() const {
   if (IsDetached())
-    return false;
+    return kWebAXSelectedStateUndefined;
 
-  return private_->IsSelected();
+  return static_cast<WebAXSelectedState>(private_->IsSelected());
 }
 
 bool WebAXObject::IsSelectedOptionActive() const {
