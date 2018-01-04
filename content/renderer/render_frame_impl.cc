@@ -54,6 +54,7 @@
 #include "content/common/frame_owner_properties.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/input_messages.h"
+#include "content/common/manifest_observer.mojom.h"
 #include "content/common/navigation_params.h"
 #include "content/common/page_messages.h"
 #include "content/common/renderer_host.mojom.h"
@@ -115,7 +116,6 @@
 #include "content/renderer/loader/web_url_request_util.h"
 #include "content/renderer/loader/weburlresponse_extradata_impl.h"
 #include "content/renderer/manifest/manifest_change_notifier.h"
-#include "content/renderer/manifest/manifest_manager.h"
 #include "content/renderer/media/audio_device_factory.h"
 #include "content/renderer/media/audio_ipc_factory.h"
 #include "content/renderer/media/media_devices_listener_impl.h"
@@ -1338,7 +1338,6 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
   plugin_power_saver_helper_ = new PluginPowerSaverHelper(this);
 #endif
 
-  manifest_manager_ = std::make_unique<ManifestManager>(this);
   if (IsMainFrame()) {
     // Manages its own lifetime.
     new ManifestChangeNotifier(this);
@@ -1858,6 +1857,10 @@ void RenderFrameImpl::BindFrameNavigationControl(
 }
 
 blink::mojom::ManifestManager& RenderFrameImpl::GetManifestManager() {
+  if (!manifest_manager_) {
+    BindLocalInterface(blink::mojom::ManifestManager::Name_,
+                       mojo::MakeRequest(&manifest_manager_).PassMessagePipe());
+  }
   return *manifest_manager_;
 }
 
@@ -3049,6 +3052,8 @@ void RenderFrameImpl::CommitNavigation(
     browser_side_navigation_pending_url_ = GURL();
     return;
   }
+
+  manifest_manager_.reset();
 
   // First, check if this is a Debug URL. If so, handle it and stop the
   // navigation right away.
@@ -5138,7 +5143,7 @@ blink::WebPushClient* RenderFrameImpl::PushClient() {
 
 blink::WebRelatedAppsFetcher* RenderFrameImpl::GetRelatedAppsFetcher() {
   if (!related_apps_fetcher_)
-    related_apps_fetcher_.reset(new RelatedAppsFetcher(&GetManifestManager()));
+    related_apps_fetcher_.reset(new RelatedAppsFetcher(this));
 
   return related_apps_fetcher_.get();
 }
@@ -6939,11 +6944,6 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
     // Host zoom is per-page, so only added on the main frame.
     GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
         &RenderFrameImpl::OnHostZoomClientRequest, weak_factory_.GetWeakPtr()));
-
-    // Web manifests are only requested for main frames.
-    registry_.AddInterface(
-        base::Bind(&ManifestManager::BindToRequest,
-                   base::Unretained(manifest_manager_.get())));
   }
 }
 

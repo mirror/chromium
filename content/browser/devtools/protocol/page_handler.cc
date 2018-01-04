@@ -927,8 +927,8 @@ void PageHandler::GotManifest(std::unique_ptr<GetAppManifestCallback> callback,
       errors->addItem(Page::AppManifestError::Create()
                           .SetMessage(error->message)
                           .SetCritical(error->critical)
-                          .SetLine(error->line)
-                          .SetColumn(error->column)
+                          .SetLine(0)
+                          .SetColumn(0)
                           .Build());
       if (error->critical)
         failed = true;
