@@ -18,6 +18,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeAlertDialog;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 
@@ -49,6 +50,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
     private @interface State {}
 
     private AlertDialog mDialog;
+
     private PermissionDialogDelegate mDialogDelegate;
 
     // As the PermissionRequestManager handles queueing for a tab and only shows prompts for active
@@ -199,9 +201,8 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
         ChromeActivity activity = mDialogDelegate.getTab().getActivity();
         LayoutInflater inflater = LayoutInflater.from(activity);
         View view = inflater.inflate(R.layout.permission_dialog, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
 
-        mDialog = builder.create();
+        mDialog = ChromeAlertDialog.getInstance(activity, R.style.AlertDialogTheme);
         mDialog.getDelegate().setHandleNativeActionModesEnabled(false);
         mDialog.setCanceledOnTouchOutside(false);
 

@@ -12,6 +12,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
+#include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
@@ -149,7 +150,9 @@ PermissionRequestManager::~PermissionRequestManager() {
 }
 
 void PermissionRequestManager::AddRequest(PermissionRequest* request) {
-  DCHECK(!vr::VrTabHelper::IsInVr(web_contents()));
+  DCHECK(!vr::VrTabHelper::IsInVr(web_contents()) ||
+         base::FeatureList::IsEnabled(
+             chrome::android::kVrBrowsingNativeAndroidUi));
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDenyPermissionPrompts)) {

@@ -44,6 +44,7 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ApplicationLifetime;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeAlertDialog;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
@@ -175,6 +176,8 @@ public class VrShellDelegate
     // Gets run when the user exits VR mode by clicking the 'x' button or system UI back button.
     private Runnable mCloseButtonListener;
 
+    private FrameLayout mUiView;
+
     private static final class VrBroadcastReceiver extends BroadcastReceiver {
         private final WeakReference<ChromeActivity> mTargetActivity;
 
@@ -280,6 +283,18 @@ public class VrShellDelegate
     public static boolean isInVr() {
         if (sInstance == null) return false;
         return sInstance.mInVr;
+    }
+
+    /**
+     * Set View for the Dialog that should show up on top of the main content.
+     */
+    public static void setDialogView(View view) {
+        if (sInstance == null) return;
+        if (view != null)
+            sInstance.mUiView.addView(view);
+        else
+            sInstance.mUiView.removeAllViews();
+        sInstance.mVrShell.setDialogView(view);
     }
 
     /**
@@ -811,6 +826,12 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            VrAlertDialog alertDialog = new VrAlertDialog(mNativeVrShellDelegate);
+            ChromeAlertDialog.setDialogHandler(alertDialog);
+        }
+
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();
@@ -1430,7 +1451,9 @@ public class VrShellDelegate
 
         if (!mInVr) return;
         mInVr = false;
-
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.VR_BROWSING_NATIVE_ANDROID_UI)) {
+            ChromeAlertDialog.setDialogHandler(null);
+        }
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;
@@ -1667,6 +1690,8 @@ public class VrShellDelegate
         LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+        mUiView = new FrameLayout(decor.getContext());
+        decor.addView(mUiView, params);
         decor.addView(mVrShell.getContainer(), params);
         mActivity.onEnterVr();
     }
@@ -1675,6 +1700,7 @@ public class VrShellDelegate
         mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
+        decor.removeView(mUiView);
         decor.removeView(mVrShell.getContainer());
     }
 
