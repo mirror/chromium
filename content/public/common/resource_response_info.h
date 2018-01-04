@@ -145,7 +145,9 @@ struct CONTENT_EXPORT ResourceResponseInfo {
 
   // A bitmask of potentially several Previews optimizations that the resource
   // could have requested.
-  PreviewsState previews_state;
+  // TODO(rdsmith, reillyg): Only used by DRP; should be removed as part of DRP
+  // servicification.
+  int previews_state;
 
   // Effective connection type when the resource was fetched. This is populated
   // only for responses that correspond to main frame requests.
