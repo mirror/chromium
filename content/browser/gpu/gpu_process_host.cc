@@ -518,6 +518,12 @@ GpuProcessHost::~GpuProcessHost() {
                            gpu::GpuSurfaceTracker::Get()->GetSurfaceCount());
 #endif
 
+  // Synchronously stop any in-process GPU thread early. Otherwise,
+  // under rare timings when the thread is still in Init(),
+  // it could crash as it fails to find a message pipe to the host.
+  if (in_process_)
+    in_process_gpu_thread_->Stop();
+
   std::string message;
   bool block_offscreen_contexts = true;
   if (!in_process_ && process_launched_) {
