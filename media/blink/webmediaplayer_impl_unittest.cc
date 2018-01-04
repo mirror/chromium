@@ -134,7 +134,7 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   void ActivateViewportIntersectionMonitoring(bool activate) override {}
   void MediaRemotingStarted(
       const blink::WebString& remote_device_friendly_name) override {}
-  void MediaRemotingStopped() override {}
+  void MediaRemotingStopped(const blink::WebString& user_message) override {}
 
   void set_is_autoplaying_muted(bool value) { is_autoplaying_muted_ = value; }
 
