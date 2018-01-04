@@ -61,10 +61,11 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
     return nullptr;
   }
 
-  return Create(element,
-                EffectInput::Convert(element, keyframes, composite,
-                                     script_state, exception_state),
-                timing);
+  KeyframeEffectModelBase* model = EffectInput::Convert(
+      element, keyframes, composite, script_state, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  return Create(element, model, timing);
 }
 
 KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
@@ -78,11 +79,13 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
         element->GetDocument(),
         WebFeature::kAnimationConstructorKeyframeListEffectNoTiming);
   }
-  return Create(
-      element,
+
+  KeyframeEffectModelBase* model =
       EffectInput::Convert(element, keyframes, EffectModel::kCompositeReplace,
-                           script_state, exception_state),
-      Timing());
+                           script_state, exception_state);
+  if (exception_state.HadException())
+    return nullptr;
+  return Create(element, model, Timing());
 }
 
 KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
