@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62bb0009_272e21fa",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "Having a reference or a pointer to a GC-managed class is prohibited. :(",
+      "parentUuid": "c050b194_2bafb393",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82beeee5_a73ba05c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2de9bde_ff3196a5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "I would prefer not to expose AddCount in additional places, the reason is that AddCount is very dangerous API due to the possibility of the overflows. We\u0027re using AddCount for the scheduler metrics, but it required careful selection of the units, consultation with uma team and changes to histogram code to make them more resistant against long-running sessions (in this situation we\u0027re reporting kilobytes instead of bytes to avoid overflows).\n\nFor now I\u0027ve refactored this to use primitive which we already use in the scheduler to encapsulate working with histograms there.",
+      "parentUuid": "82beeee5_a73ba05c",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0471775a_6b05d063",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "I think that these metrics provide additional benefit -- they show us the full distribution instead of just a sum. I think that we might decrease the granularity here, but record some distributions (e.g. overall/main frame/subframe). However, should we do it in a separate patch?\n\nRe AddCount(): see my comment above.",
+      "parentUuid": "557863e0_05b15cb0",
+      "range": {
+        "startLine": 184,
+        "startChar": 1,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b09160_1ac976c6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "07273361_007085a5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b09160_1ac976c6",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6334161_482e14b1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d308f36_8db6697d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "Ack. Continuing the discussion in the comment above.",
+      "parentUuid": "d6334161_482e14b1",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +209,30 @@
       "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1222e6_8dbc1b6f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6932,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T16:00:13Z",
+      "side": 1,
+      "message": "This one isn\u0027t completed by any suffixes, so the comment shouldn\u0027t be here. Thanks for spotting.",
+      "parentUuid": "6dc9476a_1f3dc932",
+      "range": {
+        "startLine": 6932,
+        "startChar": 5,
+        "endLine": 6932,
+        "endChar": 80
+      },
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
