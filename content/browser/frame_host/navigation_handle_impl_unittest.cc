@@ -84,8 +84,6 @@ class NavigationHandleImplTest : public RenderViewHostImplTestHarness {
   void SetUp() override {
     RenderViewHostImplTestHarness::SetUp();
     CreateNavigationHandle();
-    EXPECT_EQ(REQUEST_CONTEXT_TYPE_UNSPECIFIED,
-              test_handle_->request_context_type_);
     contents()->GetMainFrame()->InitializeRenderFrameIfNeeded();
   }
 
@@ -113,9 +111,6 @@ class NavigationHandleImplTest : public RenderViewHostImplTestHarness {
     // It's safe to use base::Unretained since the NavigationHandle is owned by
     // the NavigationHandleImplTest.
     test_handle_->WillStartRequest(
-        "GET", nullptr, Referrer(), false, ui::PAGE_TRANSITION_LINK, false,
-        REQUEST_CONTEXT_TYPE_LOCATION,
-        blink::WebMixedContentContextType::kBlockable,
         base::Bind(&NavigationHandleImplTest::UpdateThrottleCheckResult,
                    base::Unretained(this)));
   }
@@ -262,7 +257,14 @@ class NavigationHandleImplTest : public RenderViewHostImplTestHarness {
         base::TimeTicks::Now(), 0,
         false,                  // started_from_context_menu
         CSPDisposition::CHECK,  // should_check_main_world_csp
-        false);                 // is_form_submission
+        false,                  // is_form_submission
+        "GET",
+        nullptr,  // resource_request_body
+        Referrer(),
+        false,  // has_user_gesture
+        ui::PAGE_TRANSITION_LINK,
+        false,  // is_external_protocol
+        REQUEST_CONTEXT_TYPE_LOCATION);
   }
 
  private:

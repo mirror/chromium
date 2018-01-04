@@ -69,8 +69,7 @@ class InterceptNavigationThrottleTest
             test_handle.get(),
             base::Bind(&MockInterceptCallbackReceiver::ShouldIgnoreNavigation,
                        base::Unretained(mock_callback_receiver_.get()))));
-    return test_handle->CallWillStartRequestForTesting(
-        is_post, content::Referrer(), false, ui::PAGE_TRANSITION_LINK, false);
+    return test_handle->CallWillStartRequestForTesting();
   }
 
   NavigationThrottle::ThrottleCheckResult Simulate302() {
@@ -82,8 +81,7 @@ class InterceptNavigationThrottleTest
             test_handle.get(),
             base::Bind(&MockInterceptCallbackReceiver::ShouldIgnoreNavigation,
                        base::Unretained(mock_callback_receiver_.get()))));
-    test_handle->CallWillStartRequestForTesting(
-        true, content::Referrer(), false, ui::PAGE_TRANSITION_LINK, false);
+    test_handle->CallWillStartRequestForTesting();
     return test_handle->CallWillRedirectRequestForTesting(GURL(kTestUrl), false,
                                                           GURL(), false);
   }
