@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2586f27_9b4376bf",
+        "filename": "third_party/WebKit/Source/core/dom/IdleDeadline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-04T10:59:59Z",
+      "side": 0,
+      "message": "This is related - without this change the \u00270\u0027 could get clamped to 100us, which breaks the spec (we should be exactly zero for negative or preempted idle deadlines).",
+      "parentUuid": "997453bb_29879f18",
+      "revId": "0f0700e77d47b6f1f22f58408cd2529dd152367a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e9e6932_ca43d3ca",
         "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-04T10:55:58Z",
       "side": 0,
       "message": "same here?",
+      "revId": "0f0700e77d47b6f1f22f58408cd2529dd152367a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cf25e9_3303faa6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2018-01-04T10:59:59Z",
+      "side": 0,
+      "message": "This was a cleanup since we do clamping via Performance.now(). We could land in a seperate CL if it is a concern here.",
+      "parentUuid": "3e9e6932_ca43d3ca",
       "revId": "0f0700e77d47b6f1f22f58408cd2529dd152367a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
