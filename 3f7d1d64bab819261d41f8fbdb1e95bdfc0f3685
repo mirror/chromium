@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04809bf1_b93a8157",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T14:23:13Z",
+      "side": 1,
+      "message": "I think all parameters can now be made available at start time, and if I read the changes correctly that is the case. So we should remove this comment.",
+      "revId": "3f7d1d64bab819261d41f8fbdb1e95bdfc0f3685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
