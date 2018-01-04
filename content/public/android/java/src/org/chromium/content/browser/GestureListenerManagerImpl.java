@@ -23,7 +23,8 @@ import org.chromium.content_public.browser.WebContents;
  * managed by {@link WebContents}.
  */
 @JNINamespace("content")
-public class GestureListenerManagerImpl implements GestureListenerManager {
+public class GestureListenerManagerImpl
+        implements GestureListenerManager, WebContentsUserData.DestroyObserver {
     private static final class UserDataFactoryLazyHolder {
         private static final UserDataFactory<GestureListenerManagerImpl> INSTANCE =
                 GestureListenerManagerImpl::new;
@@ -157,8 +158,8 @@ public class GestureListenerManagerImpl implements GestureListenerManager {
         for (mIterator.rewind(); mIterator.hasNext();) mIterator.next().onLongPress();
     }
 
-    @CalledByNative
-    private void onDestroy() {
+    @Override
+    public void onDestroy() {
         for (mIterator.rewind(); mIterator.hasNext();) mIterator.next().onDestroyed();
         mListeners.clear();
     }

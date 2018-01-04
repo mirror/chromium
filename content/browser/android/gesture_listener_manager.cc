@@ -5,6 +5,7 @@
 #include "content/browser/android/gesture_listener_manager.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view_android.h"
+#include "content/public/browser/web_contents.h"
 #include "jni/GestureListenerManagerImpl_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/events/android/gesture_event_type.h"
@@ -18,22 +19,10 @@ using base::android::ScopedJavaLocalRef;
 
 namespace content {
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(GestureListenerManager);
-
 GestureListenerManager::GestureListenerManager(JNIEnv* env,
                                                const JavaParamRef<jobject>& obj,
                                                WebContents* web_contents)
     : java_ref_(env, obj) {
-  // Does what GestureListenerManager::CreateForWebContents is supposed to do.
-  web_contents->SetUserData(UserDataKey(), base::WrapUnique(this));
-}
-
-GestureListenerManager::~GestureListenerManager() {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return;
-  Java_GestureListenerManagerImpl_onDestroy(env, j_obj);
 }
 
 void GestureListenerManager::GestureEventAck(
@@ -93,10 +82,12 @@ void JNI_GestureListenerManagerImpl_Init(
     const JavaParamRef<jobject>& jweb_contents) {
   auto* web_contents = WebContents::FromJavaWebContents(jweb_contents);
   CHECK(web_contents) << "Should be created with a valid WebContents.";
-  DCHECK(!GestureListenerManager::FromWebContents(web_contents));
 
-  // Owned and managed via WebContentsUserData.
-  new GestureListenerManager(env, obj, web_contents);
+  auto* manager = new GestureListenerManager(env, obj, web_contents);
+  auto* web_contents_impl = static_cast<WebContentsImpl*>(web_contents);
+  WebContentsViewAndroid* view =
+      static_cast<WebContentsViewAndroid*>(web_contents_impl->GetView());
+  view->set_gesture_listener_manager(manager);
 }
 
 }  // namespace content
