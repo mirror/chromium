@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64a5127_df357857",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-04T09:54:57Z",
+      "side": 1,
+      "message": "I think you also need to change chrome/browser/resources/settings/languages_page/languages.js as informed by this comment. Or update the comments to explain why this is no longer true.",
+      "revId": "5fa41d1ea4059a2789e79efe565471a0716d4c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
