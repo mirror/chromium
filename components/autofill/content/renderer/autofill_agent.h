@@ -158,13 +158,13 @@ class AutofillAgent : public content::RenderFrameObserver,
   void FocusedNodeChanged(const blink::WebNode& node) override;
   void OnDestruct() override;
 
-  // Fires Mojo messages for a given form submission. Will always fire
-  // AutofillHostMsg_WillSubmitForm and AutofillHostMsg_FormSubmitted
-  // in sequence.
-  // TODO(crbug.com/785519): Combine those two events to one.
+  // Fires Mojo messages for a given form submission.
   void FireHostSubmitEvents(const blink::WebFormElement& form,
-                            bool known_success);
-  void FireHostSubmitEvents(const FormData& form_data, bool known_success);
+                            bool known_success,
+                            mojom::AutofillDriver::SubmissionSource source);
+  void FireHostSubmitEvents(const FormData& form_data,
+                            bool known_success,
+                            mojom::AutofillDriver::SubmissionSource source);
 
   // Shuts the AutofillAgent down on RenderFrame deletion. Safe to call multiple
   // times.
