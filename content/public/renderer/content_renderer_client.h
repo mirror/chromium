@@ -18,6 +18,7 @@
 #include "base/task_scheduler/task_scheduler.h"
 #include "build/build_config.h"
 #include "content/public/common/content_client.h"
+#include "content/public/renderer/url_loader_throttle_provider.h"
 #include "media/base/decode_capabilities.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/platform/WebContentSettingsClient.h"
@@ -383,6 +384,9 @@ class CONTENT_EXPORT ContentRendererClient {
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage);
+
+  virtual std::unique_ptr<URLLoaderThrottleProvider>
+  CreateWorkerURLLoaderThrottleProvider();
 };
 
 }  // namespace content

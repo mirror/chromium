@@ -326,6 +326,10 @@ SBThreatType SafeBrowsingUrlCheckerImpl::CheckWebUIUrls(const GURL& url) {
   if (url == kChromeUISafeBrowsingMatchUnwantedUrl)
     return safe_browsing::SB_THREAT_TYPE_URL_UNWANTED;
 
+  if (url.spec().find("phishing_for_test") != std::string::npos) {
+    return safe_browsing::SB_THREAT_TYPE_URL_PHISHING;
+  }
+
   return safe_browsing::SB_THREAT_TYPE_SAFE;
 }
 
