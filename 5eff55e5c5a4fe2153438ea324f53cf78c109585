@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eeff341_ac2ccea4",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_update_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-04T18:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7446819c_8c273051",
+      "revId": "5eff55e5c5a4fe2153438ea324f53cf78c109585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820705a4_83de5c0e",
         "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_update_checker.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5eff55e5c5a4fe2153438ea324f53cf78c109585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba804b5d_0cd0f4d5",
+        "filename": "chrome/browser/chromeos/app_mode/startup_app_launcher_update_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-04T18:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820705a4_83de5c0e",
+      "revId": "5eff55e5c5a4fe2153438ea324f53cf78c109585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
