@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d25c964_a960a9dc",
+        "filename": "ios/web/shell/test/plugin_placeholder_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-04T22:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b19086_9b02f9a5",
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4f956d_2ce645e3",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c87f8a_6cc49dda",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-04T22:17:12Z",
+      "side": 1,
+      "message": "Why, yes there is! Added tests there.",
+      "parentUuid": "aa4f956d_2ce645e3",
+      "range": {
+        "startLine": 708,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 19
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b306e88c_5b99568e",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-04T22:17:12Z",
+      "side": 1,
+      "message": "I agree that name isn\u0027t great. The fact that you questioned the logic made me re-write it to make it more clear. PTAL at the latest patch. (I won\u0027t disclose the intention of the logic here to ensure the new code makes sense to others in the future without background knowledge.)",
+      "parentUuid": "f17beda6_aed1d351",
+      "range": {
+        "startLine": 714,
+        "startChar": 6,
+        "endLine": 714,
+        "endChar": 39
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a34fb2e8_a448418d",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d46971_67d24fde",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-04T22:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a34fb2e8_a448418d",
+      "range": {
+        "startLine": 737,
+        "startChar": 12,
+        "endLine": 737,
+        "endChar": 13
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
