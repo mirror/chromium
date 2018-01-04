@@ -16,6 +16,24 @@
       "revId": "ff74506720ada9c5e0fe18ef162faf9cddac0313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65dc924_5ff644c1",
+        "filename": "build/android/gradle/root.jinja",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2018-01-04T13:40:32Z",
+      "side": 1,
+      "message": "Tried these other ones, unfortunately only alpha04 works with canary 4 for 3.1, and alpha+ matches any, so gradle version isn\u0027t high enough. Apparently + is also discouraged since it leads to unreproducible builds and errors.\n\nGood thought though! Hopefully the AS team will at some point make building for canary less painful, but for now, I think we should just follow what the canary package in goobuntu has to make it work for the majority of devs (this one doesn\u0027t update every canary push).",
+      "parentUuid": "ae36bdab_5211ed36",
+      "revId": "ff74506720ada9c5e0fe18ef162faf9cddac0313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
