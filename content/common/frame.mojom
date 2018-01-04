@@ -96,6 +96,11 @@ interface FrameNavigationControl {
       int32 error_code,
       string? error_page_content,
       URLLoaderFactoryBundle? subresource_loader_factories);
+
+  // Tells the renderer that a same-document navigation is ready to commit.
+  CommitSameDocumentNavigation(
+      CommonNavigationParams common_params,
+      RequestNavigationParams request_params);
 };
 
 // Implemented by the frame (e.g. renderer processes).
