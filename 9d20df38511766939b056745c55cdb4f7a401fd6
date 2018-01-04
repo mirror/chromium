@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df17ac39_411f6365",
+        "filename": "content/browser/loader/mojo_async_resource_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-04T17:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4b1fb0_92305bcb",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d7747a0_4a1aef65",
         "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43bf702_85876990",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-04T17:47:13Z",
+      "side": 1,
+      "message": "I was feeling guilty of using a mojo header in the non-mojo implementation.\nIn the next patch I will include the header.",
+      "parentUuid": "2d7747a0_4a1aef65",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf5d3793_c4e3e9e0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-04T17:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d740f3e_4d1b5de5",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81b5cbfb_540152b6",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd8ed0e_f9e925ce",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-04T17:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b5cbfb_540152b6",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
