@@ -105,6 +105,24 @@
       "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b4475e_9e5786b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T10:24:47Z",
+      "side": 1,
+      "message": "hugo@, the change is needed in this CL. Priviously tricky method is used:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/781326/16/third_party/WebKit/Source/core/page/FocusController.cpp#b1442\nhttps://chromium-review.googlesource.com/c/chromium/src/+/781326/16/third_party/WebKit/Source/core/page/FocusController.cpp#b1470",
+      "parentUuid": "36f446d0_0fb3b810",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
