@@ -685,9 +685,9 @@ TEST_F(U2fRegisterTest, TestAuthenticatorData) {
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
 
   std::unique_ptr<AuthenticatorData> authenticator_data =
-      AuthenticatorData::Create(kTestRelyingPartyId, flags,
-                                std::vector<uint8_t>(4, 0) /* counter */,
-                                std::move(attested_data));
+      std::make_unique<AuthenticatorData>(
+          kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
+          std::move(attested_data));
 
   EXPECT_EQ(GetTestAuthenticatorDataBytes(),
             authenticator_data->SerializeToByteArray());
@@ -707,9 +707,9 @@ TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
       static_cast<uint8_t>(AuthenticatorData::Flag::kTestOfUserPresence) |
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
   std::unique_ptr<AuthenticatorData> authenticator_data =
-      AuthenticatorData::Create(kTestRelyingPartyId, flags,
-                                std::vector<uint8_t>(4, 0) /* counter */,
-                                std::move(attested_data));
+      std::make_unique<AuthenticatorData>(
+          kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
+          std::move(attested_data));
 
   // Construct the attestation statement.
   std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =

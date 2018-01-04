@@ -119,7 +119,7 @@ bool U2fRegister::CheckedForDuplicateRegistration() {
 void U2fRegister::OnTryDevice(bool is_duplicate_registration,
                               U2fReturnCode return_code,
                               const std::vector<uint8_t>& response_data) {
-  RegisterResponseData response;
+  base::Optional<RegisterResponseData> response;
   switch (return_code) {
     case U2fReturnCode::SUCCESS:
       state_ = State::COMPLETE;
