@@ -16,6 +16,24 @@
       "revId": "dd603cb225524a2bb552b5af1463d547392379e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112ab511_f934b78a",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T17:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b6a0de_1e398b97",
+      "revId": "dd603cb225524a2bb552b5af1463d547392379e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
