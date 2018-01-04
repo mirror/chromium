@@ -569,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "377c3c81_56c5c87c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T17:03:25Z",
+      "side": 1,
+      "message": "Definitely, I\u0027m actively working on cleaning this up. The followup https://chromium-review.googlesource.com/c/chromium/src/+/828407 (waiting for your review) should help by moving a good chunk of attributes and methods to a XRFrameTransport class that\u0027s constructed on starting presentation and destructed on ending presentation, and I think that already helps make the life cycle a lot clearer. Among other things, that removes the need to reset attributes manually on exiting presentation.",
+      "parentUuid": "4d35dac7_2464fe91",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55850ac1_4fab6994",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
