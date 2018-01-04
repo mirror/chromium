@@ -16,6 +16,29 @@
       "revId": "5fa41d1ea4059a2789e79efe565471a0716d4c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf49a573_aaf2b417",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2018-01-04T22:20:14Z",
+      "side": 1,
+      "message": "I\u0027m not clear why this comment refers to kLanguageCodeChinesePairs, since it\u0027s used above, but never here.\n\nAlso, you can probably just return without concatenating |language| - it\u0027s being split into language and region (|main_part| and |tail_part|) above, and why recombine if we don\u0027t have to?\n\nMost importantly, while the comment says \"leave zh as-is\", the code looks at first glance like it wouldn\u0027t leave as-is.",
+      "range": {
+        "startLine": 104,
+        "startChar": 28,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "5fa41d1ea4059a2789e79efe565471a0716d4c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
