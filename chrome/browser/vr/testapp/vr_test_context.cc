@@ -178,6 +178,9 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_E:
         model_->exiting_vr = !model_->exiting_vr;
         break;
+      case ui::DomCode::US_P:
+        model_->reposition_mode = !model_->reposition_mode;
+        break;
       default:
         break;
     }

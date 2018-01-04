@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/elements/content_element.h"
 
 #include "chrome/browser/vr/ui_element_renderer.h"
+#include "chrome/browser/vr/ui_scene_constants.h"
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -20,6 +21,16 @@ static constexpr float kContentBoundsPropagationThreshold = 0.2f;
 // Changes of the aspect ratio lead to a
 // distorted content much more quickly. Thus, have a smaller threshold here.
 static constexpr float kContentAspectRatioPropagationThreshold = 0.01f;
+
+gfx::Vector3dF GetNormalFromTransform(const gfx::Transform& transform) {
+  gfx::Vector3dF x_axis(1, 0, 0);
+  gfx::Vector3dF y_axis(0, 1, 0);
+  transform.TransformVector(&x_axis);
+  transform.TransformVector(&y_axis);
+  gfx::Vector3dF normal = CrossProduct(x_axis, y_axis);
+  normal.GetNormalized(&normal);
+  return normal;
+}
 
 }  // namespace
 
@@ -127,8 +138,17 @@ bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
   // is animated. This approach only works with the current scene hierarchy and
   // set of animated properties.
   gfx::Transform target_transform = ComputeTargetWorldSpaceTransform();
+  gfx::Point3F point_center(0, 0, 0);
+  target_transform.TransformPoint(&point_center);
+  gfx::Vector3dF element_normal = GetNormalFromTransform(target_transform);
+  float distance = gfx::DotProduct(point_center - kOrigin, -element_normal);
+  //  float distance = std::sqrt(point_center.SquaredDistanceTo({0, 0, 0}));
+  // screen_size_related_transform.Translate3d(0, 0, point_center.z());
+
   gfx::SizeF screen_size =
-      CalculateScreenSize(projection_matrix_, target_transform, target_size);
+      //      CalculateScreenSize(projection_matrix_,
+      //      screen_size_related_transform, target_size);
+      CalculateScreenSize(projection_matrix_, distance, target_size);
 
   float aspect_ratio = target_size.width() / target_size.height();
   gfx::SizeF screen_bounds;
@@ -146,6 +166,15 @@ bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
           kContentBoundsPropagationThreshold ||
       std::abs(aspect_ratio - last_content_aspect_ratio_) >
           kContentAspectRatioPropagationThreshold) {
+    LOG(ERROR) << "=============shouldn't trigger this============";
+    LOG(ERROR) << "====depth===" << distance
+               << "===screen size ===" << screen_size.ToString();
+    LOG(ERROR) << "===width diff==="
+               << std::abs(screen_bounds.width() -
+                           last_content_screen_bounds_.width());
+    LOG(ERROR) << "===height diff==="
+               << std::abs(screen_bounds.height() -
+                           last_content_screen_bounds_.height());
     bounds_changed_callback_.Run(screen_bounds);
     last_content_screen_bounds_.set_width(screen_bounds.width());
     last_content_screen_bounds_.set_height(screen_bounds.height());
