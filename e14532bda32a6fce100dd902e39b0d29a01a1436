@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7c24c05_c5809a8a",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:10:39Z",
+      "side": 1,
+      "message": "This should be ::new as per recent CL that landed. It had a test, can you verify this fails that test without ::?",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7950878_6bb8d3e3",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:10:39Z",
+      "side": 1,
+      "message": "Every use of OptionalStorageBase looks like OptionalStorageBase\u003cT\u003e. What uses this template with |true|?",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a7b345_1e7f8f01",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:10:39Z",
+      "side": 1,
+      "message": "::new also",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2536eb31_eabdde3f",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:10:39Z",
+      "side": 1,
+      "message": "Is this done?",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ed251e_77d0a7ee",
         "filename": "base/optional.h",
         "patchSetId": 1
