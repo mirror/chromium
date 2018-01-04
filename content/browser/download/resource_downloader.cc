@@ -188,7 +188,7 @@ void ResourceDownloader::InterceptResponse(
     save_info->suggested_name = base::UTF8ToUTF16(suggested_filename.value());
   url_loader_client_ = std::make_unique<DownloadResponseHandler>(
       resource_request_.get(), this, std::move(save_info), false, false, false,
-      std::move(url_chain));
+      DownloadSource::NAVIGATION, std::move(url_chain));
 
   // Simulate on the new URLLoaderClient calls that happened on the old client.
   net::SSLInfo info;

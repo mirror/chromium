@@ -144,7 +144,8 @@ std::string DownloadRequestUtils::GetRequestOriginFromRequest(
 
 DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
                                          Delegate* delegate,
-                                         bool is_parallel_request)
+                                         bool is_parallel_request,
+                                         DownloadSource download_source)
     : delegate_(delegate),
       request_(request),
       download_id_(DownloadItem::kInvalidId),
@@ -155,7 +156,8 @@ DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
       was_deferred_(false),
       is_partial_request_(false),
       started_(false),
-      abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE) {
+      abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE),
+      download_source_(download_source) {
   DCHECK(request_);
   DCHECK(delegate_);
   if (!is_parallel_request)
@@ -226,6 +228,7 @@ DownloadRequestCore::CreateDownloadCreateInfo(DownloadInterruptReason result) {
   create_info->response_headers = request()->response_headers();
   create_info->offset = create_info->save_info->offset;
   create_info->fetch_error_body = fetch_error_body_;
+  create_info->download_source = download_source_;
   return create_info;
 }
 
