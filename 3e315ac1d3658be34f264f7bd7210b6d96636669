@@ -70,6 +70,30 @@
       "revId": "3e315ac1d3658be34f264f7bd7210b6d96636669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b13a22_6573d1c5",
+        "filename": "ui/base/ime/input_method_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2018-01-04T01:16:00Z",
+      "side": 1,
+      "message": "We just need to ignored them, but only for the WM_CHAR/WM_SYSCHAR right after physical key events. Because the Windows on-screen keyboard can issue WM_CHAR/WM_SYSCHAR without preceding physical key events.",
+      "parentUuid": "698fb93d_d0b61d27",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "3e315ac1d3658be34f264f7bd7210b6d96636669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
