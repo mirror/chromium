@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b4445a_7b37251f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_exclusion.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T19:17:39Z",
+      "side": 1,
+      "message": "This pair of files should be moved into exclusions/ as well, I suppose. Doing it in a follow-up CL is probably better, though.",
+      "revId": "a5e58b620f894eac198ffe431dd7fdaa14b0a2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

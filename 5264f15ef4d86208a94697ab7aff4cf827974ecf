@@ -938,6 +938,24 @@
     },
     {
       "key": {
+        "uuid": "960d1085_42de24a3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T19:17:39Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t get this. New shelves are created like this:\n\nNGShelf new_shelf(exclusion_end_offset), and this sets NGShelf::block_offset to exclusion_end_offset.\n\nexclusion_end_offset is exclusion-\u003erect.BlockEndOffset().\nNGBfcRect::BlockEndOffset() is end_offset.block_offset, and end_offset.block_offset certainly looks end-point exclusive to me, e.g. in NGBfcRect::BlockSize(), which returns end_offset.block_offset - start_offset.block_offset.",
+      "parentUuid": "bfee55a1_39344723",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "444535a4_ef6ed879",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
         "patchSetId": 10
@@ -1338,6 +1356,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7991c1_da62c988",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T19:17:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e696c369_5a431eb3",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
