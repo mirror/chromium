@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e7ab782_da08aa25",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-04T02:22:34Z",
+      "side": 1,
+      "message": "nit: If you still need to expose this method, can you make this a static method? You could also create a public static ShouldUseClientLoFiForRequestForTesting(...) method that calls this one in order to avoid friending the test class.",
+      "range": {
+        "startLine": 324,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 36
+      },
+      "revId": "38538f871f3c7c73868bceba6f3622f8a49b0e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdf704d_d899f3d8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-04T02:22:34Z",
+      "side": 1,
+      "message": "Instead of testing the private ShouldUseClientLoFiForRequest, would it be possible to test the MaybeAllowPlaceholderForRequest method directly? You could create a blink::DummyPageHolder to get a LocalFrame for testing, and you could also create a subclass of EmptyLocalFrameClient that returns a preset value for LocalFrameClient::GetPreviewsStateForFrame().\n\nIIUC something like the following might work:\n\nclass TestLocalFrameClient : public EmptyLocalFrameClient {\n public:\n  explicit TestLocalFrameClient(PreviewsState frame_previews_state)\n      : frame_previews_state_(frame_previews_state) {}\n  ~TestLocalFrameClient() override \u003d default;\n\n  PreviewsState GetPreviewsStateForFrame() const override {\n    return frame_previews_state_;\n  }\n\n private:\n  const PreviewsState frame_previews_state_;\n};\n\nTEST(LocalFrameTest, MaybeAllowPlaceholderImage) {\n  ResourceRequest request;\n  request.SetPreviewsState(WebURLRequest::kClientLoFiOn);\n  FetchParameters params(request);\n  DummyPageHolder::Create(IntSize(800, 600), nullptr,\n                          new TestLocalFrameClient(WebURLRequest::kPreviewsOff))\n      -\u003eGetFrame().MaybeAllowImagePlaceholder(params);\n\n  EXPECT_EQ(FetchParameters::kAllowPlaceholder,\n            params.GetPlaceholderImageRequestType());\n\n  ... etc ...\n}",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "38538f871f3c7c73868bceba6f3622f8a49b0e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
