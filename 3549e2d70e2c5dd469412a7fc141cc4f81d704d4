@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83dc8268_8180b71a",
+        "filename": "components/autofill/core/browser/phone_number_i18n.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-04T16:09:53Z",
+      "side": 1,
+      "message": "I think you should be making the same checks for validity of the phone number before formatting here similar to GetFormattedPhoneNumberForDisplay since they have similar usages.",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 33
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70983e7_0999f0ea",
+        "filename": "components/autofill/core/browser/phone_number_i18n.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-04T16:09:53Z",
+      "side": 1,
+      "message": "This needs better comments. that it:\nformats the phone number from the given |profile| if it\u0027s a valid number for the country of the given |profile|, or the country of the given |locale| as a fallback. and that it returns the phone number from the given |profile| without formatting if the number is invalid.",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 48
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedca051_c29ba938",
+        "filename": "components/autofill/core/browser/phone_number_i18n.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-04T16:09:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t this format the number regardless? Why not just expose FromatPhoneNumber function in the anonymous namespace?",
+      "range": {
+        "startLine": 107,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "3549e2d70e2c5dd469412a7fc141cc4f81d704d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
