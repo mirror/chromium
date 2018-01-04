@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "26a73fae_eee8d691",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-04T23:44:50Z",
+      "side": 1,
+      "message": "Can we instead just add this piece of code when it\u0027s actually needed?",
+      "parentUuid": "ec7f09e7_ca4b7ca3",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1071a0a6_238a9705",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "8eef1a92_7758a143",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-04T23:44:50Z",
+      "side": 1,
+      "message": "doesn\u0027t seem to be done :)",
+      "parentUuid": "b288d4a7_a061c117",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ec7b512_1e763970",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -174,6 +210,24 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba2bab44_d762a356",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-04T23:44:50Z",
+      "side": 1,
+      "message": "did you forget to upload patch set where this is actually done?",
+      "parentUuid": "d739decd_476a51c5",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
