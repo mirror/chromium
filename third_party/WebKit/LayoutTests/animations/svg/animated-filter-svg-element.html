@@ -22,3 +22,17 @@
 <svg>
   <rect id="child" fill="blue" x="0" y="0" height="100" width="100" />
 </svg>
+
+<script>
+if (window.testRunner)
+  testRunner.waitUntilDone();
+
+function waitForCompositor() {
+  return child.animate({opacity: [1, 1]}, 1).finished;
+}
+
+waitForCompositor().then(() => {
+  if (window.testRunner)
+    testRunner.notifyDone();
+});
+</script>
