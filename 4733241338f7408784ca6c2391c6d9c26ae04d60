@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a83081a_3c30496e",
+        "filename": "ui/gfx/text_elider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T12:03:30Z",
+      "side": 0,
+      "message": "I looked into this a bit, but I think it\u0027s too messy. The download shelf is a good example of why. In an ideal world, any eliding decisions happen really late in UI drawing -- e.g. views::Label should \"always\" do eliding. But things like the download shelf do weird things like use one line for the filename and another for an informational message; separated by a \\n, but neither line should exceed a maximum width.\n\nBut I still want to explore more gfx::RenderText re-use. E.g. gfx::ElideFilename calls this a bunch, and it passes a typesetter 5 times, which means *at least* 5 gfx::RenderText instances are created, and then have all their properties updated.\n\nI\u0027m thinking something like a TextSizer whose constructor takes a gfx::Typesetter, and it wraps a gfx::RenderText that can be re-used any number of times. TextSizer then gets instance methods for things like StringWidth* Elide* etc. and just asks its RenderText instance after setting appropriate flags.",
+      "revId": "4733241338f7408784ca6c2391c6d9c26ae04d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

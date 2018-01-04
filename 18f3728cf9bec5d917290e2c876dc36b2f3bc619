@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2010a99e_9dfc3ba0",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T12:03:30Z",
+      "side": 1,
+      "message": "I can\u0027t decide whether it\u0027s better to use the default argument for these or not. To minimise churn for the more heavily used methods, the plan is to leave code under c/b/ui/views unmodified where possible. Then (per the comment in ui/gfx/text_constants.h) just flip the value of gfx::Typesetter::DEFAULT to HARFBUZZ instead. (then delete the Cocoa code)\n\nFor these, I guess it\u0027s nice knowing there are other users of gfx::ElideFilename..",
+      "revId": "18f3728cf9bec5d917290e2c876dc36b2f3bc619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
