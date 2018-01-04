@@ -501,8 +501,15 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     if (speculative_render_frame_host_) {
       // If the speculative RenderFrameHost is trying to commit a navigation,
       // inform the NavigationController that the load of the corresponding
-      // NavigationEntry stopped.
-      if (speculative_render_frame_host_->navigation_handle()) {
+      // NavigationEntry stopped if needed. This is the case if the new
+      // navigation is a navigation to a different NavigationEntry that was
+      // started from BeginNavigation. If the navigation was started through the
+      // NavigationController, the NavigationController has already updated its
+      // state properly, and needs not be notified.
+      if (speculative_render_frame_host_->navigation_handle() &&
+          speculative_render_frame_host_->navigation_handle()
+                  ->pending_nav_entry_id() != request.nav_entry_id() &&
+          request.from_begin_navigation()) {
         frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
             speculative_render_frame_host_->navigation_handle()
                 ->pending_nav_entry_id());
