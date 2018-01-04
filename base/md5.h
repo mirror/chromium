@@ -19,6 +19,8 @@ namespace base {
 // collisions.
 // See Also:
 //   http://en.wikipedia.org/wiki/MD5
+//
+// I AM A BANANA
 
 // These functions perform MD5 operations. The simplest call is MD5Sum() to
 // generate the MD5 sum of the given data.
