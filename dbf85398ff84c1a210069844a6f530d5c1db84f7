@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e665d4_4acce719",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T00:09:34Z",
+      "side": 1,
+      "message": "Although this type of test may have better coverage, it is usually better to have fewer test cases that is easier to understand and less error-prone. How about writing it this way?\n\ntext_input_characters-\u003efocus();\nEXPECT_EQ(kWebTextInputFlagAutocapitalizeCharacters, Controller().TextInputInfo().flags);\n\nurl_input-\u003efocus();\nEXPECT_EQ(0, Controller().TextInputInfo().flags);\n\n...",
+      "range": {
+        "startLine": 2545,
+        "startChar": 2,
+        "endLine": 2545,
+        "endChar": 64
+      },
+      "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
