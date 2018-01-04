@@ -187,4 +187,39 @@ TEST(CrossSiteDocumentClassifierTest, SniffForJSON) {
       << "A colon character inside a string does not trigger a match";
 }
 
+TEST(CrossSiteDocumentClassifierTest, GetCanonicalMimeType) {
+  std::vector<std::pair<const char*, CrossSiteDocumentMimeType>> tests = {
+      // Basic tests for things in the original implementation:
+      {"text/html", CROSS_SITE_DOCUMENT_MIME_TYPE_HTML},
+      {"text/xml", CROSS_SITE_DOCUMENT_MIME_TYPE_XML},
+      {"application/rss+xml", CROSS_SITE_DOCUMENT_MIME_TYPE_XML},
+      {"application/xml", CROSS_SITE_DOCUMENT_MIME_TYPE_XML},
+      {"application/json", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"text/json", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"text/x-json", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"text/plain", CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN},
+
+      // Other mime types:
+      {"application/foobar", CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS},
+
+      // Regression tests for https://crbug.com/799155:
+      {"application/json+protobuf", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"application/activity+json", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"text/foobar+xml", CROSS_SITE_DOCUMENT_MIME_TYPE_XML},
+
+      // Case-insensitive comparison:
+      {"application/JSON", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+      {"application/activity+JSON", CROSS_SITE_DOCUMENT_MIME_TYPE_JSON},
+  };
+
+  for (const auto& test : tests) {
+    const char* input = test.first;  // e.g. "text/html"
+    CrossSiteDocumentMimeType expected = test.second;
+    CrossSiteDocumentMimeType actual =
+        CrossSiteDocumentClassifier::GetCanonicalMimeType(input);
+    EXPECT_EQ(expected, actual)
+        << "when testing with the following input: " << input;
+  }
+}
+
 }  // namespace content
