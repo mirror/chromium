@@ -45,8 +45,6 @@ namespace blink {
 enum AspectRatioFit { kAspectRatioFitShrink, kAspectRatioFitGrow };
 
 class PLATFORM_EXPORT LayoutSize {
-  DISALLOW_NEW();
-
  public:
   LayoutSize() {}
   explicit LayoutSize(const IntSize& size)
