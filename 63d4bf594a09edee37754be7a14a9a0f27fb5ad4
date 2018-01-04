@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3387733_f1e5a923",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-04T22:16:26Z",
+      "side": 1,
+      "message": "also check if default_wallpaper_image_.isNull() to preserve the original logic?",
+      "revId": "63d4bf594a09edee37754be7a14a9a0f27fb5ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5efc78_888b53da",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-04T22:16:26Z",
+      "side": 1,
+      "message": "optional: It looks like default_wallpaper_image_ and default_wallpaper_file_path_ are associated with each other. You may consider to construct a simple structure to put these two variables together.",
+      "revId": "63d4bf594a09edee37754be7a14a9a0f27fb5ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
