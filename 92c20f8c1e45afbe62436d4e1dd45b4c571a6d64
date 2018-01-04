@@ -98,6 +98,24 @@
       "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cff6c4c_13d2ca4d",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T19:34:04Z",
+      "side": 1,
+      "message": "Okay. Then I think we should use the login UI code under ash to control the system tray/shelf visibility (e.g. in LoginScreenController::ShowLogin/LockScreen). Shelf and system tray code should only provide an API to show/hide.",
+      "parentUuid": "288cbea2_11c3e6a5",
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
