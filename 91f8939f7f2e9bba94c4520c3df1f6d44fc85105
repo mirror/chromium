@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce7c5a60_97c10615",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "Done. It turns out there is a SkImageInfo function to compute this and it checks for overflow already.",
+      "parentUuid": "6dc22852_8fa4eee2",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5801902b_b5711dcd",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2a260551_1c295fc7",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "They do the same thing :)",
+      "parentUuid": "5801902b_b5711dcd",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7cef159_64e93ba0",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-04T16:33:44Z",
       "side": 1,
       "message": "We want to close the shm after mapping it. It stays in the pointer but frees the fd to avoid limits.",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e38754_d8e432d0",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be an issue anymore now that renderer isn\u0027t keeping SharedMemory I think?",
+      "parentUuid": "f7cef159_64e93ba0",
       "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8fd56108_4318a7ef",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5258cd_0dcbb969",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7af9ce6_ffffa1d9",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "06a28c05_ef784bec",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "Done. Removed OnReleaseDisambiguationPopupBitmap() and |disambiguation_bitmaps_| entirely.",
+      "parentUuid": "c7af9ce6_ffffa1d9",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8353cbe1_49976ba7",
         "filename": "content/renderer/render_view_impl.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b1706f_05290520",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-04T18:29:39Z",
+      "side": 1,
+      "message": "Deleted this code.",
+      "parentUuid": "8353cbe1_49976ba7",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
