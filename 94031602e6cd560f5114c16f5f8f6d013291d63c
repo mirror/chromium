@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc77011f_e234d4fa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 103570,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T02:31:12Z",
+      "side": 1,
+      "message": "If we change the definition of \"prefix,N\" to be \"insert \u003cseparator\u003e\u003cprefix\u003e before the N\u0027th dot, or if the N\u0027th dot doesn\u0027t exist, append it to the end of the histogram\", then we don\u0027t need this :)",
+      "revId": "94031602e6cd560f5114c16f5f8f6d013291d63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
