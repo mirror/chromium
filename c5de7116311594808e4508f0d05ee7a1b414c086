@@ -68,6 +68,30 @@
       "revId": "c5de7116311594808e4508f0d05ee7a1b414c086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b8350a_d5acebcc",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-04T23:45:28Z",
+      "side": 1,
+      "message": "I’m considering the default capitalization behavior to be a UI convention that could potentially be different on different platforms.\n\nThe way I wrote the spec (essentially to match Safari, since its behavior seemed more flexible), there’s a distinction drawn in the renderer between “default” behavior (no attribute value specified) and “sentences” capitalization. Currently (without this CL) in Chrome, if you use JavaScript to read the autocapitalize property for an element without autocapitalize specified, you get “sentences.” However, in Safari, you get back an empty string. The spec now says the Safari behavior is correct, so we’re going to start drawing a distinction between the default state and the sentences state.\n\nIf we always convert 0 to “sentences” in Blink, that means we’re basically enforcing that the default behavior will be “sentences” on all platforms.\n\nI don’t think it makes a big deal either way since we can always just come back and change it if we add support on a platform with a different convention. Do you want me to move it into Blink for now?",
+      "parentUuid": "379cdb00_56ecb5c0",
+      "range": {
+        "startLine": 2540,
+        "startChar": 30,
+        "endLine": 2540,
+        "endChar": 31
+      },
+      "revId": "c5de7116311594808e4508f0d05ee7a1b414c086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
