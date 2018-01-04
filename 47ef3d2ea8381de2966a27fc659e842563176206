@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9467be4e_5e478c2a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-04T21:59:51Z",
+      "side": 1,
+      "message": "Does it matter if |Discard| return false here?",
+      "range": {
+        "startLine": 531,
+        "startChar": 17,
+        "endLine": 531,
+        "endChar": 18
+      },
+      "revId": "47ef3d2ea8381de2966a27fc659e842563176206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e416a826_128cd1e6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2018-01-04T21:59:51Z",
+      "side": 1,
+      "message": "Looks like you forgot to uncomment this test :)",
+      "revId": "47ef3d2ea8381de2966a27fc659e842563176206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
