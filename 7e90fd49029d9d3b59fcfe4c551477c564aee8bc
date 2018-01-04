@@ -16,6 +16,24 @@
       "revId": "7e90fd49029d9d3b59fcfe4c551477c564aee8bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6198c6_b100da16",
+        "filename": "ash/accelerators/accelerator_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T16:51:02Z",
+      "side": 1,
+      "message": "You\u0027re right, this doesn\u0027t seem necessady, done.",
+      "parentUuid": "aa4688c6_3a1189be",
+      "revId": "7e90fd49029d9d3b59fcfe4c551477c564aee8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
