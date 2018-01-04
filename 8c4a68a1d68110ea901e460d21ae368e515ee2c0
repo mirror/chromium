@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1658260e_e67e4641",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-04T18:20:59Z",
+      "side": 1,
+      "message": "Beg pardon? This is the updated comment.",
+      "parentUuid": "e33f8e13_fb852840",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 60
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952e069d_b0dc302f",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "987d749e_7631029a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-04T18:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "952e069d_b0dc302f",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 54
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec75ab60_f966ca44",
         "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd49c0e7_896efd73",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2018-01-04T18:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec75ab60_f966ca44",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 3
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
