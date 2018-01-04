@@ -298,4 +298,8 @@ WebClipboard* Platform::Clipboard() {
   return &clipboard;
 }
 
+AomAxTreeProvider* AOMAXTreeProvider() {
+  return AomAxTreeProvider::Create();
+}
+
 }  // namespace blink
