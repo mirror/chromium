@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2954b6e4_e911cd08",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T23:48:10Z",
+      "side": 1,
+      "message": "Good catch, I missed it.\nUpdated.",
+      "parentUuid": "e64a5127_df357857",
+      "revId": "5fa41d1ea4059a2789e79efe565471a0716d4c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf49a573_aaf2b417",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-04T22:20:14Z",
       "side": 1,
       "message": "I\u0027m not clear why this comment refers to kLanguageCodeChinesePairs, since it\u0027s used above, but never here.\n\nAlso, you can probably just return without concatenating |language| - it\u0027s being split into language and region (|main_part| and |tail_part|) above, and why recombine if we don\u0027t have to?\n\nMost importantly, while the comment says \"leave zh as-is\", the code looks at first glance like it wouldn\u0027t leave as-is.",
+      "range": {
+        "startLine": 104,
+        "startChar": 28,
+        "endLine": 104,
+        "endChar": 29
+      },
+      "revId": "5fa41d1ea4059a2789e79efe565471a0716d4c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573a407c_9c0771da",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T23:48:10Z",
+      "side": 1,
+      "message": "I realize the comment doesn\u0027t make it very clear.\nWhat I mean is that, because of kLanguageCodeChineseCompatiblePairs, with Chinese languages we don\u0027t return the main_part only, which is the case for other languages. We return strings like \"zh-TW\" or \"zh-CN\".\nI\u0027ve added one more sentence in the comment, hopefully that makes it cleare. But feel free to elaborate on how you would write it.\n\nThat\u0027s correct that we don\u0027t need to recombine the parts of language! Good call.\n\nAs per \"zh\", it\u0027s an expection AMONG Chinese languages, because it has no mapping, so we return it as is, meaning that given \"zh\" as input to this function, we return \"zh\".",
+      "parentUuid": "cf49a573_aaf2b417",
       "range": {
         "startLine": 104,
         "startChar": 28,
