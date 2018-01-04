@@ -391,10 +391,6 @@ class ASH_EXPORT WallpaperController
   void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
   void UpdateCustomWallpaperLayout(mojom::WallpaperUserInfoPtr user_info,
                                    wallpaper::WallpaperLayout layout) override;
-  // TODO(crbug.com/776464): |ShowUserWallpaper| is incomplete until device
-  // policy wallpaper is migrated. Callers from chrome should use
-  // |WallpaperManager::ShowUserWallpaper| instead. Callers in ash can't use it
-  // for now.
   void ShowUserWallpaper(mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(mojom::WallpaperUserInfoPtr user_info,
