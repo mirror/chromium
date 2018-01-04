@@ -17,13 +17,13 @@
 #include "base/containers/id_map.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/shared_memory.h"
 #include "base/observer_list.h"
 #include "base/process/process.h"
 #include "base/strings/string16.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "cc/input/browser_controls_state.h"
-#include "components/viz/common/quads/shared_bitmap.h"
 #include "content/common/content_export.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/navigation_gesture.h"
@@ -521,7 +521,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnPluginActionAt(const gfx::Point& location,
                         const blink::WebPluginAction& action);
   void OnMoveOrResizeStarted();
-  void OnReleaseDisambiguationPopupBitmap(const viz::SharedBitmapId& id);
   void OnResolveTapDisambiguation(double timestamp_seconds,
                                   gfx::Point tap_viewport_offset,
                                   bool is_long_press);
@@ -785,9 +784,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   // NOTE: stats_collection_observer_ should be the last members because their
   // constructors call the AddObservers method of RenderViewImpl.
   std::unique_ptr<StatsCollectionObserver> stats_collection_observer_;
-
-  std::map<viz::SharedBitmapId, std::unique_ptr<viz::SharedBitmap>>
-      disambiguation_bitmaps_;
 
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
 
