@@ -211,7 +211,8 @@ LayoutRect RootFrameViewport::ScrollIntoView(const LayoutRect& rect_in_content,
                                              const ScrollAlignment& align_y,
                                              bool is_smooth,
                                              ScrollType scroll_type,
-                                             bool is_for_scroll_sequence) {
+                                             bool is_for_scroll_sequence,
+                                             bool needs_zoom_in_main_frame) {
   // We want to move the rect into the viewport that excludes the scrollbars so
   // we intersect the visual viewport with the scrollbar-excluded frameView
   // content rect. However, we don't use visibleContentRect directly since it

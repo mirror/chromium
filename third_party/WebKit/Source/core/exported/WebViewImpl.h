@@ -472,6 +472,8 @@ class CORE_EXPORT WebViewImpl final
 
   void RequestDecode(const PaintImage&, base::OnceCallback<void(bool)>);
 
+  void ZoomIntoRect(const WebRect&);
+
  private:
   void SetPageScaleFactorAndLocation(float, const FloatPoint&);
   void PropagateZoomFactorToLocalFrameRoots(Frame*, float);

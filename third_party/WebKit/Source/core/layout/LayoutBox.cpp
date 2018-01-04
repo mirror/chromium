@@ -659,7 +659,8 @@ void LayoutBox::ScrollRectToVisibleRecursive(
     ScrollType scroll_type,
     bool make_visible_in_visual_viewport,
     ScrollBehavior scroll_behavior,
-    bool is_for_scroll_sequence) {
+    bool is_for_scroll_sequence,
+    bool needs_zoom_in_main_frame) {
   DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
@@ -751,14 +752,18 @@ void LayoutBox::ScrollRectToVisibleRecursive(
     parent_box->ScrollRectToVisibleRecursive(
         new_rect, align_x, align_y, scroll_type,
         make_visible_in_visual_viewport, scroll_behavior,
-        is_for_scroll_sequence);
-  } else if (GetFrame()->IsLocalRoot() && !GetFrame()->IsMainFrame()) {
+        is_for_scroll_sequence, needs_zoom_in_main_frame);
+  } else if (GetFrame()->IsLocalRoot()) {
     LocalFrameView* frame_view = GetFrameView();
-    if (frame_view && frame_view->SafeToPropagateScrollToParent()) {
+    if (!frame_view)
+      return;
+    bool is_main_frame = GetFrame()->IsMainFrame();
+    if ((is_main_frame && needs_zoom_in_main_frame) ||
+        (!is_main_frame && frame_view->SafeToPropagateScrollToParent())) {
       frame_view->ScrollRectToVisibleInRemoteParent(
           new_rect, align_x, align_y, scroll_type,
           make_visible_in_visual_viewport, scroll_behavior,
-          is_for_scroll_sequence);
+          is_for_scroll_sequence, needs_zoom_in_main_frame);
     }
   }
 }
