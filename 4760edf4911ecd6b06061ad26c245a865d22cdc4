@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62592d7f_b204d2e1",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-04T23:20:02Z",
+      "side": 1,
+      "message": "why false?",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "4760edf4911ecd6b06061ad26c245a865d22cdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
