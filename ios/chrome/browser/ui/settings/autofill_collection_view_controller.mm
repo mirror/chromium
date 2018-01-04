@@ -463,6 +463,28 @@ typedef NS_ENUM(NSInteger, ItemType) {
   return YES;
 }
 
+- (void)collectionViewWillBeginEditing:(UICollectionView*)collectionView {
+  [super collectionViewWillBeginEditing:collectionView];
+
+  [self.collectionViewModel
+      removeSectionWithIdentifier:SectionIdentifierSwitches];
+  [self.collectionView reloadData];
+}
+
+- (void)collectionViewWillEndEditing:(UICollectionView*)collectionView {
+  [super collectionViewWillEndEditing:collectionView];
+
+  CollectionViewModel* model = self.collectionViewModel;
+  [model insertSectionWithIdentifier:SectionIdentifierSwitches atIndex:0];
+  [model addItem:[self autofillSwitchItem]
+      toSectionWithIdentifier:SectionIdentifierSwitches];
+  if ([self isAutofillEnabled]) {
+    [model addItem:[self walletSwitchItem]
+        toSectionWithIdentifier:SectionIdentifierSwitches];
+  }
+  [self.collectionView reloadData];
+}
+
 - (BOOL)collectionView:(UICollectionView*)collectionView
     canEditItemAtIndexPath:(NSIndexPath*)indexPath {
   // Only autofill data cells are editable.
@@ -557,7 +579,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (_userInteractionInProgress)
     return;
 
-  if (![self localProfilesOrCreditCardsExist]) {
+  if (![self localProfilesOrCreditCardsExist] && [self.editor isEditing]) {
     // Turn off edit mode if there exists nothing to edit.
     [self.editor setEditing:NO];
   }
