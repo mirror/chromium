@@ -105,6 +105,24 @@
       "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad38e16b_c624007e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/origin-trials-interfaces.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-04T19:36:46Z",
+      "side": 1,
+      "message": "For features under origin trial, the recommendation is add layout tests to the webexposed folder:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/origin_trials/webexposed/?q\u003dorigin_trials/webexposed\u0026sq\u003dpackage:chromium\u0026dr\n\nThere is a virtual test suite defined for these layout tests. That means that the layout test will run as usual (with the runtime flag enabled), but also run with the runtime flag disabled (See https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/VirtualTestSuites?q\u003dvirtualtestsuites\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d113). This should ensure that the layout test actually verifies the behaviour when enabled only by origin trial.\n\nDepending on the expectations in the layout test, you may need to provide expected.txt files to match the results (e.g. see https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/?q\u003dvirtualtestsuites\u0026sq\u003dpackage:chromium\u0026dr)",
+      "parentUuid": "5052924f_a7c924b2",
+      "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

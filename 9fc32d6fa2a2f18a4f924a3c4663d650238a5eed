@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60ba975f_3a29e6d5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-04T19:36:46Z",
+      "side": 0,
+      "message": "I wouldn\u0027t recommend this approach. By removing the attribute, it means the interface can be visible to scripts, even without the origin trial enabled.\n\nThe goal of all the bindings logic for origin trials is to ensure that various parts of IDL are only available to script when a valid origin trial token is present on the page.",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "9fc32d6fa2a2f18a4f924a3c4663d650238a5eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
