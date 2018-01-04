@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "45b52480_f65d221f",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-04T21:22:06Z",
+      "side": 1,
+      "message": "nit: prefer |descriptor| over |el|",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 21
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d85ba175_01dc4dc0",
         "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.h",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2018-01-04T12:01:06Z",
       "side": 1,
       "message": "std::unique_ptr by default does not play nice with private destructors, which is why I made it public. It is possible to keep it private and use a custom deleter, but that requires quite a bit more work. Let me know what you think.\n\nNote: A private constructor does not work with std::make_unique either, but here we can use the base::WrapUnique workaround (see comments below and Note 1 here: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique)",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1938881_38fa755a",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-04T21:22:06Z",
+      "side": 1,
+      "message": "It might be better to keep the destructor private due to the chance that other components can get the pointer of the object.",
+      "parentUuid": "d85ba175_01dc4dc0",
       "range": {
         "startLine": 49,
         "startChar": 2,
@@ -41,6 +88,29 @@
         "startChar": 3,
         "endLine": 32,
         "endChar": 37
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972f79ba_def009cc",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_service_bluez.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2018-01-04T21:22:06Z",
+      "side": 1,
+      "message": "nit: |characteristic| describes the content better here and below.",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 21
       },
       "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
