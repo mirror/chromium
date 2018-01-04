@@ -8,16 +8,14 @@
 
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/public/gpu/content_gpu_client.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/shape_detection_service.h"
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
 #include "base/bind.h"
 #include "media/mojo/services/media_service_factory.h"  // nogncheck
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "content/public/gpu/content_gpu_client.h"
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#endif  // BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
+#endif
 
 namespace content {
 
