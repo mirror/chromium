@@ -22,6 +22,47 @@
       "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31976160_d3b76f75",
+        "filename": "chrome/browser/ui/search/local_ntp_doodle_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-04T22:49:19Z",
+      "side": 1,
+      "message": "Cool. In the comment, I would suggest replacing \"seem to have any effect for some reason\" with \"have any effect\" :)\n\nOn the other hand, is the window.location behavior being tested here actually relevant to the doodle logging, or would it belong better in one of the above tests?",
+      "parentUuid": "90b0a538_d58d3c00",
+      "range": {
+        "startLine": 694,
+        "startChar": 17,
+        "endLine": 694,
+        "endChar": 0
+      },
+      "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a56ae6_65887e8f",
+        "filename": "chrome/test/data/local_ntp/simple.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-04T22:49:19Z",
+      "side": 1,
+      "message": "Add some descriptive text? Maybe just:\n  \u003cbody\u003eThis page exists to test navigations away from the NTP.\u003c/body\u003e",
+      "revId": "77ca0ca4d01f417596763e46d2a0eea5e6aa3946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
