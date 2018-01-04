@@ -675,6 +675,24 @@
     },
     {
       "key": {
+        "uuid": "d1189ce3_9b11e500",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s do that in a follow-up.",
+      "parentUuid": "ede89d49_b9e6ba22",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb885af8_6bcd72a8",
         "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
         "patchSetId": 7
@@ -836,6 +854,298 @@
       "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ed40c46_9c342dae",
+        "filename": "device/u2f/attestation_object.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "std::move(map)",
+      "range": {
+        "startLine": 41,
+        "startChar": 49,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bb2dc4_70d27bae",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: Can we just fwd-declare this here?",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b7c45d_5b396dec",
+        "filename": "device/u2f/attestation_object.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: #include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67018f3f_bbc99a4b",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "std::move()",
+      "range": {
+        "startLine": 62,
+        "startChar": 47,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90057106_a4ebe5a2",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: fwd-declare if possible",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd1614b_23d0b70f",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: These two are unused.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9123ec_7437de97",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "Please add TODO to use std::array for these small, fixed size vectors.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7bb3cb_c2efe3f3",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "Do we need to return unique_ptr\u0027s now that this is moveable?",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d75e9e_9338b481",
+        "filename": "device/u2f/authenticator_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da4fc04_5ad6ad8a",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "Move this outside into an unnamed namespace, including the comment, introduce constant for length, header, and make these constexpr size_t, and",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76d4a41_4926ac01",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: Why do we need this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 59,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696ad60b_aab5ed4c",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: These two unused.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30362094_029ea622",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: Avoid non-standard abbrv\u0027s. attestation_statement_map",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76922be_37ba7393",
+        "filename": "device/u2f/fido_attestation_statement.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T14:40:02Z",
+      "side": 1,
+      "message": "nit: certificate_array",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 36
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
