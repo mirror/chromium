@@ -6999,6 +6999,12 @@
                             "type": "string"
                         },
                         {
+                            "name": "hasPostData",
+                            "description": "True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long",
+                            "optional": true,
+                            "type": "boolean"
+                        },
+                        {
                             "name": "mixedContentType",
                             "description": "The mixed content type of the request.",
                             "optional": true,
@@ -7814,6 +7820,12 @@
                             "experimental": true,
                             "optional": true,
                             "type": "integer"
+                        },
+                        {
+                            "name": "maxBodySizeForRequestWillBeSent",
+                            "description": "Longest post body size (in bytes) that would be included in requestWillBeSent notification",
+                            "optional": true,
+                            "type": "integer"
                         }
                     ]
                 },
@@ -7897,6 +7909,23 @@
                             "name": "base64Encoded",
                             "description": "True, if content was sent as base64.",
                             "type": "boolean"
+                        }
+                    ]
+                },
+                {
+                    "name": "getPostRequestData",
+                    "parameters": [
+                        {
+                            "name": "requestId",
+                            "description": "Identifier of the network request to get content for.",
+                            "$ref": "RequestId"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "name": "contents",
+                            "description": "Request body.",
+                            "type": "string"
                         }
                     ]
                 },

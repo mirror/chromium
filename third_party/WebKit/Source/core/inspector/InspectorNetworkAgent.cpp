@@ -97,6 +97,7 @@ static const char kUserAgentOverride[] = "userAgentOverride";
 static const char kBlockedURLs[] = "blockedURLs";
 static const char kTotalBufferSize[] = "totalBufferSize";
 static const char kResourceBufferSize[] = "resourceBufferSize";
+static const char kMaxPostBodySize[] = "maxPostBodySize";
 }
 
 namespace {
@@ -334,7 +335,8 @@ void InspectorNetworkAgent::Restore() {
     Enable(state_->integerProperty(NetworkAgentState::kTotalBufferSize,
                                    g_maximum_total_buffer_size),
            state_->integerProperty(NetworkAgentState::kResourceBufferSize,
-                                   g_maximum_resource_buffer_size));
+                                   g_maximum_resource_buffer_size),
+           state_->integerProperty(NetworkAgentState::kMaxPostBodySize, 0));
   }
 }
 
@@ -361,23 +363,34 @@ static std::unique_ptr<protocol::Network::ResourceTiming> BuildObjectForTiming(
       .build();
 }
 
+static bool FormDataToString(scoped_refptr<EncodedFormData> body,
+                             size_t max_body_size,
+                             String* content) {
+  *content = "";
+  if (!body || body->IsEmpty())
+    return false;
+  Vector<char> bytes;
+  body->Flatten(bytes);
+  if (max_body_size == 0 || body->SizeInBytes() <= max_body_size)
+    *content = String::FromUTF8WithLatin1Fallback(bytes.data(), bytes.size());
+  return true;
+}
+
 static std::unique_ptr<protocol::Network::Request>
-BuildObjectForResourceRequest(const ResourceRequest& request) {
-  std::unique_ptr<protocol::Network::Request> request_object =
-      protocol::Network::Request::create()
-          .setUrl(UrlWithoutFragment(request.Url()).GetString())
-          .setMethod(request.HttpMethod())
-          .setHeaders(BuildObjectForHeaders(request.HttpHeaderFields()))
-          .setInitialPriority(ResourcePriorityJSON(request.Priority()))
-          .setReferrerPolicy(GetReferrerPolicy(request.GetReferrerPolicy()))
-          .build();
-  if (request.HttpBody() && !request.HttpBody()->IsEmpty()) {
-    Vector<char> bytes;
-    request.HttpBody()->Flatten(bytes);
-    request_object->setPostData(
-        String::FromUTF8WithLatin1Fallback(bytes.data(), bytes.size()));
-  }
-  return request_object;
+BuildObjectForResourceRequest(const ResourceRequest& request,
+                              size_t max_body_size) {
+  String content;
+  bool hasPostData =
+      FormDataToString(request.HttpBody(), max_body_size, &content);
+  return protocol::Network::Request::create()
+      .setUrl(UrlWithoutFragment(request.Url()).GetString())
+      .setMethod(request.HttpMethod())
+      .setHeaders(BuildObjectForHeaders(request.HttpHeaderFields()))
+      .setInitialPriority(ResourcePriorityJSON(request.Priority()))
+      .setReferrerPolicy(GetReferrerPolicy(request.GetReferrerPolicy()))
+      .setPostData(content)
+      .setHasPostData(hasPostData)
+      .build();
 }
 
 static std::unique_ptr<protocol::Network::Response>
@@ -649,7 +662,9 @@ void InspectorNetworkAgent::WillSendRequestInternal(
   }
 
   std::unique_ptr<protocol::Network::Request> request_info(
-      BuildObjectForResourceRequest(request));
+      BuildObjectForResourceRequest(
+          request,
+          state_->integerProperty(NetworkAgentState::kMaxPostBodySize, 0)));
 
   // |loader| is null while inspecting worker.
   // TODO(horo): Refactor MixedContentChecker and set mixed content type even if
@@ -1252,15 +1267,19 @@ void InspectorNetworkAgent::DidReceiveWebSocketFrameError(
                                      error_message);
 }
 
-Response InspectorNetworkAgent::enable(Maybe<int> total_buffer_size,
-                                       Maybe<int> resource_buffer_size) {
+Response InspectorNetworkAgent::enable(
+    Maybe<int> total_buffer_size,
+    Maybe<int> resource_buffer_size,
+    Maybe<int> max_request_will_be_sent_post_body_size) {
   Enable(total_buffer_size.fromMaybe(g_maximum_total_buffer_size),
-         resource_buffer_size.fromMaybe(g_maximum_resource_buffer_size));
+         resource_buffer_size.fromMaybe(g_maximum_resource_buffer_size),
+         max_request_will_be_sent_post_body_size.fromMaybe(0));
   return Response::OK();
 }
 
 void InspectorNetworkAgent::Enable(int total_buffer_size,
-                                   int resource_buffer_size) {
+                                   int resource_buffer_size,
+                                   int max_post_body_size) {
   if (!GetFrontend())
     return;
   resources_data_->SetResourcesDataSizeLimits(total_buffer_size,
@@ -1269,6 +1288,7 @@ void InspectorNetworkAgent::Enable(int total_buffer_size,
   state_->setInteger(NetworkAgentState::kTotalBufferSize, total_buffer_size);
   state_->setInteger(NetworkAgentState::kResourceBufferSize,
                      resource_buffer_size);
+  state_->setInteger(NetworkAgentState::kMaxPostBodySize, max_post_body_size);
   instrumenting_agents_->addInspectorNetworkAgent(this);
 }
 
@@ -1636,6 +1656,20 @@ InspectorNetworkAgent::InspectorNetworkAgent(
 void InspectorNetworkAgent::ShouldForceCORSPreflight(bool* result) {
   if (state_->booleanProperty(NetworkAgentState::kCacheDisabled, false))
     *result = true;
+}
+
+Response InspectorNetworkAgent::getPostRequestData(const String& request_id,
+                                                   String* content) {
+  NetworkResourcesData::ResourceData const* resource_data =
+      resources_data_->Data(request_id);
+  if (!resource_data) {
+    return Response::Error("No resource with given identifier found");
+  }
+  XHRReplayData* xhrData = resource_data->XhrReplayData();
+  if (xhrData && FormDataToString(xhrData->FormData(), 0, content)) {
+    return Response::OK();
+  }
+  return Response::Error("No post data available for the request");
 }
 
 }  // namespace blink
