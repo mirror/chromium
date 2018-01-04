@@ -80,6 +80,14 @@ class CORE_EXPORT ScrollAnchor final {
     const uint64_t simhash;
   };
 
+  // This enum must remain in sync with the corresponding enum in enums.xml.
+  enum RestorationStatus {
+    kSuccess = 0,
+    kFailedNoMatches,
+    kFailedNoValidMatches,
+    kFailedBadSelector
+  };
+
   // Attempt to restore |serialized_anchor| by scrolling to the element
   // identified by its selector, adjusting by its relative_offset.
   bool RestoreAnchor(const SerializedAnchor&);
