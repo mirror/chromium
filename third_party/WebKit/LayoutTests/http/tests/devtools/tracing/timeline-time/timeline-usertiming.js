@@ -51,9 +51,13 @@
       function parentMeasureIsOnTop()
       {
           performance.mark("startTime1");
+          // Do some work.
+          for(var i = 0; i < 10000; i++) {}
           performance.mark("endTime1");
 
           performance.mark("startTime2");
+          // Do some work.
+          for(var i = 0; i < 10000; i++) {}
           performance.mark("endTime2");
 
           performance.measure("durationTime1", "startTime1", "endTime1");
