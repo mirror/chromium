@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cbba08a_e702305c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-04T21:15:18Z",
+      "side": 1,
+      "message": "this is a native dependency where there wasn\u0027t before. I think that\u0027s fine as this is only called during webapk installation but wanted to double check you\u0027ve thought about this",
+      "range": {
+        "startLine": 333,
+        "startChar": 32,
+        "endLine": 333,
+        "endChar": 48
+      },
+      "revId": "387afa8de83630aa602038341c237a7b4e3a344c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45e57b8_b1dc2984",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-04T21:15:18Z",
+      "side": 1,
+      "message": "I think instead you can use: GetFieldTrialParamValue(\"AdjustWebApkInstallationSpace\", \"webapk_extra_installation_space\") and avoid the feature definition. Really we just want a config flag and don\u0027t care about \"a user visible feature\" - I think! Of course, also use constants where appropriate.\n\n+asvitkine for feedback on whether that\u0027s acceptable.",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "387afa8de83630aa602038341c237a7b4e3a344c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
