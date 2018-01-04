@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b4ffb2e_caf7bee5",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-04T23:29:54Z",
+      "side": 1,
+      "message": "Why is this a TODO? Are we going to support this eventually?",
+      "range": {
+        "startLine": 136,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 16
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd00abfc_4ad2ba04",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-04T23:29:54Z",
+      "side": 1,
+      "message": "Can we add an overall comment explaining the order of preference for original vs. candidate-scale vs. decode-to-scale. Someone unfamiliar might not know why decode-to-scale is less desirable than candidate-scale.",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 24
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd4af15_a957941d",
+        "filename": "cc/tiles/software_image_decode_cache_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-04T23:29:54Z",
+      "side": 1,
+      "message": "I believe you can just use target_info.computeMinByteSize()?",
+      "range": {
+        "startLine": 71,
+        "startChar": 56,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a57267d_f22a9772",
+        "filename": "cc/tiles/software_image_decode_cache_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2018-01-04T23:29:54Z",
+      "side": 1,
+      "message": "Why wasn\u0027t this needed before? And why is it needed now? :D",
+      "range": {
+        "startLine": 241,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 12
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
