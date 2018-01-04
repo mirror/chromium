@@ -25,6 +25,7 @@
 
 #include "base/macros.h"
 #include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/ConstructTraits.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
 
@@ -57,7 +58,10 @@ class LinkedHashSetReverseIterator;
 template <typename LinkedHashSet>
 class LinkedHashSetConstReverseIterator;
 
-template <typename Value, typename HashFunctions, typename Allocator>
+template <typename Value,
+          typename HashFunctions,
+          typename Traits,
+          typename Allocator>
 struct LinkedHashSetTranslator;
 template <typename Value, typename Allocator>
 struct LinkedHashSetExtractor;
@@ -168,9 +172,12 @@ class LinkedHashSet {
   typedef TraitsArg Traits;
   typedef LinkedHashSetNode<Value, Allocator> Node;
   typedef LinkedHashSetNodeBase NodeBase;
-  typedef LinkedHashSetTranslator<Value, HashFunctions, Allocator>
-      NodeHashFunctions;
   typedef LinkedHashSetTraits<Value, Traits, Allocator> NodeHashTraits;
+  typedef LinkedHashSetTranslator<Value,
+                                  HashFunctions,
+                                  NodeHashTraits,
+                                  Allocator>
+      NodeHashFunctions;
 
   typedef HashTable<Node,
                     Node,
@@ -390,7 +397,10 @@ class LinkedHashSet {
   NodeBase anchor_;
 };
 
-template <typename Value, typename HashFunctions, typename Allocator>
+template <typename Value,
+          typename HashFunctions,
+          typename Traits,
+          typename Allocator>
 struct LinkedHashSetTranslator {
   STATIC_ONLY(LinkedHashSetTranslator);
   typedef LinkedHashSetNode<Value, Allocator> Node;
@@ -414,6 +424,8 @@ struct LinkedHashSetTranslator {
                         NodeBase* anchor) {
     anchor->InsertBefore(location);
     location.value_ = std::forward<IncomingValueType>(key);
+    ConstructTraits<typename Traits::ValueTraits::TraitType, Traits,
+                    Allocator>::NotifyNewElements(&location.value_, 1);
   }
 
   // Empty (or deleted) slots have the next_ pointer set to null, but we
