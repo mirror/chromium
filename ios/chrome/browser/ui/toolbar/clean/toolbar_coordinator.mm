@@ -79,6 +79,8 @@
 // The coordinator for the location bar in the toolbar.
 @property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 
+@property(nonatomic, strong) OmniboxFocusOrchestrator* orchestrator;
+
 @end
 
 @implementation ToolbarCoordinator
@@ -182,6 +184,10 @@
 
   if (self.delegate)
     [self startObservingTTSNotifications];
+
+  self.orchestrator = [[OmniboxFocusOrchestrator alloc] init];
+  self.orchestrator.toolbarAnimatee = self.toolbarViewController;
+  self.locationBarCoordinator.orchestrator = self.orchestrator;
 }
 
 - (void)stop {
@@ -530,21 +536,7 @@
   // iPad should never try to expand.
   DCHECK(!IsIPadIdiom());
 
-  UIViewPropertyAnimator* animator = [[UIViewPropertyAnimator alloc]
-      initWithDuration:ios::material::kDuration1
-                 curve:UIViewAnimationCurveEaseInOut
-            animations:^{
-            }];
-
-  [self.locationBarCoordinator.locationBarView
-      addExpandOmniboxAnimations:animator];
-  [self.toolbarViewController addToolbarExpansionAnimations:animator];
-  [animator startAnimation];
-
-  if (!animated) {
-    [animator stopAnimation:NO];
-    [animator finishAnimationAtPosition:UIViewAnimatingPositionEnd];
-  }
+  [self.orchestrator expandOmnibox:animated];
 }
 
 // Animates |_toolbar| and |_locationBarView| for omnibox contraction.
