@@ -75,8 +75,11 @@ class WebVector {
 
   ~WebVector() = default;
 
+  // Create an empty vector.
+  WebVector() = default;
+
   // Create a vector with |size| default-constructed elements.
-  explicit WebVector(size_t size = 0) : data_(size) {}
+  explicit WebVector(size_t size) : data_(size) {}
 
   template <typename U>
   WebVector(const U* values, size_t size) : data_(values, values + size) {}

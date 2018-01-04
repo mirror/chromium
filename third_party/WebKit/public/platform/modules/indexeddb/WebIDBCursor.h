@@ -39,8 +39,8 @@ class WebIDBCursor {
   virtual ~WebIDBCursor() = default;
 
   virtual void Advance(unsigned long, WebIDBCallbacks*) = 0;
-  virtual void Continue(const WebIDBKey&,
-                        const WebIDBKey& primary_key,
+  virtual void Continue(WebIDBKeyView,
+                        WebIDBKeyView primary_key,
                         WebIDBCallbacks*) = 0;
   virtual void PostSuccessHandlerCallback() {}  // Only used in frontend.
 
