@@ -70,6 +70,30 @@
       "revId": "12ee131ebb141405d234d98e3fb5347022353759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21f143a_fef82efa",
+        "filename": "net/base/url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T19:35:27Z",
+      "side": 1,
+      "message": "Thanks! The analysis/commentary in here looks spot on.\n\nHere is what I propose:\n\n (1) Change IsLocalhost() to take a GURL.\n     net::IsLocalhost(const GURL\u0026 url);\n\n (2) Introduce an overload specifically for Blink\u0027s SecurityOrigin:\n     net::UrlHostIsLocalhost(base::StringPiece host_with_brackets);\n\nUnfortunately the naming of \"host\" is ambiguous, as there is the meaning from the URL spec as used by SecurityOrigin, and then there is the meaning that //net code uses which is a hostname from the perspective of name resolution.",
+      "parentUuid": "7eec2fab_d0854168",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 50
+      },
+      "revId": "12ee131ebb141405d234d98e3fb5347022353759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
