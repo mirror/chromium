@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a79a1567_924549e7",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-04T00:05:43Z",
+      "side": 1,
+      "message": "How about adding the following comments:\n\n1. Precondition of entry to DecodeImageIfNecessary is that this-\u003elock_ is acquired\nby this thread.\n\n2. DecodeImage() may temporarily release this-\u003elock_ during decode, to avoid blocking other threads.\n\n3. Upon return from DecodeImage(), this-\u003elock_ is acquired by this thread.\n\n4. During step 2, some other thread may have done operations such as decode or storing decoded\nresults in the cache. This can include mutations to cache_entry, since cache_entry points\nat a real entry in the cache, not a local variable.",
+      "revId": "230c0d909561ade463f1679ba3c4b9ebe83216a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8345d58_259f809a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 5
