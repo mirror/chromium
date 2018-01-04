@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41c4847_1fa08f31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2018-01-04T08:49:44Z",
+      "side": 1,
+      "message": "pipies or puppies? ;)",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "4d00de16c5ddc3bf3a55d16c6f6443f3e7f0212b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
