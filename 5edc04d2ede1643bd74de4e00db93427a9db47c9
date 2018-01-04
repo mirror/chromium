@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84703c7_9386283c",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-04T19:19:49Z",
+      "side": 1,
+      "message": "Nit: Maybe `Set`? `Activate` implies that it will turn it on, but then we have the `active` boolean.",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 15
+      },
+      "revId": "5edc04d2ede1643bd74de4e00db93427a9db47c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168f4dbe_18c2df60",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3746,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-04T19:19:49Z",
+      "side": 1,
+      "message": "Just remove this entirely.",
+      "range": {
+        "startLine": 3746,
+        "startChar": 6,
+        "endLine": 3746,
+        "endChar": 24
+      },
+      "revId": "5edc04d2ede1643bd74de4e00db93427a9db47c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
