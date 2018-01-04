@@ -49,6 +49,14 @@ class SynchronousCompositorBrowserFilter : public BrowserMessageFilter {
       int routing_id,
       scoped_refptr<SynchronousCompositor::FrameFuture> frame_future);
 
+  bool ReturnFrame(int routing_id,
+                   uint32_t layer_tree_frame_sink_id,
+                   base::Optional<viz::CompositorFrame> frame);
+
+  void SynchronizeStateResponse(
+      int routing_id,
+      const content::SyncCompositorCommonRendererParams& params);
+
  private:
   ~SynchronousCompositorBrowserFilter() override;
 
@@ -75,6 +83,12 @@ class SynchronousCompositorBrowserFilter : public BrowserMessageFilter {
   // This object is per renderer process, so routing_id is unique.
   using FrameFutureMap = std::map<int, FrameFutureQueue>;
   FrameFutureMap future_map_;
+
+  bool use_mojo_;
+  int pending_sync_count_ = 0;
+  base::Lock sync_lock_;
+  base::ConditionVariable sync_condition_;
+  std::map<int, SyncCompositorCommonRendererParams> pending_sync_params_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorBrowserFilter);
 };
