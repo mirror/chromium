@@ -17,12 +17,37 @@ class PdfCompositorClient {
   PdfCompositorClient();
   ~PdfCompositorClient();
 
+  // Add the map between a frame's global unique id and its content id.
+  void AddSubframeMap(service_manager::Connector* connector,
+                      uint64_t frame_guid,
+                      uint64_t content_id);
+
+  // Add a frame's content and its out-of-process subframe ids.
+  void AddSubframeContent(service_manager::Connector* connector,
+                          uint64_t frame_guid,
+                          base::SharedMemoryHandle handle,
+                          size_t data_size,
+                          const std::vector<uint64_t>& subframe_content_ids);
+
+  // Check whether it is ready to composite this frame.
+  void IsReadyToComposite(
+      service_manager::Connector* connector,
+      uint64_t frame_guid,
+      uint32_t page_num,
+      const std::vector<uint64_t>& subframe_content_ids,
+      mojom::PdfCompositor::IsReadyToCompositeCallback callback,
+      scoped_refptr<base::SequencedTaskRunner> callback_task_runner);
+
   // Composite the final picture and convert into a PDF file.
-  void Composite(service_manager::Connector* connector,
-                 base::SharedMemoryHandle handle,
-                 size_t data_size,
-                 mojom::PdfCompositor::CompositePdfCallback callback,
-                 scoped_refptr<base::SequencedTaskRunner> callback_task_runner);
+  void CompositeToPdf(
+      service_manager::Connector* connector,
+      uint64_t frame_guid,
+      uint32_t page_num,
+      base::SharedMemoryHandle handle,
+      size_t data_size,
+      const std::vector<uint64_t>& subframe_content_ids,
+      mojom::PdfCompositor::CompositeToPdfCallback callback,
+      scoped_refptr<base::SequencedTaskRunner> callback_task_runner);
 
  private:
   // Connect to the service.
