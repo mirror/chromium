@@ -140,6 +140,30 @@
       "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22fa2344_62d89f11",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2018-01-04T15:25:53Z",
+      "side": 0,
+      "message": "That checks only for response urls ending with \"html\". The BTF response for example, will need to be checked as well. You still want to skip video content.",
+      "parentUuid": "58ac8526_e8e12dac",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 55
+      },
+      "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
