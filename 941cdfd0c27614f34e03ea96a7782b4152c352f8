@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e75fec00_965363e0",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T01:15:21Z",
+      "side": 0,
+      "message": "I can\u0027t explain why but it seems like this signature change broke MSVC++\u0027s out-parameter detection heuristic but only when used in a ternary operator so the compiler thinks that |result| is being used uninitialized.",
+      "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
