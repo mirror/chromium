@@ -22,6 +22,30 @@
       "revId": "b6bfde65f7be19f7a30e04099bbb68f6f84d7624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee068983_17df5708",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-04T22:56:09Z",
+      "side": 1,
+      "message": "Some tests running in the same process might have called StatisticsRecorder::Initialize and thus created a global recorder.\n\nIt\u0027s essentially the test NotInitialized that needs StatisticsRecorder not to be initialized to test what happens when it is not initialized.\n\nAll other tests in this file use a temporary StatisticsRecorder.",
+      "parentUuid": "5c15d6e7_9b919260",
+      "range": {
+        "startLine": 88,
+        "startChar": 36,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "b6bfde65f7be19f7a30e04099bbb68f6f84d7624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
