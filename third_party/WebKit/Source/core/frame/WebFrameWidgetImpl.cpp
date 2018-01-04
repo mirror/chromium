@@ -261,6 +261,8 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       local_root_->GetFrame()->GetDocument()->Lifecycle());
   PageWidgetDelegate::Animate(*GetPage(), last_frame_time_monotonic);
+  CHECK(local_root_);  // DO NOT SUBMIT - simulation of the behavior
+                       // before the crash fix in https://crrev.com/c/819593.
   GetPage()->GetValidationMessageClient().LayoutOverlay();
 }
 

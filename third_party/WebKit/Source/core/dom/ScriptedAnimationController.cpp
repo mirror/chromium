@@ -25,6 +25,15 @@
 
 #include "core/dom/ScriptedAnimationController.h"
 
+// TODO: DO NOT SUBMIT: Remove ad-hoc debugging before submitting.
+#include <sys/types.h>
+#include <unistd.h>
+#include <iostream>
+#include "base/debug/debugger.h"
+#include "base/debug/stack_trace.h"
+#include "base/logging.h"
+#include "v8/include/v8.h"
+
 #include "core/css/MediaQueryListListener.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/Event.h"
@@ -112,7 +121,14 @@ void ScriptedAnimationController::DispatchEvents(
     remaining.swap(event_queue_);
   }
 
+  // DO NOT SUBMIT - remove ad-hoc logging before submitting the CL.
+  LOG(ERROR) << "ScriptedAnimationController::DispatchEvents"
+             << "; events.size() = " << events.size()
+             << "; stack = " << base::debug::StackTrace().ToString();
   for (const auto& event : events) {
+    // DO NOT SUBMIT - remove ad-hoc logging before submitting the CL.
+    LOG(ERROR) << "ScriptedAnimationController::DispatchEvents"
+               << "; event->type() = " << event->type().Utf8().data();
     EventTarget* event_target = event->target();
     // FIXME: we should figure out how to make dispatchEvent properly virtual to
     // avoid special casting window.
@@ -178,6 +194,9 @@ void ScriptedAnimationController::EnqueueTask(base::OnceClosure task) {
 }
 
 void ScriptedAnimationController::EnqueueEvent(Event* event) {
+  // DO NOT SUBMIT - remove ad-hoc logging before submitting the CL.
+  LOG(ERROR) << "ScriptedAnimationController::EnqueueEvent"
+             << "; event->type() = " << event->type().Utf8().data();
   probe::AsyncTaskScheduled(event->target()->GetExecutionContext(),
                             event->type(), event);
   event_queue_.push_back(event);
