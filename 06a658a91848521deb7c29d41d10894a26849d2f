@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2cf75c1_0798eca1",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-04T15:15:09Z",
+      "side": 1,
+      "message": "We call IsValidRootScroller from *inside* layout now, rather than just after. This means the LayoutView won\u0027t have a size yet. I believe these two should be equivalent, though if there are cases where that\u0027s not true, I think layout size is actually the correct thing to use.",
+      "parentUuid": "938c9c1a_d9005a5a",
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8288605b_ea9d07c9",
         "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a9495b29_ad8ea9cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-04T15:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8288605b_ea9d07c9",
+      "range": {
+        "startLine": 168,
+        "startChar": 29,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e67067c_abde523b",
         "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
         "patchSetId": 5
@@ -62,6 +104,30 @@
       "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c555c375_3533b7ab",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-04T15:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e67067c_abde523b",
+      "range": {
+        "startLine": 302,
+        "startChar": 27,
+        "endLine": 302,
+        "endChar": 36
+      },
+      "revId": "06a658a91848521deb7c29d41d10894a26849d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
