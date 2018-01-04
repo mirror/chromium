@@ -16,6 +16,24 @@
       "revId": "a466d3580454dddd17a6be33558c4203783e26dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea916b2_1d277b44",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-04T20:22:51Z",
+      "side": 1,
+      "message": "Could you add {} around \u0027if\u0027 body? Or did \u0027git cl format\u0027 remove them?",
+      "parentUuid": "1a264711_ff1b8b47",
+      "revId": "a466d3580454dddd17a6be33558c4203783e26dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
