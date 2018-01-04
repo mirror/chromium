@@ -247,3 +247,101 @@ function run_all_fp_tests_allow_all(
       'Feature policy "' + feature_name +
           '" can be disabled in cross-origin iframes using "allow" attribute.');
 }
+
+// This function tests that a given policy allows each feature for the correct
+// list of origins specified by the |allowlists|.
+// Arguments:
+//     allowlists: A list of {feature, allowlist} pairs where the feature is
+//         enabled for every origin in the allowlist, in the |policy|.
+//     policy: Either a document.policy or a iframe.policy to be tested.
+//     message: A short description of what policy is being tested.
+function test_allowlists(allowlists, policy, message) {
+  for (var allowlist of allowlists) {
+    test(function() {
+      assert_array_equals(
+        policy.getAllowlistForFeature(allowlist.feature),
+        allowlist.whitelist);
+    }, message + ' for feature ' + allowlist.feature);
+  }
+}
+
+// This function tests that a frame's policy allows and disallows features
+// correctly. A feature is allowed in a frame either through inherited policy
+// or specified by iframe allow attribute.
+// Arguments:
+//     test: test created by testharness. Examples: async_test, promise_test.
+//     allowed_features: A list of features that should be allowed in the frame.
+//     disallowed_features: A list of features that should be disallowed in the
+//     frame.
+//     src: the URL to load in the frame.
+//     allow: the allow attribute (container policy) of the iframe.
+function test_allowed_features_for_subframe(
+    test, allowed_features, disallowed_features, src, allow) {
+  let frame = document.createElement('iframe');
+  if (typeof allow !== 'undefined') {
+    frame.allow = allow;
+  }
+  frame.src = src;
+
+  window.addEventListener('message', test.step_func(function handler(evt) {
+    if (evt.source === frame.contentWindow) {
+      for (var feature of allowed_features) {
+        assert_true(evt.data.includes(feature), feature, feature + " is allowed");
+      }
+      for (var feature of disallowed_features) {
+        assert_false(evt.data.includes(feature), feature, feature + " is not allowed");
+      }
+      window.removeEventListener('message', handler);
+      test.done();
+    }
+  }));
+
+ document.body.appendChild(frame);
+}
+
+// This function tests that a frame.policy allows and disallows features
+// correctly. A feature is allowed in a frame either through inherited policy or
+// specified by iframe allow attribute.
+// Arguments:
+//     allowed_features: A list of features that should be allowed by
+//     frame.policy
+//     disallowed_features: A list of features that should be disallowed by
+//     frame.policy
+//     src: the URL to load in the frame.
+//     allow: the allow attribute (container policy) of the iframe.
+//     allowfullscreen: boolean value of allowfullscreen attribute.
+//     allowpayment: boolean value of allowpaymentrequest attribute.
+
+function test_frame_policy(
+    allowed_features, disallowed_features, src, allow, allowfullscreen, allowpayment) {
+  let frame = document.createElement('iframe');
+  document.body.appendChild(frame);
+  var frame_policy_features = frame.policy.allowedFeatures();
+  var frame_policy = frame.policy;
+  if (typeof allow !== 'undefined') {
+    frame.allow = allow;
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allow updates frame.policy');
+  }
+  if (typeof allowfullscreen !== 'undefined') {
+    frame.setAttribute('allowfullscreen', allowfullscreen);
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allowfullscreen updates frame.policy');
+  }
+  if (typeof allowpaymentrequestned !== 'undefined') {
+    frame.setAttribute('allowpaymentrequest', allowpayment);
+    // Dynamically update allow attribute update frame.policy
+    assert_not_equals(frame_policy_features, frame_policy.allowedFeatures(),
+        'Updating allowfullscreen updates frame.policy');
+  }
+  frame.src = src;
+
+  for (var feature of allowed_features) {
+    assert_true(frame_policy.allowsFeature(feature), feature + " is allowed");
+  }
+  for (var feature of disallowed_features) {
+    assert_false(frame_policy.allowsFeature(feature), feature + " is not allowed");
+  }
+}
