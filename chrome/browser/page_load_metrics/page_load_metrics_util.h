@@ -155,6 +155,21 @@ bool IsGoogleSearchResultUrl(const GURL& url);
 // Whether the given url is a Google Search redirector URL.
 bool IsGoogleSearchRedirectorUrl(const GURL& url);
 
+// Whether the given url is for a canonical Google Docs document open URL. This
+// is done on a best effort basis rather than attempting an exact match.
+// Examples:
+//   https://docs.google.com/document/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit
+//   -> true
+//   https://docs.google.com/spreadsheets/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/edit
+//   -> true
+//   https://docs.google.com/presentations/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/view
+//   -> true
+//   https://docs.google.com/drawings/d/1wgrxMZ-K7MVtnj_XU7XJnG3YCySRq8vtjzpJy-GkdkY/comment
+//   -> true
+//   https://docs.google.com/ -> false
+//   https://docs.google.com/document/ -> false
+bool IsGoogleDocsOpenUrl(const GURL& url);
+
 // Whether the given query string contains the given component. The query
 // parameter should contain the query string of a URL (the portion following
 // the question mark, excluding the question mark). The component must fully

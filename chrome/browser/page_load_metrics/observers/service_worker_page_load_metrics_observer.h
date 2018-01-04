@@ -37,6 +37,14 @@ extern const char
 extern const char kHistogramServiceWorkerDomContentLoadedInbox[];
 extern const char kHistogramServiceWorkerLoadInbox[];
 
+extern const char kHistogramServiceWorkerParseStartDocs[];
+extern const char kHistogramServiceWorkerFirstContentfulPaintDocs[];
+extern const char kHistogramServiceWorkerFirstMeaningfulPaintDocs[];
+extern const char kHistogramServiceWorkerParseStartToFirstMeaningfulPaintDocs[];
+extern const char kHistogramServiceWorkerParseStartToFirstContentfulPaintDocs[];
+extern const char kHistogramServiceWorkerDomContentLoadedDocs[];
+extern const char kHistogramServiceWorkerLoadDocs[];
+
 extern const char kHistogramServiceWorkerParseStartSearch[];
 extern const char kHistogramServiceWorkerFirstContentfulPaintSearch[];
 extern const char kHistogramServiceWorkerFirstMeaningfulPaintSearch[];

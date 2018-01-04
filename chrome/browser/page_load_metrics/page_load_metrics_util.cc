@@ -5,7 +5,9 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 
 #include <algorithm>
+#include <vector>
 
+#include "base/strings/string_split.h"
 #include "chrome/common/page_load_metrics/page_load_timing.h"
 
 namespace page_load_metrics {
@@ -204,6 +206,25 @@ bool IsGoogleSearchRedirectorUrl(const GURL& url) {
   // of certain params in the ref since this redirector is only used for
   // redirects from search.
   return url.path_piece() == "/searchurl/r.html" && url.has_ref();
+}
+
+bool IsGoogleDocsOpenUrl(const GURL& url) {
+  if (!url.SchemeIs("https") || url.host_piece() != "docs.google.com") {
+    return false;
+  }
+
+  // Expecting patterns of the form /{editor}/d/{docId}/{action}
+  std::vector<base::StringPiece> path_components = base::SplitStringPiece(
+      url.path_piece(), "/", base::WhitespaceHandling::KEEP_WHITESPACE,
+      base::SplitResult::SPLIT_WANT_ALL);
+  if (path_components.size() == 5) {
+    const base::StringPiece& editor = path_components[1];
+    return path_components[2] == "d" &&
+           (editor == "document" || editor == "spreadsheets" ||
+            editor == "presentations" || editor == "drawings");
+  }
+
+  return false;
 }
 
 bool QueryContainsComponent(const base::StringPiece query,
