@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46bd5d66_a2e7f1a4",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T22:46:05Z",
+      "side": 1,
+      "message": "Style nit: This if needs {} now.",
+      "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e38697d_d917f019",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T22:46:05Z",
+      "side": 1,
+      "message": "This should be \"0\" since this is an int.",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
