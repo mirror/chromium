@@ -444,6 +444,30 @@
       "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae3b8ae5_4c7d3dd0",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-04T15:17:11Z",
+      "side": 1,
+      "message": "Ahh, I see, macro magic at work.  Restating my personal opinion - these bind macros shrink code, but I think they really hurt readability.  :)",
+      "parentUuid": "0849e66c_d0a75d9f",
+      "range": {
+        "startLine": 854,
+        "startChar": 35,
+        "endLine": 854,
+        "endChar": 52
+      },
+      "revId": "6f67089b3144afdf994490130231587aa2b8abd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
