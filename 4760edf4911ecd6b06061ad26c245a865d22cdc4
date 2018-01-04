@@ -46,6 +46,30 @@
       "revId": "4760edf4911ecd6b06061ad26c245a865d22cdc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdee056a_fe50c287",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-04T23:44:08Z",
+      "side": 1,
+      "message": "Sure, but this false means that the experiment won\u0027t be listed on chrome://safe-browsing at all. I think we should set this to true even if the experiment is currently disabled since it is expected to be enabled in the near future.\nFeel free to ignore.",
+      "parentUuid": "4ef0d740_c2c406ff",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 42
+      },
+      "revId": "4760edf4911ecd6b06061ad26c245a865d22cdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
