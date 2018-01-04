@@ -15,8 +15,7 @@ namespace zucchini {
 
 class TargetPool;
 
-// Container of distinct indirect references of one type, along with traits,
-// only used during patch generation.
+// Container of distinct indirect references of one type, along with traits.
 class ReferenceSet {
  public:
   using const_iterator = std::vector<IndirectReference>::const_iterator;

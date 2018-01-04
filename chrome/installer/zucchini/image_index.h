@@ -14,7 +14,6 @@
 #include "base/logging.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/image_utils.h"
-#include "chrome/installer/zucchini/label_manager.h"
 #include "chrome/installer/zucchini/reference_set.h"
 #include "chrome/installer/zucchini/target_pool.h"
 
@@ -32,15 +31,15 @@ class ImageIndex {
   ImageIndex(ImageIndex&& that);
   ~ImageIndex();
 
-  // Inserts all references read from |disasm|. This should be called exactly
-  // once. If overlap between any two references of any type is encountered,
-  // returns false and leaves the object in an invalid state. Otherwise,
-  // returns true.
+  // Inserts all references read from |disasm|. This should be called
+  // exactly once. If overlap between any two references of any type is
+  // encountered, returns false and leaves the object in an invalid state.
+  // Otherwise, returns true.
   // TODO(huangs): Refactor ReaderFactory and WriterFactory so
   // |const Disassembler&| can be used here.
   bool Initialize(Disassembler* disasm);
 
-  // Returns the number of reference types the index holds.
+  // Returns the number of reference type the index holds.
   size_t TypeCount() const { return reference_sets_.size(); }
 
   // Returns the number of target pools discovered.
@@ -85,34 +84,6 @@ class ImageIndex {
 
   // Returns the size of the image.
   size_t size() const { return image_.size(); }
-
-  // Replaces every target represented as offset whose Label is in
-  // |label_manager| by the index of this Label, and updates the Label bound
-  // associated with |pool|.
-  void LabelTargets(PoolTag pool, const BaseLabelManager& label_manager) {
-    target_pools_.at(pool).LabelTargets(label_manager);
-  }
-
-  // Replaces every associated target represented as offset whose Label is in
-  // |label_manager| by the index of this Label, and updates the Label bound
-  // associated with |pool|. A target is associated iff its Label index is also
-  // used in |reference_label_manager|. All targets must have a Label in
-  // |label_manager|, and must be represented as offset when calling this
-  // function, implying it can only be called once for each |pool|, until
-  // UnlabelTargets() (below) is called.
-  void LabelAssociatedTargets(PoolTag pool,
-                              const BaseLabelManager& label_manager,
-                              const BaseLabelManager& reference_label_manager) {
-    target_pools_.at(pool).LabelAssociatedTargets(label_manager,
-                                                  reference_label_manager);
-  }
-
-  // Replaces every target represented as a Label index by its original offset,
-  // assuming that |label_manager| still holds the same Labels referered to by
-  // target indices. Resets Label bound associated with |pool| to 0.
-  void UnlabelTargets(PoolTag pool, const BaseLabelManager& label_manager) {
-    target_pools_.at(pool).UnlabelTargets(label_manager);
-  }
 
  private:
   // Inserts to |*this| index, all references described by |traits| read from

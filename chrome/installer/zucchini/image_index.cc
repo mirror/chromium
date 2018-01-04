@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/macros.h"
 #include "chrome/installer/zucchini/algorithm.h"
 #include "chrome/installer/zucchini/disassembler.h"
 

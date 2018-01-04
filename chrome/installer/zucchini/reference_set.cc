@@ -15,7 +15,7 @@ namespace zucchini {
 
 namespace {
 
-// Returns true if |refs| is sorted by location.
+// Returns true if |refs| is sorted.
 bool IsReferenceListSorted(const std::vector<IndirectReference>& refs) {
   return std::is_sorted(
       refs.begin(), refs.end(),

@@ -20,25 +20,19 @@ namespace zucchini {
 
 namespace {
 
+constexpr auto BAD = kUnusedIndex;
 using OffsetVector = std::vector<offset_t>;
-
-// In normal usage, 0.0 is an unrealistic similarity value for an
-// EquivalenceCandiate. Since similarity doesn't affect results for various unit
-// tests in this file, we use this dummy value for simplicity.
-constexpr double kDummySim = 0.0;
 
 // Helper function wrapping GenerateReferencesDelta().
 std::vector<int32_t> GenerateReferencesDeltaTest(
     const std::vector<Reference>& old_references,
     const std::vector<Reference>& new_references,
-    std::vector<offset_t>&& exp_old_targets,
     std::vector<offset_t>&& new_labels,
     const EquivalenceMap& equivalence_map) {
   ReferenceDeltaSink reference_delta_sink;
 
   TargetPool old_targets;
   old_targets.InsertTargets(old_references);
-  EXPECT_EQ(exp_old_targets, old_targets.targets());
   ReferenceSet old_refs({1, TypeTag(0), PoolTag(0)}, old_targets);
   old_refs.InitReferences(old_references);
 
@@ -71,8 +65,7 @@ std::vector<int32_t> GenerateReferencesDeltaTest(
   return delta_vec;
 }
 
-// Helper function wrapping FindExtraTargets(). |new_references| take rvalue so
-// callers can be simplified.
+// Helper function wrapping FindExtraTargets().
 std::vector<offset_t> FindExtraTargetsTest(
     std::vector<Reference>&& new_references,
     std::vector<offset_t>&& new_labels,
@@ -93,186 +86,133 @@ TEST(ZucchiniGenTest, MakeNewTargetsFromEquivalenceMap) {
   // Note that |old_offsets| provided are sorted, and |equivalences| provided
   // are sorted by |src_offset|.
 
-  constexpr auto kBad = kUnusedIndex;
-
   EXPECT_EQ(OffsetVector(), MakeNewTargetsFromEquivalenceMap({}, {}));
-  EXPECT_EQ(OffsetVector({kBad, kBad}),
+  EXPECT_EQ(OffsetVector({BAD, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1}, {}));
 
-  EXPECT_EQ(OffsetVector({0, 1, kBad}),
+  EXPECT_EQ(OffsetVector({0, 1, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2}, {{0, 0, 2}}));
-  EXPECT_EQ(OffsetVector({1, 2, kBad}),
+  EXPECT_EQ(OffsetVector({1, 2, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2}, {{0, 1, 2}}));
-  EXPECT_EQ(OffsetVector({1, kBad, 4, 5, 6, kBad}),
+  EXPECT_EQ(OffsetVector({1, BAD, 4, 5, 6, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2, 3, 4, 5},
                                              {{0, 1, 1}, {2, 4, 3}}));
-  EXPECT_EQ(OffsetVector({3, kBad, 0, 1, 2, kBad}),
+  EXPECT_EQ(OffsetVector({3, BAD, 0, 1, 2, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2, 3, 4, 5},
                                              {{0, 3, 1}, {2, 0, 3}}));
 
   // Overlap in src.
-  EXPECT_EQ(OffsetVector({1, 2, 3, kBad, kBad}),
+  EXPECT_EQ(OffsetVector({1, 2, 3, BAD, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2, 3, 4},
                                              {{0, 1, 3}, {1, 4, 2}}));
-  EXPECT_EQ(OffsetVector({1, 4, 5, 6, kBad}),
+  EXPECT_EQ(OffsetVector({1, 4, 5, 6, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2, 3, 4},
                                              {{0, 1, 2}, {1, 4, 3}}));
-  EXPECT_EQ(OffsetVector({1, 2, 5, kBad, kBad}),
+  EXPECT_EQ(OffsetVector({1, 2, 5, BAD, BAD}),
             MakeNewTargetsFromEquivalenceMap({0, 1, 2, 3, 4},
                                              {{0, 1, 2}, {1, 4, 2}}));
 
   // Jump in src.
-  EXPECT_EQ(OffsetVector({5, kBad, 6}),
+  EXPECT_EQ(OffsetVector({5, BAD, 6}),
             MakeNewTargetsFromEquivalenceMap(
                 {10, 13, 15}, {{0, 1, 2}, {9, 4, 2}, {15, 6, 2}}));
-
-  // Tie-breaking: Prefer longest Equivalence, and then Equivalence with min
-  // |dst_offset|.
-  EXPECT_EQ(OffsetVector({11}),
-            MakeNewTargetsFromEquivalenceMap({1}, {{0, 10, 4}, {1, 21, 3}}));
-  EXPECT_EQ(OffsetVector({21}),
-            MakeNewTargetsFromEquivalenceMap({1}, {{0, 10, 3}, {1, 21, 4}}));
-  EXPECT_EQ(OffsetVector({11}),
-            MakeNewTargetsFromEquivalenceMap({1}, {{0, 10, 4}, {1, 21, 4}}));
 }
 
 TEST(ZucchiniGenTest, FindExtraTargets) {
   // Note that |new_offsets| provided are sorted, and |equivalences| provided
   // are sorted by |dst_offset|.
 
-  // No equivalences.
   EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
-  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{20, 0}}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {kUnusedIndex}, {}));
   EXPECT_EQ(OffsetVector(),
-            FindExtraTargetsTest({{20, 0}}, {kUnusedIndex}, {}));
+            FindExtraTargetsTest({{0, 0}, {3, 0}}, {},
+                                 EquivalenceMap({{{2, 1, 2}, 0.0}})));
 
-  // Unrelated equivalence.
-  EXPECT_EQ(OffsetVector(),
-            FindExtraTargetsTest({{20, 0}, {23, 0}}, {},
-                                 EquivalenceMap({{{12, 21, 2}, kDummySim}})));
-
-  // Simple cases with one reference.
+  EXPECT_EQ(
+      OffsetVector({1}),
+      FindExtraTargetsTest({{0, 1}}, {}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
   EXPECT_EQ(OffsetVector({1}),
-            FindExtraTargetsTest({{20, 1}}, {},
-                                 EquivalenceMap({{{10, 20, 2}, kDummySim}})));
-  EXPECT_EQ(OffsetVector({1}),
-            FindExtraTargetsTest({{20, 1}}, {kUnusedIndex},
-                                 EquivalenceMap({{{10, 20, 2}, kDummySim}})));
-  // With symmetry.
-  EXPECT_EQ(OffsetVector({1}),
-            FindExtraTargetsTest({{10, 1}}, {kUnusedIndex},
-                                 EquivalenceMap({{{10, 10, 2}, kDummySim}})));
+            FindExtraTargetsTest({{0, 1}}, {kUnusedIndex},
+                                 EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({}),
+      FindExtraTargetsTest({{0, 1}}, {1}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
 
-  // Target ignored because it is not "extra" (found as label).
-  EXPECT_EQ(OffsetVector({}),
-            FindExtraTargetsTest({{20, 1}}, {1},
-                                 EquivalenceMap({{{10, 20, 2}, kDummySim}})));
-  EXPECT_EQ(OffsetVector({}),
-            FindExtraTargetsTest({{20, 1}}, {2, 1},
-                                 EquivalenceMap({{{10, 20, 2}, kDummySim}})));
-  EXPECT_EQ(OffsetVector({}),
-            FindExtraTargetsTest({{20, 1}}, {kUnusedIndex, 1},
-                                 EquivalenceMap({{{10, 20, 2}, kDummySim}})));
+  EXPECT_EQ(OffsetVector({1, 2}),
+            FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {},
+                                 EquivalenceMap({{{0, 1, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({1, 2}),
+      FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {kUnusedIndex, 11},
+                           EquivalenceMap({{{0, 1, 2}, 0.0}})));
 
-  // Simple cases with multiple references.
-  EXPECT_EQ(OffsetVector({5, 3}),
-            FindExtraTargetsTest({{20, 4}, {21, 5}, {22, 3}, {23, 6}}, {},
-                                 EquivalenceMap({{{10, 21, 2}, kDummySim}})));
-  // With unrelated new labels.
-  EXPECT_EQ(OffsetVector({5, 3}),
-            FindExtraTargetsTest({{20, 4}, {21, 5}, {22, 3}, {23, 6}},
-                                 {kUnusedIndex, 9},
-                                 EquivalenceMap({{{10, 21, 2}, kDummySim}})));
-  // With unrelated equivalences.
-  EXPECT_EQ(OffsetVector({5, 3}),
-            FindExtraTargetsTest({{20, 4}, {21, 5}, {22, 3}, {23, 6}}, {},
-                                 EquivalenceMap({{{11, 11, 2}, kDummySim},
-                                                 {{10, 21, 2}, kDummySim}})));
-  EXPECT_EQ(OffsetVector({5, 3}),
-            FindExtraTargetsTest({{20, 4}, {21, 5}, {22, 3}, {23, 6}}, {},
-                                 EquivalenceMap({{{10, 21, 2}, kDummySim},
-                                                 {{11, 31, 2}, kDummySim}})));
-
-  // Multiple equivalences. Targets are ordered for simplicity.
   EXPECT_EQ(OffsetVector({1, 2, 4, 5}),
             FindExtraTargetsTest(
-                {{20, 0}, {21, 1}, {22, 2}, {23, 3}, {24, 4}, {25, 5}, {26, 6}},
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
                 {kUnusedIndex},
-                EquivalenceMap(
-                    {{{10, 21, 2}, kDummySim}, {{10, 24, 2}, kDummySim}})));
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
   EXPECT_EQ(OffsetVector({2, 4}),
             FindExtraTargetsTest(
-                {{20, 0}, {21, 1}, {22, 2}, {23, 3}, {24, 4}, {25, 5}, {26, 6}},
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
                 {5, kUnusedIndex, 1},
-                EquivalenceMap(
-                    {{{10, 21, 2}, kDummySim}, {{10, 24, 2}, kDummySim}})));
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
   EXPECT_EQ(OffsetVector({4, 5}),
-            FindExtraTargetsTest({{23, 3}, {24, 4}, {25, 5}, {26, 6}}, {},
-                                 EquivalenceMap({{{10, 21, 2}, kDummySim},
-                                                 {{10, 24, 2}, kDummySim}})));
+            FindExtraTargetsTest(
+                {{3, 3}, {4, 4}, {5, 5}, {6, 6}}, {},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
 }
 
 TEST(ZucchiniGenTest, GenerateReferencesDelta) {
-  // No equivalences.
   EXPECT_EQ(std::vector<int32_t>(),
-            GenerateReferencesDeltaTest({}, {}, {}, {}, EquivalenceMap()));
-  EXPECT_EQ(std::vector<int32_t>(),
-            GenerateReferencesDeltaTest({{10, 0}}, {{20, 0}}, {0}, {},
-                                        EquivalenceMap()));
+            GenerateReferencesDeltaTest({}, {}, {}, EquivalenceMap()));
 
-  // Simple cases with one equivalence.
   EXPECT_EQ(
-      std::vector<int32_t>({0}),  // {0 - 0}.
-      GenerateReferencesDeltaTest({{10, 3}}, {{20, 3}}, {3}, {3, 4},
-                                  EquivalenceMap({{{10, 20, 4}, kDummySim}})));
+      std::vector<int32_t>(),
+      GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {}, EquivalenceMap()));
+
+  EXPECT_EQ(std::vector<int32_t>({0}),
+            GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {0, 1},
+                                        EquivalenceMap({{{0, 0, 4}, 0.0}})));
+  EXPECT_EQ(std::vector<int32_t>({1}),
+            GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {1, 0},
+                                        EquivalenceMap({{{0, 0, 4}, 0.0}})));
   EXPECT_EQ(
-      std::vector<int32_t>({1}),  // {1 - 0}.
-      GenerateReferencesDeltaTest({{10, 3}}, {{20, 3}}, {3}, {4, 3},
-                                  EquivalenceMap({{{10, 20, 4}, kDummySim}})));
-  EXPECT_EQ(std::vector<int32_t>({2, -1}),  // {2 - 0, 0 - 1}.
-            GenerateReferencesDeltaTest(
-                {{10, 3}, {11, 4}}, {{20, 3}, {21, 4}}, {3, 4}, {4, 5, 3},
-                EquivalenceMap({{{10, 20, 4}, kDummySim}})));
+      std::vector<int32_t>({2, -1}),
+      GenerateReferencesDeltaTest({{0, 0}, {1, 1}}, {{0, 0}, {1, 1}}, {1, 2, 0},
+                                  EquivalenceMap({{{0, 0, 4}, 0.0}})));
 
-  EXPECT_EQ(std::vector<int32_t>({0, 0}),  // {1 - 1, 2 - 2}.
-            GenerateReferencesDeltaTest(
-                {{10, 3}, {11, 4}, {12, 5}, {13, 6}},
-                {{20, 3}, {21, 4}, {22, 5}, {23, 6}}, {3, 4, 5, 6},
-                {3, 4, 5, 6}, EquivalenceMap({{{11, 21, 2}, kDummySim}})));
+  EXPECT_EQ(std::vector<int32_t>({0, 0}),
+            GenerateReferencesDeltaTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}},
+                                        {{0, 0}, {1, 1}, {2, 2}, {3, 3}},
+                                        {0, 1, 2, 3},
+                                        EquivalenceMap({{{1, 1, 2}, 0.0}})));
 
-  // Multiple equivalences.
-  EXPECT_EQ(std::vector<int32_t>({-1, 1}),  // {0 - 1, 1 - 0}.
+  EXPECT_EQ(std::vector<int32_t>({-1, 1}),
             GenerateReferencesDeltaTest(
-                {{10, 0}, {12, 1}}, {{10, 0}, {12, 1}}, {0, 1}, {0, 1},
+                {{0, 0}, {2, 1}}, {{0, 0}, {2, 1}}, {0, 1},
+                EquivalenceMap({{{2, 0, 2}, 0.0}, {{0, 2, 2}, 0.0}})));
+  EXPECT_EQ(std::vector<int32_t>({0, 0}),
+            GenerateReferencesDeltaTest(
+                {{0, 0}, {2, 1}}, {{0, 0}, {2, 1}}, {1, 0},
+                EquivalenceMap({{{2, 0, 2}, 0.0}, {{0, 2, 2}, 0.0}})));
+
+  EXPECT_EQ(std::vector<int32_t>({-2, 2}),
+            GenerateReferencesDeltaTest(
+                {{0, 0}, {2, 1}, {4, 2}}, {{0, 0}, {2, 1}, {4, 2}}, {0, 1, 2},
+                EquivalenceMap({{{4, 0, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+
+  EXPECT_EQ(std::vector<int32_t>({-2, 2}),
+            GenerateReferencesDeltaTest(
+                {{1, 0}, {4, 1}, {7, 2}}, {{1, 0}, {4, 1}, {7, 2}}, {0, 1, 2},
+                EquivalenceMap({{{6, 0, 3}, 0.0}, {{0, 6, 3}, 0.0}})));
+
+  EXPECT_EQ(std::vector<int32_t>({-2, 2}),
+            GenerateReferencesDeltaTest(
+                {{0, 0}, {4, 2}, {6, 1}}, {{0, 0}, {4, 2}}, {0, 1, 2},
                 EquivalenceMap(
-                    {{{12, 10, 2}, kDummySim}, {{10, 12, 2}, kDummySim}})));
-  EXPECT_EQ(
-      std::vector<int32_t>({0, 0}),  // {0 - 0, 1 - 1}.
-      GenerateReferencesDeltaTest(
-          {{0, 0}, {2, 1}}, {{0, 0}, {2, 1}}, {0, 1}, {1, 0},
-          EquivalenceMap({{{2, 0, 2}, kDummySim}, {{0, 2, 2}, kDummySim}})));
-
-  EXPECT_EQ(std::vector<int32_t>({-2, 2}),  // {0 - 2, 2 - 0}.
-            GenerateReferencesDeltaTest(
-                {{10, 0}, {12, 1}, {14, 2}}, {{10, 0}, {12, 1}, {14, 2}},
-                {0, 1, 2}, {0, 1, 2},
-                EquivalenceMap(
-                    {{{14, 10, 2}, kDummySim}, {{10, 14, 2}, kDummySim}})));
-
-  EXPECT_EQ(std::vector<int32_t>({-2, 2}),  // {0 - 2, 2 - 0}.
-            GenerateReferencesDeltaTest(
-                {{11, 0}, {14, 1}, {17, 2}}, {{11, 0}, {14, 1}, {17, 2}},
-                {0, 1, 2}, {0, 1, 2},
-                EquivalenceMap(
-                    {{{16, 10, 3}, kDummySim}, {{10, 16, 3}, kDummySim}})));
-
-  EXPECT_EQ(
-      std::vector<int32_t>({-2, 2}),  // {0 - 2, 2 - 0}.
-      GenerateReferencesDeltaTest({{10, 0}, {14, 2}, {16, 1}},
-                                  {{10, 0}, {14, 2}}, {0, 1, 2}, {0, 1, 2},
-                                  EquivalenceMap({{{14, 10, 2}, kDummySim},
-                                                  {{12, 12, 2}, kDummySim},
-                                                  {{10, 14, 2}, kDummySim}})));
+                    {{{4, 0, 2}, 0.0}, {{2, 2, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
 }
 
 // TODO(huangs): Add more tests.

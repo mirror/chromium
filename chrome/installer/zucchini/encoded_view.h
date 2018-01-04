@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <iterator>
+#include <vector>
 
 #include "base/macros.h"
 #include "chrome/installer/zucchini/image_index.h"
@@ -32,10 +33,10 @@ namespace zucchini {
 constexpr size_t kReferencePaddingProjection = 256;
 constexpr size_t kBaseReferenceProjection = 257;
 
-// A Range (providing begin and end iterators) that adapts ImageIndex to make
+// A Range (providing a begin and end iterators) that adapts ImageIndex to make
 // image data appear as an Encoded Image, that is encoded data under a higher
 // level of abstraction than raw bytes. In particular:
-// - First byte of each reference become a projection of its type and label.
+// - First byte of each reference become a projection of its type and Label.
 // - Subsequent bytes of each reference becomes |kReferencePaddingProjection|.
 // - Non-reference raw bytes remain as raw bytes.
 class EncodedView {
@@ -145,6 +146,9 @@ class EncodedView {
   // values returned by Projection().
   value_type Cardinality() const;
 
+  // Associates |labels| to targets for a given |pool|, replacing previous
+  // association. Values in |labels| must be smaller than |bound|.
+  void SetLabels(PoolTag pool, std::vector<uint32_t>&& labels, size_t bound);
   const ImageIndex& image_index() const { return image_index_; }
 
   // Range functions.
@@ -157,7 +161,17 @@ class EncodedView {
   }
 
  private:
+  struct PoolInfo {
+    PoolInfo();
+    PoolInfo(PoolInfo&&);
+    ~PoolInfo();
+
+    std::vector<uint32_t> labels;
+    size_t bound = 0;
+  };
+
   const ImageIndex& image_index_;
+  std::vector<PoolInfo> pool_infos_;
 
   DISALLOW_COPY_AND_ASSIGN(EncodedView);
 };
