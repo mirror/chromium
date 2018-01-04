@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c48d88f_cf07dbca",
+        "filename": "device/u2f/response_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "Let\u0027s make this either a class hierarchy that is movable (with non-virtual dtor and no virtual methods), or a heterogeneous type (virtual dtor and virtual methods as needed, but immutable and not copyable/movable).\n\nAlternatively, just use composition instead of inheritance.",
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c372860e_da27f663",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "Can we take these by value?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2d438f_e1c6912d",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "nit: Simply base::nullopt will work, the constructor is implicit.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629fe07e_522a47af",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "nit: Can we use the Extract() method for all this slicing here to avoid length checking and indexing?",
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9710f5_0261675d",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "Can we make goo.gl shortlinks for these? Really hard to open these. :)",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad02d600_9ec759b6",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994121c9_e0256dc1",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T17:51:19Z",
+      "side": 1,
+      "message": "nit: These are also fixed in the previous CL, right? :-)",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 16
+      },
+      "revId": "1ad9f81e88a71ccca0b2e28aa683d4cb5269d069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
