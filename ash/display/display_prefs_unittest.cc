@@ -10,6 +10,7 @@
 #include <utility>
 #include <vector>
 
+#include "ash/display/display_configuration_observer.h"
 #include "ash/display/display_util.h"
 #include "ash/display/resolution_notification_controller.h"
 #include "ash/display/screen_orientation_controller_chromeos.h"
@@ -25,7 +26,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
-#include "chrome/browser/chromeos/display/display_configuration_observer.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/user_manager/user_type.h"
@@ -104,7 +104,7 @@ class DisplayPrefsTest : public NoSessionAshTestBase {
     AshTestBase::SetUp();
     // AshTestBase::SetUp() initializes local state.
     ASSERT_TRUE(local_state());
-    observer_ = std::make_unique<chromeos::DisplayConfigurationObserver>();
+    observer_ = std::make_unique<DisplayConfigurationObserver>();
     observer_->OnDisplaysInitialized();
   }
 
