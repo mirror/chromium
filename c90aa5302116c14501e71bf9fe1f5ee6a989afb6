@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bdd5075_f178cfab",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-04T22:53:51Z",
+      "side": 1,
+      "message": "Whoops, what I get for blindly relying on git cl format.  Done.",
+      "parentUuid": "46bd5d66_a2e7f1a4",
+      "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e38697d_d917f019",
         "filename": "content/renderer/loader/web_url_loader_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-04T22:46:05Z",
       "side": 1,
       "message": "This should be \"0\" since this is an int.",
+      "range": {
+        "startLine": 220,
+        "startChar": 25,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "c90aa5302116c14501e71bf9fe1f5ee6a989afb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbc8b01_3d776410",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2018-01-04T22:53:51Z",
+      "side": 1,
+      "message": "I disagree, though I\u0027m happy to switch to explicitly casting it to an int if you want.  This context has awareness of PreviewsState, and is actually setting a semantic value on that variable, which is that this data wasn\u0027t collected from a preview.  \n\nIn general, I think everything outside of ResourceResponseInfo that can should use the symbolic versions; it\u0027s just the stuff (that is going to be) inside of the network service that we don\u0027t want to know about it.",
+      "parentUuid": "4e38697d_d917f019",
       "range": {
         "startLine": 220,
         "startChar": 25,
