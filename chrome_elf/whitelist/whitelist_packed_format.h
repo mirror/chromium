@@ -63,6 +63,53 @@ static_assert(sizeof(PackedWhitelistModule) == 44,
               "The actual padding of the PackedWhitelistModule struct doesn't "
               "match the expected padding");
 
+//------------------------------------------------------------------------------
+// Exported chrome_elf log API
+//------------------------------------------------------------------------------
+
+// Define a flat log entry for any attempted module load.
+// The total size in bytes of each log entry will be exactly
+// sizeof(LogEntry) + LogEntry.path_extra_size.  The next entry in a buffer from
+// the DrainLog() API would follow immediately after that, and will be 32-bit
+// aligned for access.
+//
+// - If this is a |blocked| entry, |path_len| and |path_extra_size| will be 0.
+//   (Full path not required for a blacklisted module log.)
+// - |path| (and |path_extra_size|) may include extra trailing null
+//   characters to ensure the path (and full entry) ends on 32-bit alignment.
+struct LogEntry {
+  // Module load blocked if true, or allowed if false.
+  bool blocked;
+  uint8_t basename_hash[20];
+  uint8_t code_id_hash[20];
+  // Number of characters in |path| string, not including null terminator.
+  uint32_t path_len;
+  // |path_extra_size| is needed for padding and alignment reasons.
+  uint32_t path_extra_size;
+  // Null terminated path guaranteed.
+  char path[1];
+};
+
+static_assert(sizeof(LogEntry) == 56,
+              "Ensure expectations for padding and alignment are correct.");
+
 }  // namespace whitelist
+
+extern "C" {
+// Exported API for calling from outside chrome_elf.dll.
+// Drains the load attempt LogEntries into the provided buffer.
+// - Returns the number of bytes written.  See comments above for LogEntry
+//   details.
+// - If provided, |log_remaining| receives the number of bytes remaining in the
+//   module log, that didn't fit in |buffer|.
+// - |buffer_size| can be 0, in which case this simply queries the size of the
+//   module log.
+uint32_t DrainLog(uint8_t* buffer,
+                  uint32_t buffer_size,
+                  uint32_t* log_remaining);
+
+// WHAT ABOUT AN EVENT TO FIRE INSTEAD OF A FUNCTION POINTER?
+// EXPORT bool RegisterNotificationCallback(func_ptr);
+}  // extern "C"
 
 #endif  // CHROME_ELF_WHITELIST_WHITELIST_PACKED_FORMAT_H_
