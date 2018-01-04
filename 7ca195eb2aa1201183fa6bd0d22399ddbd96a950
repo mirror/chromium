@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa41a57_70d0fc98",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-04T15:24:57Z",
+      "side": 1,
+      "message": "This is already in an anonymous namespace, no need for a second one. So this should just be:\n\n  const char* kXCTestFileSuffixes[] \u003d {\n      \"egtest.m\", \"egtest.mm\", \"xctest.m\", \"xctest.mm\",\n  };",
+      "revId": "7ca195eb2aa1201183fa6bd0d22399ddbd96a950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
