@@ -101,7 +101,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
     }
 
     // Mojo callback for SensorProvider::GetSensor().
-    void OnSensorCreated(device::mojom::SensorInitParamsPtr params) {
+    void OnSensorCreated(device::mojom::SensorInitParamsPtr params,
+                         device::mojom::SensorClientRequest client_request) {
       if (!params) {
         HandleSensorError();
         event_pump->DidStartIfPossible();
@@ -116,8 +117,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
       mode = params->mode;
       default_config = params->default_configuration;
 
-      sensor.Bind(std::move(params->sensor));
-      client_binding.Bind(std::move(params->client_request));
+      DCHECK(sensor.is_bound());
+      client_binding.Bind(std::move(client_request));
 
       shared_buffer_handle = std::move(params->memory);
       DCHECK(!shared_buffer);
@@ -137,8 +138,6 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
       default_config.set_frequency(kDefaultPumpFrequencyHz);
 
-      sensor.set_connection_error_handler(
-          base::Bind(&SensorEntry::HandleSensorError, base::Unretained(this)));
       sensor->ConfigureReadingChangeNotifications(false /* disabled */);
       sensor->AddConfiguration(
           default_config, base::Bind(&SensorEntry::OnSensorAddConfiguration,
@@ -190,9 +189,12 @@ class CONTENT_EXPORT DeviceSensorEventPump
   friend struct SensorEntry;
 
   void GetSensor(SensorEntry* sensor_entry) {
-    sensor_provider_->GetSensor(sensor_entry->type,
+    auto request = mojo::MakeRequest(&sensor_entry->sensor);
+    sensor_provider_->GetSensor(sensor_entry->type, std::move(request),
                                 base::Bind(&SensorEntry::OnSensorCreated,
                                            base::Unretained(sensor_entry)));
+    sensor_entry->sensor.set_connection_error_handler(base::Bind(
+        &SensorEntry::HandleSensorError, base::Unretained(sensor_entry)));
   }
 
   virtual void DidStartIfPossible() {
