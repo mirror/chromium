@@ -73,7 +73,14 @@ class WebPointerProperties {
         position_in_screen_(position_in_screen) {}
 
   WebFloatPoint PositionInWidget() const { return position_in_widget_; }
+  void SetPositionInWidget(float x, float y) {
+    position_in_widget_ = WebFloatPoint(x, y);
+  }
+
   WebFloatPoint PositionInScreen() const { return position_in_screen_; }
+  void SetPositionInScreen(float x, float y) {
+    position_in_screen_ = WebFloatPoint(x, y);
+  }
 
   // TODO(mustaq): Move the setters for position_in_widget_ and
   // position_in_screen_ here from the subclasses when mouse event coordinate
