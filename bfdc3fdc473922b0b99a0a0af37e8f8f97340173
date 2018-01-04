@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e4cc639_55152e3c",
+        "filename": "sandbox/win/src/crosscall_server.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2018-01-04T07:25:42Z",
+      "side": 1,
+      "message": "\"windows.h is not included after atomicops.h\" in this file, so I\u0027m not sure I understand this comment.",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "bfdc3fdc473922b0b99a0a0af37e8f8f97340173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
