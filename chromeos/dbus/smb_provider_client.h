@@ -75,7 +75,9 @@ class CHROMEOS_EXPORT SmbProviderClient : public DBusClient {
 
   // Calls CloseFile. This closes the file with handle |file_id|. Subsequent
   // operations using file with this handle will fail.
-  virtual void CloseFile(int32_t file_id, CloseFileCallback callback) = 0;
+  virtual void CloseFile(int32_t mount_id,
+                         int32_t file_id,
+                         CloseFileCallback callback) = 0;
 
  protected:
   // Create() should be used instead.
