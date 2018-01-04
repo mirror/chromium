@@ -131,10 +131,8 @@ void BluetoothRemoteGattServiceWin::OnGetIncludedCharacteristics(
     return;
 
   // Report discovery complete.
-  SetDiscoveryComplete(true);
   UpdateIncludedCharacteristics(characteristics.get(), num);
   NotifyGattDiscoveryCompleteForServiceIfNecessary();
-  device_->GattServiceDiscoveryComplete(this);
 }
 
 void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
@@ -187,10 +185,13 @@ void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
 void BluetoothRemoteGattServiceWin::
     NotifyGattDiscoveryCompleteForServiceIfNecessary() {
   if (discovery_completed_included_characteristics_.size() ==
-          included_characteristics_.size() &&
-      IsDiscoveryComplete() && !discovery_complete_notified_) {
-    adapter_->NotifyGattDiscoveryComplete(this);
-    discovery_complete_notified_ = true;
+      included_characteristics_.size()) {
+    SetDiscoveryComplete(true);
+    if (!discovery_complete_notified_) {
+      discovery_complete_notified_ = true;
+      device_->GattServiceDiscoveryComplete(this);
+      adapter_->NotifyGattDiscoveryComplete(this);
+    }
   }
 }
 
