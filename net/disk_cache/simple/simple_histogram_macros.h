@@ -5,14 +5,19 @@
 #ifndef NET_DISK_CACHE_SIMPLE_SIMPLE_HISTOGRAM_MACROS_H_
 #define NET_DISK_CACHE_SIMPLE_SIMPLE_HISTOGRAM_MACROS_H_
 
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/sparse_histogram.h"
 #include "net/base/cache_type.h"
 
 // This file contains macros used to report histograms. The main issue is that
 // we want to have separate histograms for each type of cache (app, http, and
 // media), while making it easy to report histograms and have all names
 // precomputed.
+
+// TODO(isherman): This macro was removed everywhere outside of this file as
+// part of http://crbug.com/773850. It's a bit of a hack to define it here.
+#define UMA_HISTOGRAM_SPARSE_SLOWLY(name, sample) \
+  base::UmaHistogramSparse(name, sample)
 
 #define SIMPLE_CACHE_THUNK(uma_type, args) UMA_HISTOGRAM_##uma_type args
 
