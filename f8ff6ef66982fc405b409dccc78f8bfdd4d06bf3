@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "331971f9_be3de8e6",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T14:44:34Z",
+      "side": 1,
+      "message": "Ah, I see. Let\u0027s rename root_container to start_container then.",
+      "parentUuid": "976b2446_250334e1",
+      "range": {
+        "startLine": 1382,
+        "startChar": 10,
+        "endLine": 1382,
+        "endChar": 14
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7457e87_314a27a0",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "\u003e Is it caused by this CL?\n\nNo. It already exists without this CL.\n\n\u003e What is the incorrect behavior?\n\nFor example:\nLayout\n[focused element, inside viewable area]\n[iframe and first candidate][focusable element and second candidate]\n\nAssume we hit down arrow key.\n\nStep1:\ncontainer - document node\nstarting rect - focused element\u0027s rect\n\niframe is discovered as candidate\n\nStep2:\ncontainer - iframe\nstarting rect - focused element\u0027s rect\n\nno focusable element found. cannot scroll.\n\nStep3:\ncontainer - document node\nstarting rect - !!iframe\u0027s rect!!\n\nno focusable element found. cannot scroll.\n\nStep4:\nstack is empty. end traversal.\n\n\nIn above scenario, step3 is definitely wrong. But line 1453 introduces this behavior.",
       "parentUuid": "1b6a3e43_f7b8ecdb",
+      "range": {
+        "startLine": 1452,
+        "startChar": 14,
+        "endLine": 1452,
+        "endChar": 42
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58a1c1f_0393b895",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T14:44:34Z",
+      "side": 1,
+      "message": "Hm. I don\u0027t understand why you do two st.push() here. https://chromium-review.googlesource.com/c/chromium/src/+/781326/10/third_party/WebKit/Source/core/page/FocusController.cpp#1403 does only one. Maybe splitting 781326\u0027s Patch Set 10 was more complicated than I expected.",
+      "parentUuid": "96d1abf3_0e26c9d0",
       "range": {
         "startLine": 1452,
         "startChar": 14,
