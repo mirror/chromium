@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35dafb31_59fd9f3f",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "Is it important that these IDs are composed out of process IDs + a process-specific ID?\n\nIf not, it might be nicer to use mojo.common.mojom.UnguessableToken.\n\nIf we used mojo.common.mojom.UnguessableToken, maybe we wouldn\u0027t need to use this ID mapping either? We could just associate an UnguessableToken with each local root, and rely on that to associate frames together as needed.",
+      "revId": "9e523535cfc3d6b4222866b65be2a13fa3c914bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

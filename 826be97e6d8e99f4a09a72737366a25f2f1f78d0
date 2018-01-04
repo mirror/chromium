@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b830726a_9f5c4ba5",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem quite right--maybe just remove it?",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5a50f5_77d8c857",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "Nit: please add a brief comment that describes what this placeholder is used for.",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca821ca_5706d3d6",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "It would be helpful to document the various cases here (i.e. if we print a page that contains frames from multiple processes, it\u0027s possible that a subframe\u0027s content will be returned before the parent frame has reported its dependent subframe\u0027s content IDs).\n\nHowever, this seems quite complicated: is it necessary to create the placeholder? Why do we need to eagerly create an entry in content_to_frame_node_ map if it already doesn\u0027t exist here, rather than just waiting for the next AddSubframeContent call?",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca0acd0_a2c63b85",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow why checking is ready to composite would mark frame_guid as complete.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d32a52_6c869a4b",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "Naively, I might expect that we could just try tracking this directly as a class member, rather than holding the pending content IDs on FrameInfos. Then checking for completion could be as simple as just checking that there are no pending content IDs or pending frame IDs, without requiring a tree walk.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f4169d_45e5277f",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T13:34:16Z",
+      "side": 1,
+      "message": "In general, we\u0027d like to move towards using mojo.common.mojom.UnguessableToken to represent IDs that need to be passed between processes. Would you be OK making this change in a followup?",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
