@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac027bc7_24957d92",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T21:41:31Z",
+      "side": 1,
+      "message": "that\u0027s the wrong thread, this one runs on the IO thread",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b0b993_4209cb92",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T21:41:31Z",
+      "side": 1,
+      "message": "I don\u0027t actually understand this one. what is it racing with exactly?",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
