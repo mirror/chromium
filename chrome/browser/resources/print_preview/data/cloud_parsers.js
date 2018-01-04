@@ -33,6 +33,12 @@ cr.define('cloudprint', function() {
   const OWNED_TAG = '^own';
 
   /**
+   * Tag that denotes whether the printer passes the 2018 certificate.
+   * @const {string}
+   */
+  const CERT_TAG = '__cp_printer_passes_2018_cert__=';
+
+  /**
    * Enumeration of cloud destination types that are supported by print preview.
    * @enum {string}
    */
@@ -81,6 +87,8 @@ cr.define('cloudprint', function() {
     const tags = json[CloudDestinationField.TAGS] || [];
     const connectionStatus = json[CloudDestinationField.CONNECTION_STATUS] ||
         print_preview.DestinationConnectionStatus.UNKNOWN;
+    const certTag = tags.find(tag => tag.startsWith(CERT_TAG)) ||
+        print_preview.DestinationCertificateStatus.NONE;
     const optionalParams = {
       account: account,
       tags: tags,
@@ -88,7 +96,8 @@ cr.define('cloudprint', function() {
       lastAccessTime:
           parseInt(json[CloudDestinationField.LAST_ACCESS], 10) || Date.now(),
       cloudID: id,
-      description: json[CloudDestinationField.DESCRIPTION]
+      description: json[CloudDestinationField.DESCRIPTION],
+      certificateStatus: certTag.substring(CERT_TAG.length)
     };
     const cloudDest = new print_preview.Destination(
         id, parseType(json[CloudDestinationField.TYPE]), origin,
