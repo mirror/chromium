@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f45cf734_b586646f",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-04T09:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b38c0f7e_71507490",
+      "range": {
+        "startLine": 62,
+        "startChar": 62,
+        "endLine": 63,
+        "endChar": 27
+      },
+      "revId": "182bb6512d3ab570a285c8e75d2bace51f021321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae42d67_46656c79",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e96db0f6_5eecd5b6",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-04T09:19:56Z",
+      "side": 1,
+      "message": "This always happens after the first (few) Decode()s. The video decoder knows the resolution by parsing the header of the input bit streams and then asks for buffers for output.",
+      "parentUuid": "6ae42d67_46656c79",
+      "revId": "182bb6512d3ab570a285c8e75d2bace51f021321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54cbff69_bd6a49fe",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-04T06:56:19Z",
       "side": 1,
       "message": "What happens if the argument to AssignPictureBuffers() is \u003c PictureBufferFormat::min_num_buffers? Is that a fatal error?",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "182bb6512d3ab570a285c8e75d2bace51f021321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f63b83_768b4943",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-04T09:19:56Z",
+      "side": 1,
+      "message": "This is not allowed. VDA implementation should check it. https://cs.chromium.org/chromium/src/media/gpu/vaapi/vaapi_video_decode_accelerator.cc?q\u003dvaapi_video_\u0026sq\u003dpackage:chromium\u0026l\u003d790\n\nFail to provide the decoder as many as the required number of buffers may stop the decoder from decoding. (e.g., the rendering path hold more buffers than it claims).",
+      "parentUuid": "54cbff69_bd6a49fe",
       "range": {
         "startLine": 70,
         "startChar": 17,
@@ -131,6 +197,30 @@
       "revId": "182bb6512d3ab570a285c8e75d2bace51f021321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c25da2_3d923644",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-04T09:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a212e5_df1049cd",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "182bb6512d3ab570a285c8e75d2bace51f021321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
