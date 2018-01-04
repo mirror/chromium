@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67f64e9_4f00e0aa",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "Should there be a distinction between \"priority could not be computed\" and \"no priority has been assigned yet\"?\n\nNinja edit: I guess UMAs will reveal how prevalent \"could not be computed\" priorities are, and whether we need to think about this or not.",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb70e01d_04d84b41",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "NIT: missing closing \u0027\"\u0027",
+      "range": {
+        "startLine": 80,
+        "startChar": 27,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b280fc8_7c1bb73e",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "Intentional? Should this be a DLOG as well?",
+      "range": {
+        "startLine": 113,
+        "startChar": 17,
+        "endLine": 113,
+        "endChar": 21
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23011056_e4331ca3",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "If for some reason the player\u0027s priority could not be computed and it does play, could this skew metrics in some way? I am trying to think of pathological cases (which we would probably choose to ignore), but I don\u0027t have a strong example ATM.",
+      "range": {
+        "startLine": 140,
+        "startChar": 41,
+        "endLine": 140,
+        "endChar": 49
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee11c7c5_d35d1b28",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "NIT: RS in caps?",
+      "range": {
+        "startLine": 164,
+        "startChar": 47,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7043be_49a484ad",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "s/earler/earlier",
+      "range": {
+        "startLine": 169,
+        "startChar": 52,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5930a214_cd11afaf",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "Same comment.",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 21
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6f3f80_13fa51cb",
+        "filename": "media/blink/resource_scheduler_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "Should there be a mention that duplicates priorities are allowed?\n\nIs it possible for a given player\u0027s priority to change over time and/or do we care for UMA purposes?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ea2e3c_8c53617b",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 4234,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T20:08:11Z",
+      "side": 1,
+      "message": "What does this imply, when it does not intersect?",
+      "range": {
+        "startLine": 4234,
+        "startChar": 12,
+        "endLine": 4234,
+        "endChar": 26
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
