@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5eacd508_aba13cef",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T01:33:16Z",
+      "side": 1,
+      "message": "All these tests are \"flaky\" on ASAN, so I am not going to mark anyone as flaky. The current one was added by someone without knowing the context of the bug.",
+      "parentUuid": "b5d6a02c_bf36c780",
+      "range": {
+        "startLine": 900,
+        "startChar": 23,
+        "endLine": 900,
+        "endChar": 38
+      },
+      "revId": "d4cc9f6b4576dd72f96ca7363fe8ed62a8337378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047e0b52_21c6dab6",
         "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aaeda9eb_21bc51c8",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T01:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047e0b52_21c6dab6",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "d4cc9f6b4576dd72f96ca7363fe8ed62a8337378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "013682b5_8b567dd7",
         "filename": "media/test/data/eme_player_js/player_utils.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-04T00:46:11Z",
       "side": 1,
       "message": "+ message.messageType so it appears in the message, and the second parameter can simply be message so JS console can examine it, if needed. Objects don\u0027t appear in the text log, so it would be nice to see the type in the test logs.",
+      "range": {
+        "startLine": 58,
+        "startChar": 52,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "d4cc9f6b4576dd72f96ca7363fe8ed62a8337378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddd3457_b4fb0b23",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T01:33:16Z",
+      "side": 1,
+      "message": "+ and , are equivalent, but I think I also like + better. Done.\n\nAs for showing \"message\", I found it not very useful. When I looked at it I felt it\u0027s a programming error that failed to stringify the object. Since we can print the messageType as a string I feel that looks much better.",
+      "parentUuid": "013682b5_8b567dd7",
       "range": {
         "startLine": 58,
         "startChar": 52,
