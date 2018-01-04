@@ -2018,6 +2018,14 @@ test("browser_tests") {
     if (!is_android && !is_mac) {
       data_deps += [ "//chrome/browser/resources/media/mei_preload:component" ]
     }
+
+    if (proprietary_codecs) {
+      sources += [ "../browser/media/encrypted_media_w3c_browsertest.cc" ]
+      data += [
+        "//third_party/WebKit/LayoutTests/external/wpt/encrypted-media/",
+        "//third_party/WebKit/LayoutTests/external/wpt/resources/",
+      ]
+    }
   }
 }
 

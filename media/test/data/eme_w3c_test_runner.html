@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <title>W3C EME test wrapper</title>
+  </head>
+  <body>
+    <script>
+      // Results of running the test reported using the document title.
+      function testSucceeds() {
+        document.title = 'success';
+      }
+      function testFails() {
+        document.title = 'failure';
+      }
+
+      function onMessage(e) {
+        // Only check for test complete status messages. The other messages
+        // (starting, running, etc.) can be ignored since we only care
+        // about the test status when the test is done. Details logged
+        // to the console so failures can be debugged.
+        if (e.data.type == 'complete') {
+          var failing_tests = 0;
+          for (let test of e.data.tests) {
+            if (test.status == test.PASS) {
+              console.log('PASS ' + test.name);
+            } else {
+              ++failing_tests;
+              if (test.status == test.FAIL) {
+                console.log('FAIL ' + test.name);
+              } else if (test.status == test.TIMEOUT) {
+                console.log('TIMEOUT ' + test.name);
+              } else {
+                console.log('UNKNOWN ' + test.name);
+              }
+              console.log('Message: ' + test.message);
+            }
+          }
+
+          if (failing_tests == 0) {
+            testSucceeds();
+          } else {
+            testFails();
+          }
+        }
+      }
+
+      // W3C test framework will send messages about the test status.
+      addEventListener('message', onMessage);
+
+      // Extract the W3C test URL.
+      var parameters = location.search.substring(1).split('&');
+      var test_url;
+      for (let parameter of parameters) {
+        var values = parameters[0].split('=');
+        if (values[0] == 'test') {
+          test_url = values[1];
+        }
+      }
+
+      // Create an iframe to run the W3C test, if it exists. As the W3C test
+      // runs in a different domain, 'encrypted-media' permission is needed.
+      if (test_url) {
+        var iframe = document.createElement('iframe');
+        iframe.allow = 'encrypted-media';
+        iframe.src = test_url;
+        document.body.appendChild(iframe);
+      } else {
+        console.log('No test specified');
+        testFails();
+      }
+    </script>
+  </body>
+</html>
