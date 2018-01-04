@@ -789,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "965ae635_bc91e07b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf069da9_09aeda4c",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f9eb8a_5e8ec4d4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
         "patchSetId": 7
@@ -800,6 +824,30 @@
       "writtenOn": "2017-11-27T21:51:55Z",
       "side": 1,
       "message": "Why are we not reusing the AndroidUiGestureTarget?",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cacd843_d15d3d6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T22:03:33Z",
+      "side": 1,
+      "message": "AndroidUiGestureTarget is using MotionEventAction.START instead of MotionEvents. Ideally we should always use MotionEvents and merge these two. I\u0027ll file a bug for this.",
+      "parentUuid": "b1f9eb8a_5e8ec4d4",
       "range": {
         "startLine": 83,
         "startChar": 16,
