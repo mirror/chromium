@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "462118f7_46c37aed",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-04T09:50:38Z",
+      "side": 1,
+      "message": "SourceFile::GetName() returns a copy of the file name, so I would recommend using a local variable here. In addition, maybe we should also allow Objective-C EarlGrey files (i.e. with \"egtest.m\" suffix).\n\nWhat about changing the code to the following:\n\n  namespace {\n  const char kXCTestFileSuffixes[] \u003d {\n    \"egtest.m\",\n    \"egtest.mm\",\n    \"xctest.m\",\n    \"xctext.mm\",\n  };\n  }  // namespace\n\n  bool IsXCTestFile(const SourceFile\u0026 file) {\n    std::string file_name \u003d file.GetName();\n    for (size_t i \u003d 0; i \u003c arraysize(kXCTestFileSuffixes); ++i) {\n      if (base::EndsWith(file_name, kXCTestFileSuffixes[i], base::CompareCase::SENSITIVE))\n        return true;\n    }\n    return false;\n  }",
+      "revId": "6faf7c0cf647ae4081c23606049912796195195d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
