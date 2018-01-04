@@ -117,6 +117,30 @@
       "revId": "387afa8de83630aa602038341c237a7b4e3a344c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38808226_10bd67a9",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-04T22:38:35Z",
+      "side": 1,
+      "message": "I get that but I was wondering about overhead of \"a feature\" (which I admittedly don\u0027t know if there is any) vs a pretty naive thing. Like this doesn\u0027t need command line flags, about:flags integration, etc. Really we just want a server-controlled config value :)\n\nOf course if that still means making it a feature, that\u0027s fine",
+      "parentUuid": "425876c8_ba68e71c",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 58
+      },
+      "revId": "387afa8de83630aa602038341c237a7b4e3a344c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
