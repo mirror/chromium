@@ -491,6 +491,18 @@ domain Browser
       # V8 version.
       string jsVersion
 
+  # Chrome histogram.
+  type Histogram extends object
+    properties
+      # Name.
+      string name
+
+  # Gets Chrome histograms.
+  command getHistograms
+    returns
+      # Histograms.
+      array of Histogram histograms
+
   # Get position and size of the browser window.
   experimental command getWindowBounds
     parameters
