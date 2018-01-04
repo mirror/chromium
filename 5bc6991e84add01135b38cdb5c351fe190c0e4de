@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a61bf20_10d6b746",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2383,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:12:26Z",
+      "side": 1,
+      "message": "nit/style: could you add an empty line to split methods here and below, too?",
+      "revId": "5bc6991e84add01135b38cdb5c351fe190c0e4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430ea870_bfdc93da",
+        "filename": "chromeos/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:12:26Z",
+      "side": 1,
+      "message": "nit/style: TODO should be in the following style in chromium.\n\n# TODO(...): remove fake_session_manager_client ...\n\nwhere (...) needs to be the assignee (like, \"TODO(hidehiko):\") or a bug (like, \"TODO(crbug.com/429094):\"). How about using crbug.com in this case?",
+      "revId": "5bc6991e84add01135b38cdb5c351fe190c0e4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

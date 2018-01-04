@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "380834a8_b7ba555e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:12:26Z",
+      "side": 1,
+      "message": "Thank you for the detailed explanation!\nThen, KioskVirtualKeyboardTestSoundsManagerTestImpl should be eventually replaced by the Mock instance, I think.\nCould you add TODO to remove it with the crbug link you found?",
+      "parentUuid": "ac32cbed_d5c1dfde",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "No. it won\u0027t work.\n\nto be honest,\nDelete() is just in-case-of behavior change of the test framework.\nThe test framework TearDown will call SoundsManager::Shutdown() (for now)\nwhile SoundsManager::Shutdown() will attempt to delete it (by a pointer stored at sounds_manager.cc by InitializingForTesting(fake_sounds_manager).\n\nMove this it to unique_ptr of the test class will cause double-free, as it\u0027s already free-ed by the test framework.\n\nand I already have these explained in the comment\n-  why not unique_ptr\n-  why not a static member of the test class.\n\nOf course, we can put it into the class just as a normal pointer (not unique_ptr), but it looks like hanging pointer (though it\u0027s not as it\u0027s deleted in SoundsManager::Shutdown)\nwhich one do you like?",
       "parentUuid": "6f343c98_dc31581e",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8014ee22_9719e397",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:12:26Z",
+      "side": 1,
+      "message": "Thank you for explanation.\nI believe I\u0027ve understood your intention, now.\nMy recommendation is, simply;\n\nvoid KioskVirtualKeyboardTest::SetUp() {\n  SoundsManager::InitializeForTesting(new KisokVirtualKeyboardTestSoundsManagerTestImpl());\n  KioskTest::SetUp();\n}\n\nBecause SoundsManager is singleton-like class, it should manage the instance lifetime anyway. Now, KisokVirtualKeyboardTestSoundsManagerTestImpl instance is injected, then\nthe instance should be owned by SoundsManager class. In browser test, we should be able to rely on the SoundsManager::Shutdown() invocation in TearDown(), I think.\nIt is a common pattern in chromeos chrome. Also, in case of leak, ASAN bot should warn.",
+      "parentUuid": "c6b0979a_08c7a664",
       "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
