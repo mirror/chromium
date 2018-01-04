@@ -345,6 +345,17 @@ TEST_F(ButtonTest, GestureEventsSetState) {
   EXPECT_EQ(Button::STATE_NORMAL, button()->state());
 }
 
+// Tests that the hover state is preserved during a view hierarchy update.
+TEST_F(ButtonTest, HoverWhileViewHierarchyPreservesState) {
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+  generator.MoveMouseTo(button()->GetBoundsInScreen().CenterPoint());
+
+  EXPECT_EQ(Button::STATE_HOVERED, button()->state());
+  button()->ViewHierarchyChanged(
+      View::ViewHierarchyChangedDetails(false, nullptr, nullptr, nullptr));
+  EXPECT_EQ(Button::STATE_HOVERED, button()->state());
+}
+
 #endif  // !defined(OS_MACOSX) || defined(USE_AURA)
 
 // Ensure subclasses of Button are correctly recognized as Button.
