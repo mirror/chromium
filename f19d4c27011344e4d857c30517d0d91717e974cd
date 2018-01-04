@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82c4470e_8dac59b7",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "No, this MRP doesn\u0027t have route controllers. It feels a bit overkill to have a route controller just to update the title, but in the current design of the details view, that\u0027d be necessary. I\u0027m inclined to not include a route controller in this patch though.\n\nAlso, I think we had a similar discussion before with John, but do we want it to say \"casting\" rather than \"presenting\"? The user might not consider local screen casting to be a \"Cast\" session.",
+      "parentUuid": "626397ab_92dc81f0",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9192684f_dfd18c5b",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8acc472_94d03641",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Moving this to WiredDisplayPresentationReceiverFactory, and using if-else there.",
+      "parentUuid": "9192684f_dfd18c5b",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9cd4d145_a1a0d8a2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Created WiredDisplayPresentationReceiverFactory and delegated test handling to that class.",
+      "parentUuid": "ea20f179_b6a4dc83",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61e09f6_b26e4d91",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95656f35_bab7cfa1",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Added the callback to the receiver ctor.",
+      "parentUuid": "d61e09f6_b26e4d91",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1a22ece6_f8f68f66",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043664e0_43f0069f",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246a7ab5_5b5e6387",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b3d4b5_8cb3756a",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Hmm make_optional() seems to require it.",
+      "parentUuid": "246a7ab5_5b5e6387",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1fb7d4f4_2e930c1d",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Yes, this is still accurate as of this patch. There was another UX discussion with Amy and John today and we decided that we want to be able to present to the primary display as well in M65, so I\u0027ll send out a separate CL to allow presenting to primary displays. In M66 we\u0027ll track the dialog location and disable presenting to the display with the controlling window.",
+      "parentUuid": "ed83d5c8_4f492ece",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b238846_e1f37d3b",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af35341_49eb0395",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b238846_e1f37d3b",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ceeaf609_36ff6029",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done. Moved the method to WDPRFactory.",
+      "parentUuid": "6888e7a0_b4e9f71e",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e7d8d7_6bff66b9",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bf43b9_fdfb67bc",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e7d8d7_6bff66b9",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d53930a2_1140a438",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "That\u0027d make the Presentation object more complex, and the observer interface would consist of just one method, so I\u0027m inclined to keep it as-is for now.",
+      "parentUuid": "65eeaaa7_675a5101",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7338ed_eadd8f88",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f7a464_7f1b6e74",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d7338ed_eadd8f88",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "6d59043c_df86400d",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebec2b26_7abcf46e",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee600fd4_d29620cb",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
         "patchSetId": 9
@@ -234,6 +468,24 @@
       "writtenOn": "2018-01-03T18:40:27Z",
       "side": 1,
       "message": "Why not have this function return a MockPresentationReceiver with |termination_callback| directly?",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a18dab_52f47899",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "This was to allow the test to have a reference to the returned receiver object.",
+      "parentUuid": "ee600fd4_d29620cb",
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -254,6 +506,24 @@
       "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298c8348_d8170e1e",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-04T02:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31055906_40113e15",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
