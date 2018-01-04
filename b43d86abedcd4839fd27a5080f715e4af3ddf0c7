@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "01f00eed_2d90b631",
+        "filename": "third_party/WebKit/Source/platform/geometry/LayoutSize.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-04T21:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c8e752_f49c9c91",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1a32fd_4753532e",
         "filename": "third_party/WebKit/Source/platform/geometry/LayoutSizeHash.h",
         "patchSetId": 2
@@ -115,6 +133,24 @@
       "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9388ef_f489868c",
+        "filename": "third_party/WebKit/Source/platform/geometry/LayoutSizeHash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-04T21:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1a32fd_4753532e",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +292,30 @@
       "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b06be0_62a74ce3",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-04T21:44:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ba4bfb_461d2307",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
