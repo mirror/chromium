@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4331fe_39c0f578",
+        "filename": "chrome/browser/vr/elements/environment/sky.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-04T14:43:40Z",
+      "side": 1,
+      "message": "Nit: 2018 too",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "988dd6eeebf27a416daad0575897545160252296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070ba776_03ebae27",
+        "filename": "chrome/browser/vr/elements/environment/sky.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-04T14:43:40Z",
+      "side": 1,
+      "message": "Nit: 2018 ;)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "988dd6eeebf27a416daad0575897545160252296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
