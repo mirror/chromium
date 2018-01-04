@@ -57,9 +57,13 @@ CreateExtensionProtocolHandler(bool is_incognito, InfoMap* extension_info_map);
 void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler);
 
 // Creates a new content::mojom::URLLoaderFactory implementation suitable for
-// handling navigation requests to extension URLs.
+// handling navigation requests to extension URLs. |test_extension_info_map|
+// is to allow tests to override the extensions InfoMap when necessary,
+// otherwise set it to null and the profile's InfoMap will be used.
 std::unique_ptr<content::mojom::URLLoaderFactory>
-CreateExtensionNavigationURLLoaderFactory(content::RenderFrameHost* frame_host);
+CreateExtensionNavigationURLLoaderFactory(
+    content::RenderFrameHost* frame_host,
+    extensions::InfoMap* test_extension_info_map);
 
 // Attempts to create a content::mojom::URLLoaderFactory implementation suitable
 // for handling subresource requests for extension URLs from |frame_host|. May

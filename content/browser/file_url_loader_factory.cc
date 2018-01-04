@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/files/file.h"
@@ -88,17 +89,20 @@ class FileURLDirectoryLoader
     : public mojom::URLLoader,
       public net::DirectoryLister::DirectoryListerDelegate {
  public:
-  static void CreateAndStart(const base::FilePath& profile_path,
-                             const ResourceRequest& request,
-                             mojom::URLLoaderRequest loader,
-                             mojom::URLLoaderClientPtrInfo client_info,
-                             std::unique_ptr<FileURLLoaderObserver> observer) {
+  static void CreateAndStart(
+      const base::FilePath& profile_path,
+      const ResourceRequest& request,
+      mojom::URLLoaderRequest loader,
+      mojom::URLLoaderClientPtrInfo client_info,
+      std::unique_ptr<FileURLLoaderObserver> observer,
+      scoped_refptr<net::HttpResponseHeaders> response_headers) {
     // Owns itself. Will live as long as its URLLoader and URLLoaderClientPtr
     // bindings are alive - essentially until either the client gives up or all
     // file data has been sent to it.
     auto* file_url_loader = new FileURLDirectoryLoader;
     file_url_loader->Start(profile_path, request, std::move(loader),
-                           std::move(client_info), std::move(observer));
+                           std::move(client_info), std::move(observer),
+                           std::move(response_headers));
   }
 
   // mojom::URLLoader:
@@ -117,7 +121,8 @@ class FileURLDirectoryLoader
              const ResourceRequest& request,
              mojom::URLLoaderRequest loader,
              mojom::URLLoaderClientPtrInfo client_info,
-             std::unique_ptr<content::FileURLLoaderObserver> observer) {
+             std::unique_ptr<content::FileURLLoaderObserver> observer,
+             scoped_refptr<net::HttpResponseHeaders> response_headers) {
     binding_.Bind(std::move(loader));
     binding_.set_connection_error_handler(base::BindOnce(
         &FileURLDirectoryLoader::OnConnectionError, base::Unretained(this)));
@@ -286,14 +291,16 @@ class FileURLDirectoryLoader
 
 class FileURLLoader : public mojom::URLLoader {
  public:
-  static void CreateAndStart(const base::FilePath& profile_path,
-                             const ResourceRequest& request,
-                             mojom::URLLoaderRequest loader,
-                             mojom::URLLoaderClientPtrInfo client_info,
-                             DirectoryLoadingPolicy directory_loading_policy,
-                             FileAccessPolicy file_access_policy,
-                             LinkFollowingPolicy link_following_policy,
-                             std::unique_ptr<FileURLLoaderObserver> observer) {
+  static void CreateAndStart(
+      const base::FilePath& profile_path,
+      const ResourceRequest& request,
+      mojom::URLLoaderRequest loader,
+      mojom::URLLoaderClientPtrInfo client_info,
+      DirectoryLoadingPolicy directory_loading_policy,
+      FileAccessPolicy file_access_policy,
+      LinkFollowingPolicy link_following_policy,
+      std::unique_ptr<FileURLLoaderObserver> observer,
+      scoped_refptr<net::HttpResponseHeaders> response_headers) {
     // Owns itself. Will live as long as its URLLoader and URLLoaderClientPtr
     // bindings are alive - essentially until either the client gives up or all
     // file data has been sent to it.
@@ -301,7 +308,7 @@ class FileURLLoader : public mojom::URLLoader {
     file_url_loader->Start(profile_path, request, std::move(loader),
                            std::move(client_info), directory_loading_policy,
                            file_access_policy, link_following_policy,
-                           std::move(observer));
+                           std::move(observer), std::move(response_headers));
   }
 
   // mojom::URLLoader:
@@ -323,7 +330,8 @@ class FileURLLoader : public mojom::URLLoader {
              DirectoryLoadingPolicy directory_loading_policy,
              FileAccessPolicy file_access_policy,
              LinkFollowingPolicy link_following_policy,
-             std::unique_ptr<FileURLLoaderObserver> observer) {
+             std::unique_ptr<FileURLLoaderObserver> observer,
+             scoped_refptr<net::HttpResponseHeaders> response_headers) {
     ResourceResponseHead head;
     head.request_start = base::TimeTicks::Now();
     head.response_start = base::TimeTicks::Now();
@@ -385,7 +393,7 @@ class FileURLLoader : public mojom::URLLoader {
       new_request.url = directory_url;
       FileURLDirectoryLoader::CreateAndStart(
           profile_path, new_request, binding_.Unbind(), client.PassInterface(),
-          std::move(observer));
+          std::move(observer), std::move(response_headers));
       MaybeDeleteSelf();
       return;
     }
@@ -442,8 +450,16 @@ class FileURLLoader : public mojom::URLLoader {
       observer->OnStart();
 
     base::File file(path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+    net::Error net_error = net::FileErrorToNetError(file.error_details());
     if (observer)
-      observer->OnOpenComplete(net::FileErrorToNetError(file.error_details()));
+      observer->OnOpenComplete(net_error);
+    if (!file.IsValid()) {
+      if (observer)
+        observer->OnDoneReading();
+      client->OnComplete(network::URLLoaderCompletionStatus(net_error));
+      MaybeDeleteSelf();
+      return;
+    }
     char initial_read_buffer[net::kMaxBytesToSniff];
     int initial_read_result =
         file.ReadAtCurrentPos(initial_read_buffer, net::kMaxBytesToSniff);
@@ -454,7 +470,7 @@ class FileURLLoader : public mojom::URLLoader {
         observer->OnBytesRead(nullptr, 0u, read_error);
         observer->OnDoneReading();
       }
-      net::Error net_error = net::FileErrorToNetError(read_error);
+      net_error = net::FileErrorToNetError(read_error);
       client->OnComplete(network::URLLoaderCompletionStatus(net_error));
       return;
     } else if (observer) {
@@ -499,6 +515,7 @@ class FileURLLoader : public mojom::URLLoader {
     }
 
     head.content_length = base::saturated_cast<int64_t>(total_bytes_to_send);
+    head.headers = response_headers;
 
     if (first_byte_to_send < initial_read_size) {
       // Write any data we read for MIME sniffing, constraining by range where
@@ -608,7 +625,7 @@ void FileURLLoaderFactory::CreateLoaderAndStart(
         FROM_HERE,
         base::BindOnce(&FileURLDirectoryLoader::CreateAndStart, profile_path_,
                        request, std::move(loader), client.PassInterface(),
-                       std::unique_ptr<FileURLLoaderObserver>()));
+                       std::unique_ptr<FileURLLoaderObserver>(), nullptr));
   } else {
     task_runner_->PostTask(
         FROM_HERE,
@@ -617,7 +634,7 @@ void FileURLLoaderFactory::CreateLoaderAndStart(
                        DirectoryLoadingPolicy::kRespondWithListing,
                        FileAccessPolicy::kRestricted,
                        LinkFollowingPolicy::kFollow,
-                       std::unique_ptr<FileURLLoaderObserver>()));
+                       std::unique_ptr<FileURLLoaderObserver>(), nullptr));
   }
 }
 
@@ -625,10 +642,12 @@ void FileURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest loader) {
   bindings_.AddBinding(this, std::move(loader));
 }
 
-void CreateFileURLLoader(const ResourceRequest& request,
-                         mojom::URLLoaderRequest loader,
-                         mojom::URLLoaderClientPtr client,
-                         std::unique_ptr<FileURLLoaderObserver> observer) {
+void CreateFileURLLoader(
+    const ResourceRequest& request,
+    mojom::URLLoaderRequest loader,
+    mojom::URLLoaderClientPtr client,
+    std::unique_ptr<FileURLLoaderObserver> observer,
+    scoped_refptr<net::HttpResponseHeaders> response_headers) {
   auto task_runner = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
@@ -638,7 +657,8 @@ void CreateFileURLLoader(const ResourceRequest& request,
                      std::move(loader), client.PassInterface(),
                      DirectoryLoadingPolicy::kFail,
                      FileAccessPolicy::kUnrestricted,
-                     LinkFollowingPolicy::kDoNotFollow, std::move(observer)));
+                     LinkFollowingPolicy::kDoNotFollow, std::move(observer),
+                     std::move(response_headers)));
 }
 
 }  // namespace content
