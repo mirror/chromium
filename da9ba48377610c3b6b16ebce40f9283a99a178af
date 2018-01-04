@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e000de9_349021f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2018-01-04T15:59:11Z",
+      "side": 1,
+      "message": "Was the change of owners intentional? If yes, I suppose you\u0027ve already communicated with phoglund@.",
+      "revId": "da9ba48377610c3b6b16ebce40f9283a99a178af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
