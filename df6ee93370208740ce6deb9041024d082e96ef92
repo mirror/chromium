@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25488d92_872998e2",
+        "filename": "chromeos/components/tether/hotspot_usage_duration_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-04T23:51:05Z",
+      "side": 1,
+      "message": "1 - This is probably more buckets than you should be using, it\u0027s suggested to keep histograms in 50-100 bucket range.\n\n2 - This will not actually create buckets like this, since UMA_HISTOGRAM_CUSTOM_TIMES will use exponential bucket spacing, e.g the smallest bucket will be more like 1000 to 1033 ms, and the largest like 17421609 - 18000000 ms.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "df6ee93370208740ce6deb9041024d082e96ef92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
