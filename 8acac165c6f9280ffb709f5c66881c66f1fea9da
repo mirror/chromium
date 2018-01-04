@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1815dff9_d8a201c3",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddc9e13_6cffef05",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70ae5a72_7a776221",
         "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c93b7a1_39d2f34c",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ae5a72_7a776221",
+      "range": {
+        "startLine": 92,
+        "startChar": 13,
+        "endLine": 92,
+        "endChar": 16
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e757a8dd_9ce8c548",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5190b3_d5008f32",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad94dedd_391b54d0",
         "filename": "chrome/browser/resources/print_preview/data/destination.js",
         "patchSetId": 6
@@ -82,6 +154,24 @@
       "writtenOn": "2018-01-04T19:28:09Z",
       "side": 1,
       "message": "Do these strings have to be strings? Could we convert this enum to a number instead?",
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943ceee9_6555d741",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "They are strings because the GCP server currently returns strings \"YES\" and \"UNKNOWN\" (which match the last two values here). We could change this to a number but would then need to convert the strings to numbers in cloud_parsers.js. Let me know if this would be preferable.",
+      "parentUuid": "ad94dedd_391b54d0",
       "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "52b8e7b4_410f0ad0",
+        "filename": "chrome/browser/resources/print_preview/search/destination_list_item.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "It is offline in the sense that we may not be able to communicate with the printer to print to it. However the fixes for the different cases are not the same (an offline printer may just be turned off and needs to be powered on, vs printer with bad certificate which needs to be installed locally to work). Substituted to connection status, since both cases are a connection issue, but a printer with a bad certificate is not necessarily \"offline\". What do you think?",
+      "parentUuid": "1f7043f5_ea101b16",
+      "range": {
+        "startLine": 199,
+        "startChar": 64,
+        "endLine": 199,
+        "endChar": 71
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff9e2c5b_a850de8d",
         "filename": "chrome/browser/resources/print_preview/settings/destination_settings.js",
         "patchSetId": 6
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-04T19:28:09Z",
       "side": 1,
       "message": "Same question here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 23
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2da0f65_1ffd158e",
+        "filename": "chrome/browser/resources/print_preview/settings/destination_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-04T23:24:38Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "ff9e2c5b_a850de8d",
       "range": {
         "startLine": 148,
         "startChar": 14,
