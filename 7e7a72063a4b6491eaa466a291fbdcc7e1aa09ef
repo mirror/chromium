@@ -16,6 +16,24 @@
       "revId": "7e7a72063a4b6491eaa466a291fbdcc7e1aa09ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e25734_d30aafbf",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/the-stylepropertymap/declared/delete-rule-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2018-01-04T23:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253f8361_52ada89c",
+      "revId": "7e7a72063a4b6491eaa466a291fbdcc7e1aa09ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
