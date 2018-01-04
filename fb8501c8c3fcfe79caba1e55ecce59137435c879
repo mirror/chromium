@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fc67482e_101cd206",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-04T15:22:06Z",
+      "side": 1,
+      "message": "I think the real problem is that WebRtcEventLogManager is a\nsingleton without a proper way to be taken down, so you\u0027re\nat its mercy (singletons are bad for test). Why not add to\nWebRtcEventLogManager a method \n  OverrideSequenceTaskRunnerForTesting() \n\nor some such and passing into it our task runner? That way\nwe can make sure we\u0027re on the same task runner (for testing\nonly) and things would run synchronously?",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "fb8501c8c3fcfe79caba1e55ecce59137435c879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "323644d2_a598bc79",
         "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
         "patchSetId": 1
