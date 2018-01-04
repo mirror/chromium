@@ -73,7 +73,6 @@
 #include "ui/resources/grit/ui_resources.h"
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "components/spellcheck/browser/spellcheck_message_filter_platform.h"
 #include "components/spellcheck/common/spellcheck_switches.h"
 #endif
 
@@ -237,10 +236,6 @@ void AwContentBrowserClient::RenderProcessWillLaunch(
   // WebView always allows persisting data.
   host->AddFilter(new cdm::CdmMessageFilterAndroid(true, false));
   host->AddFilter(new AwPrintingMessageFilter(host->GetID()));
-
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-  host->AddFilter(new SpellCheckMessageFilterPlatform(host->GetID()));
-#endif
 }
 
 bool AwContentBrowserClient::IsHandledURL(const GURL& url) {
