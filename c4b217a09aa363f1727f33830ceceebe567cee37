@@ -16,6 +16,57 @@
       "revId": "c4b217a09aa363f1727f33830ceceebe567cee37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ab3ebb_5de28ff1",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T20:49:45Z",
+      "side": 1,
+      "message": "Technically this may not be policy related, user installed certificates also require installation. I would suggest:\n1. Pass a parameter to RequestBestConnection and have it set the property, that way we can\u0027t miss any requests.\n2. Rename the variable \u0027...triggered_by_login_\u0027 and invert the logic.",
+      "revId": "c4b217a09aa363f1727f33830ceceebe567cee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b31262a_c8c802c2",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T20:49:45Z",
+      "side": 1,
+      "message": "s/a policy/a policy change/ (or \u0027policy application\u0027)",
+      "revId": "c4b217a09aa363f1727f33830ceceebe567cee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f54bdcf_67042104",
+        "filename": "chromeos/network/auto_connect_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T20:49:45Z",
+      "side": 1,
+      "message": "Second sentence is a bit unclear. How about \"RequestBestConnection() may be called from either policy application or login.\"",
+      "revId": "c4b217a09aa363f1727f33830ceceebe567cee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
