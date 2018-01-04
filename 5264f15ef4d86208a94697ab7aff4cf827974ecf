@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "214b5aed_891534d6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "If it was so hard to write, why are you making it so easy for others to read? :)\n\nOK, let\u0027s keep them.",
+      "parentUuid": "a50b9d9e_2ec1d3cd",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d528636f_7c2c7a4b",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -259,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "6ea0e625_eaa096d5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "OK, would it make sense to say \"!is_below\" instead of \"exclusion-\u003erect.BlockStartOffset() \u003c\u003d shelf.block_offset\"?",
+      "parentUuid": "2919fe8a_ac1b6ec5",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bb9484e_2db303db",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -288,6 +324,24 @@
       "side": 1,
       "message": "It needs the slight more limiting test to work.\n\nIf the exclusion aligns with a previous exclusion, it doesn\u0027t move the shelf in, but does add it to the shelves \"edges\".\n\nDoes that make sense?",
       "parentUuid": "9bb9484e_2db303db",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc89213_b980fc41",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "It\u0027s fine to be more limiting. I meant:\n\nif (exclusion-\u003erect.LineEndOffset() \u003e\u003d shelf.line_left) {\n  if (exclusion-\u003erect.LineEndOffset() \u003e shelf.line_left)\n    shelf.line_left_edges.clear();\n  shelf.line_left \u003d exclusion-\u003erect.LineEndOffset();\n  shelf.line_left_edges.push_back(exclusion);\n}",
+      "parentUuid": "21591393_acb7422c",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -364,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "4ceaeb8b_413e2aec",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "I think I would sleep better at night if we conditionally increase i (rather than doing it unconditionally in the for loop header).",
+      "parentUuid": "dfe84221_cb6c9947",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ba81487_1893542d",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -396,6 +468,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4785781_c8704623",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2e661ef_4d222092",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -466,6 +556,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f91ae2_35c7ac71",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23a42f33_8460edeb",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -645,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "23f2e5db_83a6001e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab4faf7e_eacf0c2f",
+      "range": {
+        "startLine": 397,
+        "startChar": 9,
+        "endLine": 397,
+        "endChar": 63
+      },
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1f804f1_f1be11a6",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -674,6 +806,24 @@
       "side": 1,
       "message": "This case is where we want to create an opportunity which starts at opportunity.rect.BlockStartOffset() or shelf.block_offset.\n\nWe prefer the opportunity first, hence the \u003d\u003d.",
       "parentUuid": "c1f804f1_f1be11a6",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b25e38_a65ead68",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "If they are equal, it means that the opportunity is just below the shelf, doesn\u0027t it? I mean, since shelf.block_offset is an end-exclusive offset...",
+      "parentUuid": "186784d4_4bff657d",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -849,6 +999,24 @@
       "side": 1,
       "message": "Yeah not sure of the payoff - eventually it\u0027ll have a NGBfcRect \u0026 LayoutObject.\n\nOne issue is the inline capacity for the line_left_edges above, which require a default ctor, and it seemed safer to use a scoped_refptr here. If you think it\u0027s better without the scoped_refptr I\u0027ll remove.",
       "parentUuid": "0da2d6fe_19d4b3e4",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c954ec_9127cb45",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T12:13:40Z",
+      "side": 1,
+      "message": "I guess we can keep it as it is for now.",
+      "parentUuid": "c3124901_c4c9a998",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
