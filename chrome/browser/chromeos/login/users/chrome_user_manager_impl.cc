@@ -786,7 +786,8 @@ void ChromeUserManagerImpl::GuestUserLoggedIn() {
       user_manager::User::USER_IMAGE_INVALID, false);
 
   // Initializes wallpaper after active_user_ is set.
-  WallpaperManager::Get()->ShowUserWallpaper(user_manager::GuestAccountId());
+  WallpaperControllerClient::Get()->ShowUserWallpaper(
+      user_manager::GuestAccountId());
 }
 
 void ChromeUserManagerImpl::RegularUserLoggedIn(
@@ -803,7 +804,7 @@ void ChromeUserManagerImpl::RegularUserLoggedIn(
   }
 
   if (IsCurrentUserNew())
-    WallpaperManager::Get()->ShowUserWallpaper(account_id);
+    WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
 
   GetUserImageManager(account_id)->UserLoggedIn(IsCurrentUserNew(), false);
 
@@ -820,7 +821,7 @@ void ChromeUserManagerImpl::RegularUserLoggedInAsEphemeral(
   ChromeUserManager::RegularUserLoggedInAsEphemeral(account_id, user_type);
 
   GetUserImageManager(account_id)->UserLoggedIn(IsCurrentUserNew(), false);
-  WallpaperManager::Get()->ShowUserWallpaper(account_id);
+  WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
 }
 
 void ChromeUserManagerImpl::SupervisedUserLoggedIn(
@@ -835,11 +836,11 @@ void ChromeUserManagerImpl::SupervisedUserLoggedIn(
     SetIsCurrentUserNew(true);
     active_user_ = user_manager::User::CreateSupervisedUser(account_id);
     // Leaving OAuth token status at the default state = unknown.
-    WallpaperManager::Get()->ShowUserWallpaper(account_id);
+    WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
   } else {
     if (supervised_user_manager_->CheckForFirstRun(account_id.GetUserEmail())) {
       SetIsCurrentUserNew(true);
-      WallpaperManager::Get()->ShowUserWallpaper(account_id);
+      WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
     } else {
       SetIsCurrentUserNew(false);
     }
@@ -879,7 +880,7 @@ void ChromeUserManagerImpl::PublicAccountUserLoggedIn(
   // always fetched/cleared inside a user session), in the case the user-policy
   // controlled wallpaper was cached/cleared by not updated in the login screen,
   // so we need to update the wallpaper after the public user logged in.
-  WallpaperManager::Get()->ShowUserWallpaper(user->GetAccountId());
+  WallpaperControllerClient::Get()->ShowUserWallpaper(user->GetAccountId());
   WallpaperManager::Get()->EnsureLoggedInUserWallpaperLoaded();
 
   SetPublicAccountDelegates();
@@ -896,7 +897,7 @@ void ChromeUserManagerImpl::KioskAppLoggedIn(user_manager::User* user) {
       user_manager::User::USER_IMAGE_INVALID, false);
 
   const AccountId& kiosk_app_account_id = user->GetAccountId();
-  WallpaperManager::Get()->ShowUserWallpaper(kiosk_app_account_id);
+  WallpaperControllerClient::Get()->ShowUserWallpaper(kiosk_app_account_id);
 
   // TODO(bartfab): Add KioskAppUsers to the users_ list and keep metadata like
   // the kiosk_app_id in these objects, removing the need to re-parse the
@@ -966,7 +967,8 @@ void ChromeUserManagerImpl::DemoAccountLoggedIn() {
           *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
               IDR_LOGIN_DEFAULT_USER)),
       user_manager::User::USER_IMAGE_INVALID, false);
-  WallpaperManager::Get()->ShowUserWallpaper(user_manager::DemoAccountId());
+  WallpaperControllerClient::Get()->ShowUserWallpaper(
+      user_manager::DemoAccountId());
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   command_line->AppendSwitch(::switches::kForceAppMode);
