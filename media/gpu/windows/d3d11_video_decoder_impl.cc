@@ -334,7 +334,7 @@ void D3D11VideoDecoderImpl::CreatePictureBuffers() {
     PictureBuffer buffer(i, size, client_ids, service_ids, target,
                          PIXEL_FORMAT_NV12);
 
-    picture_buffers_.push_back(base::MakeUnique<D3D11PictureBuffer>(
+    picture_buffers_.push_back(std::make_unique<D3D11PictureBuffer>(
         buffer, i, texture_refs, mailbox_holders));
 
     picture_buffers_[i]->Init(video_device_, out_texture, decoder_guid_);
