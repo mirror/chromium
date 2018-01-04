@@ -582,6 +582,14 @@ const FeatureEntry::Choice kProgressBarCompletionChoices[] = {
      switches::kProgressBarCompletion,
      "resourcesBeforeDOMContentLoadedAndSameOriginIFrames"},
 };
+
+const FeatureEntry::Choice kWebVrRenderPathChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kWebVrRenderPathClientWait, switches::kWebVrRenderPath,
+     "ClientWait"},
+    {flag_descriptions::kWebVrRenderPathGpuFence, switches::kWebVrRenderPath,
+     "GpuFence"},
+};
 #endif  // OS_ANDROID
 
 const FeatureEntry::Choice kSavePreviousDocumentResourcesChoices[] = {
@@ -2224,6 +2232,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kWebVrVsyncAlign)},
 #if defined(OS_ANDROID)
+    {"webvr-render-path", flag_descriptions::kWebVrRenderPathName,
+     flag_descriptions::kWebVrRenderPathDescription, kOsAndroid,
+     MULTI_VALUE_TYPE(kWebVrRenderPathChoices)},
     // TODO(crbug.com/731802): Use #if BUILDFLAG(ENABLE_VR_BROWSING) instead.
     {"vr-browsing", flag_descriptions::kVrBrowsingName,
      flag_descriptions::kVrBrowsingDescription, kOsAndroid,

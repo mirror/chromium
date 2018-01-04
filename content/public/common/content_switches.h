@@ -149,6 +149,7 @@ CONTENT_EXPORT extern const char kEnableVulkan[];
 CONTENT_EXPORT extern const char kEnableWebGLDraftExtensions[];
 CONTENT_EXPORT extern const char kEnableWebGLImageChromium[];
 CONTENT_EXPORT extern const char kEnableWebVR[];
+CONTENT_EXPORT extern const char kWebVrRenderPath[];
 CONTENT_EXPORT extern const char kEnableZeroCopy[];
 CONTENT_EXPORT extern const char kExplicitlyAllowedPorts[];
 CONTENT_EXPORT extern const char kFieldTrialHandle[];

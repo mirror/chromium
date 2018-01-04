@@ -26297,6 +26297,7 @@ from previous Chrome versions.
   <int value="2014331873" label="NTPDownloadSuggestions:disabled"/>
   <int value="2014629801" label="view-passwords:disabled"/>
   <int value="2015547864" label="NetworkServiceInProcess:enabled"/>
+  <int value="2016022727" label="webvr-render-path"/>
   <int value="2020107447" label="AndroidPayIntegrationV1:enabled"/>
   <int value="2032558514"
       label="RemoveUsageOfDeprecatedGaiaSigninEndpoint:enabled"/>

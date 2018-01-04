@@ -11,6 +11,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/callback_helpers.h"
+#include "base/command_line.h"
 #include "base/containers/queue.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -24,6 +25,7 @@
 #include "chrome/browser/android/vr_shell/vr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
+#include "chrome/browser/flag_descriptions.h"
 #include "chrome/browser/vr/assets.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/model/camera_model.h"
@@ -35,6 +37,7 @@
 #include "chrome/browser/vr/vr_gl_util.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "device/vr/android/gvr/gvr_delegate.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
@@ -262,9 +265,16 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   webvr_experimental_rendering_ =
       base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering);
 
-  // TODO(https://crbug.com/760389): force this on for S8 via whitelist?
-  if (gl::GLFence::IsGpuFenceSupported() && webvr_experimental_rendering_) {
-    webvr_use_gpu_fence_ = true;
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  if (command_line.HasSwitch(switches::kWebVrRenderPath)) {
+    std::string string_value =
+        command_line.GetSwitchValueASCII(switches::kWebVrRenderPath);
+    DVLOG(1) << __FUNCTION__ << ": kWebVrRenderPath=" << string_value;
+    if (string_value == flag_descriptions::kWebVrRenderPathGpuFence) {
+      // TODO(https://crbug.com/760389): force this on for S8 via whitelist?
+      webvr_use_gpu_fence_ = gl::GLFence::IsGpuFenceSupported();
+    }
   }
 
   // InitializeRenderer calls GvrDelegateReady which triggers actions such as

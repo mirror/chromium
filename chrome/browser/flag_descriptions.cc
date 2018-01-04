@@ -1620,6 +1620,12 @@ const char kWebVrExperimentalRenderingName[] =
 const char kWebVrExperimentalRenderingDescription[] =
     "Experimental rendering path optimizations for WebVR.";
 
+const char kWebVrRenderPathName[] = "WebVR render path";
+const char kWebVrRenderPathDescription[] =
+    "Rendering path preference for WebVR";
+const char kWebVrRenderPathClientWait[] = "Mailbox & ClientWait";
+const char kWebVrRenderPathGpuFence[] = "Mailbox & GpuFence";
+
 const char kWebXrName[] = "WebXR Device API";
 const char kWebXrDescription[] =
     "Allow web applications to access experimental APIs to interact with "
