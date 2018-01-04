@@ -7,8 +7,11 @@
 #include <memory>
 #include <string>
 
+#include "base/bind.h"
+#include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "content/browser/webrtc/webrtc_internals_ui_observer.h"
 #include "content/public/test/test_browser_thread.h"
@@ -74,7 +77,9 @@ class MockWakeLock : public device::mojom::WakeLock {
 
 class WebRtcEventLogManagerForTesting : public WebRtcEventLogManager {
  public:
-  WebRtcEventLogManagerForTesting() = default;
+  WebRtcEventLogManagerForTesting() {
+    InjectTaskRunnerForTesting(base::ThreadTaskRunnerHandle::Get());
+  }
   ~WebRtcEventLogManagerForTesting() override = default;
 };
 
@@ -147,6 +152,11 @@ class WebRtcInternalsTest : public testing::Test {
     VerifyString(dict, "video", video);
   }
 
+  void WaitUntilIdle() const {
+    base::RunLoop loop;
+    loop.RunUntilIdle();
+  }
+
   TestBrowserThreadBundle test_browser_thread_bundle_;
 };
 
@@ -167,6 +177,8 @@ TEST_F(WebRtcInternalsTest, AddRemoveObserver) {
   EXPECT_EQ("", observer.command());
 
   webrtc_internals.OnRemovePeerConnection(3, 4);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, EnsureNoLogWhenNoObserver) {
@@ -192,6 +204,8 @@ TEST_F(WebRtcInternalsTest, EnsureNoLogWhenNoObserver) {
   ASSERT_FALSE(dict->GetList("log", &log));
 
   webrtc_internals.OnRemovePeerConnection(3, 4);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, EnsureLogIsRemovedWhenObserverIsRemoved) {
@@ -228,6 +242,8 @@ TEST_F(WebRtcInternalsTest, EnsureLogIsRemovedWhenObserverIsRemoved) {
   ASSERT_FALSE(dict->GetList("log", &log));
 
   webrtc_internals.OnRemovePeerConnection(3, 4);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, SendAddPeerConnectionUpdate) {
@@ -253,6 +269,8 @@ TEST_F(WebRtcInternalsTest, SendAddPeerConnectionUpdate) {
 
   webrtc_internals.RemoveObserver(&observer);
   webrtc_internals.OnRemovePeerConnection(1, 2);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, SendRemovePeerConnectionUpdate) {
@@ -275,6 +293,8 @@ TEST_F(WebRtcInternalsTest, SendRemovePeerConnectionUpdate) {
   VerifyInt(dict, "lid", 2);
 
   webrtc_internals.RemoveObserver(&observer);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, SendUpdatePeerConnectionUpdate) {
@@ -307,6 +327,8 @@ TEST_F(WebRtcInternalsTest, SendUpdatePeerConnectionUpdate) {
 
   webrtc_internals.OnRemovePeerConnection(1, 2);
   webrtc_internals.RemoveObserver(&observer);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, AddGetUserMedia) {
@@ -331,6 +353,8 @@ TEST_F(WebRtcInternalsTest, AddGetUserMedia) {
                          video_constraint);
 
   webrtc_internals.RemoveObserver(&observer);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, SendAllUpdateWithGetUserMedia) {
@@ -352,6 +376,8 @@ TEST_F(WebRtcInternalsTest, SendAllUpdateWithGetUserMedia) {
                          video_constraint);
 
   webrtc_internals.RemoveObserver(&observer);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, SendAllUpdatesWithPeerConnectionUpdate) {
@@ -397,6 +423,8 @@ TEST_F(WebRtcInternalsTest, SendAllUpdatesWithPeerConnectionUpdate) {
   std::string time;
   EXPECT_TRUE(dict->GetString("time", &time));
   EXPECT_FALSE(time.empty());
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, OnAddStats) {
@@ -424,6 +452,8 @@ TEST_F(WebRtcInternalsTest, OnAddStats) {
   VerifyInt(dict, "pid", pid);
   VerifyInt(dict, "lid", lid);
   VerifyList(dict, "reports", list);
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, AudioDebugRecordingsFileSelectionCanceled) {
@@ -439,6 +469,8 @@ TEST_F(WebRtcInternalsTest, AudioDebugRecordingsFileSelectionCanceled) {
 
   EXPECT_EQ("audioDebugRecordingsFileSelectionCancelled", observer.command());
   EXPECT_EQ(nullptr, observer.value());
+
+  WaitUntilIdle();
 }
 
 TEST_F(WebRtcInternalsTest, WakeLock) {
@@ -488,6 +520,8 @@ TEST_F(WebRtcInternalsTest, WakeLock) {
   webrtc_internals.OnRemovePeerConnection(pid, lid[0]);
   EXPECT_EQ(0, webrtc_internals.num_open_connections());
   EXPECT_FALSE(webrtc_internals.HasWakeLock());
+
+  WaitUntilIdle();
 }
 
 }  // namespace content
