@@ -79,9 +79,15 @@ bool AXListBoxOption::IsParentPresentationalRole() const {
   return false;
 }
 
-bool AXListBoxOption::IsSelected() const {
-  return IsHTMLOptionElement(GetNode()) &&
-         ToHTMLOptionElement(GetNode())->Selected();
+AccessibilitySelectedState AXListBoxOption::IsSelected() const {
+  // DJKim : Need to check !GetLayoutObject()??
+  if (!GetNode() || !SupportsARIASelected())
+    return kSelectedStateUndefined;
+
+  return (IsHTMLOptionElement(GetNode()) &&
+          ToHTMLOptionElement(GetNode())->Selected())
+             ? kSelectedStateTrue
+             : kSelectedStateFalse;
 }
 
 bool AXListBoxOption::IsSelectedOptionActive() const {
@@ -141,11 +147,15 @@ bool AXListBoxOption::OnNativeSetSelectedAction(bool selected) {
   if (!select_element)
     return false;
 
-  if (!CanSetSelectedAttribute())
+  if (!SupportsARIASelected())
     return false;
 
-  bool is_option_selected = IsSelected();
-  if ((is_option_selected && selected) || (!is_option_selected && !selected))
+  AccessibilitySelectedState is_option_selected = IsSelected();
+  if (is_option_selected == kSelectedStateUndefined)
+    return false;
+
+  bool is_selected = (is_option_selected == kSelectedStateTrue) ? true : false;
+  if ((is_selected && selected) || (!is_selected && !selected))
     return false;
 
   select_element->SelectOptionByAccessKey(ToHTMLOptionElement(GetNode()));

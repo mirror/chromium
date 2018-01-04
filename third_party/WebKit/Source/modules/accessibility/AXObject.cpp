@@ -1072,7 +1072,7 @@ bool AXObject::ComputeAncestorExposesActiveDescendant() const {
   return parent->AncestorExposesActiveDescendant();
 }
 
-bool AXObject::CanSetSelectedAttribute() const {
+bool AXObject::SupportsARIASelected() const {
   // Sub-widget elements can be selected if not disabled (native or ARIA)
   return IsSubWidget(RoleValue()) && Restriction() != kDisabled;
 }
