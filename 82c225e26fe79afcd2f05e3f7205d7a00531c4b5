@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2005d00_511315e2",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T14:59:22Z",
+      "side": 1,
+      "message": "nit: no capital",
+      "revId": "82c225e26fe79afcd2f05e3f7205d7a00531c4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4a391f_fdd05c36",
+        "filename": "chrome/browser/resources/print_preview/data/measurement_system.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T14:59:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "82c225e26fe79afcd2f05e3f7205d7a00531c4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
