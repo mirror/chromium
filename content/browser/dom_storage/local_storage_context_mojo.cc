@@ -6,6 +6,7 @@
 
 #include <inttypes.h>
 #include <cctype>  // for std::isalnum
+#include "base/barrier_closure.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
@@ -397,10 +398,12 @@ void LocalStorageContextMojo::GetStorageUsage(
                      weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
 }
 
-void LocalStorageContextMojo::DeleteStorage(const url::Origin& origin) {
+void LocalStorageContextMojo::DeleteStorage(const url::Origin& origin,
+                                            base::OnceClosure callback) {
   if (connection_state_ != CONNECTION_FINISHED) {
     RunWhenConnected(base::BindOnce(&LocalStorageContextMojo::DeleteStorage,
-                                    weak_ptr_factory_.GetWeakPtr(), origin));
+                                    weak_ptr_factory_.GetWeakPtr(), origin,
+                                    std::move(callback)));
     return;
   }
 
@@ -416,13 +419,15 @@ void LocalStorageContextMojo::DeleteStorage(const url::Origin& origin) {
     AddDeleteOriginOperations(&operations, origin);
     database_->Write(std::move(operations), base::BindOnce(&NoOpDatabaseError));
   }
+  std::move(callback).Run();
 }
 
 void LocalStorageContextMojo::DeleteStorageForPhysicalOrigin(
-    const url::Origin& origin) {
+    const url::Origin& origin,
+    base::OnceClosure callback) {
   GetStorageUsage(base::BindOnce(
       &LocalStorageContextMojo::OnGotStorageUsageForDeletePhysicalOrigin,
-      weak_ptr_factory_.GetWeakPtr(), origin));
+      weak_ptr_factory_.GetWeakPtr(), origin, std::move(callback)));
 }
 
 void LocalStorageContextMojo::Flush() {
@@ -963,14 +968,21 @@ void LocalStorageContextMojo::OnGotMetaData(
 
 void LocalStorageContextMojo::OnGotStorageUsageForDeletePhysicalOrigin(
     const url::Origin& origin,
+    base::OnceClosure callback,
     std::vector<LocalStorageUsageInfo> usage) {
+  // Wait for callbacks from each suborigin and another callback from origin.
+  base::RepeatingClosure barrier =
+      base::BarrierClosure(usage.size() + 1, std::move(callback));
   for (const auto& info : usage) {
     url::Origin origin_candidate = url::Origin::Create(info.origin);
     if (!origin_candidate.IsSameOriginWith(origin) &&
-        origin_candidate.IsSamePhysicalOriginWith(origin))
-      DeleteStorage(origin_candidate);
+        origin_candidate.IsSamePhysicalOriginWith(origin)) {
+      DeleteStorage(origin_candidate, barrier);
+    } else {
+      barrier.Run();
+    }
   }
-  DeleteStorage(origin);
+  DeleteStorage(origin, barrier);
 }
 
 void LocalStorageContextMojo::OnGotStorageUsageForShutdown(

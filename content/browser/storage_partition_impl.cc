@@ -177,7 +177,8 @@ void OnLocalStorageUsageInfo(
 
     if (infos[i].last_modified >= delete_begin &&
         infos[i].last_modified <= delete_end) {
-      dom_storage_context->DeleteLocalStorage(infos[i].origin);
+      dom_storage_context->DeleteLocalStorage(infos[i].origin,
+                                              base::OnceClosure());
     }
   }
   callback.Run();
@@ -217,7 +218,8 @@ void ClearLocalStorageOnUIThread(
                       origin_matcher.Run(storage_origin,
                                          special_storage_policy.get());
     if (can_delete)
-      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin);
+      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(
+          storage_origin, base::OnceClosure());
 
     callback.Run();
     return;
