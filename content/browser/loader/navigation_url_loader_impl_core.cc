@@ -51,12 +51,13 @@ void NavigationURLLoaderImplCore::Start(
 
   // The ResourceDispatcherHostImpl can be null in unit tests.
   if (ResourceDispatcherHostImpl::Get()) {
+    int request_id;  // unused.
     ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
         resource_context, url_request_context_getter->GetURLRequestContext(),
         upload_file_system_context, *request_info,
-        std::move(navigation_ui_data), this, mojom::URLLoaderClientPtr(),
-        mojom::URLLoaderRequest(), service_worker_handle_core,
-        appcache_handle_core);
+        std::move(navigation_ui_data), this, &request_id,
+        mojom::URLLoaderClientPtr(), mojom::URLLoaderRequest(),
+        service_worker_handle_core, appcache_handle_core);
   }
 
   // Careful, |this| could be destroyed at this point. Don't notify start if
