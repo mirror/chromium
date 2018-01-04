@@ -47,7 +47,31 @@ const double kRotationSpeed = 360.0;
 // Benchmark warmup frames before starting measurement.
 const int kBenchmarkWarmupFrames = 10;
 
-using EventTimeStack = std::vector<uint32_t>;
+class EventTimes {
+ public:
+  void push_pointer_timestamp_or_msec(uint32_t msec) {
+    push_timestamp_or_msec(&pointer_timestamp, msec);
+  }
+
+  void push_touch_timestamp_or_msec(uint32_t msec) {
+    push_timestamp_or_msec(&touch_timestamp, msec);
+  }
+
+  std::vector<base::TimeTicks> stack;
+  base::TimeTicks pointer_timestamp;
+  base::TimeTicks touch_timestamp;
+
+ private:
+  void push_timestamp_or_msec(base::TimeTicks* timestamp, uint32_t msec) {
+    if (*timestamp != base::TimeTicks()) {
+      stack.push_back(*timestamp);
+      *timestamp = base::TimeTicks();
+    } else {
+      stack.push_back(base::TimeTicks() +
+                      base::TimeDelta::FromMilliseconds(msec));
+    }
+  }
+};
 
 void PointerEnter(void* data,
                   wl_pointer* pointer,
@@ -66,9 +90,9 @@ void PointerMotion(void* data,
                    uint32_t time,
                    wl_fixed_t x,
                    wl_fixed_t y) {
-  EventTimeStack* stack = static_cast<EventTimeStack*>(data);
+  EventTimes* event_times = static_cast<EventTimes*>(data);
 
-  stack->push_back(time);
+  event_times->push_pointer_timestamp_or_msec(time);
 }
 
 void PointerButton(void* data,
@@ -119,9 +143,9 @@ void TouchMotion(void* data,
                  int32_t id,
                  wl_fixed_t x,
                  wl_fixed_t y) {
-  EventTimeStack* stack = static_cast<EventTimeStack*>(data);
+  EventTimes* event_times = static_cast<EventTimes*>(data);
 
-  stack->push_back(time);
+  event_times->push_touch_timestamp_or_msec(time);
 }
 
 void TouchFrame(void* data, wl_touch* touch) {}
@@ -202,6 +226,20 @@ void FeedbackDiscarded(void* data,
   LOG(WARNING) << "Frame discarded";
 }
 
+void InputTimestamp(void* data,
+                    struct zwp_input_timestamps_v1* zwp_input_timestamps_v1,
+                    uint32_t tv_sec_hi,
+                    uint32_t tv_sec_lo,
+                    uint32_t tv_nsec) {
+  auto* timestamp = static_cast<base::TimeTicks*>(data);
+  int64_t seconds = (static_cast<int64_t>(tv_sec_hi) << 32) + tv_sec_lo;
+  int64_t microseconds = seconds * base::Time::kMicrosecondsPerSecond +
+                         tv_nsec / base::Time::kNanosecondsPerMicrosecond;
+
+  *timestamp =
+      base::TimeTicks() + base::TimeDelta::FromMicroseconds(microseconds);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +270,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
   if (!ClientBase::Init(params))
     return 1;
 
-  EventTimeStack event_times;
+  EventTimes event_times;
 
   std::unique_ptr<wl_pointer> pointer(
       static_cast<wl_pointer*>(wl_seat_get_pointer(globals_.seat.get())));
@@ -256,6 +294,30 @@ int RectsClient::Run(const ClientBase::InitParams& params,
   wl_touch_listener touch_listener = {TouchDown, TouchUp, TouchMotion,
                                       TouchFrame, TouchCancel};
   wl_touch_add_listener(touch.get(), &touch_listener, &event_times);
+
+  zwp_input_timestamps_v1_listener input_timestamps_listener = {InputTimestamp};
+
+  std::unique_ptr<zwp_input_timestamps_v1> pointer_timestamps(
+      zwp_input_timestamps_manager_v1_get_pointer_timestamps(
+          globals_.input_timestamps_manager.get(), pointer.get()));
+  if (!pointer_timestamps) {
+    LOG(WARNING) << "Can't get pointer timestamps";
+  } else {
+    zwp_input_timestamps_v1_add_listener(pointer_timestamps.get(),
+                                         &input_timestamps_listener,
+                                         &event_times.pointer_timestamp);
+  }
+
+  std::unique_ptr<zwp_input_timestamps_v1> touch_timestamps(
+      zwp_input_timestamps_manager_v1_get_touch_timestamps(
+          globals_.input_timestamps_manager.get(), touch.get()));
+  if (!touch_timestamps) {
+    LOG(WARNING) << "Can't get touch timestamps";
+  } else {
+    zwp_input_timestamps_v1_add_listener(touch_timestamps.get(),
+                                         &input_timestamps_listener,
+                                         &event_times.touch_timestamp);
+  }
 
   Schedule schedule;
   std::unique_ptr<wl_callback> frame_callback;
@@ -331,7 +393,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
       }
 
       SkCanvas* canvas = buffer->sk_surface->getCanvas();
-      if (event_times.empty()) {
+      if (event_times.stack.empty()) {
         canvas->clear(transparent_background_ ? SK_ColorTRANSPARENT
                                               : SK_ColorBLACK);
       } else {
@@ -339,20 +401,23 @@ int RectsClient::Run(const ClientBase::InitParams& params,
         // since last frame. Latest event at the top.
         int y = 0;
         // Note: Rounding up to ensure we cover the whole canvas.
-        int h =
-            (size_.height() + (event_times.size() / 2)) / event_times.size();
-        while (!event_times.empty()) {
+        int h = (size_.height() + (event_times.stack.size() / 2)) /
+                event_times.stack.size();
+        while (!event_times.stack.empty()) {
           SkIRect rect = SkIRect::MakeXYWH(0, y, size_.width(), h);
           SkPaint paint;
-          paint.setColor(SkColorSetRGB((event_times.back() & 0x0000ff) >> 0,
-                                       (event_times.back() & 0x00ff00) >> 8,
-                                       (event_times.back() & 0xff0000) >> 16));
+          int64_t event_time_msec =
+              (event_times.stack.back() - base::TimeTicks()).InMilliseconds();
+          int64_t event_time_usec =
+              (event_times.stack.back() - base::TimeTicks()).InMicroseconds();
+          paint.setColor(SkColorSetRGB((event_time_msec & 0x0000ff) >> 0,
+                                       (event_time_msec & 0x00ff00) >> 8,
+                                       (event_time_msec & 0xff0000) >> 16));
           canvas->drawIRect(rect, paint);
-          std::string text = base::UintToString(event_times.back());
+          std::string text = base::NumberToString(event_time_usec);
           canvas->drawText(text.c_str(), text.length(), 8, y + 32, text_paint);
-          frame->event_times.push_back(base::TimeTicks::FromInternalValue(
-              event_times.back() * base::Time::kMicrosecondsPerMillisecond));
-          event_times.pop_back();
+          frame->event_times.push_back(event_times.stack.back());
+          event_times.stack.pop_back();
           y += h;
         }
       }
