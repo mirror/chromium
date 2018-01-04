@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db838e16_30c0ddd6",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-04T21:05:32Z",
+      "side": 1,
+      "message": "Do you mean:\nif (!output_dir-\u003eOpenFileHandle(...",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "27c2cc60afd0497e60aed3d08a19e3e2909fd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d02131_c7d15f5a",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-04T21:05:32Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "27c2cc60afd0497e60aed3d08a19e3e2909fd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
