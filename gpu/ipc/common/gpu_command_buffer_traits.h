@@ -10,6 +10,7 @@
 #include "gpu/ipc/common/gpu_command_buffer_traits_multi.h"
 #include "ipc/ipc_message_utils.h"
 #include "ipc/ipc_param_traits.h"
+#include "ui/gfx/ipc/gfx_param_traits.h"
 
 namespace gpu {
 struct Mailbox;

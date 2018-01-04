@@ -9,6 +9,14 @@
 
 namespace mojo {
 
+// static
+bool StructTraits<gfx::mojom::BufferUsageAndFormatDataView,
+                  gfx::BufferUsageAndFormat>::
+    Read(gfx::mojom::BufferUsageAndFormatDataView data,
+         gfx::BufferUsageAndFormat* out) {
+  return data.ReadUsage(&out->first) && data.ReadFormat(&out->second);
+}
+
 std::vector<mojo::ScopedHandle>
 StructTraits<gfx::mojom::NativePixmapHandleDataView, gfx::NativePixmapHandle>::
     fds(const gfx::NativePixmapHandle& pixmap_handle) {

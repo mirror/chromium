@@ -366,8 +366,9 @@ std::vector<std::string> GetDriverBugWorkarounds() {
   return GpuDataManagerImpl::GetInstance()->GetDriverBugWorkarounds();
 }
 
-viz::BufferUsageAndFormatList CreateBufferUsageAndFormatExceptionList() {
-  viz::BufferUsageAndFormatList usage_format_list;
+std::vector<gfx::BufferUsageAndFormat>
+CreateBufferUsageAndFormatExceptionList() {
+  std::vector<gfx::BufferUsageAndFormat> usage_format_list;
   for (int usage_idx = 0; usage_idx <= static_cast<int>(gfx::BufferUsage::LAST);
        ++usage_idx) {
     gfx::BufferUsage usage = static_cast<gfx::BufferUsage>(usage_idx);
