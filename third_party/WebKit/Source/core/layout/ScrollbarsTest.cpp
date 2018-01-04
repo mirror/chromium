@@ -978,8 +978,7 @@ TEST_P(ScrollbarsTest,
 
 // Make sure native scrollbar can change by Emulator.
 // Disable on Android since Android always enable OverlayScrollbar.
-// TODO(https://crbug.com/795645): This test is failing on the ChromeOS bot.
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+#if defined(OS_ANDROID)
 TEST_P(ScrollbarsTest, DISABLED_NativeScrollbarChangeToMobileByEmulator) {
 #else
 TEST_P(ScrollbarsTest, NativeScrollbarChangeToMobileByEmulator) {
