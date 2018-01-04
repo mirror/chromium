@@ -22,6 +22,30 @@
       "revId": "c8ff4dc41dd0ce87cb0ac8d7f31c7b373e1af574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec1c71c_2540c1e9",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2018-01-04T21:22:08Z",
+      "side": 1,
+      "message": "Yeah, it looks like this also turned AFDO on for all of WebRTC, which wasn\u0027t what I wanted to do here. Apologies. :)\n\nI\u0027ll poke the bug agrieve@ made (For those following along at home: crbug.com/799064).",
+      "parentUuid": "55a95797_843fdf98",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "c8ff4dc41dd0ce87cb0ac8d7f31c7b373e1af574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
