@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28b95abf_bb3e7133",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-04T04:43:12Z",
+      "side": 1,
+      "message": "Won\u0027t this end up with marking HeapHashSet\u003cWeakMember\u003cT\u003e\u003e strongly unconditionally?",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537fa3c7_9cb759ea",
+        "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-04T04:43:12Z",
+      "side": 1,
+      "message": "Do we probably need to add a write barrier when we update impl_ as well?",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
