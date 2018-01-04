@@ -126,7 +126,7 @@ TEST_F(AutofillCollectionViewControllerTest, TestOneProfileItemDeleted) {
 
   AutofillCollectionViewController* view_controller =
       base::mac::ObjCCastStrict<AutofillCollectionViewController>(controller());
-  // Put the collectionView in 'edit' mode.
+  // Put the collectionView in 'edit' mode. This removes the switches section.
   [view_controller editButtonPressed];
 
   // This is a bit of a shortcut, since actually clicking on the 'delete'
@@ -149,10 +149,10 @@ TEST_F(AutofillCollectionViewControllerTest, TestOneProfileItemDeleted) {
 
   // This call cause a modification of the PersonalDataManager, so wait until
   // the asynchronous task complete in addition to waiting for the UI update.
-  delete_item_with_wait(1, 0);
+  delete_item_with_wait(0, 0);
   observer.Wait();  // Wait for completion of the asynchronous operation.
 
-  // Exit 'edit' mode.
+  // Exit 'edit' mode. This reintroduces the switches section.
   [view_controller editButtonPressed];
 
   // Verify the resulting UI.
