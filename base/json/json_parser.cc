@@ -7,6 +7,7 @@
 #include <cmath>
 #include <utility>
 
+#include "base/debug/alias.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -327,6 +328,16 @@ std::unique_ptr<Value> JSONParser::ParseToken(Token token) {
 }
 
 std::unique_ptr<Value> JSONParser::ConsumeDictionary() {
+  // Attempt to alias 4KB of the buffer about to be read. Need to alias multiple
+  // sites as the crashpad heuristics only grab a few hundred bytes in
+  // front/behind heap pointers on the stack.
+  // TODO(gab): Remove this after diagnosis of https://crbug.com/791487 is
+  // complete.
+  const char* initial_pos[16];
+  for (size_t i = 0; i < arraysize(initial_pos); ++i)
+    initial_pos[i] = pos_ + i * 256;
+  debug::Alias(initial_pos);
+
   if (*pos_ != '{') {
     ReportError(JSONReader::JSON_UNEXPECTED_TOKEN, 1);
     return nullptr;
