@@ -62,6 +62,7 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #include "base/process/process_handle.h"
+#include "gpu/ipc/service/direct_composition_surface_win.h"
 #endif
 
 namespace gpu {
@@ -426,6 +427,10 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
     return result;
   }
   *params.capabilities = decoder_->GetCapabilities();
+#if defined(OS_WIN)
+  params.capabilities->supports_hdr_rendering =
+      gpu::DirectCompositionSurfaceWin::IsHDRSupported();
+#endif
 
   image_factory_ = params.image_factory;
 

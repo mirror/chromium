@@ -297,12 +297,16 @@ unsigned GpuVideoAcceleratorFactoriesImpl::ImageTextureTarget(
 }
 
 media::GpuVideoAcceleratorFactories::OutputFormat
-GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat() {
+GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat(size_t bit_depth) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   if (CheckContextLost())
     return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
   auto capabilities = context_provider_->ContextCapabilities();
+  if (bit_depth > 8 && !capabilities.supports_hdr_rendering &&
+      capabilities.texture_rg) {
+    return media::GpuVideoAcceleratorFactories::OutputFormat::I420;
+  }
   if (capabilities.image_ycbcr_420v &&
       !capabilities.image_ycbcr_420v_disabled_for_video_frames) {
     return media::GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB;
