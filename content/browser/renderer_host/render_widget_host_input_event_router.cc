@@ -200,6 +200,8 @@ RenderWidgetTargetResult RenderWidgetHostInputEventRouter::FindMouseEventTarget(
         root_view, event.PositionInWidget(), event.PositionInScreen(),
         viz::EventSource::MOUSE, &transformed_point);
     if (result.should_query_view) {
+      if (result.view == root_view)
+        transformed_point = event.PositionInWidget();
       return {result.view, true, transformed_point};
     }
     target = result.view;
