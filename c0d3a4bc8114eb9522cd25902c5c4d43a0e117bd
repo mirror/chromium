@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "b4a6f3ee_56e1cfe7",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T08:09:25Z",
+      "side": 1,
+      "message": "Ack. bajones@ mentioned that this file was one of the early mojo use cases and the rules weren\u0027t as clear yet at the time.",
+      "parentUuid": "7f7d8dec_bf0ec56f",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea81b22e_9ba9ab50",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 26
@@ -184,6 +202,24 @@
       "side": 1,
       "message": "I understand the motivation, but ultimately, we want the mojoms to express only the capabilities that are available on a given platform. As I understand it, SUBMIT_AS_TEXTURE_HANDLE is Windows specific and SUBMIT_AS_MAILBOX_HOLDER is (for now, Android specific). Once 676224 is fixed, it\u0027s highly likely we\u0027d be #ifdef\u0027ing these anyway. If that\u0027s OK with you, then I\u0027m OK with this.",
       "parentUuid": "cd8c38c5_4840a716",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0178a45e_dc8f1e95",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T08:09:25Z",
+      "side": 1,
+      "message": "I\u0027m fine with appropriate #ifdef once that\u0027s supported. I just want to avoid duplicated or fragile decision logic, but simple \"that choice isn\u0027t supported on this platform\" exclusions would be easy to implement and sanity check.",
+      "parentUuid": "3740aa7a_538b5f2c",
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -343,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "79e17a90_81e9ba2d",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T08:09:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b5120c14_6cc40624",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 69
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c152a400_b70f6205",
         "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
         "patchSetId": 26
@@ -461,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "4b37da37_f88cc444",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T08:09:25Z",
+      "side": 1,
+      "message": "I\u0027m not aware of a failure mode for WaitForIncomingMethodCall other than the message pipe being broken, but AFAIK this isn\u0027t very clearly documented.\n\nMy goal here was to avoid a null pointer dereference that would otherwise occur in a fairly confusing location inside the command buffer IPC implementation.\n\nI think Mojo communication could potentially fail due to the browser side GL thread shutting down and closing the connection (i.e. via VrShellGl destructor), but this should normally happen as part of a normal \"stop presentation\" flow, with at most one outstanding frame during shutdown of the frame transport. (In the followup https://chromium-review.googlesource.com/c/chromium/src/+/828407 refactor, all this will be encapsulated in a XRFrameTransport class, this represents a VRSubmitFrameClient and the object lifetime matches the presentation duration. That\u0027s less confusing than now where VRDisplay can switch between presenting mode and non-presenting \"magic window\" mode multiple times.)\n\nIn either case, failing to place a GpuFence due to an unexpected null should be harmless, it is just expected to result in suboptimal GPU scheduling or (if persistent over many frames) overstuffed GL command buffers. I haven\u0027t seen that happening in practice.",
+      "parentUuid": "4b2a0c85_87bfea59",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55850ac1_4fab6994",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
@@ -555,6 +639,24 @@
       "side": 1,
       "message": "The name of this is a bit unclear to me. It wasn\u0027t clear that this meant \u0027waiting for something\u0027. Maybe consider naming it waiting_for_previous_frame_fence_ or something.",
       "parentUuid": "da900a8f_d475d807",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a4aaa71_3d02dadf",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2018-01-04T08:09:25Z",
+      "side": 1,
+      "message": "Done, and I also renamed the other two to waiting_for_previous_frame_{transfer,render}_.\n\n(These are all going to be moving to a separate XRFrameTransport class in a followup.)",
+      "parentUuid": "940cf2f1_0e27675f",
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
