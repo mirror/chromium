@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
+#include "content/common/json_classifier.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_response_info.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
@@ -224,69 +225,44 @@ CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForXML(
                           base::CompareCase::SENSITIVE);
 }
 
-CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForJSON(
-    base::StringPiece data) {
-  // Currently this function looks for an opening brace ('{'), followed by a
-  // double-quoted string literal, followed by a colon. Importantly, such a
-  // sequence is a Javascript syntax error: although the JSON object syntax is
-  // exactly Javascript's object-initializer syntax, a Javascript object-
-  // initializer expression is not valid as a standalone Javascript statement.
-  //
-  // TODO(nick): We have to come up with a better way to sniff JSON. The
-  // following are known limitations of this function:
-  // https://crbug.com/795470/ Support non-dictionary values (e.g. lists)
-  enum {
-    kStartState,
-    kLeftBraceState,
-    kLeftQuoteState,
-    kEscapeState,
-    kRightQuoteState,
-  } state = kStartState;
+CrossSiteDocumentClassifier::Result
+CrossSiteDocumentClassifier::SniffForJSONDict(base::StringPiece data) {
+  // This function looks for an opening brace ('{'), followed by a double-quoted
+  // string literal, followed by a colon. Importantly, such a sequence is a
+  // Javascript syntax error: although the JSON object syntax is exactly
+  // Javascript's object-initializer syntax, a Javascript object- initializer
+  // expression is not valid as a standalone Javascript statement.
+  AdvancePastWhitespace(&data);
+  if (data.empty())
+    return kMaybe;
+  if (data[0] != '{')
+    return kNo;
 
-  for (size_t i = 0; i < data.length(); ++i) {
-    const char c = data[i];
-    if (state != kLeftQuoteState && state != kEscapeState) {
-      // Whitespace is ignored (outside of string literals)
-      if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
-        continue;
-    } else {
-      // Inside string literals, control characters should result in rejection.
-      if ((c >= 0 && c < 32) || c == 127)
-        return kNo;
-    }
+  JsonClassifier sniffer;
+  sniffer.Append(data);
 
-    switch (state) {
-      case kStartState:
-        if (c == '{')
-          state = kLeftBraceState;
-        else
-          return kNo;
-        break;
-      case kLeftBraceState:
-        if (c == '"')
-          state = kLeftQuoteState;
-        else
-          return kNo;
-        break;
-      case kLeftQuoteState:
-        if (c == '"')
-          state = kRightQuoteState;
-        else if (c == '\\')
-          state = kEscapeState;
-        break;
-      case kEscapeState:
-        // Simplification: don't bother rejecting hex escapes.
-        state = kLeftQuoteState;
-        break;
-      case kRightQuoteState:
-        if (c == ':')
-          return kYes;
-        else
-          return kNo;
-        break;
-    }
-  }
+  // If we got as far as the colon, then don't bother validating the rest of the
+  // stream. The fact that this isn't valid Javascript gives us confidence that
+  // we can classify it as JSON.
+  if (sniffer.is_not_valid_javascript())
+    return kYes;
+
+  // Otherwise, errors should cause failures.
+  if (!sniffer.is_valid_json_so_far())
+    return kNo;
   return kMaybe;
+}
+
+CrossSiteDocumentClassifier::Result
+CrossSiteDocumentClassifier::SniffForJSONValue(base::StringPiece data,
+                                               bool is_eof) {
+  JsonClassifier sniffer;
+  sniffer.Append(data);
+  if (sniffer.is_not_valid_javascript())
+    return kYes;
+  if (is_eof)
+    return sniffer.is_complete_json_value() ? kYes : kNo;
+  return sniffer.is_valid_json_so_far() ? kMaybe : kNo;
 }
 
 CrossSiteDocumentClassifier::Result
@@ -332,7 +308,7 @@ CrossSiteDocumentClassifier::SniffForFetchOnlyResource(base::StringPiece data) {
     return has_parser_breaker;
 
   // A non-empty JSON object also effectively introduces a JS syntax error.
-  return SniffForJSON(data);
+  return SniffForJSONDict(data);
 }
 
 }  // namespace content

@@ -56,7 +56,8 @@ CrossSiteDocumentClassifier::Result SniffForHtmlXmlOrJson(
   if (result != CrossSiteDocumentClassifier::kYes)
     result = std::max(CrossSiteDocumentClassifier::SniffForXML(data), result);
   if (result != CrossSiteDocumentClassifier::kYes)
-    result = std::max(CrossSiteDocumentClassifier::SniffForJSON(data), result);
+    result =
+        std::max(CrossSiteDocumentClassifier::SniffForJSONDict(data), result);
   return result;
 }
 
@@ -246,6 +247,7 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       // We haven't blocked the response yet (because previous reads yielded a
       // kMaybe result), and there is no more data. Allow the response.
       confirmed_blockable = CrossSiteDocumentClassifier::kNo;
+      // This isn't valid anymore.
     } else {
       // Sniff the data to see if it likely matches the MIME type that caused us
       // to decide to block it.  If it doesn't match, it may be JavaScript,
@@ -269,7 +271,8 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       } else if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_XML) {
         confirmed_blockable = CrossSiteDocumentClassifier::SniffForXML(data);
       } else if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_JSON) {
-        confirmed_blockable = CrossSiteDocumentClassifier::SniffForJSON(data);
+        confirmed_blockable =
+            CrossSiteDocumentClassifier::SniffForJSONValue(data, false);
       } else if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN) {
         // For responses labeled as plain text, only block them if the data
         // sniffs as one of the formats we would block in the first place.
@@ -290,11 +293,16 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
 
       // If sniffing didn't yield a conclusive response, and we haven't read too
       // many bytes yet, buffer up some more data.
-      if (confirmed_blockable == CrossSiteDocumentClassifier::kMaybe &&
-          local_buffer_bytes_read_ < net::kMaxBytesToSniff &&
-          local_buffer_bytes_read_ < next_handler_buffer_size_) {
-        controller->Resume();
-        return;
+      if (confirmed_blockable == CrossSiteDocumentClassifier::kMaybe) {
+        if (local_buffer_bytes_read_ < net::kMaxBytesToSniff &&
+            local_buffer_bytes_read_ < next_handler_buffer_size_) {
+          controller->Resume();
+          return;
+        }
+
+        // Upgrade JSON maybe -> yes.
+        if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_JSON)
+          confirmed_blockable = CrossSiteDocumentClassifier::kYes;
       }
     }
 

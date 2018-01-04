@@ -2,14 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/strings/string_piece.h"
 #include "content/common/cross_site_document_classifier.h"
+#include "base/strings/string_piece.h"
+#include "content/common/json_classifier.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::StringPiece;
 using Result = content::CrossSiteDocumentClassifier::Result;
 
 namespace content {
+
+namespace {
+std::string GetNonJsonicSuffix(base::StringPiece test_value) {
+  JsonClassifier jsc;
+  for (size_t i = 0; i < test_value.length(); i++) {
+    jsc.Append(test_value.substr(i, 1));
+    if (!jsc.is_valid_json_so_far())
+      return test_value.substr(i).as_string();
+  }
+
+  EXPECT_TRUE(jsc.is_complete_json_value()) << test_value;
+  return std::string();
+}
+
+}  // namespace
 
 TEST(CrossSiteDocumentClassifierTest, IsBlockableScheme) {
   GURL data_url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA==");
@@ -125,7 +141,7 @@ TEST(CrossSiteDocumentClassifierTest, SniffForXML) {
             CrossSiteDocumentClassifier::SniffForXML(empty_data));
 }
 
-TEST(CrossSiteDocumentClassifierTest, SniffForJSON) {
+TEST(CrossSiteDocumentClassifierTest, SniffForJSONDict) {
   StringPiece json_data("\t\t\r\n   { \"name\" : \"chrome\", ");
   StringPiece json_corrupt_after_first_key(
       "\t\t\r\n   { \"name\" :^^^^!!@#\1\", ");
@@ -134,57 +150,111 @@ TEST(CrossSiteDocumentClassifierTest, SniffForJSON) {
   StringPiece non_json_data1("\t\t\r\n   foo({ \"name\" : \"chrome\", ");
   StringPiece empty_data("");
 
-  EXPECT_EQ(Result::kYes, CrossSiteDocumentClassifier::SniffForJSON(json_data));
-  EXPECT_EQ(Result::kYes, CrossSiteDocumentClassifier::SniffForJSON(
+  EXPECT_EQ(Result::kYes,
+            CrossSiteDocumentClassifier::SniffForJSONDict(json_data));
+  EXPECT_EQ(Result::kYes, CrossSiteDocumentClassifier::SniffForJSONDict(
                               json_corrupt_after_first_key));
 
   EXPECT_EQ(Result::kYes,
-            CrossSiteDocumentClassifier::SniffForJSON(json_data2));
+            CrossSiteDocumentClassifier::SniffForJSONDict(json_data2));
 
   // All prefixes prefixes of |json_data2| ought to be indeterminate.
   StringPiece almost_json = json_data2;
   while (!almost_json.empty()) {
     almost_json.remove_suffix(1);
     EXPECT_EQ(Result::kMaybe,
-              CrossSiteDocumentClassifier::SniffForJSON(almost_json))
+              CrossSiteDocumentClassifier::SniffForJSONDict(almost_json))
         << almost_json;
   }
 
   EXPECT_EQ(Result::kNo,
-            CrossSiteDocumentClassifier::SniffForJSON(non_json_data0));
+            CrossSiteDocumentClassifier::SniffForJSONDict(non_json_data0));
   EXPECT_EQ(Result::kNo,
-            CrossSiteDocumentClassifier::SniffForJSON(non_json_data1));
+            CrossSiteDocumentClassifier::SniffForJSONDict(non_json_data1));
 
   EXPECT_EQ(Result::kYes,
-            CrossSiteDocumentClassifier::SniffForJSON(R"({"" : 1})"))
+            CrossSiteDocumentClassifier::SniffForJSONDict(R"({"" : 1})"))
       << "Empty strings are accepted";
   EXPECT_EQ(Result::kNo,
-            CrossSiteDocumentClassifier::SniffForJSON(R"({'' : 1})"))
+            CrossSiteDocumentClassifier::SniffForJSONDict(R"({'' : 1})"))
       << "Single quotes are not accepted";
   EXPECT_EQ(Result::kYes,
-            CrossSiteDocumentClassifier::SniffForJSON("{\"\\\"\" : 1}"))
+            CrossSiteDocumentClassifier::SniffForJSONDict("{\"\\\"\" : 1}"))
       << "Escaped quotes are recognized";
-  EXPECT_EQ(Result::kYes,
-            CrossSiteDocumentClassifier::SniffForJSON(R"({"\\\u000a" : 1})"))
+  EXPECT_EQ(Result::kYes, CrossSiteDocumentClassifier::SniffForJSONDict(
+                              R"({"\\\u000a" : 1})"))
       << "Escaped control characters are recognized";
   EXPECT_EQ(Result::kMaybe,
-            CrossSiteDocumentClassifier::SniffForJSON(R"({"\\\u00)"))
-      << "Incomplete escape results in maybe";
-  EXPECT_EQ(Result::kMaybe, CrossSiteDocumentClassifier::SniffForJSON("{\"\\"))
+            CrossSiteDocumentClassifier::SniffForJSONDict(R"({"\\\u00)"))
       << "Incomplete escape results in maybe";
   EXPECT_EQ(Result::kMaybe,
-            CrossSiteDocumentClassifier::SniffForJSON("{\"\\\""))
+            CrossSiteDocumentClassifier::SniffForJSONDict("{\"\\"))
+      << "Incomplete escape results in maybe";
+  EXPECT_EQ(Result::kMaybe,
+            CrossSiteDocumentClassifier::SniffForJSONDict("{\"\\\""))
       << "Incomplete escape results in maybe";
   EXPECT_EQ(Result::kNo,
-            CrossSiteDocumentClassifier::SniffForJSON("{\"\n\" : true}"))
+            CrossSiteDocumentClassifier::SniffForJSONDict("{\"\n\" : true}"))
       << "Unescaped control characters are rejected";
-  EXPECT_EQ(Result::kNo, CrossSiteDocumentClassifier::SniffForJSON("{}"))
+  EXPECT_EQ(Result::kNo, CrossSiteDocumentClassifier::SniffForJSONDict("{}"))
       << "Empty dictionary is not recognized (since it's valid JS too)";
-  EXPECT_EQ(Result::kNo,
-            CrossSiteDocumentClassifier::SniffForJSON("[true, false, 1, 2]"))
+  EXPECT_EQ(Result::kNo, CrossSiteDocumentClassifier::SniffForJSONDict(
+                             "[true, false, 1, 2]"))
       << "Lists dictionary are not recognized (since they're valid JS too)";
-  EXPECT_EQ(Result::kNo, CrossSiteDocumentClassifier::SniffForJSON(R"({":"})"))
+  EXPECT_EQ(Result::kNo,
+            CrossSiteDocumentClassifier::SniffForJSONDict(R"({":"})"))
       << "A colon character inside a string does not trigger a match";
+}
+
+TEST(CrossSiteDocumentClassifierTest, SniffForJSONValue) {
+  EXPECT_EQ("", GetNonJsonicSuffix(" true"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 9"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 8"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 7"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 6"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 5"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 4"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 3"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 2"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 1"));
+  EXPECT_EQ("", GetNonJsonicSuffix(" 0"));
+  EXPECT_EQ("", GetNonJsonicSuffix("{}"));
+  EXPECT_EQ("", GetNonJsonicSuffix("{ }"));
+  EXPECT_EQ("", GetNonJsonicSuffix("{ }"));
+  EXPECT_EQ(
+      "", GetNonJsonicSuffix("88110E111111111111111111111111111111111111111"));
+  EXPECT_EQ("", GetNonJsonicSuffix("\x0d\t\r\n 55.1E-1"));
+  // Are raw tab characters allowed in strings?
+  EXPECT_EQ("\t\"\t", GetNonJsonicSuffix("\"\t\"\t"));
+  EXPECT_EQ("E ", GetNonJsonicSuffix("  truE "));
+  EXPECT_EQ(",false", GetNonJsonicSuffix("true,false"));
+  EXPECT_EQ("1:2}", GetNonJsonicSuffix("\t{\t1:2}"));
+  EXPECT_EQ("***", GetNonJsonicSuffix("\t{\"\\\"\":2, \"abcd\": null}***"));
+  EXPECT_EQ("jsonp_function([1, 2, 3])",
+            GetNonJsonicSuffix("jsonp_function([1, 2, 3])"));
+  EXPECT_EQ("", GetNonJsonicSuffix("[1, 20.0, -3.5e-12, {\n}, 1.2e01]"));
+  EXPECT_EQ(".", GetNonJsonicSuffix("[1, 20.0, -3.5e-12 \t\n, 1.2e01\n]."));
+  EXPECT_EQ(
+      "null:}}] []",
+      GetNonJsonicSuffix("[1, 2.0, -3.5e-12, 1.2e01, { \"-1\": {null:}}] []"));
+  EXPECT_EQ("", GetNonJsonicSuffix("[]"));
+  EXPECT_EQ("", GetNonJsonicSuffix("[{}, {\"\": {}}]"));
+  EXPECT_EQ("", GetNonJsonicSuffix("[]"));
+
+  EXPECT_EQ("", GetNonJsonicSuffix("\"\\uddfe1f\xff\xff\xff\xff\xff\xffz\""));
+
+  JsonClassifier jsc;
+  jsc.Append(
+      "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[["
+      "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[["
+      "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[["
+      "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[5\n");
+  EXPECT_EQ(
+      "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"
+      "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"
+      "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]"
+      "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+      jsc.GetCompletionSuffixForTesting());
 }
 
 }  // namespace content

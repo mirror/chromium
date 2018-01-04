@@ -71,7 +71,17 @@ class CONTENT_EXPORT CrossSiteDocumentClassifier {
 
   static Result SniffForHTML(base::StringPiece data);
   static Result SniffForXML(base::StringPiece data);
-  static Result SniffForJSON(base::StringPiece data);
+
+  // Sniffs for a non-empty JSON dictionary / object, like {"abc": ...
+  //
+  // This subset of JSON is a important case for document blocking, since an
+  // object initializer cannot begin a valid Javascript statement.
+  static Result SniffForJSONDict(base::StringPiece data);
+
+  // More lax version of JSON sniffing, that recognizes lists as well as
+  // objects. JSON lists are tricky, since they are also valid Javascript
+  // statements.
+  static Result SniffForJSONValue(base::StringPiece data, bool is_eof);
 
   // Sniff for patterns that indicate |data| only ought to be consumed by XHR()
   // or fetch(). This detects Javascript parser-breaker and particular JS

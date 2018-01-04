@@ -204,7 +204,7 @@ bool SiteIsolationStatsGatherer::OnReceivedFirstChunk(
                CROSS_SITE_DOCUMENT_MIME_TYPE_JSON) {
       bucket_prefix = "SiteIsolation.XSD.JSON";
       sniffed_as_target_document =
-          IsYes(CrossSiteDocumentClassifier::SniffForJSON(data));
+          IsYes(CrossSiteDocumentClassifier::SniffForJSONDict(data));
     } else {
       NOTREACHED() << "Not a blockable mime type: "
                    << resp_data->canonical_mime_type;
@@ -230,7 +230,7 @@ bool SiteIsolationStatsGatherer::OnReceivedFirstChunk(
       bucket_prefix = "SiteIsolation.XSD.Plain.HTML";
     else if (IsYes(CrossSiteDocumentClassifier::SniffForXML(data)))
       bucket_prefix = "SiteIsolation.XSD.Plain.XML";
-    else if (IsYes(CrossSiteDocumentClassifier::SniffForJSON(data)))
+    else if (IsYes(CrossSiteDocumentClassifier::SniffForJSONDict(data)))
       bucket_prefix = "SiteIsolation.XSD.Plain.JSON";
 
     if (bucket_prefix.size() > 0) {

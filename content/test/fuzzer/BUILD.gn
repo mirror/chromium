@@ -111,3 +111,14 @@ fuzzer_test("cbor_reader_fuzzer") {
   seed_corpus = "../data/fuzzer_corpus/cbor_data/"
   libfuzzer_options = [ "max_len=65535" ]
 }
+
+fuzzer_test("json_classifier_fuzzer") {
+  sources = [
+    "json_classifier_fuzzer.cc",
+  ]
+  deps = [
+    "//content/public/browser",
+  ]
+
+  #  seed_corpus = "../data/fuzzer_corpus/json_data/"
+}

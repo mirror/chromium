@@ -1260,7 +1260,7 @@ TEST_P(CrossSiteDocumentResourceHandlerTest, ResponseBlocking) {
        CrossSiteDocumentClassifier::SniffForFetchOnlyResource(
            scenario.data())) &&
       !((CrossSiteDocumentClassifier::kYes ==
-         CrossSiteDocumentClassifier::SniffForJSON(scenario.data())) &&
+         CrossSiteDocumentClassifier::SniffForJSONDict(scenario.data())) &&
         (scenario.canonical_mime_type == CROSS_SITE_DOCUMENT_MIME_TYPE_JSON ||
          scenario.canonical_mime_type == CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN));
   if (should_be_blocked && expected_to_sniff &&

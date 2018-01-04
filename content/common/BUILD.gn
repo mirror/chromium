@@ -197,6 +197,8 @@ source_set("common") {
     "input_messages.h",
     "inter_process_time_ticks_converter.cc",
     "inter_process_time_ticks_converter.h",
+    "json_classifier.cc",
+    "json_classifier.h",
     "layer_tree_settings_factory.cc",
     "layer_tree_settings_factory.h",
     "loader_util.cc",

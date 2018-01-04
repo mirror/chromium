@@ -764,7 +764,7 @@ std::unique_ptr<Value> JSONParser::ConsumeNumber() {
     return std::make_unique<Value>(num_double);
   }
 
-  return nullptr;
+  return std::make_unique<Value>();
 }
 
 bool JSONParser::ReadInt(bool allow_leading_zeros) {
