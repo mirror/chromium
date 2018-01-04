@@ -46,6 +46,8 @@ ScrollAlignment ToScrollAlignment(WebRemoteScrollAlignment alignment) {
       return ScrollAlignment::kAlignCenterIfNeeded;
     case WebRemoteScrollAlignment::kToEdgeIfNeeded:
       return ScrollAlignment::kAlignToEdgeIfNeeded;
+    case WebRemoteScrollAlignment::kCenterAlways:
+      return ScrollAlignment::kAlignCenterAlways;
     case WebRemoteScrollAlignment::kTopAlways:
       return ScrollAlignment::kAlignTopAlways;
     case WebRemoteScrollAlignment::kBottomAlways:
@@ -365,7 +367,8 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
       LayoutRect(new_rect_to_scroll), ToScrollAlignment(properties.align_x),
       ToScrollAlignment(properties.align_y), properties.GetScrollType(),
       properties.make_visible_in_visual_viewport,
-      properties.GetScrollBehavior(), properties.is_for_scroll_sequence);
+      properties.GetScrollBehavior(), properties.is_for_scroll_sequence,
+      properties.zoom_to_final_rect);
   scroll_sequencer->RunQueuedAnimations();
 }
 

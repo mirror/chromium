@@ -1876,7 +1876,8 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
     const ScrollAlignment& align_y,
     bool is_smooth,
     ScrollType scroll_type,
-    bool is_for_scroll_sequence) {
+    bool is_for_scroll_sequence,
+    bool needs_zoom_in_main_frame) {
   LayoutRect local_expose_rect(
       Box()
           .AbsoluteToLocalQuad(FloatQuad(FloatRect(rect)), kUseTransforms)

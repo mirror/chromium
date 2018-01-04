@@ -298,7 +298,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       const ScrollAlignment& align_y = ScrollAlignment::kAlignCenterIfNeeded,
       ScrollType = kProgrammaticScroll,
       bool make_visible_in_visual_viewport = true,
-      ScrollBehavior = kScrollBehaviorAuto);
+      ScrollBehavior = kScrollBehaviorAuto,
+      bool needs_zoom_in_main_frame = false);
 
   // Convenience function for getting to the nearest enclosing box of a
   // LayoutObject.

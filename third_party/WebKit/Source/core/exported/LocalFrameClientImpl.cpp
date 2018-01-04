@@ -79,6 +79,7 @@
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebMediaPlayerSource.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
+#include "public/platform/WebRemoteScrollProperties.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
@@ -1128,8 +1129,14 @@ String LocalFrameClientImpl::GetInstrumentationToken() {
 void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
     const WebRect& rect_to_scroll,
     const WebRemoteScrollProperties& properties) {
-  web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
-                                                         properties);
+  WebViewImpl* view_impl = web_frame_->ViewImpl();
+  if (view_impl->MainFrameImpl()) {
+    DCHECK(properties.zoom_to_final_rect);
+    view_impl->ZoomIntoRect(rect_to_scroll);
+  } else {
+    web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
+                                                           properties);
+  }
 }
 
 void LocalFrameClientImpl::SetVirtualTimePauser(

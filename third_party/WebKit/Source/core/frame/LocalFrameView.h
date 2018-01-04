@@ -489,7 +489,8 @@ class CORE_EXPORT LocalFrameView final
                             const ScrollAlignment& align_y,
                             bool is_smooth,
                             ScrollType = kProgrammaticScroll,
-                            bool is_for_scroll_sequence = false) override;
+                            bool is_for_scroll_sequence = false,
+                            bool needs_zoom_in_main_frame = false) override;
 
   // The window that hosts the LocalFrameView. The LocalFrameView will
   // communicate scrolls and repaints to the host window in the window's
@@ -932,6 +933,7 @@ class CORE_EXPORT LocalFrameView final
                                          ScrollType,
                                          bool,
                                          ScrollBehavior,
+                                         bool,
                                          bool);
 
   PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {

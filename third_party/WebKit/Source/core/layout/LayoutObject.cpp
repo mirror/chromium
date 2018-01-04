@@ -660,7 +660,8 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
                                        const ScrollAlignment& align_y,
                                        ScrollType scroll_type,
                                        bool make_visible_in_visual_viewport,
-                                       ScrollBehavior scroll_behavior) {
+                                       ScrollBehavior scroll_behavior,
+                                       bool needs_zoom_in_main_frame) {
   LayoutBox* enclosing_box = EnclosingBox();
   if (!enclosing_box)
     return false;
@@ -668,7 +669,8 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
   GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
   enclosing_box->ScrollRectToVisibleRecursive(
       rect, align_x, align_y, scroll_type, make_visible_in_visual_viewport,
-      scroll_behavior, scroll_type == kProgrammaticScroll);
+      scroll_behavior, scroll_type == kProgrammaticScroll,
+      needs_zoom_in_main_frame);
   GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   return true;

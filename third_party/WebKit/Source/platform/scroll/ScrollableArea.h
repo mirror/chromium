@@ -104,7 +104,8 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
                                     const ScrollAlignment& align_y,
                                     bool is_smooth,
                                     ScrollType = kProgrammaticScroll,
-                                    bool is_for_scroll_sequence = false);
+                                    bool is_for_scroll_sequence = false,
+                                    bool needs_zoom_in_main_frame = false);
 
   static bool ScrollBehaviorFromString(const String&, ScrollBehavior&);
 

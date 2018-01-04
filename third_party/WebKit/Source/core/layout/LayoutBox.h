@@ -603,7 +603,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
                                     ScrollType = kProgrammaticScroll,
                                     bool make_visible_in_visual_viewport = true,
                                     ScrollBehavior = kScrollBehaviorAuto,
-                                    bool is_for_scroll_sequence = false);
+                                    bool is_for_scroll_sequence = false,
+                                    bool needs_zoom_in_main_frame = false);
 
   LayoutRectOutsets MarginBoxOutsets() const { return margin_box_outsets_; }
   LayoutUnit MarginTop() const override { return margin_box_outsets_.Top(); }

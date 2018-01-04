@@ -274,7 +274,8 @@ LayoutRect ScrollableArea::ScrollIntoView(const LayoutRect& rect_in_content,
                                           const ScrollAlignment& align_y,
                                           bool is_smooth,
                                           ScrollType,
-                                          bool is_for_scroll_sequence) {
+                                          bool is_for_scroll_sequence,
+                                          bool needs_zoom_in_main_frame) {
   // TODO(bokan): This should really be implemented here but ScrollAlignment is
   // in Core which is a dependency violation.
   NOTREACHED();
