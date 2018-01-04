@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83432142_94dd0724",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 41
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "The new method we\u0027re introducing will be used for the commit of browser-initiated same-document navigations as well, so this comment should be updated.",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57aee0ea_12c5c282",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "For cross-document navigations we should never reach this but for race condition. Can you add a TODO to remove this block once race conditions around NavigationHandle have been solved?",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8247f10_8c33db5e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "Since we\u0027re navigating same-document we should not be changing sites. Instead of updating the SiteURL, we should DCHECK that the site URL of the URL we\u0027re committing matches the Site URL of the last committed URL.",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31566fa_06bf17ce",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "The last sentence is false (it corresponds to the old navigation codepath). The appropriate one is:\nThis is the case if the NavigationHandle for a browser-initiated same-document navigation was erased due to a race condition.\nAlso please add a TODO to remove this once we no longer have race conditions around NavigationHandles.",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a79b3a6_3534f8ea",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "nit: let\u0027s call it ValidateDidCommitParams since we eventually want to rename all DidCommitProvisionalLoad methods/structs to DidCommitNavigation.",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641413ff_b4144990",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 41
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "s/started/committed",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d6f221_e3befd77",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 4174,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "Can we DCHECK that navigation_state-\u003eWasWithinSameDocument() is false?",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47647fbf_c076d7fb",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 4217,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "I think we still need to send the update state before doing this, as scroll + scale are among the things we send in UpdateSate if I\u0027m not mistaken. Also why wasn\u0027t this moved to UpdateStateBeforeCommit?",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c6acb0_24982954",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 5549,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "So the changes to these files are a bit hard for me to review. Do you think it would be possible to split out the creation of the various Update functions outside this CL (and split it over several CLs). For example start with a CL that introduces UpdateZoomLevel, then one for UpdateNavigationHistory, and rebase the rest of the CL on top of that. It will be a lot easier for me to track how the code is moving around this way.",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50708cf_5b7d7ad7",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 1,
+      "message": "Remove typical form the comment?",
+      "revId": "4b9ef179700765804518819c9c487a8b68f2c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

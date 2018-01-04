@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6ddbdb_162ebb20",
+        "filename": "content/browser/bad_message.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 0,
+      "message": "We should not remove values from the bad message enum, as it is used by histograms and that would mess them up (see comment at the top of the enum). Instead prefix the entry by OBSOLETE_ and update the histogram values accordingly.",
+      "revId": "0defaba62f4c7b05f3af56c0a4a2d8b63eabbf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13223a81_8e402317",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 5563,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-04T16:18:59Z",
+      "side": 0,
+      "message": "nit: no need to remove Subframe navigation:",
+      "revId": "0defaba62f4c7b05f3af56c0a4a2d8b63eabbf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
