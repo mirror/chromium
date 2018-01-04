@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9d858f19_76f6c17a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9cb72e_cf7617be",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d26d7a11_538083e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 7
@@ -60,6 +84,30 @@
       "writtenOn": "2017-11-30T22:16:34Z",
       "side": 1,
       "message": "It seems a little odd to me that this class extends AlertDialog but the DialogHandler part of it doesn\u0027t use the functionalities of AlertDialog.",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792eee66_e14d19cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "It should have the same interface as AlertDialog, but can\u0027t use AlertDialog when in VR.",
+      "parentUuid": "d26d7a11_538083e6",
       "range": {
         "startLine": 19,
         "startChar": 13,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bc0341ff_e0aca38b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9269f8a_dbec5fd8",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c64d37f_232541c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 7
@@ -106,6 +178,30 @@
       "writtenOn": "2017-11-27T21:51:55Z",
       "side": 1,
       "message": "What\u0027s this?",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb152fb_a736e8fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Removed.\nI was closing the Dialog in case that something was wrong and we couldn\u0027t show it. It is not needed for now.",
+      "parentUuid": "3c64d37f_232541c9",
       "range": {
         "startLine": 54,
         "startChar": 16,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "65797abf_b71ace1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/android/support/v7/app/AlertDialog.java?l\u003d110\n\nThis method is private, so I copied the constant.",
+      "parentUuid": "f2803cbc_11044a1b",
+      "range": {
+        "startLine": 79,
+        "startChar": 10,
+        "endLine": 79,
+        "endChar": 14
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "231b681f_024ec95c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 7
@@ -152,6 +272,30 @@
       "writtenOn": "2017-11-30T22:16:34Z",
       "side": 1,
       "message": "Should we call sDialogHandler.dismiss() here? It seems strange that sDialogHandler.dismiss() is not handling all the logic for dismissal.\n\nAlso I\u0027m curious: is there any other way to close the dialog on VR besides clicking on the buttons?",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8268949c_b3b5374f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Not at this moment. We can make it possible with back button or clicking outside of the dialog in the future.",
+      "parentUuid": "231b681f_024ec95c",
       "range": {
         "startLine": 100,
         "startChar": 12,
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "544f8a7c_1b6a2095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d33698e6_6923439b",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83d1bcd2_1e7218f5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
         "patchSetId": 7
@@ -207,6 +375,30 @@
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148fbb95_0a430403",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d1bcd2_1e7218f5",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "11ff7159_9db53343",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65ebfa6d_a47062c5",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f89c2f_dae17951",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
         "patchSetId": 7
@@ -244,6 +460,30 @@
       "writtenOn": "2017-11-27T21:51:55Z",
       "side": 1,
       "message": "Magic numbers. What are we doing here?",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478a681e_8434d2df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Removed the magic number. I try to limit the View size to make sure that it won\u0027t look different in VR.",
+      "parentUuid": "41f89c2f_dae17951",
       "range": {
         "startLine": 73,
         "startChar": 46,
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "e600527b_1a2833fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c26e7018_de057905",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e5c621_2d288cf9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
         "patchSetId": 7
@@ -290,6 +554,30 @@
       "writtenOn": "2017-11-30T22:16:34Z",
       "side": 1,
       "message": "Why is ThreadUtils used here but the OnClickListener above is not?\nIs there any case that this method is not called on UI thread initially?",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 54
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7996ca_9446bb2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "removed ThreadUtils usage.",
+      "parentUuid": "d4e5c621_2d288cf9",
       "range": {
         "startLine": 99,
         "startChar": 46,
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "91592dd9_58572a72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8384aac5_f786ff0c",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7765d7b_813483f3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 7
@@ -345,6 +657,30 @@
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9120097_587d2e8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7765d7b_813483f3",
+      "range": {
+        "startLine": 289,
+        "startChar": 24,
+        "endLine": 289,
+        "endChar": 31
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "22ce3469_b2061093",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0671cae_e436aafb",
+      "range": {
+        "startLine": 290,
+        "startChar": 23,
+        "endLine": 290,
+        "endChar": 36
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb1a9c4_d0b95571",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
         "patchSetId": 7
@@ -382,6 +742,24 @@
       "writtenOn": "2017-11-30T22:16:34Z",
       "side": 1,
       "message": "Is this class supposed to be a generic class for handling communication for different views (not just dialogs)? If so, I wonder if VrAlertDialog should implement DialogRenderer instead.",
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe41919c_a417da57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Renamed the class to VrDialog",
+      "parentUuid": "fdb1a9c4_d0b95571",
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -454,6 +832,30 @@
       "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a312135_a1ba7621",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-04T02:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae58b6b_471bda36",
+      "range": {
+        "startLine": 371,
+        "startChar": 12,
+        "endLine": 373,
+        "endChar": 46
+      },
+      "revId": "e3a9afa1f825204f57cb1d78698feb726e87d01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
