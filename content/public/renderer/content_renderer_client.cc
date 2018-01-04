@@ -260,4 +260,9 @@ bool ContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
   return false;
 }
 
+std::unique_ptr<URLLoaderThrottleProvider>
+ContentRendererClient::CreateWorkerURLLoaderThrottleProvider() {
+  return nullptr;
+}
+
 }  // namespace content
