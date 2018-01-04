@@ -45,6 +45,8 @@ namespace content {
 
 namespace {
 
+void NoOp() {}
+
 void NoOpSuccess(bool success) {}
 
 void SuccessCallback(base::OnceClosure callback,
@@ -512,8 +514,10 @@ TEST_F(LocalStorageContextMojoTest, DeleteStorage) {
   set_mock_data("VERSION", "1");
   set_mock_data(std::string("_http://foobar.com") + '\x00' + "key", "value");
 
-  context()->DeleteStorage(url::Origin::Create(GURL("http://foobar.com")));
-  base::RunLoop().RunUntilIdle();
+  base::RunLoop run_loop;
+  context()->DeleteStorage(url::Origin::Create(GURL("http://foobar.com")),
+                           run_loop.QuitClosure());
+  run_loop.Run();
   EXPECT_EQ(1u, mock_data().size());
 }
 
@@ -538,7 +542,7 @@ TEST_F(LocalStorageContextMojoTest, DeleteStorageWithoutConnection) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(mock_data().empty());
 
-  context()->DeleteStorage(origin1);
+  context()->DeleteStorage(origin1, base::BindOnce(&NoOp));
   base::RunLoop().RunUntilIdle();
 
   // Data from origin2 should exist, including meta-data, but nothing should
@@ -580,7 +584,7 @@ TEST_F(LocalStorageContextMojoTest, DeleteStorageNotifiesWrapper) {
   wrapper->AddObserver(observer.Bind());
   base::RunLoop().RunUntilIdle();
 
-  context()->DeleteStorage(origin1);
+  context()->DeleteStorage(origin1, base::BindOnce(&NoOp));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(1u, observer.observations().size());
@@ -628,7 +632,7 @@ TEST_F(LocalStorageContextMojoTest, DeleteStorageWithPendingWrites) {
                base::BindOnce(&NoOpSuccess));
   base::RunLoop().RunUntilIdle();
 
-  context()->DeleteStorage(origin1);
+  context()->DeleteStorage(origin1, base::BindOnce(&NoOp));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2u, observer.observations().size());
@@ -677,7 +681,7 @@ TEST_F(LocalStorageContextMojoTest, DeleteStorageForPhysicalOrigin) {
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(mock_data().empty());
 
-  context()->DeleteStorageForPhysicalOrigin(origin1b);
+  context()->DeleteStorageForPhysicalOrigin(origin1b, base::BindOnce(&NoOp));
   base::RunLoop().RunUntilIdle();
 
   // Data from origin2 should exist, including meta-data, but nothing should
