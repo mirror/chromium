@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ecae54e_5f80f75a",
+        "filename": "ash/display/display_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T20:50:07Z",
+      "side": 1,
+      "message": "nit: This can be removed since L173 should cover this case as well.",
+      "revId": "2103d1aa6aea882bb53e082920758dae0285f5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
