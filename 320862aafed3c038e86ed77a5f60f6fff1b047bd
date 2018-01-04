@@ -52,6 +52,24 @@
       "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "089c1ad0_b5274d60",
+        "filename": "chrome/browser/chromeos/printing/external_printers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-04T23:53:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5e5a077_9f513170",
+      "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
