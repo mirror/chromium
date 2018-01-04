@@ -26,6 +26,8 @@
 
 #include "core/workers/WorkerNavigator.h"
 
+#include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
+
 namespace blink {
 
 WorkerNavigator::WorkerNavigator(const String& user_agent)
@@ -35,6 +37,10 @@ WorkerNavigator::~WorkerNavigator() {}
 
 String WorkerNavigator::userAgent() const {
   return user_agent_;
+}
+
+float WorkerNavigator::deviceMemory() const {
+  return ApproximatedDeviceMemory::GetApproximatedDeviceMemory();
 }
 
 void WorkerNavigator::Trace(blink::Visitor* visitor) {
