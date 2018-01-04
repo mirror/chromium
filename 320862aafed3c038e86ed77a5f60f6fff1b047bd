@@ -34,6 +34,24 @@
       "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5e5a077_9f513170",
+        "filename": "chrome/browser/chromeos/printing/external_printers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2018-01-04T18:13:31Z",
+      "side": 1,
+      "message": "From the comment https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?rcl\u003dd7d410b60bca5187014f34741479fc836567d9fc\u0026l\u003d46, seems like you should put |scoped_task_environment_| as the first class member. I suspect it might solve your test failure here. But it\u0027s also fine to keep the additional explicit deletion of |external_printers_|.",
+      "parentUuid": "2a733132_2e295e9d",
+      "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
