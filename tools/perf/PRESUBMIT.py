@@ -135,3 +135,15 @@ def CheckChangeOnCommit(input_api, output_api):
   report = []
   report.extend(_CommonChecks(input_api, output_api))
   return report
+
+
+def PostUploadHook(cl, change, output_api):
+  """git cl upload will call this hook after the issue is created/modified.
+
+  This hook modifies the CL description in order to add NOTRY=true
+  """
+  print change
+  description = cl.GetDescription(force=True)
+  if not 'NOTRY=true' in description:
+    description += '\nNOTRY=true # Telemetry test disabling CL'
+    cl.UpdateDescription(description, force=True)
