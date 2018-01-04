@@ -132,6 +132,8 @@ void MessagePort::Entangle(mojo::ScopedMessagePipeHandle handle) {
       std::move(handle), mojo::Connector::SINGLE_THREADED_SEND, task_runner_);
   connector_->PauseIncomingMethodCallProcessing();
   connector_->set_incoming_receiver(this);
+  connector_->set_connection_error_handler(
+      WTF::Bind(&MessagePort::close, WrapWeakPersistent(this)));
 }
 
 void MessagePort::Entangle(MessagePortChannel channel) {
