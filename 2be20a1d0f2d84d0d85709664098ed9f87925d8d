@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52afc904_0ca0902b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/origin-trials-interfaces.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-04T17:38:57Z",
+      "side": 1,
+      "message": "What happens on the bots?  Are these flags automatically set?",
+      "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
