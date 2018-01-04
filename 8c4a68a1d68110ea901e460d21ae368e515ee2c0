@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33f8e13_fb852840",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-04T18:13:10Z",
+      "side": 1,
+      "message": "I think this comment needs update.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 60
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952e069d_b0dc302f",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-04T18:13:10Z",
+      "side": 1,
+      "message": "nit: Consider calling this SetTaskRunnerForTesting(), I \nthink it\u0027s more customary.",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 54
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec75ab60_f966ca44",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-04T18:13:10Z",
+      "side": 1,
+      "message": "No need for this, you can just do:\n  base::RunLoop().RunUntilIdle();\n\non the call sites.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 3
+      },
+      "revId": "8c4a68a1d68110ea901e460d21ae368e515ee2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
