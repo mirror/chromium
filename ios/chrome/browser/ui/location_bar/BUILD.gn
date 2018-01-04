@@ -24,6 +24,7 @@ source_set("location_bar") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:browser_state",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/ui:omnibox_focus_orchestrator",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/omnibox:omnibox",
     "//ios/chrome/browser/ui/omnibox:omnibox_internal",

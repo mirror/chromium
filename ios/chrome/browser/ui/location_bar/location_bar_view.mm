@@ -284,22 +284,17 @@ const CGFloat kTextFieldTrailingOffset = 3;
       }];
 }
 
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator {
-  // TODO(crbug.com/791455): Due to crbug.com/774121 |self.leadingButton| is
-  // hidden in line 151 before the animation starts. For this reason any
-  // animation we try doing on |self.leadingButton| will not be visible.
-  [self.textField addExpandOmniboxAnimations:animator];
+#pragma mark - LocationBarAnimatee
+
+- (void)prepareToExpand {
+}
+- (void)prepareToContract {
 }
 
-- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator {
-  [self setLeadingButtonHidden:NO];
-  self.leadingButton.alpha = 0;
-  [animator addAnimations:^{
-    self.leadingButton.alpha = 1;
-    [self setLeadingButtonHidden:YES];
-    [self layoutIfNeeded];
-  }];
-  [self.textField addContractOmniboxAnimations:animator];
+- (void)showLeadingButtonIfNecessary {
+}
+
+- (void)hideLeadingButtonIfNecessary {
 }
 
 #pragma mark - Private methods

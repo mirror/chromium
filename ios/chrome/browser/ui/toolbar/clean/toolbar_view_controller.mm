@@ -74,150 +74,6 @@
   return self;
 }
 
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator {
-  // iPad should never try to animate.
-  DCHECK(!IsIPadIdiom());
-  [NSLayoutConstraint
-      deactivateConstraints:self.view.regularToolbarConstraints];
-  [NSLayoutConstraint activateConstraints:self.view.expandedToolbarConstraints];
-  // By unhiding the button we will make it layout into the correct position in
-  // the StackView.
-  self.view.contractButton.hidden = NO;
-  self.view.contractButton.alpha = 0;
-
-  void (^animations)() = ^{
-    [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                                forViews:self.view.leadingStackViewButtons];
-    [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
-                                forViews:self.view.trailingStackViewButtons];
-    [self setAllToolbarButtonsOpacity:0];
-  };
-
-  [UIViewPropertyAnimator
-      runningPropertyAnimatorWithDuration:ios::material::kDuration2
-                                    delay:0
-                                  options:UIViewAnimationOptionCurveEaseIn
-                               animations:animations
-                               completion:nil];
-
-  [animator addAnimations:^{
-    [self.view layoutIfNeeded];
-    self.view.shadowView.alpha = 0;
-    self.view.fullBleedShadowView.alpha = 1;
-    self.view.locationBarShadow.alpha = 0;
-  }];
-
-  // If locationBarLeadingButton exists fade it in.
-  if (self.view.locationBarLeadingButton) {
-    [self
-        setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
-                              forViews:@[ self.view.locationBarLeadingButton ]];
-    [animator addAnimations:^{
-      self.view.locationBarLeadingButton.hidden = NO;
-      [self setHorizontalTranslationOffset:0
-                                  forViews:@[
-                                    self.view.locationBarLeadingButton
-                                  ]];
-      self.view.locationBarLeadingButton.alpha = 1;
-    }
-                delayFactor:ios::material::kDuration2];
-  }
-
-  // When the locationBarContainer has been expanded the Contract button will
-  // fade in.
-  void (^contractButtonAnimation)() = ^{
-    self.view.contractButton.alpha = 1;
-    [self setHorizontalTranslationOffset:0
-                                forViews:@[ self.view.contractButton ]];
-  };
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                                forViews:@[ self.view.contractButton ]];
-
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:ios::material::kDuration1
-                                      delay:ios::material::kDuration4
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:contractButtonAnimation
-                                 completion:nil];
-  }];
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    CGFloat borderWidth = (finalPosition == UIViewAnimatingPositionEnd)
-                              ? 0
-                              : kLocationBarBorderWidth;
-    self.view.locationBarContainer.layer.borderWidth = borderWidth;
-  }];
-
-  self.expanded = YES;
-}
-
-- (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator {
-  // iPad should never try to animate.
-  DCHECK(!IsIPadIdiom());
-
-  // If locationBarLeadingButton exists fade it out before the rest of the
-  // Toolbar is contracted.
-  if (self.view.locationBarLeadingButton) {
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:ios::material::kDuration2
-        delay:0
-        options:UIViewAnimationOptionCurveEaseIn
-        animations:^{
-          self.view.locationBarLeadingButton.alpha = 0;
-          [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
-                                      forViews:@[
-                                        self.view.locationBarLeadingButton
-                                      ]];
-        }
-        completion:^(UIViewAnimatingPosition finalPosition) {
-          [self setHorizontalTranslationOffset:0
-                                      forViews:@[
-                                        self.view.locationBarLeadingButton
-                                      ]];
-        }];
-  }
-
-  [NSLayoutConstraint
-      deactivateConstraints:self.view.expandedToolbarConstraints];
-  [NSLayoutConstraint activateConstraints:self.view.regularToolbarConstraints];
-  // Change the Toolbar buttons opacity to 0 since these will fade in once the
-  // locationBarContainer has been contracted.
-  [self setAllToolbarButtonsOpacity:0];
-  [animator addAnimations:^{
-    self.view.locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
-    [self.view layoutIfNeeded];
-    self.view.contractButton.hidden = YES;
-    self.view.contractButton.alpha = 0;
-    self.view.shadowView.alpha = 1;
-    self.view.fullBleedShadowView.alpha = 0;
-    self.view.locationBarShadow.alpha = 1;
-    self.view.locationBarLeadingButton.hidden = YES;
-  }];
-
-  // Once the locationBarContainer has been contracted fade in ToolbarButtons.
-  void (^fadeButtonsIn)() = ^{
-    [self.view layoutIfNeeded];
-    [self setHorizontalTranslationOffset:0
-                                forViews:self.view.leadingStackViewButtons];
-    [self setHorizontalTranslationOffset:0
-                                forViews:self.view.trailingStackViewButtons];
-    [self setAllToolbarButtonsOpacity:1];
-  };
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                                forViews:self.view.leadingStackViewButtons];
-    [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
-                                forViews:self.view.trailingStackViewButtons];
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:ios::material::kDuration1
-                                      delay:ios::material::kDuration4
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:fadeButtonsIn
-                                 completion:nil];
-  }];
-  self.expanded = NO;
-}
-
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP {
   self.view.progressBar.hidden = YES;
   if (onNTP) {
@@ -677,4 +533,120 @@
     NOTREACHED();
   }
 }
+
+#pragma mark - ToolbarAnimatee
+
+- (void)prepareToExpand {
+  // iPad should never try to animate.
+  DCHECK(!IsIPadIdiom());
+
+  [NSLayoutConstraint
+      deactivateConstraints:self.view.regularToolbarConstraints];
+  [NSLayoutConstraint activateConstraints:self.view.expandedToolbarConstraints];
+  // By unhiding the button we will make it layout into the correct position in
+  // the StackView.
+  self.view.contractButton.hidden = NO;
+  self.view.contractButton.alpha = 0;
+  0
+
+      // If locationBarLeadingButton exists fade it in.
+      if (self.view.locationBarLeadingButton) {
+    [self
+        setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                              forViews:@[ self.view.locationBarLeadingButton ]];
+  }
+  [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
+                              forViews:@[ self.view.contractButton ]];
+
+  self.expanded = YES;
+}
+
+- (void)prepareToContract {
+  // iPad should never try to animate.
+  DCHECK(!IsIPadIdiom());
+
+  [NSLayoutConstraint
+      deactivateConstraints:self.view.expandedToolbarConstraints];
+  [NSLayoutConstraint activateConstraints:self.view.regularToolbarConstraints];
+  // Change the Toolbar buttons opacity to 0 since these will fade in once the
+  // locationBarContainer has been contracted.
+  [self setAllToolbarButtonsOpacity:0];
+
+  [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
+                              forViews:self.view.leadingStackViewButtons];
+  [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                              forViews:self.view.trailingStackViewButtons];
+
+  self.expanded = NO;
+}
+
+- (void)showButtons {
+  [self.view layoutIfNeeded];
+  [self setHorizontalTranslationOffset:0
+                              forViews:self.view.leadingStackViewButtons];
+  [self setHorizontalTranslationOffset:0
+                              forViews:self.view.trailingStackViewButtons];
+  [self setAllToolbarButtonsOpacity:1];
+}
+
+- (void)hideButtons {
+  [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
+                              forViews:self.view.leadingStackViewButtons];
+  [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                              forViews:self.view.trailingStackViewButtons];
+  [self setAllToolbarButtonsOpacity:0];
+}
+
+- (void)expandLocationBarContainer {
+  [self.view layoutIfNeeded];
+  self.view.shadowView.alpha = 0;
+  self.view.fullBleedShadowView.alpha = 1;
+  self.view.locationBarShadow.alpha = 0;
+}
+
+- (void)showIncognitoButtonIfNecessary {
+  if (self.view.locationBarLeadingButton) {
+    self.view.locationBarLeadingButton.hidden = NO;
+    [self
+        setHorizontalTranslationOffset:0
+                              forViews:@[ self.view.locationBarLeadingButton ]];
+    self.view.locationBarLeadingButton.alpha = 1;
+  }
+}
+
+- (void)hideIncognitoButtonIfNecessary {
+  if (self.view.locationBarLeadingButton) {
+    ' self.view.locationBarLeadingButton.alpha = 0; [self
+        setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                              forViews:@[ self.view.locationBarLeadingButton ]];
+  }
+}
+
+- (void)showBorder {
+  self.view.locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
+}
+
+- (void)hideBorder {
+  self.view.locationBarContainer.layer.borderWidth = 0;
+}
+
+- (void)contractLocationBarContainer {
+  [self.view layoutIfNeeded];
+  self.view.shadowView.alpha = 1;
+  self.view.fullBleedShadowView.alpha = 0;
+  self.view.locationBarShadow.alpha = 1;
+  self.view.locationBarLeadingButton.hidden = YES;
+}
+
+- (void)showContractButton {
+  self.view.contractButton.alpha = 1;
+  [self setHorizontalTranslationOffset:0
+                              forViews:@[ self.view.contractButton ]];
+}
+
+- (void)hideContractButton {
+  self.view.contractButton.hidden = YES;
+  self.view.contractButton.alpha = 0;
+}
+
 @end

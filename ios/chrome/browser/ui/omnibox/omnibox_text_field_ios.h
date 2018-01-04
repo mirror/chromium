@@ -9,6 +9,7 @@
 
 #include "base/strings/string16.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_delegate.h"
+#import "ios/chrome/browser/ui/omnibox_focus_orchestrator.h"
 
 // Enum type specifying the direction of fade animations.
 typedef enum {
@@ -17,7 +18,7 @@ typedef enum {
 } OmniboxTextFieldFadeStyle;
 
 // UITextField subclass to allow for adjusting borders.
-@interface OmniboxTextFieldIOS : ClippingTextField
+@interface OmniboxTextFieldIOS : ClippingTextField<OmniboxAnimatee>
 
 // Initialize the omnibox with the given frame, font, text color, and tint
 // color.
@@ -79,11 +80,6 @@ typedef enum {
 - (void)animateFadeWithStyle:(OmniboxTextFieldFadeStyle)style;
 // Called when animations added by |-animateFadeWithStyle:| can be removed.
 - (void)cleanUpFadeAnimations;
-
-// New animations API, currently behind clean-toolbar flag.
-// They replace all animations above.
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator;
-- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator;
 
 // Initial touch on the Omnibox triggers a "pre-edit" state. The current
 // URL is shown without any insertion point. First character typed replaces
