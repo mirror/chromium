@@ -243,6 +243,12 @@ class RenderProcessHostKillWaiter {
   // was killed outside of //content or exited normally.
   base::Optional<bad_message::BadMessageReason> Wait() WARN_UNUSED_RESULT;
 
+  // Waits until the renderer process is killed via
+  // mojo::Binding<>::ReportBadMessage and returns the argument passed to
+  // ReportBadMessage.  An empty string is returned if the rendererer was killed
+  // for other reasons or exited normally.
+  std::string WaitForMojoKill() WARN_UNUSED_RESULT;
+
  private:
   RenderProcessHostWatcher exit_watcher_;
   base::HistogramTester histogram_tester_;

@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "base/containers/stack.h"
+#include "base/debug/crash_logging.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -455,6 +456,22 @@ RenderProcessHostKillWaiter::Wait() {
 
   // Translate contents of the bucket into bad_message::BadMessageReason.
   return static_cast<bad_message::BadMessageReason>(bucket.min);
+}
+
+std::string RenderProcessHostKillWaiter::WaitForMojoKill() {
+  base::Optional<bad_message::BadMessageReason> result;
+  if (result != bad_message::RPH_MOJO_PROCESS_ERROR) {
+    if (result)
+      LOG(WARNING) << "Unexpected kill reason: " << result.value();
+    else
+      LOG(WARNING) << "Renderer exited normally";
+    return "";
+  }
+
+  // DO NOT SUBMIT: How do I get the crash key *value* back?
+  // return something-something ... GetMojoErrorCrashKey() ... something
+  // something.
+  return "";
 }
 
 }  // namespace content

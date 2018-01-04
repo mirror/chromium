@@ -1048,7 +1048,8 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
   // false on all other platforms.
   ignore_result(ExecuteScript(shell()->web_contents()->GetMainFrame(),
                               "localStorage.length;"));
-  EXPECT_EQ(bad_message::RPH_MOJO_PROCESS_ERROR, kill_waiter.Wait());
+  EXPECT_EQ("Access denied for localStorage request",
+            kill_waiter.WaitForMojoKill());
 }
 
 class IsolatedOriginFieldTrialTest : public ContentBrowserTest {
