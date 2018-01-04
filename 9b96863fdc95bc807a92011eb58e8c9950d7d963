@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "765bc4db_dcd93b61",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-04T11:29:01Z",
+      "side": 1,
+      "message": "This is just a wrapper for the openURL:options:completionHandler: call you make below. Now that we\u0027re on iOS10, there\u0027s no need for it any more. It\u0027s out of scope of this CL for you to remove it, but there\u0027s no need to add another callsite.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 32
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9546ff52_8f4c3f37",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-04T11:29:01Z",
+      "side": 1,
+      "message": "Per earlier comments, s/Then/And/ in these methods.",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a924d75_7407c97b",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
         "patchSetId": 11
@@ -64,6 +110,29 @@
         "startChar": 20,
         "endLine": 162,
         "endChar": 33
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66823d1f_86fd7cc6",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-04T11:29:01Z",
+      "side": 1,
+      "message": "I\u0027m confused -- why can\u0027t this just be replaced by a call to -openURL:options:completionHandler:?",
+      "range": {
+        "startLine": 194,
+        "startChar": 14,
+        "endLine": 194,
+        "endChar": 63
       },
       "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -145,6 +214,30 @@
       "writtenOn": "2018-01-04T00:00:59Z",
       "side": 1,
       "message": "nit: Is there a value in using this typedef? Block typedefs optimize for \"writing\" the code, while Style Guide advocates to optimize for \"reading\".\n\nhttp://go/objc-style#optimize-for-the-reader-not-the-writer",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a7b46a_f3b152fd",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-04T11:29:01Z",
+      "side": 1,
+      "message": "That\u0027s an interesting point. We do use ProceduralBlock and related typedefs quite a bit, and often use typedefs for specific callbacks. Do you feel it\u0027s less readable? Note that we don\u0027t have the same readability cost of using macros, since typedefs are part of the language.",
+      "parentUuid": "813a95d8_133c4c07",
       "range": {
         "startLine": 25,
         "startChar": 5,

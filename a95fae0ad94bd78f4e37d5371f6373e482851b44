@@ -443,6 +443,30 @@
     },
     {
       "key": {
+        "uuid": "a06c3664_3a0fb69a",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2018-01-04T11:29:01Z",
+      "side": 1,
+      "message": "The pattern for methods which do Foo and then do Bar is to use \u0027and\u0027 (see https://goo.gl/98n6nC) -- \"If the method describes two separate actions, use “and” to link them\". The example given is from NSWorkspace -- |openFile:withApplication:andDeactivate:|\n\nSo -showAlertIfNeededAndLaunchMailtoURL: is one option.",
+      "parentUuid": "27e4db22_3f0a2778",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "383b3e02_6a8633d5",
         "filename": "ios/chrome/browser/ui/external_app/external_app_util.h",
         "patchSetId": 10
