@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963ba648_49addc49",
+        "filename": "tools/metrics/histograms/print_histogram_names.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-04T22:42:15Z",
+      "side": 1,
+      "message": "nit: 2018",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "234f1d8a92cc66bac06f53a80c4bfc1d131fae60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
