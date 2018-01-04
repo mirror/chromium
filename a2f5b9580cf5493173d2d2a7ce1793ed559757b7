@@ -178,6 +178,24 @@
       "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460b19e8_edd4c1d2",
+        "filename": "chrome/browser/net/variations_http_headers_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T01:07:47Z",
+      "side": 1,
+      "message": "Yeah I had looked at it, so lgtm.",
+      "parentUuid": "574f9c4d_5d956535",
+      "revId": "a2f5b9580cf5493173d2d2a7ce1793ed559757b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
