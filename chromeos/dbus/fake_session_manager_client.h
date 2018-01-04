@@ -22,7 +22,14 @@ namespace chromeos {
 // returns them unmodified.
 class FakeSessionManagerClient : public SessionManagerClient {
  public:
+  enum FakeSessionManagerOptions : uint32_t {
+    NONE = 0,
+    USE_HOST_POLICY = 1 << 0,
+  };
+
   FakeSessionManagerClient();
+  explicit FakeSessionManagerClient(
+      uint32_t options /* bitwise or of multiple FakeSessionManagerOptions */);
   ~FakeSessionManagerClient() override;
 
   // SessionManagerClient overrides
@@ -176,6 +183,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   int request_lock_screen_call_count_;
   int notify_lock_screen_shown_call_count_;
   int notify_lock_screen_dismissed_call_count_;
+  bool screen_is_locked_;
 
   bool arc_available_;
   base::TimeTicks arc_start_time_;
@@ -183,6 +191,12 @@ class FakeSessionManagerClient : public SessionManagerClient {
   bool low_disk_ = false;
   // Pseudo running container id. If not running, empty.
   std::string container_instance_id_;
+
+  StubDelegate* delegate_;
+
+  // Options for FakeSessionManagerClient with value of bitwise or of
+  // multiple FakeSessionManagerOptions.
+  uint32_t options_;
 
   base::WeakPtrFactory<FakeSessionManagerClient> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(FakeSessionManagerClient);
