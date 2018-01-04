@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c49289ef_cb02d4a5",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T03:06:45Z",
+      "side": 1,
+      "message": "It\u0027s subtle why USE_AURA works here. \n\n`#if defined(OS_MACOSX) || defined(OS_ANDROID)`\n\nmight be clearer here and at the locations below.\n\nAlso I *think* this will work for the mac_views_browser build still (i.e. I don\u0027t think that build configuration has completely removed the translate infobar files yet). But go/macviewsbuilder regressed over the break anyway - I can follow up later if something goes weird.",
+      "revId": "04ee9d7c4dda0d9ccbd2a0d561fe07c0dbc047ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
