@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39dcd42a_e36ad212",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-04T16:30:26Z",
+      "side": 1,
+      "message": "This approach feels awkward to me. In particular, I don\u0027t think differentiating scroll ends \nbased on whether they are from gesture or not is the right choice. We may need to snap when\nending scroll for other reasons (e.g., when cancel fling curve that is not because of another scroll).\n\nRight now ScrollEnd is called for three reasons:\n1- InputHandlerProxy::HandleGestureScrollEnd\n2- InputHandlerProxy::CancelCurrentFling\n3- LayerTreeHostImpl::*ScrollAnimation*\n\n\nInitially you are interested to snap only for (1) but I think in future we may want to snap\nfor some cases in (2) (e.g., consider if we cancel fling because of a keyboard event,\nI think the scroll should snap then), but perhaps never for (3).\n\nHere is one potential design:\n- Introduce a  |private LayerTreeHostImpl::ScrollEndImpl| which is the\n  existing ScrollEnd and used that for (3).\n- Then augment InputHandler::ScrollEnd to accept a flag that states whether it should snap\nor not. That flag is true for cases where we are ending scroll because it is complete (e.g.,\ngesture end, or cancel fling for keyboard event) but false for cases where we are ending\nscroll just to start another one (cancel fling to handle scroll gesture).\n\n\nThat is just one idea. You could even use two methods as long as the differentiation is\nnot about it being for a gesture or not. Instead it should differentiate on whether \nscroll end is \"final\" (\u003d\u003d should snap) or \"not final\" (\u003d\u003d don\u0027t snap yet!).\nInitially we can only consider gesture scroll ends to be \"final\" but I can \nsee that not being the only case for too long.",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 69
+      },
+      "revId": "1e11df481335064778dcb2d36466a1ca0ac2637a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212ca298_d8057a75",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-04T16:30:26Z",
+      "side": 1,
+      "message": "nit: For other properties we immediately update the inputs_ regardless of\nlayer_tree_host_ being set or not. I think the same should happen here.\ni.e., move this above if(!layer_tree_host_).",
+      "range": {
+        "startLine": 345,
+        "startChar": 2,
+        "endLine": 345,
+        "endChar": 37
+      },
+      "revId": "1e11df481335064778dcb2d36466a1ca0ac2637a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c09ace3_6f552afe",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-04T16:30:26Z",
+      "side": 1,
+      "message": "nit: this should be a private method. Also please add a small comment explaining when it\nreturns true.",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 22
+      },
+      "revId": "1e11df481335064778dcb2d36466a1ca0ac2637a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
