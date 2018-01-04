@@ -35,6 +35,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
+#include "core/inspector/ThreadDebugger.h"
 #include "core/messaging/BlinkTransferableMessageStructTraits.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
@@ -44,6 +45,7 @@
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebString.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -87,6 +89,10 @@ void MessagePort::postMessage(ScriptState* script_state,
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
+
+  ThreadDebugger* debugger = ThreadDebugger::From(script_state->GetIsolate());
+  if (debugger)
+    msg.sender_stack_trace_id = debugger->StoreCurrentStackTrace("postMessage");
 
   channel_.PostMojoMessage(
       mojom::blink::TransferableMessage::WrapAsMessage(std::move(msg)));
@@ -211,7 +217,13 @@ void MessagePort::DispatchMessages() {
         *GetExecutionContext(), std::move(message.ports));
     Event* evt = MessageEvent::Create(ports, std::move(message.message));
 
+    v8::Isolate* isolate = ToIsolate(GetExecutionContext());
+    ThreadDebugger* debugger = ThreadDebugger::From(isolate);
+    if (debugger)
+      debugger->ExternalAsyncTaskStarted(message.sender_stack_trace_id);
     DispatchEvent(evt);
+    if (debugger)
+      debugger->ExternalAsyncTaskFinished(message.sender_stack_trace_id);
   }
 }
 
