@@ -13,6 +13,7 @@
 #include "base/base64url.h"
 #include "base/macros.h"
 #include "device/u2f/attestation_object.h"
+#include "device/u2f/response_data.h"
 
 namespace device {
 
@@ -20,7 +21,7 @@ namespace device {
 // https://fidoalliance.org/specs/fido-v2.0-rd-20170927/ \
 // fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#using-the- \
 // ctap2-authenticatormakecredential-command-with-ctap1-u2f-authenticators
-class RegisterResponseData {
+class RegisterResponseData : public ResponseData {
  public:
   static RegisterResponseData CreateFromU2fRegisterResponse(
       std::string relying_party_id,
@@ -35,11 +36,9 @@ class RegisterResponseData {
   RegisterResponseData(RegisterResponseData&& other);
   RegisterResponseData& operator=(RegisterResponseData&& other);
 
-  ~RegisterResponseData();
+  ~RegisterResponseData() override;
 
-  std::string GetId() const;
   std::vector<uint8_t> GetCBOREncodedAttestationObject() const;
-  const std::vector<uint8_t>& raw_id() const { return raw_id_; }
 
  private:
   std::vector<uint8_t> raw_id_;

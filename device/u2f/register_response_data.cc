@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/optional.h"
 #include "device/u2f/attested_credential_data.h"
 #include "device/u2f/ec_public_key.h"
 #include "device/u2f/fido_attestation_statement.h"
@@ -38,8 +39,9 @@ RegisterResponseData RegisterResponseData::CreateFromU2fRegisterResponse(
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
 
   std::unique_ptr<AuthenticatorData> authenticator_data =
-      AuthenticatorData::Create(relying_party_id, flags, std::move(counter),
-                                std::move(attested_data));
+      AuthenticatorData::Create(
+          relying_party_id, flags, std::move(counter),
+          base::Optional<AttestedCredentialData>(std::move(attested_data)));
 
   // Construct the attestation statement.
   std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =
@@ -58,7 +60,7 @@ RegisterResponseData::RegisterResponseData() = default;
 RegisterResponseData::RegisterResponseData(
     std::vector<uint8_t> credential_id,
     std::unique_ptr<AttestationObject> object)
-    : raw_id_(std::move(credential_id)),
+    : ResponseData(std::move(credential_id)),
       attestation_object_(std::move(object)) {}
 
 RegisterResponseData::RegisterResponseData(RegisterResponseData&& other) =
@@ -72,15 +74,6 @@ RegisterResponseData::~RegisterResponseData() = default;
 std::vector<uint8_t> RegisterResponseData::GetCBOREncodedAttestationObject()
     const {
   return attestation_object_->SerializeToCBOREncodedBytes();
-}
-
-std::string RegisterResponseData::GetId() const {
-  std::string id;
-  base::Base64UrlEncode(
-      base::StringPiece(reinterpret_cast<const char*>(raw_id_.data()),
-                        raw_id_.size()),
-      base::Base64UrlEncodePolicy::OMIT_PADDING, &id);
-  return id;
 }
 
 }  // namespace device
