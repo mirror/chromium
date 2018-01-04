@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99e4aedb_058f9788",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:31:06Z",
+      "side": 1,
+      "message": "include string16",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "8fd68c565a9b44df685da6246776fbe48163e147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f26408_cc2b03ea",
+        "filename": "ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:31:06Z",
+      "side": 1,
+      "message": "Document what raw_query is. That the name is raw implies it\u0027s some how special and worth a comment.",
+      "range": {
+        "startLine": 48,
+        "startChar": 49,
+        "endLine": 48,
+        "endChar": 58
+      },
+      "revId": "8fd68c565a9b44df685da6246776fbe48163e147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
