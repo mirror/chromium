@@ -564,6 +564,24 @@
     },
     {
       "key": {
+        "uuid": "e7b3c45e_579fabfb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T23:14:43Z",
+      "side": 1,
+      "message": "Yes, that would be clearer.",
+      "parentUuid": "8fc9004d_090aaa27",
+      "revId": "f19d4c27011344e4d857c30517d0d91717e974cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31055906_40113e15",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 9
