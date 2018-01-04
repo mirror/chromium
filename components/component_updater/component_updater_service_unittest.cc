@@ -82,6 +82,13 @@ class MockUpdateClient : public UpdateClient {
     std::move(callback).Run(update_client::Error::NONE);
   }
 
+  void Install(const std::vector<std::string>& ids,
+               CrxDataCallback crx_data_callback,
+               Callback callback) override {
+    DoInstall(ids, std::move(crx_data_callback));
+    std::move(callback).Run(update_client::Error::NONE);
+  }
+
   void Update(const std::vector<std::string>& ids,
               CrxDataCallback crx_data_callback,
               Callback callback) override {
@@ -101,6 +108,9 @@ class MockUpdateClient : public UpdateClient {
   MOCK_METHOD1(RemoveObserver, void(Observer* observer));
   MOCK_METHOD2(DoInstall,
                void(const std::string& id,
+                    const CrxDataCallback& crx_data_callback));
+  MOCK_METHOD2(DoInstall,
+               void(const std::vector<std::string>& ids,
                     const CrxDataCallback& crx_data_callback));
   MOCK_METHOD2(DoUpdate,
                void(const std::vector<std::string>& ids,

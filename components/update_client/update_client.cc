@@ -107,6 +107,28 @@ void UpdateClientImpl::Install(const std::string& id,
                      std::move(callback))));
 }
 
+void UpdateClientImpl::Install(const std::vector<std::string>& ids,
+                               CrxDataCallback crx_data_callback,
+                               Callback callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  std::vector<std::string> install_ids;
+  for (const std::string& id : ids) {
+    if (!IsUpdating(id))
+      install_ids.push_back(id);
+  }
+
+  if (install_ids.empty()) {
+    std::move(callback).Run(Error::NONE);
+    return;
+  }
+
+  RunTask(std::make_unique<TaskUpdate>(
+      update_engine_.get(), true, install_ids, std::move(crx_data_callback),
+      base::BindOnce(&UpdateClientImpl::OnTaskComplete, this,
+                     std::move(callback))));
+}
+
 void UpdateClientImpl::Update(const std::vector<std::string>& ids,
                               CrxDataCallback crx_data_callback,
                               Callback callback) {
