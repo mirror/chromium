@@ -195,7 +195,7 @@ void ArcIntentHelperBridge::OpenWallpaperPicker() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // TODO(mash): Support this functionality without ash::Shell access in Chrome.
   if (ash::Shell::HasInstance())
-    ash::Shell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
+    ash::Shell::Get()->wallpaper_controller()->OpenWallpaperPicker();
 }
 
 void ArcIntentHelperBridge::SetWallpaperDeprecated(

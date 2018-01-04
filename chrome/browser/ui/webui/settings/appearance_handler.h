@@ -47,6 +47,11 @@ class AppearanceHandler : public SettingsPageUIHandler {
   // Whether the wallpaper is policy controlled.
   void IsWallpaperPolicyControlled(const base::ListValue* args);
 
+  // Implementation of |IsWallpaperPolicyControlled|. Used as the callback of
+  // |WallpaperControllerClient::IsActiveUserPolicyControlled|.
+  void IsWallpaperPolicyControlledImpl(const base::Value& callback_id,
+                                       bool controlled);
+
   // Open the wallpaper manager app.
   void HandleOpenWallpaperManager(const base::ListValue* args);
 #endif

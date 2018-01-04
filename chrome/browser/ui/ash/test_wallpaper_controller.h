@@ -72,6 +72,9 @@ class TestWallpaperController : ash::mojom::WallpaperController {
   void AddObserver(
       ash::mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
+  void IsActiveUserPolicyControlled(
+      ash::mojom::WallpaperController::IsActiveUserPolicyControlledCallback
+          callback) override;
 
  private:
   mojo::Binding<ash::mojom::WallpaperController> binding_;

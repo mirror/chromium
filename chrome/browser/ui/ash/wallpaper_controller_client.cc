@@ -4,13 +4,21 @@
 
 #include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 
+#include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/constants.mojom.h"
+#include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_window_state_manager.h"
 #include "base/path_service.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
+#include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_paths.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
+#include "chromeos/login/login_state.h"
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/wallpaper/wallpaper_files_id.h"
@@ -100,7 +108,11 @@ void AddCanGetFilesIdCallback(const base::Closure& callback) {
 }  // namespace
 
 WallpaperControllerClient::WallpaperControllerClient()
-    : policy_handler_(this), binding_(this), weak_factory_(this) {
+    : policy_handler_(this),
+      binding_(this),
+      activation_client_observer_(this),
+      window_observer_(this),
+      weak_factory_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -143,6 +155,30 @@ wallpaper::WallpaperFilesId WallpaperControllerClient::GetFilesId(
   user_manager::known_user::SetStringPref(account_id, kWallpaperFilesId,
                                           wallpaper_files_id.id());
   return wallpaper_files_id;
+}
+
+bool WallpaperControllerClient::ShouldShowWallpaperSetting() {
+  const chromeos::LoginState* login_state = chromeos::LoginState::Get();
+  if (!login_state->IsUserLoggedIn())
+    return false;
+
+  const chromeos::LoginState::LoggedInUserType user_type =
+      login_state->GetLoggedInUserType();
+  // Whitelist user types that are allowed to change their wallpaper. (Guest
+  // users are not, see crosbug.com/26900.)
+  if (user_type == chromeos::LoginState::LOGGED_IN_USER_REGULAR ||
+      user_type == chromeos::LoginState::LOGGED_IN_USER_OWNER ||
+      user_type == chromeos::LoginState::LOGGED_IN_USER_PUBLIC_ACCOUNT ||
+      user_type == chromeos::LoginState::LOGGED_IN_USER_SUPERVISED) {
+    return true;
+  }
+  return false;
+}
+
+void WallpaperControllerClient::OpenWallpaperPickerIfAllowed() {
+  wallpaper_controller_->IsActiveUserPolicyControlled(
+      base::Bind(&WallpaperControllerClient::OpenWallpaperPicker,
+                 weak_factory_.GetWeakPtr()));
 }
 
 void WallpaperControllerClient::SetCustomWallpaper(
@@ -296,10 +332,10 @@ void WallpaperControllerClient::RemovePolicyWallpaper(
                                                GetFilesId(account_id).id());
 }
 
-void WallpaperControllerClient::OpenWallpaperPicker() {
-  // TODO(crbug.com/776464): Inline the implementation after WallpaperManager
-  // is removed.
-  chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
+void WallpaperControllerClient::IsActiveUserPolicyControlled(
+    ash::mojom::WallpaperController::IsActiveUserPolicyControlledCallback
+        callback) {
+  wallpaper_controller_->IsActiveUserPolicyControlled(std::move(callback));
 }
 
 void WallpaperControllerClient::OnDeviceWallpaperChanged() {
@@ -308,6 +344,32 @@ void WallpaperControllerClient::OnDeviceWallpaperChanged() {
 
 void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
   wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*enforced=*/);
+}
+
+void WallpaperControllerClient::OnWindowActivated(ActivationReason reason,
+                                                  aura::Window* gained_active,
+                                                  aura::Window* lost_active) {
+  if (!gained_active)
+    return;
+
+  const std::string arc_wallpapers_app_id = ArcAppListPrefs::GetAppId(
+      wallpaper_manager_util::kAndroidWallpapersAppPackage,
+      wallpaper_manager_util::kAndroidWallpapersAppActivity);
+  ash::ShelfID shelf_id =
+      ash::ShelfID::Deserialize(gained_active->GetProperty(ash::kShelfIDKey));
+  if (shelf_id.app_id == arc_wallpapers_app_id) {
+    ash::WallpaperWindowStateManager::MinimizeInactiveWindows(
+        user_manager::UserManager::Get()->GetActiveUser()->username_hash());
+    DCHECK(!ash_util::IsRunningInMash() && ash::Shell::Get());
+    activation_client_observer_.Remove(ash::Shell::Get()->activation_client());
+    window_observer_.Add(gained_active);
+  }
+}
+
+void WallpaperControllerClient::OnWindowDestroying(aura::Window* window) {
+  window_observer_.Remove(window);
+  ash::WallpaperWindowStateManager::RestoreWindows(
+      user_manager::UserManager::Get()->GetActiveUser()->username_hash());
 }
 
 void WallpaperControllerClient::FlushForTesting() {
@@ -343,4 +405,27 @@ void WallpaperControllerClient::BindAndSetClient() {
       std::move(client), user_data_path, chromeos_wallpapers_path,
       chromeos_custom_wallpapers_path,
       policy_handler_.IsDeviceWallpaperPolicyEnforced());
+}
+
+void WallpaperControllerClient::OpenWallpaperPicker(bool is_policy_controlled) {
+  // Policy controlled users are not allowed to change the wallpaper.
+  if (is_policy_controlled)
+    return;
+
+  // Do not allow opening the wallpaper picker if the wallpaper setting should
+  // be hidden.
+  if (!ShouldShowWallpaperSetting())
+    return;
+
+  if (wallpaper_manager_util::ShouldUseAndroidWallpapersApp(
+          chromeos::ProfileHelper::Get()->GetProfileByUser(
+              user_manager::UserManager::Get()->GetActiveUser())) &&
+      !ash_util::IsRunningInMash()) {
+    // Window activation watch to minimize all inactive windows is only needed
+    // by Android Wallpaper app. Legacy Chrome OS Wallpaper Picker app does that
+    // via extension API.
+    activation_client_observer_.Add(ash::Shell::Get()->activation_client());
+  }
+
+  wallpaper_manager_util::OpenWallpaperManager();
 }

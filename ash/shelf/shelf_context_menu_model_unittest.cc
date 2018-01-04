@@ -56,7 +56,9 @@ class TestWallpaperControllerClient : public mojom::WallpaperControllerClient {
   }
 
   // mojom::WallpaperControllerClient:
-  void OpenWallpaperPicker() override { open_count_++; }
+  void OpenWallpaperPicker(bool is_policy_controlled) override {
+    open_count_++;
+  }
 
  private:
   size_t open_count_ = 0;
