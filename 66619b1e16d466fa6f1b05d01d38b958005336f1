@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6e8803_2cbd3de5",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "transport_options for consistency",
+      "range": {
+        "startLine": 158,
+        "startChar": 18,
+        "endLine": 158,
+        "endChar": 34
+      },
+      "revId": "66619b1e16d466fa6f1b05d01d38b958005336f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "7f7d8dec_bf0ec56f",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "Eventually, yeah. Sorry for not catching this when this file was first landed.",
+      "parentUuid": "03488e05_8c2fb938",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea81b22e_9ba9ab50",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 26
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "A texture handle is a platform specific object such as a DXGI handle on Windows that can be used by the receiver outside the GPU process directly. The mailbox holder is a reference to a normal mailbox texture inside the GPU process, and this still needs to be separately copied for use in a different GPU context. (The current Android implementation writes the mailbox texture to a Surface in the GPU process so that it can read it back in a local context SurfaceTexture.)\n\nThese names are already intended to be generic and are used to select a platform-appropriate strategy. The goal is to minimize platform knowledge on the Blink side. Basically the render path decisions should be made on the browser side, and the Blink code just goes along with the choices. See also the followup in https://chromium-review.googlesource.com/c/chromium/src/+/828407 where I move the transport code out of modules/vr/ to make this cleaner.\n\nDoes that help? The immediate goal is to replace the current code where the Blink side basically says \"if it\u0027s an external VR display, assume it\u0027s Windows and use the Windows texture handle path\", and to prepare for upcoming changes where the choices depend on more details than just the platform - i.e. the AHardwareBuffer requires Android O, GpuFence support, and (initially) an opt-in or feature flag while it\u0027s being rolled out.",
       "parentUuid": "ea81b22e_9ba9ab50",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3740aa7a_538b5f2c",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "I understand the motivation, but ultimately, we want the mojoms to express only the capabilities that are available on a given platform. As I understand it, SUBMIT_AS_TEXTURE_HANDLE is Windows specific and SUBMIT_AS_MAILBOX_HOLDER is (for now, Android specific). Once 676224 is fixed, it\u0027s highly likely we\u0027d be #ifdef\u0027ing these anyway. If that\u0027s OK with you, then I\u0027m OK with this.",
+      "parentUuid": "cd8c38c5_4840a716",
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -283,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "b5120c14_6cc40624",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly, other than we could really use StatusOr \u003d)",
+      "parentUuid": "4717eee6_a0741edb",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 69
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c152a400_b70f6205",
         "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
         "patchSetId": 26
@@ -377,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "4b2a0c85_87bfea59",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "Right--but this method failing implies that the message pipe is probably gone right? Would we expect that to happen in any situation other than the an imminent renderer process shutdown?\n\nOr could it happen via other ways, such as if the document using WebVR is unloaded?",
+      "parentUuid": "113b64a0_2999e6ad",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55850ac1_4fab6994",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
@@ -453,6 +537,24 @@
       "side": 1,
       "message": "Done. It\u0027s the same logic as the other VRSubmitFrameClient methods - receiving the waited-for thing unblocks the corresponding WaitForThing method, including when it\u0027s inside WaitForIncomingMethodCall. See also the member comment in VRDisplay.h - I can\u0027t just check for previous_frame_fence_ being non-null since it\u0027s not supposed to wait for a fence on the first frame, hence the separate boolean.",
       "parentUuid": "022da8ea_e773f80a",
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "940cf2f1_0e27675f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T02:01:40Z",
+      "side": 1,
+      "message": "The name of this is a bit unclear to me. It wasn\u0027t clear that this meant \u0027waiting for something\u0027. Maybe consider naming it waiting_for_previous_frame_fence_ or something.",
+      "parentUuid": "da900a8f_d475d807",
       "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
