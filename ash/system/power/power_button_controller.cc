@@ -14,9 +14,11 @@
 #include "ash/shutdown_reason.h"
 #include "ash/system/power/power_button_display_controller.h"
 #include "ash/system/power/power_button_screenshot_controller.h"
+#include "ash/system/power/power_off_menu_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/session_state_animator.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/time/default_tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -46,6 +48,8 @@ PowerButtonController::PowerButtonController(
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
   Shell::Get()->display_configurator()->AddObserver(this);
   Shell::Get()->PrependPreTargetHandler(this);
+
+  is_tablet_ = true;
 }
 
 PowerButtonController::~PowerButtonController() {
@@ -198,6 +202,15 @@ void PowerButtonController::PowerButtonEventReceived(
     return;
   }
 
+  //
+  if (button_type_ == ButtonType::NORMAL && power_off_menu_controller_ &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled()) {
+    power_off_menu_controller_->OnPowerButtonEvent(down, timestamp);
+    return;
+  }
+
   // Handle tablet power button behavior.
   if (button_type_ == ButtonType::NORMAL && tablet_controller_) {
     tablet_controller_->OnPowerButtonEvent(down, timestamp);
@@ -224,6 +237,12 @@ void PowerButtonController::OnAccelerometerUpdated(
     screenshot_controller_ = std::make_unique<PowerButtonScreenshotController>(
         tablet_controller_.get(), tick_clock_.get(),
         force_clamshell_power_button_);
+  }
+
+  // TODO, still need tablet mode observer to check tablet mode for detachable?
+  if (is_tablet_ && !power_off_menu_controller_) {
+    power_off_menu_controller_ =
+        std::make_unique<PowerOffMenuController>(display_controller_.get());
   }
 }
 
@@ -254,6 +273,7 @@ void PowerButtonController::ProcessCommandLine() {
   enable_tablet_mode_ = cl->HasSwitch(switches::kAshEnableTabletMode);
   force_clamshell_power_button_ =
       cl->HasSwitch(switches::kForceClamshellPowerButton);
+  is_tablet_ = cl->HasSwitch(switches::kIsTablet);
 }
 
 void PowerButtonController::ForceDisplayOffAfterLock() {

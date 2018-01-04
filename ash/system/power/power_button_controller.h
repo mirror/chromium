@@ -27,6 +27,7 @@ class LockStateController;
 class PowerButtonDisplayController;
 class PowerButtonScreenshotController;
 class TabletPowerButtonController;
+class PowerOffMenuController;
 
 // Handles power button and lock button events. For convertible/tablet devices,
 // power button events are handled by TabletPowerButtonController to perform
@@ -92,6 +93,10 @@ class ASH_EXPORT PowerButtonController
     return tablet_controller_.get();
   }
 
+  PowerOffMenuController* power_off_menu_controller_for_test() {
+    return power_off_menu_controller_.get();
+  }
+
   void set_power_button_type_for_test(ButtonType button_type) {
     button_type_ = button_type;
   }
@@ -146,12 +151,20 @@ class ASH_EXPORT PowerButtonController
   // Handles events for power button screenshot.
   std::unique_ptr<PowerButtonScreenshotController> screenshot_controller_;
 
-  // Handles events for convertible/tablet devices.
+  // Handles events for devices that switches::kAshEnableTabletMode is set.
+  // Usually this switch is set for convertible/tablet devices except that
+  // |force_clamshell_power_button_| is set like Eve.
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
+  // Hanelds events for power off menu.
+  std::unique_ptr<PowerOffMenuController> power_off_menu_controller_;
 
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.
   base::OneShotTimer display_off_timer_;
+
+  // TODO, -----
+  bool is_tablet_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonController);
 };
