@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64cead4a_f9ed6acb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Has this gone through UX? This sounds awkward to me..",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bc5bfd_4fb17cc7",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "are updated",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baa823f_74987043",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Use base::ObserverList\u003cObserver\u003e and obseervers_.{Add|Remove}Observer",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b94cb1_5381b610",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "namespace api \u003d api::settings_private (or be explicit and don\u0027t namespace this).",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb9165a_e56f4caf",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003capi::PrefObject\u003e pref_object \u003d std::make_unique\u003capi::PrefObject\u003e();",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649eb3e4_3ef3b8ec",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "GetAsDouble is deprecated, use:\nif (!value-\u003eis_double() \u0026\u0026 !value-\u003eis_int())\n  return PREF_TYPE_MISMATCH;\ndouble double_value \u003d value-\u003eGetDouble();",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a605aed4_1f45818b",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "s/Metod/Method/\n\nWe should put all of this in the extensions::settings_private namespace.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bef376e_3d050259",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_method_short.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "s/Metod/Method/",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911a922c_dbbbf22b",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "make_unique",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8baa5e4_3e8f8684",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Is this the same logic as inchromeos_resolve_time_zone_by_geolocation_method_short.cc? If so we should share it.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3db7760_e16860f6",
+        "filename": "chrome/browser/extensions/api/settings_private/chromeos_resolve_time_zone_by_geolocation_on_off.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "namespace settings_private",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5c23fe_f8ba441b",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "namespace settings_private\n\n(Here in particular, extensions::GeneratedPrefs is very unclear)",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968cc1a9_8ff82baa",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "ObserverList",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa47341_e590dc55",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Sparate files for separate classes.",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f98b729_dce4695e",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Return a const\u0026 or a non-const *, depending on which is required (preferably the former). Is this needed outside of tests? If not name this \u0027generated_prefs_for_test()\u0027",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed104cee_874dd928",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util_enums.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-04T18:25:59Z",
+      "side": 1,
+      "message": "Use \u0027enum class\u0027",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
