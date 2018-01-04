@@ -88,8 +88,7 @@ void DataReductionProxySettings::InitDataReductionProxySettings(
   InitPrefMembers();
   RecordDataReductionInit();
 
-  if (base::FeatureList::IsEnabled(features::kDataReductionSiteBreakdown) &&
-      spdy_proxy_auth_enabled_.GetValue()) {
+  if (spdy_proxy_auth_enabled_.GetValue()) {
     data_reduction_proxy_service_->compression_stats()
         ->SetDataUsageReportingEnabled(true);
   }
@@ -133,10 +132,8 @@ void DataReductionProxySettings::SetDataReductionProxyEnabled(bool enabled) {
   if (spdy_proxy_auth_enabled_.GetValue() != enabled) {
     spdy_proxy_auth_enabled_.SetValue(enabled);
     OnProxyEnabledPrefChange();
-    if (base::FeatureList::IsEnabled(features::kDataReductionSiteBreakdown)) {
-      data_reduction_proxy_service_->compression_stats()
-          ->SetDataUsageReportingEnabled(enabled);
-    }
+    data_reduction_proxy_service_->compression_stats()
+        ->SetDataUsageReportingEnabled(enabled);
   }
 }
 
