@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d85ba175_01dc4dc0",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T12:01:06Z",
+      "side": 1,
+      "message": "std::unique_ptr by default does not play nice with private destructors, which is why I made it public. It is possible to keep it private and use a custom deleter, but that requires quite a bit more work. Let me know what you think.\n\nNote: A private constructor does not work with std::make_unique either, but here we can use the base::WrapUnique workaround (see comments below and Note 1 here: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique)",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cb7215_b361fc68",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_descriptor_bluez.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T12:01:06Z",
+      "side": 1,
+      "message": "Same situation as above, let me know what you think.",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
