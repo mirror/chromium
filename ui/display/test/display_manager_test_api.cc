@@ -154,7 +154,8 @@ bool DisplayManagerTestApi::SetDisplayUIScale(int64_t id, float ui_scale) {
   ManagedDisplayMode mode;
   if (!GetDisplayModeForUIScale(info, ui_scale, &mode))
     return false;
-  return display_manager_->SetDisplayMode(id, mode);
+  return display_manager_->SetDisplayMode(
+      id, display::Display::ModeChangeSource::kUnknown, mode);
 }
 
 void DisplayManagerTestApi::SetTouchSupport(
@@ -181,7 +182,8 @@ bool SetDisplayResolution(DisplayManager* display_manager,
   ManagedDisplayMode mode;
   if (!GetDisplayModeForResolution(info, resolution, &mode))
     return false;
-  return display_manager->SetDisplayMode(display_id, mode);
+  return display_manager->SetDisplayMode(
+      display_id, display::Display::ModeChangeSource::kUnknown, mode);
 }
 
 std::unique_ptr<DisplayLayout> CreateDisplayLayout(

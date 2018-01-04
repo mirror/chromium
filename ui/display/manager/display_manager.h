@@ -204,13 +204,15 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Resets the UI scale of the display with |display_id| to the one defined in
   // the default mode.
-  bool ResetDisplayToDefaultMode(int64_t display_id);
+  bool ResetDisplayToDefaultMode(int64_t display_id,
+                                 Display::ModeChangeSource request_source);
 
   // Sets the external display's configuration, including resolution change,
   // ui-scale change, and device scale factor change. Returns true if it changes
   // the display resolution so that the caller needs to show a notification in
   // case the new resolution actually doesn't work.
   bool SetDisplayMode(int64_t display_id,
+                      Display::ModeChangeSource request_source,
                       const ManagedDisplayMode& display_mode);
 
   // Register per display properties.
@@ -248,6 +250,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Returns true and fills in the display's selected |mode| if found, or false.
   bool GetSelectedModeForDisplayId(int64_t display_id,
                                    ManagedDisplayMode* mode) const;
+
+  // Returns the change request source of the currently active display mode of
+  // display with |id|.
+  Display::ModeChangeSource GetActiveDisplayModeChangeSource(int64_t id) const;
 
   // Sets the selected mode of |display_id| to |display_mode| if it's a
   // supported mode. This doesn't trigger reconfiguration or observers
@@ -437,10 +443,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   void UpdateInternalManagedDisplayModeListForTest();
 
   // Zoom the internal display.
-  bool ZoomInternalDisplay(bool up);
+  bool ZoomInternalDisplay(bool up,
+                           Display::ModeChangeSource request_source =
+                               Display::ModeChangeSource::kUnknown);
 
   // Reset the internal display zoom.
-  void ResetInternalDisplayZoom();
+  void ResetInternalDisplayZoom(Display::ModeChangeSource request_source =
+                                    Display::ModeChangeSource::kUnknown);
 
   // Notifies observers of display configuration changes.
   void NotifyMetricsChanged(const Display& display, uint32_t metrics);
@@ -571,6 +580,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Selected display modes for displays. Key is the displays' ID.
   std::map<int64_t, ManagedDisplayMode> display_modes_;
+
+  // Maps each display by its ID to the change request source of its currently
+  // active display mode.
+  std::map<int64_t, Display::ModeChangeSource> active_display_mode_source_;
 
   // When set to true, the host window's resize event updates the display's
   // size. This is set to true when running on desktop environment (for

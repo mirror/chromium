@@ -545,6 +545,7 @@ void DisplayManager::SetDisplayRotation(int64_t display_id,
 }
 
 bool DisplayManager::SetDisplayMode(int64_t display_id,
+                                    Display::ModeChangeSource request_source,
                                     const ManagedDisplayMode& display_mode) {
   bool change_ui_scale = GetDisplayIdForUIScaling() == display_id;
 
@@ -587,6 +588,10 @@ bool DisplayManager::SetDisplayMode(int64_t display_id,
     display_info_list.emplace_back(info);
   }
 
+  const bool result = resolution_changed || display_property_changed;
+  if (result)
+    active_display_mode_source_[display_id] = request_source;
+
   if (display_property_changed && !resolution_changed) {
     // We shouldn't synchronously update the displays here if the resolution
     // changed. This should happen asynchronously when configuration is
@@ -602,7 +607,7 @@ bool DisplayManager::SetDisplayMode(int64_t display_id,
     delegate_->display_configurator()->OnConfigurationChanged();
 #endif  // defined(OS_CHROMEOS)
 
-  return resolution_changed || display_property_changed;
+  return result;
 }
 
 void DisplayManager::RegisterDisplayProperty(
@@ -693,6 +698,15 @@ bool DisplayManager::GetSelectedModeForDisplayId(
     return false;
   *mode = iter->second;
   return true;
+}
+
+Display::ModeChangeSource DisplayManager::GetActiveDisplayModeChangeSource(
+    int64_t id) const {
+  const auto iter = active_display_mode_source_.find(id);
+  if (iter == active_display_mode_source_.end())
+    return Display::ModeChangeSource::kUnknown;
+
+  return iter->second;
 }
 
 void DisplayManager::SetSelectedModeForDisplayId(
@@ -799,10 +813,14 @@ void DisplayManager::OnNativeDisplaysChanged(
       continue;
     auto display_modes_iter = FindDisplayMode(display_info, new_mode);
     // Update the actual resolution selected as the resolution request may fail.
-    if (display_modes_iter == display_modes.end())
+    if (display_modes_iter == display_modes.end()) {
       display_modes_.erase(display_info.id());
-    else if (display_modes_.find(display_info.id()) != display_modes_.end())
+      active_display_mode_source_.erase(display_info.id());
+    } else if (display_modes_.find(display_info.id()) != display_modes_.end()) {
       display_modes_[display_info.id()] = *display_modes_iter;
+      active_display_mode_source_[display_info.id()] =
+          Display::ModeChangeSource::kUnknown;
+    }
   }
   if (Display::HasInternalDisplay() && !internal_display_connected) {
     if (display_info_.find(Display::InternalDisplayId()) ==
@@ -1488,7 +1506,9 @@ void DisplayManager::UpdateInternalManagedDisplayModeListForTest() {
   SetInternalManagedDisplayModeList(info);
 }
 
-bool DisplayManager::ZoomInternalDisplay(bool up) {
+bool DisplayManager::ZoomInternalDisplay(
+    bool up,
+    Display::ModeChangeSource request_source) {
   int64_t display_id =
       IsInUnifiedMode() ? kUnifiedDisplayId : GetDisplayIdForUIScaling();
   const ManagedDisplayInfo& display_info = GetDisplayInfo(display_id);
@@ -1505,21 +1525,24 @@ bool DisplayManager::ZoomInternalDisplay(bool up) {
     result = GetDisplayModeForNextUIScale(display_info, up, &mode);
   }
 
-  return result ? SetDisplayMode(display_id, mode) : false;
+  return result ? SetDisplayMode(display_id, request_source, mode) : false;
 }
 
-bool DisplayManager::ResetDisplayToDefaultMode(int64_t id) {
+bool DisplayManager::ResetDisplayToDefaultMode(
+    int64_t id,
+    Display::ModeChangeSource request_source) {
   if (!IsActiveDisplayId(id) || !Display::IsInternalDisplayId(id))
     return false;
 
   const ManagedDisplayInfo& info = GetDisplayInfo(id);
   ManagedDisplayMode mode;
   if (GetDefaultDisplayMode(info, &mode))
-    return SetDisplayMode(id, mode);
+    return SetDisplayMode(id, request_source, mode);
   return false;
 }
 
-void DisplayManager::ResetInternalDisplayZoom() {
+void DisplayManager::ResetInternalDisplayZoom(
+    Display::ModeChangeSource request_source) {
   if (IsInUnifiedMode()) {
     const ManagedDisplayInfo& display_info = GetDisplayInfo(kUnifiedDisplayId);
     const ManagedDisplayInfo::ManagedDisplayModeList& modes =
@@ -1527,9 +1550,9 @@ void DisplayManager::ResetInternalDisplayZoom() {
     auto iter = std::find_if(
         modes.begin(), modes.end(),
         [](const ManagedDisplayMode& mode) { return mode.native(); });
-    SetDisplayMode(kUnifiedDisplayId, *iter);
+    SetDisplayMode(kUnifiedDisplayId, request_source, *iter);
   } else {
-    ResetDisplayToDefaultMode(GetDisplayIdForUIScaling());
+    ResetDisplayToDefaultMode(GetDisplayIdForUIScaling(), request_source);
   }
 }
 
