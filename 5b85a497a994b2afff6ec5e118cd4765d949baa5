@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36691ca9_8fba7cfe",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2018-01-04T14:45:04Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this use completionAnimator ?",
+      "revId": "5b85a497a994b2afff6ec5e118cd4765d949baa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
