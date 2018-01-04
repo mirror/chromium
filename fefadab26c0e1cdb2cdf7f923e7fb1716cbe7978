@@ -34,6 +34,24 @@
       "revId": "fefadab26c0e1cdb2cdf7f923e7fb1716cbe7978",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd285a10_d7df878e",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-04T03:39:27Z",
+      "side": 1,
+      "message": "OK. Thanks, CQ\u0027ing.",
+      "parentUuid": "92c624a4_60f07bb7",
+      "revId": "fefadab26c0e1cdb2cdf7f923e7fb1716cbe7978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
