@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25543e98_e3610a86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Added. Also added actual description :)",
+      "parentUuid": "bc3d254b_04e53013",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8655e0a_1a8d7920",
         "filename": "net/base/net_error_list.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5f66d75a_e69ce566",
+        "filename": "net/base/net_error_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "changed to \"reset\"",
+      "parentUuid": "a8655e0a_1a8d7920",
+      "range": {
+        "startLine": 732,
+        "startChar": 41,
+        "endLine": 732,
+        "endChar": 44
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244231ca_fd30648d",
         "filename": "net/http/http_network_transaction.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-04T03:05:05Z",
       "side": 1,
       "message": "Optional: Since https://crrev.com/c/829993 just landed, the request can be retried on SPDY_PUSHED_STREAM_NOT_AVAILABLE as well.  If you have free cycles to write a unittest for that case too, then please include this value in the retry logic.  If not, then I can do it in a subsequent CL.",
+      "range": {
+        "startLine": 1565,
+        "startChar": 9,
+        "endLine": 1565,
+        "endChar": 55
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3272cb17_b53d5d1d",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Would it be OK if I simply add watermark checks (to check for retries) on the ServerCancelsPush test you added there?",
+      "parentUuid": "244231ca_fd30648d",
       "range": {
         "startLine": 1565,
         "startChar": 9,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6ad639c6_10f4d304",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6579,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Reworded",
+      "parentUuid": "e9228eb3_82cb4480",
+      "range": {
+        "startLine": 6579,
+        "startChar": 0,
+        "endLine": 6579,
+        "endChar": 80
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c039ab_5cf187ed",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9daa3a_331034c3",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6580,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "\u003e Regression test for https://crbug.com/798508.\n\nadded",
+      "parentUuid": "24c039ab_5cf187ed",
+      "range": {
+        "startLine": 6580,
+        "startChar": 20,
+        "endLine": 6580,
+        "endChar": 39
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "dd4db573_1832faac",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6598,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "So *this* is what I was missing! thanks :)",
+      "parentUuid": "be59f105_a0a45c98",
+      "range": {
+        "startLine": 6598,
+        "startChar": 0,
+        "endLine": 6598,
+        "endChar": 63
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b5fdc8_8337a139",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d789a65_6fd5726c",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6602,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "47b5fdc8_8337a139",
+      "range": {
+        "startLine": 6602,
+        "startChar": 6,
+        "endLine": 6602,
+        "endChar": 63
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e05260c4_d7119d90",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6614,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "changed",
+      "parentUuid": "d55b63c9_cf5303ee",
+      "range": {
+        "startLine": 6614,
+        "startChar": 25,
+        "endLine": 6614,
+        "endChar": 33
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1c5c30b_62b191fb",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa16539_8d298059",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6632,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Good call",
+      "parentUuid": "d1c5c30b_62b191fb",
+      "range": {
+        "startLine": 6632,
+        "startChar": 42,
+        "endLine": 6632,
+        "endChar": 54
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "b590b389_afc71288",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6634,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Didn\u0027t know that. changed",
+      "parentUuid": "deb168ab_d38f0914",
+      "range": {
+        "startLine": 6634,
+        "startChar": 2,
+        "endLine": 6634,
+        "endChar": 10
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "475a44cb_ba21f6db",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3fa4bf_187cc8ce",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6635,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "created",
+      "parentUuid": "475a44cb_ba21f6db",
+      "range": {
+        "startLine": 6635,
+        "startChar": 33,
+        "endLine": 6635,
+        "endChar": 41
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "8633961d_fb90336f",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6650,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "f9ab80e0_15aa2a93",
+      "range": {
+        "startLine": 6650,
+        "startChar": 0,
+        "endLine": 6650,
+        "endChar": 16
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "102403a4_45be7f1a",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
@@ -298,6 +586,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbf1fb7_78984207",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6652,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "102403a4_45be7f1a",
+      "range": {
+        "startLine": 6652,
+        "startChar": 0,
+        "endLine": 6652,
+        "endChar": 1
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "c30b73e4_ecf9a29a",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "Good call!",
+      "parentUuid": "d6770b7a_15029a96",
+      "range": {
+        "startLine": 492,
+        "startChar": 15,
+        "endLine": 492,
+        "endChar": 42
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9b0e89a_d02136b9",
         "filename": "net/spdy/chromium/spdy_stream.cc",
         "patchSetId": 2
@@ -344,6 +680,30 @@
       "revId": "82efd3495ad844afea430165adfe9f55321864a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463ae111_b145fc16",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2018-01-04T09:08:47Z",
+      "side": 1,
+      "message": "reordered",
+      "parentUuid": "e9b0e89a_d02136b9",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 79
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
