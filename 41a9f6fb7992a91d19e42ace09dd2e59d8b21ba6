@@ -88,6 +88,24 @@
       "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03709f3c_e61f25af",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T16:11:05Z",
+      "side": 1,
+      "message": "\u003e Can we also check in MojoAsyncResourceHandler that kURLLoadOptionSendSSLInfoWithResponse is only set for navigations, and not subresources? (maybe if the option is renamed kURLLoadOptionSendSSLInfoWithNavigationResponse?) - we can restrict that requirement later if some other user of the network service needs to use it, but for now I think it\u0027d be better to preserve this.\n\nWhat do we gain by adding that dcheck? One way to look at it is that MojoAsyncResourceHandler is deprecated, and content::URLLoader is the new way. Since we wouldn\u0027t add that check to URLLoader, I\u0027m not sure why we would duplicate the logic of when to request SSLInfo (through options in one place, and a DCHECK in another)?\n\nRegarding renaming the option: the network service is meant to be agnostic as to what types of requests it\u0027s making. That\u0027s why the option names don\u0027t reflect the resource type, but instead the behavior that the consumer wants.",
+      "parentUuid": "5624789c_1913e703",
+      "revId": "41a9f6fb7992a91d19e42ace09dd2e59d8b21ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

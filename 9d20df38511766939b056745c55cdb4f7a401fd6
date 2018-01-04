@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a4b1fb0_92305bcb",
+        "filename": "content/browser/loader/mojo_async_resource_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T16:11:05Z",
+      "side": 1,
+      "message": "nit: url_loader_options here and in the rest of the header/implementation to make it clear what the value is.",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7747a0_4a1aef65",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T16:11:05Z",
+      "side": 1,
+      "message": "question: why not just make this mojom::kURLLoadOptionNone?",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d740f3e_4d1b5de5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T16:11:05Z",
+      "side": 1,
+      "message": "nit: per style guide, this should be something like GetURLLoaderOptions",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b5cbfb_540152b6",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T16:11:05Z",
+      "side": 1,
+      "message": "nit: url_loader_options, to better match ur_loader.mojom and the interface name.",
+      "revId": "9d20df38511766939b056745c55cdb4f7a401fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
