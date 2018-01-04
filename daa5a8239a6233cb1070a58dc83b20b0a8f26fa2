@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811781f5_e693712f",
+        "filename": "media/gpu/windows/d3d11_video_decoder_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2018-01-04T23:36:54Z",
+      "side": 1,
+      "message": "Probably doesn\u0027t make sense since |init_cb| is const.",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "daa5a8239a6233cb1070a58dc83b20b0a8f26fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
