@@ -61,11 +61,11 @@ source_set("command_buffer_traits_sources") {
   public_deps = [
     "//gpu/command_buffer/common:common_sources",
     "//ipc",
+    "//ui/gfx/ipc",
   ]
 
   deps = [
     "//base",
-    "//ui/gfx/ipc",
     "//ui/gfx/ipc/geometry",
   ]
 }
@@ -161,6 +161,7 @@ mojom("interfaces") {
   public_deps = [
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
+    "//ui/gfx/mojo",
   ]
 }
 

@@ -139,6 +139,8 @@ IPC_STRUCT_TRAITS_BEGIN(gpu::Capabilities)
 
   IPC_STRUCT_TRAITS_MEMBER(major_version)
   IPC_STRUCT_TRAITS_MEMBER(minor_version)
+
+  IPC_STRUCT_TRAITS_MEMBER(texture_target_exception_list)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(gpu::CommandBuffer::State)
