@@ -16,6 +16,24 @@
       "revId": "4706c4215dcec0163b30560e3b778711996acf61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7a8c2f_d0037219",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2018-01-04T03:10:22Z",
+      "side": 1,
+      "message": "Done.\n\n\"\nIs it clearer and faster to hard-code the camel case name of a property\ninto its property class - since we already have that value at hand at\ngeneration time - than to construct it at runtime when it is needed.\nSlight increase in code size in favor of simplicity and speed.\n\"",
+      "parentUuid": "0e1cb0f6_eda3c12c",
+      "revId": "4706c4215dcec0163b30560e3b778711996acf61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
