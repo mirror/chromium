@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2b3570_a78930c6",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2018-01-04T18:22:36Z",
+      "side": 1,
+      "message": "So the existing visibility code seems to mainly deal with internal visibility (ie, which shelf view implementation to use). This new logic seems to be more about views that are external/not controlled by the shelf.\n\nWhat about moving the shelf widget visibility to status_area_widget.cc or system_tray.cc? There is already some code there for this in UpdateAfterLoginStatusChanged().",
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
