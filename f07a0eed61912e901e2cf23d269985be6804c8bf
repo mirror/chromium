@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "50677ca6_ad3747e9",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T18:27:49Z",
+      "side": 1,
+      "message": "I think this dcheck would fire for subframes?\n\nyou need to duplicate the exact logic navigation_url_loader_network_service.cc. per my other comment, I think this isn\u0027t needed but if you want to keep it i\u0027ll defer to you/Camille",
+      "revId": "f07a0eed61912e901e2cf23d269985be6804c8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ae4357f_c4fcc49b",
         "filename": "content/browser/loader/mojo_async_resource_handler_unittest.cc",
         "patchSetId": 9
@@ -13,6 +30,30 @@
       "writtenOn": "2018-01-04T17:47:13Z",
       "side": 1,
       "message": "I am feeling bad using a const_cast here. I first try to use request_-\u003eCancelWithSSLError([...]), but I needed the URLRequest to have started a job and this unit test doesn\u0027t. Every other thing I tried ends up using more and more code. Do you have any suggestion? Do you want to keep the 3 last tests?",
+      "range": {
+        "startLine": 1427,
+        "startChar": 13,
+        "endLine": 1427,
+        "endChar": 16
+      },
+      "revId": "f07a0eed61912e901e2cf23d269985be6804c8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f971c57e_783bd8ee",
+        "filename": "content/browser/loader/mojo_async_resource_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T18:27:49Z",
+      "side": 1,
+      "message": "I wouldn\u0027t feel bad about using const_cast in a unittest :)",
+      "parentUuid": "0ae4357f_c4fcc49b",
       "range": {
         "startLine": 1427,
         "startChar": 13,
