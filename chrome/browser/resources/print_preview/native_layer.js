@@ -30,8 +30,8 @@ print_preview.LocalDestinationInfo;
  * @typedef {{
  *   isInKioskAutoPrintMode: boolean,
  *   isInAppKioskMode: boolean,
- *   thousandsDelimeter: string,
- *   decimalDelimeter: string,
+ *   thousandsDelimiter: string,
+ *   decimalDelimiter: string,
  *   unitType: !print_preview.MeasurementSystemUnitType,
  *   previewModifiable: boolean,
  *   documentTitle: string,
