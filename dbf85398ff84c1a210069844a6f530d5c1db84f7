@@ -46,6 +46,53 @@
       "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382f2dde_1a870bde",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T03:27:52Z",
+      "side": 1,
+      "message": "I still feel that this test has some room for improvement in terms of readability and code health. I just hope to see a simple relationship between input and output that can cover distinct code paths, rather than running a mirrored verification method, which may lead to an error that is hard to find.\n\nIf you\u0027re worried about test code being too lengthy, how about making this into an array?\n\n{\"\u003cinput type\u003d\u0027text\u0027\u003e\", 0},\n{\"\u003cinput type\u003d\u0027text\u0027 autocapitalize\u003d\u0027none\u0027\u003e\", kNone}\n{\"\u003cinput type\u003d\u0027email\u0027 autocapitalize\u003d\u0027sentences\u0027\u003e\", 0}\n...\n\nAnd have a simple for-loop that only does\nelement-\u003efocus();\nEXPECT_EQ(expected, Controller().TextInputInfo().flags);\n\nOr alternatively, by using a helper function, you could write\nEXPECT_EQ(0, GetAutocapitalizeFlagsFor(\"text\", \"none\"));",
+      "parentUuid": "287607db_31a1419e",
+      "range": {
+        "startLine": 2545,
+        "startChar": 2,
+        "endLine": 2545,
+        "endChar": 64
+      },
+      "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6b25d2_af6b5949",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T03:27:52Z",
+      "side": 1,
+      "message": "This type of error is exactly what I was worried about.",
+      "range": {
+        "startLine": 2562,
+        "startChar": 41,
+        "endLine": 2562,
+        "endChar": 61
+      },
+      "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
