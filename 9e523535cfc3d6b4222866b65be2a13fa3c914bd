@@ -16,6 +16,24 @@
       "revId": "9e523535cfc3d6b4222866b65be2a13fa3c914bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6adb30_08749a89",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "for frame_guid, we can use either GlobalFrameRoutingId (if made public) or UnguessableToken (if available) instead. \n\nfor content_id, it is important to use process identifier, which could be rfp id or process main frame\u0027s UnguessableToken, + picture id (a unique ID within process). Picture id part can not be changed as it is used for serialization/deserialization of content. \n\nIf we used mojo.common.mojom.UnguessableToken, we would still need this map since content is created in its parent frame\u0027s process. This map tracks the content with its own frame.",
+      "parentUuid": "35dafb31_59fd9f3f",
+      "revId": "9e523535cfc3d6b4222866b65be2a13fa3c914bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

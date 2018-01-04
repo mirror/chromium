@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6c10bec_e448bba2",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b830726a_9f5c4ba5",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e5a50f5_77d8c857",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 33
@@ -33,6 +51,24 @@
       "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c966b3_2c81c857",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5a50f5_77d8c857",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1df71483_d3398735",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "Added some comments above. Hope it helps. \n\nTo save one map, |content_to_frame_node_map_| stores content to its frame and parent frame info. AddSubframeMap() adds content to frame map while AddSubframeContent() adds content to its parent frame info. The order of these two functions are not guaranteed. so we need to handle either case.",
+      "parentUuid": "1ca821ca_5706d3d6",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eca0acd0_a2c63b85",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 33
@@ -64,6 +118,30 @@
       "writtenOn": "2018-01-04T13:34:16Z",
       "side": 1,
       "message": "I don\u0027t quite follow why checking is ready to composite would mark frame_guid as complete.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5cfd8d_7914a844",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "Modified comments.\n\nOnly root frame will check for composition. We can always think it is complete as the checking is for subframes.",
+      "parentUuid": "eca0acd0_a2c63b85",
       "range": {
         "startLine": 79,
         "startChar": 0,
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "afac85a6_d4b90b65",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow. all the subframes formed into a tree, we need walk the tree at some point. For example, a depends b, b depends c, when c is ready, we should mark b and a both ready.",
+      "parentUuid": "b6d32a52_6c869a4b",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 5
+      },
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69f4169d_45e5277f",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 33
@@ -110,6 +212,24 @@
       "writtenOn": "2018-01-04T13:34:16Z",
       "side": 1,
       "message": "In general, we\u0027d like to move towards using mojo.common.mojom.UnguessableToken to represent IDs that need to be passed between processes. Would you be OK making this change in a followup?",
+      "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22dae9d_d6381c9f",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2018-01-04T19:50:00Z",
+      "side": 1,
+      "message": "Yes, if we use UnguessableToken to replace frame_guid, I can make the followup change.\n\nAlternatively, I think an easier route is to make GlobalFrameRoutingId public (crrev.com/c/849697) and maybe add a function to convert it to a 64bit form for easy\ntransport thru ipc?",
+      "parentUuid": "69f4169d_45e5277f",
       "revId": "826be97e6d8e99f4a09a72737366a25f2f1f78d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
