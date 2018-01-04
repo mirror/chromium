@@ -32,9 +32,15 @@ bool SiteIsolationPolicy::UseDedicatedProcessesForAllSites() {
 // static
 SiteIsolationPolicy::CrossSiteDocumentBlockingEnabledState
 SiteIsolationPolicy::IsCrossSiteDocumentBlockingEnabled() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableWebSecurity)) {
+    return XSDB_DISABLED;
+  }
+
   if (base::FeatureList::IsEnabled(
-          ::features::kCrossSiteDocumentBlockingAlways))
+          ::features::kCrossSiteDocumentBlockingAlways)) {
     return XSDB_ENABLED_UNCONDITIONALLY;
+  }
 
   if (base::FeatureList::IsEnabled(
           ::features::kCrossSiteDocumentBlockingIfIsolating)) {
