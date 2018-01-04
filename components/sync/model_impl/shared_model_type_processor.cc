@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -104,13 +105,6 @@ void SharedModelTypeProcessor::ModelReadyToSync(
       entities_[entity->metadata().client_tag_hash()] = std::move(entity);
     }
     model_type_state_ = batch->GetModelTypeState();
-    if (!entities_to_commit.empty()) {
-      waiting_for_pending_data_ = true;
-      bridge_->GetData(
-          std::move(entities_to_commit),
-          base::Bind(&SharedModelTypeProcessor::OnInitialPendingDataLoaded,
-                     weak_ptr_factory_.GetWeakPtr()));
-    }
   } else {
     DCHECK_EQ(0u, batch->TakeAllMetadata().size());
     // First time syncing; initialize metadata.
@@ -312,6 +306,7 @@ void SharedModelTypeProcessor::UntrackEntity(const EntityData& entity_data) {
 }
 
 void SharedModelTypeProcessor::NudgeForCommitIfNeeded() {
+  //base::debug::StackTrace stack; stack.Print();
   // Don't bother sending anything if there's no one to send to.
   if (!IsConnected())
     return;
@@ -324,7 +319,7 @@ void SharedModelTypeProcessor::NudgeForCommitIfNeeded() {
   bool has_local_changes = false;
   for (const auto& kv : entities_) {
     ProcessorEntityTracker* entity = kv.second.get();
-    if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
+    if (entity->RequiresCommitRequest()) {
       has_local_changes = true;
       break;
     }
@@ -337,24 +332,49 @@ void SharedModelTypeProcessor::NudgeForCommitIfNeeded() {
 void SharedModelTypeProcessor::GetLocalChanges(
     size_t max_entries,
     const GetLocalChangesCallback& callback) {
+  // base::debug::StackTrace stack; stack.Print();
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_GT(max_entries, 0U);
-
-  CommitRequestDataList commit_requests;
-  // TODO(rlarocque): Do something smarter than iterate here.
+  LOG(WARNING) << "Getting local changes.";
+  // Load data for entities to be committed.
+  LOG(WARNING) << "entities_.size():" << entities_.size();
+  std::vector<std::string> entities_requires_data;
   for (const auto& kv : entities_) {
     ProcessorEntityTracker* entity = kv.second.get();
-    if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
-      CommitRequestData request;
-      entity->InitializeCommitRequestData(&request);
-      commit_requests.push_back(request);
-      if (commit_requests.size() >= max_entries) {
-        break;
-      }
+    if (entity->RequiresCommitData()) {
+      entities_requires_data.push_back(entity->storage_key());
     }
   }
+  LOG(WARNING) << "entities_requires_data.size():"
+               << entities_requires_data.size();
+  if (!entities_requires_data.empty()) {
+    waiting_for_pending_data_ = true;
+    bridge_->GetData(
+        std::move(entities_requires_data),
+        base::Bind(&SharedModelTypeProcessor::OnPendingDataLoaded,
+                   weak_ptr_factory_.GetWeakPtr(), max_entries, callback));
+  } else {
+    // All commit data can be availbale in memory for those entries passed in
+    // the .put() method.
+    // TODO(mamir): Update .put() method not to pass the commit data to have a
+    // consistent behavior.
+    CommitRequestDataList commit_requests;
+    // TODO(rlarocque): Do something smarter than iterate here.
+    for (const auto& kv : entities_) {
+      ProcessorEntityTracker* entity = kv.second.get();
+      //LOG(WARNING) << "entity:" << *entity;
+      if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
+        CommitRequestData request;
+        entity->InitializeCommitRequestData(&request);
+        commit_requests.push_back(request);
+        if (commit_requests.size() >= max_entries) {
+          break;
+        }
+      }
+    }
 
-  callback.Run(std::move(commit_requests));
+    callback.Run(std::move(commit_requests));
+  }
 }
 
 void SharedModelTypeProcessor::OnCommitCompleted(
@@ -702,8 +722,11 @@ void SharedModelTypeProcessor::OnInitialUpdateReceived(
   NudgeForCommitIfNeeded();
 }
 
-void SharedModelTypeProcessor::OnInitialPendingDataLoaded(
+void SharedModelTypeProcessor::OnPendingDataLoaded(
+    size_t max_entries,
+    const GetLocalChangesCallback& callback,
     std::unique_ptr<DataBatch> data_batch) {
+  LOG(WARNING) << "OnPendingDataLoaded";
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(waiting_for_pending_data_);
 
@@ -715,6 +738,22 @@ void SharedModelTypeProcessor::OnInitialPendingDataLoaded(
   waiting_for_pending_data_ = false;
 
   ConnectIfReady();
+
+  CommitRequestDataList commit_requests;
+  // TODO(rlarocque): Do something smarter than iterate here.
+  for (const auto& kv : entities_) {
+    ProcessorEntityTracker* entity = kv.second.get();
+    if (entity->RequiresCommitRequest() && !entity->RequiresCommitData()) {
+      CommitRequestData request;
+      entity->InitializeCommitRequestData(&request);
+      commit_requests.push_back(request);
+      if (commit_requests.size() >= max_entries) {
+        break;
+      }
+    }
+  }
+
+  callback.Run(std::move(commit_requests));
 }
 
 void SharedModelTypeProcessor::OnDataLoadedForReEncryption(

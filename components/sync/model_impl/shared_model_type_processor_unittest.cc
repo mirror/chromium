@@ -229,7 +229,10 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
 
   void WriteItemAndAck(const std::string& key,
                        std::unique_ptr<EntityData> entity_data) {
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 1 ";
     bridge()->WriteItem(key, std::move(entity_data));
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 2 ";
+    LOG(WARNING) << ">>>>>>>>>> WriteItemAndAck 3 ";
     worker()->VerifyPendingCommits(
         {FakeModelTypeSyncBridge::TagHashFromKey(key)});
     worker()->AckOnePendingCommit();
@@ -330,7 +333,6 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
 
   // Local write before initial sync.
   bridge()->WriteItem(kKey1, kValue1);
-
   // Has data, but no metadata, entity in the processor, or commit request.
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
@@ -349,6 +351,7 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
   EXPECT_EQ(2U, ProcessorEntityCount());
   EXPECT_EQ(1, db().GetMetadata(kKey1).sequence_number());
   EXPECT_EQ(0, db().GetMetadata(kKey2).sequence_number());
+
   worker()->VerifyPendingCommits({kHash1});
 }
 
@@ -430,7 +433,9 @@ TEST_F(SharedModelTypeProcessorTest, StartErrors) {
   type_processor()->ReportError(FROM_HERE, "boom");
   ExpectError();
   OnSyncStarting();
-  OnPendingCommitDataLoaded();
+  // TODO(pavely): Commit data aren't loaded automatically now on startup.
+  // Simply remove this?
+  //OnPendingCommitDataLoaded();
 }
 
 // This test covers race conditions during loading pending data. All cases
@@ -1275,6 +1280,7 @@ TEST_F(SharedModelTypeProcessorTest, Disable) {
 
   // The first item is fully committed.
   WriteItemAndAck(kKey1, kValue1);
+  LOG(WARNING) << ">>>>>>>>>> SharedModelTypeProcessorTest, Disable 1";
 
   // The second item has a commit request in progress.
   bridge()->WriteItem(kKey2, kValue2);
@@ -1286,11 +1292,13 @@ TEST_F(SharedModelTypeProcessorTest, Disable) {
   // The third item is added after disable.
   bridge()->WriteItem(kKey3, kValue3);
 
+
   // Now we re-enable.
   OnSyncStarting();
   worker()->UpdateFromServer();
   EXPECT_TRUE(type_processor()->IsTrackingMetadata());
 
+  LOG(WARNING) << ">>>>>>>>>> SharedModelTypeProcessorTest, Disable 2";
   // Once we're ready to commit, all three local items should consider
   // themselves uncommitted and pending for commit.
   worker()->VerifyPendingCommits({kHash1, kHash2, kHash3});
