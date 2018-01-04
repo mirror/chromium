@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3866058_cf801cf3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigator/device-memory.https.any.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-04T23:36:50Z",
+      "side": 1,
+      "message": "You could also use `const`, or inline this array in the statement where it\u0027s used. Also, I think most places use camelCase variable names even though the assert functions don\u0027t.",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26ac4448_effd5ea4",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/resources/worker-navigator-device-memory.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2018-01-04T23:36:50Z",
+      "side": 1,
+      "message": "Is this file still used?",
+      "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
