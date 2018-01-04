@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4727d8_e2e607f8",
+        "filename": "content/browser/media/key_system_support_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T12:19:37Z",
+      "side": 1,
+      "message": "Does this leak? I don\u0027t see a connection error handler, and this isn\u0027t using StrongBinding either.",
+      "revId": "6ebc067fa9eb21e59ec6994b12aad1f0408e4666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
