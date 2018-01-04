@@ -473,6 +473,12 @@ void StatusBubbleMac::Create() {
 void StatusBubbleMac::Attach() {
   if (is_attached())
     return;
+
+  // When a window gains a child window, the system may try to show it or
+  // switch to its space. That's undesirable for the status bubble.
+  if (![parent_ isVisible] || ![parent_ isOnActiveSpace])
+    return;
+
   [parent_ addChildWindow:window_ ordered:NSWindowAbove];
   [[window_ contentView] setThemeProvider:parent_];
 }
@@ -519,6 +525,8 @@ void StatusBubbleMac::SetState(StatusBubbleState state) {
     Detach();
   } else {
     Attach();
+    if (!is_attached())
+      return;
   }
 
   if ([delegate_ respondsToSelector:@selector(statusBubbleWillEnterState:)])
@@ -625,7 +633,8 @@ void StatusBubbleMac::StartShowing() {
   if (state_ == kBubbleHidden) {
     // Arrange to begin fading in after a delay.
     SetState(kBubbleShowingTimer);
-    StartTimer(kShowDelayMS);
+    if (state_ == kBubbleShowingTimer)
+      StartTimer(kShowDelayMS);
   } else if (state_ == kBubbleHidingFadeOut) {
     // Cancel the fade-out in progress and replace it with a fade in.
     SetState(kBubbleShowingFadeIn);
