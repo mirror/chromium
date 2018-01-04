@@ -239,7 +239,7 @@ public class ImeAdapter {
         // Without this line, some third-party IMEs will try to compose text even when
         // not on an editable node. Even when we return null here, key events can still go
         // through ImeAdapter#dispatchKeyEvent().
-        if (mTextInputType == TextInputType.NONE) {
+        if (mTextInputType == TextInputType.NONE || mTextInputMode == WebTextInputMode.NONE) {
             setInputConnection(null);
             if (DEBUG_LOGS) Log.i(TAG, "onCreateInputConnection returns null.");
             return null;
@@ -362,16 +362,17 @@ public class ImeAdapter {
             if (mTextInputType != textInputType) {
                 mTextInputType = textInputType;
                 needsRestart = true;
+            }
 
-                boolean editable = textInputType != TextInputType.NONE;
-                boolean password = textInputType == TextInputType.PASSWORD;
-                if (mNodeEditable != editable || mNodePassword != password) {
-                    for (ImeEventObserver observer : mEventObservers) {
-                        observer.onNodeAttributeUpdated(editable, password);
-                    }
-                    mNodeEditable = editable;
-                    mNodePassword = password;
+            boolean editable =
+                    textInputType != TextInputType.NONE && textInputMode != WebTextInputMode.NONE;
+            boolean password = textInputType == TextInputType.PASSWORD;
+            if (mNodeEditable != editable || mNodePassword != password) {
+                for (ImeEventObserver observer : mEventObservers) {
+                    observer.onNodeAttributeUpdated(editable, password);
                 }
+                mNodeEditable = editable;
+                mNodePassword = password;
             }
             if (mCursorAnchorInfoController != null
                     && (!TextUtils.equals(mLastText, text) || mLastSelectionStart != selectionStart
@@ -386,7 +387,7 @@ public class ImeAdapter {
             mLastCompositionStart = compositionStart;
             mLastCompositionEnd = compositionEnd;
 
-            if (textInputType == TextInputType.NONE) {
+            if (textInputType == TextInputType.NONE || textInputMode == WebTextInputMode.NONE) {
                 hideKeyboard();
             } else {
                 if (needsRestart) restartInput();

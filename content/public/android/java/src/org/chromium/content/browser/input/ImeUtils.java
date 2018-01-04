@@ -140,7 +140,8 @@ public class ImeUtils {
     private static int getImeAction(
             int inputType, int inputFlags, int inputMode, boolean isMultiLineInput) {
         int imeAction = 0;
-        if (inputMode == WebTextInputMode.DEFAULT && inputType == TextInputType.SEARCH) {
+        if ((inputMode == WebTextInputMode.DEFAULT && inputType == TextInputType.SEARCH)
+                || inputMode == WebTextInputMode.SEARCH) {
             imeAction |= EditorInfo.IME_ACTION_SEARCH;
         } else if (isMultiLineInput) {
             // For textarea that sends you to another webpage on enter key press using
