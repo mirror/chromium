@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce813057_dc79a63c",
+        "filename": "content/browser/android/gesture_listener_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T22:06:32Z",
+      "side": 1,
+      "message": "no raw pointers, use unique_ptr and move semantics",
+      "revId": "f0b784afdd7a96fb3fa2d362fba129bb6906d187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f758e9_00bc6a34",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T22:06:32Z",
+      "side": 1,
+      "message": "DCHECK this isn\u0027t over writing an existing object. Also non-trivial setters need ThisKindOfNamingConvetion",
+      "revId": "f0b784afdd7a96fb3fa2d362fba129bb6906d187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
