@@ -311,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "0bef0452_ff485762",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-04T22:04:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6d9944b_8c9826c4",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66390414_182f4dee",
         "filename": "chrome/browser/vr/model/color_scheme.h",
         "patchSetId": 5
@@ -416,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "024eea1a_36cb1a7e",
+        "filename": "chrome/browser/vr/ui_element_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-04T22:04:09Z",
+      "side": 1,
+      "message": "Cool.",
+      "parentUuid": "a4ffb35f_6200b86e",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f487eba_3dd1d3a4",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 5
@@ -445,6 +481,24 @@
       "side": 1,
       "message": "I\u0027ve switched up the macros so that you have to type model-\u003e everywhere. Declarative is my goal, but I don\u0027t know how far out the switch will be.",
       "parentUuid": "3f487eba_3dd1d3a4",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b01e204_87edf2fb",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-04T22:04:09Z",
+      "side": 1,
+      "message": "Thanks for that change.  I really think it\u0027s a LOT better now.",
+      "parentUuid": "3f25a3e5_c31fccf2",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -640,6 +694,24 @@
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f7f696_1e1bdbf7",
+        "filename": "chrome/browser/vr/vr_gl_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-04T22:04:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bafb2fdc_90c5c090",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
