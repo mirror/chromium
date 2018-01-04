@@ -494,6 +494,7 @@ bool V4Store::GetNextSmallestUnmergedPrefix(
 
   for (const auto& iterator_pair : iterator_map) {
     PrefixSize prefix_size = iterator_pair.first;
+    CHECK_GE(prefix_size, 4u);
     HashPrefixes::const_iterator start = iterator_pair.second;
 
     CHECK(hash_prefix_map.end() != hash_prefix_map.find(prefix_size));
@@ -821,6 +822,7 @@ bool V4Store::VerifyChecksum() {
   IteratorMap iterator_map;
   HashPrefix next_smallest_prefix;
   InitializeIteratorMap(hash_prefix_map_, &iterator_map);
+  CHECK_EQ(hash_prefix_map_.size(), iterator_map.size());
   bool has_unmerged = GetNextSmallestUnmergedPrefix(
       hash_prefix_map_, iterator_map, &next_smallest_prefix);
 
@@ -832,7 +834,7 @@ bool V4Store::VerifyChecksum() {
 
     // Update the iterator map, which means that we have read one hash
     // prefix of size |next_smallest_prefix_size| from hash_prefix_map_.
-    iterator_map[next_smallest_prefix_size] += next_smallest_prefix_size;
+    iterator_map.at(next_smallest_prefix_size) += next_smallest_prefix_size;
 
     checksum_ctx->Update(next_smallest_prefix.data(),
                          next_smallest_prefix_size);
