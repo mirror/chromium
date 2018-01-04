@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "03873cf2_cc2ab5a6",
+        "filename": "ash/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "Isn\u0027t this backwards? I thought //components/keyboard_shortcut_viewer would depend on ash, not the other way around.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefabb0b_7b4d06c0",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. If the client goes away the mojo message pipe will close and if (client_) will start returning false.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e71ffa_683f73c1",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "Should this live in //components/ksv?",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dce0986_42e9bb39",
         "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.h",
         "patchSetId": 8
@@ -94,6 +145,125 @@
     },
     {
       "key": {
+        "uuid": "015d064e_993a61c4",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb664a0_ddeb955d",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "Could this just be a testing::Test? I don\u0027t see many ash dependencies here.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c26514_6947cd07",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "nit: initialize this to something",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810373ac_fdb9e8ca",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "ASSERT_NE",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a3620c_b9dea3b6",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "ASSERT_NE",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b725a19_4e7f2456",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "Does the ph name attribute have to be generic (like \"modifier\") or can it be an example (like \"ctrl\" below)? I think examples are easier for the translators.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a10301_b74a6fe6",
+        "filename": "ash/shell.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this DCHECK is useful. I would just inline the getter in the header. If someone tries to access a null ksv_controller they will just crash and we\u0027ll get a stack.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9784c659_367e2547",
         "filename": "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h",
         "patchSetId": 8
@@ -134,6 +304,57 @@
         "endLine": 3,
         "endChar": 1
       },
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c842efab_7a5324fa",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be in a file called keyboard_shortcut_info.mojom. Either this file should be renamed to keyboard_shortcut_viewer_controller.mojom, or it should be split in two (one part for info, one part for controller/client).",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052933bd_49275e47",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "Aside: It\u0027s odd that comments in this file refer to \"ash\" even though this code lives in //components.",
+      "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b6172c_22867511",
+        "filename": "components/keyboard_shortcut_viewer/keyboard_shortcut_viewer_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T02:17:01Z",
+      "side": 1,
+      "message": "using declarations in headers are banned by the style guide.\n\nI recommend putting the files in a directory called //components/ksv and putting the code in namespace \"ksv\". We have precedent for short names like //components/onc. The individual files and classes can have keyboard_shortcut_viewer in their names, which I think would be clear enough.",
       "revId": "84b3b8152cbdce48ee7c6b49a67b211a1a6944a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
