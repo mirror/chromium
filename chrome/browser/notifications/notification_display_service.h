@@ -12,19 +12,24 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/optional.h"
+#include "base/strings/string16.h"
 #include "chrome/browser/notifications/notification_common.h"
-#include "chrome/browser/notifications/notification_handler.h"
 #include "components/keyed_service/core/keyed_service.h"
 
+class NotificationHandler;
 class Profile;
 
 namespace message_center {
 class Notification;
 }
 
-// Profile-bound service that enables user-visible notifications to be displayed
-// and managed. Notifications may either be presented using a notification
-// center provided by the platform, or by Chrome's Message Center.
+// Profile-bound service that enables notifications to be displayed and
+// interacted with on the user's screen, orthogonal of whether this
+// functionality is provided by the browser or by the operating system. An
+// instance can be retrieved through the NotificationDisplayServiceFactory.
+//
+// TODO(peter): Add a NotificationHandler mechanism for registering listeners.
 class NotificationDisplayService : public KeyedService {
  public:
   ~NotificationDisplayService() override;
