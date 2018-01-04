@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "fde3eb7e_f0f61e03",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-04T12:12:57Z",
+      "side": 1,
+      "message": "In a similar spot I told Kim the DCHECK is not necessary, given that base::Optional does this already: https://codesearch.chromium.org/chromium/src/base/optional.h?l\u003d255,260,265,270 What is your take on this?",
+      "parentUuid": "e6c2171d_f96ac490",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d53c4f7_02ee794f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 7
