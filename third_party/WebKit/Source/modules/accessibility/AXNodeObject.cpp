@@ -1112,6 +1112,8 @@ int AXNodeObject::HeadingLevel() const {
     if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
       if (level >= 1 && level <= 9)
         return level;
+    } else {
+      return kDefaultHeadingLevel;
     }
   }
 
