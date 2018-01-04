@@ -1,0 +1,25 @@
+<body>
+This test creates a child iframe, which creates a grandchild iframe, which in
+turn creates a slow XHR then reloads. During commit for the reload, the slow XHR
+is cancelled, and the XHR's onabort handler in turn creates a new XHR, which is
+then aborted slightly later during the commit process. This second XHR's onabort
+handler then navigates the top frame to about:blank synchronously. This will
+cause the grandchild to detach in the middle of commit, and shouldn't crash.
+This top frame exists as a wrapper to handle calling testRunner.notifyDone(),
+because by the time the crash occurs the other frames can't: the child has
+committed about:blank and the grandchild is detached.
+<script>
+if (window.testRunner) {
+  testRunner.dumpAsText();
+  testRunner.waitUntilDone();
+}
+
+function finish() {
+  setTimeout(function() {
+    if (window.testRunner)
+      testRunner.notifyDone();
+  }, 0);
+}
+</script>
+<iframe src="resources/reentrant-xhr-onabort-crash-during-commit-child.html" onload="finish();"></iframe>
+</body>

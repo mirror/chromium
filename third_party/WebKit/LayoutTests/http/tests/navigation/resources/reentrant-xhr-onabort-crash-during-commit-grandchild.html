@@ -1,0 +1,17 @@
+<body>
+<a id="a" target="_parent" href="about:blank">Click me</a>
+<script>
+var x = new XMLHttpRequest();
+x.onabort = function() {
+  var x2 = new XMLHttpRequest();
+  x2.onabort = function() {
+    a.click();
+  }
+  x2.open("GET", "slow-resource.pl");
+  x2.send();
+}
+x.open("GET", "slow-resource.pl");
+x.send();
+location.reload();
+</script>
+</body>
