@@ -29,6 +29,7 @@ import android.os.Bundle;
 import com.google.ipc.invalidation.util.Preconditions;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.media.MediaViewerUtils;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
@@ -82,7 +83,24 @@ public final class DownloadNotificationFactory {
 
                 boolean indeterminate = downloadUpdate.getProgress().isIndeterminate()
                         || downloadUpdate.getIsDownloadPending();
-                if (downloadUpdate.getIsDownloadPending()) {
+                // OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled() is true
+                // and download is pending.
+                if (downloadUpdate.getPendingState() != null
+                        && downloadUpdate.getPendingState() != PendingState.NOT_PENDING) {
+                    switch (downloadUpdate.getPendingState()) {
+                        case PENDING_NETWORK:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending_network);
+                            break;
+                        case PENDING_ANOTHER_DOWNLOAD:
+                            contentText = context.getResources().getString(
+                                    R.string.download_notification_pending_another_download);
+                            break;
+                        default:
+                            contentText = "";
+                            break;
+                    }
+                } else if (downloadUpdate.getIsDownloadPending()) {
                     contentText = context.getResources().getString(
                             R.string.download_notification_pending);
                 } else if (indeterminate || downloadUpdate.getTimeRemainingInMillis() < 0) {
