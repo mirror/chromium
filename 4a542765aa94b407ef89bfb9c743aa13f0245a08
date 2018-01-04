@@ -69,6 +69,24 @@
       "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97414b7_0339b3eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T08:50:29Z",
+      "side": 1,
+      "message": "Ah ok. Seems like a good simplification, if it works :) But is it needed to fix bug #784320? If no, let\u0027s split that change into its own CL for bug 770147.",
+      "parentUuid": "ef347548_1bb5274d",
+      "revId": "4a542765aa94b407ef89bfb9c743aa13f0245a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
