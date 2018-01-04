@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5d5d8f_f15aee30",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T11:05:18Z",
+      "side": 1,
+      "message": "nit: Root makes me think of window.top :P Maybe it\u0027s better to keep it \"container\" for now?",
+      "range": {
+        "startLine": 1382,
+        "startChar": 10,
+        "endLine": 1382,
+        "endChar": 14
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7457e87_314a27a0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T11:05:18Z",
+      "side": 1,
+      "message": "Can we avoid saving each container\u0027s \"search rect\" on the stack by moving your \"Make start rect more reasonable\"-change* to this CL?\n\n* https://chromium-review.googlesource.com/c/chromium/src/+/781326/10//COMMIT_MSG#20",
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6a3e43_f7b8ecdb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T11:05:18Z",
+      "side": 1,
+      "message": "What is the incorrect behavior? Is it caused by this CL?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 14,
+        "endLine": 1452,
+        "endChar": 42
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
