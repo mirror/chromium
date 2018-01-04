@@ -116,6 +116,24 @@
       "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ed1f40_d572886d",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-04T23:28:04Z",
+      "side": 1,
+      "message": "Let\u0027s wait for Justin to come back for his opinion.  When I see virtual files in headers, I think, oh, there\u0027s something that implements this.  I don\u0027t often think that it\u0027s there just for testing, as virtual does have a little overhead if I recall correctly.  I tend to prefer other solutions (Set...ForTesting, FRIEND_TEST_..., etc.).  But it\u0027s Justin who\u0027s really pushing the testing effort here, so if you don\u0027t mind let\u0027s wait.",
+      "parentUuid": "d4161289_6599b167",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e014c7ae_f3608127",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-04T23:28:04Z",
+      "side": 1,
+      "message": "Odd question while I\u0027m here: do we ever have to add https scheme now?  For example, in the coming future, we won\u0027t display https:// in the omnibox in resting mode, but we will want it for the copy if it\u0027s part of the underlying URL.  Likewise, we might not display https:// in the fill_into_edit part of URLs in the dropdown, but we would want to copy them with it.  Can you think about / future-proof against these cases while you\u0027re here?",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
