@@ -600,6 +600,7 @@ static_library("layouttest_support") {
     "//device/bluetooth",
     "//device/gamepad/public/cpp:shared_with_blink",
     "//device/sensors/public/cpp:full",
+    "//gpu/ipc/service",
     "//services/ui/public/cpp/gpu",
     "//skia",
     "//ui/accessibility:ax_gen",
