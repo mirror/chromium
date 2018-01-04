@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff1ab9ff_8fc11b35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T19:06:05Z",
+      "side": 1,
+      "message": "Subject should only be one line, followed by an empty line.\n\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 38
+      },
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7397816b_821fbd1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T19:06:05Z",
+      "side": 1,
+      "message": "nit: remove ?",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c2b3570_a78930c6",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 3
@@ -13,6 +59,24 @@
       "writtenOn": "2018-01-04T18:22:36Z",
       "side": 1,
       "message": "So the existing visibility code seems to mainly deal with internal visibility (ie, which shelf view implementation to use). This new logic seems to be more about views that are external/not controlled by the shelf.\n\nWhat about moving the shelf widget visibility to status_area_widget.cc or system_tray.cc? There is already some code there for this in UpdateAfterLoginStatusChanged().",
+      "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae98d448_a5cf87e6",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T19:06:05Z",
+      "side": 1,
+      "message": "+1 to that this logic probably should not be in shelf code. \n\nCurrently, I think only login screen code (especially oobe code WizardController) mess with system tray visibility via LoginDisplayHost::SetStatusAreaVisible. Using session state itself is probably not good enough to cover all the cases.\n\nCan we implement LoginDisplayHostViews::SetStatusAreaVisible instead?",
+      "parentUuid": "6c2b3570_a78930c6",
       "revId": "92c20f8c1e45afbe62436d4e1dd45b4c571a6d64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
