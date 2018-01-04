@@ -22,6 +22,30 @@
       "revId": "bfdc3fdc473922b0b99a0a0af37e8f8f97340173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fbb11c_e7b16193",
+        "filename": "sandbox/win/src/crosscall_server.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-04T20:11:01Z",
+      "side": 1,
+      "message": "It\u0027s a bit messy. Closer investigation shows that crosscall_params.h includes windows.h (and that is probably unavoidable). I could move the #undef there. In general the #undef game isn\u0027t scientific or complete, it\u0027s whack-a-mole. My attempts at making it sane and sensible failed and a few ad-hoc undefs seem unavoidable for those bits of code that cannot tolerate the Microsoft macros.\n\nThe case for leaving the undef here is simple: MemoryBarrier is defined in thousands of source files and this is one of the few where it causes a problem.",
+      "parentUuid": "7e4cc639_55152e3c",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "bfdc3fdc473922b0b99a0a0af37e8f8f97340173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
