@@ -94,6 +94,8 @@ struct Model {
   bool experimental_features_enabled = false;
   bool skips_redraw_when_not_dirty = false;
   bool exiting_vr = false;
+
+  bool reposition_mode = false;
 };
 
 }  // namespace vr

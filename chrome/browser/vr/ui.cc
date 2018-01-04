@@ -246,6 +246,7 @@ void Ui::OnKeyboardHidden() {
 }
 
 void Ui::OnAppButtonClicked() {
+  model_->reposition_mode = !model_->reposition_mode;
   // App button clicks should be a no-op when auto-presenting WebVR.
   if (model_->web_vr_autopresentation_enabled()) {
     return;
