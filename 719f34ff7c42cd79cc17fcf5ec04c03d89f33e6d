@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9034cdad_a446220c",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:39:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb06d193_b797eadb",
+      "range": {
+        "startLine": 335,
+        "startChar": 5,
+        "endLine": 335,
+        "endChar": 52
+      },
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c71640_ccf47ad1",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d0db549f_6e4cceaf",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:39:49Z",
+      "side": 1,
+      "message": "Indeed it is different. The above match is basically a \"temporary\" match we use to classify and hold the currently inputted text.... I updated the variable name and added block scoping to try to clarify.",
+      "parentUuid": "c3c71640_ccf47ad1",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82a6f1fd_debd4898",
         "filename": "components/omnibox/browser/omnibox_edit_model.h",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2018-01-04T00:38:50Z",
       "side": 1,
       "message": "Can you do this without adding virtual annotations?  I see they\u0027re only added for testing.  Nothing else here is virtual.",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4161289_6599b167",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:39:49Z",
+      "side": 1,
+      "message": "I think it would be hard... I have to override / inject behavior somehow...\n\nSome alternatives I can think of: a) Make the delegates have virtual functions or b) add SetCurrentMatchForTesting and SetPopupIsOpenForTesting methods to the base class, but both seemed less readable than what I have here.\n\nI\u0027m flexible though, so if you have a strong opinion on the above, I\u0027m down.",
+      "parentUuid": "82a6f1fd_debd4898",
       "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
