@@ -87,6 +87,11 @@ std::unique_ptr<base::Value> DnsConfig::ToValue() const {
   return std::move(dict);
 }
 
+DnsConfig::DnsOverHttpsServerConfig::DnsOverHttpsServerConfig(
+    const GURL& server,
+    bool use_post)
+    : server(server), use_post(use_post) {}
+
 DnsConfigService::DnsConfigService()
     : watch_failed_(false),
       have_config_(false),
