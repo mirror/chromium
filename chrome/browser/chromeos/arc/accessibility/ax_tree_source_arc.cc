@@ -215,6 +215,7 @@ void PopulateAXRole(arc::mojom::AccessibilityNodeInfoData* node,
   MAP_ROLE(ui::kAXEditTextClassname, ui::AX_ROLE_TEXT_FIELD);
   MAP_ROLE(ui::kAXGridViewClassname, ui::AX_ROLE_TABLE);
   MAP_ROLE(ui::kAXImageClassname, ui::AX_ROLE_IMAGE);
+  MAP_ROLE(ui::kAXImageButtonClassname, ui::AX_ROLE_BUTTON);
   if (GetBooleanProperty(node,
                          arc::mojom::AccessibilityBooleanProperty::CLICKABLE)) {
     MAP_ROLE(ui::kAXImageViewClassname, ui::AX_ROLE_BUTTON);
@@ -245,6 +246,19 @@ void PopulateAXRole(arc::mojom::AccessibilityNodeInfoData* node,
     out_data->role = ui::AX_ROLE_GENERIC_CONTAINER;
 }
 
+bool ShouldExposeFocusableState(arc::mojom::AccessibilityNodeInfoData* node) {
+  std::string class_name;
+  if (!GetStringProperty(node,
+                         arc::mojom::AccessibilityStringProperty::CLASS_NAME,
+                         &class_name)) {
+    return true;
+  }
+
+  return class_name != ui::kAXFrameLayoutClassname &&
+         class_name != ui::kAXRelativeLayoutClassname &&
+         class_name != ui::kAXScrollViewClassname;
+}
+
 void PopulateAXState(arc::mojom::AccessibilityNodeInfoData* node,
                      ui::AXNodeData* out_data) {
 #define MAP_STATE(android_boolean_property, chrome_state) \
@@ -257,7 +271,10 @@ void PopulateAXState(arc::mojom::AccessibilityNodeInfoData* node,
   // BrowserAccessibilityAndroid. They do not completely match the above two
   // sources.
   MAP_STATE(AXBooleanProperty::EDITABLE, ui::AX_STATE_EDITABLE);
-  MAP_STATE(AXBooleanProperty::FOCUSABLE, ui::AX_STATE_FOCUSABLE);
+
+  if (ShouldExposeFocusableState(node))
+    MAP_STATE(AXBooleanProperty::FOCUSABLE, ui::AX_STATE_FOCUSABLE);
+
   MAP_STATE(AXBooleanProperty::MULTI_LINE, ui::AX_STATE_MULTILINE);
   MAP_STATE(AXBooleanProperty::PASSWORD, ui::AX_STATE_PROTECTED);
   MAP_STATE(AXBooleanProperty::SELECTED, ui::AX_STATE_SELECTED);
@@ -506,6 +523,17 @@ void AXTreeSourceArc::SerializeNode(mojom::AccessibilityNodeInfoData* node,
   if (GetBooleanProperty(node,
                          arc::mojom::AccessibilityBooleanProperty::CLICKABLE)) {
     out_data->AddBoolAttribute(ui::AX_ATTR_CLICKABLE, true);
+  }
+
+  // Range info.
+  arc::mojom::AccessibilityRangeInfoData* range_info = node->range_info.get();
+  if (range_info) {
+    out_data->AddFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE,
+                                range_info->current);
+    out_data->AddFloatAttribute(ui::AX_ATTR_MIN_VALUE_FOR_RANGE,
+                                range_info->min);
+    out_data->AddFloatAttribute(ui::AX_ATTR_MAX_VALUE_FOR_RANGE,
+                                range_info->max);
   }
 
   exo::WMHelper* wm_helper =
