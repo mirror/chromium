@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9c8996_e870c389",
+        "filename": "content/test/content_browser_test_utils_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:51:15Z",
+      "side": 1,
+      "message": "Is there a way to read back a value of a crash key?  So far I haven\u0027t been able to find one... :-(",
+      "range": {
+        "startLine": 471,
+        "startChar": 0,
+        "endLine": 474,
+        "endChar": 12
+      },
+      "revId": "052b496a1924e194fd18a98f67ba72cbab4803fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
