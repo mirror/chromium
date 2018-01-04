@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bf7cf9_29a93cff",
+        "filename": "chrome/browser/browsing_data/browsing_data_local_storage_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "might want to specify a bit more carefully what \"done\" means.",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d6c08d_457e987e",
+        "filename": "chrome/browser/browsing_data/mock_browsing_data_local_storage_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "nit: this could just be if (callback) I believe? Although if you prefer the explicit is_null that is fine with me too.",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c1fc25_71b10afc",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "not sure why these are class members, and not just internal to GetUsage? I.e. GetUsage could just be something like (uncompiled/tested):\n\nstd::vector\u003cLocalStorageUsageInfo\u003e GetUsage() {\n  auto* context \u003d ..;\n  base::RunLoop loop;\n  std::vector\u003cLocalStorageUsageInfo\u003e usage;\n  context-\u003eGetLocalStorageUsage(base::BindRepeating(\n    [](base::OnceClosure done, std::vector\u003cLocalStorageUsageInfo\u003e* out_usage, const std::vector\u003cLocalStorageUsageInfo\u003e\u0026 in_usage) {\n      *out_usage \u003d usage;\n      std::move(done).Run();\n    }, loop.QuitClosure(), \u0026in_usage));\n  loop.Run();\n  return usage;\n}",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de7ab69_cef49def",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "ReceivedMojoClosure seems like a pretty terrible name for this. Also any particular reason for allowing null callbacks? Without it you could possibly just bind directly to TaskRunner::PostTask rather than having this extra helper method. Although a properly named helper method might be clearer, don\u0027t really have strong opinions there.",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2cf6cf3_6734f102",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "this comment doesn\u0027t quite match the implementation: you\u0027re expecting callbacks for every origin with localstorage usage, not just each suborigin.",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad532aa_2d32d8ba",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "Add a comment explaining what |callback| is and when it is called?",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71485e4f_ce79399b",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "nit: base::DoNothing?",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d069c182_8bcf556d",
+        "filename": "content/public/browser/dom_storage_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "Since it\u0027s pretty unusual for callbacks to be allowed to be null, maybe document that?",
+      "range": {
+        "startLine": 43,
+        "startChar": 55,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec3fcdf_fac6a99a",
+        "filename": "content/public/browser/dom_storage_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T18:56:33Z",
+      "side": 1,
+      "message": "can you be more explicit with what \"done\" means? From the implementation it seems you consider it done when the request to delete data has been sent to the database (or is about to be sent to the database), but you\u0027re not always waiting for the database to actually commit the change. So \"done\" seems to mean that GetLocalStorageUsage will no longer include the deleted origin, but on disk nothing might have changed yet.",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
