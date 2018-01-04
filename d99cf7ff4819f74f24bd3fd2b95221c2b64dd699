@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b19bff2c_90889219",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184d6694_d7c2f747",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed2e81a_0fefcb6f",
         "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5599055_07746a61",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bed2e81a_0fefcb6f",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99d0408b_5943f876",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "936223c1_5dec09cb",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38f691e5_882fb29c",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322e8b88_180b72ad",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "It can be either situation: An error reported by FilePathWatcher or the timeout task we scheduled. Renamed to error_or_timeout for clarity.",
+      "parentUuid": "38f691e5_882fb29c",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "3a0cd65b_d3435035",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179ad0b1_4118a6cb",
+      "range": {
+        "startLine": 148,
+        "startChar": 43,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb124d3_dc8c7ccd",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "ef3ef9cf_704fffbb",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "I wasn\u0027t happy with this either, but initially felt that attaching ownership to the callback seemed easier to follow. I\u0027ve given your suggestion a try though (and clarified timeout handling as well) and it looks better indeed.",
+      "parentUuid": "2bb124d3_dc8c7ccd",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a3a407d_449a831e",
         "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2398a66c_f708d4b5",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-04T22:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a3a407d_449a831e",
+      "revId": "d99cf7ff4819f74f24bd3fd2b95221c2b64dd699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
