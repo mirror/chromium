@@ -27,6 +27,11 @@ WebRtcEventLogManager::WebRtcEventLogManager()
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // TODO: !!!!!! There is a big problem with unit tests, because we don't
+  // know when this will be completed, and can't block on this, which is flaky.
+//  task_runner_->PostTask(
+//      FROM_HERE, base::BindOnce(&WebRtcRemoteEventLogManager::Init,
+//                                base::Unretained(&remote_logs_manager_)));
 }
 
 WebRtcEventLogManager::~WebRtcEventLogManager() {
@@ -42,6 +47,7 @@ void WebRtcEventLogManager::PeerConnectionAdded(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::PeerConnectionAddedInternal,
                      base::Unretained(this), render_process_id, lid,
+                     GetRemoteEventLogManager(render_process_id, lid),
                      std::move(reply)));
 }
 
@@ -50,10 +56,12 @@ void WebRtcEventLogManager::PeerConnectionRemoved(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::PeerConnectionRemovedInternal,
                      base::Unretained(this), render_process_id, lid,
+                     GetRemoteEventLogManager(render_process_id, lid),
                      std::move(reply)));
 }
 
@@ -79,6 +87,20 @@ void WebRtcEventLogManager::DisableLocalLogging(
                      base::Unretained(this), std::move(reply)));
 }
 
+void WebRtcEventLogManager::StartRemoteLogging(
+    int render_process_id,
+    int lid,
+    size_t max_file_size_bytes,
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebRtcEventLogManager::StartRemoteLoggingInternal,
+                     base::Unretained(this), render_process_id, lid,
+                     GetRemoteEventLogManager(render_process_id, lid),
+                     max_file_size_bytes, std::move(reply)));
+}
+
 void WebRtcEventLogManager::OnWebRtcEventLogWrite(
     int render_process_id,
     int lid,
@@ -88,8 +110,9 @@ void WebRtcEventLogManager::OnWebRtcEventLogWrite(
   task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::OnWebRtcEventLogWriteInternal,
-                     base::Unretained(this), render_process_id, lid, output,
-                     std::move(reply)));
+                     base::Unretained(this), render_process_id, lid,
+                     GetRemoteEventLogManager(render_process_id, lid),
+                     output, std::move(reply)));
 }
 
 void WebRtcEventLogManager::SetLocalLogsObserver(
@@ -158,26 +181,44 @@ void WebRtcEventLogManager::OnLocalLogStopped(
 void WebRtcEventLogManager::PeerConnectionAddedInternal(
     int render_process_id,
     int lid,
+    WebRtcRemoteEventLogManager* remote_manager,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  const bool result =
+
+  const bool local_result =
       local_logs_manager_.PeerConnectionAdded(render_process_id, lid);
+
+  if (remote_manager) {
+    const bool remote_result =
+        remote_manager->PeerConnectionAdded(render_process_id, lid);
+    DCHECK_EQ(local_result, remote_result);
+  }
+
   if (reply) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(std::move(reply), result));
+                            base::BindOnce(std::move(reply), local_result));
   }
 }
 
 void WebRtcEventLogManager::PeerConnectionRemovedInternal(
     int render_process_id,
     int lid,
+    WebRtcRemoteEventLogManager* remote_manager,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  const bool result =
+
+  const bool local_result =
       local_logs_manager_.PeerConnectionRemoved(render_process_id, lid);
+
+  if (remote_manager) {
+    const bool remote_result =
+        remote_manager->PeerConnectionRemoved(render_process_id, lid);
+    DCHECK_EQ(local_result, remote_result);
+  }
+
   if (reply) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(std::move(reply), result));
+                            base::BindOnce(std::move(reply), local_result));
   }
 }
 
@@ -204,17 +245,44 @@ void WebRtcEventLogManager::DisableLocalLoggingInternal(
   }
 }
 
-void WebRtcEventLogManager::OnWebRtcEventLogWriteInternal(
+void WebRtcEventLogManager::StartRemoteLoggingInternal(
     int render_process_id,
-    int lid,  // Renderer-local PeerConnection ID.
-    const std::string& output,
+    int lid,
+    WebRtcRemoteEventLogManager* remote_manager,
+    size_t max_file_size_bytes,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  const bool result =
-      local_logs_manager_.EventLogWrite(render_process_id, lid, output);
+  DCHECK(remote_manager);
+
+  const bool result = remote_manager->StartRemoteLogging(
+      render_process_id, lid,
+      max_file_size_bytes);
+
   if (reply) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::BindOnce(std::move(reply), result));
+  }
+}
+
+void WebRtcEventLogManager::OnWebRtcEventLogWriteInternal(
+    int render_process_id,
+    int lid,
+    WebRtcRemoteEventLogManager* remote_manager,
+    const std::string& output,
+    base::OnceCallback<void(bool)> reply) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
+  const bool local_result =
+      local_logs_manager_.EventLogWrite(render_process_id, lid, output);
+
+  const bool remote_result =
+      remote_manager ?
+      remote_manager->PeerConnectionAdded(render_process_id, lid) : true;
+
+  if (reply) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::BindOnce(std::move(reply),
+                            local_result && remote_result));
   }
 }
 
@@ -245,6 +313,35 @@ void WebRtcEventLogManager::UpdateWebRtcEventLoggingState(
   } else {
     host->Send(new PeerConnectionTracker_StopEventLog(peer_connection.lid));
   }
+}
+
+const BrowserContext* WebRtcEventLogManager::GetBrowserContextFromPeerConnection(
+    int render_process_id, int lid) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+//  const auto it = pc_to_browser_context_mapping_.find(key);
+//  if (it == pc_to_browser_context_mapping_.cend()) {
+    return nullptr;
+//  }
+//  return it.second;
+}
+
+WebRtcRemoteEventLogManager* WebRtcEventLogManager::GetRemoteEventLogManager(
+    const BrowserContext* browser_context) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+//  auto it = remote_logs_managers_.find(browser_context);
+//  if (it != remote_logs_managers_.end()) {
+//    return it.second;
+//  }
+////  remote_logs_managers_
+  return nullptr;  // TODO: !!!!!!!!!!!
+}
+
+WebRtcRemoteEventLogManager* WebRtcEventLogManager::GetRemoteEventLogManager(
+    int render_process_id, int lid) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  const BrowserContext* const browser_context =
+      GetBrowserContextFromPeerConnection(render_process_id, lid);
+  return GetRemoteEventLogManager(browser_context);
 }
 
 void WebRtcEventLogManager::InjectClockForTesting(base::Clock* clock) {
