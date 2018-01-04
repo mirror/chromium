@@ -298,7 +298,8 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
       prev_max_timestamp_(QuicTime::Zero()),
       use_hq_deframer_(GetQuicReloadableFlag(quic_enable_hq_deframer)),
       spdy_framer_(SpdyFramer::ENABLE_COMPRESSION),
-      spdy_framer_visitor_(new SpdyFramerVisitor(this)) {
+      spdy_framer_visitor_(new SpdyFramerVisitor(this)),
+      headers_include_h2_stream_dependency_(false) {
   if (use_hq_deframer_) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_hq_deframer);
     hq_deframer_.set_visitor(spdy_framer_visitor_.get());
@@ -418,11 +419,30 @@ size_t QuicSpdySession::WriteHeadersImpl(
   if (perspective() == Perspective::IS_CLIENT) {
     headers_frame.set_has_priority(true);
     headers_frame.set_weight(Spdy3PriorityToHttp2Weight(priority));
+    if (headers_include_h2_stream_dependency_) {
+      SpdyStreamId dependent_stream_id = 0;
+      bool exclusive = false;
+      priority_dependency_state_.OnStreamCreation(
+          id, priority, &dependent_stream_id, &exclusive);
+      headers_frame.set_parent_stream_id(dependent_stream_id);
+      headers_frame.set_exclusive(exclusive);
+    }
   }
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(headers_frame));
   headers_stream_->WriteOrBufferData(
       QuicStringPiece(frame.data(), frame.size()), false,
       std::move(ack_notifier_delegate));
+  return frame.size();
+}
+
+size_t QuicSpdySession::WritePriority(QuicStreamId id,
+                                      QuicStreamId parent_stream_id,
+                                      int weight,
+                                      bool exclusive) {
+  SpdyPriorityIR priority_frame(id, parent_stream_id, weight, exclusive);
+  SpdySerializedFrame frame(spdy_framer_.SerializeFrame(priority_frame));
+  headers_stream_->WriteOrBufferData(
+      QuicStringPiece(frame.data(), frame.size()), false, nullptr);
   return frame.size();
 }
 
@@ -467,11 +487,27 @@ void QuicSpdySession::RegisterStreamPriority(QuicStreamId id,
 
 void QuicSpdySession::UnregisterStreamPriority(QuicStreamId id) {
   write_blocked_streams()->UnregisterStream(id);
+  if (headers_include_h2_stream_dependency_ &&
+      perspective() == Perspective::IS_CLIENT) {
+    priority_dependency_state_.OnStreamDestruction(id);
+  }
 }
 
 void QuicSpdySession::UpdateStreamPriority(QuicStreamId id,
                                            SpdyPriority new_priority) {
   write_blocked_streams()->UpdateStreamPriority(id, new_priority);
+
+  if (headers_include_h2_stream_dependency_ &&
+      perspective() == Perspective::IS_CLIENT) {
+    auto updates = priority_dependency_state_.OnStreamUpdate(id, new_priority);
+    for (auto update : updates) {
+      QuicSpdyStream* stream = GetSpdyDataStream(update.id);
+      DCHECK(stream);
+      int weight = Spdy3PriorityToHttp2Weight(stream->priority());
+      WritePriority(update.id, update.dependent_stream_id, weight,
+                    update.exclusive);
+    }
+  }
 }
 
 QuicSpdyStream* QuicSpdySession::GetSpdyDataStream(
@@ -539,6 +575,17 @@ void QuicSpdySession::OnPushPromise(SpdyStreamId stream_id,
   DCHECK_EQ(kInvalidStreamId, promised_stream_id_);
   stream_id_ = stream_id;
   promised_stream_id_ = promised_stream_id;
+  
+  if (headers_include_h2_stream_dependency_) {
+    // Pushed streams are speculative, so they start at IDLE priority.
+    SpdyPriority priority = 4;
+    QuicStreamId dependent_stream_id;
+    bool exclusive;
+    priority_dependency_state_.OnStreamCreation(
+            promised_stream_id, priority, &dependent_stream_id, &exclusive);
+    WritePriority(promised_stream_id, dependent_stream_id,
+                  Spdy3PriorityToHttp2Weight(priority), exclusive);
+  }
 }
 
 void QuicSpdySession::OnHeaderList(const QuicHeaderList& header_list) {
