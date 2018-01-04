@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8a40587_724ed3fb",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3607a37_c8f55dd5",
+      "range": {
+        "startLine": 292,
+        "startChar": 4,
+        "endLine": 292,
+        "endChar": 10
+      },
+      "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "218aadf9_944dd10f",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d96885c_0ed3cf9b",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "218aadf9_944dd10f",
+      "range": {
+        "startLine": 326,
+        "startChar": 23,
+        "endLine": 326,
+        "endChar": 26
+      },
+      "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f2b8682c_aed0eaae",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66fe0a8d_d9cd1b8e",
+      "range": {
+        "startLine": 347,
+        "startChar": 23,
+        "endLine": 347,
+        "endChar": 26
+      },
+      "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c9da074_fe5cdff9",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e39d73f8_3dc5fa9b",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T22:54:03Z",
+      "side": 1,
+      "message": "These are not assertions on the input, they only adjust |a| or |b| to allow the rotation and update in the code below. It\u0027s possible to get a negative |a| in correct execution for example.",
+      "parentUuid": "0c9da074_fe5cdff9",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 26
+      },
+      "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54181ba6_7d41f326",
         "filename": "components/translate/core/browser/translate_prefs.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5a5ba3_1f14a3bf",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2018-01-04T22:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54181ba6_7d41f326",
+      "range": {
+        "startLine": 169,
+        "startChar": 70,
+        "endLine": 169,
+        "endChar": 74
+      },
+      "revId": "ddf03bf386fcfe9ddb85d928b0383d2573fcc315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
