@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b02e6be_27d35e64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T19:50:46Z",
+      "side": 1,
+      "message": "No, no infinite recursion. Something else is leaking. My guess is some GPU channel handle. I can only tell that /proc/x/smaps shows that memory runs away from us... We need to investigate this.",
+      "parentUuid": "dfa3ced2_645aa98c",
+      "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4c42697_9b3ec301",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4096767_a91cbeb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-04T19:50:46Z",
+      "side": 1,
+      "message": "\u003e Or a simpler workaround would be to just have OnEstablishedOnIO post EstablishOnIO instead\n\nDone.",
+      "parentUuid": "a4c42697_9b3ec301",
+      "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
