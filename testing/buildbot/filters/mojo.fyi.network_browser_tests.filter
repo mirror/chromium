@@ -673,20 +673,10 @@
 -PrerenderBrowserTest.FirstContentfulPaintTimingNoCommit
 -PrerenderBrowserTest.FirstContentfulPaintTimingReuse
 -PrerenderBrowserTest.PrerenderBeforeUnload
--PrerenderBrowserTest.PrerenderCancelSubresourceRedirectUnsupportedScheme
--PrerenderBrowserTest.PrerenderCancelSubresourceUnsupportedScheme
--PrerenderBrowserTest.PrerenderDeferredImage
--PrerenderBrowserTest.PrerenderDeferredImageAfterRedirect
--PrerenderBrowserTest.PrerenderDeferredSynchronousXHR
--PrerenderBrowserTest.PrerenderLocationReplaceGWSHistograms
 -PrerenderBrowserTest.PrerenderNoCommitNoSwap
 -PrerenderBrowserTest.PrerenderNoCommitNoSwap2
 -PrerenderBrowserTest.PrerenderPing
 -PrerenderBrowserTest.PrerenderUnload
--PrerenderBrowserTest.PrerenderXhrDelete
--PrerenderBrowserTest.PrerenderXhrPut
--PrerenderBrowserTest.ResourcePriority
--PrerenderBrowserTest.ResourcePriorityOverlappingSwap
 -PrerenderBrowserTestWithExtensions.WebNavigation
 
 # Finish ServiceWorker networking glue rewrite.
@@ -779,13 +769,6 @@
 # Failing NoStatePrefetch tests
 # https://crbug.com/792776
 #
-# Depends on the prerender's ResourceThrottle which updates the histogram the
-# test monitors (PrerenderResourceThrottle).
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchHistograms/0
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchHistograms/1
-# TODO(jam): switch the tests to hook in via URLLoaderFactory to check load flags.
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.IssuesIdlePriorityRequests/0
--NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.IssuesIdlePriorityRequests/1
 # Crashing.
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookie/1
 -NoStatePrefetchBrowserTest/NoStatePrefetchBrowserTest.PrefetchCookie/0

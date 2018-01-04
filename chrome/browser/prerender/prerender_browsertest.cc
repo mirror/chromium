@@ -23,6 +23,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/bind_test_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/test/test_timeouts.h"
@@ -99,6 +100,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_request_body.h"
 #include "content/public/common/url_constants.h"
@@ -107,12 +109,14 @@
 #include "content/public/test/ppapi_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
+#include "content/public/test/url_loader_interceptor.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/manifest_handlers/mime_types_handler.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/result_catcher.h"
 #include "media/base/media_switches.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/escape.h"
 #include "net/cert/x509_certificate.h"
 #include "net/dns/mock_host_resolver.h"
@@ -2866,6 +2870,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
   net::test_server::GetFilePathWithReplacements(
       "/prerender/prerender_with_image.html", replacement_text,
       &replacement_path);
+  // Disable load event checks because they race with cancellation.
+  DisableLoadEventCheck();
   PrerenderTestURL(replacement_path, FINAL_STATUS_UNSUPPORTED_SCHEME, 0);
 }
 
@@ -2904,6 +2910,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
 // Checks that non-http/https main page redirects cancel the prerender.
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
                        PrerenderCancelMainFrameRedirectUnsupportedScheme) {
+  // Disable load event checks because they race with cancellation.
+  DisableLoadEventCheck();
   GURL url = embedded_test_server()->GetURL(
       CreateServerRedirect("invalidscheme://www.google.com/test.html"));
   PrerenderTestURL(url, FINAL_STATUS_UNSUPPORTED_SCHEME, 0);
@@ -3032,6 +3040,8 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
 
 // Checks that deferred redirects in a synchronous XHR abort the prerender.
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderDeferredSynchronousXHR) {
+  // Disable load event checks because they race with cancellation.
+  DisableLoadEventCheck();
   PrerenderTestURL("/prerender/prerender_deferred_sync_xhr.html",
                    FINAL_STATUS_BAD_DEFERRED_REDIRECT, 0);
   ui_test_utils::NavigateToURL(current_browser(), dest_url());
@@ -3231,28 +3241,25 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriority) {
   GURL main_page_url =
       GetURLWithReplacement("/prerender/prerender_with_image.html",
                             "REPLACE_WITH_IMAGE_URL", kPrefetchJpeg);
-
-  // Setup request interceptors for subresources.
-  auto get_priority_lambda = [](net::RequestPriority* out_priority,
-                                net::URLRequest* request) {
-    *out_priority = request->priority();
-  };
-  RequestCounter before_swap_counter;
   net::RequestPriority before_swap_priority = net::THROTTLED;
-  InterceptRequestAndCount(
-      before_swap_url, &before_swap_counter,
-      base::Bind(get_priority_lambda, base::Unretained(&before_swap_priority)));
-  RequestCounter after_swap_counter;
   net::RequestPriority after_swap_priority = net::THROTTLED;
-  InterceptRequestAndCount(
-      after_swap_url, &after_swap_counter,
-      base::Bind(get_priority_lambda, base::Unretained(&after_swap_priority)));
+
+  content::URLLoaderInterceptor interceptor(
+      base::BindLambdaForTesting(
+          [&](content::URLLoaderInterceptor::RequestParams* params) {
+            if (params->url_request.url == before_swap_url)
+              before_swap_priority = params->url_request.priority;
+            else if (params->url_request.url == after_swap_url)
+              after_swap_priority = params->url_request.priority;
+            return false;
+          }),
+      false, true);
 
   // Start the prerender.
   PrerenderTestURL(main_page_url, FINAL_STATUS_USED, 1);
 
   // Check priority before swap.
-  before_swap_counter.WaitForCount(1);
+  WaitForRequestCount(before_swap_url, 1);
 #if defined(OS_ANDROID)
   EXPECT_GT(before_swap_priority, net::IDLE);
 #else
@@ -3266,9 +3273,39 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriority) {
   GetActiveWebContents()->GetMainFrame()->ExecuteJavaScriptForTests(
       base::ASCIIToUTF16(
           "var img=new Image(); img.src='/prerender/image.png'"));
-  after_swap_counter.WaitForCount(1);
+  WaitForRequestCount(after_swap_url, 1);
   EXPECT_NE(net::IDLE, after_swap_priority);
 }
+
+namespace {
+
+class HangingURLLoader : public content::mojom::URLLoader {
+ public:
+  explicit HangingURLLoader(content::mojom::URLLoaderClientPtr client)
+      : client_(std::move(client)) {}
+  ~HangingURLLoader() override {}
+  // mojom::URLLoader implementation:
+  void FollowRedirect() override {}
+  void ProceedWithResponse() override {}
+  void SetPriority(net::RequestPriority priority,
+                   int32_t intra_priority_value) override {
+    if (set_priority_callback_)
+      std::move(set_priority_callback_).Run(priority);
+  }
+  void PauseReadingBodyFromNet() override {}
+  void ResumeReadingBodyFromNet() override {}
+
+  using SetPriorityCallback = base::OnceCallback<void(net::RequestPriority)>;
+  void set_set_priority_callback(SetPriorityCallback callback) {
+    set_priority_callback_ = std::move(callback);
+  }
+
+ private:
+  content::mojom::URLLoaderClientPtr client_;
+  SetPriorityCallback set_priority_callback_;
+};
+
+}  // namespace
 
 // Checks that a request started before the swap gets its original priority back
 // after the swap.
@@ -3278,30 +3315,30 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
       GetURLWithReplacement("/prerender/prerender_with_image.html",
                             "REPLACE_WITH_IMAGE_URL", kPrefetchJpeg);
 
-  // Setup request interceptors for subresources.
-  net::URLRequest* url_request = nullptr;
   net::RequestPriority priority = net::THROTTLED;
-  base::RunLoop wait_loop;
-  auto io_lambda = [](net::URLRequest** out_request,
-                      net::RequestPriority* out_priority, base::Closure closure,
-                      net::URLRequest* request) {
-    if (out_request)
-      *out_request = request;
-    content::BrowserThread::PostTask(
-        content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
-            [](net::RequestPriority priority,
-               net::RequestPriority* out_priority, base::Closure closure) {
-              *out_priority = priority;
-              closure.Run();
-            },
-            request->priority(), base::Unretained(out_priority), closure));
-  };
+  base::RunLoop load_image_run_loop, set_priority_run_loop;
+  content::URLLoaderInterceptor interceptor(
+      base::BindLambdaForTesting(
+          [&](content::URLLoaderInterceptor::RequestParams* params) {
+            if (params->url_request.url == image_url) {
+              // Check priority before swap.
+              priority = params->url_request.priority;
+              load_image_run_loop.QuitClosure().Run();
 
-  CreateHangingFirstRequestInterceptor(
-      image_url, base::FilePath(),
-      base::Bind(io_lambda, base::Unretained(&url_request),
-                 base::Unretained(&priority), wait_loop.QuitClosure()));
+              auto loader =
+                  std::make_unique<HangingURLLoader>(std::move(params->client));
+              loader->set_set_priority_callback(base::BindLambdaForTesting(
+                  [&](net::RequestPriority request_priority) {
+                    priority = request_priority;
+                    set_priority_run_loop.QuitClosure().Run();
+                  }));
+              mojo::MakeStrongBinding(std::move(loader),
+                                      std::move(params->request));
+              return true;
+            }
+            return false;
+          }),
+      false, true);
 
   // The prerender will hang on the image resource, can't run the usual checks.
   DisableLoadEventCheck();
@@ -3309,14 +3346,11 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
   // Start the prerender.
   PrerenderTestURL(main_page_url, FINAL_STATUS_USED, 0);
 
-// Check priority before swap.
+  // Check priority before swap.
+  load_image_run_loop.Run();
 #if defined(OS_ANDROID)
-  if (priority <= net::IDLE)
-    wait_loop.Run();
   EXPECT_GT(priority, net::IDLE);
 #else
-  if (priority != net::IDLE)
-    wait_loop.Run();
   EXPECT_EQ(net::IDLE, priority);
 #endif
 
@@ -3327,15 +3361,7 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
       ui::PAGE_TRANSITION_TYPED, false));
 
   // Check priority after swap. The test may timeout in case of failure.
-  priority = net::THROTTLED;
-  do {
-    base::RunLoop loop;
-    content::BrowserThread::PostTask(
-        content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(io_lambda, nullptr, base::Unretained(&priority),
-                       loop.QuitClosure(), base::Unretained(url_request)));
-    loop.Run();
-  } while (priority <= net::IDLE);
+  set_priority_run_loop.Run();
   EXPECT_GT(priority, net::IDLE);
 }
 
