@@ -350,6 +350,33 @@ class GetTokensState : public NSSOperationState {
   GetTokensCallback callback_;
 };
 
+class GetKeyLocationsState : public NSSOperationState {
+ public:
+  explicit GetKeyLocationsState(const std::vector<std::string>& public_keys,
+                                const GetKeyLocationsCallback& callback);
+  ~GetKeyLocationsState() override {}
+
+  void OnError(const base::Location& from,
+               const std::string& error_message) override {
+    CallBack(from, KeyTokenIdMap() /* assume not on system token */,
+             error_message);
+  }
+
+  void CallBack(const base::Location& from,
+                const KeyTokenIdMap& key_token_id_map,
+                const std::string& error_message) {
+    origin_task_runner_->PostTask(
+        from, base::BindOnce(callback_, key_token_id_map, error_message));
+  }
+
+  // Must be the DER encoding of a SubjectPublicKeyInfo.
+  const std::vector<std::string> public_keys_;
+
+ private:
+  // Must be called on origin thread, therefore use CallBack().
+  GetKeyLocationsCallback callback_;
+};
+
 NSSOperationState::NSSOperationState()
     : origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
 }
@@ -403,6 +430,11 @@ RemoveCertificateState::RemoveCertificateState(
 GetTokensState::GetTokensState(const GetTokensCallback& callback)
     : callback_(callback) {
 }
+
+GetKeyLocationsState::GetKeyLocationsState(
+    const std::vector<std::string>& public_keys,
+    const GetKeyLocationsCallback& callback)
+    : public_keys_(public_keys), callback_(std::move(callback)) {}
 
 // Does the actual key generation on a worker thread. Used by
 // GenerateRSAKeyWithDB().
@@ -739,6 +771,39 @@ void GetTokensWithDB(std::unique_ptr<GetTokensState> state,
 
 }  // namespace
 
+void GetKeyLocationsWithDB(std::unique_ptr<GetKeyLocationsState> state,
+                           net::NSSCertDatabase* cert_db) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  KeyTokenIdMap key_token_id_map;
+
+  for (const std::string& public_key : state->public_keys_) {
+    const uint8_t* public_key_uint8 =
+        reinterpret_cast<const uint8_t*>(public_key.data());
+    std::vector<uint8_t> public_key_vector(
+        public_key_uint8, public_key_uint8 + public_key.size());
+
+    crypto::ScopedSECKEYPrivateKey rsa_key =
+        crypto::FindNSSKeyFromPublicKeyInfo(public_key_vector);
+
+    // Fail if any key was not found.
+    if (!rsa_key) {
+      state->OnError(FROM_HERE, kErrorKeyNotFound);
+      return;
+    }
+
+    if (cert_db->GetSystemSlot() &&
+        cert_db->GetSystemSlot().get() == rsa_key->pkcs11Slot) {
+      key_token_id_map[public_key] = kTokenIdSystem;
+    } else if (cert_db->GetPrivateSlot() &&
+               cert_db->GetPrivateSlot().get() == rsa_key->pkcs11Slot) {
+      key_token_id_map[public_key] = kTokenIdUser;
+    }
+  }
+
+  state->CallBack(FROM_HERE, key_token_id_map, std::string() /* no error */);
+}
+
 namespace subtle {
 
 void GenerateRSAKey(const std::string& token_id,
@@ -950,6 +1015,19 @@ void GetTokens(const GetTokensCallback& callback,
                   base::Bind(&GetTokensWithDB, base::Passed(&state)),
                   browser_context,
                   state_ptr);
+}
+
+void GetKeyLocations(const std::vector<std::string>& public_keys,
+                     const GetKeyLocationsCallback& callback,
+                     content::BrowserContext* browser_context) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto state = std::make_unique<GetKeyLocationsState>(public_keys, callback);
+  NSSOperationState* state_ptr = state.get();
+
+  GetCertDatabase(
+      std::string() /* don't get any specific slot */,
+      base::BindRepeating(&GetKeyLocationsWithDB, base::Passed(&state)),
+      browser_context, state_ptr);
 }
 
 }  // namespace platform_keys
