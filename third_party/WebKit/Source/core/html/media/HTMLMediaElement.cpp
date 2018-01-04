@@ -4207,6 +4207,39 @@ void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {
     web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
 }
 
+int HTMLMediaElement::ComputePlayerPriority() {
+  // If we don't know the priority, make it as low as possible.
+  int priority = INT_MIN;
+
+  // We can only query for intersection if we're in kCompositingClean or better.
+  if (GetDocument().Lifecycle().GetState() <
+      DocumentLifecycle::kCompositingClean) {
+    return priority;
+  }
+
+  if (!GetLayoutObject())
+    return priority;
+
+  // Transform into the root frame's coordinate space, and order players by
+  // their position on the page.
+  if (LocalFrame* frame = GetDocument().GetFrame()) {
+    if (LocalFrame* frame_root = &frame->LocalFrameRoot()) {
+      if (LayoutObject* root_layout_object =
+              frame_root->ContentLayoutObject()) {
+        LayoutBox* ancestor = ToLayoutBox(root_layout_object);
+        LayoutRect root_space_rect;
+        bool does_intersect = GetLayoutObject()->MapToVisualRectInAncestorSpace(
+            ancestor, root_space_rect, kEdgeInclusive);
+        // Numerically higher is higher priority, so switch the sign.
+        if (does_intersect)
+          priority = -root_space_rect.PixelSnappedLocation().Y();
+      }
+    }
+  }
+
+  return priority;
+}
+
 STATIC_ASSERT_ENUM(WebMediaPlayer::kReadyStateHaveNothing,
                    HTMLMediaElement::kHaveNothing);
 STATIC_ASSERT_ENUM(WebMediaPlayer::kReadyStateHaveMetadata,
