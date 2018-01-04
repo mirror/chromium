@@ -22,6 +22,30 @@
       "revId": "c209afe622f97fb249dac990d260df9672d4e73f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c561aca_c06bbaab",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T16:44:08Z",
+      "side": 1,
+      "message": "We do not have tests for CWVWebView. And adding a test means a lot of infrastructural work, which can not be scoped to this CL. Hopefully John will have time for implementing tests in Q1.",
+      "parentUuid": "f528720e_eb9ec6a7",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 11
+      },
+      "revId": "c209afe622f97fb249dac990d260df9672d4e73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
