@@ -16,6 +16,24 @@
       "revId": "3a45eff2ae353dee8b0d3ef30e8ee85ce7df60b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356e91ae_7c004c28",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2018-01-04T02:42:46Z",
+      "side": 1,
+      "message": "The variance will depend on the hardware that you schedule this test on. I think it\u0027s hard to guess just looking at this \u0026 I would rely on running perf trybot instead.\n\nThe particular scale doesn\u0027t matter much. Perf dashboard can deal with all kind of scale IIRC",
+      "parentUuid": "2b961386_112dc774",
+      "revId": "3a45eff2ae353dee8b0d3ef30e8ee85ce7df60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
