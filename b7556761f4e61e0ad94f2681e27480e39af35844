@@ -22,6 +22,30 @@
       "revId": "b7556761f4e61e0ad94f2681e27480e39af35844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1a8586_0cb0a6ce",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2018-01-04T20:00:03Z",
+      "side": 1,
+      "message": "Unfortunately not, since it\u0027s read-only.",
+      "parentUuid": "55fd7367_301a3fd9",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "b7556761f4e61e0ad94f2681e27480e39af35844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
