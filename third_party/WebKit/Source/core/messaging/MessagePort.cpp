@@ -127,11 +127,12 @@ void MessagePort::Entangle(mojo::ScopedMessagePipeHandle handle) {
   // Only invoked to set our initial entanglement.
   DCHECK(handle.is_valid());
   DCHECK(!connector_);
-  DCHECK(GetExecutionContext());
   connector_ = std::make_unique<mojo::Connector>(
       std::move(handle), mojo::Connector::SINGLE_THREADED_SEND, task_runner_);
   connector_->PauseIncomingMethodCallProcessing();
   connector_->set_incoming_receiver(this);
+  connector_->set_connection_error_handler(
+      WTF::Bind(&MessagePort::close, WrapWeakPersistent(this)));
 }
 
 void MessagePort::Entangle(MessagePortChannel channel) {
