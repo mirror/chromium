@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfa3ced2_645aa98c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T16:42:53Z",
+      "side": 1,
+      "message": "there\u0027s no infinite recursion here, right? it would block, but why would it OOM?",
+      "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c42697_9b3ec301",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-04T16:42:53Z",
+      "side": 1,
+      "message": "that\u0027s not correct for out of process gpu. GpuProcessHost destructor runs when gpu process crashes as well, and sending out GPU_ACCESS_DENIED is wrong\n\nsounds like it would be better for BrowserGpuChannelHostFactory to listen to some sort of shutdown signal, and just stop retrying if that\u0027s the case. And there appear to be such a signal already: BrowserGpuChannelHostFactory::CloseChannel.\n\nOr a simpler workaround would be to just have OnEstablishedOnIO post EstablishOnIO instead",
+      "revId": "7158f35c3524fa87b1b505cf6dee0477a631f31c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
