@@ -26,6 +26,8 @@ source_set("ctap") {
     "ctap_request_param.h",
     "ctap_response.cc",
     "ctap_response.h",
+    "device_response_convertor.cc",
+    "device_response_convertor.h",
     "public_key_credential_descriptor.cc",
     "public_key_credential_descriptor.h",
     "public_key_credential_params.cc",
