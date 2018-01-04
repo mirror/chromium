@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "395c829e_05485cb8",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-04T00:50:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "537350c1_fc91ad62",
+      "range": {
+        "startLine": 2468,
+        "startChar": 39,
+        "endLine": 2468,
+        "endChar": 63
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7b1043_d00f55bc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 1
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "4bc624e8_abe106ae",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3263,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-04T00:50:24Z",
+      "side": 1,
+      "message": "The actual measurement of scale relies on element size and caret bounds -- both of which are only available to the renderer process of the element. OTH the measurement of scale also relies on VisualViewport which does not make much sense in an OOPIF process.\n\nI think we do need to ship more values (other than the recto to scroll) form the originating renderer process -- perhaps the offset of caret and a suggested scale value.",
+      "parentUuid": "81bfd0f3_a23f533f",
+      "range": {
+        "startLine": 3261,
+        "startChar": 34,
+        "endLine": 3263,
+        "endChar": 42
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abedcfe7_00b76f3e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 1
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "0f18c671_ff507b9e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-04T00:50:24Z",
+      "side": 1,
+      "message": "Unfortunately, this was supposed to be in the original CL which added recursive scrolling for OOPIFs (https://chromium-review.googlesource.com/c/chromium/src/+/679319).",
+      "parentUuid": "abedcfe7_00b76f3e",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56863955_9379827b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 1
@@ -99,6 +171,30 @@
       "writtenOn": "2017-12-18T21:21:57Z",
       "side": 1,
       "message": "I think it would be cleaner if this method, if it\u0027s a MainFrame, would now call ZoomInToRect based on a passed in bool (should_zoom). That way it\u0027s naturally agnostic as to whether the scroll is coming from an OOPIF or not. You\u0027d have to add some plumbing to pass that \"should zoom\" bit around but that seems like a reasonable API for this method (we should probably also start thinking of packaging up the parameters on this method into some kind of ScrollIntoViewOptions struct).\n\nBasically, I really don\u0027t like that we\u0027re keeping the \"zoom at end\" state on Frame. That should be an option passed to ScrollIntoView rather than state on the FrameView.",
+      "range": {
+        "startLine": 763,
+        "startChar": 3,
+        "endLine": 763,
+        "endChar": 0
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf80bee_b2896c3e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2018-01-04T00:50:24Z",
+      "side": 1,
+      "message": "\u003e I think it would be cleaner if this method, if it\u0027s a MainFrame, would now call ZoomInToRect based on a passed in bool (should_zoom). That way it\u0027s naturally agnostic as to whether the scroll is coming from an OOPIF or not. You\u0027d have to add some plumbing to pass that \"should zoom\" bit around but that seems like a reasonable API for this metho\n\nYes. I was not clear whether we could mix zoom and scroll here; which is why I added the flag separately. Given your point of view on this I will move it to the method as an argument.\n\n\u003e (we should probably also start thinking of packaging up the parameters on this method into some kind of ScrollIntoViewOptions struct).\n\u003e \n\u003e Basically, I really don\u0027t like that we\u0027re keeping the \"zoom at end\" state on Frame. That should be an option passed to ScrollIntoView rather than state on the FrameView.\n\nI am following up on this first. Then I come back to this change to add the logic for zoom. I suspect the outcome should be a much smaller CL (we would not need to change anything here then).",
+      "parentUuid": "56863955_9379827b",
       "range": {
         "startLine": 763,
         "startChar": 3,
