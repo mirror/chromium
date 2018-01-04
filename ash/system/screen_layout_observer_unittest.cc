@@ -60,6 +60,8 @@ class ScreenLayoutObserverTest : public AshTestBase {
 
   base::string16 GetMirroringDisplayNames();
 
+  base::string16 GetUnifiedDisplayName();
+
  private:
   const message_center::Notification* GetDisplayNotification() const;
 
@@ -113,6 +115,11 @@ base::string16 ScreenLayoutObserverTest::GetMirroringDisplayNames() {
   return display_names;
 }
 
+base::string16 ScreenLayoutObserverTest::GetUnifiedDisplayName() {
+  return base::UTF8ToUTF16(
+      display_manager()->GetDisplayNameForId(display::kUnifiedDisplayId));
+}
+
 const message_center::Notification*
 ScreenLayoutObserverTest::GetDisplayNotification() const {
   const message_center::NotificationList::Notifications notifications =
@@ -151,20 +158,31 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
             GetDisplayNotificationAdditionalText());
   EXPECT_TRUE(GetDisplayNotificationText().empty());
 
-  // UI-scale
+  // UI-scale to 0.8.
   CloseNotification();
-  UpdateDisplay("400x400@1.5");
+  display::Display::SetInternalDisplayId(display_manager()->first_display_id());
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      false /* up */, display::Display::ModeChangeSource::kAccelerator));
   EXPECT_EQ(l10n_util::GetStringFUTF16(
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
-                GetFirstDisplayName(), base::UTF8ToUTF16("600x600")),
+                GetFirstDisplayName(), base::UTF8ToUTF16("320x320")),
             GetDisplayNotificationAdditionalText());
   EXPECT_EQ(l10n_util::GetStringUTF16(
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE),
             GetDisplayNotificationText());
 
-  // UI-scale to 1.0
+  // Using settings UI to change the UI-scale should show no notification.
   CloseNotification();
-  UpdateDisplay("400x400");
+  display::Display::SetInternalDisplayId(display_manager()->first_display_id());
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      false /* up */, display::Display::ModeChangeSource::kSettingsUI));
+  EXPECT_TRUE(GetDisplayNotificationText().empty());
+  EXPECT_TRUE(GetDisplayNotificationAdditionalText().empty());
+
+  // Reset UI-scale to 1.0 by keyboard shortcut.
+  CloseNotification();
+  display_manager()->ResetInternalDisplayZoom(
+      display::Display::ModeChangeSource::kAccelerator);
   EXPECT_EQ(l10n_util::GetStringFUTF16(
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
                 GetFirstDisplayName(), base::UTF8ToUTF16("400x400")),
@@ -173,9 +191,10 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
                 IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE),
             GetDisplayNotificationText());
 
-  // No-update
+  // No notification since source is unknown.
   CloseNotification();
-  UpdateDisplay("400x400");
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      true, display::Display::ModeChangeSource::kUnknown));
   EXPECT_TRUE(GetDisplayNotificationText().empty());
   EXPECT_TRUE(GetDisplayNotificationAdditionalText().empty());
 
@@ -234,14 +253,12 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
   EXPECT_TRUE(GetDisplayNotificationAdditionalText().empty());
 
   // Resize the first display.
+  CloseNotification();
   UpdateDisplay("400x400@1.5,200x200");
-  EXPECT_EQ(l10n_util::GetStringFUTF16(
-                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
-                GetFirstDisplayName(), base::UTF8ToUTF16("600x600")),
-            GetDisplayNotificationAdditionalText());
-  EXPECT_EQ(l10n_util::GetStringUTF16(
-                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE),
-            GetDisplayNotificationText());
+  // No notification since the source wasn't specified to be from an
+  // accelerator.
+  EXPECT_TRUE(GetDisplayNotificationText().empty());
+  EXPECT_TRUE(GetDisplayNotificationAdditionalText().empty());
 
   // Rotate the second.
   UpdateDisplay("400x400@1.5,200x200/r");
@@ -257,6 +274,51 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
   display::Display::SetInternalDisplayId(
       display_manager()->GetSecondaryDisplay().id());
   UpdateDisplay("400x400@1.5");
+  EXPECT_TRUE(GetDisplayNotificationText().empty());
+}
+
+// Zooming in Unified Mode results in display size changes rather than changes
+// in the UI scales, in which case, we still want to show a notification when
+// the source of change is a keyboard shortcut.
+TEST_F(ScreenLayoutObserverTest, ZoomingInUnifiedModeNotification) {
+  Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
+      true);
+  UpdateDisplay("400x400,200x200");
+
+  // Enter unified mode.
+  display_manager()->SetUnifiedDesktopEnabled(true);
+
+  // Using keyboard shortcuts to change the zoom should result in a
+  // notification.
+  CloseNotification();
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      false /* up */, display::Display::ModeChangeSource::kAccelerator));
+  EXPECT_EQ(l10n_util::GetStringFUTF16(
+                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
+                GetUnifiedDisplayName(), base::UTF8ToUTF16("400x200")),
+            GetDisplayNotificationAdditionalText());
+  EXPECT_EQ(l10n_util::GetStringUTF16(
+                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE),
+            GetDisplayNotificationText());
+
+  CloseNotification();
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      true /* up */, display::Display::ModeChangeSource::kAccelerator));
+  EXPECT_EQ(l10n_util::GetStringFUTF16(
+                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED,
+                GetUnifiedDisplayName(), base::UTF8ToUTF16("800x400")),
+            GetDisplayNotificationAdditionalText());
+  EXPECT_EQ(l10n_util::GetStringUTF16(
+                IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE),
+            GetDisplayNotificationText());
+
+  // However, when the source is the settings UI, the ScreenLayoutObserver does
+  // not produce a notification for resolution changes in Unified Mode. These
+  // are handled by the ResolutionNotificationController instead.
+  CloseNotification();
+  EXPECT_TRUE(display_manager()->ZoomInternalDisplay(
+      false /* up */, display::Display::ModeChangeSource::kSettingsUI));
+  EXPECT_TRUE(GetDisplayNotificationAdditionalText().empty());
   EXPECT_TRUE(GetDisplayNotificationText().empty());
 }
 

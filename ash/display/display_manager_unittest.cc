@@ -1983,7 +1983,8 @@ TEST_F(DisplayManagerTest, ResetInternalDisplayZoomFor1_25x) {
 
   // Reset the internal display zoom and expect the UI scale to go to the
   // default 0.8f.
-  display_manager()->ResetInternalDisplayZoom();
+  display_manager()->ResetInternalDisplayZoom(
+      display::Display::ModeChangeSource::kUnknown);
   EXPECT_EQ(1.25f, GetDisplayInfoAt(0).GetEffectiveDeviceScaleFactor());
   EXPECT_EQ(1.0f, GetDisplayInfoAt(0).GetEffectiveUIScale());
   EXPECT_EQ(0.8f, GetDisplayInfoAt(0).configured_ui_scale());
@@ -3066,8 +3067,10 @@ TEST_F(DisplayManagerTest, DockMode) {
   EXPECT_TRUE(display_manager()->IsActiveDisplayId(external_id));
   EXPECT_FALSE(display_manager()->IsActiveDisplayId(internal_id));
 
-  EXPECT_FALSE(display_manager()->ZoomInternalDisplay(true));
-  EXPECT_FALSE(display_manager()->ZoomInternalDisplay(false));
+  EXPECT_FALSE(display_manager()->ZoomInternalDisplay(
+      true, display::Display::ModeChangeSource::kUnknown));
+  EXPECT_FALSE(display_manager()->ZoomInternalDisplay(
+      false, display::Display::ModeChangeSource::kUnknown));
   EXPECT_FALSE(display::test::DisplayManagerTestApi(display_manager())
                    .SetDisplayUIScale(internal_id, 1.0f));
 }
