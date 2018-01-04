@@ -16,6 +16,24 @@
       "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55076704_5baa559b",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-04T18:32:21Z",
+      "side": 0,
+      "message": "It\u0027s because nothing forces base::StringToInt to initialize \u0026result (as far as the compiler is concerned). The correct fix is to initialize |result| when declaring it, i.e. |int result \u003d 0;|.",
+      "parentUuid": "e75fec00_965363e0",
+      "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
