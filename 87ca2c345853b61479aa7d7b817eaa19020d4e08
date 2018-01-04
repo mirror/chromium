@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91fb2f05_b4490d09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T20:30:07Z",
+      "side": 1,
+      "message": "How about:\n\nRename files and symbols relating to PAC (proxy auto config).\n\nThe bug number is not descriptive to include in the title, and in fact is already part of Bug:613655 at the bottom so doesn\u0027t add any information.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 90
+      },
+      "revId": "87ca2c345853b61479aa7d7b817eaa19020d4e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1453af1_8132ba7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T20:30:07Z",
+      "side": 1,
+      "message": "This comment implies that we renamed the DHCP files too.\n\nCan you add the file renames for dhcp_proxy_script*?",
+      "range": {
+        "startLine": 8,
+        "startChar": 153,
+        "endLine": 8,
+        "endChar": 175
+      },
+      "revId": "87ca2c345853b61479aa7d7b817eaa19020d4e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81a17f_5c90180f",
+        "filename": "content/browser/frame_host/mixed_content_navigation_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T20:30:07Z",
+      "side": 1,
+      "message": "Remove this change.",
+      "revId": "87ca2c345853b61479aa7d7b817eaa19020d4e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497e31e1_7dc51065",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 4996,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T20:30:07Z",
+      "side": 1,
+      "message": "The renamed unittest files also need to be updated.",
+      "revId": "87ca2c345853b61479aa7d7b817eaa19020d4e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51b394a_66168266",
+        "filename": "net/proxy/pac_file_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-04T20:30:07Z",
+      "side": 1,
+      "message": "NET_PROXY_PAC_FILE_DATA_H_\n\n(here and on next line; looks like the comment at bottom of file is correct).",
+      "revId": "87ca2c345853b61479aa7d7b817eaa19020d4e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
