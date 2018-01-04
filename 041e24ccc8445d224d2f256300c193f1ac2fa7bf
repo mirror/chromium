@@ -22,6 +22,30 @@
       "revId": "041e24ccc8445d224d2f256300c193f1ac2fa7bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1ae284_1fcb65bd",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17914,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2018-01-04T17:52:40Z",
+      "side": 1,
+      "message": "Oops, sorry. I\u0027ve configured my emacs to not do this again. See CL:851032.",
+      "parentUuid": "918ee44d_b31c4115",
+      "range": {
+        "startLine": 17914,
+        "startChar": 0,
+        "endLine": 17914,
+        "endChar": 1
+      },
+      "revId": "041e24ccc8445d224d2f256300c193f1ac2fa7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
