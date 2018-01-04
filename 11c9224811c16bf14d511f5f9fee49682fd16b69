@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "529b4958_51c7a093",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T22:23:24Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t know those were approved.\n\nI had to move out \u0027params-\u003etarget_contents\u0027 as well. It looks a little more busy but seems ok.",
+      "parentUuid": "1fb2a370_b945e395",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fcd2d03_c44d033a",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -105,6 +123,24 @@
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42fcd19_951da057",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T22:23:24Z",
+      "side": 1,
+      "message": "Done and added test.",
+      "parentUuid": "5d668d5f_db2fbb43",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "0468d528_9d4ea73d",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T22:23:24Z",
+      "side": 1,
+      "message": "Ah, I\u0027m blind. Essentially fixed and added test.",
+      "parentUuid": "f942465b_0a3db8d6",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd55180a_520fd7db",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -211,6 +265,24 @@
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0613621_20cfe400",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T22:23:24Z",
+      "side": 1,
+      "message": "GetIndexOfExistingTab() is used in another place, so I didn\u0027t want to touch it (yet). But I did move the SINGLETON_TAB case so that it picks up the looping (even in the Android case).",
+      "parentUuid": "55a5a854_03581d60",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
