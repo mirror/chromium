@@ -34,6 +34,24 @@
       "revId": "f5660f71e3873e31623b88d61848d323592f4013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357abe66_b88f3639",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-04T00:15:44Z",
+      "side": 1,
+      "message": "Closing the last incognito window will cause its storage partitions to be destroyed, while the main thread continues to run, no?  I don\u0027t think we keep around the entire profile in memory.\n\nSame for guest profiles, and I assume multiple profiles, if you\u0027re using them.",
+      "parentUuid": "97e42984_19fe8609",
+      "revId": "f5660f71e3873e31623b88d61848d323592f4013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
