@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa755195_85d9110a",
+        "filename": "ash/system/supervised/tray_supervised_user.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T01:28:20Z",
+      "side": 1,
+      "message": "Is this comment still accurate? If not, please update.",
+      "revId": "5d33f67a5a93bb3a2a5a12f779209bb36d348201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
