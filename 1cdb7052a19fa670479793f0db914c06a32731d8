@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3fe6aa4f_e3134dd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-01-04T16:30:41Z",
+      "side": 1,
+      "message": "No. There\u0027s no TODO.\nI think there\u0027re some misunderstanding.\n\nThe bug is already fixed. The bug is about why AudioStreamHandler has to keep a instance copy of current audio manager. The fix makes we have to workaround it (because we don\u0027t want this instance copy).\n\nThis is the changes for your reference (and it refers to an internal bug):\nhttps://codereview.chromium.org/2205153002",
+      "parentUuid": "380834a8_b7ba555e",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f343c98_dc31581e",
         "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
         "patchSetId": 13
@@ -123,6 +147,24 @@
       "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35afabeb_9b713090",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1257237
+      },
+      "writtenOn": "2018-01-04T16:30:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8014ee22_9719e397",
+      "revId": "1cdb7052a19fa670479793f0db914c06a32731d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
