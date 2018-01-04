@@ -1481,6 +1481,9 @@ extern const char kPermissionPromptPersistenceToggleDescription[];
 extern const char kAcceleratedMjpegDecodeName[];
 extern const char kAcceleratedMjpegDecodeDescription[];
 
+extern const char kAllowPasswordSubstitutionInOncName[];
+extern const char kAllowPasswordSubstitutionInOncDescription[];
+
 extern const char kAllowTouchpadThreeFingerClickName[];
 extern const char kAllowTouchpadThreeFingerClickDescription[];
 

@@ -25,6 +25,7 @@ CHROMEOS_EXPORT extern const char kAggressiveCacheDiscardThreshold[];
 CHROMEOS_EXPORT extern const char kAggressiveTabDiscardThreshold[];
 CHROMEOS_EXPORT extern const char kAggressiveThreshold[];
 CHROMEOS_EXPORT extern const char kAllowFailedPolicyFetchForTest[];
+CHROMEOS_EXPORT extern const char kAllowPasswordSubstitutionInOnc[];
 CHROMEOS_EXPORT extern const char kAllowRAInDevMode[];
 CHROMEOS_EXPORT extern const char kAppAutoLaunched[];
 CHROMEOS_EXPORT extern const char kAppOemManifestFile[];

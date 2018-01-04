@@ -53,6 +53,16 @@ const char kAggressiveThreshold[] = "aggressive";
 const char kAllowFailedPolicyFetchForTest[] =
     "allow-failed-policy-fetch-for-test";
 
+// Enables the use of a substitution variable for the password when defining the
+// ONC value for the user network configuration. Turning this on will allow the
+// administrator to use ${PASSWORD} in the password field as an indicator that
+// the user's password will be used to authenticate to the network. Enabling
+// this feature would mean that all enterprise users' password will be saved on
+// login. The password may be discarded after policy has been parsed and it
+// does not contain the ${PASSWORD} variable.
+const char kAllowPasswordSubstitutionInOnc[] =
+    "allow-password-substitution-in-onc";
+
 // Allows remote attestation (RA) in dev mode for testing purpose. Usually RA
 // is disabled in dev mode because it will always fail. However, there are cases
 // in testing where we do want to go through the permission flow even in dev

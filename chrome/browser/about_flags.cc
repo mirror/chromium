@@ -3651,6 +3651,13 @@ const FeatureEntry kFeatureEntries[] = {
          kMarkHttpAsFeatureVariations,
          "MarkHttpAs")},
 
+#if defined(OS_CHROMEOS)
+    {"allow-password-substitution-in-onc",
+     flag_descriptions::kAllowPasswordSubstitutionInOncName,
+     flag_descriptions::kAllowPasswordSubstitutionInOncDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kAllowPasswordSubstitutionInOnc)},
+#endif  // defined(OS_CHROMEOS)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the

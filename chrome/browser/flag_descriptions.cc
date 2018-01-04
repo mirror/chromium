@@ -2395,6 +2395,11 @@ const char kAcceleratedMjpegDecodeDescription[] =
     "Enable hardware-accelerated mjpeg decode for captured frame where "
     "available.";
 
+const char kAllowPasswordSubstitutionInOncName[] =
+    "Allow password substitution in wifi policy";
+const char kAllowPasswordSubstitutionInOncDescription[] =
+    "Allow password substitution in the ONC value for the user network policy.";
+
 const char kAllowTouchpadThreeFingerClickName[] = "Touchpad three-finger-click";
 const char kAllowTouchpadThreeFingerClickDescription[] =
     "Enables touchpad three-finger-click as middle button.";
