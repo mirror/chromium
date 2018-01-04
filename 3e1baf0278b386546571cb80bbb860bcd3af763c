@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "182fc454_17119a4e",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-04T17:04:39Z",
+      "side": 1,
+      "message": "Done. I\u0027ve removed unique_ptr and now destroy sequence looks like this:\n\nCronetURLRequestContextAdapter::Destroy()\nCronetURLRequestContext::Destroy()\nCronetURLRequestContext::DestroyOnNetworkThread()\nCronetURLRequestContextAdapter::OnDestroyNetworkThread()\nCronetURLRequestContextAdapter::~CronetURLRequestContextAdapter()\nCronetURLRequestContext::~CronetURLRequestContext()",
+      "parentUuid": "f9486db6_aebffb51",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d314b29e_f71deccd",
         "filename": "components/cronet/cronet_global_state.h",
         "patchSetId": 8
