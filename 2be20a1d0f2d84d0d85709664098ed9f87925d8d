@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "29bd0e57_c190fa0d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/origin-trials-interfaces.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-04T17:54:43Z",
+      "side": 1,
+      "message": "Please update this comment to say this has to be done locally to test origin trial support.",
+      "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52afc904_0ca0902b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/origin-trials-interfaces.html",
         "patchSetId": 5
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I don\u0027t think you can have both: if the feature is \"experimental\", it will be tested by the content shell no matter what. If you want to test Origin Trial only, you\u0027ll have to run the test manually with the flag.\n\nPerhaps chasej@ has better idea on this?",
       "parentUuid": "52afc904_0ca0902b",
+      "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32487441_a32d4c1e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/origin-trials-interfaces.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2018-01-04T17:54:43Z",
+      "side": 1,
+      "message": "Please add a comment on what actually gets tested on the bots.",
+      "parentUuid": "9a42918e_58c95208",
       "revId": "2be20a1d0f2d84d0d85709664098ed9f87925d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
