@@ -726,8 +726,6 @@ crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slotted-pseudo-elemen
 crbug.com/667560 [ Debug ] http/tests/devtools/elements/styles-3/styles-change-node-while-editing.js [ Pass Failure ]
 crbug.com/778515 http/tests/devtools/elements/styles-3/styles-add-new-rule.js [ Pass Failure ]
 
-crbug.com/785571 http/tests/devtools/console/console-context-selector.js [ Pass Failure ]
-
 crbug.com/789225 http/tests/devtools/console/console-focus.js [ Pass Failure ]
 
 crbug.com/667560 [ Win ] http/tests/devtools/console-cross-origin-iframe-logging.js [ Pass Timeout ]
@@ -2769,8 +2767,8 @@ crbug.com/709227 external/wpt/workers/nested_worker.worker.html [ Timeout ]
 
 # Crashes
 crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.pattern.basic.nocontext.worker.html [ Crash ]
-crbug.com/786249 http/tests/inspector-protocol/network/response-interception-no-change-content-not-ready.js [ Crash ]
-crbug.com/786249 http/tests/inspector-protocol/network/response-interception-request-completes-network-closes.js [ Crash ]
+crbug.com/786249 http/tests/inspector-protocol/network/response-interception-no-change-content-not-ready.js [ Pass Crash ]
+crbug.com/786249 http/tests/inspector-protocol/network/response-interception-request-completes-network-closes.js [ Pass Crash ]
 
 # ====== Tests from enabling .any.js/.worker.js tests end here ========
 
@@ -2984,7 +2982,7 @@ crbug.com/736177 [ Mac10.12 Retina ] tables/mozilla_expected_failures/core/capti
 crbug.com/736177 [ Mac10.12 Retina ] virtual/prefer_compositing_to_lcd_text/compositing/overflow/theme-affects-visual-overflow.html [ Failure Pass ]
 crbug.com/736177 [ Mac10.12 Retina ] virtual/scalefactor200/fast/hidpi/static/validation-bubble-appearance-hidpi.html [ Failure Pass ]
 
-crbug.com/734762 inspector-protocol/timeline/page-frames.js [ Failure ]
+crbug.com/734762 inspector-protocol/timeline/page-frames.js [ Failure Pass ]
 
 crbug.com/736255 [ Mac ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001b.html [ Skip ]
 crbug.com/736732 virtual/enable_wasm/external/wpt/wasm/wasm_local_iframe_test.html [ Timeout Pass ]
