@@ -1,0 +1,385 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c39301aa_64f674f6",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f73ca1_5e82c141",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Is this used?",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94b31d6_7aaf5994",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c2171d_f96ac490",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: DCHECK(response_data.has_value());",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d53c4f7_02ee794f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Clean |client_data_| for good measure.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd1aad2_d3df5a80",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: No longer used.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc61a49f_263c5fb0",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: bind + bind_helpers unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6482b73_52a82084",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e38944_bca000ca",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8953020c_3222e8e2",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Fwd-declaration of OneShotTimer should suffice in the header.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b98d94_f1d08923",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: #include \"base/optional.h\"",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ffd4f4_cd71d4ba",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: blank line before.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adfc6bc_2d4432bd",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c2a630_7f5ef1bb",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f267b7f9_afb2727e",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: Are these needed?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1ac9bf_28c785bb",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 130,
+        "startChar": 23,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9bfaab8_1e02cf94",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: This can be greatly simplified, see the guarantees of RunLoop here:\n\nhttps://cs.chromium.org/chromium/src/base/run_loop.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d98-101",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb885af8_6bcd72a8",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "Let\u0027s make a typedef for this, or maybe use the Mojo callback type if possible.",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 67
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fa69c4_eb9d50a0",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: #include \"base/strings/string_piece.h\"",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff8db6c_724925e1",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: No longer used.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785a0f67_3f9362b2",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T11:21:05Z",
+      "side": 1,
+      "message": "nit: These are currently only used in the corresponding .cc file. Are you planning to use them elsewhere? Otherwise we could just move them into the .cc in an unnamed namespace.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
