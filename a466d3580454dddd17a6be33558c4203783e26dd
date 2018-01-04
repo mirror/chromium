@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a264711_ff1b8b47",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2018-01-04T19:51:22Z",
+      "side": 1,
+      "message": "git cl format gave me this...",
+      "revId": "a466d3580454dddd17a6be33558c4203783e26dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
