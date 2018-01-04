@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include "bindings/core/v8/V8ObjectBuilder.h"
+#include "bindings/core/v8/double_or_performance_mark_options.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/events/Event.h"
@@ -443,9 +444,36 @@ void PerformanceBase::AddLongTaskTiming(
 
 void PerformanceBase::mark(const String& mark_name,
                            ExceptionState& exception_state) {
+  DoubleOrPerformanceMarkOptions startOrOptions;
+  this->mark(mark_name, startOrOptions, exception_state);
+}
+
+void PerformanceBase::mark(
+    const String& mark_name,
+    DoubleOrPerformanceMarkOptions& startOrPerformanceMarkOptions,
+    ExceptionState& exception_state) {
   if (!user_timing_)
     user_timing_ = UserTiming::Create(*this);
-  if (PerformanceEntry* entry = user_timing_->Mark(mark_name, exception_state))
+  ScriptValue detail;
+  DOMHighResTimeStamp start = now();
+  if (startOrPerformanceMarkOptions.IsDouble()) {
+    start = startOrPerformanceMarkOptions.GetAsDouble();
+  } else if (startOrPerformanceMarkOptions.IsPerformanceMarkOptions()) {
+    const PerformanceMarkOptions& performanceMarkOptions =
+        startOrPerformanceMarkOptions.GetAsPerformanceMarkOptions();
+    if (performanceMarkOptions.hasDetail()) {
+      detail = performanceMarkOptions.detail();
+    }
+    if (performanceMarkOptions.hasStartTime()) {
+      start = performanceMarkOptions.startTime();
+    }
+  } else {
+    DCHECK(startOrPerformanceMarkOptions.IsNull());
+  }
+
+  // Pass in an empty ScriptValue if the mark's detail doesn't exist.
+  if (PerformanceEntry* entry =
+          user_timing_->Mark(mark_name, start, detail, exception_state))
     NotifyObserversOfEntry(*entry);
 }
 

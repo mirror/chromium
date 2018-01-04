@@ -6,7 +6,11 @@ function checkEntries(perfEntriesToCheck, expectedEntries) {
     // we match based on entryType and name
     for (var i = expectedEntries.length - 1; i >= 0; i--) {
       var ex = expectedEntries[i];
-      if (ex.entryType === pe.entryType && ex.name === pe.name) {
+      if (ex.entryType === pe.entryType && ex.name === pe.name &&
+          JSON.stringify(ex.detail) === JSON.stringify(pe.detail)) {
+        if (ex.startTime !== undefined)
+          if (ex.startTime === pe.startTime) return ex;
+          else return null;
         return ex;
       }
     }
