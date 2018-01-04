@@ -16,6 +16,24 @@
       "revId": "6231681255fed139006c8d58874f746d746aac8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50437a3_b70297cc",
+        "filename": "chrome/test/data/webui/settings/help_page_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T17:32:00Z",
+      "side": 0,
+      "message": "Unfortunately this is not a whoops, but necessary. ROOT_PATH is not defined in this file. This used to work before when ROOT_PATH was declared with var in settings_page_browsertest.js, but it no longer works with let (ROOT_PATH is not defined here).",
+      "parentUuid": "11ab1bec_958f43c3",
+      "revId": "6231681255fed139006c8d58874f746d746aac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

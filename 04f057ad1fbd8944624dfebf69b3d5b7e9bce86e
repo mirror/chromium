@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cf21799_b82a74f4",
+        "filename": "chrome/test/data/webui/settings/focus_row_behavior_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T17:32:00Z",
+      "side": 1,
+      "message": "Ack. I\u0027d rather leave this for a linter/formatter or a future CL, since it\u0027s not the focus of this CL.",
+      "parentUuid": "d1ee9c05_b076b47b",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2bfea5_d6b3fe86",
         "filename": "chrome/test/data/webui/settings/people_page_sync_page_interactive_test.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15984426_d5b310e8",
+        "filename": "chrome/test/data/webui/settings/people_page_sync_page_interactive_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T17:32:00Z",
+      "side": 1,
+      "message": "Ack. I\u0027d rather leave this for a linter/formatter, since it\u0027s not the focus of this CL.",
+      "parentUuid": "3d2bfea5_d6b3fe86",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dc12947_a5567cc3",
         "filename": "chrome/test/data/webui/settings/protocol_handlers_tests.js",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd23a07_0d264650",
+        "filename": "chrome/test/data/webui/settings/protocol_handlers_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T17:32:00Z",
+      "side": 1,
+      "message": "Done, since multiple variables per line are disallowed by the styleguide. See\nhttps://google.github.io/styleguide/jsguide.html#features-one-variable-per-declaration",
+      "parentUuid": "8dc12947_a5567cc3",
+      "revId": "04f057ad1fbd8944624dfebf69b3d5b7e9bce86e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
