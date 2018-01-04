@@ -408,6 +408,7 @@ void UiSceneCreator::CreateScene() {
   CreateBackground();
   CreateViewportAwareRoot();
   CreateContentQuad();
+  CreateUiDialog();
   CreateExitPrompt();
   CreateAudioPermissionPrompt();
   CreateSystemIndicators();
@@ -422,6 +423,58 @@ void UiSceneCreator::CreateScene() {
   CreateWebVrSubtree();
   CreateKeyboard();
   CreateController();
+}
+
+void UiSceneCreator::OnDialogBoundsChanged(const gfx::SizeF& bounds) {
+  // TODO(asimjour): Update the UI element when dialog bounds changed.
+}
+
+void UiSceneCreator::CreateUiDialog() {
+  std::unique_ptr<ContentElement> ui_dialog = base::MakeUnique<ContentElement>(
+      content_input_delegate_,
+      base::Bind(&UiSceneCreator::OnDialogBoundsChanged,
+                 base::Unretained(this)));
+  ui_dialog->SetName(k2dDialog);
+  ui_dialog->SetDrawPhase(kPhaseForeground);
+  ui_dialog->SetSize(kContentWidth * kUiDialogWidthRatio,
+                     kContentHeight * kUiDialogHeightRatio);
+  ui_dialog->SetVisible(false);
+  ui_dialog->set_requires_layout(false);
+  ui_dialog->set_corner_radius(kContentCornerRadius);
+  ui_dialog->SetTransitionedProperties({BOUNDS});
+  ui_dialog->SetTranslate(0, 0, kUiDialogDepthOffset);
+
+  ui_dialog->AddBinding(VR_BIND_FUNC(ContentInputDelegatePtr, Model, model_,
+                                     native_ui.delegate, ContentElement,
+                                     ui_dialog.get(), SetDelegate));
+  ui_dialog->AddBinding(VR_BIND_FUNC(unsigned int, Model, model_, ui_texture_id,
+                                     ContentElement, ui_dialog.get(),
+                                     SetTextureId));
+  ui_dialog->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::Bind([](Model* m) { return m->native_ui.alert_dialog_enabled; },
+                 base::Unretained(model_)),
+      base::Bind([](ContentElement* dialog,
+                    const bool& enabled) { EnableDialog(dialog, enabled); },
+                 base::Unretained(ui_dialog.get()))));
+
+  ui_dialog->AddBinding(base::MakeUnique<Binding<float>>(
+      base::Bind([](Model* m) { return m->native_ui.size_ratio; },
+                 base::Unretained(model_)),
+      base::Bind([](ContentElement* dialog,
+                    const float& value) { SetDialogHeight(dialog, value); },
+                 base::Unretained(ui_dialog.get()))));
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(ui_dialog));
+}
+
+void UiSceneCreator::EnableDialog(ContentElement* dialog, bool enabled) {
+  dialog->SetVisible(enabled);
+  dialog->set_requires_layout(enabled);
+  dialog->set_hit_testable(enabled);
+}
+
+void UiSceneCreator::SetDialogHeight(ContentElement* dialog, float height) {
+  dialog->SetSize(kContentWidth * kUiDialogWidthRatio,
+                  kContentWidth * kUiDialogWidthRatio * height);
 }
 
 void UiSceneCreator::Create2dBrowsingSubtreeRoots() {

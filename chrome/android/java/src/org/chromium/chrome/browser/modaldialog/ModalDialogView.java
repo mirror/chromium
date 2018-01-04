@@ -62,6 +62,18 @@ public class ModalDialogView implements View.OnClickListener {
 
         /** Optional: Resource ID of the String to show on the negative button. */
         public @StringRes int negativeButtonTextId;
+
+        /**
+         * Optional: The String to show on the positive button. Note that String
+         * will be ignored if the positiveButtonTextId is not zero.
+         */
+        public String positiveButtonText;
+
+        /**
+         * Optional: The String to show on the negative button. Note that String
+         * will be ignored if the negativeButtonTextId is not zero.
+         */
+        public String negativeButtonText;
     }
 
     @IntDef({BUTTON_POSITIVE, BUTTON_NEGATIVE})
@@ -80,6 +92,7 @@ public class ModalDialogView implements View.OnClickListener {
     private final ViewGroup mCustomView;
     private final Button mPositiveButton;
     private final Button mNegativeButton;
+    private boolean mViewIsReady = false;
 
     /**
      * Constructor for initializing controller and views.
@@ -112,6 +125,7 @@ public class ModalDialogView implements View.OnClickListener {
      * Prepare the contents before showing the dialog.
      */
     protected void prepareBeforeShow() {
+        mViewIsReady = true;
         if (TextUtils.isEmpty(mParams.title)) {
             mTitleView.setVisibility(View.GONE);
         } else {
@@ -134,18 +148,24 @@ public class ModalDialogView implements View.OnClickListener {
             mCustomView.setVisibility(View.GONE);
         }
 
-        if (mParams.positiveButtonTextId == 0) {
-            mPositiveButton.setVisibility(View.GONE);
-        } else {
+        if (mParams.positiveButtonTextId != 0) {
             mPositiveButton.setText(mParams.positiveButtonTextId);
             mPositiveButton.setOnClickListener(this);
+        } else if (mParams.positiveButtonText != null) {
+            mPositiveButton.setText(mParams.positiveButtonText);
+            mPositiveButton.setOnClickListener(this);
+        } else {
+            mPositiveButton.setVisibility(View.GONE);
         }
 
-        if (mParams.negativeButtonTextId == 0) {
-            mNegativeButton.setVisibility(View.GONE);
-        } else {
+        if (mParams.negativeButtonTextId != 0) {
             mNegativeButton.setText(mParams.negativeButtonTextId);
             mNegativeButton.setOnClickListener(this);
+        } else if (mParams.negativeButtonText != null) {
+            mNegativeButton.setText(mParams.negativeButtonText);
+            mNegativeButton.setOnClickListener(this);
+        } else {
+            mNegativeButton.setVisibility(View.GONE);
         }
     }
 
@@ -160,6 +180,7 @@ public class ModalDialogView implements View.OnClickListener {
      * @return The content view of this dialog.
      */
     public View getView() {
+        if (!mViewIsReady) prepareBeforeShow();
         return mDialogView;
     }
 
