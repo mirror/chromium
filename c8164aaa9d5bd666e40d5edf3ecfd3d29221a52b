@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf4c89c_0406d3d0",
+        "filename": "ui/gfx/native_widget_types.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T00:58:55Z",
+      "side": 1,
+      "message": "Please move this with other conditionals includes above (line 17ish).",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "c8164aaa9d5bd666e40d5edf3ecfd3d29221a52b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
