@@ -26,6 +26,16 @@ class ComputedStyleUtils {
                                             bool visited_link);
   static CSSValue* ZoomAdjustedPixelValueForLength(const Length&,
                                                    const ComputedStyle&);
+  static const CSSValue* BackgroundImageOrWebkitMaskImage(const FillLayer&);
+  static const CSSValue* ValueForFillSize(const FillSize&,
+                                          const ComputedStyle&);
+  static const CSSValue* BackgroundImageOrWebkitMaskSize(const ComputedStyle&,
+                                                         const FillLayer&);
+  static const CSSValueList* ValuesForBackgroundShorthand(
+      const ComputedStyle&,
+      const LayoutObject*,
+      Node*,
+      bool allow_visited_style);
 };
 
 }  // namespace blink
