@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d080c89c_69eca9d5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T11:03:44Z",
+      "side": 1,
+      "message": "You can omit has_value(): if (!description) return false",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813319c4_24201e04",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T11:03:44Z",
+      "side": 1,
+      "message": "Could you move it inside RendererSchedulerImpl?",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe8c823_bdb79d21",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T11:03:44Z",
+      "side": 1,
+      "message": "Could we a) make implementation reasonable (e.g. actually compare values). b) move the implementation to .cc file?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93951e46_2a91144c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-04T11:03:44Z",
+      "side": 1,
+      "message": "Once again, I don\u0027t think that TaskTypeToString should be in tracing_helper.h. Could we move it to renderer_scheduler_impl.cc for now?",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 44
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
