@@ -22,6 +22,30 @@
       "revId": "2bbfe472e8c34e6023f1eb404377d7e7371e2154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add0676d_80768b0e",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T18:41:02Z",
+      "side": 1,
+      "message": "For this one, no. Clustering is specific to native symbols, so doesn\u0027t need to be done here.",
+      "parentUuid": "1b601964_c8b9f823",
+      "range": {
+        "startLine": 171,
+        "startChar": 31,
+        "endLine": 171,
+        "endChar": 42
+      },
+      "revId": "2bbfe472e8c34e6023f1eb404377d7e7371e2154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
