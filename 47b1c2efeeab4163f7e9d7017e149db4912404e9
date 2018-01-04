@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5f8d07_f06dcc20",
+        "filename": "ui/views/controls/button/radio_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:03:17Z",
+      "side": 1,
+      "message": "Document why this ignores set_request_focus_on_press. I\u0027m going to assume this is ok for mac (which forces request_focus_on_press to false) as it would seem the same rationale should apply.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "47b1c2efeeab4163f7e9d7017e149db4912404e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaaab296_85f3f76c",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:03:17Z",
+      "side": 1,
+      "message": "\u0027click\u0027 is mildly confusing given the event is a press. Maybe press_event?",
+      "range": {
+        "startLine": 108,
+        "startChar": 23,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "47b1c2efeeab4163f7e9d7017e149db4912404e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2dd0e9_e9804e49",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:03:17Z",
+      "side": 1,
+      "message": "Should this be UseMd()?",
+      "range": {
+        "startLine": 117,
+        "startChar": 36,
+        "endLine": 117,
+        "endChar": 57
+      },
+      "revId": "47b1c2efeeab4163f7e9d7017e149db4912404e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
