@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/timer/timer.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
 class GURL;
@@ -27,9 +28,11 @@ namespace data_reduction_proxy {
 // URLFetcherDelegate for fetching the warmup URL.
 class WarmupURLFetcher : public net::URLFetcherDelegate {
  public:
+  enum class FetchResult { kSuccessful, kFailed, kTimedOut };
+
   // The proxy server that was used to fetch the request, and whether the fetch
   // was successful.
-  typedef base::RepeatingCallback<void(const net::ProxyServer&, bool)>
+  typedef base::RepeatingCallback<void(const net::ProxyServer&, FetchResult)>
       WarmupURLFetcherCallback;
 
   WarmupURLFetcher(const scoped_refptr<net::URLRequestContextGetter>&
@@ -49,8 +52,18 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   // query params to the warmup URL.
   void GetWarmupURLWithQueryParam(GURL* warmup_url_with_query_params) const;
 
+  // Returns the timeout value for fetching the secure proxy URL. Virtualized
+  // for testing.
+  virtual base::TimeDelta GetTimeout() const;
+
  private:
   void OnURLFetchComplete(const net::URLFetcher* source) override;
+
+  // Called when the fetch time outs.
+  void OnTimeout();
+
+  // Timer to enforce timeout for fetching the warmup URL.
+  base::OneShotTimer timeout_timer_;
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 

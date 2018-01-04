@@ -16,8 +16,10 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
+#include "net/nqe/network_quality_estimator.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
+#include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_status.h"
 
@@ -31,6 +33,8 @@ WarmupURLFetcher::WarmupURLFetcher(
       is_fetch_in_flight_(false),
       callback_(callback) {
   DCHECK(url_request_context_getter_);
+  DCHECK(url_request_context_getter_->GetURLRequestContext()
+             ->network_quality_estimator());
 }
 
 WarmupURLFetcher::~WarmupURLFetcher() {}
@@ -64,6 +68,7 @@ void WarmupURLFetcher::FetchWarmupURL() {
   GetWarmupURLWithQueryParam(&warmup_url_with_query_params);
 
   fetcher_.reset();
+  timeout_timer_.Stop();
   is_fetch_in_flight_ = true;
 
   fetcher_ =
@@ -82,6 +87,9 @@ void WarmupURLFetcher::FetchWarmupURL() {
   static const int kMaxRetries = 5;
   fetcher_->SetAutomaticallyRetryOn5xx(false);
   fetcher_->SetAutomaticallyRetryOnNetworkChanges(kMaxRetries);
+
+  timeout_timer_.Start(FROM_HERE, GetTimeout(), this,
+                       &WarmupURLFetcher::OnTimeout);
   fetcher_->Start();
 }
 
@@ -102,6 +110,9 @@ void WarmupURLFetcher::GetWarmupURLWithQueryParam(
 
 void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK_EQ(source, fetcher_.get());
+  DCHECK(is_fetch_in_flight_);
+
+  timeout_timer_.Stop();
   is_fetch_in_flight_ = false;
   UMA_HISTOGRAM_BOOLEAN(
       "DataReductionProxy.WarmupURL.FetchSuccessful",
@@ -136,7 +147,7 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
       source->GetStatus().error() == net::ERR_INTERNET_DISCONNECTED) {
     // Fetching failed due to Internet unavailability, and not due to some
     // error. Set the proxy server to unknown.
-    callback_.Run(net::ProxyServer(), true);
+    callback_.Run(net::ProxyServer(), FetchResult::kSuccessful);
     return;
   }
 
@@ -146,11 +157,58 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
       source->GetResponseHeaders() &&
       HasDataReductionProxyViaHeader(*(source->GetResponseHeaders()),
                                      nullptr /* has_intermediary */);
-  callback_.Run(source->ProxyServerUsed(), success_response);
+  callback_.Run(source->ProxyServerUsed(), success_response
+                                               ? FetchResult::kSuccessful
+                                               : FetchResult::kFailed);
 }
 
 bool WarmupURLFetcher::IsFetchInFlight() const {
   return is_fetch_in_flight_;
+}
+
+base::TimeDelta WarmupURLFetcher::GetTimeout() const {
+  // The timeout value should always be between kMinTimeout and kDefaultTimeout
+  // (both inclusive).
+  constexpr base::TimeDelta kDefaultTimeout = base::TimeDelta::FromSeconds(60);
+  constexpr base::TimeDelta kMinTimeout = base::TimeDelta::FromSeconds(10);
+  constexpr size_t kHttpRttMultiplier = 20;
+
+  const net::NetworkQualityEstimator* network_quality_estimator =
+      url_request_context_getter_->GetURLRequestContext()
+          ->network_quality_estimator();
+
+  base::Optional<base::TimeDelta> http_rtt_estimate =
+      network_quality_estimator->GetHttpRTT();
+  if (!http_rtt_estimate)
+    return kDefaultTimeout;
+
+  base::TimeDelta timeout = kHttpRttMultiplier * http_rtt_estimate.value();
+  if (timeout > kDefaultTimeout)
+    return kDefaultTimeout;
+
+  if (timeout < kMinTimeout)
+    return kMinTimeout;
+
+  return timeout;
+}
+
+void WarmupURLFetcher::OnTimeout() {
+  DCHECK(is_fetch_in_flight_);
+  DCHECK(fetcher_);
+  is_fetch_in_flight_ = false;
+
+  const net::ProxyServer& proxy_server = fetcher_->ProxyServerUsed();
+
+  // Stop the |fetcher_| since there is no need to continue the fetch.
+  fetcher_.reset();
+
+  UMA_HISTOGRAM_BOOLEAN("DataReductionProxy.WarmupURL.FetchSuccessful", false);
+
+  base::UmaHistogramSparse("DataReductionProxy.WarmupURL.NetError",
+                           net::ERR_ABORTED);
+
+  // Set the |response| to an empty string to trigger failure.
+  callback_.Run(proxy_server, FetchResult::kTimedOut);
 }
 
 }  // namespace data_reduction_proxy
