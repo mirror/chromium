@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f9486db6_aebffb51",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2018-01-04T16:19:18Z",
+      "side": 1,
+      "message": "I think we can simplify this if we introduce CronetURLRequestContext::DestroyOnNetworkThread() and will post that instead of DeleteSoon(this) from CronetURLRequestContext::Destroy().\n\nWe can get rid of unique_ptr() and ~CronetURLRequestContextAdapter() will be empty.\n\nHere is the sequence:\n\n// Called on client thread:\nCronetURLRequestContextAdapter::Destroy() {\n  CronetURLRequestContext::Destroy();\n  // CronetURLRequestContextAdapter::this will be invalid upon return.\n}\n\n// Called on client thread:\nCronetURLRequestContext::Destroy() {\n[posts CronetURLRequestContext::DestroyOnNetworkThread()], deletes network thread]\n  // CronetURLRequestContext::this will be invalid upon return.\n}\n\n// Called on network thread:\nCronetURLRequestContext::DestroyOnNetworkThread() {\n  delegate_-\u003eOnDestroyNetworkThread();\n  // CronetURLRequestContext::this will be invalid upon return.\n}\n\n// Called on network thread:\nCronetURLRequestContextAdapter::OnDestroyNetworkThread() {\n  // This calls ~CronetURLRequestContextAdapter() and ~CronetURLRequestContext()\n  delete this;  \n  // This will be invalid upon return.\n}\n\nWDYT? I\u0027ll try to code it up.",
+      "parentUuid": "d440f4b4_0ad631b5",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d314b29e_f71deccd",
         "filename": "components/cronet/cronet_global_state.h",
         "patchSetId": 8
