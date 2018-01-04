@@ -5,6 +5,7 @@
 #include "chrome/renderer/prerender/prerender_dispatcher.h"
 
 #include <stddef.h>
+#include <utility>
 
 #include "base/logging.h"
 #include "chrome/common/prerender_messages.h"
@@ -32,11 +33,31 @@ PrerenderDispatcher::~PrerenderDispatcher() {
   WebPrerenderingSupport::Shutdown();
 }
 
+void PrerenderDispatcher::RegisterMojoInterfaces(
+    blink::AssociatedInterfaceRegistry* associated_interfaces) {
+  // Note: Unretained is safe here because this class is a leaky LazyInstance.
+  // For the same reason, UnregisterMojoInterfaces isn't required.
+  associated_interfaces->AddInterface(
+      base::Bind(&PrerenderDispatcher::OnPrerenderDispatcherRequest,
+                 base::Unretained(this)));
+}
+
+void PrerenderDispatcher::UnregisterMojoInterfaces(
+    blink::AssociatedInterfaceRegistry* associated_interfaces) {
+  associated_interfaces->RemoveInterface(
+      chrome::mojom::PrerenderDispatcher::Name_);
+}
+
+void PrerenderDispatcher::OnPrerenderDispatcherRequest(
+    chrome::mojom::PrerenderDispatcherAssociatedRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
 bool PrerenderDispatcher::IsPrerenderURL(const GURL& url) const {
   return running_prerender_urls_.count(url) >= 1;
 }
 
-void PrerenderDispatcher::OnPrerenderStart(int prerender_id) {
+void PrerenderDispatcher::PrerenderStart(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -50,7 +71,7 @@ void PrerenderDispatcher::OnPrerenderStart(int prerender_id) {
   prerender.DidStartPrerender();
 }
 
-void PrerenderDispatcher::OnPrerenderStopLoading(int prerender_id) {
+void PrerenderDispatcher::PrerenderStopLoading(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -63,7 +84,7 @@ void PrerenderDispatcher::OnPrerenderStopLoading(int prerender_id) {
   prerender.DidSendLoadForPrerender();
 }
 
-void PrerenderDispatcher::OnPrerenderDomContentLoaded(int prerender_id) {
+void PrerenderDispatcher::PrerenderDomContentLoaded(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -77,11 +98,11 @@ void PrerenderDispatcher::OnPrerenderDomContentLoaded(int prerender_id) {
   prerender.DidSendDOMContentLoadedForPrerender();
 }
 
-void PrerenderDispatcher::OnPrerenderAddAlias(const GURL& alias) {
+void PrerenderDispatcher::PrerenderAddAlias(const GURL& alias) {
   running_prerender_urls_.insert(alias);
 }
 
-void PrerenderDispatcher::OnPrerenderRemoveAliases(
+void PrerenderDispatcher::PrerenderRemoveAliases(
     const std::vector<GURL>& aliases) {
   for (size_t i = 0; i < aliases.size(); ++i) {
     std::multiset<GURL>::iterator it = running_prerender_urls_.find(aliases[i]);
@@ -91,7 +112,7 @@ void PrerenderDispatcher::OnPrerenderRemoveAliases(
   }
 }
 
-void PrerenderDispatcher::OnPrerenderStop(int prerender_id) {
+void PrerenderDispatcher::PrerenderStop(int prerender_id) {
   std::map<int, WebPrerender>::iterator it = prerenders_.find(prerender_id);
   if (it == prerenders_.end())
     return;
@@ -106,25 +127,6 @@ void PrerenderDispatcher::OnPrerenderStop(int prerender_id) {
   // This may not be that big of a deal in practice, since the newly created tab
   // is unlikely to go to the prerendered page.
   prerenders_.erase(prerender_id);
-}
-
-bool PrerenderDispatcher::OnControlMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PrerenderDispatcher, message)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStart, OnPrerenderStart)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStopLoading,
-                        OnPrerenderStopLoading)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderDomContentLoaded,
-                        OnPrerenderDomContentLoaded)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderAddAlias, OnPrerenderAddAlias)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderRemoveAliases,
-                        OnPrerenderRemoveAliases)
-    IPC_MESSAGE_HANDLER(PrerenderMsg_OnPrerenderStop, OnPrerenderStop)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
 }
 
 void PrerenderDispatcher::Add(const WebPrerender& prerender) {

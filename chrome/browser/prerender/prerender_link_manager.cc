@@ -17,13 +17,14 @@
 #include "chrome/browser/prerender/prerender_handle.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
-#include "chrome/common/prerender_messages.h"
+#include "chrome/common/prerender.mojom.h"
 #include "chrome/common/prerender_types.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/session_storage_namespace.h"
 #include "content/public/common/referrer.h"
 #include "extensions/features/features.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "ui/gfx/geometry/size.h"
 #include "url/gurl.h"
 
@@ -57,16 +58,6 @@ void RecordLinkManagerStarting(const uint32_t rel_types) {
   UMA_HISTOGRAM_ENUMERATION("Prerender.RelTypesLinkStarted",
                             rel_types & (kRelTypeHistogramEnumMax - 1),
                             kRelTypeHistogramEnumMax);
-}
-
-void Send(int child_id, IPC::Message* raw_message) {
-  using content::RenderProcessHost;
-  std::unique_ptr<IPC::Message> own_message(raw_message);
-
-  RenderProcessHost* render_process_host = RenderProcessHost::FromID(child_id);
-  if (!render_process_host)
-    return;
-  render_process_host->Send(own_message.release());
 }
 
 }  // namespace
@@ -378,8 +369,18 @@ void PrerenderLinkManager::StartPrerenders() {
       running_launcher_and_render_view_routes.insert(
           launcher_and_render_view_route);
     } else {
-      Send((*i)->launcher_child_id,
-          new PrerenderMsg_OnPrerenderStop((*i)->prerender_id));
+      content::RenderProcessHost* render_process_host =
+          content::RenderProcessHost::FromID((*i)->launcher_child_id);
+      if (!render_process_host)
+        return;
+
+      IPC::ChannelProxy* channel = render_process_host->GetChannel();
+      // channel might be NULL in tests.
+      if (channel) {
+        chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+        channel->GetRemoteAssociatedInterface(&client);
+        client->PrerenderStop((*i)->prerender_id);
+      }
       prerenders_.erase(*i);
     }
   }
@@ -471,8 +472,19 @@ void PrerenderLinkManager::OnPrerenderStart(
   LinkPrerender* prerender = FindByPrerenderHandle(prerender_handle);
   if (!prerender)
     return;
-  Send(prerender->launcher_child_id,
-       new PrerenderMsg_OnPrerenderStart(prerender->prerender_id));
+
+  content::RenderProcessHost* render_process_host =
+      content::RenderProcessHost::FromID(prerender->launcher_child_id);
+  if (!render_process_host)
+    return;
+
+  IPC::ChannelProxy* channel = render_process_host->GetChannel();
+  // channel might be NULL in tests.
+  if (channel) {
+    chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+    channel->GetRemoteAssociatedInterface(&client);
+    client->PrerenderStart(prerender->prerender_id);
+  }
 }
 
 void PrerenderLinkManager::OnPrerenderStopLoading(
@@ -481,8 +493,18 @@ void PrerenderLinkManager::OnPrerenderStopLoading(
   if (!prerender)
     return;
 
-  Send(prerender->launcher_child_id,
-       new PrerenderMsg_OnPrerenderStopLoading(prerender->prerender_id));
+  content::RenderProcessHost* render_process_host =
+      content::RenderProcessHost::FromID(prerender->launcher_child_id);
+  if (!render_process_host)
+    return;
+
+  IPC::ChannelProxy* channel = render_process_host->GetChannel();
+  // channel might be NULL in tests.
+  if (channel) {
+    chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+    channel->GetRemoteAssociatedInterface(&client);
+    client->PrerenderStopLoading(prerender->prerender_id);
+  }
 }
 
 void PrerenderLinkManager::OnPrerenderDomContentLoaded(
@@ -491,8 +513,18 @@ void PrerenderLinkManager::OnPrerenderDomContentLoaded(
   if (!prerender)
     return;
 
-  Send(prerender->launcher_child_id,
-       new PrerenderMsg_OnPrerenderDomContentLoaded(prerender->prerender_id));
+  content::RenderProcessHost* render_process_host =
+      content::RenderProcessHost::FromID(prerender->launcher_child_id);
+  if (!render_process_host)
+    return;
+
+  IPC::ChannelProxy* channel = render_process_host->GetChannel();
+  // channel might be NULL in tests.
+  if (channel) {
+    chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+    channel->GetRemoteAssociatedInterface(&client);
+    client->PrerenderDomContentLoaded(prerender->prerender_id);
+  }
 }
 
 void PrerenderLinkManager::OnPrerenderStop(
@@ -501,8 +533,17 @@ void PrerenderLinkManager::OnPrerenderStop(
   if (!prerender)
     return;
 
-  Send(prerender->launcher_child_id,
-      new PrerenderMsg_OnPrerenderStop(prerender->prerender_id));
+  content::RenderProcessHost* render_process_host =
+      content::RenderProcessHost::FromID(prerender->launcher_child_id);
+  if (render_process_host) {
+    IPC::ChannelProxy* channel = render_process_host->GetChannel();
+    // channel might be NULL in tests.
+    if (channel) {
+      chrome::mojom::PrerenderDispatcherAssociatedPtr client;
+      channel->GetRemoteAssociatedInterface(&client);
+      client->PrerenderStop(prerender->prerender_id);
+    }
+  }
   RemovePrerender(prerender);
   StartPrerenders();
 }
