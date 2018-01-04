@@ -29,11 +29,13 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryAdapter;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.media.MediaViewerUtils;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -451,7 +453,12 @@ public class DownloadManagerService
                 mDownloadNotifier.notifyDownloadCanceled(item.getContentId());
                 break;
             case DOWNLOAD_STATUS_INTERRUPTED:
-                mDownloadNotifier.notifyDownloadInterrupted(info, progress.mIsAutoResumable);
+                if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                    mDownloadNotifier.notifyDownloadInterrupted(
+                            info, progress.mIsAutoResumable, PendingState.PENDING_NETWORK);
+                } else {
+                    mDownloadNotifier.notifyDownloadInterrupted(info, progress.mIsAutoResumable);
+                }
                 removeFromDownloadProgressMap = !progress.mIsAutoResumable;
                 break;
             default:
