@@ -306,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "b7914d70_c1873f01",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-04T04:54:21Z",
+      "side": 1,
+      "message": "If it\u0027s safe to call _FilterDefinition() for definitions not in need of filtering, then this would allow us to avoid the two-step filtration process. That might in turn make each Filter function short enough to just inline them all into _FilterDefinition().",
+      "parentUuid": "f74b03d9_7ef5c71d",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25b4fdf9_0ac98fe5",
         "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
         "patchSetId": 6
