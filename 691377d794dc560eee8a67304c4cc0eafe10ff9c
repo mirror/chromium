@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d59acdb3_dc7e37ce",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "I didn\u0027t see this used.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e547c58_088c20cc",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s clear from the signature that this returns a pointer, so okay to drop \"Ptr\"",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b7a025_6bb4c64e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "std::make_unique here and elsewhere.\ncrbug.com/755727",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c352f7b2_6351a0d2",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "Nit: Prefer ParseInternal, as this is a mock just for testing and not part of the API like the other Parse.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2086f6d_cc17e722",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "Nit: test_parser_ could be assigned in the initialization list and unique_ptr allocated as a temporary, avoiding an extra unique_ptr allocation.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423bb757_a3862c8c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "We\u0027ve converted other code to use the system request context, instead of a profile-specific one.  The system context allows dial_app_discovery_service to work as a global singleton.\n\nWhich one is used in the real dial_app_discovery_service?",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9476cf_0db69144",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "Nit: just call CreateParsedAppInfoPtr(1) below.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ca378e_55472557",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "auto?",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd1bace_f49b8ec3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "It seems like you could just pass the desired app name and app state as arguments to CreateParsedDialAppInfo(), then call that function below.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76a433d_ab714648",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "I didn\u0027t see a use of this #include.",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ee4ed2_86989564",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2018-01-04T22:31:44Z",
+      "side": 1,
+      "message": "Nice unit test :-)",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
