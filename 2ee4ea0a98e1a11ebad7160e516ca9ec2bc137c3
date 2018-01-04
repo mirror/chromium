@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7257af6d_9ddef69c",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-04T01:51:19Z",
+      "side": 1,
+      "message": "Some questions (mainly for my understanding) :)\n1) With this change, when the event time is out-of-date, a new frame will still be delivered later. Is this expected?\n\n2) For |kPassiveRefreshRequest| event, ObserveEventAndDecideCapture() returns false when the source content has been changed. Should we still enable the delayed refresh in this case? Will there be an active refresh request coming later?\n\n3) How about |kMouseCursorUpdate| event? Should we do same logic?",
+      "revId": "2ee4ea0a98e1a11ebad7160e516ca9ec2bc137c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
