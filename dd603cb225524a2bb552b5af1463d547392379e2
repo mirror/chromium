@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3b6a0de_1e398b97",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-04T17:21:03Z",
+      "side": 1,
+      "message": "I was using \"T\u0026\" for the return value rather than the typedefs in the help here. I think it\u0027s lot easier to skim for somebody  trying to quickly use the class (so make it match the front() and back() calls\".",
+      "revId": "dd603cb225524a2bb552b5af1463d547392379e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
