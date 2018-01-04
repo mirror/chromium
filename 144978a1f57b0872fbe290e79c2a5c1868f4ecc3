@@ -16,6 +16,24 @@
       "revId": "144978a1f57b0872fbe290e79c2a5c1868f4ecc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e370df1e_49ea2606",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2018-01-04T03:07:29Z",
+      "side": 1,
+      "message": "Done.\n\n\"\nThese accessors are not needed in CSSUnresolvedProperty at this stage. We want to constrain the functionality of CSSUnresolvedProperty to the bare minimum so as to discourage its usage. \nIt is useful to know that a property representation is strictly a resolved property; thus we \ndo not want CSSUnresolvedProperty used except where absolutely necessary. If it turns out that these are needed on CSSUnresolvedProperty in future then they can be moved back.\n\"",
+      "parentUuid": "742fa866_56ac24dc",
+      "revId": "144978a1f57b0872fbe290e79c2a5c1868f4ecc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
