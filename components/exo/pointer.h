@@ -70,6 +70,7 @@ class Pointer : public SurfaceTreeHost,
   // Overridden from ui::EventHandler:
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnScrollEvent(ui::ScrollEvent* event) override;
+  void OnTouchEvent(ui::TouchEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
   // Overridden from ui::client::CursorClientObserver:

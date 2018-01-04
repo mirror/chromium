@@ -193,6 +193,8 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
   if (!focus_surface_)
     return;
 
+  LOG(ERROR) << "OnMouseEvent" << event->type();
+
   if (event->IsMouseEvent() &&
       event->type() != ui::ET_MOUSE_EXITED &&
       event->type() != ui::ET_MOUSE_CAPTURE_CHANGED) {
@@ -273,6 +275,13 @@ void Pointer::OnScrollEvent(ui::ScrollEvent* event) {
   OnMouseEvent(event);
 }
 
+void Pointer::OnTouchEvent(ui::TouchEvent* event) {
+  Surface* target = GetEffectiveTargetForEvent(event);
+  LOG(ERROR) << "OnToucvhEvent SetFocus:" << target;
+  if (target != focus_surface_)
+    SetFocus(target, event->location_f(), 0);
+}
+
 void Pointer::OnGestureEvent(ui::GestureEvent* event) {
   // We don't want to handle gestures generated from touchscreen events,
   // we handle touch events in touch.cc
@@ -347,6 +356,8 @@ Surface* Pointer::GetEffectiveTargetForEvent(ui::Event* event) const {
 void Pointer::SetFocus(Surface* surface,
                        const gfx::PointF& location,
                        int button_flags) {
+  LOG(ERROR) << "SetFocus:" << surface << ", w=" << (surface ? surface->window(): nullptr);
+
   // First generate a leave event if we currently have a target in focus.
   if (focus_surface_) {
     delegate_->OnPointerLeave(focus_surface_);
@@ -365,6 +376,7 @@ void Pointer::SetFocus(Surface* surface,
     focus_surface_ = surface;
     focus_surface_->AddSurfaceObserver(this);
     focus_surface_->RegisterCursorProvider(this);
+    focus_surface_->window()->Focus();
   }
   delegate_->OnPointerFrame();
 }

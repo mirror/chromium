@@ -49,6 +49,8 @@
 #include "ui/gfx/path.h"
 #include "ui/gfx/scoped_canvas.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace aura {
 
 Window::Window(WindowDelegate* delegate, client::WindowType type)
@@ -613,6 +615,8 @@ bool Window::CanReceiveEvents() const {
 }
 
 void Window::SetCapture() {
+  LOG(ERROR) << "SetCapture on:" << GetName();
+  base::debug::StackTrace().Print();
   if (!IsVisible())
     return;
 
