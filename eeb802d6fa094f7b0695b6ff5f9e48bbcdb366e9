@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ae2caa_a20ce48e",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "how about getting rid of the local:\n    programs_data-\u003e emplace_back(std::move(display_name), hkey,\n                                 std::move(candidate_key_path), wow64access);",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2d5d72_3b054470",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "nit: inline this below unless it really looks ugly",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 30
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2439ef1_35eb5b97",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "emplace here, too?",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 32
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4161a2_78944353",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "should this call programs-\u003eclear() (see comment in .h)",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5948cf0c_af6997e8",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "nit: can you size |programs| here to avoid reallocs with:\n  programs-\u003ereserve(programs-\u003esize() + (equal_range.second - equal_range.first));",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c2ddc0_80a54966",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "should this be singular (GetProgramFromInstallDirectory) since it never adds more than one?",
+      "range": {
+        "startLine": 285,
+        "startChar": 34,
+        "endLine": 285,
+        "endChar": 35
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfbf01f_ad039264",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "since this closure is captured by the instance and used at some later time, it should be passed by value (with std::move) rather than by reference. it also looks like OnceClosure is appropriate. feel free to address in a separate CL if you prefer.",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fee6042_599ea3bd",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "nit: omit \"with\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 42,
+        "endLine": 93,
+        "endChar": 46
+      },
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69af54d1_5e32dc9b",
+        "filename": "chrome/browser/conflicts/installed_programs_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T09:40:43Z",
+      "side": 1,
+      "message": "curious: wdyt of returning the vector and leaving it up to the caller to test it for emptyness? if you prefer it this way, please document how existing values in |programs| are handled -- is the instance cleared by this function or no?",
+      "revId": "eeb802d6fa094f7b0695b6ff5f9e48bbcdb366e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
