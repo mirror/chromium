@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c4366f4_08a563ff",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-04T23:21:14Z",
+      "side": 1,
+      "message": "// Make sure non-video requests are proxied.    ?",
+      "revId": "9950be5384c9ce74ce087ec9d499a6d385f0f1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
