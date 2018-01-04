@@ -32,7 +32,7 @@ public class CastMessageHandler {
 
     // Sequence number used when no sequence number is required or was initially passed.
     static final int INVALID_SEQUENCE_NUMBER = -1;
-    static final String MEDIA_NAMESPACE = "urn:x-cast:com.google.cast.media";
+    public static final String MEDIA_NAMESPACE = "urn:x-cast:com.google.cast.media";
     static final String GAMES_NAMESPACE = "urn:x-cast:com.google.cast.games";
 
     private static final String MEDIA_MESSAGE_TYPES[] = {
