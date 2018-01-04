@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ba62bb3_0c8fb533",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c24c05_c5809a8a",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7950878_6bb8d3e3",
         "filename": "base/optional.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-04T16:10:39Z",
       "side": 1,
       "message": "Every use of OptionalStorageBase looks like OptionalStorageBase\u003cT\u003e. What uses this template with |true|?",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5292f843_feda972d",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:44:44Z",
+      "side": 1,
+      "message": "Thanks to the default value at L35, this is used if T is tirivally-descructible.",
+      "parentUuid": "f7950878_6bb8d3e3",
       "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b26a48ff_1a3d0675",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a7b345_1e7f8f01",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2536eb31_eabdde3f",
         "filename": "base/optional.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-04T16:10:39Z",
       "side": 1,
       "message": "Is this done?",
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2791fa7e_66bd4926",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-04T16:44:44Z",
+      "side": 1,
+      "message": "I think not fully yet. I\u0027ll address this with adding unittests in a later CL.",
+      "parentUuid": "2536eb31_eabdde3f",
       "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
