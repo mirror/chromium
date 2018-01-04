@@ -9,6 +9,11 @@ class BubbleSyncPromoDelegate {
  public:
   virtual ~BubbleSyncPromoDelegate() {}
   virtual void OnSignInLinkClicked() = 0;
+
+  // virtual void StartSignin();
+  // virtual void StartSigninWithAccount(const AccountInfo& account_info);
+  // virtual void ShowOtherAccountsMenu(const views::Menu& menu) = 0;
+  // virtual void DismissOtherAccountsMenu(const views::Menu& menu) = 0;
 };
 
 #endif  // CHROME_BROWSER_UI_SYNC_BUBBLE_SYNC_PROMO_DELEGATE_H_
