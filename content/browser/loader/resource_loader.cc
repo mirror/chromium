@@ -399,8 +399,12 @@ void ResourceLoader::OnCertificateRequested(
 
   DCHECK(!ssl_client_auth_handler_)
       << "OnCertificateRequested called with ssl_client_auth_handler pending";
-  ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
-      delegate_->CreateClientCertStore(this), request_.get(), cert_info, this));
+  ResourceRequestInfo::WebContentsGetter web_contents_getter =
+      ResourceRequestInfo::ForRequest(request_.get())
+          ->GetWebContentsGetterForRequest();
+  ssl_client_auth_handler_.reset(
+      new SSLClientAuthHandler(delegate_->CreateClientCertStore(this),
+                               web_contents_getter, cert_info, this));
   ssl_client_auth_handler_->SelectCertificate();
 }
 

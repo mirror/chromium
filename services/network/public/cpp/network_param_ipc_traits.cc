@@ -10,29 +10,6 @@
 
 namespace IPC {
 
-namespace {
-
-void WriteCert(base::Pickle* m, net::X509Certificate* cert) {
-  WriteParam(m, !!cert);
-  if (cert)
-    cert->Persist(m);
-}
-
-bool ReadCert(const base::Pickle* m,
-              base::PickleIterator* iter,
-              scoped_refptr<net::X509Certificate>* cert) {
-  DCHECK(!*cert);
-  bool has_object;
-  if (!ReadParam(m, iter, &has_object))
-    return false;
-  if (!has_object)
-    return true;
-  *cert = net::X509Certificate::CreateFromPickle(iter);
-  return !!cert->get();
-}
-
-}  // namespace
-
 void ParamTraits<net::HashValue>::Write(base::Pickle* m, const param_type& p) {
   WriteParam(m, p.ToString());
 }
@@ -129,12 +106,46 @@ void ParamTraits<scoped_refptr<net::HttpResponseHeaders>>::Log(
   l->append("<HttpResponseHeaders>");
 }
 
+void ParamTraits<scoped_refptr<net::SSLCertRequestInfo>>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  WriteParam(m, p != nullptr);
+  if (p) {
+    WriteParam(m, p->host_and_port);
+    WriteParam(m, p->is_proxy);
+    WriteParam(m, p->cert_authorities);
+    WriteParam(m, p->cert_key_types);
+  }
+}
+
+bool ParamTraits<scoped_refptr<net::SSLCertRequestInfo>>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* r) {
+  bool has_object;
+  if (!ReadParam(m, iter, &has_object))
+    return false;
+  if (!has_object)
+    return true;
+  *r = new net::SSLCertRequestInfo();
+  return ReadParam(m, iter, &(*r)->host_and_port) &&
+         ReadParam(m, iter, &(*r)->is_proxy) &&
+         ReadParam(m, iter, &(*r)->cert_authorities) &&
+         ReadParam(m, iter, &(*r)->cert_key_types);
+}
+
+void ParamTraits<scoped_refptr<net::SSLCertRequestInfo>>::Log(
+    const param_type& p,
+    std::string* l) {
+  l->append("<SSLCertRequestInfo>");
+}
+
 void ParamTraits<net::SSLInfo>::Write(base::Pickle* m, const param_type& p) {
   WriteParam(m, p.is_valid());
   if (!p.is_valid())
     return;
-  WriteCert(m, p.cert.get());
-  WriteCert(m, p.unverified_cert.get());
+  WriteParam(m, p.cert);
+  WriteParam(m, p.unverified_cert);
   WriteParam(m, p.cert_status);
   WriteParam(m, p.security_bits);
   WriteParam(m, p.key_exchange_group);
@@ -162,8 +173,8 @@ bool ParamTraits<net::SSLInfo>::Read(const base::Pickle* m,
     return false;
   if (!is_valid)
     return true;
-  return ReadCert(m, iter, &r->cert) &&
-         ReadCert(m, iter, &r->unverified_cert) &&
+  return ReadParam(m, iter, &r->cert) &&
+         ReadParam(m, iter, &r->unverified_cert) &&
          ReadParam(m, iter, &r->cert_status) &&
          ReadParam(m, iter, &r->security_bits) &&
          ReadParam(m, iter, &r->key_exchange_group) &&
@@ -185,6 +196,33 @@ bool ParamTraits<net::SSLInfo>::Read(const base::Pickle* m,
 
 void ParamTraits<net::SSLInfo>::Log(const param_type& p, std::string* l) {
   l->append("<SSLInfo>");
+}
+
+void ParamTraits<scoped_refptr<net::X509Certificate>>::Write(
+    base::Pickle* m,
+    const param_type& p) {
+  WriteParam(m, !!p);
+  if (p)
+    p->Persist(m);
+}
+
+bool ParamTraits<scoped_refptr<net::X509Certificate>>::Read(
+    const base::Pickle* m,
+    base::PickleIterator* iter,
+    param_type* r) {
+  DCHECK(!*r);
+  bool has_object;
+  if (!ReadParam(m, iter, &has_object))
+    return false;
+  if (!has_object)
+    return true;
+  *r = net::X509Certificate::CreateFromPickle(iter);
+  return !!r->get();
+}
+
+void ParamTraits<scoped_refptr<net::X509Certificate>>::Log(const param_type& p,
+                                                           std::string* l) {
+  l->append("<X509Certificate>");
 }
 
 void ParamTraits<scoped_refptr<net::ct::SignedCertificateTimestamp>>::Write(

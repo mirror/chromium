@@ -5,7 +5,9 @@
 mojom = "//content/public/common/url_loader.mojom"
 public_headers = [
   "//net/base/host_port_pair.h",
+  "//net/cert/x509_certificate.h",
   "//net/http/http_request_headers.h",
+  "//net/ssl/ssl_cert_request_info.h",
   "//net/ssl/ssl_info.h",
 ]
 traits_headers = [ "//services/network/public/cpp/network_param_ipc_traits.h" ]
@@ -17,5 +19,7 @@ deps = [
 type_mappings = [
   "content.mojom.HostPortPair=net::HostPortPair",
   "content.mojom.HttpRequestHeaders=net::HttpRequestHeaders",
+  "content.mojom.SSLCertRequestInfo=scoped_refptr<net::SSLCertRequestInfo>[nullable_is_same_type]",
   "content.mojom.SSLInfo=net::SSLInfo",
+  "content.mojom.X509Certificate=scoped_refptr<net::X509Certificate>[nullable_is_same_type]",
 ]
