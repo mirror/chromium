@@ -53,6 +53,9 @@ void SetTexParameters(GLenum texture_type);
 // Sets color uniforms given an SkColor.
 void SetColorUniform(GLuint handle, SkColor c);
 
+// Sets color uniforms (but not alpha) given an SkColor.
+void SetOpaqueColorUniform(GLuint handle, SkColor c);
+
 }  // namespace vr
 
 #endif  // CHROME_BROWSER_VR_VR_GL_UTIL_H_

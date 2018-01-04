@@ -33,6 +33,8 @@ static constexpr float kContentVerticalOffsetDMM = -0.1f;
 static constexpr float kContentVerticalOffset =
     kContentVerticalOffsetDMM * kContentDistance;
 static constexpr float kContentCornerRadius = 0.005f * kContentWidth;
+static constexpr float kContentShadowOffset = 0.09f;
+static constexpr float kContentShadowIntesity = 0.3f;
 static constexpr float kBackplaneSize = 1000.0;
 static constexpr float kBackgroundDistanceMultiplier = 1.414f;
 
