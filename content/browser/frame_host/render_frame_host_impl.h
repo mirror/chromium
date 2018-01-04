@@ -227,6 +227,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       blink::WebSuddenTerminationDisablerType disabler_type) override;
   bool IsFeatureEnabled(blink::FeaturePolicyFeature feature) override;
   void ViewSource() override;
+  GlobalFrameRoutingId GetGlobalFrameRoutingId() override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -362,8 +363,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // a RenderWidgetHost and nor does any of its ancestors. That would
   // typically mean that the frame has been detached from the frame tree.
   virtual RenderWidgetHostImpl* GetRenderWidgetHost();
-
-  GlobalFrameRoutingId GetGlobalFrameRoutingId();
 
   // The unique ID of the latest NavigationEntry that this RenderFrameHost is
   // showing. This may change even when this frame hasn't committed a page,

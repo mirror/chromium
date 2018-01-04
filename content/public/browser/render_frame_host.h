@@ -11,6 +11,7 @@
 #include "base/callback_forward.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/global_frame_routing_id.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/file_chooser_params.h"
 #include "ipc/ipc_listener.h"
@@ -304,6 +305,9 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // Opens view-source tab for the document last committed in this
   // RenderFrameHost.
   virtual void ViewSource() = 0;
+
+  // Returns a globally identifiable routing id for this render frame host.
+  virtual GlobalFrameRoutingId GetGlobalFrameRoutingId() = 0;
 
  private:
   // This interface should only be implemented inside content.

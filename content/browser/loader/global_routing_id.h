@@ -40,33 +40,6 @@ struct GlobalRoutingID {
   }
 };
 
-// Same as GlobalRoutingID except the route_id must be a RenderFrameHost routing
-// id.
-struct GlobalFrameRoutingId {
-  GlobalFrameRoutingId() : child_id(0), frame_routing_id(MSG_ROUTING_NONE) {}
-
-  GlobalFrameRoutingId(int child_id, int frame_routing_id)
-      : child_id(child_id), frame_routing_id(frame_routing_id) {}
-
-  // The unique ID of the child process (different from OS's PID).
-  int child_id;
-
-  // The route ID (unique for each URLRequest source).
-  int frame_routing_id;
-
-  bool operator<(const GlobalFrameRoutingId& other) const {
-    return std::tie(child_id, frame_routing_id) <
-           std::tie(other.child_id, other.frame_routing_id);
-  }
-  bool operator==(const GlobalFrameRoutingId& other) const {
-    return child_id == other.child_id &&
-           frame_routing_id == other.frame_routing_id;
-  }
-  bool operator!=(const GlobalFrameRoutingId& other) const {
-    return !(*this == other);
-  }
-};
-
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_LOADER_GLOBAL_ROUTING_ID_H_
