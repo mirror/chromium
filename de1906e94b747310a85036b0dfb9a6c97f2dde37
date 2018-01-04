@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9033e8a_1ad04ae0",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T22:58:34Z",
+      "side": 1,
+      "message": "Would it be useful to explain when this is not null?",
+      "range": {
+        "startLine": 163,
+        "startChar": 51,
+        "endLine": 163,
+        "endChar": 72
+      },
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff73e75_69199d20",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T22:58:34Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55666f9b_5655b76a",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T22:58:34Z",
+      "side": 1,
+      "message": "Should we just DCHECK that index is 0?",
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
