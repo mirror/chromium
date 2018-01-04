@@ -545,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "4d35dac7_2464fe91",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T08:16:21Z",
+      "side": 1,
+      "message": "So, I\u0027m OK with this for now. But it\u0027s a bit hard to understand how the shutdown semantics work in this area: would it be possible to try cleaning this up in followups / clearly defining how shutting down works? There should only be two cases:\n\n1) WebVR presentation is stopped and there\u0027s a clean shutdown sequence (i.e. we shouldn\u0027t encounter wait failures in this path)\n2) The entire browser is shutting down, in which case there\u0027s really nothing further to do anyway, and we may as well early return (i.e. there\u0027s no fence because the wait failed)",
+      "parentUuid": "4b37da37_f88cc444",
+      "range": {
+        "startLine": 697,
+        "startChar": 38,
+        "endLine": 698,
+        "endChar": 37
+      },
+      "revId": "c0d3a4bc8114eb9522cd25902c5c4d43a0e117bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55850ac1_4fab6994",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 26
