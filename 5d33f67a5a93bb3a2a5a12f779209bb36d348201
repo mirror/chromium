@@ -16,6 +16,24 @@
       "revId": "5d33f67a5a93bb3a2a5a12f779209bb36d348201",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fde3fb_dad84752",
+        "filename": "ash/system/supervised/tray_supervised_user.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-04T17:56:00Z",
+      "side": 1,
+      "message": "Good catch. The comment is no longer true. I deleted it since custodian info is no longer special and we handle it like other user session info (as in TrayUser). \n\nAfter alemate@\u0027s CL, the supervised/child user session is created with all proper info (i.e. with correct user type and custodian info). User type is not going to change after user session starts (i.e. user must signs out to change to a regular user session). The custodian info might still change.",
+      "parentUuid": "fa755195_85d9110a",
+      "revId": "5d33f67a5a93bb3a2a5a12f779209bb36d348201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
