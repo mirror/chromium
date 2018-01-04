@@ -117,6 +117,30 @@
       "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47af93e7_c8559d6c",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2562,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-04T23:09:57Z",
+      "side": 1,
+      "message": "Updated. I also noticed that I was sending no flags (0) instead of the None flag for the non-supported \u003cinput\u003e types. This doesn\u0027t matter much on Android since Android doesn\u0027t enable autocapitalization unless we explicitly tell it to, but it might potentially make a difference on other platforms, so I\u0027ve fixed this to match what I\u0027d written in the test case.",
+      "parentUuid": "33348004_a80bf50a",
+      "range": {
+        "startLine": 2562,
+        "startChar": 41,
+        "endLine": 2562,
+        "endChar": 61
+      },
+      "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
