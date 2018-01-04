@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb06d193_b797eadb",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-04T00:38:50Z",
+      "side": 1,
+      "message": "Right now this read as\nIF the popup is open THEN the user is in input mode, ...\nwhich isn\u0027t true.\n\nDid you mean to say \"and\" instead of the comma?",
+      "range": {
+        "startLine": 335,
+        "startChar": 5,
+        "endLine": 335,
+        "endChar": 52
+      },
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c71640_ccf47ad1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-04T00:38:50Z",
+      "side": 1,
+      "message": "It seems weird to me that we\u0027re using a different |current_match| here than in blocks 323-328.",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a6f1fd_debd4898",
+        "filename": "components/omnibox/browser/omnibox_edit_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-04T00:38:50Z",
+      "side": 1,
+      "message": "Can you do this without adding virtual annotations?  I see they\u0027re only added for testing.  Nothing else here is virtual.",
+      "revId": "719f34ff7c42cd79cc17fcf5ec04c03d89f33e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
