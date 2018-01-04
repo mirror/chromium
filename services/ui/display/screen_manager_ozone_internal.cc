@@ -195,18 +195,24 @@ void ScreenManagerOzoneInternal::ToggleAddRemoveDisplay() {
 }
 
 void ScreenManagerOzoneInternal::IncreaseInternalDisplayZoom() {
-  if (Display::HasInternalDisplay())
-    display_manager_->ZoomInternalDisplay(false);
+  if (Display::HasInternalDisplay()) {
+    display_manager_->ZoomInternalDisplay(false,
+                                          Display::ModeChangeSource::kUnknown);
+  }
 }
 
 void ScreenManagerOzoneInternal::DecreaseInternalDisplayZoom() {
-  if (Display::HasInternalDisplay())
-    display_manager_->ZoomInternalDisplay(true);
+  if (Display::HasInternalDisplay()) {
+    display_manager_->ZoomInternalDisplay(true,
+                                          Display::ModeChangeSource::kUnknown);
+  }
 }
 
 void ScreenManagerOzoneInternal::ResetInternalDisplayZoom() {
-  if (Display::HasInternalDisplay())
-    display_manager_->ResetInternalDisplayZoom();
+  if (Display::HasInternalDisplay()) {
+    display_manager_->ResetInternalDisplayZoom(
+        Display::ModeChangeSource::kUnknown);
+  }
 }
 
 void ScreenManagerOzoneInternal::RotateCurrentDisplayCW() {

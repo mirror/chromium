@@ -265,6 +265,7 @@ bool ScreenLayoutObserver::GetDisplayMessageForNotification(
     }
   }
 
+  const display::DisplayManager* display_manager = GetDisplayManager();
   for (const auto& iter : display_info_) {
     DisplayInfoMap::const_iterator old_iter = old_info.find(iter.first);
     if (old_iter == old_info.end()) {
@@ -276,8 +277,17 @@ bool ScreenLayoutObserver::GetDisplayMessageForNotification(
       return false;
     }
 
-    if (iter.second.configured_ui_scale() !=
-        old_iter->second.configured_ui_scale()) {
+    if ((iter.second.configured_ui_scale() !=
+         old_iter->second.configured_ui_scale()) ||
+        (display_manager->IsInUnifiedMode() &&
+         iter.second.size_in_pixel() != old_iter->second.size_in_pixel())) {
+      if (display_manager->GetActiveDisplayModeChangeSource(iter.first) !=
+          display::Display::ModeChangeSource::kAccelerator) {
+        // Only show the resolution change notification, if the user changed it
+        // using a keyboard shortcut.
+        continue;
+      }
+
       *out_message = l10n_util::GetStringUTF16(
           IDS_ASH_STATUS_TRAY_DISPLAY_RESOLUTION_CHANGED_TITLE);
       *out_additional_message = l10n_util::GetStringFUTF16(

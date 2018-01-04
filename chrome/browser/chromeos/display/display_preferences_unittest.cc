@@ -453,7 +453,8 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   display::ManagedDisplayMode mode(gfx::Size(300, 200), 60.0f, false, true,
                                    1.0 /* ui_scale */,
                                    1.25f /* device_scale_factor */);
-  display_manager()->SetDisplayMode(id2, mode);
+  display_manager()->SetDisplayMode(
+      id2, display::Display::ModeChangeSource::kUnknown, mode);
 
   window_tree_host_manager->SetPrimaryDisplayId(id2);
 
@@ -623,7 +624,8 @@ TEST_F(DisplayPreferencesTest, PreventStore) {
   // Once the notification is removed, the specified resolution will be stored
   // by SetDisplayMode.
   ash::Shell::Get()->display_manager()->SetDisplayMode(
-      id, display::ManagedDisplayMode(gfx::Size(300, 200), 60.0f, false, true));
+      id, display::Display::ModeChangeSource::kUnknown,
+      display::ManagedDisplayMode(gfx::Size(300, 200), 60.0f, false, true));
   UpdateDisplay("300x200#500x400|400x300|300x200");
 
   property = nullptr;

@@ -59,6 +59,18 @@ class DISPLAY_EXPORT Display final {
     ROTATION_SOURCE_UNKNOWN,
   };
 
+  // Defines the possible sources for display mode change requests.
+  enum class ModeChangeSource {
+    // Display mode was changed using a keyboard shortcut.
+    kAccelerator,
+
+    // Display mode was changed from the display settings UI.
+    kSettingsUI,
+
+    // No source is provided.
+    kUnknown,
+  };
+
   // Touch support for the display.
   enum TouchSupport {
     TOUCH_SUPPORT_UNKNOWN,
