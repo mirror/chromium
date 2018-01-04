@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4688c6_3a1189be",
+        "filename": "ash/accelerators/accelerator_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-04T01:22:49Z",
+      "side": 1,
+      "message": "optional: This might not be needed since this is a NoSessionAshTestBase. I\u0027m not 100% sure though.",
+      "revId": "7e90fd49029d9d3b59fcfe4c551477c564aee8bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
