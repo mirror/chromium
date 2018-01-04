@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeb46016_752e0c7c",
+        "filename": "ios/web/web_state/js/common_js_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ(@(data.expected_placeholder_installed), result)\n\nExecuteJavaScript can return NSNull, which will crash the tests.",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 13
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112d1435_2049fd12",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "Would it be useful to explain what \"fallback content\" is?",
+      "range": {
+        "startLine": 708,
+        "startChar": 31,
+        "endLine": 708,
+        "endChar": 39
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb7bc0c_06e57c9f",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "Missed var for |i|, which creates a global variable. BTW, it is better to move all vars to the pot, because JS interpreter does that anyway.",
+      "range": {
+        "startLine": 719,
+        "startChar": 10,
+        "endLine": 719,
+        "endChar": 11
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bf120c_edb4e10e",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "getChildEmbedElement_ ?",
+      "range": {
+        "startLine": 737,
+        "startChar": 6,
+        "endLine": 737,
+        "endChar": 24
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a0b1de_64f2ffa9",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "Missing var for i",
+      "range": {
+        "startLine": 742,
+        "startChar": 11,
+        "endLine": 742,
+        "endChar": 12
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

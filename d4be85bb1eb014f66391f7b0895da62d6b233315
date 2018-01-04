@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "69d979f4_2e514537",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T23:12:03Z",
+      "side": 1,
+      "message": "This code is much easier to understand now. Thank you!",
+      "parentUuid": "b306e88c_5b99568e",
+      "range": {
+        "startLine": 714,
+        "startChar": 6,
+        "endLine": 714,
+        "endChar": 39
+      },
+      "revId": "d4be85bb1eb014f66391f7b0895da62d6b233315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a34fb2e8_a448418d",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 2
