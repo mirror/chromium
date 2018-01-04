@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b93daf68_db7bc7de",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T23:33:30Z",
+      "side": 1,
+      "message": "As mentioned in another comment, can we set the flag value to sentences in blink level and remove this?",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 76
+      },
+      "revId": "c5de7116311594808e4508f0d05ee7a1b414c086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d9b7ca_eae0bcf9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T23:33:30Z",
+      "side": 1,
+      "message": "Can you refactor this into a static method?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "c5de7116311594808e4508f0d05ee7a1b414c086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379cdb00_56ecb5c0",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2540,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-04T23:33:30Z",
+      "side": 1,
+      "message": "Is there any reason we want to have 0 and k...Sentences separately and convert 0 to ...SENTENCES in the java side? If there is no good reason, can we just make this return k...Sentences here? \n(And potentially remove ...None?)",
+      "range": {
+        "startLine": 2540,
+        "startChar": 30,
+        "endLine": 2540,
+        "endChar": 31
+      },
+      "revId": "c5de7116311594808e4508f0d05ee7a1b414c086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
