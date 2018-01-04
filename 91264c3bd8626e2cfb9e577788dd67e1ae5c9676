@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "917708c0_372b0449",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 0,
+      "message": "This is covered by 1) the new \"match prefix\" logic in the code below and 2) by the new unit tests.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "91264c3bd8626e2cfb9e577788dd67e1ae5c9676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb6cd2a7_7c441f4b",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 0,
+      "message": "Covered in the new code by |base::StartsWith(mime_type, kAppXml, ...)|.",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 54
+      },
+      "revId": "91264c3bd8626e2cfb9e577788dd67e1ae5c9676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

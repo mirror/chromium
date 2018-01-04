@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f8994e_6e64c4f2",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 1,
+      "message": "Note that these constants will now be used in \"prefix matching\" code below, even though these constants do not have a plus at the end.  I think this is fine - it should be okay to match all of:\n- application/json (matched by the old code)\n- application/json+protobuf (matched by the new code - this is the bug we are trying to fix)\n- application/jsonfoobar (matched by the new code - somewhat unexpectedly, but probably desirably)\n- application/xmlfoobarformat (matched by the new code - somewhat unexpectedly, but probably also desirably)\n\nWDYT?",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41583dd_d4cd4b6f",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 1,
+      "message": "Including the plus character in the suffixes.\n\nWDYT?",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc58738_3d580770",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 1,
+      "message": "Declared to avoid line wrapping... :-P",
+      "range": {
+        "startLine": 94,
+        "startChar": 17,
+        "endLine": 94,
+        "endChar": 33
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f53b94c_5c6637bf",
+        "filename": "content/common/cross_site_document_classifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:58:41Z",
+      "side": 1,
+      "message": "We could in theory keep |const std::string\u0026| as the type.  At one point I thought that I need to change the type in order to use base::StringPiece::starts_with, but this is not really true.  Still - taking base::StringPiece is input is desirable (the function is more versatile this way), right?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
