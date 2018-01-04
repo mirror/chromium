@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39c6ff86_388ea429",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T02:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520993d1_cfa33ce0",
+      "revId": "8c7dd227602285c693639257bad3904b69d30102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec3e3d4_7c03c7cf",
         "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
         "patchSetId": 14
@@ -39,6 +57,30 @@
       "revId": "8c7dd227602285c693639257bad3904b69d30102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad0a991_81f99265",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T02:02:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec3e3d4_7c03c7cf",
+      "range": {
+        "startLine": 228,
+        "startChar": 61,
+        "endLine": 228,
+        "endChar": 65
+      },
+      "revId": "8c7dd227602285c693639257bad3904b69d30102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
