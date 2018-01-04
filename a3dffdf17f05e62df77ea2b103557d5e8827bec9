@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bf7e38c_472ffa24",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc14abd3_489591cd",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade9067c_848a1091",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f26de7_b52a4ad7",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade9067c_848a1091",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd50a9fb_1d0bc4e5",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "346d8d0d_441fad52",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b4a69ef_602c0c0f",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1821a460_0c82d58e",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b4a69ef_602c0c0f",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 76
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +234,30 @@
       "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a9d4ff_452fcedf",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd4a5fab_4c51643b",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
