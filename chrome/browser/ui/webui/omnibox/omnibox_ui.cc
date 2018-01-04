@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/webui/omnibox/omnibox_page_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -18,13 +19,12 @@ OmniboxUI::OmniboxUI(content::WebUI* web_ui) : MojoWebUIController(web_ui) {
   // Set up the chrome://omnibox/ source.
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIOmniboxHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("omnibox.css", IDR_OMNIBOX_CSS);
   source->AddResourcePath("omnibox.js", IDR_OMNIBOX_JS);
   source->AddResourcePath("chrome/browser/ui/webui/omnibox/omnibox.mojom.js",
                           IDR_OMNIBOX_MOJO_JS);
   source->SetDefaultResource(IDR_OMNIBOX_HTML);
-  source->UseGzip();
-
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source);
 }
 

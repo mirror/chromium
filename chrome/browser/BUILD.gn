@@ -4467,6 +4467,8 @@ grit("resources") {
   output_dir = "$root_gen_dir/chrome"
   outputs = [
     "grit/browser_resources.h",
+    "grit/browser_resources_map.cc",
+    "grit/browser_resources_map.h",
     "browser_resources.pak",
   ]
 

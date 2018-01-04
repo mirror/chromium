@@ -14,6 +14,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
@@ -115,9 +116,9 @@ LocalStateUI::LocalStateUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   // Set up the chrome://local-state source.
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUILocalStateHost);
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->SetDefaultResource(IDR_LOCAL_STATE_HTML);
   html_source->AddResourcePath("local_state.js", IDR_LOCAL_STATE_JS);
-  html_source->UseGzip();
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), html_source);
   web_ui->AddMessageHandler(base::MakeUnique<LocalStateUIHandler>());
 }
