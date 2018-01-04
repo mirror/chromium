@@ -4,6 +4,18 @@
 
 import("//build/config/ios/rules.gni")
 
+source_set("omnibox_focus_orchestrator") {
+  sources = [
+    "omnibox_focus_orchestrator.h",
+    "omnibox_focus_orchestrator.mm",
+  ]
+
+  deps = [
+    "//base",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
 source_set("ui") {
   sources = [
     "UIView+SizeClassSupport.h",

@@ -30,6 +30,12 @@
 @synthesize browserState = _browserState;
 @synthesize dispatcher = dispatcher;
 
+- (void)setOrchestrator:(OmniboxFocusOrchestrator*)orchestrator {
+  _orchestrator = orchestrator;
+  orchestrator.locationBarAnimatee = self.locationBarView;
+  orchestrator.omniboxAnimatee = self.locationBarView.textField;
+}
+
 - (void)start {
   BOOL isIncognito = self.browserState->IsOffTheRecord();
 

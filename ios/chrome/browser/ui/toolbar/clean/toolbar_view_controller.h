@@ -9,6 +9,7 @@
 
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
+#import "ios/chrome/browser/ui/omnibox_focus_orchestrator.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_consumer.h"
 
 @protocol ApplicationCommands;
@@ -20,10 +21,10 @@
 
 // View controller for a toolbar, which will show a horizontal row of
 // controls and/or labels.
-@interface ToolbarViewController
-    : UIViewController<ActivityServicePositioner,
-                       FullscreenUIElement,
-                       ToolbarConsumer>
+@interface ToolbarViewController : UIViewController<ActivityServicePositioner,
+                                                    FullscreenUIElement,
+                                                    ToolbarConsumer,
+                                                    ToolbarAnimatee>
 
 - (instancetype)initWithDispatcher:
                     (id<ApplicationCommands, BrowserCommands>)dispatcher
@@ -49,12 +50,6 @@
 // Sets the location bar view, containing the omnibox.
 - (void)setLocationBarView:(UIView*)locationBarView;
 
-// Adds the toolbar expanded state animations to |animator|, and changes the
-// toolbar constraints in preparation for the animation.
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator;
-// Adds the toolbar contracted state animations to |animator|, and changes the
-// toolbar constraints in preparation for the animation.
-- (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator;
 // Updates the view so a snapshot can be taken. It needs to be adapted,
 // depending on if it is a snapshot displayed |onNTP| or not.
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP;

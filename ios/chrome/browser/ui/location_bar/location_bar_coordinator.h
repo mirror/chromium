@@ -15,6 +15,8 @@ class ChromeBrowserState;
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 
+@class OmniboxFocusOrchestrator;
+
 @interface LocationBarCoordinator : NSObject
 
 // LocationBarView containing the omnibox.
@@ -23,6 +25,8 @@ class ChromeBrowserState;
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 // The dispatcher for this view controller.
 @property(nonatomic, weak) id<ApplicationCommands, BrowserCommands> dispatcher;
+
+@property(nonatomic, strong) OmniboxFocusOrchestrator* orchestrator;
 
 // Start this coordinator.
 - (void)start;

@@ -297,46 +297,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
                                   [self fadeAnimationLayers]);
 }
 
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator {
-  // Hide the rightView button so its not visibile on its initial layout
-  // while the expan animation is happening.
-  self.rightView.hidden = YES;
-  self.rightView.frame = [self rightViewRectForBounds:self.bounds];
-  [animator addAnimations:^{
-    [self layoutIfNeeded];
-    [self.rightView layoutIfNeeded];
-  }];
-
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.rightView.hidden = NO;
-    self.rightView.alpha = 0;
-    self.rightView.frame =
-        CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:0.2
-                                      delay:0.1
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                   self.rightView.alpha = 1.0;
-                                   self.rightView.frame = CGRectLayoutOffset(
-                                       self.rightView.frame,
-                                       -kToolbarButtonAnimationOffset);
-                                 }
-                                 completion:nil];
-  }];
-}
-
-- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator {
-  [animator addAnimations:^{
-    self.rightView.alpha = 0;
-    self.rightView.frame =
-        CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
-  }];
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.rightView = nil;
-  }];
-}
-
 #pragma mark pre-edit
 
 // Creates a UILabel based on the current dimension of the text field and
@@ -415,6 +375,30 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 // Overridden to require an OmniboxTextFieldDelegate.
 - (void)setDelegate:(id<OmniboxTextFieldDelegate>)delegate {
   [super setDelegate:delegate];
+}
+
+#pragma mark - OmniboxAnimatee
+
+- (void)prepareToExpand {
+  self.rightView.hidden = NO;
+  self.rightView.alpha = 0;
+  self.rightView.frame = CGRectLayoutOffset(
+      [self rightViewRectForBounds:self.bounds], kToolbarButtonAnimationOffset);
+}
+
+- (void)prepareToContract {
+}
+
+- (void)showClearButton {
+  self.rightView.alpha = 1.0;
+  self.rightView.frame =
+      CGRectLayoutOffset(self.rightView.frame, -kToolbarButtonAnimationOffset);
+}
+
+- (void)hideClearButton {
+  self.rightView.alpha = 0;
+  self.rightView.frame =
+      CGRectLayoutOffset(self.rightView.frame, kToolbarButtonAnimationOffset);
 }
 
 #pragma mark - Private methods

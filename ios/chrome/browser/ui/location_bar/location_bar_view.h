@@ -7,13 +7,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/chrome/browser/ui/omnibox_focus_orchestrator.h"
+
 @class OmniboxTextFieldIOS;
 
 // The location bar view is the view that is displayed in the visible "address
 // bar" space of the toolbar. Everything that's located in the white rectangle
 // is the location bar: the button on the left, the buttons on the right, the
 // omnibox textfield.
-@interface LocationBarView : UIView
+@interface LocationBarView : UIView<LocationBarAnimatee>
 
 // Initialize the location bar with the given frame, font, text color, and tint
 // color for omnibox.
@@ -50,16 +52,6 @@
 // Perform an animation of |leadingButton| sliding out and fading out towards
 // the leading edge.
 - (void)fadeOutLeadingButton;
-
-// Perform animations for expanding the omnibox. This animation can be seen on
-// an iPhone when the omnibox is focused. It involves sliding the leading button
-// out and fading its alpha.
-- (void)addExpandOmniboxAnimations:(UIViewPropertyAnimator*)animator;
-
-// Perform animations for expanding the omnibox. This animation can be seen on
-// an iPhone when the omnibox is defocused. It involves sliding the leading
-// button in and fading its alpha.
-- (void)addContractOmniboxAnimations:(UIViewPropertyAnimator*)animator;
 
 @end
 
