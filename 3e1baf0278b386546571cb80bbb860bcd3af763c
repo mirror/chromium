@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "65013252_22922c27",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T19:16:26Z",
+      "side": 1,
+      "message": "How about we just get rid of the global_state namespace and leave these functions in just the \"cronet\" namespace?",
+      "parentUuid": "b2d697e6_e8e890bb",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "3e1baf0278b386546571cb80bbb860bcd3af763c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c11436ee_8191edbf",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
         "patchSetId": 8

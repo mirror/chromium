@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37af7f88_3c5bd53f",
+        "filename": "components/cronet/cronet_url_request_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T19:16:26Z",
+      "side": 1,
+      "message": "Seems like Context owns the Adapter, my logic being that \nCronetURLRequestContext::DestroyOnNetworkThread() and CronetURLRequestContextAdapter::OnDestroyNetworkThread() seem like thinly veiled destructors.\n\nI propose we make the Context have a unique_ptr to a Delegate and change this code to:\n  GetNetworkTaskRunner()-\u003eDeleteSoon(FROM_HERE, delegate_);\n\nThen we can entirely get rid of CronetURLRequestContext::DestroyOnNetworkThread() and CronetURLRequestContextAdapter::OnDestroyNetworkThread().\n\nWDYT?",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 462,
+        "endChar": 53
+      },
+      "revId": "8fa589d48f86a6a856f46a670d6a1c4ab195ce9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
