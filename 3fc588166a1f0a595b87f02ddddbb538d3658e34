@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09788de_19f6b568",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/green-square-ref.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T11:15:38Z",
+      "side": 1,
+      "message": "I suppose you could use css/reference/ref-filled-green-100px-square-only.html instead in your tests?",
+      "revId": "3fc588166a1f0a595b87f02ddddbb538d3658e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63aa343d_fc51307c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T11:15:38Z",
+      "side": 1,
+      "message": "Probably no point in checking the object type here anymore.",
+      "revId": "3fc588166a1f0a595b87f02ddddbb538d3658e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa54cb3d_c09e34d1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T11:15:38Z",
+      "side": 1,
+      "message": "This could fail very easily: We don\u0027t yet know if the sibling tables are anonymous, but if they are not, we may for instance have a floated table next to an inline-table.\n\nI suggest that you move the check into MergeAnonymousTablePartsIfNeeded(), after you have checked that both are anonymous. Then their inlineness definitely need to match.",
+      "revId": "3fc588166a1f0a595b87f02ddddbb538d3658e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
