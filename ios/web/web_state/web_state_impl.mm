@@ -673,7 +673,7 @@ const GURL& WebStateImpl::GetLastCommittedURL() const {
 GURL WebStateImpl::GetCurrentURL(URLVerificationTrustLevel* trust_level) const {
   GURL URL = [web_controller_ currentURLWithTrustLevel:trust_level];
   bool equalOrigins = URL.GetOrigin() == GetLastCommittedURL().GetOrigin();
-  DCHECK(equalOrigins);
+//  DCHECK(equalOrigins);
   UMA_HISTOGRAM_BOOLEAN("Web.CurrentOriginEqualsLastCommittedOrigin",
                         equalOrigins);
   return URL;
