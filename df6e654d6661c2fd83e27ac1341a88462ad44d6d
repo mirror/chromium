@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef00e99_67483e19",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T04:25:27Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t want a real struct (vs std::pair) for the c++ side? A struct has the advantage of names vs .first/.second.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 2
+      },
+      "revId": "df6e654d6661c2fd83e27ac1341a88462ad44d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
