@@ -27,6 +27,10 @@
 #include "ui/gl/gl_fence_egl.h"
 #endif
 
+#if defined(OS_WIN)
+#include "gpu/ipc/service/direct_composition_surface_win.h"
+#endif
+
 namespace gpu {
 namespace gles2 {
 
@@ -1059,7 +1063,12 @@ void FeatureInfo::InitializeFeatures() {
   }
 #endif
 
-  if (gl::HasExtension(extensions, "GL_APPLE_ycbcr_422")) {
+#if defined(OS_WIN)
+  feature_flags_.hdr_rendering =
+      gpu::DirectCompositionSurfaceWin::IsHDRSupported()
+#endif
+
+          if (gl::HasExtension(extensions, "GL_APPLE_ycbcr_422")) {
     AddExtensionString("GL_CHROMIUM_ycbcr_422_image");
     feature_flags_.chromium_image_ycbcr_422 = true;
   }
