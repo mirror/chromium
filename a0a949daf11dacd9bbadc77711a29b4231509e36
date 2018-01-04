@@ -22,6 +22,30 @@
       "revId": "a0a949daf11dacd9bbadc77711a29b4231509e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f028472_677fd6e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-04T18:32:10Z",
+      "side": 1,
+      "message": "It currently uses child_space, which is instantiated for each iteration (new column heights each time). But the good question is, why are we using the constraint space for this at all? Pretty sure it\u0027s just for historical reasons.\n\nFixed. Thanks!",
+      "parentUuid": "86e8f7e6_0f3e0e52",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 38
+      },
+      "revId": "a0a949daf11dacd9bbadc77711a29b4231509e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
