@@ -5,6 +5,7 @@
 #include "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.h"
 
 #include "base/logging.h"
+
 #include "media/cdm/ppapi/clear_key_cdm/cdm_proxy_common.h"
 
 namespace media {
@@ -30,8 +31,7 @@ void ClearKeyCdmProxy::Process(Function function,
 
   if (crypto_session_id != kClearKeyCdmProxyCryptoSessionId ||
       !std::equal(input_data.begin(), input_data.end(),
-                  kClearKeyCdmProxyInputData.begin(),
-                  kClearKeyCdmProxyInputData.end())) {
+                  kClearKeyCdmProxyInputData.begin())) {
     std::move(process_cb).Run(Status::kFail, {});
     return;
   }
@@ -48,8 +48,7 @@ void ClearKeyCdmProxy::CreateMediaCryptoSession(
   DVLOG(1) << __func__;
 
   if (!std::equal(input_data.begin(), input_data.end(),
-                  kClearKeyCdmProxyInputData.begin(),
-                  kClearKeyCdmProxyInputData.end())) {
+                  kClearKeyCdmProxyInputData.begin())) {
     std::move(create_media_crypto_session_cb).Run(Status::kFail, 0, 0);
     return;
   }
