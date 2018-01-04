@@ -16,6 +16,24 @@
       "revId": "fefadab26c0e1cdb2cdf7f923e7fb1716cbe7978",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c624a4_60f07bb7",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1167349
+      },
+      "writtenOn": "2018-01-04T03:36:51Z",
+      "side": 1,
+      "message": "I kept them all for consistency sake(followed similar to whats in other workaround.)\nI suggest if its not going to break existing and works as expected, lets keep it.\nAlso i don\u0027t have commit-queue privileges, so someone from Google should do it.",
+      "parentUuid": "35ead4ce_6b1480bf",
+      "revId": "fefadab26c0e1cdb2cdf7f923e7fb1716cbe7978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
