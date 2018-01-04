@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb756734_56a55b6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T19:32:07Z",
+      "side": 1,
+      "message": "I think you want to make a change in OverviewListLayout or AccessibilityTabModelWrapper.  It is missing the signal here that we closed all the tabs somewhere and needs to do this.  If you close the incognito tabs manually do the buttons hide?  Seems like we need another observer method somewhere in there.",
+      "range": {
+        "startLine": 211,
+        "startChar": 24,
+        "endLine": 211,
+        "endChar": 38
+      },
+      "revId": "34823bbdd614122a95a0ca6888d8a4793eee1ee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
