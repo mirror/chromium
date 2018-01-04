@@ -31,6 +31,8 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
       std::vector<PublicKeyCredentialDescriptor> allow_list);
   CTAPGetAssertionRequestParam& SetPinAuth(std::vector<uint8_t> pin_auth);
   CTAPGetAssertionRequestParam& SetPinProtocol(uint8_t pin_protocol);
+  CTAPGetAssertionRequestParam& SetUserVerification(bool user_verfication);
+  CTAPGetAssertionRequestParam& SetUserPresence(bool user_presence);
 
  private:
   std::string rp_id_;
@@ -38,6 +40,8 @@ class CTAPGetAssertionRequestParam : public CTAPRequestParam {
   base::Optional<std::vector<PublicKeyCredentialDescriptor>> allow_list_;
   base::Optional<std::vector<uint8_t>> pin_auth_;
   base::Optional<uint8_t> pin_protocol_;
+  bool user_verification_;
+  bool user_presence_;
 
   DISALLOW_COPY_AND_ASSIGN(CTAPGetAssertionRequestParam);
 };
