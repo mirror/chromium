@@ -53,6 +53,16 @@ static Node* EnclosingListChild(Node* node, Node* list_node) {
   return list_child;
 }
 
+static int PreviousIndexBasedOnNextPosition(
+    const PositionWithAffinity& next_position,
+    ContainerNode* scope) {
+  const VisiblePosition& visible_position =
+      CreateVisiblePosition(next_position);
+  const VisiblePosition& prev_position = PreviousPositionOf(visible_position);
+
+  return IndexForVisiblePosition(prev_position, scope);
+}
+
 HTMLUListElement* InsertListCommand::FixOrphanedListChild(
     Node* node,
     EditingState* editing_state) {
@@ -207,6 +217,10 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         visible_start_of_selection, scope_for_start_of_selection);
     int index_for_end_of_selection = IndexForVisiblePosition(
         visible_end_of_selection, scope_for_end_of_selection);
+    const VisiblePosition next_visible_position_after_end_selection =
+        NextPositionOf(visible_end_of_selection);
+    const PositionWithAffinity next_position_after_end_selection =
+        next_visible_position_after_end_selection.ToPositionWithAffinity();
 
     if (StartOfParagraph(visible_start_of_selection,
                          kCanSkipOverEditingBoundary)
@@ -284,6 +298,14 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
 
     // Fetch the end of the selection, for the reason mentioned above.
     if (!end_of_selection.IsConnected()) {
+      // index_for_end_of_selection value could have been changed after
+      // DoApplyForSingleParagraph. If our stored next position is connected
+      // and valid we update the index based on the cached next position.
+      if (next_position_after_end_selection.IsNotNull() &&
+          next_position_after_end_selection.IsConnected()) {
+        index_for_end_of_selection = PreviousIndexBasedOnNextPosition(
+            next_position_after_end_selection, scope_for_end_of_selection);
+      }
       visible_end_of_selection = VisiblePositionForIndex(
           index_for_end_of_selection, scope_for_end_of_selection);
       if (visible_end_of_selection.IsNull())
