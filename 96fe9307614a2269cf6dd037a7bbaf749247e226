@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e120c0c0_afe39356",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43833,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T15:34:29Z",
+      "side": 0,
+      "message": "Metric owners will correct me if I\u0027m wrong, but for most other obsolete Net histograms I see that the owner field was kept.",
+      "range": {
+        "startLine": 43833,
+        "startChar": 3,
+        "endLine": 43833,
+        "endChar": 8
+      },
+      "revId": "96fe9307614a2269cf6dd037a7bbaf749247e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
