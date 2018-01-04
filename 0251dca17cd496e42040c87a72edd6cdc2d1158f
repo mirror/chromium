@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2205f4_d0b9248f",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "usually only test helpers get put in namespace test - I think this can be dropped.",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a010fc3_1b5c86ba",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "It\u0027s usually fine to nullptr for the button listener - does that work?",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb07f00_dfac8a64",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "comment why this is necessary?",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7473f4a_01587b68",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "is a widget needed? (Can the test just do \n\n  HoverButton button(...);\n  button.SetSize(..);\n\n?\n\n(or comment why needed - maybe something to do with tooltips)",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d21eea2_36681dc1",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "with WIDGET_OWNS_NATIVE_WIDGET it\u0027s proabbly better to do `widget_ \u003d nullptr;` so it\u0027s balanced with the stuff done in SetUp()",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be885a6d_bb4c0c88",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "EXPECT_FOO for all these -- ASSERT is usually just if the test would segfault/dcheck if execution were to continue. EXPECT allows the test to continue and put more info in the test logs.",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57eaf078_9b200a5c",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "maybe a helper?\n\nauto get_width \u003d [](const char* text) {\n  return views::Label(base::ASCIIToUTF16(text)).GetPreferredSize().width();\n};\n\n  EXPECT_GT(kButtonWidth, get_width(kTitleSubtitlePairs[0].title));\n  EXPECT_GT(kButtonWidth, get_width(kTitleSubtitlePairs[0].subtitle));",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f249f317_8d179816",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "comment like\n\n  // The accessible name should always be the title and subtitle concatenated by \\n.",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09594598_546c1b5a",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "does gfx::Point() (i.e. {0,0}) work for the point?",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d827a0f4_f96875e4",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:07:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this.. a single test case could also just iterate through the array and do something like\n\nSCOPED_TRACE(testing::Message() \u003c\u003c \"Index: \" \u003c\u003c i \u003c\u003c \", auto_compute\u003d\" \u003c\u003c (auto_compute ? \"true\" : \"false\");\n\nEach test case is a bit more work/cognitive load for the try bots, particularly when there is SetUp/TearDown.\n\nWas there something that made paramaterising the test more compelling?",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
