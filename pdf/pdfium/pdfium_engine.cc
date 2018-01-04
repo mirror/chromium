@@ -2707,6 +2707,12 @@ int PDFiumEngine::GetNamedDestinationPage(const std::string& destination) {
   return dest ? FPDFDest_GetPageIndex(doc_, dest) : -1;
 }
 
+std::pair<int, int> PDFiumEngine::TransformPagePoint(int page_index,
+                                                     int page_x,
+                                                     int page_y) {
+  return pages_[page_index]->TransformXY(page_x, page_y);
+}
+
 int PDFiumEngine::GetMostVisiblePage() {
   if (in_flight_visible_page_)
     return *in_flight_visible_page_;
