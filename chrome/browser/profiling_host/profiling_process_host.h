@@ -205,6 +205,8 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Called after the MDPs have been given time to emit memory dumps.
   void OnMinimumTimeHasElapsed();
 
+  profiling::mojom::StackMode GetStackMode();
+
   // Sends the end of the data pipe to the profiling service.
   void AddClientToProfilingService(profiling::mojom::ProfilingClientPtr client,
                                    base::ProcessId pid,

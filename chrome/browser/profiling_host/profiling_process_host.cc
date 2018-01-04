@@ -337,6 +337,20 @@ void ProfilingProcessHost::OnMinimumTimeHasElapsed() {
     std::move(finish_tracing_callback_).Run();
 }
 
+profiling::mojom::StackMode ProfilingProcessHost::GetStackMode() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  if (cmdline->HasSwitch(switches::kMemlogStackMode)) {
+    std::string stack_mode = cmdline->GetSwitchValueASCII(switches::kMemlogStackMode);
+    if (stack_mode == switches::kMemlogStackModeNative)
+      return profiling::mojom::StackMode::NATIVE;
+    if (stack_mode == switches::kMemlogStackModePseudo)
+      return profiling::mojom::StackMode::PSEUDO;
+    if (stack_mode == switches::kMemlogStackModeMixed)
+      return profiling::mojom::StackMode::MIXED;
+  }
+  return profiling::mojom::StackMode::NATIVE;
+}
+
 void ProfilingProcessHost::AddClientToProfilingService(
     profiling::mojom::ProfilingClientPtr client,
     base::ProcessId pid,
@@ -356,7 +370,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
       pid, std::move(client),
       mojo::WrapPlatformFile(pipes.PassSender().release().handle),
       mojo::WrapPlatformFile(pipes.PassReceiver().release().handle),
-      process_type);
+      process_type, GetStackMode());
 }
 
 // static

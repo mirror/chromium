@@ -506,6 +506,11 @@ const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[] =
     "[e.g. diff_heap_profiler.py] to examine the trace. Note that "
     "automatically uploaded traces will always be pruned. This only affects "
     "manually taken memory-infra traces.";
+const char kOOPHPStackModeName[] = "The type of stack to record for memlog heap dumps";
+const char kOOPHPStackModeDescription[] = "By default, memlog heap dumps record a native stack, which requires symbolization. It's also possible to record a pseudo stack using trace events as identifiers. It's also possible to do a mix of both.";
+const char kOOPHPStackModeMixed[] = "Record a mix of pseudo and native stack frames";
+const char kOOPHPStackModeNative[] = "Record instruction addresses from unwinding the stack. The result requires symbolization.";
+const char kOOPHPStackModePseudo[] = "Uses trace events as identifiers";
 
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 const char kEnablePictureInPictureDescription[] =

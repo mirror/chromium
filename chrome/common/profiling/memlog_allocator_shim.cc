@@ -14,6 +14,7 @@
 #include "base/lazy_instance.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
+#include "base/trace_event/heap_profiler_allocation_context_tracker.h"
 #include "base/trace_event/heap_profiler_allocation_register.h"
 #include "build/build_config.h"
 #include "chrome/common/profiling/memlog_stream.h"
@@ -21,6 +22,10 @@
 #if defined(OS_POSIX)
 #include <limits.h>
 #endif
+
+using base::trace_event::AllocationContext;
+using base::trace_event::AllocationContextTracker;
+using CaptureMode = base::trace_event::AllocationContextTracker::CaptureMode;
 
 namespace profiling {
 
@@ -48,6 +53,13 @@ SetGCFreeHookFunction g_hook_gc_free = nullptr;
 // do so will cause non-deterministic deadlock, depending on whether the
 // allocation is dispatched to the same SendBuffer.
 base::LazyInstance<base::ThreadLocalBoolean>::Leaky g_prevent_reentrancy =
+    LAZY_INSTANCE_INITIALIZER;
+
+// If we are using pseudo stacks, we need to inform the profiling service of the
+// address to string mapping. To avoid a global lock, we keep a thread-local
+// unordered_set of every address that has been sent from the thread in
+// question.
+base::LazyInstance<base::ThreadLocalPointer<std::unordered_set<const void*>>>::Leaky g_sent_strings =
     LAZY_INSTANCE_INITIALIZER;
 
 class SendBuffer {
@@ -242,15 +254,86 @@ void HookGCFree(uint8_t* address) {
   AllocatorShimLogFree(address);
 }
 
+// Updates an existing in_memory buffer with frame data. If a frame contains a
+// pointer to a cstring rather than an instruction pointer, and the profiling
+// service has not yet been informed of that pointer -> cstring mapping, sends a
+// StringMappingPacket.
+class FrameSerializer {
+ public:
+  FrameSerializer(uint64_t* stack, const void* address, SendBuffer* send_buffers) : stack_(stack), address_(address), send_buffers_(send_buffers) {}
+
+  void AddFrame(base::trace_event::StackFrame& frame) {
+    if (frame.type == base::trace_event::StackFrame::Type::PROGRAM_COUNTER) {
+      AddInstructionPointer(frame.value);
+      return;
+    }
+
+    if (g_sent_strings.Pointer()->Get() == NULL) {
+      g_sent_strings.Pointer()->Set(new std::unordered_set<const void*>);
+    }
+
+    // Using a TLS cache of sent_strings avoids lock contention on malloc, which
+    // would kill performance.
+    std::unordered_set<const void*>* sent_strings = g_sent_strings.Pointer()->Get();
+    if (sent_strings->find(frame.value) == sent_strings->end()) {
+      const char* null_terminated_cstring = static_cast<const char*>(frame.value);
+      // length does not include the null terminator.
+      size_t length = strnlen(null_terminated_cstring, 255);
+
+      char message[255 + sizeof(StringMappingPacket)];
+      StringMappingPacket* string_mapping_packet = reinterpret_cast<StringMappingPacket*>(message);
+      string_mapping_packet->address = reinterpret_cast<uint64_t>(frame.value);
+      string_mapping_packet->string_len = length;
+      memcpy(message + sizeof(StringMappingPacket), null_terminated_cstring, length);
+      DoSend(address_, message, sizeof(StringMappingPacket) + length, send_buffers_);
+      sent_strings->insert(frame.value);
+    }
+
+    AddInstructionPointer(frame.value);
+  }
+
+  void AddInstructionPointer(const void* value) {
+    *stack_ = reinterpret_cast<uint64_t>(value);
+    ++stack_;
+    ++count_;
+  }
+
+  size_t count() { return count_; }
+
+ private:
+  // The next frame should be written to this memory location. We're not
+  // concerned about buffer overrun because the max buffer size is much larger
+  // than the max number of allowed frames.
+  uint64_t* stack_;
+
+  // The number of frames that have been written to the stack.
+  size_t count_ = 0;
+
+  const void* address_;
+  SendBuffer* send_buffers_;
+};
+
 }  // namespace
 
 void InitTLSSlot() {
   ignore_result(g_prevent_reentrancy.Pointer()->Get());
 }
 
-void InitAllocatorShim(MemlogSenderPipe* sender_pipe) {
+void InitAllocatorShim(MemlogSenderPipe* sender_pipe, mojom::StackMode stack_mode) {
   // Must be done before hooking any functions that make stack traces.
   base::debug::EnableInProcessStackDumping();
+
+  switch (stack_mode) {
+    case mojom::StackMode::PSEUDO:
+      AllocationContextTracker::SetCaptureMode(CaptureMode::PSEUDO_STACK);
+      break;
+    case mojom::StackMode::MIXED:
+      AllocationContextTracker::SetCaptureMode(CaptureMode::MIXED_STACK);
+      break;
+    case mojom::StackMode::NATIVE:
+      AllocationContextTracker::SetCaptureMode(CaptureMode::DISABLED);
+      break;
+  }
 
   g_send_buffers.Write(new SendBuffer[kNumSendBuffers]);
   g_sender_pipe = sender_pipe;
@@ -287,6 +370,39 @@ void StopAllocatorShimDangerous() {
     g_sender_pipe->Close();
 }
 
+void SerializeFramesFromAllocationContext(FrameSerializer* serializer) {
+  auto* tracker = AllocationContextTracker::GetInstanceForCurrentThread();
+  if (!tracker)
+    return;
+
+  AllocationContext allocation_context;
+  if (!tracker->GetContextSnapshot(&allocation_context))
+    return;
+
+  for (size_t i = 0; i < allocation_context.backtrace.frame_count; ++i) {
+    serializer->AddFrame(allocation_context.backtrace.frames[i]);
+  }
+}
+
+void SerializeFramesFromBacktrace(FrameSerializer* serializer) {
+#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
+    const void* frames[kMaxStackEntries];
+    size_t frame_count = base::debug::TraceStackFramePointers(
+        frames, kMaxStackEntries,
+        1);  // exclude this function from the trace.
+#else   // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
+    // Fall-back to capturing the stack with base::debug::StackTrace,
+    // which is likely slower, but more reliable.
+    base::debug::StackTrace stack_trace(kMaxStackEntries);
+    size_t frame_count = 0u;
+    const void* const* frames = stack_trace.Addresses(&frame_count);
+#endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
+
+  // If there are too many frames, keep the ones furthest from main().
+  for (size_t i = 0; i < frame_count; i++)
+    serializer->AddInstructionPointer(frames[i]);
+}
+
 void AllocatorShimLogAlloc(AllocatorType type,
                            void* address,
                            size_t sz,
@@ -312,22 +428,14 @@ void AllocatorShimLogAlloc(AllocatorType type,
     uint64_t* stack =
         reinterpret_cast<uint64_t*>(&message[sizeof(AllocPacket)]);
 
-#if BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
-    const void* frames[kMaxStackEntries];
-    size_t frame_count = base::debug::TraceStackFramePointers(
-        frames, kMaxStackEntries,
-        1);  // exclude this function from the trace.
-#else   // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
-    // Fall-back to capturing the stack with base::debug::StackTrace,
-    // which is likely slower, but more reliable.
-    base::debug::StackTrace stack_trace(kMaxStackEntries);
-    size_t frame_count = 0u;
-    const void* const* frames = stack_trace.Addresses(&frame_count);
-#endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
+    FrameSerializer serializer(stack, address, send_buffers);
 
-    // If there are too many frames, keep the ones furthest from main().
-    for (size_t i = 0; i < frame_count; i++)
-      stack[i] = (uint64_t)frames[i];
+    CaptureMode capture_mode = AllocationContextTracker::capture_mode();
+    if (capture_mode == CaptureMode::PSEUDO_STACK || capture_mode == CaptureMode::MIXED_STACK) {
+      SerializeFramesFromAllocationContext(&serializer);
+    } else {
+      SerializeFramesFromBacktrace(&serializer);
+    }
 
     size_t context_len = context ? strnlen(context, kMaxContextLen) : 0;
 
@@ -335,15 +443,14 @@ void AllocatorShimLogAlloc(AllocatorType type,
     alloc_packet->allocator = type;
     alloc_packet->address = (uint64_t)address;
     alloc_packet->size = sz;
-    alloc_packet->stack_len = static_cast<uint32_t>(frame_count);
+    alloc_packet->stack_len = static_cast<uint32_t>(serializer.count()) * sizeof(uint64_t);
     alloc_packet->context_byte_len = static_cast<uint32_t>(context_len);
 
-    char* message_end = reinterpret_cast<char*>(&stack[frame_count]);
+    char* message_end = message + sizeof(AllocPacket) + alloc_packet->stack_len;
     if (context_len > 0) {
       memcpy(message_end, context, context_len);
       message_end += context_len;
     }
-
     DoSend(address, message, message_end - message, send_buffers);
   }
 
