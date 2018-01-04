@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03fd53d1_faa532cc",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-04T00:01:17Z",
+      "side": 1,
+      "message": "Was a lint error.",
+      "parentUuid": "7b1984b8_eb11dcd5",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43179f10_ee5ee459",
         "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-21T19:57:25Z",
       "side": 1,
       "message": "Doesn\u0027t seem to toggle - I\u0027d expect that if you\u0027re already dictating, it\nshould stop. That seems small, maybe just implement that for this\nchange?",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c998e140_3c7aa5e3",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-04T00:01:17Z",
+      "side": 1,
+      "message": "Done; originally, I thought about having the keystroke restart dictation. This is because dictation stops due to silence, not another press of the keystroke (unlike on other platforms).",
+      "parentUuid": "43179f10_ee5ee459",
       "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +103,24 @@
       "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc7f255_1634a864",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-04T00:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "923775f9_0ac06d45",
+      "revId": "5ddb6899d895f84e8b3f43c44ac58b944847553d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
