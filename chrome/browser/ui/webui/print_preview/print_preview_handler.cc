@@ -170,12 +170,12 @@ const char kIsInKioskAutoPrintMode[] = "isInKioskAutoPrintMode";
 // Dictionary field to indicate whether Chrome is running in forced app (app
 // kiosk) mode. It's not the same as desktop Chrome kiosk (the one above).
 const char kIsInAppKioskMode[] = "isInAppKioskMode";
-// Name of a dictionary field holding the thousands delimeter according to the
+// Name of a dictionary field holding the thousands delimiter according to the
 // locale.
-const char kThousandsDelimeter[] = "thousandsDelimeter";
-// Name of a dictionary field holding the decimal delimeter according to the
+const char kThousandsDelimiter[] = "thousandsDelimiter";
+// Name of a dictionary field holding the decimal delimiter according to the
 // locale.
-const char kDecimalDelimeter[] = "decimalDelimeter";
+const char kDecimalDelimiter[] = "decimalDelimiter";
 // Name of a dictionary field holding the measurement system according to the
 // locale.
 const char kUnitType[] = "unitType";
@@ -892,8 +892,8 @@ void PrintPreviewHandler::GetNumberFormatAndMeasurementSystem(
   // Getting the number formatting based on the locale and writing to
   // dictionary.
   base::string16 number_format = base::FormatDouble(123456.78, 2);
-  settings->SetString(kDecimalDelimeter, number_format.substr(6, 1));
-  settings->SetString(kThousandsDelimeter, number_format.substr(3, 1));
+  settings->SetString(kDecimalDelimiter, number_format.substr(6, 1));
+  settings->SetString(kThousandsDelimiter, number_format.substr(3, 1));
   settings->SetInteger(kUnitType, system);
 }
 

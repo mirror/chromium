@@ -724,7 +724,7 @@ cr.define('print_preview', function() {
           settings.previewModifiable, settings.documentTitle,
           settings.documentHasSelection);
       this.printTicketStore_.init(
-          settings.thousandsDelimeter, settings.decimalDelimeter,
+          settings.thousandsDelimiter, settings.decimalDelimiter,
           settings.unitType, settings.shouldPrintSelectionOnly);
       this.destinationStore_.init(
           settings.isInAppKioskMode, settings.printerName,

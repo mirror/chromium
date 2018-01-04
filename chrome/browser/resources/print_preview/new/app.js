@@ -153,7 +153,7 @@ Polymer({
     this.notifyPath('documentInfo_.pageCount');
     this.updateFromStickySettings_(settings.serializedAppStateStr);
     this.measurementSystem_.setSystem(
-        settings.thousandsDelimeter, settings.decimalDelimeter,
+        settings.thousandsDelimiter, settings.decimalDelimiter,
         settings.unitType);
     this.setSetting('selectionOnly', settings.shouldPrintSelectionOnly);
     this.destinationStore_.init(

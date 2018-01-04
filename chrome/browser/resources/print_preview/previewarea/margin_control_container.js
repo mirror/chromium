@@ -280,14 +280,14 @@ cr.define('print_preview', function() {
         return null;
       }
       const validationRegex = new RegExp(
-          '^(^-?)(\\d)+(\\' + this.measurementSystem_.thousandsDelimeter +
-          '\\d{3})*(\\' + this.measurementSystem_.decimalDelimeter + '\\d*)?' +
+          '^(^-?)(\\d)+(\\' + this.measurementSystem_.thousandsDelimiter +
+          '\\d{3})*(\\' + this.measurementSystem_.decimalDelimiter + '\\d*)?' +
           '(' + this.measurementSystem_.unitSymbol + ')?$');
       if (validationRegex.test(value)) {
         // Replacing decimal point with the dot symbol in order to use
         // parseFloat() properly.
         const replacementRegex =
-            new RegExp('\\' + this.measurementSystem_.decimalDelimeter + '{1}');
+            new RegExp('\\' + this.measurementSystem_.decimalDelimiter + '{1}');
         value = value.replace(replacementRegex, '.');
         return this.measurementSystem_.convertToPoints(parseFloat(value));
       }

@@ -302,16 +302,16 @@ cr.define('print_preview', function() {
 
     /**
      * Initializes the print ticket store. Dispatches an INITIALIZE event.
-     * @param {string} thousandsDelimeter Delimeter of the thousands place.
-     * @param {string} decimalDelimeter Delimeter of the decimal point.
+     * @param {string} thousandsDelimiter Delimiter of the thousands place.
+     * @param {string} decimalDelimiter Delimiter of the decimal point.
      * @param {!print_preview.MeasurementSystemUnitType} unitType Type of unit
      *     of the local measurement system.
      * @param {boolean} selectionOnly Whether only selected content should be
      *     printed.
      */
-    init(thousandsDelimeter, decimalDelimeter, unitType, selectionOnly) {
+    init(thousandsDelimiter, decimalDelimiter, unitType, selectionOnly) {
       this.measurementSystem_.setSystem(
-          thousandsDelimeter, decimalDelimeter, unitType);
+          thousandsDelimiter, decimalDelimiter, unitType);
       this.selectionOnly_.updateValue(selectionOnly);
 
       // Initialize ticket with user's previous values.

@@ -17,8 +17,8 @@ cr.define('restore_state_test', function() {
     const initialSettings = {
       isInKioskAutoPrintMode: false,
       isInAppKioskMode: false,
-      thousandsDelimeter: ',',
-      decimalDelimeter: '.',
+      thousandsDelimiter: ',',
+      decimalDelimiter: '.',
       unitType: 1,
       previewModifiable: true,
       documentTitle: 'title',
