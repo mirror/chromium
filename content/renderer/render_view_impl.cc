@@ -40,7 +40,6 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/dom_storage/dom_storage_types.h"
@@ -100,6 +99,8 @@
 #include "media/media_features.h"
 #include "media/renderers/audio_renderer_impl.h"
 #include "media/video/gpu_video_accelerator_factories.h"
+#include "mojo/public/cpp/system/buffer.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "net/base/data_url.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
@@ -485,6 +486,28 @@ content::mojom::WindowContainerType WindowFeaturesToContainerType(
   }
 }
 
+// Allocates and maps SharedMemory of |size|. Will return null if allocation
+// or map fails.
+std::unique_ptr<base::SharedMemory> AllocateAndMapSharedMemory(size_t size) {
+  mojo::ScopedSharedBufferHandle handle =
+      mojo::SharedBufferHandle::Create(size);
+  if (!handle.is_valid())
+    return nullptr;
+
+  base::SharedMemoryHandle platform_handle;
+  MojoResult result = mojo::UnwrapSharedMemoryHandle(
+      std::move(handle), &platform_handle, nullptr, nullptr);
+  if (result != MOJO_RESULT_OK)
+    return nullptr;
+
+  auto shm = std::make_unique<base::SharedMemory>(platform_handle,
+                                                  false /* read_only */);
+  if (!shm->Map(size))
+    return nullptr;
+
+  return shm;
+}
+
 }  // namespace
 
 RenderViewImpl::RenderViewImpl(
@@ -649,8 +672,6 @@ void RenderViewImpl::Initialize(
 
 RenderViewImpl::~RenderViewImpl() {
   DCHECK(!frame_widget_);
-
-  disambiguation_bitmaps_.clear();
 
 #if defined(OS_ANDROID)
   // The date/time picker client is both a std::unique_ptr member of this class
@@ -1129,8 +1150,6 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_MediaPlayerActionAt, OnMediaPlayerActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_PluginActionAt, OnPluginActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_SetActive, OnSetActive)
-    IPC_MESSAGE_HANDLER(ViewMsg_ReleaseDisambiguationPopupBitmap,
-                        OnReleaseDisambiguationPopupBitmap)
     IPC_MESSAGE_HANDLER(ViewMsg_ResolveTapDisambiguation,
                         OnResolveTapDisambiguation)
     IPC_MESSAGE_HANDLER(ViewMsg_ForceRedraw, OnForceRedraw)
@@ -2311,16 +2330,27 @@ bool RenderViewImpl::DidTapMultipleTargets(
     case TAP_MULTIPLE_TARGETS_STRATEGY_POPUP: {
       gfx::Size canvas_size =
           gfx::ScaleToCeiledSize(zoom_rect.size(), new_total_scale);
-      viz::SharedBitmapManager* manager =
-          RenderThreadImpl::current()->shared_bitmap_manager();
-      std::unique_ptr<viz::SharedBitmap> shared_bitmap =
-          manager->AllocateSharedBitmap(canvas_size);
-      CHECK(shared_bitmap);
+
+      SkImageInfo info =
+          SkImageInfo::MakeN32Premul(canvas_size.width(), canvas_size.height());
+      size_t shm_size = info.computeMinByteSize();
+
+      if (shm_size == 0) {
+        DLOG(ERROR) << "Invalid size for SharedMemory";
+        return false;
+      }
+
+      std::unique_ptr<base::SharedMemory> shm =
+          AllocateAndMapSharedMemory(shm_size);
+      if (!shm) {
+        DLOG(ERROR)
+            << "Shared memory allocation failed for disambiguation popup";
+        return false;
+      }
+
       {
         SkBitmap bitmap;
-        SkImageInfo info = SkImageInfo::MakeN32Premul(canvas_size.width(),
-                                                      canvas_size.height());
-        bitmap.installPixels(info, shared_bitmap->pixels(), info.minRowBytes());
+        bitmap.installPixels(info, shm->memory(), info.minRowBytes());
         cc::SkiaPaintCanvas canvas(bitmap);
 
         // TODO(trchen): Cleanup the device scale factor mess.
@@ -2345,9 +2375,8 @@ bool RenderViewImpl::DidTapMultipleTargets(
 
       Send(new ViewHostMsg_ShowDisambiguationPopup(
           GetRoutingID(), physical_window_zoom_rect, canvas_size,
-          shared_bitmap->id()));
-      viz::SharedBitmapId id = shared_bitmap->id();
-      disambiguation_bitmaps_[id] = std::move(shared_bitmap);
+          shm->TakeHandle()));
+
       handled = true;
       break;
     }
@@ -2441,12 +2470,6 @@ void RenderViewImpl::EnableAutoResizeForTesting(const gfx::Size& min_size,
 
 void RenderViewImpl::DisableAutoResizeForTesting(const gfx::Size& new_size) {
   OnDisableAutoResize(new_size);
-}
-
-void RenderViewImpl::OnReleaseDisambiguationPopupBitmap(
-    const viz::SharedBitmapId& id) {
-  size_t erased_count = disambiguation_bitmaps_.erase(id);
-  DCHECK_EQ(1U, erased_count);
 }
 
 void RenderViewImpl::OnResolveTapDisambiguation(double timestamp_seconds,
