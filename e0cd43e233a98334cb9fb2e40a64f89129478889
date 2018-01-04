@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c902130_d15d5e47",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T13:07:34Z",
+      "side": 1,
+      "message": "can we remove this whole thing now?  I think our Chromium tests use assets via your new \"data\" spec, and the other system I know about uses the results of cronet_package_copy_test_assets.",
+      "range": {
+        "startLine": 598,
+        "startChar": 42,
+        "endLine": 598,
+        "endChar": 0
+      },
+      "revId": "e0cd43e233a98334cb9fb2e40a64f89129478889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f30a2cf_d73cfdaf",
+        "filename": "components/cronet/android/test/src/org/chromium/net/TestFilesInstaller.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T13:07:34Z",
+      "side": 1,
+      "message": "unused; remove?",
+      "range": {
+        "startLine": 15,
+        "startChar": 79,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "e0cd43e233a98334cb9fb2e40a64f89129478889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223bc0ca_b4f12a53",
+        "filename": "components/cronet/android/test/src/org/chromium/net/TestFilesInstaller.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2018-01-04T13:07:34Z",
+      "side": 1,
+      "message": "Can we add to this comment:\nNOTE(pauljensen): This hook is used (overridden) when tests are run in other configurations, so it should not be removed.",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "e0cd43e233a98334cb9fb2e40a64f89129478889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
