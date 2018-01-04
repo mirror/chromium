@@ -224,6 +224,11 @@ static NSString* gUserAgentProduct = nil;
 
 - (void)webState:(web::WebState*)webState
     didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
+  if (details.is_in_page) {
+    // Do not call webViewDidCommitNavigation: for fragment navigations.
+    return;
+  }
+
   if ([_navigationDelegate
           respondsToSelector:@selector(webViewDidCommitNavigation:)]) {
     [_navigationDelegate webViewDidCommitNavigation:self];
