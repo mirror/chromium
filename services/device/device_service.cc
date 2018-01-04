@@ -12,7 +12,11 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+<<<<<<< HEAD
 #include "device/geolocation/geolocation_context.h"
+=======
+#include "device/sensors/device_sensor_host.h"
+>>>>>>> parent of 3bed76d75076... Reland: Refactor DeviceOrientationEventPump to use generic sensor as its backend
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "services/device/fingerprint/fingerprint.h"
 #include "services/device/generic_sensor/sensor_provider_impl.h"
@@ -95,8 +99,16 @@ DeviceService::~DeviceService() {
 void DeviceService::OnStart() {
   registry_.AddInterface<mojom::Fingerprint>(base::Bind(
       &DeviceService::BindFingerprintRequest, base::Unretained(this)));
+<<<<<<< HEAD
   registry_.AddInterface<mojom::GeolocationContext>(base::Bind(
       &DeviceService::BindGeolocationContextRequest, base::Unretained(this)));
+=======
+  registry_.AddInterface<mojom::OrientationSensor>(base::Bind(
+      &DeviceService::BindOrientationSensorRequest, base::Unretained(this)));
+  registry_.AddInterface<mojom::OrientationAbsoluteSensor>(
+      base::Bind(&DeviceService::BindOrientationAbsoluteSensorRequest,
+                 base::Unretained(this)));
+>>>>>>> parent of 3bed76d75076... Reland: Refactor DeviceOrientationEventPump to use generic sensor as its backend
   registry_.AddInterface<mojom::PowerMonitor>(base::Bind(
       &DeviceService::BindPowerMonitorRequest, base::Unretained(this)));
   registry_.AddInterface<mojom::ScreenOrientationListener>(
@@ -182,9 +194,44 @@ void DeviceService::BindFingerprintRequest(mojom::FingerprintRequest request) {
   Fingerprint::Create(std::move(request));
 }
 
+<<<<<<< HEAD
 void DeviceService::BindGeolocationContextRequest(
     mojom::GeolocationContextRequest request) {
   GeolocationContext::Create(std::move(request));
+=======
+void DeviceService::BindOrientationSensorRequest(
+    mojom::OrientationSensorRequest request) {
+#if defined(OS_ANDROID)
+  // On Android the device sensors implementations need to run on the UI thread
+  // to communicate to Java.
+  DeviceOrientationHost::Create(std::move(request));
+#else
+  // On platforms other than Android the device sensors implementations run on
+  // the IO thread.
+  if (io_task_runner_) {
+    io_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&DeviceOrientationHost::Create, base::Passed(&request)));
+  }
+#endif  // defined(OS_ANDROID)
+}
+
+void DeviceService::BindOrientationAbsoluteSensorRequest(
+    mojom::OrientationAbsoluteSensorRequest request) {
+#if defined(OS_ANDROID)
+  // On Android the device sensors implementations need to run on the UI thread
+  // to communicate to Java.
+  DeviceOrientationAbsoluteHost::Create(std::move(request));
+#else
+  // On platforms other than Android the device sensors implementations run on
+  // the IO thread.
+  if (io_task_runner_) {
+    io_task_runner_->PostTask(FROM_HERE,
+                              base::Bind(&DeviceOrientationAbsoluteHost::Create,
+                                         base::Passed(&request)));
+  }
+#endif  // defined(OS_ANDROID)
+>>>>>>> parent of 3bed76d75076... Reland: Refactor DeviceOrientationEventPump to use generic sensor as its backend
 }
 
 void DeviceService::BindPowerMonitorRequest(
