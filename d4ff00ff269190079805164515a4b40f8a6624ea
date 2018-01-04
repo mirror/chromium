@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff5fe3cf_3bed5acb",
+        "filename": "chrome/browser/safe_browsing/permission_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2018-01-04T18:51:10Z",
+      "side": 1,
+      "message": "I\u0027d suggest making this a dcheck.  Do you really want it to crash on Stable rather than silently send the wrong thing?",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 10
+      },
+      "revId": "d4ff00ff269190079805164515a4b40f8a6624ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
