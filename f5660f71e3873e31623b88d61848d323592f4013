@@ -52,6 +52,24 @@
       "revId": "f5660f71e3873e31623b88d61848d323592f4013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f8f107_6accf9a6",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T01:16:49Z",
+      "side": 1,
+      "message": "Thanks, I forgot that incognito storage partitions get deleted on window close. The others stay until shutdown.",
+      "parentUuid": "357abe66_b88f3639",
+      "revId": "f5660f71e3873e31623b88d61848d323592f4013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
