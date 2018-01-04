@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "866ab952_d44e84e5",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-04T22:36:08Z",
+      "side": 1,
+      "message": "Comment should say this is the param.",
+      "range": {
+        "startLine": 23,
+        "startChar": 34,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc68a828_cd79ace0",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-04T22:36:08Z",
+      "side": 1,
+      "message": "Nit: const char kWebapkExtraInstallationSpace[] \u003d",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b27ca9e_998ce162",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-04T22:36:08Z",
+      "side": 1,
+      "message": "Use GetFieldTrialParamByFeatureAsInt or base::FeatureParam\u003cint\u003e.\n\nOr you can avoid needing the JNI by using ChromeFeatures.getFieldTrialParamByFeatureAsInt() from Java.",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
