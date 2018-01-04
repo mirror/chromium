@@ -208,17 +208,27 @@ void* AllocPages(void* address,
   DCHECK(!(reinterpret_cast<uintptr_t>(address) & align_offset_mask));
 
   // If the client passed null as the address, choose a good one.
-  if (!address) {
+  if (address == nullptr) {
     address = GetRandomPageBase();
     address = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(address) &
                                       align_base_mask);
   }
 
   // First try to force an exact-size, aligned allocation from our random base.
-  for (int count = 0; count < 3; ++count) {
+#if defined(ARCH_CPU_32_BITS)
+  // On 32 bit systems, try 2 times. In the loop below, if kHintIsAdvisory, then
+  // try a random aligned address, and then the first aligned address after
+  // |ret|. If !kHintIsAdvisory, try once at a random aligned address, and then
+  // once unhinted.
+  constexpr int kExactSizeTries = 2;
+#else
+  // On 64 bit systems, try 3 random aligned addresses.
+  constexpr int kExactSizeTries = 3;
+#endif
+  for (int i = 0; i < kExactSizeTries; ++i) {
     void* ret = AllocPagesIncludingReserved(address, length, page_accessibility,
                                             commit);
-    if (ret) {
+    if (ret != nullptr) {
       // If the alignment is to our liking, we're done.
       if (!(reinterpret_cast<uintptr_t>(ret) & align_offset_mask))
         return ret;
@@ -259,8 +269,9 @@ void* AllocPages(void* address,
                                       commit);
     // The retries are for Windows, where a race can steal our mapping on
     // resize.
-  } while (ret && (ret = TrimMapping(ret, try_length, length, align,
-                                     page_accessibility, commit)) == nullptr);
+  } while (ret != nullptr &&
+           (ret = TrimMapping(ret, try_length, length, align,
+                              page_accessibility, commit)) == nullptr);
 
   return ret;
 }
