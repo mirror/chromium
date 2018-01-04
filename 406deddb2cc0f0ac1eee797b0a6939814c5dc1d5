@@ -34,6 +34,24 @@
       "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375a9a41_80c86184",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T04:07:06Z",
+      "side": 1,
+      "message": "Being stricter than std::vector to start with seems fine: it\u0027s always easier to relax the restrictions going forward than the other way around.",
+      "parentUuid": "649427fa_66925996",
+      "revId": "406deddb2cc0f0ac1eee797b0a6939814c5dc1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
