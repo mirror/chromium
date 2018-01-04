@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cf90ded_eb8c10ef",
+        "filename": "chrome/browser/ui/cocoa/infobars/confirm_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27df490e_20b10548",
+      "revId": "4c971a73bbcbf5771d7fcbdaa4ccc161a4943159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79662fc0_00b10475",
         "filename": "chrome/browser/ui/cocoa/infobars/confirm_infobar_controller.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4c971a73bbcbf5771d7fcbdaa4ccc161a4943159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bd324b_cb6cc423",
+        "filename": "chrome/browser/ui/cocoa/infobars/confirm_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79662fc0_00b10475",
+      "revId": "4c971a73bbcbf5771d7fcbdaa4ccc161a4943159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
