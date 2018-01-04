@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc22852_8fa4eee2",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "Can you use checked math and bad_message if it would overflow?",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5801902b_b5711dcd",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "Uh.. so.. the SBM does handle-\u003eis_valid(). Is that the same thing..?",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cef159_64e93ba0",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "We want to close the shm after mapping it. It stays in the pointer but frees the fd to avoid limits.",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5258cd_0dcbb969",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2341,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "Can we use checked math pls",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7af9ce6_ffffa1d9",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2381,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "Do we need to duplicate and keep a reference in the renderer?\n\nWe do that for compositor things cuz we want to recycle them, and for mailboxes cuz we keep it alive. But for a shm, would it not be kept alive if we just passed the original handle to the IPC?",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8353cbe1_49976ba7",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-04T16:33:44Z",
+      "side": 1,
+      "message": "nit: flat_map",
+      "revId": "91f8939f7f2e9bba94c4520c3df1f6d44fc85105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
