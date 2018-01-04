@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae36bdab_5211ed36",
+        "filename": "build/android/gradle/root.jinja",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T02:06:12Z",
+      "side": 1,
+      "message": "Looking at https://docs.gradle.org/2.11/userguide/dependency_management.html#sec:dependency_resolution\n\nI wonder if any of these will work such that we won\u0027t need to update for each alpha:\n \"com.android.tools.build:gradle:3.1.0\"\n \"com.android.tools.build:gradle:3.1.0-alpha\"\n \"com.android.tools.build:gradle:3.1.0-alpha+\"",
+      "revId": "ff74506720ada9c5e0fe18ef162faf9cddac0313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
