@@ -34,6 +34,24 @@
       "revId": "6231681255fed139006c8d58874f746d746aac8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b28174_26825648",
+        "filename": "chrome/test/data/webui/settings/help_page_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T20:16:19Z",
+      "side": 0,
+      "message": "Ended up reverting this and adding an exception for ROOT_PATH to keep using var, because other tests were breaking too. Worth investigating separately, but no need to delay the migration otherwise.",
+      "parentUuid": "f50437a3_b70297cc",
+      "revId": "6231681255fed139006c8d58874f746d746aac8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
