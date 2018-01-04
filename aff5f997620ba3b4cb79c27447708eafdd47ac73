@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb40672_0bcc0fe2",
+        "filename": "chrome/browser/loader/safe_browsing_resource_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-04T19:14:46Z",
+      "side": 1,
+      "message": "nit: C",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "aff5f997620ba3b4cb79c27447708eafdd47ac73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
