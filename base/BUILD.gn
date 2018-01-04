@@ -1101,11 +1101,17 @@ jumbo_component("base") {
     "win/wrapped_window_proc.h",
   ]
 
-  # winternl.h and NTSecAPI.h have different definitions of UNICODE_STRING.
-  # There's only one client of NTSecAPI.h in base but several of winternl.h,
-  # so exclude the NTSecAPI.h one.
   if (is_win) {
-    jumbo_excluded_sources = [ "rand_util_win.cc" ]
+    jumbo_excluded_sources = [
+      # winternl.h and NTSecAPI.h have different definitions of UNICODE_STRING.
+      # There's only one client of NTSecAPI.h in base but several of winternl.h,
+      # so exclude the NTSecAPI.h one.
+      "rand_util_win.cc",
+
+      # dtoa.cc leaks a bunch of macros, one of which (Bias) conflicts with
+      # a variable in timezoneapi.h in the win sdk.
+      "third_party/dmg_fp/dtoa_wrapper.cc",
+    ]
   }
 
   if (!is_nacl) {
