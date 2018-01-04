@@ -16,6 +16,24 @@
       "revId": "c434162883d99505b6dd38caba44cb6cc24295a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568b0ca0_63c6a3c6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValueFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2018-01-04T17:35:52Z",
+      "side": 1,
+      "message": "Fair point, I\u0027ve been thinking the same, but it appears that there are not too many fuzzers that use LLVMFuzzerInitialize, and even fewer of them use it correctly (static initialization is preferred unless we need argc / argv). After discussing it with folks, we ended up with a conclusion that it would be better to fix it on a case-by-case basis. I\u0027m looking through cases and replacing LLVMFuzzerInitialize with static initialization. In other cases I\u0027ll be adding attributes like here, but this is a very rare case (another one I\u0027ve fixed so far was in V8).",
+      "parentUuid": "664cd2fb_8495ed0b",
+      "revId": "c434162883d99505b6dd38caba44cb6cc24295a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
