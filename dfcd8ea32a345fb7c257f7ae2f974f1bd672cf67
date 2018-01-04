@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "15989278_307c38da",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-04T21:57:51Z",
+      "side": 1,
+      "message": "\u003e \u003e There may be some perf impact for doing that on Breakpad-using platforms (Linux, Android, CrOS), but there shouldn\u0027t be on Crashpad platforms (Win, Mac). Repeatedly setting without clearing should be fairly fast due to some internal optimizations I added recently, but set-clear-set will cause Breakpad\u0027s crash key storage to do a linear scan of the entire crash key table. There\u0027s always the string-copy in either case, though.\n\u003e \n\u003e I think that ContentClient::SetActiveURL(emptyURL, emptyString) will always call into CrashKeyStringImpl::Set and never into CrashKeyStringImpl::Clear.\n\u003e \n\u003e I am not sure if my particular key will ever be chunked.  I don\u0027t think so (single entry, limited to 1024 characters)?\n\nA single chunk entry is 128 bytes, so this will definitely be chunked.\n\n\u003e Looking at CrashKeyStringImpl::Set, I don\u0027t see O(N) complexity for non-chunked entries.\n\nThe O(N) complexity is within the TransitionalCrashKeyStorage/NonAllocatingMap::SetKeyValue. There\u0027s some optimization within CrashKeyStringImpl::Set to avoid it, though.\n\n\u003e Also - I wonder if better amortized performance can be achieved by doing the linear scan lazily.  For example - clearing a key could just mark the key as cleared and only later (later \u003d when storage is full?  something else maybe?) would do a linear scan (which I am guessing is needed to compact the crash values?).\n\nI don\u0027t plan on spending any time optimizing the Breakpad code path because all platforms are converging on Crashpad.",
+      "parentUuid": "2d4876a9_022232ba",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 42
+      },
+      "revId": "dfcd8ea32a345fb7c257f7ae2f974f1bd672cf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "356e451d_217ac60e",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 5
