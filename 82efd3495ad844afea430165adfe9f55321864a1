@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8b0ed671_667f0ae0",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-04T14:06:06Z",
+      "side": 1,
+      "message": "Well not exactly: you would also need to add mock data for the HEADERS frame sent by the client and the HEADERS and DATA frame sent by the server.  Also, you need an ASYNC wait to keep the connection open so that the retry can use the existing connection, or if the EOF is read together with the RST_STREAM, then just add a new connection for the retry.\n\nI\u0027m happy to deal with this in a follow-up CL if you want to land this CL as is.",
+      "parentUuid": "3272cb17_b53d5d1d",
+      "range": {
+        "startLine": 1565,
+        "startChar": 9,
+        "endLine": 1565,
+        "endChar": 55
+      },
+      "revId": "82efd3495ad844afea430165adfe9f55321864a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9228eb3_82cb4480",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 2
