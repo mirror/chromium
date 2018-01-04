@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad504a2f_31de5e34",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-04T01:11:50Z",
+      "side": 1,
+      "message": "This is called from GpuMemoryBufferVideoFramePool::PoolImpl::BindAndCreateMailboxesHardwareFrameResources which already grabbed the lock.\nI suppose we could assume, or we could explicitly pass in the Capabilities, or even move all this to the caller (there\u0027s only 1).",
+      "revId": "1b206df071c195d01e403b341d98944086499330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0358f689_4fafd300",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-04T01:11:50Z",
+      "side": 1,
+      "message": "main_thread_context_ hasn\u0027t been set yet, it will be (possibly) in PepperGraphics2DHost::PrepareTransferableResource.\n\nMy suggestion is to delay this logic until PrepareTransferableResource, we don\u0027t need scanout_texture_target_* until then anyway.",
+      "revId": "1b206df071c195d01e403b341d98944086499330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
