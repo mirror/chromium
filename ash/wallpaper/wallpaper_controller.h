@@ -36,10 +36,6 @@ namespace color_utils {
 struct ColorProfile;
 }  // namespace color_utils
 
-namespace user_manager {
-class UserImage;
-}  // namespace user_manager
-
 namespace wallpaper {
 class WallpaperColorCalculator;
 class WallpaperResizer;
@@ -55,8 +51,7 @@ class WallpaperControllerObserver;
 using CustomWallpaperElement = std::pair<base::FilePath, gfx::ImageSkia>;
 using CustomWallpaperMap = std::map<AccountId, CustomWallpaperElement>;
 
-using LoadedCallback =
-    base::Callback<void(std::unique_ptr<user_manager::UserImage>)>;
+using LoadedCallback = base::Callback<void(const gfx::ImageSkia& image)>;
 
 // Controls the desktop background wallpaper:
 //   - Sets a wallpaper image and layout;
@@ -473,11 +468,10 @@ class ASH_EXPORT WallpaperController
   // Used as the callback of default wallpaper decoding. Sets default wallpaper
   // to be the decoded image, and shows the wallpaper now if |show_wallpaper|
   // is true.
-  void OnDefaultWallpaperDecoded(
-      const base::FilePath& path,
-      wallpaper::WallpaperLayout layout,
-      bool show_wallpaper,
-      std::unique_ptr<user_manager::UserImage> user_image);
+  void OnDefaultWallpaperDecoded(const base::FilePath& path,
+                                 wallpaper::WallpaperLayout layout,
+                                 bool show_wallpaper,
+                                 const gfx::ImageSkia& image);
 
   // Saves |image| to disk if |user_info->is_ephemeral| is false, or if it is a
   // policy wallpaper for public accounts. Shows the wallpaper immediately if
@@ -507,7 +501,7 @@ class ASH_EXPORT WallpaperController
                           const base::FilePath& path,
                           const wallpaper::WallpaperInfo& info,
                           bool show_wallpaper,
-                          std::unique_ptr<user_manager::UserImage> user_image);
+                          const gfx::ImageSkia& image);
 
   // Reloads the current wallpaper. It may change the wallpaper size based on
   // the current display's resolution. If |clear_cache| is true, all wallpaper
@@ -553,8 +547,7 @@ class ASH_EXPORT WallpaperController
   void SetDevicePolicyWallpaper();
 
   // Called when the device policy controlled wallpaper has been decoded.
-  void OnDevicePolicyWallpaperDecoded(
-      std::unique_ptr<user_manager::UserImage> device_wallpaper_image);
+  void OnDevicePolicyWallpaperDecoded(const gfx::ImageSkia& image);
 
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
@@ -600,8 +593,12 @@ class ASH_EXPORT WallpaperController
   // Cached wallpapers of users.
   CustomWallpaperMap wallpaper_cache_map_;
 
-  // Current decoded default image is stored in cache.
-  std::unique_ptr<user_manager::UserImage> default_wallpaper_image_;
+  // Cached default wallpaper image.
+  gfx::ImageSkia default_wallpaper_image_;
+
+  // Cached default wallpaper file path, used to check if the cached image is
+  // outdated. (i.e. when there's a new default wallpaper.)
+  base::FilePath default_wallpaper_file_path_;
 
   // The paths of the customized default wallpapers, if they exist.
   base::FilePath customized_default_wallpaper_small_;
