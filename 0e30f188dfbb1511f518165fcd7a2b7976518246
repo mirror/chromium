@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6fb742_9a5c617c",
+        "filename": "base/android/child_process_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-04T22:24:49Z",
+      "side": 1,
+      "message": "would\u0027ve been nice if the java diff was as clean as the native (not your fault of course)",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 30
+      },
+      "revId": "0e30f188dfbb1511f518165fcd7a2b7976518246",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

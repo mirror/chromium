@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ed7513_16ea1925",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 4376,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-04T22:24:49Z",
+      "side": 0,
+      "message": "Ran is in the process of adding this back so depending on ordering, you may have to revert this",
+      "range": {
+        "startLine": 4376,
+        "startChar": 63,
+        "endLine": 4376,
+        "endChar": 79
+      },
+      "revId": "1a254cfcd090f09b99734b05107957c36fb1875e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
