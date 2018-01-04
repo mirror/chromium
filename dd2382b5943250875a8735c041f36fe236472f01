@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f3cc8d_c3e1f4d5",
+        "filename": "components/history/core/browser/expire_history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-04T20:35:41Z",
+      "side": 1,
+      "message": "A base::flat_set will be more efficient here.",
+      "revId": "dd2382b5943250875a8735c041f36fe236472f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
