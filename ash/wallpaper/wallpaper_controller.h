@@ -215,9 +215,10 @@ class ASH_EXPORT WallpaperController
   // Returns the prominent color based on |color_profile|.
   SkColor GetProminentColor(color_utils::ColorProfile color_profile) const;
 
-  // Provides current image on the wallpaper, or empty gfx::ImageSkia if there
+  // Returns current image on the wallpaper, or empty gfx::ImageSkia if there
   // is no image, e.g. wallpaper is none.
   gfx::ImageSkia GetWallpaper() const;
+
   uint32_t GetWallpaperOriginalImageId() const;
 
   wallpaper::WallpaperLayout GetWallpaperLayout() const;
@@ -267,6 +268,11 @@ class ASH_EXPORT WallpaperController
   // Prepares wallpaper to lock screen transition. Will apply blur if
   // |locking| is true and remove it otherwise.
   void PrepareWallpaperForLockScreenChange(bool locking);
+
+  // Returns the location of the active user's wallpaper (either an URL or a
+  // file path). Returns an empty string if there's no active user, or the
+  // active user has not set a user wallpaper.
+  std::string GetActiveUserWallpaperLocation();
 
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
@@ -347,19 +353,6 @@ class ASH_EXPORT WallpaperController
 
   // Gets path of encoded wallpaper from cache. Returns true if success.
   bool GetPathFromCache(const AccountId& account_id, base::FilePath* path);
-
-  // TODO(crbug.com/776464): Remove this after WallpaperManager is removed.
-  // Returns the pointer of |current_user_wallpaper_info_|.
-  wallpaper::WallpaperInfo* GetCurrentUserWallpaperInfo();
-
-  // TODO(crbug.com/776464): Remove this after WallpaperManager is removed.
-  // Returns the pointer of |wallpaper_cache_map_|.
-  CustomWallpaperMap* GetWallpaperCacheMap();
-
-  // TODO(crbug.com/776464): Remove this after WallpaperManager is removed.
-  // Returns the account id of |current_user_|, or an empty account id if
-  // |current_user_| is null.
-  AccountId GetCurrentUserAccountId();
 
   // Returns true if device wallpaper policy is in effect and we are at the
   // login screen right now.

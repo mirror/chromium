@@ -28,6 +28,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -626,13 +627,13 @@ SkColor WallpaperController::GetProminentColor(
 wallpaper::WallpaperLayout WallpaperController::GetWallpaperLayout() const {
   if (current_wallpaper_)
     return current_wallpaper_->wallpaper_info().layout;
-  return wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED;
+  return wallpaper::NUM_WALLPAPER_LAYOUT;
 }
 
 wallpaper::WallpaperType WallpaperController::GetWallpaperType() const {
   if (current_wallpaper_)
     return current_wallpaper_->wallpaper_info().type;
-  return wallpaper::DEFAULT;
+  return wallpaper::WALLPAPER_TYPE_COUNT;
 }
 
 void WallpaperController::SetDefaultWallpaperImpl(
@@ -720,6 +721,10 @@ void WallpaperController::SetCustomizedDefaultWallpaperPaths(
 void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
                                             const WallpaperInfo& info) {
   current_user_wallpaper_info_ = info;
+  UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Type",
+                            current_user_wallpaper_info_.type,
+                            wallpaper::WALLPAPER_TYPE_COUNT);
+
   // 1x1 wallpaper should be stretched.
   if (image.width() == 1 && image.height() == 1)
     current_user_wallpaper_info_.layout = wallpaper::WALLPAPER_LAYOUT_STRETCH;
@@ -797,6 +802,21 @@ void WallpaperController::PrepareWallpaperForLockScreenChange(bool locking) {
     for (auto& observer : observers_)
       observer.OnWallpaperBlurChanged();
   }
+}
+
+std::string WallpaperController::GetActiveUserWallpaperLocation() {
+  // The currently active user has index 0.
+  const mojom::UserSession* const active_user_session =
+      Shell::Get()->session_controller()->GetUserSession(0 /*user index=*/);
+  if (!active_user_session)
+    return std::string();
+
+  WallpaperInfo info;
+  if (!GetUserWallpaperInfo(active_user_session->user_info->account_id, &info,
+                            !active_user_session->user_info->is_ephemeral)) {
+    return std::string();
+  }
+  return info.location;
 }
 
 void WallpaperController::OnDisplayConfigurationChanged() {
@@ -1041,20 +1061,6 @@ bool WallpaperController::GetPathFromCache(const AccountId& account_id,
     return true;
   }
   return false;
-}
-
-wallpaper::WallpaperInfo* WallpaperController::GetCurrentUserWallpaperInfo() {
-  return &current_user_wallpaper_info_;
-}
-
-CustomWallpaperMap* WallpaperController::GetWallpaperCacheMap() {
-  return &wallpaper_cache_map_;
-}
-
-AccountId WallpaperController::GetCurrentUserAccountId() {
-  if (current_user_)
-    return current_user_->account_id;
-  return EmptyAccountId();
 }
 
 bool WallpaperController::ShouldSetDevicePolicyWallpaper() const {
