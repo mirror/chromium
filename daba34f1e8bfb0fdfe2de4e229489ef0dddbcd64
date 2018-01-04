@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "021bd362_c87edffc",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-04T19:00:45Z",
+      "side": 1,
+      "message": "The overload actually calls the two argument version with ASSERT_NO_EXCEPTION as the second argument. This will throw for poorly-formed selectors e.g. \"##foobar\", but not for well-formed selectors that have no matches.",
+      "parentUuid": "3805a5f2_1e1192fa",
+      "range": {
+        "startLine": 487,
+        "startChar": 22,
+        "endLine": 487,
+        "endChar": 34
+      },
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c20ad9_d42049b5",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d210809_4661a189",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-04T19:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c20ad9_d42049b5",
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -74,6 +116,24 @@
       "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1561e4a5_f03c1d07",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31464,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-04T19:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebef8c34_4863c9f7",
+      "revId": "daba34f1e8bfb0fdfe2de4e229489ef0dddbcd64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
