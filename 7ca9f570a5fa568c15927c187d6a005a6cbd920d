@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8b76da67_cd851b7e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-04T15:38:52Z",
+      "side": 1,
+      "message": "It\u0027s a bit tricky :) I would summarize it as follows; please correct me if I am wrong.\n\nTrace():\n- Trace strong members \n- Register weak slots when not used from containers (this is potentially problematic currently as slots can get registered multiple times). \n\nTraceInCollection()\n- Tracing with special weak handling, e.g., clearing of weak slots\n\nkNoWeakHandlingInCollections -\u003e Trace()\nkWeakHandlingInCollections -\u003e TraceInCollection or Trace, depending on whether weakness actually is needed (e.g. you could have kWeakHandlingInCollections in a collection that only has strong references)",
+      "parentUuid": "057900b2_e5f29070",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537fa3c7_9cb759ea",
         "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
         "patchSetId": 2
