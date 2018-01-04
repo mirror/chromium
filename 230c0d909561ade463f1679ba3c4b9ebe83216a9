@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e430671d_77c2cf78",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-04T00:54:34Z",
+      "side": 1,
+      "message": "Added a comment. Slightly different than your suggestion, but should be clear?",
+      "parentUuid": "a79a1567_924549e7",
+      "revId": "230c0d909561ade463f1679ba3c4b9ebe83216a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8345d58_259f809a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 5
