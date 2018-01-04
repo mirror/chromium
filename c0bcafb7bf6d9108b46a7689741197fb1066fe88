@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fddeb74_98ea562a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T21:43:37Z",
+      "side": 1,
+      "message": "oooh, 2018...fancy :-)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4ffa0c_fa1cdbc0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T21:43:37Z",
+      "side": 1,
+      "message": "Could we add two more methods here to prevent the need for classes to implement this over and over:\n    private FirstRunPageDelegate getPageDelegate() {\n        return (FirstRunPageDelegate) getActivity();\n    }\n\n------------\n\n/** @see Fragment#getActivity() */\nActivity getActivity();\n\n/** */\ndefault FirstRunPageDelegate getPageDelegate() {\n    return (FirstRunPageDelegate) getActivity();\n}\n\nA bit less redundant boilerplate?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a2f1ff_09852faa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-04T21:43:37Z",
+      "side": 1,
+      "message": "Should we use convoluted java generics here to force that this is a FirstRunFragment?\n\npublic interface FirstRunPage\u003cT extends Fragment \u0026 FirstRunFragment\u003e {\n    ...\n    T instantiateFragment();\n}",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
