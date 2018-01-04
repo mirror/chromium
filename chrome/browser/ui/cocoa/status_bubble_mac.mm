@@ -473,6 +473,18 @@ void StatusBubbleMac::Create() {
 void StatusBubbleMac::Attach() {
   if (is_attached())
     return;
+
+  // Adding a child window to a window in one space while the user is
+  // interacting with a Chrome window in another space causes the system to
+  // switch spaces as of in macOS 10.13 (filed as rdar://36299823). As a
+  // workaround, only add the status bubble to a window if it's visible.
+  //
+  // There's no code to attach the bubble later if the window becomes visible.
+  // Enough paths lead here (timers and mouse event handlers) that I think just
+  // ignoring the attempt is fine.
+  if (![parent_ isVisible] || ![parent_ isOnActiveSpace])
+    return;
+
   [parent_ addChildWindow:window_ ordered:NSWindowAbove];
   [[window_ contentView] setThemeProvider:parent_];
 }
@@ -519,6 +531,8 @@ void StatusBubbleMac::SetState(StatusBubbleState state) {
     Detach();
   } else {
     Attach();
+    if (!is_attached())
+      return;
   }
 
   if ([delegate_ respondsToSelector:@selector(statusBubbleWillEnterState:)])
@@ -625,7 +639,8 @@ void StatusBubbleMac::StartShowing() {
   if (state_ == kBubbleHidden) {
     // Arrange to begin fading in after a delay.
     SetState(kBubbleShowingTimer);
-    StartTimer(kShowDelayMS);
+    if (state_ == kBubbleShowingTimer)
+      StartTimer(kShowDelayMS);
   } else if (state_ == kBubbleHidingFadeOut) {
     // Cancel the fade-out in progress and replace it with a fade in.
     SetState(kBubbleShowingFadeIn);
