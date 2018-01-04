@@ -16,6 +16,24 @@
       "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a733132_2e295e9d",
+        "filename": "chrome/browser/chromeos/printing/external_printers_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2018-01-04T08:24:22Z",
+      "side": 1,
+      "message": "That is correct.  Destruction order is reverse of declaration http://en.cppreference.com/w/cpp/language/destructor#Destruction_sequence The task runner is SKIP_ON_SHUTDOWN so the destructor for the Restriction pointer wasn\u0027t running if the TaskEnvironment is deleted first.",
+      "parentUuid": "e76fdaae_ff7433c0",
+      "revId": "320862aafed3c038e86ed77a5f60f6fff1b047bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
