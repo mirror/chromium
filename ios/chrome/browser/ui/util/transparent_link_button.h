@@ -31,6 +31,7 @@ extern const CGFloat kLinkTapAreaMinimum;
 // label and the same action.
 + (NSArray*)buttonsForLinkFrames:(NSArray*)linkFrames
                              URL:(const GURL&)URL
+                      lineHeight:(CGFloat)lineHeight
               accessibilityLabel:(NSString*)label;
 
 // The URL passed upon initialization.

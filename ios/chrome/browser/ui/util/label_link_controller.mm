@@ -12,6 +12,7 @@
 #include "base/mac/foundation_util.h"
 #import "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/ui/ui_util.h"
+#include "ios/chrome/browser/ui/util/CRUILabel+AttributeUtils.h"
 #import "ios/chrome/browser/ui/util/label_observer.h"
 #import "ios/chrome/browser/ui/util/text_region_mapper.h"
 #import "ios/chrome/browser/ui/util/transparent_link_button.h"
@@ -375,6 +376,7 @@
       NSArray* buttons =
           [TransparentLinkButton buttonsForLinkFrames:layout.frames
                                                   URL:URL
+                                           lineHeight:_label.cr_lineHeight
                                    accessibilityLabel:accessibilityLabel];
       for (TransparentLinkButton* button in buttons) {
 #ifndef NDEBUG
