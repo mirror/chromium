@@ -47,6 +47,8 @@ public class TabModelImpl extends TabModelJniBridge {
     private final ObserverList<TabModelObserver> mObservers;
     private RecentlyClosedBridge mRecentlyClosedBridge;
 
+    private int mPreviousTabId = INVALID_TAB_INDEX;
+
     // Undo State Tracking -------------------------------------------------------------------------
 
     /**
@@ -494,10 +496,11 @@ public class TabModelImpl extends TabModelJniBridge {
             }
 
             Tab tab = TabModelUtils.getCurrentTab(this);
-
             mModelDelegate.requestToShowTab(tab, type);
 
             if (tab != null) {
+                setPreviousId(lastId, tab.getId());
+
                 for (TabModelObserver obs : mObservers) obs.didSelectTab(tab, type, lastId);
 
                 boolean wasAlreadySelected = tab.getId() == lastId;
@@ -510,6 +513,16 @@ public class TabModelImpl extends TabModelJniBridge {
         } finally {
             TraceEvent.end("TabModelImpl.setIndex");
         }
+    }
+
+    /**
+     * Sets mPreviousTabId to the last tab selected if it's new.
+     * @param lastId The id of the last tab selected.
+     * @param tabId The id of the current tab selected.
+     */
+    private void setPreviousId(int lastId, int tabId) {
+        if (lastId == tabId || mPreviousTabId == lastId) return;
+        mPreviousTabId = lastId;
     }
 
     /**
@@ -777,5 +790,9 @@ public class TabModelImpl extends TabModelJniBridge {
     @Override
     public boolean isPendingTabAdd() {
         return mIsPendingTabAdd;
+    }
+
+    public int getPreviousTabId() {
+        return mPreviousTabId;
     }
 }
