@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23aaa3f_f29d0565",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-04T08:03:08Z",
+      "side": 1,
+      "message": "Is it possible to have transient window parented to root window?",
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
