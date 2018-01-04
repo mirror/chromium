@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a278d6fd_7832a9d0",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:49:29Z",
+      "side": 1,
+      "message": "Done.  Thanks for catching this.",
+      "parentUuid": "66d5e205_30eee991",
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63266a7_f950fe88",
         "filename": "content/browser/browser_side_navigation_browsertest.cc",
         "patchSetId": 7
@@ -113,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "0315adde_38b16c1e",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:49:29Z",
+      "side": 1,
+      "message": "\u003e Yeah, it\u0027d be nice to print the wrong bad message, but I can see how it\u0027s difficult.\n\nAck.\n\n\u003e Does the byte dump have the wrong bad message in it?\n\nThe byte dump has the wrong bad message in it, but it is written in hex.  Sort of.  Example:\n\n../../content/browser/site_per_process_browsertest.cc:2729: Failure\nExpected equality of these values:\n  bad_message::RPH_MOJO_PROCESS_ERROR\n    Which is: 123\n  kill_waiter.Wait()\n    Which is: 8-byte object \u003c00-00 00-00 11-00 00-00\u003e\n\n(note that 0x11 \u003d\u003d 17 \u003d\u003d RFPH_DETACH)\n\n\u003e Either way, I think the improvements here are totally worth it without this.\n\nAck.",
+      "parentUuid": "5f38620c_31c84f35",
+      "range": {
+        "startLine": 368,
+        "startChar": 2,
+        "endLine": 368,
+        "endChar": 50
+      },
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb140b1d_06c61b53",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 7
@@ -127,6 +169,24 @@
       "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffb73d0_746a54ab",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:49:29Z",
+      "side": 1,
+      "message": "\u003e In the future, I wonder if it\u0027d be useful to also check the mojo error string (stored in \"mojo-message-error\" crash key IIUC) for cases like this.  I.e., the error here should be \"Access denied for localStorage request\".\n\nGreat idea.  OTOH, I\u0027ve tried putting together https://crrev.com/c/851133 and got stuck - I see how to set a crash key value, but so far I was unable to figure out how to read the value back.  At any rate - we can follow-up on the other CL.",
+      "parentUuid": "fb140b1d_06c61b53",
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "04ecc97e_4021057d",
+        "filename": "content/test/content_browser_test_utils_internal.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71dc719f_a8fe4fca",
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1418998c_ed044cdd",
         "filename": "content/test/content_browser_test_utils_internal.h",
         "patchSetId": 7
@@ -214,6 +292,30 @@
       "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d518e85d_9b203cbf",
+        "filename": "content/test/content_browser_test_utils_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-04T23:49:29Z",
+      "side": 1,
+      "message": "\u003e Perhaps this should be WARN_UNUSED_RESULT, to force users to check their bad messages?\n\nGood idea.  Done.\n\n\u003e People should presumably still use RenderProcessHostWatcher if they don\u0027t care about the bad message number - in fact, maybe that\u0027s worth mentioning in a comment?\n\nCorrect.  Comment added.",
+      "parentUuid": "1418998c_ed044cdd",
+      "range": {
+        "startLine": 239,
+        "startChar": 48,
+        "endLine": 239,
+        "endChar": 52
+      },
+      "revId": "d648f785ca71cc9ab9941720aff323a3f663372c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
