@@ -56,9 +56,6 @@ void WebView::SetWebContents(content::WebContents* replacement) {
     return;
   DetachWebContents();
   WebContentsObserver::Observe(replacement);
-  // web_contents() now returns |replacement| from here onwards.
-  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
-                                  : FocusBehavior::NEVER);
   if (wc_owner_.get() != replacement)
     wc_owner_.reset();
   if (embed_fullscreen_widget_mode_enabled_) {
@@ -68,6 +65,9 @@ void WebView::SetWebContents(content::WebContents* replacement) {
     DCHECK(!is_embedding_fullscreen_widget_);
   }
   AttachWebContents();
+  // web_contents() now returns |replacement| from here onwards.
+  SetFocusBehavior(web_contents() ? FocusBehavior::ALWAYS
+                                  : FocusBehavior::NEVER);
   NotifyAccessibilityWebContentsChanged();
 }
 
