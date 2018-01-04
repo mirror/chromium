@@ -19,6 +19,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/shared_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
@@ -2210,24 +2211,24 @@ void RenderWidgetHostImpl::OnUnlockMouse() {
 void RenderWidgetHostImpl::OnShowDisambiguationPopup(
     const gfx::Rect& rect_pixels,
     const gfx::Size& size,
-    const viz::SharedBitmapId& id) {
+    uint32_t bitmap_id,
+    base::SharedMemoryHandle handle) {
   DCHECK(!rect_pixels.IsEmpty());
   DCHECK(!size.IsEmpty());
 
-  std::unique_ptr<viz::SharedBitmap> bitmap =
-      viz::ServerSharedBitmapManager::current()->GetSharedBitmapFromId(size,
-                                                                       id);
-  if (!bitmap) {
+  SkImageInfo info = SkImageInfo::MakeN32Premul(size.width(), size.height());
+  const size_t shm_size = size.width() * size.height() * info.bytesPerPixel();
+
+  auto shm =
+      std::make_unique<base::SharedMemory>(handle, false /* read_only */);
+  if (!shm->Map(shm_size)) {
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RWH_SHARED_BITMAP);
     return;
   }
 
-  DCHECK(bitmap->pixels());
-
-  SkImageInfo info = SkImageInfo::MakeN32Premul(size.width(), size.height());
   SkBitmap zoomed_bitmap;
-  zoomed_bitmap.installPixels(info, bitmap->pixels(), info.minRowBytes());
+  zoomed_bitmap.installPixels(info, shm->memory(), info.minRowBytes());
 
   // Note that |rect| is in coordinates of pixels relative to the window origin.
   // Aura-based systems will want to convert this to DIPs.
@@ -2237,7 +2238,7 @@ void RenderWidgetHostImpl::OnShowDisambiguationPopup(
   // It is assumed that the disambiguation popup will make a copy of the
   // provided zoomed image, so we delete this one.
   zoomed_bitmap.setPixels(nullptr);
-  Send(new ViewMsg_ReleaseDisambiguationPopupBitmap(GetRoutingID(), id));
+  Send(new ViewMsg_ReleaseDisambiguationPopupBitmap(GetRoutingID(), bitmap_id));
 }
 
 void RenderWidgetHostImpl::SetIgnoreInputEvents(bool ignore_input_events) {
