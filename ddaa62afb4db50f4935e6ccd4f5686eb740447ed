@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e494b9b5_e8e9a77b",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:50:13Z",
+      "side": 1,
+      "message": "Nice catch thanks!",
+      "parentUuid": "d665774e_8181c7f1",
+      "range": {
+        "startLine": 33,
+        "startChar": 35,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787f223d_55296f05",
         "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a18129b8_647d48b5",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:50:13Z",
+      "side": 1,
+      "message": "Unfortunately it must be Passed per: static_assert failed \"Bound argument |i| is move-only but will be forwarded by copy. Ensure |Arg| is bound using base::Passed(), not std::move().\"\n\nI used this as a reference: https://cs.chromium.org/chromium/src/docs/callback.md?type\u003dcs\u0026q\u003dcallback.md\u0026sq\u003dpackage:chromium\u0026l\u003d246\n\nThe ideal solution is that favicon_service itself needs to take a OnceCallback and we can use BindOnce here instead of BindRepeating, but thats beyond the scope of this CL.",
+      "parentUuid": "787f223d_55296f05",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74fa029c_095d934c",
         "filename": "components/omnibox/browser/omnibox_client.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36e0305_2f2a3f68",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-04T21:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74fa029c_095d934c",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 11
+      },
+      "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
