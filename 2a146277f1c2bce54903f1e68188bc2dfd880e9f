@@ -1,0 +1,284 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0269ec50_8357dfa4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "Nit: This is a mashed sentence (possibly around \"since\").",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824c7756_9897a4d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "This is odd. Let\u0027s discuss.",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7782962_6291fbe3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "All new flags, etc. should be WebXr unless they are specific to WebVR 1.1.",
+      "range": {
+        "startLine": 586,
+        "startChar": 31,
+        "endLine": 586,
+        "endChar": 33
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fdbf25_e7839205",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2237,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "FEATURE_WITH_PARAMS_VALUE seems like a better choice so we don\u0027t have to handle command line parsing, etc. It might add useless enabled \u0026 disabled, but maybe we can figure out what that means.\n\nExample usage: https://cs.chromium.org/chromium/src/chrome/browser/prerender/prerender_field_trial.cc?type\u003dcs\u0026l\u003d23",
+      "range": {
+        "startLine": 2237,
+        "startChar": 5,
+        "endLine": 2237,
+        "endChar": 21
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17fb9b0_774eab8b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "We should use a Feature rather than a switch, which means this shouldn\u0027t be necessary.",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957a7440_305680b3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this file should be included outside about_flags (see [1]). See also below.\n\n[1] https://cs.chromium.org/search/?q\u003d%22chrome/browser/flag_descriptions.h%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af929659_e2e1de95",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "This is comparing a human-readable string, which probably isn\u0027t going to be passed on the command line. Shouldn\u0027t this be \"GpuFence\"?",
+      "range": {
+        "startLine": 274,
+        "startChar": 24,
+        "endLine": 274,
+        "endChar": 67
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9610ad_efa12089",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "... Presentation ...?",
+      "range": {
+        "startLine": 1623,
+        "startChar": 42,
+        "endLine": 1623,
+        "endChar": 43
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852beb4c_254b4ec3",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1625,
+        "startChar": 40,
+        "endLine": 1625,
+        "endChar": 41
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bcc0aa2_cab4d0ec",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "OOC, what will the future names be and will they be obvious?\nFor example, it\u0027s not clear that these are the Baseline/Android N paths. It might help to at least comment that here.",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36a5223_5dd2fd16",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "Should we add \"Option\" or something here so all the options have a common prefix? Is there a pattern elsewhere in this file?",
+      "range": {
+        "startLine": 1001,
+        "startChar": 34,
+        "endLine": 1001,
+        "endChar": 35
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a5e6f7_409d97a9",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64665b00_b154ea05",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "Why is this a switch rather than a feature? Note that EnableWebVR is legacy. See also the discussion about FEATURE_WITH_PARAMS_VALUE.",
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b18cd18_e2b20c21",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2018-01-04T22:59:52Z",
+      "side": 1,
+      "message": "It looks like these are alphabetical.",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 49
+      },
+      "revId": "2a146277f1c2bce54903f1e68188bc2dfd880e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
