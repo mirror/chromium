@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27df490e_20b10548",
+        "filename": "chrome/browser/ui/cocoa/infobars/confirm_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T01:35:48Z",
+      "side": 1,
+      "message": "link_url -\u003e linkUrl (or linkURL?, or just `url`) since this is between @foo/@end",
+      "revId": "4c971a73bbcbf5771d7fcbdaa4ccc161a4943159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79662fc0_00b10475",
+        "filename": "chrome/browser/ui/cocoa/infobars/confirm_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T01:35:48Z",
+      "side": 1,
+      "message": "url_string -\u003e urlString (uRLString? ewww.. or perhaps `spec`)",
+      "revId": "4c971a73bbcbf5771d7fcbdaa4ccc161a4943159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
