@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "87ea6a32_e6dc9919",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-04T23:27:19Z",
+      "side": 1,
+      "message": "This CL looks correct, so LGTM.\n\nHowever, why do we need both \"Trace / TraceInCollection \"and \"kNoWeakHandlingInCollections / kWeakHandlingInCollections\"? I guess either is sufficient because what we want to specify is just whether we should handle weak processing or not.",
+      "parentUuid": "8b76da67_cd851b7e",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537fa3c7_9cb759ea",
         "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
         "patchSetId": 2
