@@ -188,6 +188,14 @@ bool FileManagerPrivateRemoveMountFunction::RunAsync() {
   if (!volume.get())
     return false;
 
+
+  const std::vector<base::WeakPtr<file_manager::Volume>>& volume_list =
+      file_manager::VolumeManager::Get(GetProfile())->GetVolumeList();
+  LOG(ERROR) << "~~~NUM VOLS: " <<  volume_list.size();
+
+  LOG(ERROR) << "~~~VOLUME'S PROVIDER ID: " << volume->provider_id().ToString();
+
+
   // TODO(tbarzic): Send response when callback is received, it would make more
   // sense than remembering issued unmount requests in file manager and showing
   // errors for them when MountCompleted event is received.
@@ -208,6 +216,7 @@ bool FileManagerPrivateRemoveMountFunction::RunAsync() {
                                    volume->file_system_id())) {
         return false;
       }
+      LOG(ERROR) << "~~~FILE MANAGER PRIVATE API unmount suceeded";
       break;
     }
     default:

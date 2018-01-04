@@ -778,6 +778,8 @@ void VolumeManager::OnProvidedFileSystemUnmount(
     const chromeos::file_system_provider::ProvidedFileSystemInfo&
         file_system_info,
     base::File::Error error) {
+
+  LOG(ERROR) << "~~~ VOLUME MANAGER: onUnmount called with idstring: " << file_system_info.display_name();
   // TODO(mtomasz): Introduce own type, and avoid using MountError internally,
   // since it is related to cros disks only.
   const chromeos::MountError mount_error = error == base::File::FILE_OK
@@ -1044,6 +1046,7 @@ void VolumeManager::DoMountEvent(chromeos::MountError error_code,
 
 void VolumeManager::DoUnmountEvent(chromeos::MountError error_code,
                                    const Volume& volume) {
+  LOG(ERROR) << "~~~ DoUnmount called";
   auto iter = mounted_volumes_.find(volume.volume_id());
   if (iter == mounted_volumes_.end())
     return;

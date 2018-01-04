@@ -79,11 +79,13 @@ void Service::Shutdown() {
 
 void Service::AddObserver(Observer* observer) {
   DCHECK(observer);
+  LOG(ERROR) << "~~~   ADD OBSERVER CALLED";
   observers_.AddObserver(observer);
 }
 
 void Service::RemoveObserver(Observer* observer) {
   DCHECK(observer);
+  LOG(ERROR) << "~~~   REMOVE OBSERVER CALLED";
   observers_.RemoveObserver(observer);
 }
 
@@ -197,6 +199,7 @@ base::File::Error Service::MountFileSystemInternal(
 base::File::Error Service::UnmountFileSystem(const ProviderId& provider_id,
                                              const std::string& file_system_id,
                                              UnmountReason reason) {
+  LOG(ERROR) << "~~~SERVICE UNMOUNT CALLED";
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto file_system_it = file_system_map_.find(
@@ -207,6 +210,7 @@ base::File::Error Service::UnmountFileSystem(const ProviderId& provider_id,
       observer.OnProvidedFileSystemUnmount(empty_file_system_info,
                                            base::File::FILE_ERROR_NOT_FOUND);
     }
+    LOG(ERROR) << "~~~earlyexit 1";
     return base::File::FILE_ERROR_NOT_FOUND;
   }
 
@@ -224,11 +228,14 @@ base::File::Error Service::UnmountFileSystem(const ProviderId& provider_id,
       observer.OnProvidedFileSystemUnmount(
           file_system_info, base::File::FILE_ERROR_INVALID_OPERATION);
     }
+    LOG(ERROR) << "~~~earlyexit 2";
     return base::File::FILE_ERROR_INVALID_OPERATION;
   }
 
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
+    LOG(ERROR) << "~~~has an observer! "; 
     observer.OnProvidedFileSystemUnmount(file_system_info, base::File::FILE_OK);
+  }
 
   mount_point_name_to_key_map_.erase(mount_point_name);
 
@@ -244,6 +251,7 @@ base::File::Error Service::UnmountFileSystem(const ProviderId& provider_id,
 
 bool Service::RequestUnmount(const ProviderId& provider_id,
                              const std::string& file_system_id) {
+  LOG(ERROR) << "~~~REQUEST UNMOUNT CALLED";
   DCHECK(thread_checker_.CalledOnValidThread());
 
   auto file_system_it = file_system_map_.find(
@@ -406,7 +414,9 @@ void Service::OnRequestUnmountStatus(
   if (error != base::File::FILE_OK) {
     for (auto& observer : observers_)
       observer.OnProvidedFileSystemUnmount(file_system_info, error);
+    LOG(ERROR) << "~~~UNMOUNT FAILED";
   }
+  LOG(ERROR) << "~~~UNMOUNT SUCCEEDS";
 }
 
 void Service::OnWatcherChanged(const ProvidedFileSystemInfo& file_system_info,

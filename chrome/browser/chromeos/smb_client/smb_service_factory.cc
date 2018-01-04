@@ -12,17 +12,21 @@
 namespace chromeos {
 namespace smb_client {
 
+// static
 SmbService* SmbServiceFactory::Get(content::BrowserContext* context) {
+  LOG(ERROR) << "~~~Factory Get called";
   return static_cast<SmbService*>(
       GetInstance()->GetServiceForBrowserContext(context, true));
 }
 
+// static
 SmbService* SmbServiceFactory::FindExisting(content::BrowserContext* context) {
   return static_cast<SmbService*>(
       GetInstance()->GetServiceForBrowserContext(context, false));
 }
 
 SmbServiceFactory* SmbServiceFactory::GetInstance() {
+  LOG(ERROR) << "~~~GetInstance Called";
   return base::Singleton<SmbServiceFactory>::get();
 }
 

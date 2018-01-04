@@ -57,9 +57,11 @@ class SmbProviderClientImpl : public SmbProviderClient {
     options.set_path(share_path.value());
     CallMethod(smbprovider::kMountMethod, options,
                &SmbProviderClientImpl::HandleMountCallback, &callback);
+    LOG(ERROR) << "~~~ SmbProviderClient Mount Called";
   }
 
   void Unmount(int32_t mount_id, UnmountCallback callback) override {
+    LOG(ERROR) << "~~~ SmbProviderClient Unmount Called, chromium work done";
     smbprovider::UnmountOptions options;
     options.set_mount_id(mount_id);
     CallMethod(smbprovider::kUnmountMethod, options,
@@ -138,6 +140,9 @@ class SmbProviderClientImpl : public SmbProviderClient {
   // Handles D-Bus callback for mount.
   void HandleMountCallback(MountCallback callback, dbus::Response* response) {
     if (!response) {
+
+      LOG(ERROR) << "~~~ Mount: failed to call smbprovider";
+
       DLOG(ERROR) << "Mount: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED, -1);
       return;
@@ -160,6 +165,9 @@ class SmbProviderClientImpl : public SmbProviderClient {
   // Handles D-Bus callback for unmount.
   void HandleUnmountCallback(UnmountCallback callback,
                              dbus::Response* response) {
+
+    LOG(ERROR)<< "~~~ chromium stuff resuming";
+    
     if (!response) {
       DLOG(ERROR) << "Unmount: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED);

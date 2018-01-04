@@ -171,6 +171,8 @@ ExtensionFunction::ResponseAction FileSystemProviderUnmountFunction::Run() {
       Service::Get(Profile::FromBrowserContext(browser_context()));
   DCHECK(service);
 
+  LOG(ERROR) << "~~~FSP API UNMOUNT FUNCTION RUN CALLED";
+
   const base::File::Error result = service->UnmountFileSystem(
       ProviderId::CreateFromExtensionId(extension_id()),
       params->options.file_system_id, Service::UNMOUNT_REASON_USER);

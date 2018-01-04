@@ -34,6 +34,7 @@ SmbService* SmbService::Get(content::BrowserContext* context) {
 void SmbService::Mount(const file_system_provider::MountOptions& options,
                        const base::FilePath& share_path,
                        MountResponse callback) {
+  LOG(ERROR) << "~~~MOUNT API called";
   chromeos::DBusThreadManager::Get()->GetSmbProviderClient()->Mount(
       share_path, base::BindOnce(&SmbService::OnMountResponse,
                                  weak_ptr_factory_.GetWeakPtr(),
@@ -45,7 +46,11 @@ void SmbService::OnMountResponse(
     const file_system_provider::MountOptions& options,
     smbprovider::ErrorType error,
     int32_t mount_id) {
+  LOG(ERROR) << "~~~OnMountResponse called";
+  LOG(ERROR) << "mount_id: " << mount_id;
   if (error != smbprovider::ERROR_OK) {
+    LOG(ERROR) << "~~~OnMountResponse recieved error: " << error;
+    DCHECK(mount_id >= 0);
     std::move(callback).Run(SmbFileSystem::TranslateError(error));
     return;
   }

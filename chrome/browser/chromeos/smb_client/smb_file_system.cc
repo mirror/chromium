@@ -140,6 +140,7 @@ SmbProviderClient* SmbFileSystem::GetSmbProviderClient() const {
 
 AbortCallback SmbFileSystem::RequestUnmount(
     const storage::AsyncFileUtil::StatusCallback& callback) {
+  LOG(ERROR) << "~~~UNMOUNT CALLED on SMBFS.";
   GetSmbProviderClient()->Unmount(
       GetMountId(), base::BindOnce(&SmbFileSystem::HandleRequestUnmountCallback,
                                    weak_ptr_factory_.GetWeakPtr(), callback));
@@ -149,6 +150,7 @@ AbortCallback SmbFileSystem::RequestUnmount(
 void SmbFileSystem::HandleRequestUnmountCallback(
     const storage::AsyncFileUtil::StatusCallback& callback,
     smbprovider::ErrorType error) const {
+  LOG(ERROR) << "~~~UNMOUNT CALLBACK ON SMBFS recieved error: " << TranslateError(error);
   if (TranslateError(error) == base::File::FILE_OK) {
     callback.Run(smb_service_->Unmount(
         file_system_info_.provider_id(), file_system_info_.file_system_id(),

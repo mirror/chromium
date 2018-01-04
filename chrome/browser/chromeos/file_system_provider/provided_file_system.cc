@@ -173,6 +173,8 @@ void ProvidedFileSystem::SetNotificationManagerForTesting(
 
 AbortCallback ProvidedFileSystem::RequestUnmount(
     const storage::AsyncFileUtil::StatusCallback& callback) {
+
+  LOG(ERROR) << "~~~extension pfs request UNMOUNT CALLED";
   const int request_id = request_manager_->CreateRequest(
       REQUEST_UNMOUNT,
       std::unique_ptr<RequestManager::HandlerInterface>(
