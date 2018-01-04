@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351ce16b_6a188065",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "I don\u0027t think we use this?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38459aef_bde36ad8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "nit: please move these methods up to the `public` block above. Style guide says there should only be one of each {public, protected, private} in that order.",
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1166d0e4_b1ab3deb",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "nit: it\u0027s base::nullopt by default",
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f421a916_7aa74127",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "nit: PostTaskToTaskRunnerThread()?",
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb729f6_402aaf71",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "Hmm, how did the Windows code end up using |user_cancelled|? That\u0027s unfortunate, we use |by_user| everywhere else. Can we align? (Can be a future CL.)",
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee73670_31bd3f7a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "nit: rename `Delegate` to `HandleOperation`?",
+      "range": {
+        "startLine": 232,
+        "startChar": 62,
+        "endLine": 232,
+        "endChar": 72
+      },
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fbd67d_bb7cf4b7",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_interactive_uitest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "nit: using base::Unretained() in a test is fine.",
+      "revId": "da130930d51f4cef03efdbbb382e096d102468fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

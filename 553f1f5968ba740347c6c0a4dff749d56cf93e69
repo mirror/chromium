@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b16b46d_aed76454",
+        "filename": "chrome/browser/notifications/notification_display_service_tester.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2018-01-04T12:30:33Z",
+      "side": 1,
+      "message": "++docs",
+      "revId": "553f1f5968ba740347c6c0a4dff749d56cf93e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
