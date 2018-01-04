@@ -105,6 +105,20 @@ config_templates.borderConfig_ = {
   invalidObjects: [new CSSUnitValue(4, 'px')]
 };
 
+// TODO: Flesh this out once we have a table of what properties
+// normalize to what.
+config_templates.positionConfig_ = {
+  validKeywords: [
+    'inherit',
+    'initial',
+    'unset',
+  ],
+  validObjects: [
+  ],
+  supportsMultiple: false,
+  invalidObjects: []
+};
+
 config_templates.lengthConfig = function() {
   return Object.assign({}, config_templates.lengthConfig_);
 };
@@ -113,4 +127,7 @@ config_templates.lengthPercentConfig = function() {
 };
 config_templates.borderConfig = function() {
   return Object.assign({}, config_templates.borderConfig_);
+};
+config_templates.positionConfig = function() {
+  return Object.assign({}, config_templates.positionConfig_);
 };
