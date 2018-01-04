@@ -22,6 +22,30 @@
       "revId": "2bf1ab763022f6b210dd20cc9194b3b709b8d2ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be67be07_9c11f4d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-04T23:23:55Z",
+      "side": 1,
+      "message": "I kept NOT_PENDING in the enum and made changes to DownloadNotificationFactory instead because I think it\u0027s useful to describe downloads that are not pending but call the same method for notification updates as downloads that are pending. I sent in related files, which use PendingState, for review in Patch 4 to provide more context.\n\nAlso, I\u0027m thinking with this new enum, it may be reasonable to remove mIsDownloadPending from DownloadUpdate. That way two variables do not have to be checked for pending downloads. The check getIsDownloadPending() can be replaced by getPendingState() !\u003d NOT_PENDING (it\u0027s not as readable though). Will be something to discuss with Downloads team later.",
+      "parentUuid": "2923f467_9f112943",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "2bf1ab763022f6b210dd20cc9194b3b709b8d2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
