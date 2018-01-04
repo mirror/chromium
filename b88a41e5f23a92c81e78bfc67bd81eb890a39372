@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adbe2c08_cd016ec1",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-04T11:10:51Z",
+      "side": 1,
+      "message": "I don\u0027t see any changes to VaapiPicture in this CL: are they in a separate CL?",
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
