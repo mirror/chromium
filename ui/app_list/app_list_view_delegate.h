@@ -43,10 +43,9 @@ class APP_LIST_EXPORT AppListViewDelegate {
   // Gets the SpeechUIModel for the app list. Owned by the AppListViewDelegate.
   virtual SpeechUIModel* GetSpeechUI() = 0;
 
-  // Invoked to start a new search. Delegate collects query input from
-  // SearchBoxModel and populates SearchResults. Both models are sub models
-  // of AppListModel.
-  virtual void StartSearch() = 0;
+  // Invoked to start a new search. Delegate populates SearchResults matching
+  // the query.
+  virtual void StartSearch(const base::string16& raw_query) = 0;
 
   // Invoked to open the search result.
   virtual void OpenSearchResult(SearchResult* result,
