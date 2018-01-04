@@ -30,6 +30,8 @@ UiElementRenderer::UiElementRenderer(bool use_gl) {
   Init();
   BaseQuadRenderer::CreateBuffers();
   TexturedQuadRenderer::CreateBuffers();
+  Stars::Renderer::CreateBuffers();
+  Sky::Renderer::CreateBuffers();
 }
 
 UiElementRenderer::~UiElementRenderer() = default;
@@ -45,6 +47,8 @@ void UiElementRenderer::Init() {
   controller_renderer_ = base::MakeUnique<Controller::Renderer>();
   gradient_grid_renderer_ = base::MakeUnique<Grid::Renderer>();
   shadow_renderer_ = base::MakeUnique<Shadow::Renderer>();
+  stars_renderer_ = base::MakeUnique<Stars::Renderer>();
+  sky_renderer_ = base::MakeUnique<Sky::Renderer>();
   background_renderer_ = base::MakeUnique<Background::Renderer>();
 }
 
@@ -135,6 +139,20 @@ void UiElementRenderer::DrawShadow(const gfx::Transform& model_view_proj_matrix,
   FlushIfNecessary(shadow_renderer_.get());
   shadow_renderer_->Draw(model_view_proj_matrix, element_size, x_padding,
                          y_padding, y_offset, color, opacity, corner_radius);
+}
+
+void UiElementRenderer::DrawStars(
+    float t,
+    const gfx::Transform& model_view_proj_matrix) {
+  FlushIfNecessary(stars_renderer_.get());
+  stars_renderer_->Draw(t, model_view_proj_matrix);
+}
+
+void UiElementRenderer::DrawSky(const gfx::Transform& model_view_proj_matrix,
+                                const EnvironmentGradientColors& colors,
+                                float opacity) {
+  FlushIfNecessary(sky_renderer_.get());
+  sky_renderer_->Draw(model_view_proj_matrix, colors, opacity);
 }
 
 void UiElementRenderer::DrawBackground(

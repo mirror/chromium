@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VR_ELEMENTS_BACKGROUND_H_
-#define CHROME_BROWSER_VR_ELEMENTS_BACKGROUND_H_
+#ifndef CHROME_BROWSER_VR_ELEMENTS_ENVIRONMENT_BACKGROUND_H_
+#define CHROME_BROWSER_VR_ELEMENTS_ENVIRONMENT_BACKGROUND_H_
 
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/renderers/base_quad_renderer.h"
@@ -58,4 +58,4 @@ class Background : public UiElement {
 
 }  // namespace vr
 
-#endif  // CHROME_BROWSER_VR_ELEMENTS_BACKGROUND_H_
+#endif  // CHROME_BROWSER_VR_ELEMENTS_ENVIRONMENT_BACKGROUND_H_

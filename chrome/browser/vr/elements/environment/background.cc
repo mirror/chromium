@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/vr/elements/background.h"
+#include "chrome/browser/vr/elements/environment/background.h"
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/skia_surface_provider.h"

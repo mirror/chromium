@@ -141,6 +141,14 @@ void InitializeColorSchemes() {
   normal_scheme.snackbar_button_colors.background_hover = 0xDD2D2D2D;
   normal_scheme.snackbar_button_colors.background_down = 0xDD2D2D2D;
 
+  normal_scheme.sky_gradient.ground = 0xFF646DA3;
+  normal_scheme.sky_gradient.mid_ground = 0xFFA191B0;
+  normal_scheme.sky_gradient.below_horizon = 0xFF7478A0;
+  normal_scheme.sky_gradient.horizon = 0xFFDDB2AD;
+  normal_scheme.sky_gradient.above_horizon = 0xFFEDE4B1;
+  normal_scheme.sky_gradient.mid_sky = 0xFFB0BFDB;
+  normal_scheme.sky_gradient.sky = 0xFF6371A9;
+
   g_fullscreen_scheme.Get() = normal_scheme;
   ColorScheme& fullscreen_scheme = g_fullscreen_scheme.Get();
   fullscreen_scheme.world_background = 0xFF000714;
@@ -167,6 +175,14 @@ void InitializeColorSchemes() {
       fullscreen_scheme.element_foreground;
   fullscreen_scheme.system_indicator_background =
       fullscreen_scheme.element_background;
+
+  fullscreen_scheme.sky_gradient.ground = 0xFF000000;
+  fullscreen_scheme.sky_gradient.mid_ground = 0xFF2B2445;
+  fullscreen_scheme.sky_gradient.below_horizon = 0xFF2D254D;
+  fullscreen_scheme.sky_gradient.horizon = 0xFF2C244A;
+  fullscreen_scheme.sky_gradient.above_horizon = 0xFF5D317A;
+  fullscreen_scheme.sky_gradient.mid_sky = 0xFF332963;
+  fullscreen_scheme.sky_gradient.sky = 0xFF1B1E46;
 
   g_incognito_scheme.Get() = normal_scheme;
   ColorScheme& incognito_scheme = g_incognito_scheme.Get();
@@ -238,11 +254,20 @@ void InitializeColorSchemes() {
   incognito_scheme.suggestion_button_colors.background_hover = 0xFF656565;
   incognito_scheme.suggestion_button_colors.background_down = 0xFF656565;
 
+  incognito_scheme.sky_gradient.ground = 0xFF363C55;
+  incognito_scheme.sky_gradient.mid_ground = 0xFF524672;
+  incognito_scheme.sky_gradient.below_horizon = 0xFF533F6D;
+  incognito_scheme.sky_gradient.horizon = 0xFF4C3F70;
+  incognito_scheme.sky_gradient.above_horizon = 0xFFA46392;
+  incognito_scheme.sky_gradient.mid_sky = 0xFF4258A7;
+  incognito_scheme.sky_gradient.sky = 0xFF272B53;
+
   initialized = true;
 }
 
 static constexpr size_t kButtonColorsSize = 20;
 static constexpr size_t kUrlBarColorsSize = 44;
+static constexpr size_t kEnvironmentGradientColorsSize = 28;
 
 }  // namespace
 
@@ -291,6 +316,24 @@ bool UrlBarColors::operator==(const UrlBarColors& other) const {
 }
 
 bool UrlBarColors::operator!=(const UrlBarColors& other) const {
+  return !(*this == other);
+}
+
+static_assert(
+    kEnvironmentGradientColorsSize == sizeof(EnvironmentGradientColors),
+    "If the new colors are added to EnvironmentGradientColors, we must "
+    "explicitly bump this size and update operator== below");
+
+bool EnvironmentGradientColors::operator==(
+    const EnvironmentGradientColors& other) const {
+  return ground == other.ground && mid_ground == other.mid_ground &&
+         below_horizon == other.below_horizon && horizon == other.horizon &&
+         above_horizon == other.above_horizon && mid_sky == other.mid_sky &&
+         sky == other.sky;
+}
+
+bool EnvironmentGradientColors::operator!=(
+    const EnvironmentGradientColors& other) const {
   return !(*this == other);
 }
 
