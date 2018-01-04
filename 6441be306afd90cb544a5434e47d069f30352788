@@ -72,6 +72,41 @@
     },
     {
       "key": {
+        "uuid": "e07a0784_96bf971c",
+        "filename": "chrome/browser/ui/app_list/start_page_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T02:08:08Z",
+      "side": 1,
+      "message": "\u003e How do we make that \"probably\" a \"certainly\"?\n\u003e Before I remove this change I want to be sure.\n\nDelete the file? It also put a google doodle in the app list once, but that\u0027s not used either.  Or ping vadimt@ who\u0027s working on  http://crbug.com/781407.\n\nBut since the whole file is on the chopping block, I\u0027m less worried about dependencies being added that aren\u0027t needed later.",
+      "parentUuid": "bc09d32a_885df0a1",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7c005d_f5758587",
+        "filename": "chrome/browser/ui/app_list/start_page_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T02:08:08Z",
+      "side": 1,
+      "message": "nit: no curlies (consistent with the `if` below).",
+      "revId": "6441be306afd90cb544a5434e47d069f30352788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60d83217_d5e01605",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 9
