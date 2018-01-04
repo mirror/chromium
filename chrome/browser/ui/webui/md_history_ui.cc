@@ -24,6 +24,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -53,6 +54,7 @@ content::WebUIDataSource* CreateMdHistoryUIHTMLSource(Profile* profile,
                                                       bool use_test_title) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIHistoryHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   // Localized strings (alphabetical order).
   source->AddLocalizedString("bookmarked", IDS_HISTORY_ENTRY_BOOKMARKED);
@@ -125,11 +127,11 @@ content::WebUIDataSource* CreateMdHistoryUIHTMLSource(Profile* profile,
 
   source->AddBoolean(kIsUserSignedInKey, IsUserSignedIn(profile));
 
-  struct UncompressedResource {
+  struct PathIdr {
     const char* path;
     int idr;
   };
-  const UncompressedResource uncompressed_resources[] = {
+  const PathIdr resources[] = {
     {"constants.html", IDR_MD_HISTORY_CONSTANTS_HTML},
     {"constants.js", IDR_MD_HISTORY_CONSTANTS_JS},
     {"history.js", IDR_MD_HISTORY_HISTORY_JS},
@@ -166,13 +168,9 @@ content::WebUIDataSource* CreateMdHistoryUIHTMLSource(Profile* profile,
     {"synced_device_manager.js", IDR_MD_HISTORY_SYNCED_DEVICE_MANAGER_JS},
 #endif
   };
-
-  std::vector<std::string> exclude_from_gzip;
-  for (const auto& resource : uncompressed_resources) {
+  for (const auto& resource : resources) {
     source->AddResourcePath(resource.path, resource.idr);
-    exclude_from_gzip.push_back(resource.path);
   }
-  source->UseGzip(exclude_from_gzip);
 
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   source->AddResourcePath("app.html",
