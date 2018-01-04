@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c36af07e_a28865dd",
+        "filename": "content/gpu/gpu_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "420437d7_0471aebd",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ec5320c_73aaf33f",
         "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-03T22:42:34Z",
       "side": 1,
       "message": "These values are tested on both sides. I think it would be better if this class didn\u0027t bother checking values (except for the final result in OnMediaCryptoSessionCreated()). Then these first 2 would simply be if (status !\u003d kOk) fail; cdm_proxy_-\u003e... .\n\nOr if you want to check, simply use CHECK_EQ(crypto_session_id, ...); But I think that\u0027s wasted as Process() will check the passed crypto_session_id anyway.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f64b231_a5828179",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "It\u0027s tested on both sides to make sure we pass the value correctly both ways. I agree that checking in ClearKeyCdmProxy would also work, but it\u0027ll be harder to read and follow.",
+      "parentUuid": "5ec5320c_73aaf33f",
       "range": {
         "startLine": 44,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "235c2149_ecdc137f",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "I did it and to be exact it should be kClearKeyCdmProxyCreateMediaCryptoSessionInputData, which I felt is too long. That\u0027s why I thought it\u0027s probably good enough to reuse kClearKeyCdmProxyInputData. After all, we just want to make sure the data is sent to the proxy successfully. In theory there\u0027s a slight chance that Process() and CreateMediaCryptoSession() got messed up and not caught because we use the same data twice. But given the fact that even the signature of these two calls are different, the chance is really really small...",
+      "parentUuid": "02bb0ba2_fab64f0b",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdba4cc4_de34377e",
         "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-03T22:42:34Z",
       "side": 1,
       "message": "If doing the previous comment, just test for !\u003d kOk above, and make this OnTestComplete(crypto_session_id \u003d\u003d kClearKeyCdmProxyMediaCryptoSessionId).",
+      "range": {
+        "startLine": 81,
+        "startChar": 17,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e745a1_976734f8",
+        "filename": "media/cdm/ppapi/clear_key_cdm/cdm_proxy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "This ID is only sent one way and I do want to check it.",
+      "parentUuid": "fdba4cc4_de34377e",
       "range": {
         "startLine": 81,
         "startChar": 17,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "01f04cba_9ddd83f6",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727a7a05_a1918612",
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d4b82f_281ccfd3",
         "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.cc",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5a55ba0e_7addc892",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d4b82f_281ccfd3",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0d9b58_f2ebd7ae",
         "filename": "media/mojo/services/gpu_mojo_media_client.h",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2018-01-03T22:42:34Z",
       "side": 1,
       "message": "Seems strange to have the constructor require a CdmProxyFactoryCB (and save it), yet the function to use it may not exist. However, it saves a few bytes of code, so I guess it\u0027s worth it. Is it worth conditionally including |cdm_proxy_factory_cb_|?",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "38131d6fe191bc79975eeaf169e0cf63aa063502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518f84b9_6d54ce99",
+        "filename": "media/mojo/services/gpu_mojo_media_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-04T00:53:02Z",
+      "side": 1,
+      "message": "Yeah, I tried to if/def everywhere. But that end up with too many if/defs (see GpuServiceFactory::RegisterServices for an example), which makes the code really hard to read.\n\nCurrently I am following the example of |android_overlay_factory_cb| which is only used on Android, but passed in unconditionally.\n\nWDYT or any suggestions?",
+      "parentUuid": "ed0d9b58_f2ebd7ae",
       "range": {
         "startLine": 49,
         "startChar": 28,
