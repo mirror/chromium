@@ -52,6 +52,24 @@
       "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5647d8ff_5f848874",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2018-01-04T03:17:49Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Keeping the style as in this patch makes sense, at least for the time being.\n\nThank you!",
+      "parentUuid": "ba0fdc60_f0eccf38",
+      "revId": "cd86a56d6329c0bc3872920a1dca63ea7477b759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
