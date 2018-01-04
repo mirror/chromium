@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9013a4d5_ec907698",
+        "filename": "components/safe_browsing/db/v4_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-04T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf3f8c5_90358bd3",
+      "revId": "963c6513380de20d6acfddf9e5b9e6041f5fd2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af7d42d9_fbc95582",
         "filename": "components/safe_browsing/db/v4_store.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-04T18:48:28Z",
       "side": 1,
       "message": "I wonder what %0 does.... would it crash here, with a div-by-zero signal?",
+      "range": {
+        "startLine": 504,
+        "startChar": 28,
+        "endLine": 504,
+        "endChar": 39
+      },
+      "revId": "963c6513380de20d6acfddf9e5b9e6041f5fd2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7841dde3_a874ba94",
+        "filename": "components/safe_browsing/db/v4_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2018-01-04T22:42:29Z",
+      "side": 1,
+      "message": "Yes, it would cause a crash which suggests that the empty prefix never reached here.",
+      "parentUuid": "af7d42d9_fbc95582",
       "range": {
         "startLine": 504,
         "startChar": 28,
