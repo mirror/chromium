@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4fcbd3_a1eeca50",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2018-01-04T00:25:31Z",
+      "side": 1,
+      "message": "Is this just testLitePageNano() now? No scrolling action nor related verification?",
+      "range": {
+        "startLine": 254,
+        "startChar": 18,
+        "endLine": 254,
+        "endChar": 21
+      },
+      "revId": "660b23a063594b8728209536227b88258cc06893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
