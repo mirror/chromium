@@ -19,7 +19,8 @@ namespace {
 
 void DisallowBlockingOperations() {
   base::ThreadRestrictions::SetIOAllowed(false);
-  base::ThreadRestrictions::DisallowWaiting();
+  // TODO(crbug.com/793486): Renable after the underlying issue is fixed.
+  // base::ThreadRestrictions::DisallowBaseSyncPrimitives();
 }
 
 }  // namespace
