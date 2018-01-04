@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61c2ddbd_4a980471",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T17:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91efd5d4_b61d87b3",
+      "revId": "a5f3fc6dabbeae322e517cb4f6ba5dae20960af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d024ffd3_f238ac0f",
         "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a5f3fc6dabbeae322e517cb4f6ba5dae20960af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e15633_511cd638",
+        "filename": "third_party/WebKit/Source/core/messaging/MessagePort.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2018-01-04T17:40:12Z",
+      "side": 1,
+      "message": "Yeah, such a DCHECK_GT should hold, added it.",
+      "parentUuid": "d024ffd3_f238ac0f",
+      "revId": "a5f3fc6dabbeae322e517cb4f6ba5dae20960af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
