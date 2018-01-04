@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "976b2446_250334e1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T12:04:42Z",
+      "side": 1,
+      "message": "We already use container variable name in while loop. I think changing this variable to container reduces readability. Do you have good name for variable in while loop?",
+      "parentUuid": "3b5d5d8f_f15aee30",
+      "range": {
+        "startLine": 1382,
+        "startChar": 10,
+        "endLine": 1382,
+        "endChar": 14
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7457e87_314a27a0",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1d4e5d75_c4c16e5f",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T12:04:42Z",
+      "side": 1,
+      "message": "We cannot decide search rect deterministically because https://chromium-review.googlesource.com/c/chromium/src/+/848438/2/third_party/WebKit/Source/core/page/FocusController.cpp#1453 is very heuristic. The line introduces that different search rect may used in same container.",
+      "parentUuid": "a7457e87_314a27a0",
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b6a3e43_f7b8ecdb",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2018-01-04T11:05:18Z",
       "side": 1,
       "message": "What is the incorrect behavior? Is it caused by this CL?",
+      "range": {
+        "startLine": 1452,
+        "startChar": 14,
+        "endLine": 1452,
+        "endChar": 42
+      },
+      "revId": "f8ff6ef66982fc405b409dccc78f8bfdd4d06bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d1abf3_0e26c9d0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2018-01-04T12:04:42Z",
+      "side": 1,
+      "message": "\u003e Is it caused by this CL?\n\nNo. It already exists without this CL.\n\n\u003e What is the incorrect behavior?\n\nFor example:\nLayout\n[focused element, inside viewable area]\n[iframe and first candidate][focusable element and second candidate]\n\nAssume we hit down arrow key.\n\nStep1:\ncontainer - document node\nstarting rect - focused element\u0027s rect\n\niframe is discovered as candidate\n\nStep2:\ncontainer - iframe\nstarting rect - focused element\u0027s rect\n\nno focusable element found. cannot scroll.\n\nStep3:\ncontainer - document node\nstarting rect - !!iframe\u0027s rect!!\n\nno focusable element found. cannot scroll.\n\nStep4:\nstack is empty. end traversal.\n\n\nIn above scenario, step3 is definitely wrong. But line 1453 introduces this behavior.",
+      "parentUuid": "1b6a3e43_f7b8ecdb",
       "range": {
         "startLine": 1452,
         "startChar": 14,
