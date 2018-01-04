@@ -35,6 +35,18 @@ struct UrlBarColors {
   ButtonColors back_button;
 };
 
+struct SkyGradientColors {
+  bool operator==(const SkyGradientColors& other) const;
+  bool operator!=(const SkyGradientColors& other) const;
+  SkColor ground = SK_ColorBLACK;
+  SkColor mid_ground = SK_ColorBLACK;
+  SkColor below_horizon = SK_ColorBLACK;
+  SkColor horizon = SK_ColorBLACK;
+  SkColor above_horizon = SK_ColorBLACK;
+  SkColor mid_sky = SK_ColorBLACK;
+  SkColor sky = SK_ColorBLACK;
+};
+
 struct ColorScheme {
   enum Mode : int {
     kModeNormal = 0,
@@ -110,6 +122,8 @@ struct ColorScheme {
   ButtonColors suggestion_button_colors;
 
   SkColor cursor;
+
+  SkyGradientColors sky_gradient;
 };
 
 }  // namespace vr
