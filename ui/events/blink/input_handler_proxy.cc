@@ -787,7 +787,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollEnd(
     // generate the ScrollEnd when it is done.
   } else {
     cc::ScrollState scroll_state = CreateScrollStateForGesture(gesture_event);
-    input_handler_->ScrollEnd(&scroll_state);
+    input_handler_->ScrollEnd(&scroll_state, true);
   }
 
   if (scroll_sequence_ignored_)

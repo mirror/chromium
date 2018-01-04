@@ -352,41 +352,6 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   return snap_area_data;
 }
 
-FloatPoint SnapCoordinator::FindSnapPosition(const FloatPoint& current_position,
-                                             const SnapContainerData& data,
-                                             bool should_snap_on_x,
-                                             bool should_snap_on_y) {
-  float smallest_distance_x = std::numeric_limits<float>::max();
-  float smallest_distance_y = std::numeric_limits<float>::max();
-  FloatPoint snap_position = current_position;
-  for (SnapAreaData snap_area_data : data.snap_area_list) {
-    // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
-    if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.x();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.X() - offset);
-      if (distance < smallest_distance_x) {
-        smallest_distance_x = distance;
-        snap_position.SetX(offset);
-      }
-    }
-    if (should_snap_on_y && (snap_area_data.snap_axis == SnapAxis::kY ||
-                             snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_position.y();
-      if (offset == SnapAreaData::kInvalidScrollPosition)
-        continue;
-      float distance = std::abs(current_position.Y() - offset);
-      if (distance < smallest_distance_y) {
-        smallest_distance_y = distance;
-        snap_position.SetY(offset);
-      }
-    }
-  }
-  return snap_position;
-}
-
 bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
                                       bool did_scroll_x,
                                       bool did_scroll_y,
@@ -399,18 +364,17 @@ bool SnapCoordinator::GetSnapPosition(const LayoutBox& snap_container,
   if (!data.snap_area_list.size())
     return false;
 
-  SnapAxis axis = data.scroll_snap_type.axis;
-  did_scroll_x &= (axis == SnapAxis::kX || axis == SnapAxis::kBoth);
-  did_scroll_y &= (axis == SnapAxis::kY || axis == SnapAxis::kBoth);
-
   ScrollableArea* scrollable_area = ScrollableAreaForSnapping(snap_container);
   if (!scrollable_area)
     return false;
 
   FloatPoint current_position = scrollable_area->ScrollPosition();
 
-  *snap_position =
-      FindSnapPosition(current_position, data, did_scroll_x, did_scroll_y);
+  gfx::ScrollOffset position = data.FindSnapPosition(
+      gfx::ScrollOffset(current_position.X(), current_position.Y()),
+      did_scroll_x, did_scroll_y);
+  snap_position->SetX(position.x());
+  snap_position->SetY(position.y());
 
   return *snap_position != current_position;
 }
@@ -461,13 +425,13 @@ void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
   // container or from existing areas in orphan pool.
 }
 
-SnapContainerData SnapCoordinator::EnsureSnapContainerData(
+Optional<SnapContainerData> SnapCoordinator::GetSnapContainerData(
     const LayoutBox& snap_container) {
   auto iter = snap_container_map_.find(&snap_container);
   if (iter != snap_container_map_.end()) {
     return iter->value;
   }
-  return SnapContainerData();
+  return base::nullopt;
 }
 
 #ifndef NDEBUG
