@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e0a9324_7f42cbe5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-04T20:48:32Z",
+      "side": 1,
+      "message": "nit: Can you remove this class and just use the \"TEST(...)\" macro below instead of \"TEST_F(...)\"?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "cb0ef62272a46a59902d425c453e0d086ef84c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4173baf0_3e876378",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2018-01-04T20:48:32Z",
+      "side": 1,
+      "message": "nit: Could you use EXPECT_EQ(FetchParameters::kDisallowPlaceholder, ...) instead of EXPECT_NE(FetchParameters::kAllowPlaceholder, ...)? Here and elsewhere in the file where it checks EXPECT_NE like this.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "cb0ef62272a46a59902d425c453e0d086ef84c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
