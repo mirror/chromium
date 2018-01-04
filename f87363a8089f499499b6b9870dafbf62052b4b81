@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f218d866_e25fd9ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMessageHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-04T23:04:52Z",
+      "side": 1,
+      "message": "Should this be moved into CastSessionUtil?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "f87363a8089f499499b6b9870dafbf62052b4b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
