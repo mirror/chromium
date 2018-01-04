@@ -160,6 +160,7 @@ viz_component("service") {
     "//cc/paint",
     "//components/crash/core/common:crash_key",
     "//components/viz/common",
+    "//gpu/ipc:gl_in_process_context",
 
     # Note that dependency on //gpu/ipc/client is for GpuMemoryBufferImpl. This
     # dependency should not be in public_deps.
@@ -181,7 +182,6 @@ viz_component("service") {
     "//cc",
     "//cc/debug",
     "//gpu/command_buffer/client:gles2_interface",
-    "//gpu/ipc:command_buffer",
     "//services/viz/privileged/interfaces/compositing",
     "//services/viz/public/interfaces",
     "//ui/gfx",
@@ -307,6 +307,7 @@ viz_source_set("unit_tests") {
     "//gpu/command_buffer/client",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/ipc:gl_in_process_context",
+    "//gpu/ipc/service",
     "//media",
     "//media/capture:capture_lib",
     "//services/ui/public/interfaces",
@@ -317,6 +318,7 @@ viz_source_set("unit_tests") {
     "//third_party/libyuv",
     "//ui/display/types",
     "//ui/gfx:test_support",
+    "//ui/gl",
   ]
 
   if (use_ozone) {
