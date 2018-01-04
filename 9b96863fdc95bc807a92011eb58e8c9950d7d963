@@ -250,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "1523703c_8b726630",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T16:08:00Z",
+      "side": 1,
+      "message": "Block typedefs poorly communicate the return type and the arguments. Sometimes typedefs improve the formatting, which makes the code more readable, but I don\u0027t think that\u0027s the case here. Callbacks typedefs are pretty common in Chrome for iOS codebase, so it should be up to Ed to decide on this.",
+      "parentUuid": "51a7b46a_f3b152fd",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2abe1d47_dcc7b00d",
         "filename": "ios/chrome/browser/web/app_launcher_tab_helper.h",
         "patchSetId": 11

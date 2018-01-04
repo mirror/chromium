@@ -467,6 +467,30 @@
     },
     {
       "key": {
+        "uuid": "445199ae_625dbef3",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-04T16:08:00Z",
+      "side": 1,
+      "message": "Thanks for the link.",
+      "parentUuid": "a06c3664_3a0fb69a",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "383b3e02_6a8633d5",
         "filename": "ios/chrome/browser/ui/external_app/external_app_util.h",
         "patchSetId": 10
