@@ -57,9 +57,10 @@ class CONTENT_EXPORT LocalStorageContextMojo
   void OpenLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request);
   void GetStorageUsage(GetStorageUsageCallback callback);
-  void DeleteStorage(const url::Origin& origin);
+  void DeleteStorage(const url::Origin& origin, base::OnceClosure callback);
   // Like DeleteStorage(), but also deletes storage for all sub-origins.
-  void DeleteStorageForPhysicalOrigin(const url::Origin& origin);
+  void DeleteStorageForPhysicalOrigin(const url::Origin& origin,
+                                      base::OnceClosure callback);
   void Flush();
   void FlushOriginForTesting(const url::Origin& origin);
 
@@ -130,6 +131,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
 
   void OnGotStorageUsageForDeletePhysicalOrigin(
       const url::Origin& origin,
+      base::OnceClosure callback,
       std::vector<LocalStorageUsageInfo> usage);
 
   void OnGotStorageUsageForShutdown(std::vector<LocalStorageUsageInfo> usage);
