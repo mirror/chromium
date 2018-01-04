@@ -567,7 +567,7 @@ bool NotificationPlatformBridgeWin::DecodeTemplateId(
   *origin_url = GURL(split[3]);
 
   notification_id->clear();
-  // Notification IDs is the rest of the string (delimeters not stripped off).
+  // Notification IDs is the rest of the string (delimiters not stripped off).
   for (size_t i = kMinVectorSize - 1; i < split.size(); ++i) {
     if (i > kMinVectorSize - 1)
       *notification_id += kDelimiter;
@@ -584,7 +584,7 @@ std::string NotificationPlatformBridgeWin::EncodeTemplateId(
     const std::string& profile_id,
     bool incognito,
     const GURL& origin_url) {
-  // The pipe was chosen as delimeter because it is invalid for directory paths
+  // The pipe was chosen as delimiter because it is invalid for directory paths
   // and unsafe for origins -- and should therefore be encoded (as per
   // http://www.ietf.org/rfc/rfc1738.txt).
   return base::StringPrintf(

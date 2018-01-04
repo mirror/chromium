@@ -387,10 +387,10 @@ class PrintPreviewHandlerTest : public testing::Test {
                                         base::Value::Type::BOOLEAN));
     ASSERT_TRUE(settings->FindKeyOfType("isInAppKioskMode",
                                         base::Value::Type::BOOLEAN));
-    ASSERT_TRUE(settings->FindKeyOfType("thousandsDelimeter",
+    ASSERT_TRUE(settings->FindKeyOfType("thousandsDelimiter",
                                         base::Value::Type::STRING));
     ASSERT_TRUE(
-        settings->FindKeyOfType("decimalDelimeter", base::Value::Type::STRING));
+        settings->FindKeyOfType("decimalDelimiter", base::Value::Type::STRING));
     ASSERT_TRUE(
         settings->FindKeyOfType("unitType", base::Value::Type::INTEGER));
     ASSERT_TRUE(settings->FindKeyOfType("previewModifiable",
