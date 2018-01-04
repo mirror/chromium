@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1fb2a370_b945e395",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:44:33Z",
+      "side": 1,
+      "message": "Well, setting in the one caller versus every return site seems preferable...\n\nI agree that the setting in line 137 is weird.  I\u0027d hoist that to the caller side.  At that point, |params| could be const ref, I think.\n\nAs for returns, C++11 has an answer for this: return a tuple (or a pair).  Then on the caller side:\n\n  int singleton_index;\n  std::tie(params-\u003ebrowser, singleton_index) \u003d GetBrowserAndTabForDisposition(...);",
+      "parentUuid": "3579e831_f1157dc6",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fcd2d03_c44d033a",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5d668d5f_db2fbb43",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:44:33Z",
+      "side": 1,
+      "message": "I would assume usually multiple targets wouldn\u0027t exist, but on the rare occasion they do, switching within the current window, and then in decreasing order of recent use, definitely seems like it would match user intent better than picking a tab at random, when multiple exist.\n\nImplementation-wise, shouldn\u0027t the current window always be the \"last active\" one, so if you just loop over begin/end_last_active(), you\u0027ll get that for free, without extra code?",
+      "parentUuid": "b68f165e_8bd4ff58",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61f627f9_cbd168d8",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "\u003e I don\u0027t think this is right now -- aren\u0027t we supposed to be leaving |browser| set in |params| now that we\u0027ve removed the return value?\n\nSee the caller. We used to immediately set |browser-\u003eparams| with the return value anyways.\n\n\u003e If this really is a bug, we should probably have a test (of cross-window tab switching) that would have caught this.",
       "parentUuid": "61f627f9_cbd168d8",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f942465b_0a3db8d6",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-04T01:44:33Z",
+      "side": 1,
+      "message": "I know.  My point is, you used to return |browser| here, not |current_browser|.  Effectively, you\u0027re introducing a bug with this change by \"changing the returned browser\" (so to speak).",
+      "parentUuid": "c05f846d_ca552c3d",
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
