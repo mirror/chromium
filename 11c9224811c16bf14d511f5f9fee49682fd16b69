@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3579e831_f1157dc6",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T01:16:50Z",
+      "side": 1,
+      "message": "I too would normally return it, but |params-\u003ebrowser| just gets set in the (only/sole) caller, so it seemed like a wasted step. Also note that on line 137 we clobber another field. I thought we should go one way (const NavigateParms\u0026 or, even better, individual parameters) or the other and it seems like we prefer a non-const in/out params. (It also felt weird returning the browser and passing the tab index.) I\u0027m happy to go the other way if it looks better to you.",
+      "parentUuid": "5a633498_8148fbc6",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fcd2d03_c44d033a",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T22:27:28Z",
       "side": 1,
       "message": "(Not new to this patchset, just noticing this now)\n\nIt seems like in the case where tabs in multiple windows match, this effectively picks randomly.\n\nShouldn\u0027t we prioritize the current window, and then most-recently-activated windows?  I think that would basically be equivalent to replacing this range-based loop with an iterator one that uses begin/end_last_active()?",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68f165e_8bd4ff58",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T01:16:50Z",
+      "side": 1,
+      "message": "Ok, sounds reasonable, but, after this change, should we really have that many? And if we did, does it really matter which one we pick? I\u0027m trying to think of why the current window is better and, aside from jank, once we assert that one navigation is as good as another (the premise of tab-switching) then it kind of doesn\u0027t matter.\n\nI could look in the current browser first pretty easily, but it looks like there would be some duplication of code? (Unless we made a custom loop.) I would think BrowserList::GetInstance() is the place to put something like that.",
+      "parentUuid": "4fcd2d03_c44d033a",
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c05f846d_ca552c3d",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T01:16:50Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this is right now -- aren\u0027t we supposed to be leaving |browser| set in |params| now that we\u0027ve removed the return value?\n\nSee the caller. We used to immediately set |browser-\u003eparams| with the return value anyways.\n\n\u003e If this really is a bug, we should probably have a test (of cross-window tab switching) that would have caught this.",
+      "parentUuid": "61f627f9_cbd168d8",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd55180a_520fd7db",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-03T22:27:28Z",
       "side": 1,
       "message": "This duplicates the existing code\u0027s behavior, so clearly not introducing a new bug; but I\u0027m wondering if it\u0027s either necessary or correct to set this for dispositions other than SINGLETON_TAB.  It\u0027s a bit hard to tell from quick examination of the caller code.",
+      "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba04dfc7_a12dd650",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T01:16:50Z",
+      "side": 1,
+      "message": "Right, I was just trying to duplicate existing code. GetIndexOfExistingTab() immediately bails on non-singleton dispositions, so it\u0027s pretty harmless. I can split the code and have only case SINGLETON_TAB do the GetIndexOfExistingTab() but then it may still fall through and run WindowCanOpenTabs() again. Or I could duplicate the code. I assume this way is preferable.",
+      "parentUuid": "dd55180a_520fd7db",
       "revId": "11c9224811c16bf14d511f5f9fee49682fd16b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
