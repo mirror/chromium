@@ -16,6 +16,24 @@
       "revId": "8a77e61dddbe03655789a1e95200dd9ffe18bf02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aadf40c_e47e63f4",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-04T19:52:34Z",
+      "side": 1,
+      "message": "SPv1 issues 2 transforms:\n1. translate(scrollable_area-\u003eGetScrollOffset() - graphics_layer.OffsetFromLayoutObject()) in CompositedLayerMapping with a TransformRecorder.\n2. translate(layout_block_.ScrolledContentOffset()) in BlockPainter with a ScrollRecorder.\n\nThe 2 transforms combined is translate(graphics_layer.OffsetFromLayoutObject() + VerticalScrollbarWith(), 0) for vertical-rl mode.",
+      "parentUuid": "0f0647b4_26e925cc",
+      "revId": "8a77e61dddbe03655789a1e95200dd9ffe18bf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
