@@ -31,8 +31,8 @@ class MusDemoTest : public service_manager::test::ServiceTest {
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch("use-test-config");
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus, switches::kMusHostVizValue);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kMusHostingViz);
     ServiceTest::SetUp();
   }
 
