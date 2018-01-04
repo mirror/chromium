@@ -22,6 +22,30 @@
       "revId": "4bbbc44e3922a74cfddce1dca973032e1e86cd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b4cf2f_333be1e6",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2018-01-04T13:21:27Z",
+      "side": 1,
+      "message": "Fullscreen folder doesn\u0027t have public folder. But this protocol is clearly made for other components as stated in the description: \"UI elements that need to react to Fullscreen events should conform to this protocol\".\nSame for others.",
+      "parentUuid": "a9770072_a11de5c7",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "4bbbc44e3922a74cfddce1dca973032e1e86cd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
