@@ -70,6 +70,30 @@
       "revId": "e186b94e6670157d5bb6b8dbc963c36833dfde15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fc7a4a_a7c4cba5",
+        "filename": "components/update_client/update_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2018-01-04T00:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a398ca_761c239a",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 8
+      },
+      "revId": "e186b94e6670157d5bb6b8dbc963c36833dfde15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
