@@ -67,10 +67,12 @@ class GFX_EXPORT StringSlicer {
 };
 
 // Elides |text| to fit the |available_pixel_width| with the specified behavior.
-GFX_EXPORT base::string16 ElideText(const base::string16& text,
-                                    const gfx::FontList& font_list,
-                                    float available_pixel_width,
-                                    ElideBehavior elide_behavior);
+GFX_EXPORT base::string16 ElideText(
+    const base::string16& text,
+    const gfx::FontList& font_list,
+    float available_pixel_width,
+    ElideBehavior elide_behavior,
+    Typesetter typesetter = Typesetter::DEFAULT);
 
 // Elide a filename to fit a given pixel width, with an emphasis on not hiding
 // the extension unless we have to. If filename contains a path, the path will
@@ -80,7 +82,8 @@ GFX_EXPORT base::string16 ElideText(const base::string16& text,
 // PDF (Pop Directional Formatting) mark.
 GFX_EXPORT base::string16 ElideFilename(const base::FilePath& filename,
                                         const gfx::FontList& font_list,
-                                        float available_pixel_width);
+                                        float available_pixel_width,
+                                        Typesetter typesetter);
 
 // Functions to elide strings when the font information is unknown. As opposed
 // to the above functions, ElideString() and ElideRectangleString() operate in
