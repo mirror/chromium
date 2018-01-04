@@ -54,18 +54,6 @@ std::vector<PageInfo> GetAllPersistentPageInfos(
   return result;
 }
 
-std::set<base::FilePath> GetAllArchives(const base::FilePath& archives_dir) {
-  std::set<base::FilePath> result;
-  base::FileEnumerator file_enumerator(archives_dir, false,
-                                       base::FileEnumerator::FILES,
-                                       FILE_PATH_LITERAL("*.mhtml"));
-  for (auto archive_path = file_enumerator.Next(); !archive_path.empty();
-       archive_path = file_enumerator.Next()) {
-    result.insert(archive_path);
-  }
-  return result;
-}
-
 bool DeletePagesByOfflineIds(const std::vector<int64_t>& offline_ids,
                              sql::Connection* db) {
   static const char kSql[] =
@@ -78,13 +66,6 @@ bool DeletePagesByOfflineIds(const std::vector<int64_t>& offline_ids,
       return false;
   }
   return true;
-}
-
-bool DeleteFiles(const std::vector<base::FilePath>& file_paths) {
-  bool result = true;
-  for (const auto& file_path : file_paths)
-    result = base::DeleteFile(file_path, false) && result;
-  return result;
 }
 
 SyncOperationResult CheckConsistencySync(
@@ -131,26 +112,6 @@ SyncOperationResult CheckConsistencySync(
 
   if (!transaction.Commit())
     return SyncOperationResult::TRANSACTION_COMMIT_ERROR;
-
-  // Delete any files in the persistent archive directory that no longer have
-  // associated entries in the database.
-  std::set<base::FilePath> archive_paths = GetAllArchives(archives_dir);
-  std::vector<base::FilePath> files_to_delete;
-  for (const auto& archive_path : archive_paths) {
-    if (persistent_page_info_paths.find(archive_path) ==
-        persistent_page_info_paths.end()) {
-      files_to_delete.push_back(archive_path);
-    }
-  }
-
-  if (files_to_delete.size() > 0) {
-    UMA_HISTOGRAM_COUNTS(
-        "OfflinePages.ConsistencyCheck.Persistent.PagesMissingDbEntryCount",
-        static_cast<int32_t>(files_to_delete.size()));
-  }
-
-  if (!DeleteFiles(files_to_delete))
-    return SyncOperationResult::FILE_OPERATION_ERROR;
 
   return SyncOperationResult::SUCCESS;
 }
