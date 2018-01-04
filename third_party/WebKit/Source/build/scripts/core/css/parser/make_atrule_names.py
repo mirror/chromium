@@ -28,6 +28,7 @@ class AtRuleNamesWriter(json5_generator.Writer):
         }
 
         self._descriptors = self.json5_file.name_dictionaries
+        self._descriptors.sort(key=lambda d: len(d["name"]))
         self._character_offsets = []
 
         # AtRuleDescriptorID::Invalid is 0.
@@ -42,7 +43,8 @@ class AtRuleNamesWriter(json5_generator.Writer):
                 descriptor['name'])
             descriptor['enum_value'] = first_descriptor_id + offset
             self._character_offsets.append(chars_used)
-            chars_used += len(descriptor['name'])
+            # Add 1 to account for null terminator.
+            chars_used = chars_used + len(descriptor['name']) + 1
             self._longest_name_length = max(
                 len(descriptor['name']),
                 len(descriptor['alias']),
