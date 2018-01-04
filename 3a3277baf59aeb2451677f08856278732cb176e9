@@ -52,6 +52,24 @@
       "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8432528_1d62c18f",
+        "filename": "base/android/java/src/org/chromium/base/BaseChromiumApplication.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T02:08:42Z",
+      "side": 0,
+      "message": "The existing logic is just \"isIsolated\", which doesn\u0027t cover gpu process, or other priveledged processes (e.g. restart process)",
+      "parentUuid": "2bd71f09_42621e5c",
+      "revId": "3a3277baf59aeb2451677f08856278732cb176e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
