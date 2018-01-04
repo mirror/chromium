@@ -59,6 +59,7 @@ core_idl_files =
                     "css/CSSStyleDeclaration.idl",
                     "css/CSSStyleRule.idl",
                     "css/CSSStyleSheet.idl",
+                    "css/CSSStyleSheetConstructor.idl",
                     "css/CSSSupportsRule.idl",
                     "css/CSSViewportRule.idl",
                     "css/FontFace.idl",
