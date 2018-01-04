@@ -203,16 +203,11 @@ class LocalDeviceInstrumentationTestRun(
       def set_debug_app(dev):
         # Set debug app in order to enable reading command line flags on user
         # builds
-        if not self._test_instance.package_info:
-          logging.error("Couldn't set debug app: no package info")
-        elif not self._test_instance.package_info.package:
-          logging.error("Couldn't set debug app: no package defined")
-        else:
-          cmd = ['am', 'set-debug-app', '--persistent']
-          if self._test_instance.wait_for_java_debugger:
-            cmd.append('-w')
-          cmd.append(self._test_instance.package_info.package)
-          dev.RunShellCommand(cmd, check_return=True)
+        cmd = ['am', 'set-debug-app', '--persistent']
+        if self._test_instance.wait_for_java_debugger:
+          cmd.append('-w')
+        cmd.append(self._test_instance.apk_under_test.GetPackageName())
+        dev.RunShellCommand(cmd, check_return=True)
 
       @trace_event.traced
       def edit_shared_prefs(dev):
@@ -284,7 +279,7 @@ class LocalDeviceInstrumentationTestRun(
     if self._test_instance.wait_for_java_debugger:
       logging.warning('*' * 80)
       logging.warning('Waiting for debugger to attach to process: %s',
-                      self._test_instance.package_info.package)
+                      self._test_instance.apk_under_test.GetPackageName())
       logging.warning('*' * 80)
 
   #override
