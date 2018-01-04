@@ -39,6 +39,7 @@ class TestingPrefServiceSimple;
 namespace net {
 class MockClientSocketFactory;
 class NetLog;
+class TestNetworkQualityEstimator;
 class URLRequestContext;
 class URLRequestContextStorage;
 }
@@ -509,6 +510,7 @@ class DataReductionProxyTestContext {
       std::unique_ptr<TestDataReductionProxyEventStorageDelegate>
           storage_delegate,
       std::unique_ptr<TestConfigStorer> config_storer,
+      std::unique_ptr<net::TestNetworkQualityEstimator> estimator,
       TestDataReductionProxyParams* params,
       unsigned int test_context_flags);
 
@@ -529,6 +531,7 @@ class DataReductionProxyTestContext {
   std::unique_ptr<DataReductionProxySettings> settings_;
   std::unique_ptr<TestDataReductionProxyEventStorageDelegate> storage_delegate_;
   std::unique_ptr<TestConfigStorer> config_storer_;
+  std::unique_ptr<net::TestNetworkQualityEstimator> estimator_;
 
   TestDataReductionProxyParams* params_;
 

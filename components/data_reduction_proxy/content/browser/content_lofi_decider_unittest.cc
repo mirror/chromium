@@ -32,6 +32,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/network_delegate_impl.h"
 #include "net/http/http_request_headers.h"
+#include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_retry_info.h"
 #include "net/socket/socket_test_util.h"
@@ -73,7 +74,9 @@ const Client kClient = Client::UNKNOWN;
 
 class ContentLoFiDeciderTest : public testing::Test {
  public:
-  ContentLoFiDeciderTest() : context_(false) {
+  ContentLoFiDeciderTest() : context_(true) {
+    context_.set_network_quality_estimator(&estimator_);
+    context_.Init();
     test_context_ = DataReductionProxyTestContext::Builder()
                         .WithClient(kClient)
                         .WithURLRequestContext(&context_)
@@ -215,6 +218,7 @@ class ContentLoFiDeciderTest : public testing::Test {
 
  protected:
   base::MessageLoopForIO message_loop_;
+  net::TestNetworkQualityEstimator estimator_;
   net::TestURLRequestContext context_;
   net::TestDelegate delegate_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;

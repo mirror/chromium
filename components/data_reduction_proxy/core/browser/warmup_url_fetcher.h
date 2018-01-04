@@ -27,9 +27,11 @@ namespace data_reduction_proxy {
 // URLFetcherDelegate for fetching the warmup URL.
 class WarmupURLFetcher : public net::URLFetcherDelegate {
  public:
+  enum class FetchResult { kSuccessful, kFailed, kTimedOut };
+
   // The proxy server that was used to fetch the request, and whether the fetch
   // was successful.
-  typedef base::RepeatingCallback<void(const net::ProxyServer&, bool)>
+  typedef base::RepeatingCallback<void(const net::ProxyServer&, FetchResult)>
       WarmupURLFetcherCallback;
 
   WarmupURLFetcher(const scoped_refptr<net::URLRequestContextGetter>&

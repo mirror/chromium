@@ -16,6 +16,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "net/http/http_status_code.h"
+#include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/proxy/proxy_server.h"
 #include "net/socket/socket_test_util.h"
 #include "net/url_request/url_fetcher.h"
@@ -42,7 +43,7 @@ class WarmupURLFetcherTest : public WarmupURLFetcher {
   const net::ProxyServer& proxy_server_last() const {
     return proxy_server_last_;
   }
-  bool success_response_last() const { return success_response_last_; }
+  FetchResult success_response_last() const { return success_response_last_; }
 
   static void InitExperiment(
       base::test::ScopedFeatureList* scoped_feature_list) {
@@ -57,7 +58,7 @@ class WarmupURLFetcherTest : public WarmupURLFetcher {
 
  private:
   void HandleWarmupFetcherResponse(const net::ProxyServer& proxy_server,
-                                   bool success_response) {
+                                   FetchResult success_response) {
     callback_received_count_++;
     proxy_server_last_ = proxy_server;
     success_response_last_ = success_response;
@@ -65,7 +66,7 @@ class WarmupURLFetcherTest : public WarmupURLFetcher {
 
   size_t callback_received_count_ = 0;
   net::ProxyServer proxy_server_last_;
-  bool success_response_last_ = false;
+  FetchResult success_response_last_ = FetchResult::kFailed;
   DISALLOW_COPY_AND_ASSIGN(WarmupURLFetcherTest);
 };
 
@@ -74,6 +75,10 @@ TEST(WarmupURLFetcherTest, TestGetWarmupURLWithQueryParam) {
   base::MessageLoopForIO message_loop;
   scoped_refptr<net::URLRequestContextGetter> request_context_getter =
       new net::TestURLRequestContextGetter(message_loop.task_runner());
+  net::TestNetworkQualityEstimator estimator;
+  request_context_getter->GetURLRequestContext()->set_network_quality_estimator(
+      &estimator);
+
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
 
   GURL gurl_original;
@@ -128,6 +133,9 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLNoViaHeader) {
   scoped_refptr<net::URLRequestContextGetter> request_context_getter =
       new net::TestURLRequestContextGetter(message_loop.task_runner(),
                                            std::move(test_request_context));
+  net::TestNetworkQualityEstimator estimator;
+  request_context_getter->GetURLRequestContext()->set_network_quality_estimator(
+      &estimator);
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
   EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
@@ -156,7 +164,8 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLNoViaHeader) {
             warmup_url_fetcher.proxy_server_last().scheme());
   // success_response_last() should be false since the response does not contain
   // the via header.
-  EXPECT_FALSE(warmup_url_fetcher.success_response_last());
+  EXPECT_EQ(WarmupURLFetcher::FetchResult::kFailed,
+            warmup_url_fetcher.success_response_last());
 }
 
 TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLWithViaHeader) {
@@ -187,6 +196,9 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLWithViaHeader) {
   scoped_refptr<net::URLRequestContextGetter> request_context_getter =
       new net::TestURLRequestContextGetter(message_loop.task_runner(),
                                            std::move(test_request_context));
+  net::TestNetworkQualityEstimator estimator;
+  request_context_getter->GetURLRequestContext()->set_network_quality_estimator(
+      &estimator);
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
   EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
@@ -213,9 +225,9 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLWithViaHeader) {
   EXPECT_EQ(1u, warmup_url_fetcher.callback_received_count());
   EXPECT_EQ(net::ProxyServer::SCHEME_DIRECT,
             warmup_url_fetcher.proxy_server_last().scheme());
-  // success_response_last() should be true since the response contains the via
-  // header.
-  EXPECT_TRUE(warmup_url_fetcher.success_response_last());
+  // The last response contained the via header.
+  EXPECT_EQ(WarmupURLFetcher::FetchResult::kSuccessful,
+            warmup_url_fetcher.success_response_last());
 }
 
 TEST(WarmupURLFetcherTest,
@@ -244,6 +256,9 @@ TEST(WarmupURLFetcherTest,
   scoped_refptr<net::URLRequestContextGetter> request_context_getter =
       new net::TestURLRequestContextGetter(message_loop.task_runner(),
                                            std::move(test_request_context));
+  net::TestNetworkQualityEstimator estimator;
+  request_context_getter->GetURLRequestContext()->set_network_quality_estimator(
+      &estimator);
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
   warmup_url_fetcher.FetchWarmupURL();
@@ -293,6 +308,9 @@ TEST(WarmupURLFetcherTest, TestConnectionResetFetchWarmupURL) {
   scoped_refptr<net::URLRequestContextGetter> request_context_getter =
       new net::TestURLRequestContextGetter(message_loop.task_runner(),
                                            std::move(test_request_context));
+  net::TestNetworkQualityEstimator estimator;
+  request_context_getter->GetURLRequestContext()->set_network_quality_estimator(
+      &estimator);
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
   EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
@@ -317,7 +335,8 @@ TEST(WarmupURLFetcherTest, TestConnectionResetFetchWarmupURL) {
   EXPECT_EQ(1u, warmup_url_fetcher.callback_received_count());
   EXPECT_EQ(net::ProxyServer::SCHEME_INVALID,
             warmup_url_fetcher.proxy_server_last().scheme());
-  EXPECT_FALSE(warmup_url_fetcher.success_response_last());
+  EXPECT_EQ(WarmupURLFetcher::FetchResult::kFailed,
+            warmup_url_fetcher.success_response_last());
 }
 
 }  // namespace
