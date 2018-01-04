@@ -100,6 +100,7 @@ function PDFViewer(browserApi) {
   this.isFormFieldFocused_ = false;
 
   this.delayedScriptingMessages_ = [];
+  this.outstandingTransformPagePointRequests_ = [];
 
   this.isPrintPreview_ = location.origin === 'chrome://print';
   this.isPrintPreviewLoaded_ = false;
@@ -233,9 +234,15 @@ function PDFViewer(browserApi) {
   });
 
   document.body.addEventListener('change-page-and-xy', e => {
-    this.viewport_.goToPageAndXY(e.detail.page, e.detail.x, e.detail.y);
-    if (e.detail.origin == 'bookmark')
-      this.metrics.onFollowBookmark();
+    this.outstandingTransformPagePointRequests_.push({
+      callback: this.goToPageAndXY_.bind(this, e.detail.origin, e.detail.page)
+    });
+    this.plugin_.postMessage({
+      type: 'transformPagePoint',
+      page: e.detail.page,
+      x: e.detail.x,
+      y: e.detail.y
+    });
   });
 
   document.body.addEventListener('navigate', e => {
@@ -715,6 +722,11 @@ PDFViewer.prototype = {
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;
         break;
+      case 'transformPagePointReply':
+        var outstandingRequest =
+            this.outstandingTransformPagePointRequests_.shift();
+        outstandingRequest.callback(message.data);
+        break;
     }
   },
 
@@ -1011,5 +1023,11 @@ PDFViewer.prototype = {
    */
   get bookmarks() {
     return this.bookmarks_;
+  },
+
+  goToPageAndXY_: function(origin, page, message) {
+    this.viewport_.goToPageAndXY(page, message.x, message.y);
+    if (origin == 'bookmark')
+      this.metrics.onFollowBookmark();
   }
 };

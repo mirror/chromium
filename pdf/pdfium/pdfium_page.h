@@ -80,6 +80,8 @@ class PDFiumPage {
   // |target| is required.
   void GetPageYTarget(FPDF_DEST destination, LinkTarget* target);
 
+  std::pair<int, int> TransformXY(int x, int y);
+
   // Given a point in the document that's in this page, returns its character
   // index if it's near a character, and also the type of text.
   // Target is optional. It will be filled in for WEBLINK_AREA or

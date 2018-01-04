@@ -385,9 +385,19 @@ void PDFiumPage::GetPageYTarget(FPDF_DEST destination, LinkTarget* target) {
     return;
   }
 
+  // pp::FloatRect page_rect(x, y, 0, 0);
+  // pp::FloatRect pixel_rect(FloatPageRectToPixelRect(GetPage(), page_rect));
+  target->y_in_pixels = y;
+}
+
+std::pair<int, int> PDFiumPage::TransformXY(int x, int y) {
+  if (!available_) {
+    return {0, 0};
+  }
+
   pp::FloatRect page_rect(x, y, 0, 0);
   pp::FloatRect pixel_rect(FloatPageRectToPixelRect(GetPage(), page_rect));
-  target->y_in_pixels = pixel_rect.y();
+  return {pixel_rect.x(), pixel_rect.y()};
 }
 
 PDFiumPage::Area PDFiumPage::GetURITarget(FPDF_ACTION uri_action,
