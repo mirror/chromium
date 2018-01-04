@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "b5120214_8de299fa",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2018-01-04T23:57:50Z",
+      "side": 1,
+      "message": "Changed code to use fragment height instead of PaginationOffset.Y() here. I believe this time it\u0027s correct :)\n\nPTAL.\n\n(About paged media, currently we don\u0027t generate fragment data for layout ojbects, so the new algorithm doesn\u0027t apply. I think for short term we can still use the old repeating painting code for spv175 printing, and for long term we switch to generate fragment data during printing.)",
+      "parentUuid": "1fafcbc6_ffaa5e36",
+      "revId": "558c70ea95292b862b5bfda2846103ae7fed8a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec0d4a78_b5f97bce",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 6
