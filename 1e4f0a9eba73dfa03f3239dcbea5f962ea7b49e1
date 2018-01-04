@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ab2bdc_71bc4803",
+        "filename": "net/dns/host_resolver_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2018-01-04T19:26:26Z",
+      "side": 1,
+      "message": "Can we either implement this or call NOTIMPLEMENTED();? Or is it not exposed over Mojo and never expected to be called?",
+      "revId": "1e4f0a9eba73dfa03f3239dcbea5f962ea7b49e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4652beb5_463f214f",
+        "filename": "net/dns/mock_host_resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2018-01-04T19:26:26Z",
+      "side": 1,
+      "message": "Same as HostResolverMojo.",
+      "revId": "1e4f0a9eba73dfa03f3239dcbea5f962ea7b49e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
