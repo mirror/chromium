@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a63e789_005264ae",
+        "filename": "third_party/zlib/google/zip_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-04T18:35:57Z",
+      "side": 0,
+      "message": "Did you know of base::SequencedTaskRunnerHandle::Get()? This is often better for replies than taking an external SequencedTaskRunner (injecting a SequencedTaskRunner shouldn\u0027t really be necessary anymore : https://chromium.googlesource.com/chromium/src/+/lkcr/docs/threading_and_tasks.md#TaskRunner-ownership-encourage-no-dependency-injection).",
+      "range": {
+        "startLine": 373,
+        "startChar": 6,
+        "endLine": 373,
+        "endChar": 41
+      },
+      "revId": "621dc92470d83699c5934cb79f3d00bdb021587f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
