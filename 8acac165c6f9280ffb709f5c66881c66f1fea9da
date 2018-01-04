@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ddc9e13_6cffef05",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "s/passesCertTag/certTag",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ae5a72_7a776221",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "const passesCertTag \u003d tags.find(tag \u003d\u003e tag.startsWith(CERT_TAG));",
+      "range": {
+        "startLine": 92,
+        "startChar": 13,
+        "endLine": 92,
+        "endChar": 16
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5190b3_d5008f32",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "Is CERT_TAG guaranteed to exist in the response? The code here does not account for the case where tags.find() returns undefined. If that shouldn\u0027t happen, maybe add an assertion?",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 38
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad94dedd_391b54d0",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "Do these strings have to be strings? Could we convert this enum to a number instead?",
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7043f5_ea101b16",
+        "filename": "chrome/browser/resources/print_preview/search/destination_list_item.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "Should we rename s/offline/stale? Here and elsewhere? Or is a printer with an invalid cert effectively offline?",
+      "range": {
+        "startLine": 199,
+        "startChar": 64,
+        "endLine": 199,
+        "endChar": 71
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9e2c5b_a850de8d",
+        "filename": "chrome/browser/resources/print_preview/settings/destination_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-04T19:28:09Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 23
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
