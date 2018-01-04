@@ -46,6 +46,9 @@ Scheduler::Scheduler(
   begin_impl_frame_deadline_closure_ = base::Bind(
       &Scheduler::OnBeginImplFrameDeadline, weak_factory_.GetWeakPtr());
 
+  // We want to handle side-effects-only BeginFrames.
+  wants_side_effects_only_begin_frames_ = true;
+
   ProcessScheduledActions();
 }
 
