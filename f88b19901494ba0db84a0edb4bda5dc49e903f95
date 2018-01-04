@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be8ecb31_e6fb9bda",
+        "filename": "tools/binary_size/libsupersize/html_report.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T16:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4af73c1_c889e176",
+      "range": {
+        "startLine": 174,
+        "startChar": 25,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "f88b19901494ba0db84a0edb4bda5dc49e903f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a33fdc8_a059fdae",
         "filename": "tools/binary_size/libsupersize/models.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T14:50:03Z",
       "side": 1,
       "message": "s/symbols/raw_symbols/",
+      "range": {
+        "startLine": 162,
+        "startChar": 34,
+        "endLine": 162,
+        "endChar": 41
+      },
+      "revId": "f88b19901494ba0db84a0edb4bda5dc49e903f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21a3ff4_08bc70f0",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T16:52:24Z",
+      "side": 1,
+      "message": "Added a comment. Keeping it as self.symbols so that we don\u0027t have to cluster twice if accessing them both.",
+      "parentUuid": "7a33fdc8_a059fdae",
       "range": {
         "startLine": 162,
         "startChar": 34,
