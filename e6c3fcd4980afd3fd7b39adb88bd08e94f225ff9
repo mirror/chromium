@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ca528f8_3a5d30d1",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-04T23:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19dcd79d_e9391e97",
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9999e9a9_c3c9de76",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-04T20:22:08Z",
       "side": 1,
       "message": "Can this function just call ExpectNewEntries with a map with one entry?",
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1943ef_cee32007",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-04T23:10:46Z",
+      "side": 1,
+      "message": "We could, but we would need to get the entry\u0027s source id before calling ExpectNewEntries. Moreover, we can\u0027t get the source id from the source_url because source_url may be empty (e.g. for UserActivity). So the only way to get the source id is by looking up the entry from ukm and get the source id from the entry. However, this \"looking up entries from ukm\" work is done by ExpectNewEntries already, so it\u0027s duplicating the work.\n\nFor the case of ExpectNewEntry, as we don\u0027t need to check source id anyway, I think it would be simpler to keep it separate from ExpectNewEntries. What do you think?",
+      "parentUuid": "9999e9a9_c3c9de76",
       "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8b28c94d_b4834e0e",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-04T23:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b758ef9f_caf50128",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb721eb1_741b435f",
         "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
         "patchSetId": 10
@@ -79,6 +139,30 @@
       "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b86eb59_83ca49d5",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-04T23:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb721eb1_741b435f",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 26
+      },
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

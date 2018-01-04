@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "fa0278ce_0ef7e1e5",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2018-01-04T23:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e402567e_ff39f6de",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a32e877a_4aa72bbf",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
