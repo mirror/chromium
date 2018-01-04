@@ -4,6 +4,19 @@
 
 import("//build/config/android/rules.gni")
 
+applicationId = "org.chromium.customtabsclient"
+
+custom_tabs_support_jinja_variables = [ "applicationId=$applicationId" ]
+
+custom_tabs_support_manifest =
+    "$target_gen_dir/custom_tabs_support/AndroidManifest.xml"
+
+jinja_template("custom_tabs_support_manifest") {
+   input = "src/customtabs/AndroidManifest.xml"
+   output = custom_tabs_support_manifest
+   variables = custom_tabs_support_jinja_variables
+}
+
 android_resources("chrome_tabs_client_example_apk_resources") {
   resource_dirs = [ "src/Application/src/main/res" ]
   android_manifest = "src/Application/src/main/AndroidManifest.xml"
@@ -16,6 +29,8 @@ android_resources("chrome_tabs_client_example_apk_resources") {
 android_resources("custom_tabs_support_resources") {
   resource_dirs = [ "src/customtabs/res" ]
   custom_package = "android.support.customtabs.browseractions"
+  android_manifest = custom_tabs_support_manifest
+  android_manifest_dep = ":custom_tabs_support_manifest"
 }
 
 android_apk("custom_tabs_client_example_apk") {
