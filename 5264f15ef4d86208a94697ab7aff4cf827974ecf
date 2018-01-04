@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "1f9c2eb0_95b8ba4a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea0e625_eaa096d5",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb9484e_2db303db",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -348,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "aed42216_facc74df",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3bc89213_b980fc41",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bef8d7a_56030388",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -380,6 +416,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260c868f_ff3b9366",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b042b9_16ef20c0",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +487,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef68fe8_ce01ecbf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ceaeb8b_413e2aec",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -521,6 +593,24 @@
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd382c5_1836b557",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25cba452_f872f316",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -824,6 +914,24 @@
       "side": 1,
       "message": "If they are equal, it means that the opportunity is just below the shelf, doesn\u0027t it? I mean, since shelf.block_offset is an end-exclusive offset...",
       "parentUuid": "186784d4_4bff657d",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfee55a1_39344723",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "It\u0027s on the shelf, instead of just below it. A simple test is:\nhttps://www.software.hixie.ch/utilities/js/live-dom-viewer/?saved\u003d5664\n\nI believe we should be treating it as an inclusive offset.",
+      "parentUuid": "74b25e38_a65ead68",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1209,6 +1317,24 @@
       "writtenOn": "2017-12-27T00:01:22Z",
       "side": 1,
       "message": "Hmm.. almost starting to wonder if there should be convenience getters for these things in NGLayoutOpportunity.",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e696c369_5a431eb3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "I was planning on changing LineStartOffset to LineLeftOffset to be consistent with the specs. I might add helpers in that patch.",
+      "parentUuid": "b73ca0e2_1f552119",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

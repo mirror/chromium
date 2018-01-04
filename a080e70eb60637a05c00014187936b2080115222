@@ -16,6 +16,24 @@
       "revId": "a080e70eb60637a05c00014187936b2080115222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c715f68_d9c3570e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/exclusions/ng_exclusion_space.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2018-01-04T18:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a999500a_e368173b",
+      "revId": "a080e70eb60637a05c00014187936b2080115222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
