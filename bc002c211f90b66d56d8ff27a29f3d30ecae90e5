@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62162337_bdec15c7",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2018-01-04T05:15:30Z",
+      "side": 1,
+      "message": "base::WrapUnique is used here as the ctor is private. std::make_unique\u003cT\u003e lacks permission to call the ctor.",
+      "parentUuid": "1b2bbefb_7b669e56",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d931efab_6656dfe7",
         "filename": "content/public/browser/shared_worker_service.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c83646cb_dccb3bd2",
+        "filename": "content/public/browser/shared_worker_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2018-01-04T05:15:30Z",
+      "side": 1,
+      "message": "Agreed. I will remove.",
+      "parentUuid": "d931efab_6656dfe7",
+      "range": {
+        "startLine": 16,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39613075_43d348b5",
         "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd6e797_903f8e68",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2018-01-04T05:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39613075_43d348b5",
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
