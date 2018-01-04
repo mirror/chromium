@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dcd79d_e9391e97",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T20:22:08Z",
+      "side": 1,
+      "message": "Since this is in a more general base class now, maybe change comment to \"Simulate the WebContents hiding during destruction. This lets tests validate what is logged when a tab is destroyed.\"",
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9999e9a9_c3c9de76",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T20:22:08Z",
+      "side": 1,
+      "message": "Can this function just call ExpectNewEntries with a map with one entry?",
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b758ef9f_caf50128",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T20:22:08Z",
+      "side": 1,
+      "message": "We shouldn\u0027t expose this class in the global namespace. Can we move it to the .cc file?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb721eb1_741b435f",
+        "filename": "chrome/browser/ui/tabs/tab_ukm_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T20:22:08Z",
+      "side": 1,
+      "message": "This might be easier to use if it returned the number of new entries recorded, so instead of this (which sounds like we expect a new entry to be recorded):\n\nEXPECT_TRUE(checker.WasNewEntryRecorded(kEntryName, 0);\n\nwe could write this:\n\nEXPECT_EQ(0, checker.NumNewEntries(kEntryName));",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 26
+      },
+      "revId": "e6c3fcd4980afd3fd7b39adb88bd08e94f225ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

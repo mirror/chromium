@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b82d23fd_662182c6",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2018-01-04T20:22:08Z",
+      "side": 1,
+      "message": "Sorry Jia (who based this off my code)! I\u0027m surprised because we do this in quite a lot of tests.",
+      "parentUuid": "3f02cc5a_3da2e5c0",
+      "revId": "b8fdc35f1e92f313842e7983b28e0400f0a54913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32e877a_4aa72bbf",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm_unittest.cc",
         "patchSetId": 3
