@@ -164,6 +164,30 @@
       "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b125de0_5312efbd",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2018-01-04T17:25:21Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "22fa2344_62d89f11",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 55
+      },
+      "revId": "5ae5d44d83a76dfc5f62b0ed255ea9dacd953b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
