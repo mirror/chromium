@@ -34,6 +34,14 @@ const char kClientLoFiDescription[] = "Client LoFi Previews";
 const char kNoScriptDescription[] = "NoScript Previews";
 const char kOfflineDesciption[] = "Offline Previews";
 
+struct FlagDetails {
+  // Flag feature name.
+  char flag_name[];
+
+  // Links to the flag in chrome://flags.
+  char flag_link[];
+};
+
 // Flag feature name.
 const char kNoScriptFeatureName[] = "NoScriptPreviews";
 #if defined(OS_ANDROID)
