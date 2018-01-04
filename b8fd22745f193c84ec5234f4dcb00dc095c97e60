@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf37fe28_e5578790",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_panel_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-04T12:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9253e1e_65b69992",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "b8fd22745f193c84ec5234f4dcb00dc095c97e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab8a986_d17ae4c1",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "72db574f_b9c573da",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-04T12:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab8a986_d17ae4c1",
+      "revId": "b8fd22745f193c84ec5234f4dcb00dc095c97e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eb266b4_2a0a4e55",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "b8fd22745f193c84ec5234f4dcb00dc095c97e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18e6eca_1a536deb",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-04T12:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb266b4_2a0a4e55",
+      "revId": "b8fd22745f193c84ec5234f4dcb00dc095c97e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
