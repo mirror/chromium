@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5d33fa_4f2e76bd",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-04T17:11:33Z",
+      "side": 1,
+      "message": "set this to 0 here.",
+      "range": {
+        "startLine": 433,
+        "startChar": 6,
+        "endLine": 433,
+        "endChar": 30
+      },
+      "revId": "4455c66bcd25619d82894c556079222e31f06cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
