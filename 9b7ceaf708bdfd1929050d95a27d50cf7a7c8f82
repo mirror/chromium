@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "795f0fc1_bc5133f4",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-04T19:34:29Z",
+      "side": 1,
+      "message": "This comment needs to be changed.",
+      "range": {
+        "startLine": 2058,
+        "startChar": 11,
+        "endLine": 2058,
+        "endChar": 40
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36962e7c_fe98ca33",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2018-01-04T19:34:29Z",
+      "side": 1,
+      "message": "I think this is how git cl format formatted this, but let me check.",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 37
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
