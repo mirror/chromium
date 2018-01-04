@@ -480,7 +480,8 @@ int32_t CommandBufferProxyImpl::CreateImage(ClientBuffer buffer,
   }
 
   DCHECK(gpu::IsImageFromGpuMemoryBufferFormatSupported(
-      gpu_memory_buffer->GetFormat(), capabilities_));
+      gpu_memory_buffer->GetFormat(), capabilities_))
+      << " format: " << static_cast<int>(gpu_memory_buffer->GetFormat());
   DCHECK(gpu::IsImageSizeValidForGpuMemoryBufferFormat(
       gfx::Size(width, height), gpu_memory_buffer->GetFormat()));
   DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(
