@@ -18,6 +18,7 @@
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/host/renderer_settings_creation.h"
+#include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/gpu/compositor_util.h"
@@ -476,7 +477,12 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
   params.compositor_task_runner = compositor->task_runner();
   params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
   // TODO(crbug.com/730660): Make a ClientSharedBitmapManager to pass here.
-  params.shared_bitmap_manager = shared_bitmap_manager_.get();
+  if (shared_bitmap_manager_) {
+    params.shared_bitmap_manager = shared_bitmap_manager_.get();
+  } else {
+    params.shared_bitmap_manager = viz::ServerSharedBitmapManager::current();
+  }
+  LOG(ERROR) << __func__ << ": this time, shared_bitmap_manager_ is " << params.shared_bitmap_manager;
   params.pipes.compositor_frame_sink_associated_info = std::move(sink_info);
   params.pipes.client_request = std::move(client_request);
   params.local_surface_id_provider =
