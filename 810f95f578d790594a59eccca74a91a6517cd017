@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53fe9f78_d353c88a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-04T14:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d080c89c_69eca9d5",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813319c4_24201e04",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "810f95f578d790594a59eccca74a91a6517cd017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a62f49e_88da434c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-04T14:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813319c4_24201e04",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48af077f_dc54a3c0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-04T14:28:15Z",
+      "side": 1,
+      "message": "a) Done\nb) It\u0027s constexpr",
+      "parentUuid": "dbe8c823_bdb79d21",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93951e46_2a91144c",
         "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "810f95f578d790594a59eccca74a91a6517cd017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27d1140_6513068c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2018-01-04T14:28:15Z",
+      "side": 1,
+      "message": "Done. I thought you meant moving OptionalTaskTypeToString only.",
+      "parentUuid": "93951e46_2a91144c",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 44
+      },
+      "revId": "810f95f578d790594a59eccca74a91a6517cd017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
