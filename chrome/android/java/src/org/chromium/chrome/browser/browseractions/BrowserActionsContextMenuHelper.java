@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.support.annotation.IntDef;
 import android.support.customtabs.browseractions.BrowserActionItem;
 import android.support.customtabs.browseractions.BrowserActionsIntent;
-import android.support.customtabs.browseractions.BrowserActionsIntent.BrowserActionsItemId;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Pair;
@@ -236,9 +235,9 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
                     }
                 }
             }
-            items.add(
-                    new BrowserActionsCustomContextMenuItem(CUSTOM_BROWSER_ACTIONS_ID_GROUP.get(i),
-                            customItems.get(i).getTitle(), drawable));
+            items.add(new BrowserActionsCustomContextMenuItem(
+                    CUSTOM_BROWSER_ACTIONS_ID_GROUP.get(i), customItems.get(i).getTitle(), drawable,
+                    customItems.get(i).getIconUri()));
             mCustomItemActionMap.put(
                     CUSTOM_BROWSER_ACTIONS_ID_GROUP.get(i), customItems.get(i).getAction());
         }
@@ -285,7 +284,7 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
                 "BrowserActions.SelectedOption", itemId, NUM_ACTIONS);
     }
 
-    private void notifyBrowserActionSelected(@BrowserActionsItemId int menuId) {
+    private void notifyBrowserActionSelected(int menuId) {
         if (mOnBrowserActionSelectedCallback == null) return;
         Intent additionalData = new Intent();
         additionalData.setData(Uri.parse(String.valueOf(menuId)));

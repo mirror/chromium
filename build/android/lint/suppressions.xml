@@ -338,6 +338,7 @@ Still reading?
     <ignore regexp="chrome/android/java/res/drawable-hdpi/omnibox_info.png"/>
     <ignore regexp="clank/java/clank_strings_grd.resources.zip/values/android_internal_strings.xml"/>
     <ignore regexp="tools/android/audio_focus_grabber/java/res/drawable-hdpi/notification_icon.png"/>
+    <ignore regexp="third_party/custom_tabs_client/src/customtabs/res/xml/filepaths.xml"/>
   </issue>
   <issue id="UseCompoundDrawables">
     <!-- Upscaling 24dp to 48dp doesn't work as expected with a TextView compound drawable. -->
