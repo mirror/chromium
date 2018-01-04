@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ca92aedb_eaa55d7c",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-04T23:36:19Z",
+      "side": 1,
+      "message": "I think we need to use the same ClientCertStore that\u0027s used in the old path (ResourceLoader), as it\u0027s configured by other code in the browser.\n\nThe remoting code linked to is for a different purpose, that\u0027s for the remote desktop binary that runs separate from chrome.",
+      "parentUuid": "ca5f7ee2_3b6b2b6b",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ff1f29_77813c53",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 4
