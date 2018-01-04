@@ -1146,6 +1146,439 @@
       "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e281e937_6ff49957",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "What guarantees that this is an EC key?",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd17b59_ac61fbc8",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: Please add a TODO to introudce a KeyHandle / CredentialID class so this can follow the same Extract*FromU2fRegistrationResponse pattern as the public key.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4fe8e5_878fee58",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 9
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a2047a_4a05fa85",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: #include authenticator_data.h",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888bf586_e7b99257",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: std::move",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f665e2f2_d10673dc",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: attested_credential_data",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb85d6bd_51ac7b0c",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: std::move",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e14fed_8934ed4d",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: I\u0027d just inline |credential_id|.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdb9fc3_dcf5ad79",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: Only used in the .cc",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c400f608_e1996b8f",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: fwd-declare",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c173e7ce_d02f3442",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1dbc7b4_32a8b085",
+        "filename": "device/u2f/u2f_parsing_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: 66u, 67u",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6c6950_028bf175",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: s/cb/completion_callback/g",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e2630c_eac8b1ef",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "Can we add a DCHECK on what the |return_code| is in this case? Or restructure the control flow so that it\u0027s more obvious what combinations are allowed?",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a67b69d_ecc6a73a",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "Note that this is won\u0027t pass an empty optional\u003cRRDate\u003e, but instead an optional with a default RRData value. Possibly make |response| an optional itself? Also, please spruce up the unittest to enforce this.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3940be_0f0b1110",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "Can this actually be called multiple times? If not, make this a base::OnceCallback and pass it around by value.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7f42fc_2aac2117",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: Comment below the next declaration",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c289af19_9146b1b6",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: std::make_unique. Also couple of other instances in file.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0591fb_059682aa",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: #include \"testing/gmock/include/gmock/gmock.h\"",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 13
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c615f7b_7e089c94",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: std::move",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a2739b_b25e77c6",
+        "filename": "device/u2f/u2f_response_test_data.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: Headers should not use unnamed namespaces.",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef867d6b_f9f9de84",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "nit: Please rename |cb| around these files too.",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08ecea4_d576fe2d",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-04T15:11:34Z",
+      "side": 1,
+      "message": "Let\u0027s also add expectations as to what\u0027s in get\u003c1\u003e.",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 11
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
