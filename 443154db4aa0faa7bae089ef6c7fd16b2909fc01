@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f5603d9_686d6695",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "If there was a reason, it doesn\u0027t exist anymore...",
+      "parentUuid": "07d38c74_58dac0e6",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed4b37b_897219e2",
         "filename": "device/u2f/authenticator_data.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5913aed_5f21791c",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed4b37b_897219e2",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e25c41ab_585a8dab",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6d4c14_bef72e71",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 71
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b70a61d_fef12cb3",
         "filename": "device/u2f/register_response_data.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86c24ce_fe4e344a",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b70a61d_fef12cb3",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "837190c4_b27b8a45",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623431a7_d83fe164",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 69
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cadfd85e_e895b3c5",
         "filename": "device/u2f/register_response_data.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489ba001_ca52c8ab",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cadfd85e_e895b3c5",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8979d44d_3620ab68",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa3f35a8_0c922680",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29b6942_453b8751",
         "filename": "device/u2f/register_response_data.h",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-04T12:00:26Z",
       "side": 1,
       "message": "Maybe this can be a constructor instead?\n\nRegisterResponseData(\n    std::string relying_party_id,\n    std::vector\u003cuint8_t\u003e u2f_data);",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccfc28b_951577fb",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "I kind of like the distinction between parsing out relevant information from u2f_data and then using it to construct a RegisterResponse. Do you feel strongly about it?",
+      "parentUuid": "b29b6942_453b8751",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4391b8c5_301915c7",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "017d9d55_0f75381e",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba44351_1e368231",
         "filename": "device/u2f/sign_response_data.cc",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82f5d8c_75bf22b0",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba44351_1e368231",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d156d45a_12193662",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65da6bdf_0db81125",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 46
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02a80abe_2a5ac3cd",
         "filename": "device/u2f/sign_response_data.cc",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34080c37_065f4ad6",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a80abe_2a5ac3cd",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "b5724400_d04ef6f9",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf318bd_7b2ceef5",
+      "range": {
+        "startLine": 32,
+        "startChar": 63,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6632f43_eb13a10a",
         "filename": "device/u2f/sign_response_data.cc",
         "patchSetId": 2
@@ -321,6 +633,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7d07d4_9bf28829",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6632f43_eb13a10a",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 72
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "2ea6c50a_8ac5840b",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232f8de1_781fce13",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3006ba8_8da4896e",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 2
@@ -358,6 +718,30 @@
       "writtenOn": "2018-01-04T12:00:26Z",
       "side": 1,
       "message": "move it down to its only usage in the SUCCESS branch after your TODO comment",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 48
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045bc3d9_70042c39",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Response needs to be defined outside of the switch statement",
+      "parentUuid": "b3006ba8_8da4896e",
       "range": {
         "startLine": 122,
         "startChar": 0,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "16c99918_d4f7c4ec",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401a6061_ad26057d",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 1
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7a84386_54c12977",
         "filename": "device/u2f/u2f_sign_unittest.cc",
         "patchSetId": 2
@@ -413,6 +821,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8780dda_64c7fa2a",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a84386_54c12977",
+      "range": {
+        "startLine": 330,
+        "startChar": 60,
+        "endLine": 330,
+        "endChar": 67
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "df8e63ca_9687d78f",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e70a62_010ddb71",
+      "range": {
+        "startLine": 331,
+        "startChar": 32,
+        "endLine": 331,
+        "endChar": 72
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1030b44b_931301bf",
         "filename": "device/u2f/u2f_sign_unittest.cc",
         "patchSetId": 2
@@ -459,6 +915,30 @@
       "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f258c728_65d241a3",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-04T14:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1030b44b_931301bf",
+      "range": {
+        "startLine": 342,
+        "startChar": 43,
+        "endLine": 342,
+        "endChar": 55
+      },
+      "revId": "443154db4aa0faa7bae089ef6c7fd16b2909fc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
