@@ -16,6 +16,24 @@
       "revId": "2ee4ea0a98e1a11ebad7160e516ca9ec2bc137c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11061d91_2940918c",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2018-01-04T04:07:43Z",
+      "side": 1,
+      "message": "1. Yes, but the callback makes a fresh call to clock_-\u003eNowTicks() to pass a current event time.\n\n2. I have an open crbug to revisit the whole \"passive\" versus \"active\" refresh request logic. I think the \"dirty flag\" should be moved from VideoCaptureOracle to this class. Then, VideoCaptureOracle need not differentiate between \"passive\" versus \"active.\" With those changes, the issue you mention would no longer be an problem. In the meantime, though, I think the behavior is acceptable: an unfortunate, but acceptable delay.\n\n3. At this time, cursor rendering is in the browser process; and there\u0027s nothing here that is aware that refresh requests are being made for cursor rendering. As a clean-up task, we should be able to remove the kMouseCursorUpdate event from the oracle logic since it will be unused.",
+      "parentUuid": "7257af6d_9ddef69c",
+      "revId": "2ee4ea0a98e1a11ebad7160e516ca9ec2bc137c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
