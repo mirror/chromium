@@ -1036,6 +1036,7 @@ void PrintTo(const CertificateNameVerifyTestData& data, std::ostream* os) {
 }
 
 const CertificateNameVerifyTestData kNameVerifyTestData[] = {
+    { false, "", "" },
     { true, "foo.com", "foo.com" },
     { true, "f", "f" },
     { false, "h", "i" },
