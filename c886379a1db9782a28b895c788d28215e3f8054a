@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a37bb31_2a1e7f1c",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f572c7_b81bed2c",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf190cb_290b92da",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-03T15:15:10Z",
       "side": 1,
       "message": "just checking, this still needs to be plumbed right?",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5f7ee2_3b6b2b6b",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Yes, I am considering using something like:\nhttps://cs.chromium.org/chromium/src/remoting/host/token_validator_base.cc?l\u003d180-199\nWhat do you think? Thanks!",
+      "parentUuid": "edf190cb_290b92da",
       "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf088933_2504f9b9",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ff1f29_77813c53",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc23ec7_ffa0e87e",
         "filename": "content/browser/network_service_client.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d12a2fd_9e3b83c7",
+        "filename": "content/browser/network_service_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc23ec7_ffa0e87e",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a6f6d384_7e74fee6",
+        "filename": "content/network/url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c46ae93_c95ae7ae",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37e89fa5_38bb0c6b",
         "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5835fa5_bd94df6b",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2018-01-04T18:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37e89fa5_38bb0c6b",
+      "revId": "c886379a1db9782a28b895c788d28215e3f8054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
