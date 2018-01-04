@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b2bbefb_7b669e56",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-04T01:34:30Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d931efab_6656dfe7",
+        "filename": "content/public/browser/shared_worker_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-04T01:34:30Z",
+      "side": 1,
+      "message": "I think this is obvious from the class name \"SharedWorkerService\". Could you remove this sentence?",
+      "range": {
+        "startLine": 16,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39613075_43d348b5",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2018-01-04T01:34:30Z",
+      "side": 1,
+      "message": "This is not relevant to your change, but could you add a comment like this?\n\n// TODO(nhiroki): Add a comment about the reason why we terminate all shared workers here.",
+      "revId": "bc002c211f90b66d56d8ff27a29f3d30ecae90e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
