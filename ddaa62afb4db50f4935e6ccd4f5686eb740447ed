@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2dd078ca_f81204c8",
+        "filename": "chrome/browser/ui/omnibox/favicon_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-04T22:04:59Z",
+      "side": 1,
+      "message": "Correct, I just meant swap the ampersand(\u0026) for std::move. (Leave \u0027Passed()\u0027.) Otherwise it looks like you\u0027re attempting to pass the address (even though we know that it de-references the pointer.)",
+      "parentUuid": "a18129b8_647d48b5",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 58
+      },
+      "revId": "ddaa62afb4db50f4935e6ccd4f5686eb740447ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74fa029c_095d934c",
         "filename": "components/omnibox/browser/omnibox_client.h",
         "patchSetId": 2
