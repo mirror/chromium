@@ -22,6 +22,30 @@
       "revId": "4227d689464cd57d07813df19689fb8d6c22dd9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026356d6_45d4e800",
+        "filename": "components/cronet/android/test/javaperftests/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2018-01-04T13:45:58Z",
+      "side": 0,
+      "message": "Done. Missed that. Thanks!",
+      "parentUuid": "281e0353_d1b90e96",
+      "range": {
+        "startLine": 337,
+        "startChar": 72,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "4227d689464cd57d07813df19689fb8d6c22dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
