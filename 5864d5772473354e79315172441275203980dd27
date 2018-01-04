@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1817ebc9_a240584d",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2018-01-04T05:55:09Z",
+      "side": 1,
+      "message": "yea I don\u0027t think this is right - I don\u0027t think there\u0027s any guarantee that it will be inserted back into the hierarchy under the mouse cursor, so it\u0027s just as likely to end up with a grey hover when it shouldn\u0027t have one.\n\nBut! I think there\u0027s an assumption this method is making which we have now changed. This was probably written when a removal would only ever happen when details.child \u003d\u003d this. But now other child views can be removed. So I think we just need to change `\u0026\u0026 !IsHotTracked()` -\u003e `\u0026\u0026 details.child \u003d\u003d this`",
+      "revId": "5864d5772473354e79315172441275203980dd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
