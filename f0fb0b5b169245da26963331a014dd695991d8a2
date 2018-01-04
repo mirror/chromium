@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d19d6cc_99d54660",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-04T20:41:35Z",
+      "side": 1,
+      "message": "Using a two-value enum here would greatly help readability at caller sites.",
+      "range": {
+        "startLine": 41,
+        "startChar": 35,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "f0fb0b5b169245da26963331a014dd695991d8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92948f1_e375e1ad",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-04T20:41:35Z",
+      "side": 1,
+      "message": "Can popups happen here with WebTriggeringEventInfo::kNotFromEvent? Is that trusted?",
+      "range": {
+        "startLine": 1472,
+        "startChar": 12,
+        "endLine": 1472,
+        "endChar": 62
+      },
+      "revId": "f0fb0b5b169245da26963331a014dd695991d8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
