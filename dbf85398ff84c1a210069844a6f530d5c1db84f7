@@ -22,6 +22,30 @@
       "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287607db_31a1419e",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodControllerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2545,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-04T01:37:49Z",
+      "side": 1,
+      "message": "The test has to test at least the following cases: \n\n- \"\" sets no flags\n- \"none\" sets kWebTextInputFlagAutocapitalizeNone\n- \"characters\" sets kWebTextInputFlagAutocapitalizeCharacters\n- \"words\" sets kWebTextInputFlagAutocapitalizeWords\n- \"sentences\" sets kWebTextInputFlagAutocapitalizeSentences\n- \u003cinput\u003e elements of type \"text\" support autocapitalize\n- \u003cinput\u003e elements of type \"search\" support autocapitalize\n- \u003cinput\u003e elements of type \"email\" do not support autocapitalize\n- \u003cinput\u003e elements of type \"url\" do not support autocapitalize\n- \u003cinput\u003e elements of type \"password\" do not support autocapitalize\n- \u003ctextarea\u003e elements support autocapitalize\n- contenteditable elements support autocapitalize\n\nPreferably, we\u0027d test \"\", \"none\", and at least one of {\"characters\", \"words\", \"sentences\"} for each of the element types. I didn\u0027t think it made sense to write out all these tests. I\u0027m not sure it would even be easier to read. There are enough places in the implementation where bugs can creep in that I don\u0027t feel comfortable leaving any of these out.",
+      "parentUuid": "32e665d4_4acce719",
+      "range": {
+        "startLine": 2545,
+        "startChar": 2,
+        "endLine": 2545,
+        "endChar": 64
+      },
+      "revId": "dbf85398ff84c1a210069844a6f530d5c1db84f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
