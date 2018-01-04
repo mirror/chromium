@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "79dc7981_fc2a7860",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2018-01-04T20:25:02Z",
+      "side": 1,
+      "message": "In that case there would be a delay between when the value is set and when the rest of the attributes are set. This looks better as is. Could you please verify the behavior on Desktop? i.e., setting these attributes on non-autofilled fields.",
+      "parentUuid": "19d10b31_21305027",
+      "range": {
+        "startLine": 653,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 74
+      },
+      "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec3e094_93dc7ea8",
         "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
         "patchSetId": 1
