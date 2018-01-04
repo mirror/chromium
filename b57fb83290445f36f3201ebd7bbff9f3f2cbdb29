@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8a33b54e_48d3aef5",
+        "filename": "chrome/browser/vr/elements/environment/sky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0715c6b_66072138",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b8aeb4_f2847177",
         "filename": "chrome/browser/vr/elements/environment/sky.cc",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "Why are you not formatting this?",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0accdc_162e4b6d",
+        "filename": "chrome/browser/vr/elements/environment/sky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Autoformatting looked weird. This is moot now after addressing your next comment.",
+      "parentUuid": "b7b8aeb4_f2847177",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -67,6 +103,24 @@
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca98d89_8172a6ab",
+        "filename": "chrome/browser/vr/elements/environment/sky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd905932_f8553abe",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "5fe700a1_663b57dc",
+        "filename": "chrome/browser/vr/elements/environment/sky.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cd6da6_c952e7bb",
+      "range": {
+        "startLine": 313,
+        "startChar": 9,
+        "endLine": 313,
+        "endChar": 19
+      },
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "546c1cfa_42e0ea2f",
         "filename": "chrome/browser/vr/elements/environment/sky.h",
         "patchSetId": 5
@@ -104,6 +182,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "- This isn\u0027t a sky, is it?  Isn\u0027t this an \"environment color adjuster\" than varies everything visible?  \"sky\" and \"stars\" sound like the same thing.\n- Class-level comment definitely warranted here.",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f846958_cf72a0ca",
+        "filename": "chrome/browser/vr/elements/environment/sky.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "True, but it will eventually be a sky proper. The gradient, however, will be for more than just the sky as you say, so I\u0027ve updated that name.\n\nI\u0027ve added a class level comment with detail and a TODO.",
+      "parentUuid": "546c1cfa_42e0ea2f",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "656ca414_2a66f1be",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337a3b9e_03054ff7",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34b3901d_cd555af4",
         "filename": "chrome/browser/vr/elements/environment/stars.cc",
         "patchSetId": 5
@@ -144,6 +258,24 @@
     },
     {
       "key": {
+        "uuid": "285458ad_844059c6",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34b3901d_cd555af4",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "958785e5_204c77b0",
         "filename": "chrome/browser/vr/model/color_scheme.cc",
         "patchSetId": 5
@@ -155,6 +287,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "How crazy would it be to memcmp() these instead?  For objects that are a collection of PODs, maybe that\u0027s a better option?  I\u0027m trying to think of a way to not have to keep adding these custom compare functions.",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d9944b_8c9826c4",
+        "filename": "chrome/browser/vr/model/color_scheme.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "It\u0027s not crazy, but I\u0027d prefer to convert all of these structures together in a separate change if we went this route.",
+      "parentUuid": "958785e5_204c77b0",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "01715970_2fd14773",
+        "filename": "chrome/browser/vr/model/color_scheme.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66390414_182f4dee",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795137c4_746ab99d",
         "filename": "chrome/browser/vr/target_property.h",
         "patchSetId": 5
@@ -189,6 +357,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "Is there a reason this can\u0027t become NUM_TARGET_PROPERTIES, so it doesn\u0027t have to keep changing to match the last element?",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2826382d_bb6e1157",
+        "filename": "chrome/browser/vr/target_property.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Nope. IIRC, you\u0027d suggested this for element names/types, but I hadn\u0027t fixed up this enum.",
+      "parentUuid": "795137c4_746ab99d",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "a4ffb35f_6200b86e",
+        "filename": "chrome/browser/vr/ui_element_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d love to do this, but I keep hitting snooze on the refactor. I think plumbing through UiElementRenderer is a bit of a pain. We\u0027ll have to think about how we\u0027ll implement the FakeUiElementRenderer for the opacity test, though.",
+      "parentUuid": "b59026b5_e167755c",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f487eba_3dd1d3a4",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 5
@@ -223,6 +427,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "So here, both these properties are on the model, but the first one gets its model-\u003e from the macro, right?  This is a readability fail IMO.  If anything, can the macro provide model, such that this clause can be dropped into a bind() body instead?\n\nI know we\u0027re going declarative, but I think that\u0027s more a reason to not use macros at all.",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f25a3e5_c31fccf2",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "I\u0027ve switched up the macros so that you have to type model-\u003e everywhere. Declarative is my goal, but I don\u0027t know how far out the switch will be.",
+      "parentUuid": "3f487eba_3dd1d3a4",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "e65b2213_a8e69ca8",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b81784_7edefafe",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39b929ba_fa401fca",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 5
@@ -260,6 +500,24 @@
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4896865_03eb867f",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39b929ba_fa401fca",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "40c31b91_758c77f5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52dc03c_03893921",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "483d3fe2_56e29407",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 5
@@ -291,6 +567,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "This constant name wins the verbosity award!  :)",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962c5325_549fb2e9",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "Still less than 80 characters!",
+      "parentUuid": "483d3fe2_56e29407",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +619,24 @@
       "writtenOn": "2018-01-04T16:07:26Z",
       "side": 1,
       "message": "Wait, does this mean \"set color component but leave alpha unchanged\" or \"set a color with opacity 1.0\" (as the function name suggests)?",
+      "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafb2fdc_90c5c090",
+        "filename": "chrome/browser/vr/vr_gl_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-04T18:36:23Z",
+      "side": 1,
+      "message": "updated comment.",
+      "parentUuid": "0f07ddda_68567917",
       "revId": "b57fb83290445f36f3201ebd7bbff9f3f2cbdb29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
