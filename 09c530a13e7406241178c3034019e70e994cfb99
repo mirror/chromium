@@ -37,6 +37,97 @@
     },
     {
       "key": {
+        "uuid": "72408229_c15fd704",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "can this code be removed in favor of adding AR_DOCKED to the propertied checked below?",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6ab42a_df3764cc",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "??? rotation_state is an int. how about changing line 494 to:\n    AR_STATE rotation_state \u003d 0;",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1866d626_a5df4e42",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "nit:\n    if (get_auto_rotation_state_func(\u0026rotation_state) \u0026\u0026\n        (rotation_state \u0026 (AR_NOT_SUPPORTED | AR_LAPTOP | AR_NOSENSOR)) !\u003d 0) {\n      return false;\n    }",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ebc774_052d107c",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "nit: get rid of these two locals and inline the |role| comparisons on line 509",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c51535a_5ecea772",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "https://support.microsoft.com/en-us/help/17210/windows-10-use-your-pc-like-a-tablet uses \"tablet mode\" rather than \"Tablet Mode\".",
+      "range": {
+        "startLine": 147,
+        "startChar": 47,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be81d0b4_fd98eada",
         "filename": "base/win/win_util.h",
         "patchSetId": 1
@@ -54,6 +145,86 @@
         "endLine": 151,
         "endChar": 37
       },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c69e4a0_af046cbf",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "nit: \"Windows 10 tablet mode\"",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1a59e5_2ba7cebf",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "while this list is better than nothing at all, i think it\u0027s beneficial to be more explicit. how about:\n\n// - The system is running Windows 8 or newer,\n// - has a touch digitizer,\n// - is not docked,\n// - has a supported rotation sensor,\n// - is not in laptop mode,\n// - the device\u0027s OEM prefers the mobile or slate power management profile, and\n// - the system is in slate mode.",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df988d33_f4f911f1",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem relevant to consumers of this function. if you think it\u0027s really important to spell this out, please move it into the .cc file with a comment along the lines of:\n\n\"This function does not check for Windows 10 tablet mode because it is used to determine the correct interaction media queries. blahblah more detail blahblah.\"\n\nThis will make it less likely that someone will do a handy refactor in the impl, while removing clutter from the public api.",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 67
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6c7a9c_579d09e2",
+        "filename": "ui/base/touch/touch_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-04T10:58:27Z",
+      "side": 1,
+      "message": "it seems possible that IsDeviceUsedAsATablet would return false (e.g., the device is docked), but that it has a digitizer. NONE is the wrong answer in this case, no?",
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
