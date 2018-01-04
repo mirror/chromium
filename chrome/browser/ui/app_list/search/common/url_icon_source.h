@@ -11,14 +11,14 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/image_decoder.h"
-#include "net/url_request/url_fetcher_delegate.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_source.h"
 #include "url/gurl.h"
 
-namespace net {
-class URLFetcher;
-class URLRequestContextGetter;
+namespace content {
+namespace mojom {
+class URLLoaderFactory;
+}
 }
 
 namespace app_list {
@@ -26,7 +26,6 @@ namespace app_list {
 // An ImageSkiaSource for icons fetched from a URL. Till the URL icon is
 // fetched, the default icon (specified by it's resource id) is shown.
 class UrlIconSource : public gfx::ImageSkiaSource,
-                      public net::URLFetcherDelegate,
                       public ImageDecoder::ImageRequest {
  public:
   typedef base::Closure IconLoadedCallback;
@@ -34,7 +33,7 @@ class UrlIconSource : public gfx::ImageSkiaSource,
   // Create a URL Icon source with the given URL. The post_process parameter
   // specifies a function to post-process the result icon before displaying it.
   UrlIconSource(const IconLoadedCallback& icon_loaded_callback,
-                net::URLRequestContextGetter* context_getter,
+                content::mojom::URLLoaderFactory* loader_factory,
                 const GURL& icon_url,
                 int icon_size,
                 int default_icon_resource_id);
@@ -56,13 +55,13 @@ class UrlIconSource : public gfx::ImageSkiaSource,
   void OnDecodeImageFailed() override;
 
   IconLoadedCallback icon_loaded_callback_;
-  net::URLRequestContextGetter* context_getter_;
   const GURL icon_url_;
   const int icon_size_;
   const int default_icon_resource_id_;
 
   bool icon_fetch_attempted_;
-  std::unique_ptr<net::URLFetcher> icon_fetcher_;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader_;
+  std::unique_ptr<content::mojom::URLLoaderFactory> loader_factory_;
 
   gfx::ImageSkia icon_;
 
