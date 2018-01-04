@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3389586_50fc60d8",
+        "filename": "remoting/ios/domain/client_session_details.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2018-01-04T00:00:06Z",
+      "side": 0,
+      "message": "This is currently unused so I just removed it.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "e6bcf5303827fb9cdff8d7e5a8cb8779e55a98e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
