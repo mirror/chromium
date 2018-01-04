@@ -6,9 +6,11 @@
 #define CHROME_BROWSER_VR_UI_SCENE_CREATOR_H_
 
 #include "base/macros.h"
+#include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
+#include "ui/gfx/geometry/size_f.h"
 
 namespace vr {
 
@@ -39,6 +41,7 @@ class UiSceneCreator {
       TextInputDelegate* text_input_delegate);
 
  private:
+  void OnDialogBoundsChanged(const gfx::SizeF& bounds);
   void Create2dBrowsingSubtreeRoots();
   void CreateWebVrRoot();
   void CreateSystemIndicators();
@@ -60,6 +63,9 @@ class UiSceneCreator {
   void CreateWebVrTimeoutScreen();
   void CreateController();
   void CreateKeyboard();
+  void CreateUiDialog();
+  static void EnableDialog(ContentElement* dialog, bool enabled);
+  static void SetDialogHeight(ContentElement* dialog, float height);
 
   UiBrowserInterface* browser_;
   UiScene* scene_;

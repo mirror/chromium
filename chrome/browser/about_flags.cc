@@ -2224,6 +2224,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"webxr", flag_descriptions::kWebXrName,
      flag_descriptions::kWebXrDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kWebXr)},
+    {"vr-browsing-native-android-ui",
+     flag_descriptions::kVrBrowsingNativeAndroidUiName,
+     flag_descriptions::kVrBrowsingNativeAndroidUiDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kVrBrowsingNativeAndroidUi)},
 #if BUILDFLAG(ENABLE_VR)
     {"webvr-vsync-align", flag_descriptions::kWebVrVsyncAlignName,
      flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,

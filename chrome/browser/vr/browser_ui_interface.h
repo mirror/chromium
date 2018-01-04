@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_BROWSER_UI_INTERFACE_H_
 #define CHROME_BROWSER_VR_BROWSER_UI_INTERFACE_H_
 
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "components/security_state/core/security_state.h"
 
@@ -39,6 +40,11 @@ class BrowserUiInterface {
   virtual void OnSpeechRecognitionStateChanged(int new_state) = 0;
   virtual void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) = 0;
+  virtual void SetAlertDialogEnabled(bool enabled,
+                                     ContentInputDelegate* delegate,
+                                     int width,
+                                     int height) = 0;
+  virtual void SetAlertDialogSize(int width, int height) = 0;
 
   // Tab handling.
   virtual void AppendToTabList(bool incognito,
