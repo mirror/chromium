@@ -61,6 +61,14 @@ void SmbService::OnMountResponse(
   std::move(callback).Run(result);
 }
 
+base::File::Error SmbService::Unmount(
+    const ProviderId& provider_id,
+    const std::string& file_system_id,
+    file_system_provider::Service::UnmountReason reason) {
+  return GetProviderService()->UnmountFileSystem(provider_id, file_system_id,
+                                                 reason);
+}
+
 Service* SmbService::GetProviderService() const {
   return file_system_provider::Service::Get(profile_);
 }

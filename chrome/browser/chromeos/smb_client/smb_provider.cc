@@ -6,6 +6,7 @@
 
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
+#include "chrome/browser/chromeos/file_system_provider/service.h"
 #include "chrome/browser/chromeos/smb_client/smb_file_system.h"
 #include "chrome/browser/profiles/profile.h"
 
@@ -27,7 +28,8 @@ SmbProvider::CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
-  return std::make_unique<SmbFileSystem>(file_system_info);
+  return std::make_unique<SmbFileSystem>(file_system_info,
+                                         SmbService::Get(profile));
 }
 
 const Capabilities& SmbProvider::GetCapabilities() const {
