@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09a323a7_3afd1859",
+        "filename": "chrome/browser/extensions/zipfile_installer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T23:48:07Z",
+      "side": 1,
+      "message": "The previous include order was fine. This only goes at the top of zipfile_installer.cc.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 56
+      },
+      "revId": "44cc40e6e11c4132aaad5264f2febd15c7e709d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228f42c7_0e82d417",
+        "filename": "chrome/browser/extensions/zipfile_installer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T23:48:07Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(expect_error);",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "44cc40e6e11c4132aaad5264f2febd15c7e709d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb1d075_dd72fd5c",
+        "filename": "chrome/browser/extensions/zipfile_installer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-04T23:48:07Z",
+      "side": 1,
+      "message": "Suffix member variable with _.",
+      "range": {
+        "startLine": 77,
+        "startChar": 14,
+        "endLine": 77,
+        "endChar": 38
+      },
+      "revId": "44cc40e6e11c4132aaad5264f2febd15c7e709d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
