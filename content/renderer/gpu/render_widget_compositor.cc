@@ -976,6 +976,17 @@ void RenderWidgetCompositor::UpdateEventRectsForSubframeIfNecessary() {
                               gfx::Rect(gfx::Point(), root_layer->bounds()));
   }
   root_layer->SetTouchActionRegion(std::move(touch_event_handler));
+
+  WebEventListenerProperties mouse_wheel_properties =
+      EventListenerProperties(WebEventListenerClass::kMouseWheel);
+  bool has_wheel_handlers =
+      mouse_wheel_properties == WebEventListenerProperties::kBlocking ||
+      mouse_wheel_properties == WebEventListenerProperties::kBlockingAndPassive;
+  cc::Region wheel_event_handler;
+  if (has_wheel_handlers) {
+    wheel_event_handler.Union(gfx::Rect(gfx::Point(), root_layer->bounds()));
+  }
+  root_layer->SetWheelEventHandlerRegion(wheel_event_handler);
 }
 
 blink::WebEventListenerProperties

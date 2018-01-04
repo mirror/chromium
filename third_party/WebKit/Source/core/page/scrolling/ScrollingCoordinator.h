@@ -124,6 +124,7 @@ class CORE_EXPORT ScrollingCoordinator final
   void SetLayerIsContainerForFixedPositionLayers(GraphicsLayer*, bool);
   void UpdateLayerPositionConstraint(PaintLayer*);
   void TouchEventTargetRectsDidChange();
+  void WheelEventTargetRectsDidChange();
   void WillDestroyLayer(PaintLayer*);
 
   void UpdateScrollParentForGraphicsLayer(GraphicsLayer* child,
@@ -134,6 +135,7 @@ class CORE_EXPORT ScrollingCoordinator final
       const LocalFrame*) const;
 
   void UpdateTouchEventTargetRectsIfNeeded();
+  void UpdateWheelEventTargetRectsIfNeeded();
 
   void UpdateUserInputScrollable(ScrollableArea*);
 
@@ -162,6 +164,7 @@ class CORE_EXPORT ScrollingCoordinator final
   // Dirty flags used to idenfity what really needs to be computed after
   // compositing is updated.
   bool touch_event_target_rects_are_dirty_;
+  bool wheel_event_target_rects_are_dirty_;
   bool should_scroll_on_main_thread_dirty_;
 
  private:
@@ -171,7 +174,9 @@ class CORE_EXPORT ScrollingCoordinator final
   void SetShouldHandleScrollGestureOnMainThreadRegion(const Region&,
                                                       LocalFrameView*);
   void SetTouchEventTargetRects(LayerHitTestRects&);
+  void SetWheelEventTargetRects(LayerHitTestRects&);
   void ComputeTouchEventTargetRects(LayerHitTestRects&);
+  void ComputeWheelEventTargetRects(LayerHitTestRects&);
 
   WebScrollbarLayer* AddWebScrollbarLayer(ScrollableArea*,
                                           ScrollbarOrientation,
@@ -191,6 +196,7 @@ class CORE_EXPORT ScrollingCoordinator final
   ScrollbarMap horizontal_scrollbars_;
   ScrollbarMap vertical_scrollbars_;
   HashSet<const PaintLayer*> layers_with_touch_rects_;
+  HashSet<const PaintLayer*> layers_with_wheel_rects_;
   bool was_frame_scrollable_;
 
   MainThreadScrollingReasons last_main_thread_scrolling_reasons_;

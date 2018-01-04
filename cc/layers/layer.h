@@ -264,6 +264,11 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     return inputs_.touch_action_region;
   }
 
+  void SetWheelEventHandlerRegion(const Region& wheel_event_handler_region);
+  const Region& wheel_event_handler_region() const {
+    return inputs_.wheel_event_handler_region;
+  }
+
   void set_did_scroll_callback(
       base::Callback<void(const gfx::ScrollOffset&, const ElementId&)>
           callback) {
@@ -595,6 +600,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     Region non_fast_scrollable_region;
 
     TouchActionRegion touch_action_region;
+
+    Region wheel_event_handler_region;
 
     // When set, position: fixed children of this layer will be affected by URL
     // bar movement. bottom-fixed element will be pushed down as the URL bar

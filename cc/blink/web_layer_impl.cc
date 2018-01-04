@@ -349,6 +349,29 @@ WebLayerImpl::TouchEventHandlerRegionForTouchActionForTesting(
   return result;
 }
 
+void WebLayerImpl::SetWheelEventHandlerRegion(
+    const WebVector<blink::WebRect>& wheel_rects) {
+  cc::Region region;
+  for (const auto& rect : wheel_rects)
+    region.Union(rect);
+  layer_->SetWheelEventHandlerRegion(region);
+}
+
+WebVector<WebRect> WebLayerImpl::WheelEventHandlerRegion() const {
+  size_t num_rects = 0;
+  for (cc::Region::Iterator it = layer_->wheel_event_handler_region().begin();
+       it != layer_->wheel_event_handler_region().end(); ++it)
+    ++num_rects;
+
+  WebVector<WebRect> result(num_rects);
+  size_t i = 0;
+  for (gfx::Rect rect : layer_->wheel_event_handler_region()) {
+    result[i] = rect;
+    ++i;
+  }
+  return result;
+}
+
 void WebLayerImpl::SetIsContainerForFixedPositionLayers(bool enable) {
   layer_->SetIsContainerForFixedPositionLayers(enable);
 }
