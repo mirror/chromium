@@ -28,7 +28,6 @@
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/resources/release_callback.h"
-#include "components/viz/common/resources/resource.h"
 #include "components/viz/common/resources/resource_fence.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_id.h"
