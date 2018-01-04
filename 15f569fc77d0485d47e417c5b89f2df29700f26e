@@ -16,6 +16,24 @@
       "revId": "15f569fc77d0485d47e417c5b89f2df29700f26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99134cb_0363d366",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2018-01-04T18:36:03Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll try it in a follow-up CL.",
+      "parentUuid": "50ed4dc4_3d916c20",
+      "revId": "15f569fc77d0485d47e417c5b89f2df29700f26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
