@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44620894_fcc9f630",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-04T20:17:26Z",
+      "side": 1,
+      "message": "\u0027%s\u0027 % \u0027platformBuildVersionCode\u0027 --\u003e \u0027platformBuildVersionCode\u0027",
+      "revId": "8b289f1ed0111e5a84851fd0b7c7564dc4bd9de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
