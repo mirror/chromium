@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48d9669d_bad28a0b",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "i went back and forth on this.  i doubt that it will be a big deal -- almost all of them will be \"could not compute\".  the only time we have \"not assigned\" is during the brief period after the player is created but before it starts loading.\n\nat that point, if some other player does something interesting (draws the first frame, for example), then we\u0027d get use INT_MIN for this player\u0027s priority.  however, it\u0027s unclear that we could do better than that, since w really can\u0027t compute it anyway.",
+      "parentUuid": "d67f64e9_4f00e0aa",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 41
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb70e01d_04d84b41",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "17542631a878db57a273937186036d1072698d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72582ac4_e0ba440e",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb70e01d_04d84b41",
+      "range": {
+        "startLine": 80,
+        "startChar": 27,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5d50e3e4_55f33e9a",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "thought i removed all of those.  thanks.",
+      "parentUuid": "3b280fc8_7c1bb73e",
+      "range": {
+        "startLine": 113,
+        "startChar": 17,
+        "endLine": 113,
+        "endChar": 21
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23011056_e4331ca3",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-04T20:08:11Z",
       "side": 1,
       "message": "If for some reason the player\u0027s priority could not be computed and it does play, could this skew metrics in some way? I am trying to think of pathological cases (which we would probably choose to ignore), but I don\u0027t have a strong example ATM.",
+      "range": {
+        "startLine": 140,
+        "startChar": 41,
+        "endLine": 140,
+        "endChar": 49
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06f8a7e_8e73b868",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "it depends a lot on how prevalent unknown priority players are.  if they\u0027re very prevalent, then we probably can\u0027t use \"player position\" as the only way of determining the priority, anyway.  the OnPlayerLoaded UMA will hopefully tell us if we\u0027re in this case.",
+      "parentUuid": "23011056_e4331ca3",
       "range": {
         "startLine": 140,
         "startChar": 41,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a0a6e38e_f9824fae",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee11c7c5_d35d1b28",
+      "range": {
+        "startLine": 164,
+        "startChar": 47,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7043be_49a484ad",
         "filename": "media/blink/resource_scheduler_metrics.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "17542631a878db57a273937186036d1072698d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c608eaec_0fcd534d",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f7043be_49a484ad",
+      "range": {
+        "startLine": 169,
+        "startChar": 52,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "52445d59_fd2ae997",
+        "filename": "media/blink/resource_scheduler_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5930a214_cd11afaf",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 21
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f6f3f80_13fa51cb",
         "filename": "media/blink/resource_scheduler_metrics.h",
         "patchSetId": 12
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "56aa5ab8_97101939",
+        "filename": "media/blink/resource_scheduler_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "updated the comment.\n\nthe player priorities aren\u0027t allowed to change once they\u0027re set in OnPlayerLoadStarted.  however, other players may be removed / added to the list, changing the ordering.\n\ni don\u0027t think that it will have too big of an impact on the result, since we\u0027re setting them \u0027as early as possible\u0027 in some sense.  in real life, maybe we would have delays while waiting for resources to become available to load the next player.  in that case, maybe we could re-evaluate the priority before choosing a player.\n\nhowever,  i\u0027m not trying to get into that much detail.  plus, it seems much less likely than the simpler cases, to me.",
+      "parentUuid": "5f6f3f80_13fa51cb",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ea2e3c_8c53617b",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
         "patchSetId": 12
@@ -206,6 +398,30 @@
       "revId": "17542631a878db57a273937186036d1072698d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a837af_3be472f4",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 4234,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-04T23:10:13Z",
+      "side": 1,
+      "message": "i think that it means that it couldn\u0027t map the coordinate systems, such as if the ancestor isn\u0027t actually an ancestor.  since we\u0027re getting the root frame, i wouldn\u0027t expect it do happen often, and not sure what to do if it does.",
+      "parentUuid": "b5ea2e3c_8c53617b",
+      "range": {
+        "startLine": 4234,
+        "startChar": 12,
+        "endLine": 4234,
+        "endChar": 26
+      },
+      "revId": "17542631a878db57a273937186036d1072698d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
