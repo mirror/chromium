@@ -215,9 +215,10 @@ class ASH_EXPORT WallpaperController
   // Returns the prominent color based on |color_profile|.
   SkColor GetProminentColor(color_utils::ColorProfile color_profile) const;
 
-  // Provides current image on the wallpaper, or empty gfx::ImageSkia if there
+  // Returns current image on the wallpaper, or empty gfx::ImageSkia if there
   // is no image, e.g. wallpaper is none.
   gfx::ImageSkia GetWallpaper() const;
+
   uint32_t GetWallpaperOriginalImageId() const;
 
   wallpaper::WallpaperLayout GetWallpaperLayout() const;
@@ -267,6 +268,11 @@ class ASH_EXPORT WallpaperController
   // Prepares wallpaper to lock screen transition. Will apply blur if
   // |locking| is true and remove it otherwise.
   void PrepareWallpaperForLockScreenChange(bool locking);
+
+  // Returns the location of the active user's wallpaper (either an URL or a
+  // file path). Returns an empty string if there's no active user, or the
+  // active user has not set a user wallpaper.
+  std::string GetActiveUserWallpaperLocation();
 
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
