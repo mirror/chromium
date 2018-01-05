@@ -26,10 +26,6 @@ struct InitGlobals {
     // asserting when handling non-ASCII urls.
     CHECK(base::i18n::InitializeICU());
 
-    // Prevent every call to get a Histogram* from leaking memory. Instead, only
-    // the fist call to get each Histogram* leaks memory.
-    base::StatisticsRecorder::Initialize();
-
     // Disable noisy logging as per "libFuzzer in Chrome" documentation:
     // testing/libfuzzer/getting_started.md#Disable-noisy-error-message-logging.
     logging::SetMinLogLevel(logging::LOG_FATAL);
