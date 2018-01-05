@@ -491,6 +491,43 @@ domain Browser
       # V8 version.
       string jsVersion
 
+  # Chrome histogram bucket.
+  type Bucket extends object
+    properties
+      # Minimum value (inclusive).
+      integer low
+      # Maximum value (exclusive).
+      integer high
+      # Number of samples.
+      integer count
+
+  # Chrome histogram.
+  type Histogram extends object
+    properties
+      # Name.
+      string name
+      # Sum of sample values.
+      integer sum
+      # Total number of samples.
+      integer count
+      # Buckets.
+      array of Bucket buckets
+
+  # Get all Chrome histograms.
+  command getHistograms
+    returns
+      # Histograms.
+      array of Histogram histograms
+
+  # Get a Chrome histogram by name.
+  command getHistogram
+    parameters
+      # Requested histogram name.
+      string name
+    returns
+      # Histogram.
+      Histogram histogram
+
   # Get position and size of the browser window.
   experimental command getWindowBounds
     parameters
