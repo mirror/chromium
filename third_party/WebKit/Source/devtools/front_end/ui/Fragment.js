@@ -182,8 +182,9 @@ UI.Fragment = class {
    */
   static _render(template, values) {
     var content = template.template.ownerDocument.importNode(template.template.content, true);
-    var resultElement =
-        /** @type {!Element} */ (content.firstChild === content.lastChild ? content.firstChild : content);
+    if (content.firstChild !== content.lastChild)
+      throw new Error('Fragment must have a single top-level element');
+    var resultElement = /** @type {!Element} */ content.firstChild;
     var result = new UI.Fragment(resultElement);
 
     var idByElement = new Map();
@@ -203,15 +204,7 @@ UI.Fragment = class {
         idByElement.set(element, bind.elementId);
       } else if ('replaceNodeIndex' in bind) {
         var value = values[/** @type {number} */ (bind.replaceNodeIndex)];
-        var node = null;
-        if (value instanceof Node)
-          node = value;
-        else if (value instanceof UI.Fragment)
-          node = value._element;
-        else
-          node = createTextNode('' + value);
-
-        element.parentNode.insertBefore(node, element);
+        this._insertNodesBefore(value, element);
         element.remove();
       } else if ('state' in bind) {
         var list = result._states.get(bind.state.name) || [];
@@ -238,32 +231,104 @@ UI.Fragment = class {
           }
         }
       } else {
-        throw 'Unexpected bind';
+        throw new Error('Unexpected bind');
       }
     }
 
-    // We do this after binds so that querySelector works.
-    var shadows = result._element.querySelectorAll('x-shadow');
-    for (var shadow of shadows) {
-      if (!shadow.parentElement)
-        throw 'There must be a parent element here';
-      var shadowRoot = UI.createShadowRootWithCoreStyles(shadow.parentElement);
-      if (shadow.parentElement.tagName === 'X-WIDGET')
-        shadow.parentElement._shadowRoot = shadowRoot;
-      var children = [];
-      while (shadow.lastChild) {
-        children.push(shadow.lastChild);
-        shadow.lastChild.remove();
-      }
-      for (var i = children.length - 1; i >= 0; i--)
-        shadowRoot.appendChild(children[i]);
-      var id = idByElement.get(shadow);
-      if (id)
-        result._elementsById.set(id, /** @type {!Element} */ (/** @type {!Node} */ (shadowRoot)));
-      shadow.remove();
-    }
-
+    result._element = result._postProcess(idByElement, result._element);
     return result;
+  }
+
+  /**
+   * @param {*} value
+   * @param {!Element} element
+   */
+  static _insertNodesBefore(value, element) {
+    if (Array.isArray(value)) {
+      for (var item of value)
+        this._insertNodesBefore(item, element);
+      return;
+    }
+    var node = null;
+    if (value instanceof Node)
+      node = value;
+    else if (value instanceof UI.Fragment)
+      node = value._element;
+    else if (value === null || value === undefined)
+      node = createTextNode('');
+    else
+      node = createTextNode('' + value);
+    element.parentNode.insertBefore(node, element);
+  }
+
+  _postProcess(idByElement, element) {
+    if (!UI.Fragment._registry.has(element.tagName)) {
+      var child = element.firstChild;
+      while (child) {
+        var next = child.nextSibling;
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          var processed = this._postProcess(idByElement, child);
+          if (processed !== child) {
+            element.insertBefore(processed, child);
+            child.remove();
+          }
+        }
+        child = next;
+      }
+      return element;
+    }
+
+    var paramNames = UI.Fragment._registry.get(element.tagName).params;
+    var processor = UI.Fragment._registry.get(element.tagName).processor;
+    var children = [];
+    var params = {};
+    var child = element.firstChild;
+    while (child) {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        var tagName = child.tagName.toLowerCase();
+        if (paramNames.has(tagName)) {
+          var paramChildren = [];
+          for (var paramChild of child.childNodes) {
+            if (paramChild.nodeType === Node.ELEMENT_NODE)
+              paramChildren.push(this._postProcess(idByElement, paramChild));
+            else
+              paramChildren.push(paramChild);
+          }
+          if (paramChildren.length === 1) {
+            params[tagName] = paramChildren[0];
+          } else {
+            var fragment = createDocumentFragment();
+            for (var paramChild of paramChildren)
+              fragment.appendChild(paramChild);
+            params[tagName] = fragment;
+          }
+        } else {
+          var processed = this._postProcess(idByElement, child);
+          children.push(processed);
+        }
+      } else {
+        children.push(child);
+      }
+      child = child.nextSibling;
+    }
+    element.removeChildren();
+
+    var result = processor.call(null, element, params, children);
+    if (result instanceof UI.Fragment)
+      result = result._element;
+    if (result !== element) {
+      var id = idByElement.get(element);
+      if (id) {
+        idByElement.delete(element);
+        idByElement.set(result, id);
+        this._elementsById.set(id, result);
+      }
+    }
+    return result;
+  }
+
+  static register(tag, params, processor) {
+    UI.Fragment._registry.set(tag.toUpperCase(), {params: new Set(params), processor: processor});
   }
 };
 
@@ -315,3 +380,4 @@ UI.Fragment._attributeMarkerRegex = /template-attribute\d+/;
 UI.Fragment._class = index => 'template-class-' + index;
 
 UI.Fragment._templateCache = new Map();
+UI.Fragment._registry = new Map();

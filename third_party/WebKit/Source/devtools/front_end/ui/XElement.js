@@ -12,7 +12,8 @@ UI.XElement = class extends HTMLElement {
       'padding-right', 'margin',      'margin-top',       'margin-bottom',  'margin-left',
       'margin-right',  'overflow',    'overflow-x',       'overflow-y',     'font-size',
       'color',         'background',  'background-color', 'border',         'border-top',
-      'border-bottom', 'border-left', 'border-right',     'max-width',      'max-height'
+      'border-bottom', 'border-left', 'border-right',     'max-width',      'max-height',
+      'line-height', 'text', 'hidden', 'font-weight', 'justify-content'
     ];
   }
 
@@ -23,6 +24,16 @@ UI.XElement = class extends HTMLElement {
    * @override
    */
   attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'hidden') {
+      if (newValue !== null) {
+        this._display = this.style.getPropertyValue('display');
+        this.style.setProperty('display', 'none');
+      } else {
+        if (this._display)
+          this.style.setProperty('display', this._display);
+        this._display = null;
+      }
+    }
     if (attr === 'flex') {
       if (newValue === null)
         this.style.removeProperty('flex');
@@ -30,6 +41,23 @@ UI.XElement = class extends HTMLElement {
         this.style.setProperty('flex', newValue);
       else
         this.style.setProperty('flex', '0 0 ' + newValue);
+      return;
+    }
+    if (attr === 'text') {
+      if (oldValue === 'ellipsis') {
+        this.style.removeProperty('white-space');
+        this.style.removeProperty('text-overflow');
+        this.style.removeProperty('overflow');
+      } else if (oldValue === 'pre') {
+        this.style.setProperty('white-space', 'pre');
+      }
+      if (newValue === 'ellipsis') {
+        this.style.setProperty('white-space', 'nowrap');
+        this.style.setProperty('text-overflow', 'ellipsis');
+        this.style.setProperty('overflow', 'hidden');
+      } else if (newValue === 'pre') {
+        this.style.setProperty('white-space', 'pre');
+      }
       return;
     }
     if (newValue === null) {
@@ -44,6 +72,23 @@ UI.XElement = class extends HTMLElement {
     } else {
       this.style.setProperty(attr, newValue);
     }
+  }
+
+  /**
+   * @return {boolean}
+   */
+  get hidden() {
+    return this.hasAttribute('hidden');
+  }
+
+  /**
+   * @param {boolean} value
+   */
+  set hidden(value) {
+    if (value)
+      this.setAttribute('hidden', '');
+    else
+      this.removeAttribute('hidden');
   }
 };
 
@@ -135,20 +180,8 @@ UI.XSpan = class extends UI.XElement {
   }
 };
 
-/**
- * @extends {UI.XElement}
- */
-UI.XText = class extends UI.XElement {
-  constructor() {
-    super();
-    this.style.setProperty('display', 'inline');
-    this.style.setProperty('white-space', 'pre');
-  }
-};
-
-self.customElements.define('x-vbox', UI.XVBox);
-self.customElements.define('x-hbox', UI.XHBox);
-self.customElements.define('x-cbox', UI.XCBox);
-self.customElements.define('x-div', UI.XDiv);
-self.customElements.define('x-span', UI.XSpan);
-self.customElements.define('x-text', UI.XText);
+// self.customElements.define('x-vbox', UI.XVBox);
+// self.customElements.define('x-hbox', UI.XHBox);
+// self.customElements.define('x-cbox', UI.XCBox);
+// self.customElements.define('x-div', UI.XDiv);
+// self.customElements.define('x-span', UI.XSpan);

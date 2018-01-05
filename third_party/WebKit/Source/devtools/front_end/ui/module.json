@@ -56,6 +56,7 @@
         "ShortcutsScreen.js",
         "Geometry.js",
         "XLink.js",
+        "XReport.js",
         "XWidget.js"
     ],
     "resources": [
@@ -70,6 +71,7 @@
         "infobar.css",
         "inlineButton.css",
         "inspectorCommon.css",
+        "inspectorCommon2.css",
         "inspectorStyle.css",
         "inspectorSyntaxHighlight.css",
         "inspectorSyntaxHighlightDark.css",

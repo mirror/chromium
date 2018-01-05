@@ -8,49 +8,18 @@
 Resources.AppManifestView = class extends UI.VBox {
   constructor() {
     super(true);
-    this.registerRequiredCSS('resources/appManifestView.css');
 
-    this._emptyView = new UI.EmptyWidget(Common.UIString('No manifest detected'));
-    var p = this._emptyView.appendParagraph();
-    var linkElement = UI.XLink.create(
-        'https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/?utm_source=devtools',
-        Common.UIString('Read more about the web manifest'));
-    p.appendChild(UI.formatLocalized('A web manifest allows you to control how your app behaves when launched and displayed to the user. %s', [linkElement]));
+    this.contentElement.style.setProperty('background', '#f9f9f9');
+    this.contentElement.style.setProperty('overflow', 'auto');
 
-    this._emptyView.show(this.contentElement);
-    this._emptyView.hideWidget();
-
-    this._reportView = new UI.ReportView(Common.UIString('App Manifest'));
-    this._reportView.show(this.contentElement);
-    this._reportView.hideWidget();
-
-    this._errorsSection = this._reportView.appendSection(Common.UIString('Errors and warnings'));
-    this._identitySection = this._reportView.appendSection(Common.UIString('Identity'));
-    var toolbar = this._identitySection.createToolbar();
-    toolbar.renderAsLinks();
+    this._themeColorSwatch = InlineEditor.ColorSwatch.create();
+    this._backgroundColorSwatch = InlineEditor.ColorSwatch.create();
+    this._toolbar = new UI.Toolbar('');
+    this._toolbar.renderAsLinks();
     var addToHomeScreen =
         new UI.ToolbarButton(Common.UIString('Add to homescreen'), undefined, Common.UIString('Add to homescreen'));
     addToHomeScreen.addEventListener(UI.ToolbarButton.Events.Click, this._addToHomescreen, this);
-    toolbar.appendToolbarItem(addToHomeScreen);
-
-    this._presentationSection = this._reportView.appendSection(Common.UIString('Presentation'));
-    this._iconsSection = this._reportView.appendSection(Common.UIString('Icons'));
-
-    this._nameField = this._identitySection.appendField(Common.UIString('Name'));
-    this._shortNameField = this._identitySection.appendField(Common.UIString('Short name'));
-
-    this._startURLField = this._presentationSection.appendField(Common.UIString('Start URL'));
-
-    var themeColorField = this._presentationSection.appendField(Common.UIString('Theme color'));
-    this._themeColorSwatch = InlineEditor.ColorSwatch.create();
-    themeColorField.appendChild(this._themeColorSwatch);
-
-    var backgroundColorField = this._presentationSection.appendField(Common.UIString('Background color'));
-    this._backgroundColorSwatch = InlineEditor.ColorSwatch.create();
-    backgroundColorField.appendChild(this._backgroundColorSwatch);
-
-    this._orientationField = this._presentationSection.appendField(Common.UIString('Orientation'));
-    this._displayField = this._presentationSection.appendField(Common.UIString('Display'));
+    this._toolbar.appendToolbarItem(addToHomeScreen);
 
     SDK.targetManager.observeModels(SDK.ResourceTreeModel, this);
   }
@@ -79,7 +48,12 @@ Resources.AppManifestView = class extends UI.VBox {
   }
 
   _updateManifest() {
-    this._resourceTreeModel.fetchAppManifest(this._renderManifest.bind(this));
+    this._resourceTreeModel.fetchAppManifest((url, data, errors) => {
+      console.time('manifest');
+      for (var i = 0; i < 100; i++)
+        this._renderManifest(url, data, errors);
+      console.timeEnd('manifest');
+    });
   }
 
   /**
@@ -88,58 +62,30 @@ Resources.AppManifestView = class extends UI.VBox {
    * @param {!Array<!Protocol.Page.AppManifestError>} errors
    */
   _renderManifest(url, data, errors) {
+    this.contentElement.removeChildren();
+
     if (!data && !errors.length) {
-      this._emptyView.showWidget();
-      this._reportView.hideWidget();
+      var empty = UI.Fragment.cached`
+        <cbox overflow=auto flex=auto>
+          <vbox x-center color='hsla(0, 0%, 65%, 1)' padding=30px min-width=70px>
+            <h2>No manifest detected</h2>
+            <div max-width=300px line-height=18px>
+              A web manifest allows you to control how your app behaves when launched and displayed to the user.
+              <x-link href='https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/?utm_source=devtools'
+                  class=devtools-link>Read more about the web manifest.</x-link>
+            </div>
+          </vbox>
+        </cbox>
+      `;
+      this.contentElement.appendChild(empty.element());
       return;
     }
-    this._emptyView.hideWidget();
-    this._reportView.showWidget();
 
-    this._reportView.setURL(Components.Linkifier.linkifyURL(url));
-    this._errorsSection.clearContent();
-    this._errorsSection.element.classList.toggle('hidden', !errors.length);
-    for (var error of errors) {
-      this._errorsSection.appendRow().appendChild(
-          UI.createLabel(error.message, error.critical ? 'smallicon-error' : 'smallicon-warning'));
-    }
-
-    if (!data)
-      return;
-
-    if (data.charCodeAt(0) === 0xFEFF)
-      data = data.slice(1);  // Trim the BOM as per https://tools.ietf.org/html/rfc7159#section-8.1.
-
-    var parsedManifest = JSON.parse(data);
-    this._nameField.textContent = stringProperty('name');
-    this._shortNameField.textContent = stringProperty('short_name');
-    this._startURLField.removeChildren();
-    var startURL = stringProperty('start_url');
-    if (startURL) {
-      var completeURL = /** @type {string} */ (Common.ParsedURL.completeURL(url, startURL));
-      this._startURLField.appendChild(Components.Linkifier.linkifyURL(completeURL, {text: startURL}));
-    }
-
-    this._themeColorSwatch.classList.toggle('hidden', !stringProperty('theme_color'));
-    var themeColor = Common.Color.parse(stringProperty('theme_color') || 'white') || Common.Color.parse('white');
-    this._themeColorSwatch.setColor(/** @type {!Common.Color} */ (themeColor));
-    this._backgroundColorSwatch.classList.toggle('hidden', !stringProperty('background_color'));
-    var backgroundColor =
-        Common.Color.parse(stringProperty('background_color') || 'white') || Common.Color.parse('white');
-    this._backgroundColorSwatch.setColor(/** @type {!Common.Color} */ (backgroundColor));
-
-    this._orientationField.textContent = stringProperty('orientation');
-    this._displayField.textContent = stringProperty('display');
-
-    var icons = parsedManifest['icons'] || [];
-    this._iconsSection.clearContent();
-    for (var icon of icons) {
-      var title = (icon['sizes'] || '') + '\n' + (icon['type'] || '');
-      var field = this._iconsSection.appendField(title);
-      var imageElement = field.createChild('img');
-      imageElement.style.maxWidth = '200px';
-      imageElement.style.maxHeight = '200px';
-      imageElement.src = Common.ParsedURL.completeURL(url, icon['src']);
+    var parsedManifest;
+    if (data) {
+      if (data.charCodeAt(0) === 0xFEFF)
+        data = data.slice(1);  // Trim the BOM as per https://tools.ietf.org/html/rfc7159#section-8.1.
+      parsedManifest = JSON.parse(data);
     }
 
     /**
@@ -147,11 +93,65 @@ Resources.AppManifestView = class extends UI.VBox {
      * @return {string}
      */
     function stringProperty(name) {
+      if (!parsedManifest)
+        return '';
       var value = parsedManifest[name];
       if (typeof value !== 'string')
         return '';
       return value;
     }
+    
+    var errorRows = errors.map(error => {
+      var label = UI.createLabel(error.message, error.critical ? 'smallicon-error' : 'smallicon-warning');
+      return UI.Fragment.cached`<hbox style='margin: 10px 0 2px 18px;'>${label}</hbox>`;
+    });
+
+    var startURL = stringProperty('start_url');
+    var startURLLink;
+    if (startURL) {
+      var completeURL = /** @type {string} */ (Common.ParsedURL.completeURL(url, startURL));
+      startURLLink = Components.Linkifier.linkifyURL(completeURL, {text: startURL});
+    }
+
+    this._themeColorSwatch.hidden = !stringProperty('theme_color');
+    var themeColor = Common.Color.parse(stringProperty('theme_color') || 'white') || Common.Color.parse('white');
+    this._themeColorSwatch.setColor(/** @type {!Common.Color} */ (themeColor));
+
+    this._backgroundColorSwatch.hidden = !stringProperty('background_color');
+    var backgroundColor =
+        Common.Color.parse(stringProperty('background_color') || 'white') || Common.Color.parse('white');
+    this._backgroundColorSwatch.setColor(/** @type {!Common.Color} */ (backgroundColor));
+
+    var icons = (parsedManifest['icons'] || []).map(icon => {
+      var title = (icon['sizes'] || '') + '\n' + (icon['type'] || '');
+      var src = Common.ParsedURL.completeURL(url, icon['src']);
+      return UI.Fragment.cached`
+        <x-report-field><title>${title}</title>
+          <img src=${src} stlye='max-width: 200px; max-height: 200px;'></img>
+        </x-report-field>
+      `;
+    });
+
+    var report = UI.Fragment.cached`
+      <x-report>
+        <title>App Manifest</title>
+        <url>${Components.Linkifier.linkifyURL(url)}</url>
+        <x-report-section class=${errorRows.length ? '' : 'hidden'}><title>Errors and warnings</title>${errorRows}</x-report-section>
+        <x-report-section><title>Identity</title><toolbar>${this._toolbar.element}</toolbar>
+          <x-report-field><title>Name</title>${stringProperty('name')}</x-report-field>
+          <x-report-field><title>Short name</title>${stringProperty('short_name')}</x-report-field>
+        </x-report-section>
+        <x-report-section><title>Presentation</title>
+          <x-report-field><title>Start URL</title>${startURLLink}</x-report-field>
+          <x-report-field><title>Theme color</title>${this._themeColorSwatch}</x-report-field>
+          <x-report-field><title>Background color</title>${this._backgroundColorSwatch}</x-report-field>
+          <x-report-field><title>Orientation</title>${stringProperty('orientation')}</x-report-field>
+          <x-report-field><title>Display</title>${stringProperty('display')}</x-report-field>
+        </x-report-section>
+        <x-report-section><title>Icons</title>${icons}</x-report-section>
+      </x-report>
+    `;
+    this.contentElement.appendChild(report.element());
   }
 
   /**
@@ -165,3 +165,38 @@ Resources.AppManifestView = class extends UI.VBox {
     }
   }
 };
+
+UI.Fragment.register('x-report', ['title', 'subtitle', 'url', 'toolbar'], (element, params, children) => {
+  return UI.Fragment.cached`
+    <vbox style='background: white'>
+      <vbox style='flex: none; border-bottom: 1px solid rgb(230, 230, 230); padding: 12px 24px;'>
+        <hbox style='font-size: 15px'>${params.title}</hbox>
+        <hbox style='font-size: 12px; margin-top: 10px' class=${params.subtitle ? '' : 'hidden'}>${params.subtitle}</hbox>
+        <hbox style='font-size: 12px; margin-top: 10px' class=${params.url ? '' : 'hidden'}>${params.url}</hbox>
+        <hbox style='margin: 5px 0 -8px -8px;' class=${params.toolbar ? '' : 'hidden'}>${params.toolbar}</hbox>
+      </vbox>
+      <vbox>${children}</vbox>
+    </vbox>
+  `;
+});
+
+UI.Fragment.register('x-report-section', ['title', 'toolbar'], (element, params, children) => {
+  return UI.Fragment.cached`
+    <vbox style='flex: none; padding: 12px; border-bottom: 1px solid rgb(230, 230, 230);'>
+      <hbox style='align-items: center; margin-left: 18px'>
+        <hbox style='flex: auto; font-weight: bold; color: #555; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;'>${params.title}</hbox>
+        ${params.toolbar}
+      </hbox>
+      <vbox>${children}</vbox>
+    </vbox>
+  `;
+});
+
+UI.Fragment.register('x-report-field', ['title'], (element, params, children) => {
+  return UI.Fragment.cached`
+    <hbox style='margin-top: 8px; line-height: 28px;'>
+      <hbox style='flex: 0 0 128px; white-space: pre; justify-content: flex-end; color: #888; padding: 0 6px;'>${params.title}</hbox>
+      <div style='flex: auto; white-space: pre; padding: 0 6px;'>${children}</div>
+    </hbox>
+  `;
+});
