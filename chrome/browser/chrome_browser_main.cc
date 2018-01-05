@@ -829,6 +829,22 @@ void ChromeBrowserMainParts::SetupOriginTrialsCommandLine() {
   }
 }
 
+void ChromeBrowserMainParts::StartProfilingThread(base::PlatformThreadId id) {
+  StackSamplingConfiguration* config = StackSamplingConfiguration::Get();
+  if (config->IsProfilerEnabledForCurrentProcess()) {
+    io_thread_sampling_profiler_ =
+        std::make_unique<base::StackSamplingProfiler>(
+            id, config->GetSamplingParamsForCurrentProcess(),
+            metrics::CallStackProfileMetricsProvider::
+                GetProfilerCallbackForIOThreadStartup());
+    io_thread_sampling_profiler_->Start();
+  }
+}
+
+void ChromeBrowserMainParts::EndProfilingThread() {
+  io_thread_sampling_profiler_.reset();
+}
+
 // -----------------------------------------------------------------------------
 // TODO(viettrungluu): move more/rest of BrowserMain() into BrowserMainParts.
 

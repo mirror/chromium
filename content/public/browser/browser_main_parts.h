@@ -5,6 +5,7 @@
 #ifndef CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 #define CONTENT_PUBLIC_BROWSER_BROWSER_MAIN_PARTS_H_
 
+#include "base/threading/platform_thread.h"
 #include "content/common/content_export.h"
 
 namespace content {
@@ -71,6 +72,14 @@ class CONTENT_EXPORT BrowserMainParts {
   // been run), and the toolkit has been initialized. Returns the error code
   // (or 0 if no error).
   virtual int PreCreateThreads();
+
+  // This is called right after child threads owned by the content framework are
+  // created. Samples the behavior of a thread given |id| using sampling
+  // profiler.
+  virtual void StartProfilingThread(base::PlatformThreadId id) {}
+
+  // This is called just before child threads are stopped.
+  virtual void EndProfilingThread() {}
 
   virtual void ServiceManagerConnectionStarted(
       ServiceManagerConnection* connection) {}

@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/profiler/stack_sampling_profiler.h"
+#include "base/threading/platform_thread.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_browser_field_trials.h"
 #include "chrome/browser/chrome_process_singleton.h"
@@ -65,6 +66,8 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   void PreMainMessageLoopStart() override;
   void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void StartProfilingThread(base::PlatformThreadId id) override;
+  void EndProfilingThread() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
   void PreMainMessageLoopRun() override;
@@ -152,6 +155,10 @@ class ChromeBrowserMainParts : public content::BrowserMainParts {
   // A profiler that periodically samples stack traces. Used to sample startup
   // behavior.
   base::StackSamplingProfiler sampling_profiler_;
+
+  // A profiler that periodically samples stack traces. Used to sample
+  // behavior on the IO thread.
+  std::unique_ptr<base::StackSamplingProfiler> io_thread_sampling_profiler_;
 
   // Members initialized after / released before main_message_loop_ ------------
 

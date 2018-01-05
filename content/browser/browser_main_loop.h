@@ -262,6 +262,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   // CreateStartupTasks()
   //   PreCreateThreads()
   //   CreateThreads()
+  //   StartProfilingIOThread()
   //   BrowserThreadsStarted()
   //     InitializeMojo()
   //     InitStartupTracingForDuration()
