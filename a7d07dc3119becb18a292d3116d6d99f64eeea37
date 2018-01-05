@@ -69,6 +69,24 @@
       "revId": "a7d07dc3119becb18a292d3116d6d99f64eeea37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f297c2a2_18f01646",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-05T18:12:09Z",
+      "side": 1,
+      "message": "Either the slow pacing or high frame drop rate results poor playback quality. Changed the string to \"Poor playback quality\" to indicate that the switching is caused by this, and switching to mirroring is trying to improve the playback quality in this case.",
+      "parentUuid": "a49ad96a_b67b6840",
+      "revId": "a7d07dc3119becb18a292d3116d6d99f64eeea37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
