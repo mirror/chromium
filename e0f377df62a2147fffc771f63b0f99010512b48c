@@ -1279,6 +1279,30 @@
     },
     {
       "key": {
+        "uuid": "ccb56f55_d2a1417e",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T09:20:34Z",
+      "side": 1,
+      "message": "Just suspense. PS 9 looks great!",
+      "parentUuid": "2d2009e1_5c2d6d32",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 5
+      },
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76d4a41_4926ac01",
         "filename": "device/u2f/ec_public_key.cc",
         "patchSetId": 7
@@ -1987,6 +2011,24 @@
       "side": 1,
       "message": "Well... return_code must be SUCCESS, but if the response is from an authenticator that has already been registered (is_duplicate_registration), then we don\u0027t want to surface the SUCCESS but instead surface the CONDITIONS_NOT_SATISFIED error. I\u0027m not quite sure how else to structure it..",
       "parentUuid": "81e2630c_eac8b1ef",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435ec980_c7eeee63",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T09:20:34Z",
+      "side": 1,
+      "message": "Can we remove the |response| local variable, and do something like:\n\nif (is_duplicate_registration) {\n   std::move(completion_callback_).Run(\n       U2fReturnCode::CONDITIONS_NOT_SATISFIED, base::nullopt);\n} else {\n   std::move(completion_callback_).Run(\n       U2fReturnCode::SUCCESS, \n       RegisterResponseData::CreateFromU2fRegisterResponse(\n           relying_party_id_, std::move(response_data)));\n}",
+      "parentUuid": "8626b539_3e1c0c1e",
       "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
