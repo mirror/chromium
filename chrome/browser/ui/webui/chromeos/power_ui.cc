@@ -36,6 +36,10 @@ const char kRequestBatteryChargeDataCallback[] = "requestBatteryChargeData";
 const char kOnRequestBatteryChargeDataFunction[] =
     "powerUI.showBatteryChargeData";
 
+const char kRequestCpuTemperatureDataCallback[] = "requestCpuTemperatureData";
+const char kOnRequestCpuTermperatureDataFunction[] =
+    "powerUI.showCpuTemperatureData";
+
 const char kRequestCpuIdleDataCallback[] = "requestCpuIdleData";
 const char kOnRequestCpuIdleDataFunction[] =
     "powerUI.showCpuIdleData";
@@ -54,6 +58,7 @@ class PowerMessageHandler : public content::WebUIMessageHandler {
 
  private:
   void OnGetBatteryChargeData(const base::ListValue* value);
+  void OnGetCpuTemperatureData(const base::ListValue* value);
   void OnGetCpuIdleData(const base::ListValue* value);
   void OnGetCpuFreqData(const base::ListValue* value);
   void GetJsStateOccupancyData(
@@ -73,6 +78,10 @@ void PowerMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       kRequestBatteryChargeDataCallback,
       base::Bind(&PowerMessageHandler::OnGetBatteryChargeData,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kRequestCpuTemperatureDataCallback,
+      base::Bind(&PowerMessageHandler::OnGetCpuTemperatureData,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       kRequestCpuIdleDataCallback,
@@ -105,6 +114,10 @@ void PowerMessageHandler::OnGetBatteryChargeData(const base::ListValue* value) {
   web_ui()->CallJavascriptFunctionUnsafe(kOnRequestBatteryChargeDataFunction,
                                          js_power_supply_data,
                                          js_system_resumed_data);
+}
+
+void PowerMessageHandler::OnGetCpuTemperatureData(
+    const base::ListValue* value) {
 }
 
 void PowerMessageHandler::OnGetCpuIdleData(const base::ListValue* value) {
@@ -223,6 +236,8 @@ PowerUI::PowerUI(content::WebUI* web_ui) : content::WebUIController(web_ui) {
   html->AddLocalizedString("samplesText",
                            IDS_ABOUT_POWER_AVERAGE_SAMPLES_TEXT);
 
+  html->AddLocalizedString("cpuTemperatureSectionTitle",
+                           IDS_ABOUT_POWER_CPU_TEMPERATURE_SECTION_TITLE);
   html->AddLocalizedString("cpuIdleSectionTitle",
                            IDS_ABOUT_POWER_CPU_IDLE_SECTION_TITLE);
   html->AddLocalizedString("idleStateOccupancyPercentageHeader",
