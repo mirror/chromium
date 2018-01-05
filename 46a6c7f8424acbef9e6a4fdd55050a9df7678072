@@ -34,6 +34,24 @@
       "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb532b9_084c1252",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T04:28:05Z",
+      "side": 1,
+      "message": "\u003e I was thinking the same thing while I was in there. I think there\u0027s a very good chance we will want to re-attach HTTPS here soon.\n\u003e \n\u003e I was going to investigate separately though, since it\u0027s a semi-different motivation than this CL.\n\nYou can investigate it separately if you want.  I have a feeling, however, that the security folks will launch the hide-https at some point and we\u0027ll forgot to revise this code.  If you\u0027re not implementing the https-addition now, can you please add a test that will fail if we\u0027re starting to do https by default in order to remind someone to touch this code?",
+      "parentUuid": "c0233ddd_38e36be1",
+      "revId": "46a6c7f8424acbef9e6a4fdd55050a9df7678072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
