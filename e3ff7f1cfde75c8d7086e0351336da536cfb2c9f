@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc01eb5_311cb6fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T18:28:08Z",
+      "side": 1,
+      "message": "I\u0027m trying to reconcile this patch now that huayinz@\u0027s patch landed for ModalDialogManager.\n\nIn my mind, we don\u0027t want this class long term, nor the DialogRenderer.  I see the world where VR either replaces the presenters in the ModalDialogManager or replaces the Manager itself at the activity level.\n\nThe main thing would then be changing the PermissionDialogController to use the ModalDialogManager/ModalDialogView instead of using the AlertDialog at all.\n\nI guess my initial question is whether you see this as the desired long term solution as well?",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb8efbd_de64bdec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T18:28:08Z",
+      "side": 1,
+      "message": "Chrome supports mutli-window, so it\u0027s odd to have a stateful static like this (especially in a dialog class that could potentially be shown two at a time I believe in multiwindow, you can also stack dialogs on top of each other in non-multi-window).  I know this is used for VR only, which won\u0027t support multi-window, but this seems somewhat dangerous to me.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2018c41e_4ec39cbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T18:28:08Z",
+      "side": 1,
+      "message": "This seems like someone was passing an invalid id?  This seems like a developer bug that should potentially just crash.",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
