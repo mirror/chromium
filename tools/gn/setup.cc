@@ -488,6 +488,8 @@ bool Setup::FillArgsFromArgsInputFile() {
   Scope::KeyValueMap overrides;
   arg_scope.GetCurrentScopeValues(&overrides);
   build_settings_.build_args().AddArgOverrides(overrides);
+  build_settings_.build_args().SetBuildArgsDependencyFiles(
+      arg_scope.build_dependency_files());
   return true;
 }
 
