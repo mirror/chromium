@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260e9e10_d5d96205",
+        "filename": "chrome/browser/chromeos/platform_keys/platform_keys_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2018-01-05T11:58:54Z",
+      "side": 1,
+      "message": "nit: double space",
+      "range": {
+        "startLine": 36,
+        "startChar": 55,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "4fc36191a35e95f434119a8fe1d52eed7c5d364b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
