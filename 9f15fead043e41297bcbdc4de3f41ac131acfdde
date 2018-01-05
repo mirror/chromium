@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8d18d6f_66dc27f6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T00:38:07Z",
+      "side": 1,
+      "message": "Deleted since no longer necessary :)",
+      "parentUuid": "81cae575_f19b21d3",
+      "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efff1011_f1f2cf9f",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "as discussed - I think the first layout looks OK (although, I suppose it depends on how strongly UX feel about it).\n\nI don\u0027t think there\u0027s any general purpose layout algorithm that could cater for having the secondary text extending beyond the view above it (and its column) but not into the space that a view occupies in the column after it.\n\nWe should also spot-check performance in chrome://tracing. Ideally the SizeToContents call in BubbleDialogDelegateView::CreateBubble() is always a no-op (Widget::Init should pick the right size to begin with).\n\nIt looks as though the current latency is ~100ms on Mac. If that were to double, it would be very noticable.",
       "parentUuid": "057bd8e6_10bfdfd6",
+      "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9f948a_ed7162b5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T00:38:07Z",
+      "side": 1,
+      "message": "OK, switched to the first layout :) I checked a couple of verbose languages, and they look bad, but I think they might have looked bad anyway because they have really long words that cause them to wrap early. Here\u0027s a screenshot of German (Russian is pretty similar): https://drive.google.com/file/d/1P6d6DhjVLUZcBiI81grTXQgm_6CclsrJ/view?usp\u003dsharing\n\nWill send this via maxwalker@ to approve when he is back from OOO.\n\nchrome://tracing on Mac says the Page Info bubble takes ~30ms more on average with this patch than without :( (Tested on a layout showing 5 permissions, two which have the secondary text underneath.) Opening and closing it really fast feels OK to me though. WDYT?",
+      "parentUuid": "0ba83748_dbcc93d7",
       "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
