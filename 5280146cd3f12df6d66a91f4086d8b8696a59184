@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f71178_ec501f95",
+        "filename": "chrome/browser/chromeos/background/ash_wallpaper_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T23:07:16Z",
+      "side": 1,
+      "message": "nit: no \"else\" if the other branch returns.",
+      "revId": "5280146cd3f12df6d66a91f4086d8b8696a59184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
