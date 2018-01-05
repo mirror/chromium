@@ -388,8 +388,7 @@ initWithBrowserLauncher:(id<BrowserLauncher>)browserLauncher
 
   // Dismiss any UI that is presented on screen and that is listening for
   // profile notifications.
-  if ([appNavigation settingsNavigationController])
-    [appNavigation closeSettingsAnimated:NO completion:nil];
+  [appNavigation closeSettingsAnimated:NO completion:nil];
 
   // Clean up the device sharing manager before the main browser state is shut
   // down.
