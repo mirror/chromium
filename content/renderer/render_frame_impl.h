@@ -534,6 +534,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void CommitSameDocumentNavigation(
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params) override;
+  void HandleRendererDebugURL(const GURL& url) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;

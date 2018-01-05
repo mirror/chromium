@@ -101,6 +101,9 @@ interface FrameNavigationControl {
   CommitSameDocumentNavigation(
       CommonNavigationParams common_params,
       RequestNavigationParams request_params);
+
+  // Asks the renderer to handle a renderer-debug URL.
+  HandleRendererDebugURL(url.mojom.Url url);
 };
 
 // Implemented by the frame (e.g. renderer processes).

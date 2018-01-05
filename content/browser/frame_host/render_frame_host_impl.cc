@@ -3403,30 +3403,16 @@ void RenderFrameHostImpl::CommitNavigation(
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
-
+  DCHECK(!IsRendererDebugURL(common_params.url));
   DCHECK(
-      (response && (url_loader_client_endpoints || body)) ||
-      common_params.url.SchemeIs(url::kDataScheme) ||
-      !IsURLHandledByNetworkStack(common_params.url) ||
-      FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type) ||
-      IsRendererDebugURL(common_params.url));
+      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type));
+
+  DCHECK((response && (url_loader_client_endpoints || body)) ||
+         common_params.url.SchemeIs(url::kDataScheme) ||
+         !IsURLHandledByNetworkStack(common_params.url));
 
   const bool is_first_navigation = !has_committed_any_navigation_;
   has_committed_any_navigation_ = true;
-
-  // TODO(arthursonzogni): Consider using separate methods and IPCs for
-  // javascript-url navigation. Excluding this case from the general one will
-  // prevent us from doing inappropriate things with javascript-url.
-  // See https://crbug.com/766149.
-  if (common_params.url.SchemeIs(url::kJavaScriptScheme)) {
-    DCHECK(!url_loader_client_endpoints && !body);
-    GetNavigationControl()->CommitNavigation(
-        ResourceResponseHead(), GURL(), common_params, request_params,
-        mojom::URLLoaderClientEndpointsPtr(),
-        /*subresource_loader_factories=*/base::nullopt,
-        devtools_navigation_token);
-    return;
-  }
 
   UpdatePermissionsForNavigation(common_params, request_params);
 
@@ -3612,6 +3598,18 @@ void RenderFrameHostImpl::FailedNavigation(
   if (navigation_handle_)
     DCHECK_NE(net::OK, navigation_handle_->GetNetErrorCode());
   frame_tree_node_->ResetNavigationRequest(true, true);
+}
+
+void RenderFrameHostImpl::HandleRendererDebugURL(const GURL& url) {
+  DCHECK(IsRendererDebugURL(url));
+  GetNavigationControl()->HandleRendererDebugURL(url);
+
+  // Several tests expect a load of Chrome Debug URLs to send a DidStopLoading
+  // notification, so set is loading to true here to properly surface it when
+  // the renderer process is done handling the URL.
+  // TODO(clamy): Remove the test dependency on this behavior.
+  if (!url.SchemeIs(url::kJavaScriptScheme))
+    is_loading_ = true;
 }
 
 void RenderFrameHostImpl::SetUpMojoIfNeeded() {

@@ -207,6 +207,9 @@ class WebLocalFrame : public WebFrame {
                                             WebFrameLoadType,
                                             const WebHistoryItem&) = 0;
 
+  // Loads a JavaScript URL in the frame.
+  virtual void LoadJavaScriptURL(const WebURL&) = 0;
+
   // This method is short-hand for calling LoadData, where mime_type is
   // "text/html" and text_encoding is "UTF-8".
   virtual void LoadHTMLString(const WebData& html,
