@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee18f84_293ade3a",
+        "filename": "cc/test/test_web_graphics_context_3d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-05T01:23:45Z",
+      "side": 1,
+      "message": "We should do this after l.519, binding a buffer of 0 is valid",
+      "revId": "665b455f07db500da18eaf6f86e78010fbc51030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
