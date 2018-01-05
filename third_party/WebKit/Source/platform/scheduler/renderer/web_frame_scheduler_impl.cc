@@ -561,12 +561,15 @@ bool WebFrameSchedulerImpl::IsExemptFromBudgetBasedThrottling() const {
   return has_active_connection();
 }
 
+void WebFrameSchedulerImpl::RegisterTraceableVariable(
+    TraceableVariable* tracer) {
+  tracers_.push_back(tracer);
+}
+
 void WebFrameSchedulerImpl::OnTraceLogEnabled() {
-  frame_visible_.OnTraceLogEnabled();
-  page_visible_.OnTraceLogEnabled();
-  page_stopped_.OnTraceLogEnabled();
-  frame_paused_.OnTraceLogEnabled();
-  cross_origin_.OnTraceLogEnabled();
+  for (auto tracer : tracers_) {
+    tracer->OnTraceLogEnabled();
+  }
 }
 
 }  // namespace scheduler

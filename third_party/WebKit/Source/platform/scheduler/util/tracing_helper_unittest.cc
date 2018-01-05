@@ -4,6 +4,9 @@
 
 #include "platform/scheduler/util/tracing_helper.h"
 
+#include <memory>
+#include <vector>
+
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -11,7 +14,18 @@ namespace scheduler {
 
 namespace {
 
-struct {} g_object;
+const char* g_last_state = nullptr;
+
+void ExpectTraced(const char* state) {
+  EXPECT_TRUE(state);
+  EXPECT_TRUE(g_last_state);
+  EXPECT_STREQ(state, g_last_state);
+  g_last_state = nullptr;
+}
+
+void ExpectNotTraced() {
+  EXPECT_FALSE(g_last_state);
+}
 
 const char* SignOfInt(int value) {
   if (value > 0) {
@@ -23,15 +37,73 @@ const char* SignOfInt(int value) {
   }
 }
 
+class Controller : public TraceableVariableController {
+ public:
+  Controller() {}
+  virtual ~Controller() {}
+
+  void RegisterTraceableVariable(TraceableVariable* tracer) final {
+    tracers_.push_back(tracer);
+  }
+
+  void OnTraceLogEnabled() {
+    for (auto tracer : tracers_) {
+      tracer->OnTraceLogEnabled();
+    }
+  }
+
+ private:
+  std::vector<TraceableVariable*> tracers_;
+};
+
 }  // namespace
 
-// TODO(kraynov): Tracing tests.
+namespace internal {
 
-TEST(TracingHelperTest, Operators) {
+class TraceableStateForTest
+    : public TraceableState<int, kTracingCategoryNameDefault> {
+ public:
+  TraceableStateForTest(TraceableVariableController* controller)
+      : TraceableState(0, "State", controller, SignOfInt) {
+    // We shouldn't expect trace in constructor here because mock isn't set yet.
+    mock_trace_for_test_ = &MockTrace;
+  }
+
+  TraceableStateForTest& operator =(const int& value) {
+    Assign(value);
+    return *this;
+  }
+
+  static void MockTrace(const char* state) {
+    EXPECT_TRUE(state);
+    EXPECT_FALSE(g_last_state);  // No unexpected traces.
+    g_last_state = state;
+  }
+};
+
+}  // namespace internal
+
+// TODO(kraynov): TraceableCounter tests.
+
+TEST(TracingHelperTest, TraceableState) {
+  std::unique_ptr<Controller> controller(new Controller());
+  internal::TraceableStateForTest state(controller.get());
+  controller->OnTraceLogEnabled();
+  ExpectTraced("zero");
+  state = 0;
+  ExpectNotTraced();
+  state = 1;
+  ExpectTraced("positive");
+  state = -1;
+  ExpectTraced("negative");
+}
+
+TEST(TracingHelperTest, TraceableStateOperators) {
+  std::unique_ptr<Controller> controller(new Controller());
   TraceableState<int, kTracingCategoryNameDebug> x(
-      -1, "X", &g_object, SignOfInt);
+      -1, "X", controller.get(), SignOfInt);
   TraceableState<int, kTracingCategoryNameDebug> y(
-      1, "Y", &g_object, SignOfInt);
+      1, "Y", controller.get(), SignOfInt);
   EXPECT_EQ(0, x + y);
   EXPECT_FALSE(x == y);
   EXPECT_TRUE(x != y);

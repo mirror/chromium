@@ -19,7 +19,9 @@ namespace scheduler {
 
 // CPUTimeBudgetPool represents a collection of task queues which share a limit
 // on total cpu time.
-class PLATFORM_EXPORT CPUTimeBudgetPool : public BudgetPool {
+class PLATFORM_EXPORT CPUTimeBudgetPool
+    : public BudgetPool,
+      public TraceableVariableController {
  public:
   CPUTimeBudgetPool(const char* name,
                     BudgetPoolController* budget_pool_controller,
@@ -86,6 +88,8 @@ class PLATFORM_EXPORT CPUTimeBudgetPool : public BudgetPool {
   void OnWakeUp(base::TimeTicks now) final;
   void AsValueInto(base::trace_event::TracedValue* state,
                    base::TimeTicks now) const final;
+
+  void RegisterTraceableVariable(TraceableVariable*) {}  // Ignore.
   void OnTraceLogEnabled();
 
  protected:

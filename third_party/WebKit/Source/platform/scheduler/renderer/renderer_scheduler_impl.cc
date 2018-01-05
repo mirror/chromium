@@ -2473,46 +2473,17 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
   }
 }
 
+void RendererSchedulerImpl::RegisterTraceableVariable(
+    TraceableVariable* tracer) {
+  tracers_.push_back(tracer);
+}
+
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
-
-  // TODO(kraynov): Create auto-registration mechanism.
-  main_thread_only().current_use_case.OnTraceLogEnabled();
-  main_thread_only().longest_jank_free_task_duration.Trace();
-  main_thread_only().renderer_pause_count.Trace();
-  main_thread_only().navigation_task_expected_count.Trace();
-  main_thread_only().expensive_task_policy.OnTraceLogEnabled();
-  main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
-  main_thread_only().renderer_hidden.OnTraceLogEnabled();
-  main_thread_only().renderer_backgrounded.OnTraceLogEnabled();
-  main_thread_only().stopping_when_backgrounded_enabled.OnTraceLogEnabled();
-  main_thread_only().stopped_when_backgrounded.OnTraceLogEnabled();
-  main_thread_only().was_shutdown.OnTraceLogEnabled();
-  main_thread_only().loading_task_estimated_cost.Trace();
-  main_thread_only().timer_task_estimated_cost.Trace();
-  main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
-  main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
-  main_thread_only().touchstart_expected_soon.OnTraceLogEnabled();
-  main_thread_only().have_seen_a_begin_main_frame.OnTraceLogEnabled();
-  main_thread_only().have_reported_blocking_intervention_in_current_policy.
-      OnTraceLogEnabled();
-  main_thread_only().have_reported_blocking_intervention_since_navigation.
-      OnTraceLogEnabled();
-  main_thread_only().has_visible_render_widget_with_touch_handler.
-      OnTraceLogEnabled();
-  main_thread_only().begin_frame_not_expected_soon.OnTraceLogEnabled();
-  main_thread_only().in_idle_period_for_testing.OnTraceLogEnabled();
-  main_thread_only().use_virtual_time.OnTraceLogEnabled();
-  main_thread_only().is_audio_playing.OnTraceLogEnabled();
-  main_thread_only().compositor_will_send_main_frame_not_expected.
-      OnTraceLogEnabled();
-  main_thread_only().has_navigated.OnTraceLogEnabled();
-  main_thread_only().pause_timers_for_webview.OnTraceLogEnabled();
-  main_thread_only().process_type.OnTraceLogEnabled();
-  main_thread_only().task_description_for_tracing.OnTraceLogEnabled();
-
-  for (WebViewSchedulerImpl* web_view_scheduler :
-       main_thread_only().web_view_schedulers) {
+  for (auto tracer : tracers_) {
+    tracer->OnTraceLogEnabled();
+  }
+  for (auto web_view_scheduler : main_thread_only().web_view_schedulers) {
     web_view_scheduler->OnTraceLogEnabled();
   }
 }

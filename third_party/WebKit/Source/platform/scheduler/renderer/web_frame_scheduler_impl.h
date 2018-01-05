@@ -44,7 +44,9 @@ namespace web_view_scheduler_impl_unittest {
 class WebViewSchedulerImplTest;
 }
 
-class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
+class PLATFORM_EXPORT WebFrameSchedulerImpl
+    : public WebFrameScheduler,
+      public TraceableVariableController {
  public:
   WebFrameSchedulerImpl(RendererSchedulerImpl* renderer_scheduler,
                         WebViewSchedulerImpl* parent_web_view_scheduler,
@@ -80,6 +82,7 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
 
   bool has_active_connection() const { return active_connection_count_; }
 
+  void RegisterTraceableVariable(TraceableVariable* tracer) final;
   void OnTraceLogEnabled();
 
  private:
@@ -119,6 +122,7 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
 
   base::WeakPtr<WebFrameSchedulerImpl> AsWeakPtr();
 
+  std::vector<TraceableVariable*> tracers_;  // Not owned. Don't move this line.
   scoped_refptr<MainThreadTaskQueue> loading_task_queue_;
   scoped_refptr<MainThreadTaskQueue> loading_control_task_queue_;
   scoped_refptr<MainThreadTaskQueue> throttleable_task_queue_;
@@ -137,8 +141,6 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED
   std::set<Observer*> loader_observers_;             // NOT OWNED
   WebFrameScheduler::ThrottlingState throttling_state_;
-  // TODO(kraynov): Find a way to distinguish different frames
-  // (probably by grouping on TraceViewer side).
   TraceableState<bool, kTracingCategoryNameInfo> frame_visible_;
   TraceableState<bool, kTracingCategoryNameInfo> page_visible_;
   TraceableState<bool, kTracingCategoryNameInfo> page_stopped_;

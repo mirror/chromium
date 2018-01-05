@@ -21,7 +21,7 @@ CPUTimeBudgetPool::CPUTimeBudgetPool(
     : BudgetPool(name, budget_pool_controller),
       current_budget_level_(base::TimeDelta(),
                             "RendererScheduler.BackgroundBudgetMs",
-                            budget_pool_controller,
+                            this,
                             TimeDeltaToMilliseconds),
       last_checkpoint_(now),
       cpu_percentage_(1) {}
@@ -162,7 +162,7 @@ void CPUTimeBudgetPool::AsValueInto(base::trace_event::TracedValue* state,
 }
 
 void CPUTimeBudgetPool::OnTraceLogEnabled() {
-  current_budget_level_.Trace();
+  current_budget_level_.OnTraceLogEnabled();
 }
 
 void CPUTimeBudgetPool::Advance(base::TimeTicks now) {
