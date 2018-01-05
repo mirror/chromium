@@ -161,9 +161,9 @@ RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
 
 int RenderWidgetInputHandler::GetWidgetRoutingIdAtPoint(
     const gfx::Point& point) {
-  gfx::PointF point_in_pixel =
-      gfx::ConvertPointToPixel(widget_->GetOriginalDeviceScaleFactor(),
-                               gfx::PointF(point.x(), point.y()));
+  gfx::PointF point_in_pixel = gfx::ConvertPointToPixel(
+      widget_->GetOriginalDeviceScaleFactor(), gfx::PointF(point));
+  LOG(ERROR) << "Looking up node at: " << point_in_pixel.ToString();
   blink::WebNode result_node = widget_->GetWebWidget()
                                    ->HitTestResultAt(blink::WebPoint(
                                        point_in_pixel.x(), point_in_pixel.y()))

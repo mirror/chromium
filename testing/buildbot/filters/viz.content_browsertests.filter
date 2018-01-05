@@ -57,6 +57,7 @@
 -SitePerProcessBrowserTest.SubframeTouchEventRouting
 -SitePerProcessBrowserTest.SurfaceHitTestPointerEventsNone
 -SitePerProcessBrowserTest.SurfaceHitTestTest
+-SitePerProcessBrowserTest.OverlapSurfaceHitTestTest
 -SitePerProcessBrowserTest.TwoSubframesCreatePopupMenuWidgetsSimultaneously
 -SitePerProcessBrowserTest.ViewBoundsInNestedFrameTest
 
