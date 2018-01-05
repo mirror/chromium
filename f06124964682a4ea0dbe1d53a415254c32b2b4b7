@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8dbac482_66b804ea",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:16:18Z",
+      "side": 1,
+      "message": "I see. Can we at least add an assertion within the for loop, to ensure that we are not overwriting an existing value (assuming there is no valid use case for it)?",
+      "parentUuid": "7edf4ce3_a93fd966",
+      "revId": "f06124964682a4ea0dbe1d53a415254c32b2b4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0471a243_24436066",
         "filename": "content/browser/webui/web_ui_data_source_impl.cc",
         "patchSetId": 5

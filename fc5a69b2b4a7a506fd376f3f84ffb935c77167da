@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "973410ea_dbaae06c",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:16:18Z",
+      "side": 1,
+      "message": "Should we pre-process the path as in line 303 before doing this lookup? I see that the old code did not do this, but perhaps this is more fragile than it needs to be.\n\nAlso, could this simply be\n\nif (excluded_paths_.count(path))\n  return false;",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 58
+      },
+      "revId": "fc5a69b2b4a7a506fd376f3f84ffb935c77167da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
