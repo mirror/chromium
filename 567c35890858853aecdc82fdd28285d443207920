@@ -69,6 +69,24 @@
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09c1fd_9e1d3a32",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:46:18Z",
+      "side": 1,
+      "message": "\u003e Here\u0027s the UML:\n\u003e \n\u003e InProcessGpuThread owns a InProcessChildThreadParams.\n\u003e That InProcessChildThreadParams has a pointer to an OutgoingBrokerClientInvitation.\n\u003e \n\u003e The pointed OutgoingBrokerClientInvitation is owned by BrowserChildProcessHostImpl.\n\u003e GpuProcessHost owns both BrowserChildProcessHostImpl and InProcessGpuThread. \n\u003e \n\u003e Here\u0027s the race:\n\u003e \n\u003e The destruction order goes bottom up in gpu_process_host.h so the IO thread destructs BrowserChildProcessHostImpl before InProcessGpuThread \u003d\u003e InProcessGpuThread::Init() starts to execute the deleted (!) OutgoingBrokerClientInvitation it has a pointer to.\n\u003e \n\u003e When the GPU thread runs the deleted OutgoingBrokerClientInvitation\u0027s ExtractInProcessMessagePipe() it crashes on the NOTREACHED because attached_ports_ has already been destructed.\n\u003e \n\u003e A simpler solution may be to just fix the destruction order. I already suggested that here https://codereview.chromium.org/2973723003/diff/1/content/browser/gpu/gpu_process_host.h (as a solution to another race). What do you think?\n\nOh that\u0027s use after free due to wrong destruction order. What if you just move in_process_gpu_thread_ to be declared below process_?",
+      "parentUuid": "8654f89c_04e48f85",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
