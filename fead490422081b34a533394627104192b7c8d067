@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42701bcf_0611ff87",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b6299c_3184d482",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "Can you describe what \"generated preferences\" are. As of now, the comment does not add any value.",
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c954a948_8230c815",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "can you add a new line here.\n\nAlso, comments for the methods would be nice",
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb569ea_2d591b68",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "can the callback be declared in here, in GeneratedPref class, rather than GeneratedPrefs (given that GeneratedPrefs depend on this interface, not the other way around)",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51501c4_3b81cc15",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "why require profile in ctor if it\u0027s not used anywhere?",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648c9508_ef20ef4d",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "I think HasPref would be more suitable name for this.\n(in theory, |pref_name| could be a generated pref not managed by this class)",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9635955e_68d7be55",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "this is exactly like GeneratedPref interface.\nCould FindPrefImpl (maybe renamed to GetPref) be made public, instead of exposing these methods?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c663ae93_216504da",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "this is not really what this code does :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd78928a_c7548084",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "isn\u0027t this the same as\nchrome::GetBrowserContextRedirectedInIncognito(context);",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea32ab76_16acd549",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T22:30:46Z",
+      "side": 1,
+      "message": "can GeneratedPrefs take a BrowserContext, so you don\u0027t have to do a cast here?",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
