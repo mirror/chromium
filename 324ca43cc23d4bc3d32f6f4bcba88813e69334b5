@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be78d6df_2359d489",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "Is there a reason to copy the callback instead of passing a * and using the common ObserverList pattern?\n\nAlso, it is unusual not to have a remove method. Please explain why we do not need to remove these in the comment (assuming that is indeed OK).",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dbaa98_f4efb2fb",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "callbacks_",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ebc3cb_59ce38f8",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "PREF_NOT_FOUND",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81873837_f440dc80",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "According to the comment this should be CHECK(impl).",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9913d767_22dfd804",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "When will this be null? It seems like in that case we should just test |generated_prefs| in line 511 instead?",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b9fb71_1b6b6583",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:47:24Z",
+      "side": 1,
+      "message": "Same here. if (generated_prefs \u0026\u0026 generated_prefs-\u003eHasPref(..)) ...",
+      "revId": "324ca43cc23d4bc3d32f6f4bcba88813e69334b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
