@@ -22,6 +22,30 @@
       "revId": "e2724722ac704a1b837d3b8f6ab5fb8994da2468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0801b74e_9bce67ac",
+        "filename": "chrome/browser/plugins/hung_plugin_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T22:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f707e260_417faded",
+      "range": {
+        "startLine": 1,
+        "startChar": 31,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "e2724722ac704a1b837d3b8f6ab5fb8994da2468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
