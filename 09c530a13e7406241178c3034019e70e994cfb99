@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "43be9618_0734ec9b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "I don\u0027t think GetAutoRotationState fct is guaranteed to be always present. GetSystemMetrics is supported since Windows 2000.",
+      "parentUuid": "72408229_c15fd704",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c6ab42a_df3764cc",
         "filename": "base/win/win_util.cc",
         "patchSetId": 1
@@ -68,6 +86,24 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aa9b3f_eeebac28",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c6ab42a_df3764cc",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "14f5fa06_3b5bb08f",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1866d626_a5df4e42",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ebc774_052d107c",
         "filename": "base/win/win_util.cc",
         "patchSetId": 1
@@ -102,6 +156,24 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1dc5ac_b2246bac",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4ebc774_052d107c",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +197,30 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ce2507_cfe5a08e",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c51535a_5ecea772",
+      "range": {
+        "startLine": 147,
+        "startChar": 47,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +270,54 @@
     },
     {
       "key": {
+        "uuid": "4745e7c3_19cdcf2e",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c69e4a0_af046cbf",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 22
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e39dd5b9_034a69f9",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be81d0b4_fd98eada",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 37
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a1a59e5_2ba7cebf",
         "filename": "base/win/win_util.h",
         "patchSetId": 1
@@ -188,6 +332,24 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35c40d3_44b701b9",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a1a59e5_2ba7cebf",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "17d62212_d81fb115",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df988d33_f4f911f1",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 67
+      },
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6c7a9c_579d09e2",
         "filename": "ui/base/touch/touch_device_win.cc",
         "patchSetId": 1
@@ -228,6 +414,24 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f7359a_5ca201cb",
+        "filename": "ui/base/touch/touch_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2018-01-05T20:35:41Z",
+      "side": 1,
+      "message": "Yes but only if there no mouse connected. Just as a reminder (and thus why Windows is the only platform to have such complicated code for that feature) SM_MOUSEPRESENT is almost never false and can\u0027t really be used to detect the presence of a mouse. Per Microsoft documentation \"This value is rarely zero, because of support for virtual mice and because some systems detect the presence of the port instead of the presence of a mouse.\"\n\nFor the sake of completeness we can do an extra check to see if there is no touch digitizer before returning POINTER_TYPE_NONE.",
+      "parentUuid": "dd6c7a9c_579d09e2",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
