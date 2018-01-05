@@ -252,7 +252,7 @@ TEST_F(ContextMenuJsTest, UnsupportedReferrerPolicy) {
 #if TARGET_IPHONE_SIMULATOR
 #define MAYBE_LinkOfTextFromTallPage LinkOfTextFromTallPage
 #else
-#define MAYBE_LinkOfTextFromTallPage FLAKY_LinkOfTextFromTallPage
+#define MAYBE_LinkOfTextFromTallPage DISABLED_LinkOfTextFromTallPage
 #endif
 TEST_F(ContextMenuJsTest, MAYBE_LinkOfTextFromTallPage) {
   const char kHtml[] =
@@ -307,7 +307,7 @@ TEST_F(ContextMenuJsTest, LinkOfTextWithoutCalloutProperty) {
 #if TARGET_IPHONE_SIMULATOR
 #define MAYBE_LinkOfTextWithCalloutDefault LinkOfTextWithCalloutDefault
 #else
-#define MAYBE_LinkOfTextWithCalloutDefault FLAKY_LinkOfTextWithCalloutDefault
+#define MAYBE_LinkOfTextWithCalloutDefault DISABLED_LinkOfTextWithCalloutDefault
 #endif
 TEST_F(ContextMenuJsTest, MAYBE_LinkOfTextWithCalloutDefault) {
   const char kLinkHtml[] =
