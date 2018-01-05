@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7fdfaf3_14a03075",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T00:48:51Z",
+      "side": 1,
+      "message": "please remove this. This is a duplicate of the `SetSoftwareMirrorMode()` in the parent class.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 3
+      },
+      "revId": "e86126375139ec590298ce01f7dace54006d9e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098aa82b_1f86e17b",
+        "filename": "ash/display/mirror_window_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T00:48:51Z",
+      "side": 1,
+      "message": "Please remove this, it\u0027s not needed.",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "e86126375139ec590298ce01f7dace54006d9e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fcd562_1f6dff1d",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T00:48:51Z",
+      "side": 1,
+      "message": "Since this test runs only when multi mirroring is enabled (i.e. you\u0027re not running it once with the flag added and once without), then this condition is not needed.\n\nSuggestion: Take this part out in a separate parameterized test. run once with the flag and once without and assert both expectations.",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 53
+      },
+      "revId": "e86126375139ec590298ce01f7dace54006d9e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
