@@ -249,8 +249,8 @@ void ViewsMusTestSuite::Initialize() {
   EnsureCommandLineSwitch(ui::switches::kUseTestConfig);
 
   EnsureCommandLineSwitch(switches::kOverrideUseSoftwareGLForTests);
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kMus, switches::kMusHostVizValue);
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kMusHostingViz);
 
   ViewsTestSuite::Initialize();
   service_manager_connections_ = std::make_unique<ServiceManagerConnection>();
