@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03355eb5_5916bc83",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:40:52Z",
+      "side": 0,
+      "message": "Note: Removing this whole comment feels heavy-handed, but all of the points it discusses are only relevant when the status bubble stays attached to its parent window all the time.",
+      "revId": "15d5aac54f5b11b8a9feff54ecb5c450d0e60515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
