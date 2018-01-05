@@ -257,10 +257,6 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
   if ([tab loadFinished]) {
     [[OmniboxGeolocationController sharedInstance] finishPageLoadForTab:tab
                                                             loadSuccess:YES];
-
-    if (!webState->GetLastCommittedURL().SchemeIs(kChromeUIScheme)) {
-      base::RecordAction(base::UserMetricsAction("MobilePageLoaded"));
-    }
   }
 
   [tab setDelegate:nil];
