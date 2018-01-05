@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/webui/policy_ui_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
 
@@ -49,6 +50,7 @@ content::WebUIDataSource* CreatePolicyUIHtmlSource() {
   source->AddLocalizedString("hideExpandedValue",
                              IDS_POLICY_HIDE_EXPANDED_VALUE);
   source->AddLocalizedString("policyLearnMore", IDS_POLICY_LEARN_MORE);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   // Add required resources.
 #if !defined(OS_ANDROID)
   source->AddResourcePath("policy_common.css", IDR_POLICY_COMMON_CSS);
@@ -57,7 +59,6 @@ content::WebUIDataSource* CreatePolicyUIHtmlSource() {
   source->AddResourcePath("policy_base.js", IDR_POLICY_BASE_JS);
   source->AddResourcePath("policy.js", IDR_POLICY_JS);
   source->SetDefaultResource(IDR_POLICY_HTML);
-  source->UseGzip();
   return source;
 }
 

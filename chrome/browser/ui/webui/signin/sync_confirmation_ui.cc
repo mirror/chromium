@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/webui/signin/sync_confirmation_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "content/public/browser/web_ui.h"
@@ -26,7 +27,7 @@ SyncConfirmationUI::SyncConfirmationUI(content::WebUI* web_ui)
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUISyncConfirmationHost);
   source->SetJsonPath("strings.js");
-
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("signin_shared_css.html", IDR_SIGNIN_SHARED_CSS_HTML);
 
   int title_ids, confirm_button_ids, undo_button_ids;
