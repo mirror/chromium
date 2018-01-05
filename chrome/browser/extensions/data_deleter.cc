@@ -4,6 +4,7 @@
 
 #include "chrome/browser/extensions/data_deleter.h"
 
+#include "base/barrier_closure.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/task_runner.h"
@@ -54,7 +55,8 @@ void ClearCookiesOnIOThread(scoped_refptr<net::URLRequestContextGetter> context,
 // |partition|.
 void DeleteOrigin(Profile* profile,
                   StoragePartition* partition,
-                  const GURL& origin) {
+                  const GURL& origin,
+                  base::OnceClosure callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(profile);
   DCHECK(partition);
@@ -70,9 +72,10 @@ void DeleteOrigin(Profile* profile,
     // simpler than special casing.  This code should go away once we merge
     // the various URLRequestContexts (http://crbug.com/159193).
 
-    partition->ClearDataForOrigin(
-        ~StoragePartition::REMOVE_DATA_MASK_SHADER_CACHE,
-        StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL, origin);
+    partition->ClearData(~StoragePartition::REMOVE_DATA_MASK_SHADER_CACHE,
+                         StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
+                         origin, StoragePartition::OriginMatcherFunction(),
+                         base::Time(), base::Time::Max(), std::move(callback));
 
     // Delete cookies separately from other data so that the request context
     // for extensions doesn't need to be passed into the StoragePartition.
@@ -100,7 +103,9 @@ void OnNeedsToGarbageCollectIsolatedStorage(WeakPtr<ExtensionService> es) {
 }  // namespace
 
 // static
-void DataDeleter::StartDeleting(Profile* profile, const Extension* extension) {
+void DataDeleter::StartDeleting(Profile* profile,
+                                const Extension* extension,
+                                base::OnceClosure callback) {
   DCHECK(profile);
   DCHECK(extension);
 
@@ -110,6 +115,7 @@ void DataDeleter::StartDeleting(Profile* profile, const Extension* extension) {
         base::Bind(
             &OnNeedsToGarbageCollectIsolatedStorage,
             ExtensionSystem::Get(profile)->extension_service()->AsWeakPtr()));
+    std::move(callback).Run();
   } else {
     GURL launch_web_url_origin(
         AppLaunchInfo::GetLaunchWebURL(extension).GetOrigin());
@@ -120,11 +126,16 @@ void DataDeleter::StartDeleting(Profile* profile, const Extension* extension) {
 
     ExtensionSpecialStoragePolicy* storage_policy =
         profile->GetExtensionSpecialStoragePolicy();
+
+    base::RepeatingClosure barrier =
+        base::BarrierClosure(2, std::move(callback));
     if (storage_policy->NeedsProtection(extension) &&
         !storage_policy->IsStorageProtected(launch_web_url_origin)) {
-      DeleteOrigin(profile, partition, launch_web_url_origin);
+      DeleteOrigin(profile, partition, launch_web_url_origin, barrier);
+    } else {
+      barrier.Run();
     }
-    DeleteOrigin(profile, partition, extension->url());
+    DeleteOrigin(profile, partition, extension->url(), barrier);
   }
 
   // Begin removal of the settings for the current extension.
