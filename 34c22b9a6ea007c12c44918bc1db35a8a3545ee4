@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb4156a_bbe19325",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T23:52:34Z",
+      "side": 1,
+      "message": "Is this needed given we have line 83 of common_v2.sb ?",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1794e4f2_48f6cca1",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T23:52:34Z",
+      "side": 1,
+      "message": "This one is new from gpu.sb -- how\u0027d it come up?",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a516581_7393b7d3",
+        "filename": "services/service_manager/sandbox/mac/gpu_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T23:52:34Z",
+      "side": 1,
+      "message": "Alphabetize this list?",
+      "revId": "34c22b9a6ea007c12c44918bc1db35a8a3545ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
