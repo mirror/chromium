@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331cd6c7_2cc3711b",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "nit: How about just RequestToLaunchApp? C++ does not have a convention to describe the argument in method name.",
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1016bf2f_51c03cfa",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "nit: Can we reformat this to use all available width?",
+      "range": {
+        "startLine": 67,
+        "startChar": 46,
+        "endLine": 67,
+        "endChar": 52
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8aa418_33229b1c",
+        "filename": "ios/chrome/browser/app_launcher/app_launcher_tab_helper.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 72,
+        "startChar": 41,
+        "endLine": 72,
+        "endChar": 42
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caef8214_ebdea982",
+        "filename": "ios/chrome/browser/app_launcher/app_launching.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "This method does not look like AppLaunching-related method.",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e738cb50_fce84046",
+        "filename": "ios/chrome/browser/ui/app_launcher/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "nit: 2018?",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd7af8c_9ae4b3a6",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "nit: Can we reformat this to fit all available width?",
+      "range": {
+        "startLine": 55,
+        "startChar": 46,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea34c14_72cb6f7c",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "This captures URL by reference, which may cause a crash.",
+      "range": {
+        "startLine": 101,
+        "startChar": 61,
+        "endLine": 101,
+        "endChar": 74
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24388d2_2e8a23d3",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:12:49Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_BOOLEAN expand to a large chunk of code, which has statics and other heavy things. Can we move UMA_HISTOGRAM_BOOLEAN to a separate function to avoid duplication overhead?",
+      "range": {
+        "startLine": 122,
+        "startChar": 38,
+        "endLine": 122,
+        "endChar": 63
+      },
+      "revId": "4e18e777ece2776622b72a5400861728425855d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
