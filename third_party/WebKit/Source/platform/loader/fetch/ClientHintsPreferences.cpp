@@ -102,6 +102,11 @@ void ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
 
   const KURL url = response.Url();
 
+  if (url.Protocol() != "https") {
+    // Only HTTPS domains are allowed to persist client hints.
+    return;
+  }
+
   bool conversion_ok = false;
   int64_t persist_duration_seconds =
       accept_ch_lifetime_header_value.ToInt64Strict(&conversion_ok);

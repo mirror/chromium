@@ -172,12 +172,6 @@ mojom::FetchCacheMode DetermineFrameCacheMode(Frame* frame,
                             ResourceType::kIsNotMainResource, load_type);
 }
 
-bool IsClientHintsAllowed(const KURL& url) {
-  return (url.ProtocolIs("http") || url.ProtocolIs("https")) &&
-         (SecurityOrigin::IsSecure(url) ||
-          SecurityOrigin::Create(url)->IsLocalhost());
-}
-
 }  // namespace
 
 struct FrameFetchContext::FrozenState final
@@ -515,11 +509,9 @@ void FrameFetchContext::DispatchDidReceiveResponse(
                               ->Loader()
                               .GetProvisionalDocumentLoader()) {
     FrameClientHintsPreferencesContext hints_context(GetFrame());
-    if (IsClientHintsAllowed(response.Url())) {
-      document_loader_->GetClientHintsPreferences()
-          .UpdateFromAcceptClientHintsHeader(
-              response.HttpHeaderField(HTTPNames::Accept_CH), &hints_context);
-    }
+    document_loader_->GetClientHintsPreferences()
+        .UpdateFromAcceptClientHintsHeader(
+            response.HttpHeaderField(HTTPNames::Accept_CH), &hints_context);
     // When response is received with a provisional docloader, the resource
     // haven't committed yet, and we cannot load resources, only preconnect.
     resource_loading_policy = LinkLoader::kDoNotLoadResources;
@@ -822,9 +814,6 @@ void FrameFetchContext::AddClientHintsIfNecessary(
     const ClientHintsPreferences& hints_preferences,
     const FetchParameters::ResourceWidth& resource_width,
     ResourceRequest& request) {
-  if (!IsClientHintsAllowed(request.Url()))
-    return;
-
   WebEnabledClientHints enabled_hints;
   // Check if |url| is allowed to run JavaScript. If not, client hints are not
   // attached to the requests that initiate on the render side.
@@ -1165,9 +1154,6 @@ bool FrameFetchContext::ShouldSendClientHint(
 
 void FrameFetchContext::ParseAndPersistClientHints(
     const ResourceResponse& response) {
-  if (!IsClientHintsAllowed(response.Url()))
-    return;
-
   ClientHintsPreferences hints_preferences;
   WebEnabledClientHints enabled_client_hints;
   TimeDelta persist_duration;
