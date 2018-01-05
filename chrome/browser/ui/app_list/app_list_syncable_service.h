@@ -11,11 +11,13 @@
 #include <memory>
 #include <string>
 
+#include "ash/app_list/controller/app_list_controller_impl.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/sync/glue/sync_start_util.h"
+#include "chrome/browser/ui/app_list/app_list_controller_client_impl.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/sync/model/string_ordinal.h"
 #include "components/sync/model/sync_change.h"
@@ -269,6 +271,9 @@ class AppListSyncableService : public syncer::SyncableService,
   Profile* profile_;
   extensions::ExtensionSystem* extension_system_;
   std::unique_ptr<ChromeAppListModelUpdater> model_updater_;
+  // TODO(hejq): move |app_list_controller_| when we finish refactoring.
+  std::unique_ptr<ash::AppListControllerImpl> app_list_controller_;
+  std::unique_ptr<AppListControllerClientImpl> app_list_client_;
   std::unique_ptr<ModelObserver> model_observer_;
   std::unique_ptr<ExtensionAppModelBuilder> apps_builder_;
   std::unique_ptr<ArcAppModelBuilder> arc_apps_builder_;

@@ -293,6 +293,11 @@ AppListSyncableService::AppListSyncableService(
     : profile_(profile),
       extension_system_(extension_system),
       model_updater_(std::make_unique<ChromeAppListModelUpdater>()),
+      app_list_controller_(std::make_unique<ash::AppListControllerImpl>(
+          model_updater_->model_.get(),
+          model_updater_->search_model_.get())),
+      app_list_client_(std::make_unique<AppListControllerClientImpl>(
+          app_list_controller_.get())),
       initial_sync_data_processed_(false),
       first_app_list_sync_(true),
       weak_ptr_factory_(this) {

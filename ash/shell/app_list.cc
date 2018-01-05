@@ -129,8 +129,7 @@ class WindowTypeShelfItem : public app_list::AppListItem {
     }
   }
 
-  // AppListItem
-  void Activate(int event_flags) override { ActivateItem(type_, event_flags); }
+  void Activate(int event_flags) { ActivateItem(type_, event_flags); }
 
  private:
   Type type_;

@@ -53,8 +53,6 @@ void AppListItem::RemoveObserver(AppListItemObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void AppListItem::Activate(int event_flags) {}
-
 const char* AppListItem::GetItemType() const {
   static const char* app_type = "";
   return app_type;
