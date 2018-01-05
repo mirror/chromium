@@ -271,6 +271,7 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
       profile_->GetPath().Append(chrome::kDownloadMetadataStoreFilename);
   download_metadata_cache_.reset(new download::InProgressCacheImpl(
       metadata_cache_file, disk_access_task_runner_));
+  location_dialog_helper_.reset(new DownloadLocationDialogHelper());
 }
 
 ChromeDownloadManagerDelegate::~ChromeDownloadManagerDelegate() {
@@ -755,6 +756,7 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
     const base::FilePath& suggested_path,
     DownloadConfirmationReason reason,
     const DownloadTargetDeterminerDelegate::ConfirmationCallback& callback) {
+  LOG(ERROR) << "joy: RequestConfirmation";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download->IsTransient());
 
@@ -770,6 +772,14 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
       callback.Run(DownloadConfirmationResult::CANCELED, base::FilePath());
       return;
 
+    case DownloadConfirmationReason::PREFERENCE:
+      LOG(ERROR) << "joy: DownloadConfirmationReason::PREFERENCE";
+      if (download->GetWebContents()) {
+        location_dialog_helper_->ShowDialog(download->GetWebContents(),
+                                            suggested_path, callback);
+      }
+      return;
+
     case DownloadConfirmationReason::NAME_TOO_LONG:
     case DownloadConfirmationReason::TARGET_NO_SPACE:
     // These are errors. But rather than cancel the download we are going to
@@ -781,7 +791,7 @@ void ChromeDownloadManagerDelegate::RequestConfirmation(
     // prompt and try the same location.
 
     case DownloadConfirmationReason::SAVE_AS:
-    case DownloadConfirmationReason::PREFERENCE:
+      // case DownloadConfirmationReason::PREFERENCE:
       callback.Run(DownloadConfirmationResult::CONTINUE_WITHOUT_CONFIRMATION,
                    suggested_path);
       return;

@@ -104,6 +104,7 @@ void SelectFileDialog::SelectFile(
     const base::FilePath::StringType& default_extension,
     gfx::NativeWindow owning_window,
     void* params) {
+  LOG(ERROR) << "joy: SelectFile default_path: " << default_path;
   DCHECK(listener_);
 
   if (select_file_policy_.get() &&
