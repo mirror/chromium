@@ -16,6 +16,24 @@
       "revId": "52400724b8e86199aea17a7fc2a305c6c64399c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6dc3b2d_228dad95",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2018-01-05T18:09:00Z",
+      "side": 1,
+      "message": "Done, sorry for the delay (vacation).",
+      "parentUuid": "b2d2dee4_67597cd8",
+      "revId": "52400724b8e86199aea17a7fc2a305c6c64399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
