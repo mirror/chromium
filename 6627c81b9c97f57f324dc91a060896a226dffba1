@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03424d6f_0565abde",
+        "filename": "components/sync/base/data_type_histogram_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce54500_fce56d9b",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93d3710_ef9757d5",
+        "filename": "content/public/test/content_test_suite_base.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852a3a1c_9d4cd9a6",
+        "filename": "dbus/signal_sender_verification_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2deb2bd8_52e23bc1",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2645ac_f2977803",
+        "filename": "ios/web/test/web_test_suite.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 8,
+        "startChar": 45,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fc6976_c25866ed",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b18522b_6f6b6af3",
+        "filename": "media/test/run_all_unittests.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce003c3d_7da85b50",
+        "filename": "sql/test/sql_test_suite.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c39e308_0a6d3fc1",
+        "filename": "testing/libfuzzer/fuzzers/language_detection_fuzzer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1459007_2cfee968",
+        "filename": "third_party/WebKit/Source/platform/testing/TestingPlatformSupport.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:11:25Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 36,
+        "startChar": 45,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "6627c81b9c97f57f324dc91a060896a226dffba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
