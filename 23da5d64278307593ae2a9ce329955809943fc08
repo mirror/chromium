@@ -39,6 +39,29 @@
       "revId": "23da5d64278307593ae2a9ce329955809943fc08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7af70c_bb85b9e3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2018-01-05T21:48:16Z",
+      "side": 1,
+      "message": "nit: Better to check IsValidFor(GetDocument()) instead.",
+      "range": {
+        "startLine": 305,
+        "startChar": 10,
+        "endLine": 305,
+        "endChar": 55
+      },
+      "revId": "23da5d64278307593ae2a9ce329955809943fc08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
