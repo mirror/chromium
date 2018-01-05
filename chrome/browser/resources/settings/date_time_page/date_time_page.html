@@ -58,7 +58,7 @@
             <cr-toggle
                 id="timeZoneAutoDetect"
                 aria-label="$i18n{timeZoneGeolocation}"
-                checked="[[timeZoneAutoDetect_]]"
+                checked="[[prefs.generated.resolve_timezone_by_geolocation_on_off.value]]"
                 disabled="[[hasTimeZoneAutoDetectPolicyRestriction_]]"
                 on-change="onTimeZoneAutoDetectChange_">
             </cr-toggle>
@@ -72,12 +72,11 @@
             <div id="timeZoneButton" class="two-line">
                 $i18n{timeZoneButton}
               <div class="secondary">
-                <div hidden="[[timeZoneAutoDetect_]]">
+                <div hidden="[[prefs.generated.resolve_timezone_by_geolocation_on_off.value]]">
                   [[activeTimeZoneDisplayName]]
                 </div>
-                <div hidden="[[!timeZoneAutoDetect_]]">
-                    [[getTimeZoneAutoDetectMethodDisplayName_(
-                          timeZoneAutoDetectMethod_)]]
+                <div hidden="[[!prefs.generated.resolve_timezone_by_geolocation_on_off.value]]">
+                    [[getTimeZoneAutoDetectMethodDisplayName_(prefs.generated.resolve_timezone_by_geolocation_method_short.value)]]
                 </div>
               </div>
             </div>
@@ -97,7 +96,6 @@
         <div class="settings-box continuation embedded"
             hidden="[[prefs.cros.flags.fine_grained_time_zone_detection_enabled.value]]">
           <timezone-selector prefs="{{prefs}}"
-              time-zone-auto-detect="[[timeZoneAutoDetect_]]"
               active-time-zone-display-name="{{activeTimeZoneDisplayName}}">
           </timezone-selector>
         </div>
@@ -117,7 +115,6 @@
             associated-control="[[$$('#timeZoneSettingsTrigger')]]"
             page-title="$i18n{timeZoneSubpageTitle}">
           <timezone-subpage id="timezoneSubpage" prefs="{{prefs}}"
-              time-zone-auto-detect="[[timeZoneAutoDetect_]]"
               active-time-zone-display-name="{{activeTimeZoneDisplayName}}">
           </timezone-subpage>
         </settings-subpage>
