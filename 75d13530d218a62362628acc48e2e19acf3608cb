@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86823585_dea035d1",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "2018~",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce75299_eaacf672",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "do we still need this if we already have it in the header?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0996eea5_6f179cf4",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "nit: please remove this space",
+      "range": {
+        "startLine": 28,
+        "startChar": 50,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f5775e_aa96c837",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "2018~",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3c3d4f_38bf3d1c",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "c system files should be before c++ ones, and can you please use \u003c\u003e instead of quotes?\nalso can you please change the quotes for stdint.h in clear_digest_task.h?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1802d4b_9d17b765",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "nit: empty line here after namespace {?",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a53f00_e76bc0b5",
+        "filename": "components/offline_pages/core/model/add_page_to_download_manager_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "nit: i don\u0027t have a strong opinion here but is there a strong reason not using unique_ptr or just an object to make the ownership clearer?",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f8afba_327b1857",
+        "filename": "components/offline_pages/core/system_download_manager_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "nit: empty line before this?",
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90c858e_9a8df01e",
+        "filename": "components/offline_pages/core/system_download_manager_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "will it make sense to have this as a setter as well? will there be any test cases that need to call addCompleteDownload() more than once?",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c13a559_60b50d2a",
+        "filename": "components/offline_pages/core/system_download_manager_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2018-01-05T23:04:22Z",
+      "side": 1,
+      "message": "nit: upper case?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "75d13530d218a62362628acc48e2e19acf3608cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
