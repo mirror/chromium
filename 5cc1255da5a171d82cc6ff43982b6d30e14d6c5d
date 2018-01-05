@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c1766eb_705c629b",
+        "filename": "build/toolchain/win/midl.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T20:07:49Z",
+      "side": 1,
+      "message": "Can you add \"header_file (optional)\" with documentation here.",
+      "revId": "5cc1255da5a171d82cc6ff43982b6d30e14d6c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
