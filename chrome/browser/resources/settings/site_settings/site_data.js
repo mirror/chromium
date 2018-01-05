@@ -14,7 +14,7 @@
  *   localData: string,
  * }}
  */
-var CookieDataSummaryItem;
+let CookieDataSummaryItem;
 
 /**
  * @typedef {{
@@ -23,7 +23,7 @@ var CookieDataSummaryItem;
  *   count: number,
  * }}
  */
-var CookieRemovePacket;
+let CookieRemovePacket;
 
 /**
  * TODO(dbeam): upstream to polymer externs?

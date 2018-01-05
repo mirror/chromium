@@ -8,7 +8,7 @@
  * fixed-width font sizes. http://crbug.com/91922.
  * @const @private {number}
  */
-var SIZE_DIFFERENCE_FIXED_STANDARD_ = 3;
+const SIZE_DIFFERENCE_FIXED_STANDARD_ = 3;
 
 
 /**
@@ -101,7 +101,7 @@ Polymer({
     focusConfig_: {
       type: Object,
       value: function() {
-        var map = new Map();
+        const map = new Map();
         if (settings.routes.FONTS) {
           map.set(
               settings.routes.FONTS.path, '#customize-fonts-subpage-trigger');
@@ -283,7 +283,7 @@ Polymer({
       return;
     }
 
-    var i18nId;
+    let i18nId;
     // <if expr="is_linux and not chromeos">
     i18nId = useSystemTheme ? 'systemTheme' : 'classicTheme';
     // </if>
