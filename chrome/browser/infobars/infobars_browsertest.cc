@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/banners/app_banner_infobar_delegate_desktop.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/extensions/api/debugger/extension_dev_tools_infobar.h"
 #include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -188,6 +189,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"extension_dev_tools", IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
       {"alternate_nav", IBD::ALTERNATE_NAV_INFOBAR_DELEGATE},
@@ -206,6 +208,10 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
     case IBD::APP_BANNER_INFOBAR_DELEGATE:
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
+      break;
+    case IBD::EXTENSION_DEV_TOOLS_INFOBAR_DELEGATE:
+      extensions::ExtensionDevToolsInfoBar::Create("id", "name", nullptr,
+                                                   base::Closure());
       break;
     case IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE:
       ChromeSelectFilePolicy(GetWebContents()).SelectFileDenied();
@@ -295,6 +301,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_extension_dev_tools) {
   ShowAndVerifyUi();
 }
 
