@@ -375,11 +375,7 @@ void SurfaceHitTestTestHelper(
         quit_closure.Run();
       }));
   content::RunThisRunLoop(&run_loop);
-  ASSERT_EQ(
-      viz::FrameSinkId(
-          root_view->GetRenderWidgetHost()->GetProcess()->GetID(),
-          child_node->render_manager()->GetProxyToParent()->GetRoutingID()),
-      received_frame_sink_id);
+  ASSERT_EQ(rwhv_child->GetFrameSinkId(), received_frame_sink_id);
 
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
