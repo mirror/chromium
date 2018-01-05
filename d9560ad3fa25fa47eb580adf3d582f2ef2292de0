@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "623b573a_021dc628",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T19:01:36Z",
+      "side": 1,
+      "message": "Gotcha.  Sounds good to me... I can certainly see wanting to handle 16-bit.  (Though in terms of bulk images in the wild, I think you\u0027ll find the proportion that are 8-bit are like 1-ε.)",
+      "parentUuid": "b036f36e_502bf31b",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ad08af6_c2a06f5b",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -219,6 +243,24 @@
       "side": 1,
       "message": "According to https://www.w3.org/TR/2003/REC-PNG-20031110/#11PLTE (section 11.3.2), num_trans is guaranteed to never be more than the number of palette entries, but it can be less. One pass could work, as the `if (i \u003c num_trans) vld1_u8 else vdup` is likely something all branch predictors can handle.",
       "parentUuid": "6ad08af6_c2a06f5b",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda3ca54_835ff8f6",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T19:01:36Z",
+      "side": 1,
+      "message": "Ah, gotcha.  Yeah, I would be interested to see the effect on both code generation and execution speed of the \u003d (i \u003c num_trans) ? vld1_u8() : dup() version.",
+      "parentUuid": "e6bf531f_8c2a73c7",
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
