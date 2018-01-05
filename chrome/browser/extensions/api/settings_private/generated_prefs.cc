@@ -1,0 +1,63 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/extensions/api/settings_private/generated_prefs.h"
+
+#include "base/callback.h"
+#include "build/build_config.h"
+#include "chrome/browser/extensions/api/settings_private/generated_pref.h"
+#include "chrome/browser/extensions/api/settings_private/prefs_util_enums.h"
+#include "chrome/common/extensions/api/settings_private.h"
+
+namespace extensions {
+namespace settings_private {
+
+GeneratedPrefs::GeneratedPrefs(Profile* profile) {
+}
+
+GeneratedPrefs::~GeneratedPrefs() {}
+
+bool GeneratedPrefs::IsGenerated(const std::string& pref_name) const {
+  return FindPrefImpl(pref_name) != nullptr;
+}
+
+std::unique_ptr<api::settings_private::PrefObject> GeneratedPrefs::GetPref(
+    const std::string& pref_name) const {
+  GeneratedPref* impl = FindPrefImpl(pref_name);
+  if (!impl)
+    return nullptr;
+
+  return impl->GetPrefObject();
+}
+
+SetPrefResult GeneratedPrefs::SetPref(const std::string& pref_name,
+                                      const base::Value* value) {
+  GeneratedPref* impl = FindPrefImpl(pref_name);
+  if (!impl)
+    return SetPrefResult::PREF_TYPE_UNSUPPORTED;
+
+  return impl->SetPref(value);
+}
+
+void GeneratedPrefs::AddPrefObserver(
+    const std::string& pref_name,
+    const GeneratedPrefs::PrefChangeCallback& observer) {
+  GeneratedPref* impl = FindPrefImpl(pref_name);
+  if (!impl)
+    return;
+
+  impl->AddPrefObserver(observer);
+}
+
+GeneratedPref* GeneratedPrefs::FindPrefImpl(
+    const std::string& pref_name) const {
+  const PrefsMap::const_iterator it = prefs_.find(pref_name);
+  if (it == prefs_.end())
+    return nullptr;
+
+  return it->second.get();
+}
+
+}  // namespace settings_private
+}  // namespace extensions
