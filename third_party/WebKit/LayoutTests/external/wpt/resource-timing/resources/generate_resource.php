@@ -17,12 +17,12 @@
       break;
 
   case "css":
-      $body = file_get_contents("gray_bg.css");
+      $body = file_get_contents("resource_timing_test0.css");
       $content_type = "text/css";
       break;
 
   case "font":
-      $body = file_get_contents("Ahem.ttf");
+      $body = file_get_contents("/fonts/Ahem.ttf");
       $content_type = "application/octet-stream";
       break;
 
@@ -32,12 +32,12 @@
       break;
 
   case "image":
-      $body = file_get_contents("1x1-blue.png");
+      $body = file_get_contents("blue.png");
       $content_type = "image/png";
       break;
 
   case "script":
-      $body = file_get_contents("empty_script.js");
+      $body = file_get_contents("resource_timing_test0.js");
       $content_type = "text/javascript";
       break;
 
