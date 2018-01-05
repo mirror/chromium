@@ -105,6 +105,24 @@
       "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d2d0b4_12ec4960",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T23:50:34Z",
+      "side": 1,
+      "message": "Hmm... yeah I guess there\u0027s no real great option. To summarize:\n\n1. The current solution is unfortunate because it requires processing each line multiple times for headers.\n2. Encoding the logic directly into QuotedPrintableEncode doesn\u0027t really make sense either (because when encoding the body, there\u0027s no required utf-8 encoding)\n3. Creating a delegate works but (still) feels very specific to this particular problem.\n\nI guess let\u0027s just go with #3. If we do #3, we should consider just having an AppendOutput() function as well for outputting the normal characters: then we can avoid creating a scratch Vector, copying it to another Vector, and then turning it into a String (below). In that case, we could just call AddPrefix and AddSoftLineBreak to something like DidStartLine and DidFinishLine. Does this sound OK?",
+      "parentUuid": "f998c5e0_f7332dfe",
+      "revId": "9af8acb880dbbd2303a49000023a16ae0cffbbcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
