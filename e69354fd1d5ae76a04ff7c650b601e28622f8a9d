@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7a61578_64e4c7d1",
+        "filename": ".gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "This will easily rot.  What if it was vr/assets/background/ and the image was in there?  Then when the gradients come in, they\u0027ll also be covered?  Just a thought.",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cf7d85_c567d1c5",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "To confirm - this CL has been tested to not break anything in the \"no internal repo\" case, right?",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7168f5bb_2016d6e2",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "Weird wrapping here - all on individual lines, or pack in as many as you can?",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55efb31e_1429451d",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "Does this need 10 threads?  Not sure if it matters.",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d96fe52f_f505a8e1",
         "filename": "chrome/browser/resources/vr/OWNERS",
         "patchSetId": 4
@@ -13,6 +81,23 @@
       "writtenOn": "2018-01-05T17:10:18Z",
       "side": 1,
       "message": "Happy to add more owners. Added me to keep track of the assets component content.",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0736b740_df5c241d",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "Weird that there doesn\u0027t look to be a runtime equivalent of this.",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +144,23 @@
         "endLine": 508,
         "endChar": 8
       },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54842e56_107dbb52",
+        "filename": "chrome/browser/vr/testapp/vr_testapp_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:22:31Z",
+      "side": 1,
+      "message": "Empty spaces?  Gerrit seems to be highlighting them.",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
