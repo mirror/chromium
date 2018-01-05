@@ -685,7 +685,11 @@ public class DownloadUtils {
                 entry != null && state == DownloadState.INTERRUPTED && entry.isAutoResumable;
 
         if (isDownloadPending) {
-            return context.getString(R.string.download_notification_pending);
+            if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                return context.getString(R.string.download_notification_pending_network);
+            } else {
+                return context.getString(R.string.download_notification_pending);
+            }
         } else if (isDownloadPaused(item)) {
             return context.getString(R.string.download_notification_paused);
         }

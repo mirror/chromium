@@ -243,6 +243,13 @@ static jboolean JNI_OfflinePageBridge_IsPageSharingEnabled(
   return offline_pages::IsOfflinePagesSharingEnabled();
 }
 
+static jboolean
+JNI_OfflinePageBridge_IsOfflinePagesDescriptivePendingStatusEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz) {
+  return offline_pages::IsOfflinePagesDescriptivePendingStatusEnabled();
+}
+
 static jboolean JNI_OfflinePageBridge_CanSavePage(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
