@@ -32,7 +32,12 @@ class ScopedGpuPreferences {
 
 }  // namespace
 
-TEST(GpuPreferencesUtilTest, EncodeDecode) {
+#if defined(OS_WIN)
+#define MAYBE_EncodeDecode DISABLED_EncodeDecode
+#else
+#define MAYBE_EncodeDecode EncodeDecode
+#endif
+TEST(GpuPreferencesUtilTest, MAYBE_EncodeDecode) {
   {  // Testing default values.
     ScopedGpuPreferences scoped_input_prefs, scoped_decoded_prefs;
     GpuPreferences& input_prefs = scoped_input_prefs.Ref();
