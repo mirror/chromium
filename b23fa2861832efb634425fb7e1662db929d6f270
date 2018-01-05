@@ -22,6 +22,30 @@
       "revId": "b23fa2861832efb634425fb7e1662db929d6f270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8c86e3_af090036",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93228,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:09:59Z",
+      "side": 0,
+      "message": "Keeping it around for now until we deprecate it.",
+      "parentUuid": "6520237f_f4f34f16",
+      "range": {
+        "startLine": 93222,
+        "startChar": 0,
+        "endLine": 93228,
+        "endChar": 12
+      },
+      "revId": "b23fa2861832efb634425fb7e1662db929d6f270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

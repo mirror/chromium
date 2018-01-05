@@ -22,6 +22,30 @@
       "revId": "69ca447eaed39ee41e1f94756f90f8cb0e8c4f74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50ca0ab_1f650ed5",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:09:59Z",
+      "side": 1,
+      "message": "Good idea! Changed to base::TimeTicks.",
+      "parentUuid": "b2d2b623_348b7783",
+      "range": {
+        "startLine": 185,
+        "startChar": 35,
+        "endLine": 185,
+        "endChar": 39
+      },
+      "revId": "69ca447eaed39ee41e1f94756f90f8cb0e8c4f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

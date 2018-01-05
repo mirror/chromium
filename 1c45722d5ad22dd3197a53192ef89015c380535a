@@ -22,6 +22,30 @@
       "revId": "1c45722d5ad22dd3197a53192ef89015c380535a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886dc0ec_836f7343",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:09:59Z",
+      "side": 1,
+      "message": "VR.Component.Assets.DurationUntilReady.OnRegisterComponent will report the same values as VR.Component.Assets.DurationUntilReady.OnChromeStart except of a few edge cases. That is why I use the same granularity. Initially, this granularity was chosen since we expect the majority of the values to be around 0 and 6 mins. With 100 buckets we get a reasonable precision around the 6 mins mark.",
+      "parentUuid": "1de048a5_78b2bbe5",
+      "range": {
+        "startLine": 151,
+        "startChar": 55,
+        "endLine": 151,
+        "endChar": 74
+      },
+      "revId": "1c45722d5ad22dd3197a53192ef89015c380535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
