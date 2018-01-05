@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "94bec6fb_bc1f3b30",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T15:19:38Z",
+      "side": 1,
+      "message": "Yes, I also cannot see one.",
+      "parentUuid": "9f720f49_f1a12e67",
+      "range": {
+        "startLine": 561,
+        "startChar": 20,
+        "endLine": 561,
+        "endChar": 38
+      },
+      "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef62ab4d_d42e481a",
         "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
         "patchSetId": 4
@@ -63,6 +87,24 @@
       "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ac8c95_0b1071e0",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T15:19:38Z",
+      "side": 1,
+      "message": "Done. \n\n(Had it initially for consistency.)",
+      "parentUuid": "ef62ab4d_d42e481a",
+      "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

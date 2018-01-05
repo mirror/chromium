@@ -16,6 +16,24 @@
       "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aadd028_e326af97",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T15:19:38Z",
+      "side": 0,
+      "message": "I\u0027d like to keep it but unfortunately we cannot.\n\nVectorTraits\u003cblink::RuleData\u003e::kCanCopyWithMemcpy \u003d\u003e std::is_trivially_copy_assignable\u003cblink::RuleData\u003e \u003d\u003e false\n\nis_trivially_copy_assignable doesn\u0027t know about our special handling.\n\nNeed to think about how we could preserve that ability to nicely assert it.",
+      "parentUuid": "2ef0b278_18b4d648",
+      "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
