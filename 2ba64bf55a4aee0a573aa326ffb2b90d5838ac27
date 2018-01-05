@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad03995a_2e3ed642",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"DrawQuads\", and \"when no quad is being\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560afcfd_e34d5a8b",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"remains\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6485cae7_6fe01d71",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"remains\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bd8f60_6030e3ba",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"remains\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bae5a5_3b42a6e6",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "why did u say rect6 - (rect6 union rect7)? isn\u0027t it rect6-rect7 (ie bottom rect minus top rect)?",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f604382d_5506ce3b",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"remains\" .. i guess this repeats a lot :)",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd9ab54_77d7c081",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"intersect\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b9b1a6_0b7593b3",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"intersect\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98866ae_0ede91ca",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"negating the z-axis does not cause |q2| to move at all\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78243d45_5c7e07e5",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"rotation\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5ef23f_0ba47245",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"rotation\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a036c6_1d79f9ec",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"RenderPass\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4689d69_a326f2c5",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"The RenderPassDrawQuad\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee09562_79aa71c0",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2296,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "adding a row like\n\n|   | ||\n\nabove the bottom row to give the inner rect left/right edges might help make this more clear. atm it looks like a line. or there\u0027s always extended ascii bar characters ^_^",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d862d69f_b0e54713",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2365,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"intersects\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2648d56e_116490d0",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T00:16:00Z",
+      "side": 1,
+      "message": "\"on the root RenderPass\"",
+      "revId": "2ba64bf55a4aee0a573aa326ffb2b90d5838ac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
