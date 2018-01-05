@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1ac2ae_12a51050",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2298,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "not accessible yet",
+      "range": {
+        "startLine": 2298,
+        "startChar": 38,
+        "endLine": 2298,
+        "endChar": 48
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d76299_73d5924e",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "please update the function description in the header file.",
+      "range": {
+        "startLine": 1723,
+        "startChar": 28,
+        "endLine": 1723,
+        "endChar": 51
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee5cff7_0288dc79",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1739,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "that are",
+      "range": {
+        "startLine": 1739,
+        "startChar": 56,
+        "endLine": 1739,
+        "endChar": 63
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6648ae4_d69a2d91",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "It is",
+      "range": {
+        "startLine": 1740,
+        "startChar": 17,
+        "endLine": 1740,
+        "endChar": 21
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f200c2_a51615fd",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "selected",
+      "range": {
+        "startLine": 1740,
+        "startChar": 22,
+        "endLine": 1740,
+        "endChar": 27
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48387c51_5e1be5d6",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "1. If the page already contain a non-empty value in input element, this is adopted and not overridden.",
+      "range": {
+        "startLine": 1741,
+        "startChar": 8,
+        "endLine": 1741,
+        "endChar": 40
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf746685_c1f25f4f",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "new line",
+      "range": {
+        "startLine": 1743,
+        "startChar": 21,
+        "endLine": 1743,
+        "endChar": 22
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6469d9_2d73c3da",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": ", or if username field is empty and not...",
+      "range": {
+        "startLine": 1743,
+        "startChar": 62,
+        "endLine": 1743,
+        "endChar": 63
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c13641_d0c265d1",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "-p",
+      "range": {
+        "startLine": 1771,
+        "startChar": 42,
+        "endLine": 1771,
+        "endChar": 43
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6df4bf7_568c0b9c",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 1,
+      "message": "set by the page (to avoid the ambiguity of \"filling\")",
+      "range": {
+        "startLine": 1771,
+        "startChar": 55,
+        "endLine": 1771,
+        "endChar": 64
+      },
+      "revId": "ffe30c3f139baf2e97fb91926c1aec08d0f3cce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

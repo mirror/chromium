@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92fc908d_a76e4bd9",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 0,
+      "message": "Why is this not needed anymore?",
+      "revId": "c9f5fc2de639dac40c6cc956ef3caca343513099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acab7ad_3c001c51",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2018-01-05T12:56:54Z",
+      "side": 0,
+      "message": "Do you fully understand the implications of this change? I noticed that line 1783 in the old code (1792 in the new code) still has the \"if (old !\u003d new)\" pattern instead of \"if (!new.empty() \u0026\u0026 old.empty())\"",
+      "revId": "c9f5fc2de639dac40c6cc956ef3caca343513099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
