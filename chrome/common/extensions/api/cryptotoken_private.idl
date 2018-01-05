@@ -5,9 +5,21 @@
 // <code>chrome.cryptotokenPrivate</code> API that provides hooks to Chrome to
 // be used by cryptotoken component extension.
 namespace cryptotokenPrivate {
+  // In the following, an AppId is roughly an origin and is formally defined in
+  // https://fidoalliance.org/specs/fido-u2f-v1.2-ps-20170411/fido-appid-and-facets-v1.2-ps-20170411.html
 
   // Callback for appId check
   callback AppIdCallback = void(boolean result);
+
+  dictionary CanAppIdGetAttestationOptions {
+    // appId is the AppId (see definition, above) that was used in the
+    // registration request and which has been authenticated by
+    // |canOriginAssertAppId|.
+    DOMString appId;
+    // tabId identifies the tab in which the registration is occuring so that
+    // any permissions prompt is correctly located.
+    long tabId;
+  };
 
   interface Functions {
     // Checks whether the origin is allowed to assert the appId, according to
@@ -27,5 +39,10 @@ namespace cryptotokenPrivate {
     // use its batch attestation certificate.
     static void isAppIdHashInEnterpriseContext(ArrayBuffer appIdHash,
                                                AppIdCallback callback);
+
+    // Checks whether the given appId can access real attestation data, or
+    // whether generic attestation data should be substituted.
+    static void canAppIdGetAttestation(CanAppIdGetAttestationOptions options,
+                                       AppIdCallback callback);
   };
 };
