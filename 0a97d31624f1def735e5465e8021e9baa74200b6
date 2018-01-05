@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e047230_b523ffdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-05T19:04:43Z",
+      "side": 1,
+      "message": "Is this case a subset of the other case? (ie. getIsDownloadPending should always be true if downloadUpdate.getPendingState() !\u003d PendingState.NOT_PENDING?) Are there cases that have getIsDownloadPending true but downloadUpdate.getPendingState() !\u003d PendingState.NOT_PENDING?\n\nAlso do we really need two enums for that or is there a plan to take out the getPendingState after the isOfflinePagesDescriptivePendingStatusEnabled is always true?",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 88
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcf5b3e_8960a8e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-05T19:04:43Z",
+      "side": 1,
+      "message": "Would it make sense to pass a more distinguishing param in the cases that don\u0027t include the pendingState parameter and !isOfflinePagesDescriptivePendingStatusEnabled? Would there be a difference in behavior in those cases that isn\u0027t captured by NOT_PENDING? If not, then why not just pass the PendingState.NOT_PENDING instead of having the additional method?\n\n(Same goes for other instances with the two versions of each of the methods, ie notifyDownloadPending, notifyDownloadPaused, notifyDownloadInterrupted, etc).",
+      "range": {
+        "startLine": 229,
+        "startChar": 32,
+        "endLine": 229,
+        "endChar": 56
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13daa97_46a6554f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2018-01-05T19:04:43Z",
+      "side": 1,
+      "message": "nit: Maybe include a comment about why this is always PENDING_NETWORK vs the other types of pending.",
+      "range": {
+        "startLine": 689,
+        "startChar": 16,
+        "endLine": 689,
+        "endChar": 89
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
