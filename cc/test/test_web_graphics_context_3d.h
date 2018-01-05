@@ -499,7 +499,7 @@ class TestWebGraphicsContext3D {
   gpu::SyncToken last_waited_sync_token_;
   int unpack_alignment_;
 
-  unsigned bound_buffer_;
+  std::map<unsigned, unsigned> bound_buffer_;
   TextureTargets texture_targets_;
 
   scoped_refptr<Namespace> namespace_;
