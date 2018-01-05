@@ -206,6 +206,29 @@
       "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d0a092_7d5d5102",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T18:22:40Z",
+      "side": 1,
+      "message": "Another test suggestion:\n\nRequest two at once, a low priority request and then a high priority request, using different socket params.  Make sure each request gets a correctly tagger socket.  The low priority request will probably connect first, but its socket will be vended to the second request.\n\nAnd at the SSL layer:\n\nStart with a transport pool with no available socket slots (but available sockets at the SSL layer).  Make two requests with different tags.  Cancel the first request.  Free up slots in the transport socket pool.  Make sure you get a socket with the right tag (And no data was reported for the wrong tag?  Or would that be expected).",
+      "range": {
+        "startLine": 1237,
+        "startChar": 6,
+        "endLine": 1237,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
