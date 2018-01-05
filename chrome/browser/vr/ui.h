@@ -9,6 +9,8 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/version.h"
+#include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/keyboard_ui_interface.h"
 #include "chrome/browser/vr/platform_controller.h"
@@ -89,7 +91,11 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) override;
   void OnAssetsComponentReady() override;
+  void OnAssetsLoaded(AssetsLoadStatus status,
+                      std::unique_ptr<Assets> assets,
+                      const base::Version& component_version);
 
+  void OnAssetsLoading();
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
@@ -116,8 +122,6 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void ReinitializeForTest(const UiInitialState& ui_initial_state);
 
   void Dump(bool include_bindings);
-
-  void SetBackgroundImage(std::unique_ptr<SkBitmap> bitmap);
 
   // Keyboard input related.
   void RequestFocus(int element_id);
