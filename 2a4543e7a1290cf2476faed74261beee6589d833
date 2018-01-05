@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef9419b5_acb24d18",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T18:22:39Z",
+      "side": 1,
+      "message": "Nit: add_to_trace (ditto on line 98 and 138)",
+      "range": {
+        "startLine": 124,
+        "startChar": 15,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "2a4543e7a1290cf2476faed74261beee6589d833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f8dc3f_a8808288",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T18:22:39Z",
+      "side": 1,
+      "message": "Constifying PODs doesn\u0027t generally add much and is somewhat inconsistent with the rest of the codebase.\n\nThough I think there\u0027s a reasonable argument to be made that we could be using const more aggressively. All this is to say... whatever you\u0027re prefer here is fine.",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 22
+      },
+      "revId": "2a4543e7a1290cf2476faed74261beee6589d833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
