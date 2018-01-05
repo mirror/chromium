@@ -70,6 +70,30 @@
       "revId": "6f1a7c88c75b14c9f918210a80e1ead2f0222ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55d8216_67922797",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2018-01-05T20:48:22Z",
+      "side": 1,
+      "message": "Both before and after this CL, Chrome interprets invalid values (and also \"on\") as explicitly triggering the \"sentences\" state (we return \"sentences\" for the IDL interface instead of \"\"). If I recall correctly, I decided on this behavior for the spec because both Chrome and Safari are already doing this.\n\nI believe the historical reason for this behavior is that Apple declared that \"on\" and \"off\" are deprecated values, and someone observed that there\u0027s no need to explicitly test for \"on\" if we treat all invalid values as triggering the sentences state.\n\nWhen we call element-\u003eautocapitalize(), we get the IDL value for the element, so it\u0027s already been mapped to one of \"\", \"none\", \"sentences\", \"words\", or \"characters\".",
+      "parentUuid": "3a1695b3_9976287b",
+      "range": {
+        "startLine": 1257,
+        "startChar": 48,
+        "endLine": 1257,
+        "endChar": 68
+      },
+      "revId": "6f1a7c88c75b14c9f918210a80e1ead2f0222ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
