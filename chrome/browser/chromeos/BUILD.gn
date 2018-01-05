@@ -237,6 +237,8 @@ source_set("chromeos") {
     "accessibility/accessibility_util.h",
     "accessibility/chromevox_panel.cc",
     "accessibility/chromevox_panel.h",
+    "accessibility/dictation.cc",
+    "accessibility/dictation.h",
     "accessibility/event_handler_common.cc",
     "accessibility/event_handler_common.h",
     "accessibility/magnification_manager.cc",

@@ -973,6 +973,11 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="Accel_Toggle_DICTATION">
+  <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
+  <description>Please enter the description of the metric.</description>
+</action>
+
 <action name="Accel_Toggle_High_Contrast">
   <owner>dmazzoni@chromium.org</owner>
   <description>
