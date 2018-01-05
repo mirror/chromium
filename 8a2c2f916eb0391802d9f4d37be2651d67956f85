@@ -16,6 +16,24 @@
       "revId": "8a2c2f916eb0391802d9f4d37be2651d67956f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bae7da_c8941883",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T20:30:49Z",
+      "side": 0,
+      "message": "These are all edited manually.\n\nAnother member of the network service team who was sheriffing our FYI bot that week had manually added them once our FYI bot turned red after the tests landed.\n\nSince the tests now pass with the network service, I\u0027m just removing the entries here so our bots can run them.",
+      "parentUuid": "ed31005d_e36e1912",
+      "revId": "8a2c2f916eb0391802d9f4d37be2651d67956f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
