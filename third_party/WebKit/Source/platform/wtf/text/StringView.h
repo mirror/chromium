@@ -149,6 +149,8 @@ class WTF_EXPORT StringView {
   template <bool isSpecialCharacter(UChar)>
   bool IsAllSpecialCharacters() const;
 
+  bool ContainsOnlyASCII() const { return impl_->ContainsOnlyASCII(); }
+
  private:
   void Set(const StringImpl&, unsigned offset, unsigned length);
 
