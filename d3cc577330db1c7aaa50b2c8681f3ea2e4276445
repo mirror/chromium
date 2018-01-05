@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "476ead21_48d81f83",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-05T19:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3df5816_f4f12d1c",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c308ef8_55a6675c",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6d68bd91_3dbfdcc0",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-05T19:07:29Z",
+      "side": 1,
+      "message": "Seems to work fine!",
+      "parentUuid": "7c308ef8_55a6675c",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83147a3e_f20641a8",
         "filename": "content/renderer/render_view_impl.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c84c52_eac1a929",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2350,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2018-01-05T19:07:29Z",
+      "side": 1,
+      "message": "I mostly wanted to convey that the browser process will free the shared memory, update to be more accurate.",
+      "parentUuid": "83147a3e_f20641a8",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
