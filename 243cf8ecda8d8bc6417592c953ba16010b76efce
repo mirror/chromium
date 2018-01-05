@@ -22,6 +22,30 @@
       "revId": "243cf8ecda8d8bc6417592c953ba16010b76efce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b0f5b9_0508eca2",
+        "filename": "chrome/browser/extensions/zipfile_installer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T22:23:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b2edda_d93e299e",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "243cf8ecda8d8bc6417592c953ba16010b76efce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
