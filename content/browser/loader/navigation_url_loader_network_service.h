@@ -20,10 +20,12 @@ struct RedirectInfo;
 
 namespace content {
 
-class ResourceContext;
+class NavigationData;
 class NavigationPostDataHandler;
+class ResourceContext;
 class StoragePartition;
 class URLLoaderRequestHandler;
+struct GlobalRequestID;
 
 // This is an implementation of NavigationURLLoader used when
 // --enable-network-service is used.
@@ -48,9 +50,13 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   void ProceedWithResponse() override;
 
   void OnReceiveResponse(
-      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       scoped_refptr<ResourceResponse> response,
-      const base::Optional<net::SSLInfo>& ssl_info,
+      mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+      const net::SSLInfo& ssl_info,
+      std::unique_ptr<NavigationData> navigation_data,
+      const GlobalRequestID& global_request_id,
+      bool is_download,
+      bool is_stream,
       mojom::DownloadedTempFilePtr downloaded_file);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          scoped_refptr<ResourceResponse> response);
@@ -70,14 +76,6 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
   std::unique_ptr<URLLoaderRequestController> request_controller_;
 
   bool allow_download_;
-
-  // If this request was triggered by an anchor tag with a download attribute,
-  // the |suggested_filename_| will be the (possibly empty) value of said
-  // attribute.
-  base::Optional<std::string> suggested_filename_;
-
-  // Current URL that is being navigated, updated after redirection.
-  GURL url_;
 
   // Factories to handle navigation requests for non-network resources.
   ContentBrowserClient::NonNetworkURLLoaderFactoryMap
