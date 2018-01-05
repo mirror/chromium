@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb746d9e_953b50eb",
+        "filename": "ios/web/web_state/js/resources/autofill_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T22:16:33Z",
+      "side": 1,
+      "message": "This is very large script, which is not used by ios/web code, so I don\u0027t think that script should be a part of ios/web. Can we move this script to components instead?",
+      "revId": "9edc76d9231876b1608b4d2e313f50af5b5886cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
