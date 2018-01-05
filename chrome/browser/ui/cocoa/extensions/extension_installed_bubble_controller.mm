@@ -140,7 +140,8 @@ gfx::Point ExtensionInstalledBubble::GetAnchorPoint(
     case ExtensionInstalledBubble::ANCHOR_ACTION: {
       BrowserActionsController* controller =
           [[windowController toolbarController] browserActionsController];
-      arrowPoint = [controller popupPointForId:extension()->id()];
+      arrowPoint =
+          [controller popupPointForId:extension()->id() usingArrow:YES];
       break;
     }
     case ExtensionInstalledBubble::ANCHOR_OMNIBOX: {

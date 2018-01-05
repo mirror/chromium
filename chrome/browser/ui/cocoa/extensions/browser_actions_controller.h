@@ -95,7 +95,10 @@ extern NSString* const kBrowserActionVisibilityChangedNotification;
 
 // Returns where the popup arrow should point to for the action with the given
 // |id|. If passed an id with no corresponding button, returns NSZeroPoint.
-- (NSPoint)popupPointForId:(const std::string&)id;
+// |usingArrow| indicates whether the popup has an arrow, which will anchor to
+// the bottom-center. With no arrow, the anchor is the bottom-right (bottom-left
+// in RTL).
+- (NSPoint)popupPointForId:(const std::string&)id usingArrow:(BOOL)usingArrow;
 
 // Returns the currently-active web contents.
 - (content::WebContents*)currentWebContents;

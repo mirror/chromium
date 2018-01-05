@@ -126,7 +126,8 @@ const CGFloat kBrowserActionBubbleYOffset = 3.0;
 
 // Returns the popup point for the given |view| with |bounds|.
 - (NSPoint)popupPointForView:(NSView*)view
-                  withBounds:(NSRect)bounds;
+                  withBounds:(NSRect)bounds
+                  usingarrow:(BOOL)arrow;
 
 // Moves the given button both visually and within the toolbar model to the
 // specified index.
@@ -359,7 +360,7 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
   return toolbarActionsBar_->GetFullSize();
 }
 
-- (NSPoint)popupPointForId:(const std::string&)id {
+- (NSPoint)popupPointForId:(const std::string&)id usingArrow:(BOOL)usingArrow {
   BrowserActionButton* button = [self buttonForId:id];
   if (!button)
     return NSZeroPoint;
@@ -373,7 +374,9 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
                         fromView:[button superview]];
   }
 
-  return [self popupPointForView:referenceButton withBounds:bounds];
+  return [self popupPointForView:referenceButton
+                      withBounds:bounds
+                      usingArrow:usingArrow];
 }
 
 - (content::WebContents*)currentWebContents {
@@ -735,16 +738,20 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 }
 
 - (NSPoint)popupPointForView:(NSView*)view
-                  withBounds:(NSRect)bounds {
+                  withBounds:(NSRect)bounds
+                  usingArrow:(BOOL)usingArrow {
   NSPoint anchor;
-  if (chrome::ShowAllDialogsWithViewsToolkit()) {
-    // Anchor to the bottom-right of the button.
-    anchor = NSMakePoint(NSMaxX(bounds), [view isFlipped] ? NSMaxY(bounds) : 0);
-  } else {
+  if (usingArrow) {
     // Anchor point just above the center of the bottom.
     int y = [view isFlipped] ? NSMaxY(bounds) - kBrowserActionBubbleYOffset
                              : kBrowserActionBubbleYOffset;
     anchor = NSMakePoint(NSMidX(bounds), y);
+  } else {
+    // Anchor to the bottom-right of the button (bottom-left in RTL).
+    CGFloat x = cocoa_l10n_util::ShouldDoExperimentalRTLLayout()
+                    ? NSMinX(bounds)
+                    : NSMaxX(bounds);
+    anchor = NSMakePoint(x, [view isFlipped] ? NSMaxY(bounds) : 0);
   }
   // Convert the point to the container view's frame, and adjust for animation.
   NSPoint anchorInContainer =
@@ -821,7 +828,8 @@ void ToolbarActionsBarBridge::ShowToolbarActionBubble(
 
   DCHECK_GE([buttons_ count], 0u);
   NSPoint anchor = [self popupPointForView:anchorView
-                                withBounds:[anchorView bounds]];
+                                withBounds:[anchorView bounds]
+                                usingArrow:!viewsBubblePresenter_];
 
   NSWindow* parentWindow = [containerView_ window];
   anchor = ui::ConvertPointFromWindowToScreen(parentWindow, anchor);

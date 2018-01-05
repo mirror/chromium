@@ -110,7 +110,8 @@ NSPoint ExtensionActionPlatformDelegateCocoa::GetPopupPoint() const {
           controller_->browser()->window()->GetNativeWindow()];
   BrowserActionsController* actionsController =
       [[windowController toolbarController] browserActionsController];
-  return [actionsController popupPointForId:controller_->GetId()];
+  return
+      [actionsController popupPointForId:controller_->GetId() usingArrow:YES];
 }
 
 void ExtensionActionPlatformDelegateCocoa::Observe(
