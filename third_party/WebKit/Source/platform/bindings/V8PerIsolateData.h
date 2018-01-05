@@ -28,6 +28,7 @@
 
 #include <memory>
 
+#include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/time/default_tick_clock.h"
 #include "gin/public/isolate_holder.h"
 #include "gin/public/v8_idle_task_runner.h"
@@ -304,6 +305,8 @@ class PLATFORM_EXPORT V8PerIsolateData {
 
   Persistent<ActiveScriptWrappableSet> active_script_wrappables_;
   std::unique_ptr<ScriptWrappableVisitor> script_wrappable_visitor_;
+
+  base::PartitionAllocatorGeneric array_buffer_partition_;
 
   RuntimeCallStats runtime_call_stats_;
 };
