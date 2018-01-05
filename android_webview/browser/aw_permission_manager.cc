@@ -322,7 +322,6 @@ int AwPermissionManager::RequestPermissions(
       case PermissionType::NOTIFICATIONS:
       case PermissionType::DURABLE_STORAGE:
       case PermissionType::BACKGROUND_SYNC:
-      case PermissionType::SENSORS:
       case PermissionType::FLASH:
       case PermissionType::ACCESSIBILITY_EVENTS:
       case PermissionType::CLIPBOARD_READ:
@@ -332,7 +331,12 @@ int AwPermissionManager::RequestPermissions(
         pending_request_raw->SetPermissionStatus(permissions[i],
                                                  PermissionStatus::DENIED);
         break;
+      // Auto-granted.
       case PermissionType::MIDI:
+      case PermissionType::AMBIENT_LIGHT_SENSOR:
+      case PermissionType::ACCELEROMETER:
+      case PermissionType::GYROSCOPE:
+      case PermissionType::MAGNETOMETER:
         pending_request_raw->SetPermissionStatus(permissions[i],
                                                  PermissionStatus::GRANTED);
         break;
@@ -463,7 +467,6 @@ void AwPermissionManager::CancelPermissionRequest(int request_id) {
       case PermissionType::AUDIO_CAPTURE:
       case PermissionType::VIDEO_CAPTURE:
       case PermissionType::BACKGROUND_SYNC:
-      case PermissionType::SENSORS:
       case PermissionType::FLASH:
       case PermissionType::ACCESSIBILITY_EVENTS:
       case PermissionType::CLIPBOARD_READ:
@@ -472,6 +475,10 @@ void AwPermissionManager::CancelPermissionRequest(int request_id) {
                          << static_cast<int>(permission);
         break;
       case PermissionType::MIDI:
+      case PermissionType::AMBIENT_LIGHT_SENSOR:
+      case PermissionType::ACCELEROMETER:
+      case PermissionType::GYROSCOPE:
+      case PermissionType::MAGNETOMETER:
         // There is nothing to cancel so this is simply ignored.
         break;
       case PermissionType::NUM:
@@ -503,7 +510,10 @@ PermissionStatus AwPermissionManager::GetPermissionStatus(
     return result_cache_->GetResult(permission, requesting_origin,
                                     embedding_origin);
   } else if (permission == PermissionType::MIDI ||
-             permission == PermissionType::SENSORS) {
+             permission == PermissionType::ACCELEROMETER ||
+             permission == PermissionType::GYROSCOPE ||
+             permission == PermissionType::MAGNETOMETER ||
+             permission == PermissionType::AMBIENT_LIGHT_SENSOR) {
     return PermissionStatus::GRANTED;
   }
 

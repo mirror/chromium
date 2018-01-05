@@ -52,8 +52,14 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::VIDEO_CAPTURE;
     case PermissionName::BACKGROUND_SYNC:
       return PermissionType::BACKGROUND_SYNC;
-    case PermissionName::SENSORS:
-      return PermissionType::SENSORS;
+    case PermissionName::AMBIENT_LIGHT_SENSOR:
+      return PermissionType::AMBIENT_LIGHT_SENSOR;
+    case PermissionName::ACCELEROMETER:
+      return PermissionType::ACCELEROMETER;
+    case PermissionName::GYROSCOPE:
+      return PermissionType::GYROSCOPE;
+    case PermissionName::MAGNETOMETER:
+      return PermissionType::MAGNETOMETER;
     case PermissionName::ACCESSIBILITY_EVENTS:
       return PermissionType::ACCESSIBILITY_EVENTS;
     case PermissionName::CLIPBOARD_READ:
@@ -80,11 +86,19 @@ blink::FeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
       return blink::FeaturePolicyFeature::kMicrophone;
     case PermissionType::VIDEO_CAPTURE:
       return blink::FeaturePolicyFeature::kCamera;
+    case PermissionType::ACCELEROMETER:
+      return blink::FeaturePolicyFeature::kAccelerometer;
+    case PermissionType::AMBIENT_LIGHT_SENSOR:
+      return blink::FeaturePolicyFeature::kAmbientLightSensor;
+    case PermissionType::GYROSCOPE:
+      return blink::FeaturePolicyFeature::kGyroscope;
+    case PermissionType::MAGNETOMETER:
+      return blink::FeaturePolicyFeature::kMagnetometer;
+    case PermissionType::SENSORS:  // Deprecated.
     case PermissionType::NOTIFICATIONS:
     case PermissionType::DURABLE_STORAGE:
     case PermissionType::BACKGROUND_SYNC:
     case PermissionType::FLASH:
-    case PermissionType::SENSORS:
     case PermissionType::ACCESSIBILITY_EVENTS:
     case PermissionType::CLIPBOARD_READ:
     case PermissionType::CLIPBOARD_WRITE:
