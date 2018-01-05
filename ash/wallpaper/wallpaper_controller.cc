@@ -178,6 +178,21 @@ ColorProfileType GetColorProfileType(ColorProfile color_profile) {
   return ColorProfileType::DARK_MUTED;
 }
 
+// If |data_is_ready| is true, start decoding the image, which will run
+// |callback| upon completion; if it's false, run |callback| directly with an
+// empty image.
+void OnWallpaperDataRead(LoadedCallback callback,
+                         std::unique_ptr<std::string> data,
+                         bool data_is_ready) {
+  if (!data_is_ready) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(std::move(callback), base::Passed(gfx::ImageSkia())));
+  } else {
+    DecodeWallpaper(*data, std::move(callback));
+  }
+}
+
 // Deletes a list of wallpaper files in |file_list|.
 void DeleteWallpaperInList(const std::vector<base::FilePath>& file_list) {
   for (const base::FilePath& path : file_list) {
@@ -524,21 +539,6 @@ void WallpaperController::SetWallpaperFromPath(
 }
 
 // static
-void WallpaperController::DecodeWallpaperIfApplicable(
-    LoadedCallback callback,
-    std::unique_ptr<std::string> data,
-    bool data_is_ready) {
-  // The connector for the mojo service manager is null in unit tests.
-  if (!data_is_ready || !Shell::Get()->shell_delegate()->GetShellConnector()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(std::move(callback), base::Passed(gfx::ImageSkia())));
-  } else {
-    DecodeWallpaper(std::move(data), std::move(callback));
-  }
-}
-
-// static
 gfx::ImageSkia WallpaperController::CreateSolidColorWallpaper() {
   SkBitmap bitmap;
   bitmap.allocN32Pixels(1, 1);
@@ -721,12 +721,15 @@ void WallpaperController::SetCustomizedDefaultWallpaperPaths(
 void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
                                             const WallpaperInfo& info) {
   current_user_wallpaper_info_ = info;
-  wallpaper::WallpaperLayout layout = info.layout;
+  // 1x1 wallpaper should be stretched.
+  if (image.width() == 1 && image.height() == 1)
+    current_user_wallpaper_info_.layout = wallpaper::WALLPAPER_LAYOUT_STRETCH;
   VLOG(1) << "SetWallpaper: image_id="
           << wallpaper::WallpaperResizer::GetImageId(image)
-          << " layout=" << layout;
+          << " layout=" << current_user_wallpaper_info_.layout;
 
-  if (WallpaperIsAlreadyLoaded(image, true /*compare_layouts=*/, layout)) {
+  if (WallpaperIsAlreadyLoaded(image, true /*compare_layouts=*/,
+                               current_user_wallpaper_info_.layout)) {
     VLOG(1) << "Wallpaper is already loaded";
     return;
   }
@@ -737,7 +740,8 @@ void WallpaperController::SetWallpaperImage(const gfx::ImageSkia& image,
     color_calculator_.reset();
   }
   current_wallpaper_.reset(new wallpaper::WallpaperResizer(
-      image, GetMaxDisplaySizeInNative(), info, sequenced_task_runner_));
+      image, GetMaxDisplaySizeInNative(), current_user_wallpaper_info_,
+      sequenced_task_runner_));
   current_wallpaper_->AddObserver(this);
   current_wallpaper_->StartResize();
 
@@ -875,11 +879,15 @@ void WallpaperController::ReadAndDecodeWallpaper(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::FilePath& file_path) {
   decode_requests_for_testing_.push_back(file_path);
+  if (bypass_decode_for_testing_) {
+    std::move(callback).Run(CreateSolidColorWallpaper());
+    return;
+  }
   std::string* data = new std::string;
   base::PostTaskAndReplyWithResult(
       task_runner.get(), FROM_HERE,
       base::Bind(&base::ReadFileToString, file_path, data),
-      base::Bind(&DecodeWallpaperIfApplicable, std::move(callback),
+      base::Bind(&OnWallpaperDataRead, std::move(callback),
                  base::Passed(base::WrapUnique(data))));
 }
 
@@ -1013,7 +1021,7 @@ void WallpaperController::SetArcWallpaper(
   // |has_gaia_account| is unused.
   user_info->has_gaia_account = true;
   SaveAndSetWallpaper(std::move(user_info), wallpaper_files_id, file_name,
-                      image, wallpaper::CUSTOMIZED, layout, show_wallpaper);
+                      wallpaper::CUSTOMIZED, layout, show_wallpaper, image);
 }
 
 bool WallpaperController::GetWallpaperFromCache(const AccountId& account_id,
@@ -1069,22 +1077,13 @@ void WallpaperController::SetCustomWallpaper(
     const std::string& wallpaper_files_id,
     const std::string& file_name,
     wallpaper::WallpaperLayout layout,
-    wallpaper::WallpaperType type,
     const SkBitmap& image,
     bool show_wallpaper) {
-  // TODO(crbug.com/776464): Currently |SetCustomWallpaper| is used by both
-  // CUSTOMIZED and POLICY types, but it's better to separate them: a new
-  // |SetPolicyWallpaper| will be created so that the type parameter can be
-  // removed, and only a single |CanSetUserWallpaper| check is needed here.
-  if ((type != wallpaper::POLICY &&
-       IsPolicyControlled(user_info->account_id, !user_info->is_ephemeral)) ||
-      IsInKioskMode()) {
+  if (!CanSetUserWallpaper(user_info->account_id, !user_info->is_ephemeral))
     return;
-  }
-
   SaveAndSetWallpaper(std::move(user_info), wallpaper_files_id, file_name,
-                      gfx::ImageSkia::CreateFrom1xBitmap(image), type, layout,
-                      show_wallpaper);
+                      wallpaper::CUSTOMIZED, layout, show_wallpaper,
+                      gfx::ImageSkia::CreateFrom1xBitmap(image));
 }
 
 void WallpaperController::SetOnlineWallpaper(
@@ -1141,6 +1140,29 @@ void WallpaperController::SetCustomizedDefaultWallpaper(
     const base::FilePath& file_path,
     const base::FilePath& resized_directory) {
   NOTIMPLEMENTED();
+}
+
+void WallpaperController::SetPolicyWallpaper(
+    mojom::WallpaperUserInfoPtr user_info,
+    const std::string& wallpaper_files_id,
+    const std::string& data) {
+  // There is no visible wallpaper in kiosk mode.
+  if (IsInKioskMode())
+    return;
+
+  // Updates the screen only when the user has logged in.
+  const bool show_wallpaper =
+      Shell::Get()->session_controller()->IsActiveUserSessionStarted();
+  LoadedCallback callback = base::Bind(
+      &WallpaperController::SaveAndSetWallpaper, weak_factory_.GetWeakPtr(),
+      base::Passed(std::move(user_info)), wallpaper_files_id,
+      "policy-controlled.jpeg", wallpaper::POLICY,
+      wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, show_wallpaper);
+
+  if (bypass_decode_for_testing_)
+    std::move(callback).Run(CreateSolidColorWallpaper());
+  else
+    DecodeWallpaper(data, std::move(callback));
 }
 
 void WallpaperController::SetDeviceWallpaperPolicyEnforced(bool enforced) {
@@ -1280,6 +1302,19 @@ void WallpaperController::RemoveUserWallpaper(
     const std::string& wallpaper_files_id) {
   RemoveUserWallpaperInfo(user_info->account_id, !user_info->is_ephemeral);
   RemoveUserWallpaperImpl(user_info->account_id, wallpaper_files_id);
+}
+
+void WallpaperController::RemovePolicyWallpaper(
+    mojom::WallpaperUserInfoPtr user_info,
+    const std::string& wallpaper_files_id) {
+  DCHECK(IsPolicyControlled(user_info->account_id, !user_info->is_ephemeral));
+  // Updates the screen only when the user has logged in.
+  const bool show_wallpaper =
+      Shell::Get()->session_controller()->IsActiveUserSessionStarted();
+  // Removes the wallpaper info so that the user is no longer policy controlled,
+  // otherwise setting default wallpaper is not allowed.
+  RemoveUserWallpaperInfo(user_info->account_id, !user_info->is_ephemeral);
+  SetDefaultWallpaper(std::move(user_info), wallpaper_files_id, show_wallpaper);
 }
 
 void WallpaperController::SetWallpaper(const SkBitmap& wallpaper,
@@ -1560,11 +1595,6 @@ void WallpaperController::OnDefaultWallpaperDecoded(
   }
 
   if (show_wallpaper) {
-    // 1x1 wallpaper is actually solid color, so it should be stretched.
-    if (cached_default_wallpaper_.image.width() == 1 &&
-        cached_default_wallpaper_.image.height() == 1) {
-      layout = wallpaper::WALLPAPER_LAYOUT_STRETCH;
-    }
     WallpaperInfo info(cached_default_wallpaper_.file_path.value(), layout,
                        wallpaper::DEFAULT, base::Time::Now().LocalMidnight());
     SetWallpaperImage(cached_default_wallpaper_.image, info);
@@ -1575,10 +1605,10 @@ void WallpaperController::SaveAndSetWallpaper(
     mojom::WallpaperUserInfoPtr user_info,
     const std::string& wallpaper_files_id,
     const std::string& file_name,
-    const gfx::ImageSkia& image,
     wallpaper::WallpaperType type,
     wallpaper::WallpaperLayout layout,
-    bool show_wallpaper) {
+    bool show_wallpaper,
+    const gfx::ImageSkia& image) {
   // Empty image indicates decode failure. Use default wallpaper in this case.
   if (image.isNull()) {
     SetDefaultWallpaperImpl(user_info->account_id, user_info->type,

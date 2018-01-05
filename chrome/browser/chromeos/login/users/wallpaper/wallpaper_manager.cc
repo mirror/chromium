@@ -111,11 +111,6 @@ bool HasNonDeviceLocalAccounts(const user_manager::UserList& users) {
   return false;
 }
 
-// Call |closure| when HashWallpaperFilesIdStr will not assert().
-void CallWhenCanGetFilesId(const base::Closure& closure) {
-  SystemSaltGetter::Get()->AddOnSystemSaltReady(closure);
-}
-
 // A helper to set the wallpaper image for Classic Ash and Mash.
 void SetWallpaper(const gfx::ImageSkia& image, wallpaper::WallpaperInfo info) {
   if (ash_util::IsRunningInMash()) {
@@ -298,19 +293,6 @@ void WallpaperManager::EnsureLoggedInUserWallpaperLoaded() {
       user_manager::UserManager::Get()->GetActiveUser()->GetAccountId());
 }
 
-void WallpaperManager::OnPolicyFetched(const std::string& policy,
-                                       const AccountId& account_id,
-                                       std::unique_ptr<std::string> data) {
-  if (!data)
-    return;
-
-  user_image_loader::StartWithData(
-      task_runner_, std::move(data), ImageDecoder::ROBUST_JPEG_CODEC,
-      0,  // Do not crop.
-      base::Bind(&WallpaperManager::SetPolicyControlledWallpaper,
-                 weak_factory_.GetWeakPtr(), account_id));
-}
-
 bool WallpaperManager::IsPolicyControlled(const AccountId& account_id) const {
   if (!ash::Shell::HasInstance() || ash_util::IsRunningInMash()) {
     // Some unit tests come here without a Shell instance.
@@ -323,28 +305,6 @@ bool WallpaperManager::IsPolicyControlled(const AccountId& account_id) const {
           account_id);
   return ash::Shell::Get()->wallpaper_controller()->IsPolicyControlled(
       account_id, is_persistent);
-}
-
-void WallpaperManager::OnPolicySet(const std::string& policy,
-                                   const AccountId& account_id) {
-  WallpaperInfo info;
-  GetUserWallpaperInfo(account_id, &info);
-  info.type = wallpaper::POLICY;
-  SetUserWallpaperInfo(account_id, info, true /*is_persistent=*/);
-}
-
-void WallpaperManager::OnPolicyCleared(const std::string& policy,
-                                       const AccountId& account_id) {
-  WallpaperInfo info;
-  GetUserWallpaperInfo(account_id, &info);
-  info.type = wallpaper::DEFAULT;
-  SetUserWallpaperInfo(account_id, info, true /*is_persistent=*/);
-
-  // If we're at the login screen, do not change the wallpaper but defer it
-  // until the user logs in to the system.
-  if (user_manager::UserManager::Get()->IsUserLoggedIn()) {
-    SetDefaultWallpaperImpl(account_id, true /*show_wallpaper=*/);
-  }
 }
 
 void WallpaperManager::OpenWallpaperPicker() {
@@ -530,34 +490,6 @@ const char* WallpaperManager::GetCustomWallpaperSubdirForCurrentResolution() {
   return resolution == ash::WallpaperController::WALLPAPER_RESOLUTION_SMALL
              ? ash::WallpaperController::kSmallWallpaperSubDir
              : ash::WallpaperController::kLargeWallpaperSubDir;
-}
-
-void WallpaperManager::SetPolicyControlledWallpaper(
-    const AccountId& account_id,
-    std::unique_ptr<user_manager::UserImage> user_image) {
-  if (!WallpaperControllerClient::Get()->CanGetWallpaperFilesId()) {
-    CallWhenCanGetFilesId(
-        base::Bind(&WallpaperManager::SetPolicyControlledWallpaper,
-                   weak_factory_.GetWeakPtr(), account_id,
-                   base::Passed(std::move(user_image))));
-    return;
-  }
-
-  const wallpaper::WallpaperFilesId wallpaper_files_id =
-      WallpaperControllerClient::Get()->GetFilesId(account_id);
-
-  if (!wallpaper_files_id.is_valid())
-    LOG(FATAL) << "Wallpaper flies id if invalid!";
-
-  // If we're at the login screen, do not change the wallpaper to the user
-  // policy controlled wallpaper but only update the cache. It will be later
-  // updated after the user logs in.
-  WallpaperControllerClient::Get()->SetCustomWallpaper(
-      account_id, wallpaper_files_id, "policy-controlled.jpeg",
-      wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::POLICY,
-      user_image->image(),
-      user_manager::UserManager::Get()
-          ->IsUserLoggedIn() /* update wallpaper */);
 }
 
 wallpaper::WallpaperInfo* WallpaperManager::GetCachedWallpaperInfo() {
