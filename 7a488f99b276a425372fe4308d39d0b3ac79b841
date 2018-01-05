@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1aa0334_de762da6",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2018-01-05T21:24:37Z",
+      "side": 1,
+      "message": "Add the bug here.",
+      "revId": "7a488f99b276a425372fe4308d39d0b3ac79b841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
