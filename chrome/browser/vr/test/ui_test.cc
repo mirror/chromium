@@ -139,6 +139,9 @@ void UiTest::VerifyOnlyElementsVisible(
     if (name == kNone)
       name = owner_name;
     bool should_be_visible = (names.find(name) != names.end());
+    if (WillElementBeVisible(&element) != should_be_visible) {
+      ui_->Dump(false);
+    }
     EXPECT_EQ(WillElementBeVisible(&element), should_be_visible);
   }
 }
