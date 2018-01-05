@@ -12,6 +12,7 @@
 #include "base/values.h"
 #include "base/version.h"
 #include "chrome/browser/vr/metrics_helper.h"
+#include "chrome/browser/vr/model/loaded_assets.h"
 #include "content/public/browser/browser_thread.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/codec/jpeg_codec.h"
@@ -21,10 +22,18 @@ namespace vr {
 
 namespace {
 
-static const base::FilePath::CharType kBackgroundFileNamePng[] =
-    FILE_PATH_LITERAL("background.png");
-static const base::FilePath::CharType kBackgroundFileNameJpeg[] =
-    FILE_PATH_LITERAL("background.jpeg");
+static const base::FilePath::CharType kBackgroundBaseFilename[] =
+    FILE_PATH_LITERAL("background");
+static const base::FilePath::CharType kNormalGradientBaseFilename[] =
+    FILE_PATH_LITERAL("normal_gradient");
+static const base::FilePath::CharType kIncognitoGradientBaseFilename[] =
+    FILE_PATH_LITERAL("incognito_gradient");
+static const base::FilePath::CharType kFullscreenGradientBaseFilename[] =
+    FILE_PATH_LITERAL("fullscreen_gradient");
+static const base::FilePath::CharType kPngExtension[] =
+    FILE_PATH_LITERAL("png");
+static const base::FilePath::CharType kJpegExtension[] =
+    FILE_PATH_LITERAL("jpeg");
 
 }  // namespace
 
@@ -79,66 +88,77 @@ void Assets::SetOnComponentReadyCallback(
   on_component_ready_callback_ = on_component_ready;
 }
 
+AssetsLoadStatus LoadImage(const base::FilePath& component_install_dir,
+                           const base::FilePath::CharType* base_file,
+                           std::unique_ptr<SkBitmap>* out_image) {
+  bool is_png = false;
+  std::string encoded_file_content;
+
+  base::FilePath file_path = component_install_dir.Append(base_file);
+
+  if (base::PathExists(file_path.AddExtension(kPngExtension))) {
+    file_path = file_path.AddExtension(kPngExtension);
+    is_png = true;
+  } else if (base::PathExists(file_path.AddExtension(kJpegExtension))) {
+    file_path = file_path.AddExtension(kJpegExtension);
+  } else {
+    return AssetsLoadStatus::kNotFound;
+  }
+
+  if (!base::ReadFileToString(file_path, &encoded_file_content)) {
+    return AssetsLoadStatus::kParseFailure;
+  }
+
+  if (is_png) {
+    (*out_image) = base::MakeUnique<SkBitmap>();
+    if (!gfx::PNGCodec::Decode(
+            reinterpret_cast<const unsigned char*>(encoded_file_content.data()),
+            encoded_file_content.size(), out_image->get())) {
+      (*out_image) = nullptr;
+    }
+  } else {
+    (*out_image) = gfx::JPEGCodec::Decode(
+        reinterpret_cast<const unsigned char*>(encoded_file_content.data()),
+        encoded_file_content.size());
+  }
+
+  if (!out_image->get()) {
+    return AssetsLoadStatus::kInvalidContent;
+  }
+
+  return AssetsLoadStatus::kSuccess;
+}
+
 // static
 void Assets::LoadAssetsTask(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     const base::Version& component_version,
     const base::FilePath& component_install_dir,
     OnAssetsLoadedCallback on_loaded) {
-  std::string background_file_content;
-  base::FilePath background_file_path;
-  bool is_png = false;
-
-  if (base::PathExists(component_install_dir.Append(kBackgroundFileNamePng))) {
-    background_file_path = component_install_dir.Append(kBackgroundFileNamePng);
-    is_png = true;
-  } else if (base::PathExists(
-                 component_install_dir.Append(kBackgroundFileNameJpeg))) {
-    background_file_path =
-        component_install_dir.Append(kBackgroundFileNameJpeg);
-  } else {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::BindOnce(std::move(on_loaded), AssetsLoadStatus::kNotFound,
-                       nullptr, component_version));
-    return;
-  }
-
-  if (!base::ReadFileToString(background_file_path, &background_file_content)) {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::BindOnce(std::move(on_loaded), AssetsLoadStatus::kParseFailure,
-                       nullptr, component_version));
-    return;
-  }
+  auto assets = base::MakeUnique<LoadedAssets>();
+  AssetsLoadStatus status = AssetsLoadStatus::kSuccess;
 
   std::unique_ptr<SkBitmap> background_image;
-  if (is_png) {
-    background_image = base::MakeUnique<SkBitmap>();
-    if (!gfx::PNGCodec::Decode(reinterpret_cast<const unsigned char*>(
-                                   background_file_content.data()),
-                               background_file_content.size(),
-                               background_image.get())) {
-      background_image = nullptr;
-    }
-  } else {
-    background_image = gfx::JPEGCodec::Decode(
-        reinterpret_cast<const unsigned char*>(background_file_content.data()),
-        background_file_content.size());
-  }
+  status = LoadImage(component_install_dir, kBackgroundBaseFilename,
+                     &assets->background);
 
-  if (!background_image) {
-    task_runner->PostTask(
-        FROM_HERE,
-        base::BindOnce(std::move(on_loaded), AssetsLoadStatus::kInvalidContent,
-                       nullptr, component_version));
-    return;
+  if (status == AssetsLoadStatus::kSuccess) {
+    LoadImage(component_install_dir, kNormalGradientBaseFilename,
+              &assets->normal_gradient);
+  }
+  if (status == AssetsLoadStatus::kSuccess) {
+    LoadImage(component_install_dir, kIncognitoGradientBaseFilename,
+              &assets->incognito_gradient);
+  }
+  if (status == AssetsLoadStatus::kSuccess) {
+    LoadImage(component_install_dir, kFullscreenGradientBaseFilename,
+              &assets->fullscreen_gradient);
   }
 
   task_runner->PostTask(
       FROM_HERE,
       base::BindOnce(std::move(on_loaded), AssetsLoadStatus::kSuccess,
-                     std::move(background_image), component_version));
+                     std::move(assets), component_version));
 }
 
 Assets::Assets()
