@@ -52,6 +52,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
         @Override
         public void onChange() {
             getAdapter().notifyDataSetChanged();
+            updateStackButtonWrapper(mTabModelSelector.getModel(true).getCount() != 0);
         }
 
         @Override
@@ -208,7 +209,7 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
                 mModernStandardButton.select();
             }
         } else {
-            mStackButtonWrapper.setVisibility(incognitoEnabled ? View.VISIBLE : View.GONE);
+            updateStackButtonWrapper(incognitoEnabled);
             if (incognitoSelected) {
                 mIncognitoButton.setBackgroundResource(R.drawable.btn_bg_holo_active);
                 mStandardButton.setBackgroundResource(R.drawable.btn_bg_holo);
@@ -250,6 +251,10 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
                 : R.string.accessibility_tab_switcher_standard_stack_selected;
         AccessibilityTabModelWrapper.this.announceForAccessibility(
                 getResources().getString(stackAnnouncementId));
+    }
+
+    private void updateStackButtonWrapper(boolean makeVisible) {
+        mStackButtonWrapper.setVisibility(makeVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
