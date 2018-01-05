@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c05eebbf_cebbf8c5",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-05T23:50:50Z",
+      "side": 1,
+      "message": "A few things:\n1- some tests have a null RenderThreadImpl (they have a mock instead). A null check would suffice I think.\n2- GetGpuFactories() will force instantiating the factories, even for renderers that don\u0027t use media. It seems like unnecessary overhead in the general case (both memory and startup time). Maybe we could separate a \"GetGpuFactories\" (gets if exists) from a \"CreateOrGetGpuFactories\" (creates if it doesn\u0027t exist), but we\u0027d still have to be careful to set the HDRRenderingStatus when calling the later (from other places).\n3- so, we could have different RenderWidgets in the same process (same RTI so same GpuVideoAcceleratorFactoriesImpl) that go on different screens (e.g. 2 windows with same origin open). Is this a problem?",
+      "revId": "518da0a1c16a350b3ed6e0bfe87c5d444741730c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
