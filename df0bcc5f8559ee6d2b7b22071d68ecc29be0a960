@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a06b45a_39bbea68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T17:38:14Z",
+      "side": 1,
+      "message": "Do we need to use cached metrics for this and the record*Histogram calls in onSheetOpened and onSheetClosed?",
+      "range": {
+        "startLine": 206,
+        "startChar": 24,
+        "endLine": 206,
+        "endChar": 49
+      },
+      "revId": "df0bcc5f8559ee6d2b7b22071d68ecc29be0a960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
