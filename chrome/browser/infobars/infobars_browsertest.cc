@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/banners/app_banner_infobar_delegate_desktop.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/devtools/devtools_ui_bindings.h"
 #include "chrome/browser/extensions/crx_installer.h"
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -27,6 +28,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/test/test_browser_ui.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/infobars/core/infobar.h"
@@ -36,6 +38,7 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "ui/base/l10n/l10n_util.h"
 
 #if !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/startup/default_browser_infobar_delegate.h"
@@ -188,6 +191,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"dev_tools", IBD::DEV_TOOLS_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
       {"alternate_nav", IBD::ALTERNATE_NAV_INFOBAR_DELEGATE},
@@ -207,6 +211,15 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
       break;
+    case IBD::DEV_TOOLS_INFOBAR_DELEGATE: {
+      DevToolsUIBindings bindings(GetWebContents());
+      bindings.ShowDevToolsConfirmInfoBar(
+          l10n_util::GetStringFUTF16(
+              IDS_DEV_TOOLS_CONFIRM_ADD_FILE_SYSTEM_MESSAGE,
+              base::ASCIIToUTF16("file_path")),
+          DevToolsUIBindings::InfoBarCallback());
+      break;
+    }
     case IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE:
       ChromeSelectFilePolicy(GetWebContents()).SelectFileDenied();
       break;
@@ -295,6 +308,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_dev_tools) {
   ShowAndVerifyUi();
 }
 
