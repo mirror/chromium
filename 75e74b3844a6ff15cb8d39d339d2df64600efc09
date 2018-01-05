@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "37fc91a4_865fed28",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-05T20:24:52Z",
+      "side": 1,
+      "message": "\u003e I agree that\u0027s a good idea, but I\u0027d prefer not to mix functional changes with refactoring.\n\nI agree that mixing them is not best. Can you do it as a followup with TODO in this CL?",
+      "parentUuid": "0d038ffc_3ee14f3b",
+      "revId": "75e74b3844a6ff15cb8d39d339d2df64600efc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937ec67d_42d7167b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
