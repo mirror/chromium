@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a58596e7_5a3aa005",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-05T13:23:13Z",
+      "side": 1,
+      "message": "When is `Terminate()` called? Do we still need to call `TearDown()`?",
+      "revId": "6f2833f3236b73330997944d8808b709abbb2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fce6bef_967f0366",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContainerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-05T13:23:13Z",
+      "side": 1,
+      "message": "That\u0027s a bit weird. Wouldn\u0027t `TearDown()` already have been called?",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 12
+      },
+      "revId": "6f2833f3236b73330997944d8808b709abbb2265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
