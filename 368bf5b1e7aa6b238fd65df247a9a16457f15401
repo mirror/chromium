@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00c5b92_dd1454fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/AppManifestView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T22:09:15Z",
+      "side": 1,
+      "message": "Bring back classList.",
+      "revId": "368bf5b1e7aa6b238fd65df247a9a16457f15401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
