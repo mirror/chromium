@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4f691e5_0a659b8b",
+        "filename": "net/dns/host_resolver_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2018-01-05T17:53:34Z",
+      "side": 1,
+      "message": "This isn\u0027t expected to be called from anything that needs to go through Mojo.",
+      "parentUuid": "d5ab2bdc_71bc4803",
+      "revId": "1e4f0a9eba73dfa03f3239dcbea5f962ea7b49e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4652beb5_463f214f",
         "filename": "net/dns/mock_host_resolver.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1e4f0a9eba73dfa03f3239dcbea5f962ea7b49e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3e3f0e_1b6fb4c5",
+        "filename": "net/dns/mock_host_resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2018-01-05T17:53:34Z",
+      "side": 1,
+      "message": "Okay, yeah, this one should be implemented. Done.",
+      "parentUuid": "4652beb5_463f214f",
+      "revId": "1e4f0a9eba73dfa03f3239dcbea5f962ea7b49e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
