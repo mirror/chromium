@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a5b212_137be38c",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:07:56Z",
+      "side": 1,
+      "message": "for (const auto\u0026 switch_string : append_switches) {\n...AppendSwitch(switch_string);",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c712bb27_618c6393",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:07:56Z",
+      "side": 1,
+      "message": "Following a return, it\u0027s idiomatic to drop the else - it\u0027s always an else.\n\nif (thing)\n  return thang;\nif (thinger)\n  return thung;\nreturn theeng;",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6adab0_0425e8e4",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:07:56Z",
+      "side": 1,
+      "message": "Do you think you\u0027ll ever need this?",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff9d019_a370a2fd",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2018-01-05T19:07:56Z",
+      "side": 1,
+      "message": "\u0027Cause I know you love to hear this:  Periods on sentences, as the style guide says, and for consistency.  Sorry, but I can\u0027t not notice.  :)",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
