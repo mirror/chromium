@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "965e54f0_1437d90c",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3d9d9a_8c04f811",
+        "filename": "components/unzip_service/public/cpp/unzip.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "That does not look right.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 52
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a173c7_6544cf8f",
+        "filename": "components/unzip_service/public/cpp/unzip.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb62167_c2e64de6",
+        "filename": "components/unzip_service/unzip_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "Nit: add empty line after this line.\nAlso missing includes for string and macros.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20232713_b30b8a11",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "Should we log an error?",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd548407_b3154f45",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "std::make_unique (same below)",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf80c443_9caf88c5",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "should we log an error?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 1
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888ddb24_7fa85d8a",
+        "filename": "components/unzip_service/unzipper_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "I thought the new convention was to not use Impl in the implementation names anymore. rockot@ can you confirm?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a71271c_28830562",
+        "filename": "components/update_client/action_runner.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T17:38:37Z",
+      "side": 1,
+      "message": "Nit: add memory include and forward declare Connector.",
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
