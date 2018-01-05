@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3fee34e0_eecc5a86",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/infinitely-tall-multicol-with-infitely-tall-child-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-05T23:48:00Z",
+      "side": 1,
+      "message": "It\u0027s an interesting question -- this feels like an edge case that other implementations may also hit",
+      "parentUuid": "21020b06_1ad41884",
+      "revId": "0efc506548c448ba0674c4be978fead6e6218f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf30dcce_778b91e8",
         "filename": "third_party/WebKit/LayoutTests/fast/multicol/infinitely-tall-multicol-with-infitely-tall-child-crash.html",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2018-01-05T18:42:39Z",
       "side": 1,
       "message": "\"Infinity\". Gets truncated to a few pixels less than LayoutUnit::Max() because it\u0027s represented internally as a float inside the Length structure.",
+      "revId": "0efc506548c448ba0674c4be978fead6e6218f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e5b5ca_f7c0fde6",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/infinitely-tall-multicol-with-infitely-tall-child-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2018-01-05T23:48:00Z",
+      "side": 1,
+      "message": "By the way, this and your next comment may be better as an html comment in the file\u003e",
+      "parentUuid": "cf30dcce_778b91e8",
       "revId": "0efc506548c448ba0674c4be978fead6e6218f15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
