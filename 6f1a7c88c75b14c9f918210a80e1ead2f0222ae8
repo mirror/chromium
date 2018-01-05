@@ -94,6 +94,30 @@
       "revId": "6f1a7c88c75b14c9f918210a80e1ead2f0222ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37607d7_aad69558",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-05T21:31:01Z",
+      "side": 1,
+      "message": "Makes sense. Thanks for the explanation!",
+      "parentUuid": "d55d8216_67922797",
+      "range": {
+        "startLine": 1257,
+        "startChar": 48,
+        "endLine": 1257,
+        "endChar": 68
+      },
+      "revId": "6f1a7c88c75b14c9f918210a80e1ead2f0222ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
