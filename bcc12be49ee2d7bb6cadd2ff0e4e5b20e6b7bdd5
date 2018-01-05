@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5619b34a_1290616e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T19:15:08Z",
+      "side": 1,
+      "message": "I\u0027ve already forgotten why we would begin an implframe when we !CanDraw(). Can you add comments explaining how, as well as why we\u0027d return true then?",
+      "revId": "bcc12be49ee2d7bb6cadd2ff0e4e5b20e6b7bdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038a828d_57a3e507",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T19:15:08Z",
+      "side": 1,
+      "message": "I had asked this earlier and not remembering if it was resolved. This changes states, so if HasDamage is called again later in the frame, it could give a different result for the same BeginFrame, which I think is bad. What is the plan for that?",
+      "revId": "bcc12be49ee2d7bb6cadd2ff0e4e5b20e6b7bdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
