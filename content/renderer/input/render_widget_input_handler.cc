@@ -161,14 +161,12 @@ RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
 
 int RenderWidgetInputHandler::GetWidgetRoutingIdAtPoint(
     const gfx::Point& point) {
-  gfx::PointF point_in_pixel =
-      gfx::ConvertPointToPixel(widget_->GetOriginalDeviceScaleFactor(),
-                               gfx::PointF(point.x(), point.y()));
+  gfx::PointF point_in_pixel = gfx::ConvertPointToPixel(
+      widget_->GetOriginalDeviceScaleFactor(), gfx::PointF(point));
   blink::WebNode result_node = widget_->GetWebWidget()
                                    ->HitTestResultAt(blink::WebPoint(
                                        point_in_pixel.x(), point_in_pixel.y()))
                                    .GetNode();
-
   // TODO(crbug.com/797828): When the node is null the caller may
   // need to do extra checks. Like maybe update the layout and then
   // call the hit-testing API. Either way it might be better to have

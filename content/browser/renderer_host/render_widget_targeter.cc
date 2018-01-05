@@ -102,6 +102,9 @@ void RenderWidgetTargeter::FindTargetAndDispatch(
       delegate_->FindTargetSynchronously(root_view, event);
   if (!result.view)
     return;
+  LOG(ERROR) << "First query: " << result.should_query_view << ","
+             << (result.target_location ? result.target_location->ToString()
+                                        : "[]");
 
   RenderWidgetHostViewBase* target = result.view;
   auto* event_ptr = &event;
@@ -129,13 +132,10 @@ void RenderWidgetTargeter::QueryClient(
   if (mouse_event.GetType() == blink::WebInputEvent::kUndefined)
     return;
   request_in_flight_ = true;
-  float scale_factor = root_view->current_device_scale_factor();
   auto* target_client =
       target->GetRenderWidgetHostImpl()->input_target_client();
   target_client->FrameSinkIdAt(
-      gfx::ScaleToCeiledPoint(
-          gfx::ToCeiledPoint(mouse_event.PositionInWidget()), scale_factor,
-          scale_factor),
+      gfx::ToCeiledPoint(mouse_event.PositionInWidget()),
       base::BindOnce(&RenderWidgetTargeter::FoundFrameSinkId,
                      weak_ptr_factory_.GetWeakPtr(), root_view->GetWeakPtr(),
                      target->GetWeakPtr(),
@@ -168,6 +168,9 @@ void RenderWidgetTargeter::FoundFrameSinkId(
   auto* frame_proxy_host = RenderFrameProxyHost::FromID(
       frame_sink_id.client_id(), frame_sink_id.sink_id());
   if (!frame_proxy_host || !root_view || !target) {
+    LOG(ERROR) << "Found target: "
+               << (target_location ? target_location->ToString() : "[]") << " "
+               << target.get();
     auto* frame_host = RenderFrameHostImpl::FromID(frame_sink_id.client_id(),
                                                    frame_sink_id.sink_id());
     if (frame_host) {
@@ -188,7 +191,21 @@ void RenderWidgetTargeter::FoundFrameSinkId(
   if (view == target.get()) {
     FoundTarget(root_view.get(), view, event, latency, target_location);
   } else {
-    QueryClient(root_view.get(), view, event, latency, target_location);
+    base::Optional<gfx::PointF> location = target_location;
+    if (target_location) {
+      gfx::PointF updated_location = *target_location;
+      if (target->TransformPointToCoordSpaceForView(updated_location, view,
+                                                    &updated_location)) {
+        location.emplace(updated_location);
+      }
+    }
+    LOG(ERROR) << "Querying again: " << (location ? location->ToString() : "[]")
+               << " vs. "
+               << gfx::PointF(static_cast<const blink::WebMouseEvent&>(event)
+                                  .PositionInWidget())
+                      .ToString()
+               << " " << root_view.get() << "," << target.get() << "," << view;
+    QueryClient(root_view.get(), view, event, latency, location);
   }
 }
 
