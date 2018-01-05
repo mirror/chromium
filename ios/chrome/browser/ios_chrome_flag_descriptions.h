@@ -56,6 +56,10 @@ extern const char kMarkHttpAsName[];
 extern const char kMarkHttpAsDescription[];
 extern const char kMarkHttpAsDangerous[];
 
+// Title and description for the flag to enable the Memex Tab Switcher.
+extern const char kMemexTabSwitcherName[];
+extern const char kMemexTabSwitcherDescription[];
+
 // Title and description for the flag to enable the new fullscreen
 // implementation.
 extern const char kNewFullscreenName[];
