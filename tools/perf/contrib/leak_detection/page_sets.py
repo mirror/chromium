@@ -21,6 +21,24 @@ class LeakDetectionPage(page_module.Page):
     action_runner.PrepareForLeakDetection()
     action_runner.MeasureMemory()
 
+# Some websites have a script that loads resources continuously, in which cases
+# HasReachedQuiescence would not be reached. This class waits for document ready
+# state to be complete to avoid timeout for those pages.
+class ResourceLoadingLeakDetectionPage(page_module.Page):
+  def __init__(self, url, page_set, name=''):
+    super(ResourceLoadingLeakDetectionPage, self).__init__(
+      url=url, page_set=page_set, name=name)
+
+  def RunNavigateSteps(self, action_runner):
+    action_runner.Navigate('about:blank')
+    action_runner.PrepareForLeakDetection()
+    action_runner.MeasureMemory()
+    action_runner.Navigate(self.url)
+    action_runner.tab.WaitForDocumentReadyStateToBeComplete()
+    action_runner.Navigate('about:blank')
+    action_runner.PrepareForLeakDetection()
+    action_runner.MeasureMemory()
+
 class LeakDetectionStorySet(story.StorySet):
   def __init__(self):
     super(LeakDetectionStorySet, self).__init__(
@@ -35,7 +53,6 @@ class LeakDetectionStorySet(story.StorySet):
       'https://www.facebook.com',
       'https://www.baidu.com',
       'https://www.wikipedia.org',
-      'https://www.yahoo.com',
       'https://www.reddit.com',
       'http://www.qq.com',
       'http://www.amazon.com',
@@ -46,11 +63,16 @@ class LeakDetectionStorySet(story.StorySet):
       'http://www.time.com',
       'http://infomoney.com.br',
       'http://www.cheapoair.com',
-      'http://www.quora.com',
       'http://www.onlinedown.net',
       'http://www.dailypost.ng',
       'http://www.listindiario.com',
       'http://www.aljazeera.net',
     ]
+    resource_loading_urls_list = [
+      'https://www.yahoo.com',
+      'http://www.quora.com',
+    ]
     for url in urls_list:
       self.AddStory(LeakDetectionPage(url, self, url))
+    for url in resource_loading_urls_list:
+      self.AddStory(ResourceLoadingLeakDetectionPage(url, self, url))
