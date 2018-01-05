@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d124399d_e638c91d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-05T22:24:56Z",
+      "side": 1,
+      "message": "probably should add \"VideoDecoder\" in there somewhere.",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "3c1e6d990ec9506c4d571989cb8a62f902b9b699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d827d7_077b5425",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-05T22:24:56Z",
+      "side": 1,
+      "message": "please be more specific, though this is a fairly good qualitative description.  :)",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "3c1e6d990ec9506c4d571989cb8a62f902b9b699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10989899_1a0a910b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-05T22:24:56Z",
+      "side": 1,
+      "message": "you can optionally include a Test: field after Bug:, below, that is a one-line description of the test.\n\ni don\u0027t think that anything automated cares whether it\u0027s there or not.  some folks do it that way, others do it how you did.",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "3c1e6d990ec9506c4d571989cb8a62f902b9b699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f8e9ca_af296168",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2018-01-05T22:24:56Z",
+      "side": 1,
+      "message": "please change this to \"Bug: 794216\".  this will cause gerritt to update the bug when the patch lands.  you\u0027ll still have to manually close it, but it will provide a link from here to crbug and the other way around.",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "3c1e6d990ec9506c4d571989cb8a62f902b9b699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
