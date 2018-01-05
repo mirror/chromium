@@ -93,9 +93,13 @@ initWithToolsMenuConfigurationProvider:(id)configurationProvider
   ToolbarStyle style = isIncognito ? INCOGNITO : NORMAL;
   ToolbarButtonFactory* buttonFactory =
       [[ToolbarButtonFactory alloc] initWithStyle:style];
+  buttonFactory.dispatcher = self.dispatcher;
 
   self.toolbarViewController = [[PrimaryToolbarViewController alloc]
       initWithButtonFactory:buttonFactory];
+  self.toolbarViewController.dispatcher = self.dispatcher;
+  self.toolbarViewController.locationBarView =
+      self.locationBarCoordinator.locationBarView;
 }
 
 #pragma mark - Property Accessors

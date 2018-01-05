@@ -15,6 +15,10 @@
 @interface PrimaryToolbarView ()
 @property(nonatomic, strong) UIStackView* stackView;
 @property(nonatomic, strong) UIView* locationBarContainer;
+
+// Redefined as readwrite
+@property(nonatomic, strong, readwrite) ToolbarButton* tabGridButton;
+
 @end
 
 @implementation PrimaryToolbarView
@@ -23,15 +27,42 @@
 @synthesize locationBarView = _locationBarView;
 @synthesize stackView = _stackView;
 @synthesize locationBarContainer = _locationBarContainer;
+@synthesize tabGridButton = _tabGridButton;
 @synthesize topSafeAnchor = _topSafeAnchor;
 
 #pragma mark - Setup
 
 - (void)setUp {
+  self.translatesAutoresizingMaskIntoConstraints = NO;
   self.locationBarContainer = [[UIView alloc] init];
   self.locationBarContainer.backgroundColor = [UIColor whiteColor];
+
+  self.tabGridButton = [self.buttonFactory tabSwitcherStripButton];
   self.stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
-    [self.buttonFactory tabSwitcherStripButton], self.locationBarContainer
+    self.tabGridButton, self.locationBarContainer
+  ]];
+
+  self.stackView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:self.stackView];
+
+  if (@available(iOS 11, *)) {
+    [NSLayoutConstraint activateConstraints:@[
+      [self.stackView.leadingAnchor
+          constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],
+      [self.stackView.trailingAnchor
+          constraintEqualToAnchor:self.safeAreaLayoutGuide.trailingAnchor],
+    ]];
+  } else {
+    [NSLayoutConstraint activateConstraints:@[
+      [self.stackView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [self.stackView.trailingAnchor
+          constraintEqualToAnchor:self.trailingAnchor],
+    ]];
+  }
+  [NSLayoutConstraint activateConstraints:@[
+    [self.stackView.topAnchor constraintEqualToAnchor:self.topSafeAnchor],
+    [self.stackView.heightAnchor constraintEqualToConstant:48],
+    [self.stackView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
   ]];
 }
 
