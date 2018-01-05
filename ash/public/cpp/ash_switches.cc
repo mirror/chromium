@@ -80,6 +80,9 @@ const char kAshSidebarDisabled[] = "disable-ash-sidebar";
 // is used to enable tablet mode on convertible devices.
 const char kAshEnableTabletMode[] = "enable-touchview";
 
+// True if the device is tablet or detachable.
+const char kIsTablet[] = "is_tablet";
+
 // Enable the wayland server.
 const char kAshEnableWaylandServer[] = "ash-enable-wayland-server";
 
