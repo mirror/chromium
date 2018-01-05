@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "3334c39d_e7ec840f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T07:27:57Z",
+      "side": 1,
+      "message": "I am not trying to change the trace API with the write barrier.\n\nHistorically, objects in containers are traced with TraceInCollection which also performs weak handling. This weak handling is different from the weak handling were slots are registered that are then processed in the atomic pause.\n\nFor the write barrier we would like to use the regular Trace method though that does not have weak handling. This is the reason we have two paths in some cases.\n\nHaving said that, this is pretty much the most complicated part for the barrier. The rest should be easier then :)",
+      "parentUuid": "87ea6a32_e6dc9919",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537fa3c7_9cb759ea",
         "filename": "third_party/WebKit/Source/platform/wtf/LinkedHashSet.h",
         "patchSetId": 2
