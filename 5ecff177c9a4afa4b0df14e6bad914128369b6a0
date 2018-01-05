@@ -94,6 +94,53 @@
       "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0f28428_54c46224",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T15:42:12Z",
+      "side": 1,
+      "message": "Okay, I didn\u0027t realise it was so many files. Doing in a separate CL is fine then.\n\nNote: In the future, for such changes, it\u0027s actually OK to TBR downstream owners if you have an LGTM from an OWNER of the API you\u0027re changing.",
+      "parentUuid": "78adcc77_d223df20",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c024c7_a366f2af",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T15:42:12Z",
+      "side": 1,
+      "message": "Nit: Add WhileLocked() suffix to document the precondition in the function name.",
+      "range": {
+        "startLine": 252,
+        "startChar": 33,
+        "endLine": 252,
+        "endChar": 35
+      },
+      "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
