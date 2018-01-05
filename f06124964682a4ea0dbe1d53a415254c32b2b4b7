@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e38bccf_f64ecfbf",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T01:31:47Z",
+      "side": 1,
+      "message": "Should we add an assertion to ensure that this method is only called once?",
+      "revId": "f06124964682a4ea0dbe1d53a415254c32b2b4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0471a243_24436066",
+        "filename": "content/browser/webui/web_ui_data_source_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T01:31:47Z",
+      "side": 1,
+      "message": "Perhaps use std::map count(resource_id) here and at line 176?",
+      "revId": "f06124964682a4ea0dbe1d53a415254c32b2b4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
