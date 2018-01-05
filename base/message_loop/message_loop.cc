@@ -20,6 +20,7 @@
 #include "base/trace_event/trace_event.h"
 
 #if defined(OS_MACOSX)
+#include "base/feature_list.h"
 #include "base/message_loop/message_pump_mac.h"
 #endif
 #if defined(OS_POSIX) && !defined(OS_IOS) && !defined(OS_FUCHSIA)
@@ -159,6 +160,11 @@ bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
   return true;
 }
 
+#if defined(OS_MACOSX)
+static const Feature kMacUseMessagePumpDefault{"MacUseMessagePumpDefault",
+                                               FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_MACOSX)
+
 // static
 std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 // TODO(rvargas): Get rid of the OS guards.
@@ -180,15 +186,6 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>(new MessagePumpForUI())
 #endif
 
-#if defined(OS_MACOSX)
-  // Use an OS native runloop on Mac to support timer coalescing.
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop())
-#else
-#define MESSAGE_PUMP_DEFAULT \
-  std::unique_ptr<MessagePump>(new MessagePumpDefault())
-#endif
-
   if (type == MessageLoop::TYPE_UI) {
     if (message_pump_for_ui_factory_)
       return message_pump_for_ui_factory_();
@@ -203,7 +200,12 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #endif
 
   DCHECK_EQ(MessageLoop::TYPE_DEFAULT, type);
-  return MESSAGE_PUMP_DEFAULT;
+#if defined(OS_MACOSX)
+  if (!FeatureList::IsEnabled(kMacUseMessagePumpDefault)) {
+    return std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop());
+  }
+#endif
+  return std::make_unique<MessagePumpDefault>();
 }
 
 void MessageLoop::AddDestructionObserver(
