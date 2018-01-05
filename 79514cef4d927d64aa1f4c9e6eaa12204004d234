@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ec18d3_8c0e76c1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2018-01-05T15:33:57Z",
+      "side": 1,
+      "message": "optional: I\u0027m not sure if you want to do it in this CL, but we only really ever need to set this for main-frame requests as well, see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d787535",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 67
+      },
+      "revId": "79514cef4d927d64aa1f4c9e6eaa12204004d234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
