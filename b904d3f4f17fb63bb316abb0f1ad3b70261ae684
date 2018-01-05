@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922afd48_56a4efec",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T07:34:58Z",
+      "side": 1,
+      "message": "IIRC, we left off with Daniel\u0027s comment below:\n\n\u003e OK. In conclusion:\n\u003e - keep the message\n\u003e - drop the command-line flag from being mentioned\n\u003e - don\u0027t warn more than 1x (?), or perhaps once per transition between throttled and unthrottled?\n\nWere we still planning on that?",
+      "revId": "b904d3f4f17fb63bb316abb0f1ad3b70261ae684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
