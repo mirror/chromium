@@ -287,6 +287,7 @@ File::Error File::OSErrorToFileError(DWORD last_error) {
     case ERROR_SHARING_VIOLATION:
       return FILE_ERROR_IN_USE;
     case ERROR_FILE_EXISTS:
+    case ERROR_ALREADY_EXISTS:
       return FILE_ERROR_EXISTS;
     case ERROR_FILE_NOT_FOUND:
     case ERROR_PATH_NOT_FOUND:
