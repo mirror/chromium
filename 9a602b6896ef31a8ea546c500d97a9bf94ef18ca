@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ae03208_91bee744",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "Done. (I would be sad if it hadn\u0027t worked for pair.)",
+      "parentUuid": "c58f4a31_ffd53084",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e275c52_14c7b56c",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e388a10_5ea330fc",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "I suspect that there are cases where we might already have a target contents, but the non-negative tab index tells us that we found a singleton (used later).",
+      "parentUuid": "4e275c52_14c7b56c",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0c2a0d7_0fdcf721",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "The following code clobbers target contents regardless, which we don\u0027t want for singletons, and \u0027target_contents\u0027 may or may not be set (if we can trust the comment.)",
+      "parentUuid": "82fc8cd4_7aa725e0",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a73b74ea_28d68590",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133abcac_f08c22cd",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a73b74ea_28d68590",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4e103b1d_9cf3ded2",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7fb0bcd_9e4ac8ba",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb688f8_27fac018",
         "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "88fed76f_08eb396e",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb688f8_27fac018",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060dfab4_d1aba9ce",
         "filename": "chrome/browser/ui/singleton_tabs.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc80ea7_46d92858",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T16:48:42Z",
+      "side": 1,
+      "message": "I changed GetBrowserAndTabForDisposition() to const ref too.",
+      "parentUuid": "060dfab4_d1aba9ce",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
