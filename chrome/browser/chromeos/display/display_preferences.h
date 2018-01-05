@@ -18,6 +18,7 @@ class Point;
 }
 
 namespace display {
+struct MixedMirrorModeParams;
 struct TouchCalibrationData;
 }
 
@@ -61,6 +62,11 @@ void StoreLegacyTouchDataForTest(int64_t display_id,
 bool ParseTouchCalibrationStringForTest(
     const std::string& str,
     std::array<std::pair<gfx::Point, gfx::Point>, 4>* point_pair_quad);
+
+// Stores the given |mixed_params| for tests. Clears stored parameters if
+// |mixed_params| is null.
+void StoreDisplayMixedMirrorModeParamsForTest(
+    const display::MixedMirrorModeParams* mixed_params);
 
 }  // namespace chromeos
 

@@ -48,6 +48,9 @@ constexpr char kTouchAssociationTimestamp[] = "touch_association_timestamp";
 constexpr char kTouchAssociationCalibrationData[] =
     "touch_association_calibration_data";
 
+constexpr char kMirroringSourceId[] = "mirroring_source_id";
+constexpr char kMirroringDestinationIds[] = "mirroring_destination_ids";
+
 // This kind of boilerplates should be done by base::JSONValueConverter but it
 // doesn't support classes like gfx::Insets for now.
 // TODO(mukai): fix base::JSONValueConverter and use it here.
@@ -360,6 +363,49 @@ void LoadExternalDisplayMirrorInfo() {
       external_display_mirror_info);
 }
 
+// Loads mixed mirror mode parameters which will later be used to restore mixed
+// mirror mode.
+void LoadDisplayMixedMirrorModeParams() {
+  PrefService* local_state = g_browser_process->local_state();
+  const base::DictionaryValue* pref_data =
+      local_state->GetDictionary(prefs::kDisplayMixedMirrorModeParams);
+
+  if (pref_data->empty()) {
+    GetDisplayManager()->set_mixed_mirror_mode_params(nullptr);
+    return;
+  }
+
+  auto* mirroring_source_id_value = pref_data->FindKey(kMirroringSourceId);
+  if (!mirroring_source_id_value)
+    return;
+
+  DCHECK(mirroring_source_id_value->is_string());
+  int64_t mirroring_source_id;
+  if (!base::StringToInt64(mirroring_source_id_value->GetString(),
+                           &mirroring_source_id)) {
+    return;
+  }
+
+  auto* mirroring_destination_ids_value =
+      pref_data->FindKey(kMirroringDestinationIds);
+  if (!mirroring_destination_ids_value)
+    return;
+
+  DCHECK(mirroring_destination_ids_value->is_list());
+  display::DisplayIdList mirroring_destination_ids;
+  for (const auto& entry : mirroring_destination_ids_value->GetList()) {
+    DCHECK(entry.is_string());
+    int64_t id;
+    if (!base::StringToInt64(entry.GetString(), &id))
+      return;
+    mirroring_destination_ids.emplace_back(id);
+  }
+
+  GetDisplayManager()->set_mixed_mirror_mode_params(
+      std::make_unique<display::MixedMirrorModeParams>(
+          mirroring_source_id, mirroring_destination_ids));
+}
+
 void StoreDisplayLayoutPref(const display::DisplayIdList& list,
                             const display::DisplayLayout& display_layout) {
   DCHECK(display::DisplayLayout::Validate(list, display_layout));
@@ -568,6 +614,37 @@ void StoreExternalDisplayMirrorInfo() {
     pref_data->GetList().emplace_back(base::Value(base::Int64ToString(id)));
 }
 
+// Stores mixed mirror mode parameters. Clear the preferences if
+// |mixed_mirror_mode_params| is null.
+void StoreDisplayMixedMirrorModeParams(
+    const display::MixedMirrorModeParams* mixed_mirror_mode_params) {
+  PrefService* local_state = g_browser_process->local_state();
+  DictionaryPrefUpdate update(local_state,
+                              prefs::kDisplayMixedMirrorModeParams);
+  base::DictionaryValue* pref_data = update.Get();
+  pref_data->Clear();
+
+  if (!mixed_mirror_mode_params)
+    return;
+
+  pref_data->SetKey(
+      kMirroringSourceId,
+      base::Value(base::Int64ToString(mixed_mirror_mode_params->source_id)));
+
+  base::ListValue mirroring_destination_ids_value;
+  for (const auto& id : mixed_mirror_mode_params->destination_ids) {
+    mirroring_destination_ids_value.GetList().emplace_back(
+        base::Value(base::Int64ToString(id)));
+  }
+  pref_data->SetKey(kMirroringDestinationIds,
+                    std::move(mirroring_destination_ids_value));
+}
+
+void StoreCurrentDisplayMixedMirrorModeParams() {
+  StoreDisplayMixedMirrorModeParams(
+      GetDisplayManager()->mixed_mirror_mode_params());
+}
+
 }  // namespace
 
 void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
@@ -580,6 +657,7 @@ void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(prefs::kDisplayRotationLock);
   registry->RegisterDictionaryPref(prefs::kDisplayTouchAssociations);
   registry->RegisterListPref(prefs::kExternalDisplayMirrorInfo);
+  registry->RegisterDictionaryPref(prefs::kDisplayMixedMirrorModeParams);
 }
 
 void StoreDisplayPrefs() {
@@ -599,6 +677,7 @@ void StoreDisplayPrefs() {
   StoreCurrentDisplayProperties();
   StoreDisplayTouchAssociations();
   StoreExternalDisplayMirrorInfo();
+  StoreCurrentDisplayMixedMirrorModeParams();
 }
 
 void StoreDisplayRotationPrefs(bool rotation_lock) {
@@ -620,6 +699,7 @@ void LoadDisplayPreferences(bool first_run_after_boot) {
   LoadDisplayLayouts();
   LoadDisplayProperties();
   LoadExternalDisplayMirrorInfo();
+  LoadDisplayMixedMirrorModeParams();
   LoadDisplayRotationState();
   LoadDisplayTouchAssociations();
   if (!first_run_after_boot) {
@@ -665,6 +745,11 @@ bool ParseTouchCalibrationStringForTest(
     const std::string& str,
     display::TouchCalibrationData::CalibrationPointPairQuad* point_pair_quad) {
   return ParseTouchCalibrationStringValue(str, point_pair_quad);
+}
+
+void StoreDisplayMixedMirrorModeParamsForTest(
+    const display::MixedMirrorModeParams* mixed_params) {
+  StoreDisplayMixedMirrorModeParams(mixed_params);
 }
 
 }  // namespace chromeos
