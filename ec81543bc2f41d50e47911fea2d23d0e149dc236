@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3956af08_60de0853",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "nit: Suggest kPackagedFileExe, since this is the FILE_EXE for packaged mode.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc26584e_a91b3452",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "Can we do this by just testing whether \"/pkg\" exists in the process\u0027 namespace?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a32de2c_09022188",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "Putting this work-around in the PathService means that code calling CommandLine::GetProgram() will get the wrong answer (it\u0027ll see the original parent-relative command path).\n\nIf we instead modify the CommandLine so that GetProgram() returns the package-relative path (i.e. /pkg/bin/...) then that removes the need for any work-arounds in either PathService nor LaunchProcess.\n\nIf we choose to launch package \"foo\" then is the binary visible as \"/pkg/bin/foo\", or only as \"/pkg/bin/app\"?  If so then we can have CommandLine detect when the binary originates from a package, and update the path to /pkg/bin but leave the basename intact?\n\nIf it is only visible as \"app\", but we can launch sub-processes from other arbitrary binaries in the package, then we could have a trivial \"app\" stub that launches the real binary by its package-relative name, and passes the command-line parameters, etc, unmodified, perhaps, to work around that limitation...",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150f8749_c239e564",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "AFAICT this is only used by the chrome::FILE_RESOURCE_MODULE path, so can we just NOTIMPLEMENTED() it and return false?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb60c39_f8c6e066",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "Can we derived this from e.g. FILE_EXE, in the same way that we do for Mac \u0026 Windows?\n\nAlternatively, the POSIX version allows overriding via an environment variable, so we could potentially just set that in the runner, and fail here if it isn\u0027t set - it should only be used by tests in any case.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de52dde_d798ea45",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "Is this correct? Shouldn\u0027t it be /pkg/bin?\n\nCan\u0027t we derive this from FILE_EXE, or vice versa?  (i.e. FILE_EXE.DirName(), or DIR_EXE.Append(\"app\")). In fact, this is what the generic PathProvider() in //base does - so this is deliberately overriding it from /pkg/bin to /pkg/lib..?\n\nWhy do we need DIR_EXE for packaged, but not bootfs?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14760dc_190a1717",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "All of the cases (including the un-matched default) are the same except DIR_SOURCE_ROOT, so why not have a single switch statement with that case specialized?\n\n(However, see note, above, on DIR_SOURCE_ROOT values)",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 3
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24894490_31b232eb",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "This looks like it is overriding the binary in the command-line to always be the calling-process\u0027 binary, which won\u0027t work in general.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 3
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350d1a90_ac2321e2",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "nit: Suggest adding a comment, e.g. \"Path to file describing the services to be made available to the process.\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656119b1_e902622a",
+        "filename": "build/config/fuchsia/sandbox_policy",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T00:21:49Z",
+      "side": 1,
+      "message": "Do we have descriptions somewhere of what each of these provides? Or can we add comments to this file, e.g. \"Needed for filesystem access.\" etc?",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
