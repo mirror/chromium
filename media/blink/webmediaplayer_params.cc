@@ -31,7 +31,8 @@ WebMediaPlayerParams::WebMediaPlayerParams(
     mojom::MediaMetricsProviderPtr metrics_provider,
     base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
         blink::WebSurfaceLayerBridgeObserver*)> create_bridge_callback,
-    scoped_refptr<viz::ContextProvider> context_provider)
+    scoped_refptr<viz::ContextProvider> context_provider,
+    blink::WebLayerTreeView* layer_tree_view)
     : defer_load_cb_(defer_load_cb),
       audio_renderer_sink_(audio_renderer_sink),
       media_log_(std::move(media_log)),
@@ -52,7 +53,8 @@ WebMediaPlayerParams::WebMediaPlayerParams(
       embedded_media_experience_enabled_(embedded_media_experience_enabled),
       metrics_provider_(std::move(metrics_provider)),
       create_bridge_callback_(create_bridge_callback),
-      context_provider_(std::move(context_provider)) {}
+      context_provider_(std::move(context_provider)),
+      layer_tree_view_(layer_tree_view) {}
 
 WebMediaPlayerParams::~WebMediaPlayerParams() = default;
 

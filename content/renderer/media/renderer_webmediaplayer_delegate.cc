@@ -10,6 +10,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/sys_info.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/common/media/media_player_delegate_messages.h"
 #include "content/public/common/content_client.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -114,6 +116,16 @@ void RendererWebMediaPlayerDelegate::DidPlayerMutedStatusChange(int delegate_id,
                                                                 bool muted) {
   Send(new MediaPlayerDelegateHostMsg_OnMutedStatusChanged(routing_id(),
                                                            delegate_id, muted));
+}
+
+void RendererWebMediaPlayerDelegate::PictureInPictureSurfaceIdUpdated(
+    int delegate_id,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {
+  Send(new MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId(
+      routing_id(), delegate_id, frame_sink_id, parent_id, nonce, size));
 }
 
 void RendererWebMediaPlayerDelegate::DidPause(int player_id) {
@@ -234,6 +246,8 @@ bool RendererWebMediaPlayerDelegate::OnMessageReceived(
                         OnMediaDelegateVolumeMultiplierUpdate)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_BecamePersistentVideo,
                         OnMediaDelegateBecamePersistentVideo)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_EndPictureInPictureMode,
+      OnMediaDelegateEndPictureInPictureMode)
     IPC_MESSAGE_UNHANDLED(return false)
   IPC_END_MESSAGE_MAP()
   return true;
@@ -336,6 +350,14 @@ void RendererWebMediaPlayerDelegate::OnMediaDelegateBecamePersistentVideo(
   Observer* observer = id_map_.Lookup(player_id);
   if (observer)
     observer->OnBecamePersistentVideo(value);
+}
+
+void RendererWebMediaPlayerDelegate::OnMediaDelegateEndPictureInPictureMode(
+    int player_id) {
+  Observer* observer = id_map_.Lookup(player_id);
+  if (observer) {
+    observer->OnPictureInPictureModeEnded();
+  }
 }
 
 void RendererWebMediaPlayerDelegate::ScheduleUpdateTask() {

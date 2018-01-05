@@ -20,6 +20,8 @@
 #include "media/base/routing_token_callback.h"
 #include "media/blink/media_blink_export.h"
 #include "media/filters/context_3d.h"
+#include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
+#include "third_party/WebKit/public/platform/WebLayerTreeView.h"
 #include "media/mojo/interfaces/media_metrics_provider.mojom.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 
@@ -82,7 +84,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::MediaMetricsProviderPtr metrics_provider,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
           blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<viz::ContextProvider> context_provider,
+      blink::WebLayerTreeView* layer_tree_view);
 
   ~WebMediaPlayerParams();
 
@@ -161,6 +164,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return context_provider_;
   }
 
+  blink::WebLayerTreeView* layer_tree_view() { return layer_tree_view_; }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -185,6 +190,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
   scoped_refptr<viz::ContextProvider> context_provider_;
+  blink::WebLayerTreeView* layer_tree_view_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

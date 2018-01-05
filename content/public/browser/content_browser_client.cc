@@ -11,6 +11,8 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/public/browser/client_certificate_delegate.h"
 #include "content/public/browser/memory_coordinator_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -600,6 +602,13 @@ bool ContentBrowserClient::ShouldForceDownloadResource(
   return false;
 }
 
+void ContentBrowserClient::UpdatePictureInPictureSurfaceId(
+    RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {}
+
 void ContentBrowserClient::CreateUsbDeviceManager(
     RenderFrameHost* render_frame_host,
     device::mojom::UsbDeviceManagerRequest request) {}
@@ -608,4 +617,4 @@ void ContentBrowserClient::CreateUsbChooserService(
     RenderFrameHost* render_frame_host,
     device::mojom::UsbChooserServiceRequest request) {}
 
-}  // namespace content
+} // namespace content

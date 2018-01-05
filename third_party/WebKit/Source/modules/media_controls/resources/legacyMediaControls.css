@@ -512,6 +512,26 @@ audio::-internal-media-controls-cast-button, video::-internal-media-controls-cas
     color: inherit;
 }
 
+audio::-internal-media-controls-picture-in-picture-button, video::-internal-media-controls-picture-in-picture-button {
+    -webkit-appearance: none;
+    background-image: -webkit-image-set(
+      url(default_100_percent/legacy/mediaplayer_pictureinpicture.png) 1x);
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    flex: none;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    border-width: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: initial;
+    color: inherit;
+}
+
 audio::-internal-media-controls-cast-button.on,
 video::-internal-media-controls-cast-button.on {
     background-image: -webkit-image-set(

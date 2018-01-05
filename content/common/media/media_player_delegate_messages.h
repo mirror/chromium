@@ -49,6 +49,8 @@ IPC_MESSAGE_ROUTED2(MediaPlayerDelegateMsg_BecamePersistentVideo,
                     int /* delegate_id, distinguishes instances */,
                     double /* is_persistent */)
 
+IPC_MESSAGE_ROUTED1(MediaPlayerDelegateMsg_EndPictureInPictureMode,
+    int /* delegate_id, distinguishes instances */)
 // ----------------------------------------------------------------------------
 // Messages from the renderer notifying the browser of playback state changes.
 // ----------------------------------------------------------------------------
@@ -70,6 +72,14 @@ IPC_MESSAGE_ROUTED5(MediaPlayerDelegateHostMsg_OnMediaPlaying,
 IPC_MESSAGE_ROUTED2(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                     int /* delegate_id, distinguishes instances */,
                     bool /* the new muted status */)
+
+IPC_MESSAGE_ROUTED5(
+    MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+    int /* delegate id */,
+    viz::FrameSinkId /* the frame sink id */,
+    uint32_t /* the parent id of the surface id */,
+    base::UnguessableToken /* the nonce of the surface id */,
+    gfx::Size /* frame size */)
 
 IPC_MESSAGE_ROUTED2(
     MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
