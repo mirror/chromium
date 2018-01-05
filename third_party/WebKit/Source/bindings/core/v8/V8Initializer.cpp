@@ -544,13 +544,23 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kZeroInitialize);
+    void* data = AllocateUninitialized(size);
+    if (data)
+      memset(data, '\0', size);
+
+    return data;
   }
 
   void* AllocateUninitialized(size_t size) override {
-    return WTF::ArrayBufferContents::AllocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::kDontInitialize);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    V8PerIsolateData* per_isolate_data = V8PerIsolateData::From(isolate);
+
+    void* data = PartitionAllocGenericFlags(
+        per_isolate_data->GetArrayBufferPartition(),
+        base::PartitionAllocReturnNull, size,
+        WTF_HEAP_PROFILER_TYPE_NAME(WTF::ArrayBufferContents));
+
+    return data;
   }
 
   void Free(void* data, size_t size) override {

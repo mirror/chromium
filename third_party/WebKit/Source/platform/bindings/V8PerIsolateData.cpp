@@ -90,6 +90,8 @@ V8PerIsolateData::V8PerIsolateData(
   GetIsolate()->AddMicrotasksCompletedCallback(&MicrotasksCompletedCallback);
   if (IsMainThread())
     g_main_thread_per_isolate_data = this;
+
+  array_buffer_allocator_.init();
 }
 
 // This constructor is used for taking a V8 context snapshot. It must run on the
@@ -109,6 +111,8 @@ V8PerIsolateData::V8PerIsolateData()
 
   // SnapshotCreator enters the isolate, so we don't call Isolate::Enter() here.
   g_main_thread_per_isolate_data = this;
+
+  array_buffer_allocator_.init();
 }
 
 V8PerIsolateData::~V8PerIsolateData() {}
