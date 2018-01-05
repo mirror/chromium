@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73202cfb_76a8e679",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptTabModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T00:07:19Z",
+      "side": 1,
+      "message": "I\u0027d call this mDialogView now",
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa9ce29_d9772a89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptTabModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T00:07:19Z",
+      "side": 1,
+      "message": "should this have an @IntDef for the buttonType?",
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8c694f_09e770cb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/JavascriptTabModalDialogTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T00:07:19Z",
+      "side": 1,
+      "message": "can we move this and the corresponding other classes to the jsdialog subpackage (in a followup CL)?",
+      "range": {
+        "startLine": 5,
+        "startChar": 35,
+        "endLine": 5,
+        "endChar": 36
+      },
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735272a5_9ec191d0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/JavascriptTabModalDialogTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T00:07:19Z",
+      "side": 1,
+      "message": "pollUiThread already does the UI thread stuff for you, so you don\u0027t need this inner runOnUiThreadBlocking",
+      "range": {
+        "startLine": 315,
+        "startChar": 39,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
