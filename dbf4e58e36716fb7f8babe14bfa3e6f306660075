@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "983ce166_27a06599",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-01-05T23:54:10Z",
+      "side": 1,
+      "message": "your text editor emits tabs?",
+      "range": {
+        "startLine": 1465,
+        "startChar": 0,
+        "endLine": 1465,
+        "endChar": 1
+      },
+      "revId": "dbf4e58e36716fb7f8babe14bfa3e6f306660075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
