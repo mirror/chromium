@@ -190,4 +190,15 @@ int Task::GetKeepaliveCount() const {
   return -1;
 }
 
+// static
+gfx::ImageSkia* Task::FetchIcon(int id, gfx::ImageSkia** result_image) {
+  if (!*result_image && ui::ResourceBundle::HasSharedInstance()) {
+    *result_image =
+        ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(id);
+    if (*result_image)
+      (*result_image)->MakeThreadSafe();
+  }
+  return *result_image;
+}
+
 }  // namespace task_manager
