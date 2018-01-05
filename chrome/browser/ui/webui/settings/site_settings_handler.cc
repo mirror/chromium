@@ -366,7 +366,7 @@ void SiteSettingsHandler::HandleClearUsage(
     // Also clear the *local* storage data.
     scoped_refptr<BrowsingDataLocalStorageHelper> local_storage_helper =
         new BrowsingDataLocalStorageHelper(profile_);
-    local_storage_helper->DeleteOrigin(url);
+    local_storage_helper->DeleteOrigin(url, base::BindOnce(&base::DoNothing));
   }
 }
 
