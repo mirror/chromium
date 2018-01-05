@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "684a3ae0_5388f941",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T02:14:53Z",
+      "side": 0,
+      "message": "Yes, it is not necessary. Calling SetMirrorMode should be enough to trigger reconfiguration.",
+      "parentUuid": "91db7674_4d710213",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 64
+      },
+      "revId": "5199959ae2860ee2f61926aa8d9a7358304c2970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a193055_bcbbd233",
         "filename": "ash/system/screen_layout_observer_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5199959ae2860ee2f61926aa8d9a7358304c2970",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2598df_ba18971c",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T02:14:53Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9a193055_bcbbd233",
+      "range": {
+        "startLine": 354,
+        "startChar": 33,
+        "endLine": 354,
+        "endChar": 75
+      },
+      "revId": "5199959ae2860ee2f61926aa8d9a7358304c2970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
