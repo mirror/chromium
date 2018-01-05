@@ -94,6 +94,30 @@
       "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be25000_1d2b6617",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T17:59:28Z",
+      "side": 1,
+      "message": "I think executing changes as a runnable adds a layer of indirection that makes the code more confusing and may make stack traces harder to follow.\n\nAlso, in this CL #changePreference is called inconsistently. There are several preferences that aren\u0027t checked, e.g. PREF_AUTOFILL_SETTINGS, PREF_SAVED_PASSWORDS, PREF_DATA_REDUCTION, PREF_LANGUAGES, PREF_DOWNLOADS.\n\nIf there are specific things that a sub-class needs to override, I suggest creating smaller methods that update specific preference then overriding in the browser built on top of Chromium, e.g. #updateSearchEnginePreference() could be protected and overridden to remove the preference.",
+      "parentUuid": "35acb6ca_205ad23a",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 75
+      },
+      "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
