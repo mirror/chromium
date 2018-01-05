@@ -22,6 +22,30 @@
       "revId": "4a7bdae63d5fb7179aa02795237c5a7ec9dff77a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba815e4d_0a0d2009",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-05T21:14:47Z",
+      "side": 1,
+      "message": "Thanks for pointing this out - good catch.  Done.",
+      "parentUuid": "cc32f851_1ab49658",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "4a7bdae63d5fb7179aa02795237c5a7ec9dff77a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
