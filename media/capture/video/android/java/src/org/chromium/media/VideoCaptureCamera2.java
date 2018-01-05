@@ -185,7 +185,7 @@ public class VideoCaptureCamera2 extends VideoCapture {
         }
     };
 
-    private static final double kNanoSecondsToFps = 1.0E-9;
+    private static final double kNanoSecondsPerSecond = 1000000000;
     private static final String TAG = "VideoCapture";
     private static final long PRECAPTURE_TIMEOUT_MS = 1000;
 
@@ -604,14 +604,14 @@ public class VideoCaptureCamera2 extends VideoCapture {
                     final long minFrameDuration = streamMap.getOutputMinFrameDuration(format, size);
                     minFrameRate = (minFrameDuration == 0)
                             ? 0.0f
-                            : (1.0 / kNanoSecondsToFps * minFrameDuration);
+                            : (kNanoSecondsPerSecond / minFrameDuration);
                 } else {
                     // TODO(mcasas): find out where to get the info from in this case.
                     // Hint: perhaps using SCALER_AVAILABLE_PROCESSED_MIN_DURATIONS.
                     minFrameRate = 0.0;
                 }
                 formatList.add(new VideoCaptureFormat(
-                        size.getWidth(), size.getHeight(), (int) minFrameRate, 0));
+                        size.getWidth(), size.getHeight(), (int) minFrameRate, format));
             }
         }
         return formatList.toArray(new VideoCaptureFormat[formatList.size()]);
