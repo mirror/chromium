@@ -52,6 +52,24 @@
       "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bcd517d_1ed1e2e1",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T15:37:59Z",
+      "side": 0,
+      "message": "The more I think about I see a broader problem.\n\nAnything that contains a Member will now answer this with false. I will think through whether this is a problem before landing the CL.",
+      "parentUuid": "b0523f34_937ce646",
+      "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
