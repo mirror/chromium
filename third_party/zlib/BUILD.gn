@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/test.gni")
+
 if (current_cpu == "arm" || current_cpu == "arm64") {
   import("//build/config/arm.gni")
 }
@@ -281,4 +283,24 @@ static_library("minizip") {
   ]
 
   public_configs = [ ":zlib_config" ]
+}
+
+test("zlib_bench") {
+  include_dirs = [ "." ]
+
+  sources = [
+    "contrib/bench/zlib_bench.cpp",
+  ]
+
+  if (!is_debug) {
+    configs -= [ "//build/config/compiler:default_optimization" ]
+    configs += [ "//build/config/compiler:optimize_speed" ]
+  }
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  deps = [
+    ":zlib",
+  ]
 }
