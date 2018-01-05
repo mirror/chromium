@@ -899,6 +899,11 @@ void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
     support_->SetNeedsBeginFrame(needs_begin_frames);
 }
 
+void RenderWidgetHostViewChildFrame::SetWantsSideEffectsOnlyBeginFrames() {
+  if (support_)
+    support_->SetWantsSideEffectsOnlyBeginFrames();
+}
+
 InputEventAckState RenderWidgetHostViewChildFrame::FilterInputEvent(
     const blink::WebInputEvent& input_event) {
   if (input_event.GetType() == blink::WebInputEvent::kGestureFlingStart) {

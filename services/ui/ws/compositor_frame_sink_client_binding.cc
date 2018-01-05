@@ -18,6 +18,10 @@ CompositorFrameSinkClientBinding::CompositorFrameSinkClientBinding(
 
 CompositorFrameSinkClientBinding::~CompositorFrameSinkClientBinding() = default;
 
+void CompositorFrameSinkClientBinding::SetWantsSideEffectsOnlyBeginFrames() {
+  compositor_frame_sink_->SetWantsSideEffectsOnlyBeginFrames();
+}
+
 void CompositorFrameSinkClientBinding::SetNeedsBeginFrame(
     bool needs_begin_frame) {
   compositor_frame_sink_->SetNeedsBeginFrame(needs_begin_frame);

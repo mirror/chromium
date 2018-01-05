@@ -189,6 +189,7 @@ class CONTENT_EXPORT DelegatedFrameHost
                                          gfx::PointF* transformed_point);
 
   void SetNeedsBeginFrames(bool needs_begin_frames);
+  void SetWantsSideEffectsOnlyBeginFrames();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
 
   // Exposed for tests.

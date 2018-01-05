@@ -50,6 +50,11 @@ const BeginFrameArgs& PrimaryBeginFrameSource::LastUsedBeginFrameArgs() const {
   return last_begin_frame_args_;
 }
 
+bool PrimaryBeginFrameSource::WantsSideEffectsOnlyBeginFrames() const {
+  // Forward side-effects-only BeginFrames.
+  return true;
+}
+
 void PrimaryBeginFrameSource::OnBeginFrameSourcePausedChanged(bool paused) {}
 
 void PrimaryBeginFrameSource::DidFinishFrame(BeginFrameObserver* obs) {

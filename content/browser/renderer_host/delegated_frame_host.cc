@@ -258,6 +258,15 @@ void DelegatedFrameHost::SetNeedsBeginFrames(bool needs_begin_frames) {
   support_->SetNeedsBeginFrame(needs_begin_frames);
 }
 
+void DelegatedFrameHost::SetWantsSideEffectsOnlyBeginFrames() {
+  if (enable_viz_) {
+    NOTIMPLEMENTED();
+    return;
+  }
+
+  support_->SetWantsSideEffectsOnlyBeginFrames();
+}
+
 void DelegatedFrameHost::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
   if (enable_viz_) {
     NOTIMPLEMENTED();

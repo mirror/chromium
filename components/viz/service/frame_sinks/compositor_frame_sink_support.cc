@@ -140,6 +140,14 @@ void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
   UpdateNeedsBeginFramesInternal();
 }
 
+void CompositorFrameSinkSupport::SetWantsSideEffectsOnlyBeginFrames() {
+  wants_side_effects_only_begin_frames_ = true;
+}
+
+bool CompositorFrameSinkSupport::WantsSideEffectsOnlyBeginFrames() const {
+  return wants_side_effects_only_begin_frames_;
+}
+
 void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
   TRACE_EVENT2("viz", "CompositorFrameSinkSupport::DidNotProduceFrame",
                "ack.source_id", ack.source_id, "ack.sequence_number",

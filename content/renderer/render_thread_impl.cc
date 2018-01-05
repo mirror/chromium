@@ -1980,6 +1980,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   params.local_surface_id_provider =
       std::make_unique<RendererLocalSurfaceIdProvider>();
 
+  // The renderer runs animations and layout for side-effects-only BeginFrames.
+  params.wants_side_effects_only_begin_frames = true;
+
   // In disable gpu vsync mode, also let the renderer tick as fast as it
   // can. The top level begin frame source will also be running as a back
   // to back begin frame source, but using a synthetic begin frame source
