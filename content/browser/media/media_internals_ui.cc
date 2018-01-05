@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "content/browser/media/media_internals_handler.h"
 #include "content/grit/content_resources.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -20,12 +21,10 @@ namespace {
 WebUIDataSource* CreateMediaInternalsHTMLSource() {
   WebUIDataSource* source =
       WebUIDataSource::Create(kChromeUIMediaInternalsHost);
-
   source->SetJsonPath("strings.js");
-
+  source->AddGzipMap(kContentResources, kContentResourcesSize);
   source->AddResourcePath("media_internals.js", IDR_MEDIA_INTERNALS_JS);
   source->SetDefaultResource(IDR_MEDIA_INTERNALS_HTML);
-  source->UseGzip();
   return source;
 }
 
