@@ -231,6 +231,9 @@ class CONTENT_EXPORT BrowserMainLoop {
   // Create all secondary threads.
   int CreateThreads();
 
+  // Starts to profile the IO thread.
+  int StartProfilingIOThread();
+
   // Called right after the browser threads have been started.
   int BrowserThreadsStarted();
 
@@ -262,6 +265,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   // CreateStartupTasks()
   //   PreCreateThreads()
   //   CreateThreads()
+  //   StartProfilingIOThread()
   //   BrowserThreadsStarted()
   //     InitializeMojo()
   //     InitStartupTracingForDuration()

@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <memory>
-#include <string>
 #include <utility>
 #include <vector>
 
@@ -942,6 +941,10 @@ void BrowserMainLoop::CreateStartupTasks() {
       base::Bind(&BrowserMainLoop::CreateThreads, base::Unretained(this));
   startup_task_runner_->AddTask(create_threads);
 
+  StartupTask profile_thread_started = base::Bind(
+      &BrowserMainLoop::StartProfilingIOThread, base::Unretained(this));
+  startup_task_runner_->AddTask(profile_thread_started);
+
   StartupTask browser_thread_started = base::Bind(
       &BrowserMainLoop::BrowserThreadsStarted, base::Unretained(this));
   startup_task_runner_->AddTask(browser_thread_started);
@@ -1164,6 +1167,12 @@ int BrowserMainLoop::CreateThreads() {
   return result_code_;
 }
 
+int BrowserMainLoop::StartProfilingIOThread() {
+  if (parts_)
+    parts_->StartProfilingThread(io_thread_->GetThreadId());
+  return result_code_;
+}
+
 int BrowserMainLoop::PreMainMessageLoopRun() {
 #if defined(OS_ANDROID)
   // Let screen instance be overridable by parts.
@@ -1294,6 +1303,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 
   if (save_file_manager_)
     save_file_manager_->Shutdown();
+
+  if (parts_)
+    parts_->EndProfilingThread();
 
   {
     base::ThreadRestrictions::ScopedAllowWait allow_wait_for_join;
