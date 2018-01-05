@@ -22,6 +22,30 @@
       "revId": "bb7718b3349599535ad15e40138c5070cd573626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98146e6_c82a2201",
+        "filename": "tools/clang/value_cleanup/ValueRewriter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T10:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12757c40_07c8f885",
+      "range": {
+        "startLine": 65,
+        "startChar": 43,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "bb7718b3349599535ad15e40138c5070cd573626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
