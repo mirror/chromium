@@ -9,10 +9,13 @@
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/web_contents.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
+#include "ui/aura/window.h"
+#include "ui/gfx/native_widget_types.h"
 
 namespace chromeos {
 namespace power {
@@ -35,16 +38,43 @@ void UserActivityLoggerDelegateUkm::UpdateOpenTabsURLs() {
     return;
 
   source_ids_.clear();
-  for (Browser* browser : *BrowserList::GetInstance()) {
+  bool active_tab_found = false;
+  BrowserList* browser_list = BrowserList::GetInstance();
+  DCHECK(browser_list);
+
+  // Go through all browsers starting from last active ones.
+  for (auto browser_iterator = browser_list->begin_last_active();
+       browser_iterator != browser_list->end_last_active();
+       ++browser_iterator) {
+    Browser* browser = *browser_iterator;
     const TabStripModel* const tab_strip_model = browser->tab_strip_model();
     DCHECK(tab_strip_model);
+
+    int active_tab_index = -1;
+
+    const bool is_browser_visible =
+        browser->window()->GetNativeWindow()->IsVisible();
+    if (!active_tab_found && is_browser_visible) {
+      active_tab_index = tab_strip_model->active_index();
+      active_tab_found = true;
+    }
+
+    const bool is_browser_focused = browser->window()->IsActive();
+
     for (int i = 0; i < tab_strip_model->count(); ++i) {
       content::WebContents* contents = tab_strip_model->GetWebContentsAt(i);
       DCHECK(contents);
       ukm::SourceId source_id =
           ukm::GetSourceIdForWebContentsDocument(contents);
-      if (source_id != ukm::kInvalidSourceId)
-        source_ids_.push_back(source_id);
+      if (source_id == ukm::kInvalidSourceId)
+        continue;
+
+      const bool is_active = i == active_tab_index;
+      const TabProperty tab_property = {is_active, is_browser_focused,
+                                        is_browser_visible};
+
+      source_ids_.insert(
+          std::pair<ukm::SourceId, TabProperty>(source_id, tab_property));
     }
   }
 }
@@ -83,9 +113,15 @@ void UserActivityLoggerDelegateUkm::LogActivity(
 
   user_activity.Record(ukm_recorder_);
 
-  for (const ukm::SourceId& id : source_ids_) {
-    ukm::builders::UserActivityId(id).SetActivityId(source_id).Record(
-        ukm_recorder_);
+  for (const std::pair<ukm::SourceId, TabProperty>& kv : source_ids_) {
+    const ukm::SourceId& id = kv.first;
+    const TabProperty& tab_property = kv.second;
+    ukm::builders::UserActivityId(id)
+        .SetActivityId(source_id)
+        .SetIsActive(tab_property.is_active)
+        .SetIsBrowserFocused(tab_property.is_browser_focused)
+        .SetIsBrowserVisible(tab_property.is_browser_visible)
+        .Record(ukm_recorder_);
   }
 }
 
