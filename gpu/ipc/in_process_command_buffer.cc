@@ -426,7 +426,6 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
     return result;
   }
   *params.capabilities = decoder_->GetCapabilities();
-
   image_factory_ = params.image_factory;
 
   return gpu::ContextResult::kSuccess;

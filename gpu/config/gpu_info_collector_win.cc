@@ -68,6 +68,70 @@ void GetAMDVideocardInfo(GPUInfo* gpu_info) {
 }
 #endif
 
+// static
+bool IsHDRSupported() {
+  // HDR support was introduced in Windows 10 Creators Update.
+  if (base::win::GetVersion() < base::win::VERSION_WIN10_RS2)
+    return false;
+
+  HRESULT hr = S_OK;
+  Microsoft::WRL::ComPtr<IDXGIFactory> factory;
+  hr = CreateDXGIFactory(__uuidof(IDXGIFactory),
+                         reinterpret_cast<void**>(factory.GetAddressOf()));
+  if (FAILED(hr)) {
+    DLOG(ERROR) << "Failed to create DXGI factory.";
+    return false;
+  }
+
+  bool hdr_monitor_found = false;
+  for (UINT adapter_index = 0;; ++adapter_index) {
+    Microsoft::WRL::ComPtr<IDXGIAdapter> adapter;
+    hr = factory->EnumAdapters(adapter_index, adapter.GetAddressOf());
+    if (hr == DXGI_ERROR_NOT_FOUND)
+      break;
+    if (FAILED(hr)) {
+      DLOG(ERROR) << "Unexpected error creating DXGI adapter.";
+      break;
+    }
+
+    for (UINT output_index = 0;; ++output_index) {
+      Microsoft::WRL::ComPtr<IDXGIOutput> output;
+      hr = adapter->EnumOutputs(output_index, output.GetAddressOf());
+      if (hr == DXGI_ERROR_NOT_FOUND)
+        break;
+      if (FAILED(hr)) {
+        DLOG(ERROR) << "Unexpected error creating DXGI adapter.";
+        break;
+      }
+
+      Microsoft::WRL::ComPtr<IDXGIOutput6> output6;
+      hr = output->QueryInterface(
+          __uuidof(IDXGIOutput6),
+          reinterpret_cast<void**>(output6.GetAddressOf()));
+      if (FAILED(hr)) {
+        DLOG(WARNING) << "IDXGIOutput6 is required for HDR detection.";
+        continue;
+      }
+
+      DXGI_OUTPUT_DESC1 desc;
+      if (FAILED(output6->GetDesc1(&desc))) {
+        DLOG(ERROR) << "Unexpected error getting output descriptor.";
+        continue;
+      }
+
+      base::UmaHistogramSparse("GPU.Output.ColorSpace", desc.ColorSpace);
+      base::UmaHistogramSparse("GPU.Output.MaxLuminance", desc.MaxLuminance);
+
+      if (desc.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020) {
+        hdr_monitor_found = true;
+      }
+    }
+  }
+
+  UMA_HISTOGRAM_BOOLEAN("GPU.Output.HDR", hdr_monitor_found);
+  return hdr_monitor_found;
+}
+
 CollectInfoResult CollectDriverInfoD3D(const std::wstring& device_id,
                                        GPUInfo* gpu_info) {
   TRACE_EVENT0("gpu", "CollectDriverInfoD3D");
@@ -318,6 +382,7 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
     gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
     return kCollectInfoNonFatalFailure;
   }
+  gpu_info->supports_hdr_rendering = IsHDRSupported();
 
   gpu_info->basic_info_state = kCollectInfoSuccess;
   return kCollectInfoSuccess;
