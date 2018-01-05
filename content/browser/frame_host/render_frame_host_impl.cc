@@ -3543,24 +3543,19 @@ void RenderFrameHostImpl::CommitNavigation(
          is_same_document || !is_first_navigation ||
          subresource_loader_factories.has_value());
 
-  GetNavigationControl()->CommitNavigation(
-      head, body_url, common_params, request_params,
-      std::move(url_loader_client_endpoints),
-      std::move(subresource_loader_factories), devtools_navigation_token);
+  if (is_same_document) {
+    GetNavigationControl()->CommitSameDocumentNavigation(common_params,
+                                                         request_params);
+  } else {
+    GetNavigationControl()->CommitNavigation(
+        head, body_url, common_params, request_params,
+        std::move(url_loader_client_endpoints),
+        std::move(subresource_loader_factories), devtools_navigation_token);
 
-  // If a network request was made, update the Previews state.
-  if (IsURLHandledByNetworkStack(common_params.url) &&
-      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type)) {
-    last_navigation_previews_state_ = common_params.previews_state;
-  }
+    // If a network request was made, update the Previews state.
+    if (IsURLHandledByNetworkStack(common_params.url))
+      last_navigation_previews_state_ = common_params.previews_state;
 
-  // If this navigation is same-document, then |body| is nullptr. So without
-  // this condition, the following line would reset |stream_handle_| to nullptr.
-  // Doing this would stop any pending document load in the renderer and this
-  // same-document navigation would not load any new ones for replacement.
-  // The user would finish with a half loaded document.
-  // See https://crbug.com/769645.
-  if (!is_same_document) {
     // Released in OnStreamHandleConsumed().
     stream_handle_ = std::move(body);
   }

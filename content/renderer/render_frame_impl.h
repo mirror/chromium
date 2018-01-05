@@ -531,6 +531,9 @@ class CONTENT_EXPORT RenderFrameImpl
       int error_code,
       const base::Optional<std::string>& error_page_content,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
+  void CommitSameDocumentNavigation(
+      const CommonNavigationParams& common_params,
+      const RequestNavigationParams& request_params) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1097,8 +1100,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       const ResourceResponseHead& head,
-      const GURL& body_url,
-      bool is_same_document_navigation);
+      const GURL& body_url);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources
   // for this frame. Only valid to call when the Network Service is enabled.
