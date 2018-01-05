@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42005a72_7466b1d1",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-05T11:41:14Z",
+      "side": 1,
+      "message": "nit: It\u0027s not \"the current realm\", it\u0027s \"the relevant realm of the receiver object\".\n\nYou can see the difference as:\n\n    winA.navigator.credentials.get.call(winB.navigator.credentials);\n\nwhere\n\n    winA \u003d window of the current realm, and\n    winB \u003d window of the relevant realm of the receiver object.",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 32
+      },
+      "revId": "17beb99df0260b16b2e08036a49219dc9fcf9f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94767cbc_4bc52524",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2018-01-05T11:41:14Z",
+      "side": 1,
+      "message": "ditto\n\nI know that this is not your fault, but the original comment has been wrong.",
+      "range": {
+        "startLine": 111,
+        "startChar": 62,
+        "endLine": 111,
+        "endChar": 69
+      },
+      "revId": "17beb99df0260b16b2e08036a49219dc9fcf9f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
