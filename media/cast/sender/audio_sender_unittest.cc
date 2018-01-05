@@ -12,7 +12,6 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/values.h"
 #include "media/base/fake_single_thread_task_runner.h"
@@ -108,7 +107,7 @@ class AudioSenderTest : public ::testing::Test {
 
     transport_ = new TestPacketSender();
     transport_sender_.reset(new CastTransportImpl(
-        &testing_clock_, base::TimeDelta(), base::MakeUnique<TransportClient>(),
+        &testing_clock_, base::TimeDelta(), std::make_unique<TransportClient>(),
         base::WrapUnique(transport_), task_runner_));
     OperationalStatus operational_status = STATUS_UNINITIALIZED;
     audio_sender_.reset(new AudioSender(

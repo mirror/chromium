@@ -17,11 +17,11 @@
 #include <functional>
 #include <list>
 #include <map>
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_byteorder.h"
@@ -915,13 +915,13 @@ class TransportClient : public CastTransport::Client {
 void End2EndTest::Create() {
   transport_sender_.reset(new CastTransportImpl(
       &testing_clock_sender_, base::TimeDelta::FromMilliseconds(1),
-      base::MakeUnique<TransportClient>(cast_environment_sender_->logger(),
+      std::make_unique<TransportClient>(cast_environment_sender_->logger(),
                                         nullptr),
       base::WrapUnique(sender_to_receiver_), task_runner_sender_));
 
   transport_receiver_.reset(new CastTransportImpl(
       &testing_clock_sender_, base::TimeDelta::FromMilliseconds(1),
-      base::MakeUnique<TransportClient>(cast_environment_receiver_->logger(),
+      std::make_unique<TransportClient>(cast_environment_receiver_->logger(),
                                         this),
       base::WrapUnique(receiver_to_sender_), task_runner_sender_));
 

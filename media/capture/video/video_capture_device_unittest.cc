@@ -303,7 +303,7 @@ class VideoCaptureDeviceTest
   void SetUp() override {
 #if defined(OS_CHROMEOS)
     dbus_setter_->SetPowerManagerClient(
-        base::MakeUnique<chromeos::FakePowerManagerClient>());
+        std::make_unique<chromeos::FakePowerManagerClient>());
 #endif
 #if defined(OS_ANDROID)
     static_cast<VideoCaptureDeviceFactoryAndroid*>(
@@ -350,7 +350,7 @@ class VideoCaptureDeviceTest
     for (const auto& descriptor : *device_descriptors_) {
       if (IsDeviceUsableForTesting(descriptor)) {
         DLOG(INFO) << "Using camera " << descriptor.GetNameAndModel();
-        return base::MakeUnique<VideoCaptureDeviceDescriptor>(descriptor);
+        return std::make_unique<VideoCaptureDeviceDescriptor>(descriptor);
       }
     }
     DLOG(WARNING) << "No usable camera found";
@@ -364,7 +364,7 @@ class VideoCaptureDeviceTest
     DLOG(INFO) << "Using camera "
                << device_descriptors_->front().GetNameAndModel();
     ;
-    return base::MakeUnique<VideoCaptureDeviceDescriptor>(
+    return std::make_unique<VideoCaptureDeviceDescriptor>(
         device_descriptors_->front());
   }
 
