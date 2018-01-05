@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5622f9_0c796508",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-05T14:41:58Z",
+      "side": 1,
+      "message": "I\u0027m remembering now that apk_under_test is optional. E.g. there are sometimes stand-alone test apks. I think instead you need to fall back to self._test_instance.test_apk.GetPackageName() if apk_under_test is None",
+      "revId": "e000151f9f538969fab83f52a30add0b31743ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
