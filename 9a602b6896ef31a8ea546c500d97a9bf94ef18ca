@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c58f4a31_ffd53084",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: I think you can just \"return {browser, index};\", though you might need to switch from returning a std::pair to a std::tuple to do so.",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e275c52_14c7b56c",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: With some rewriting, I suspect the code in here doesn\u0027t need to keep track of both |singleton_index| and the WebContents it refers to; probably just the latter is needed.  Ideally you\u0027d reach the point where this code was just:\n\n  std::tie(params-\u003ebrowser, params-\u003etarget_contents) \u003d GetBrowserAndTab...;\n\nThis could be done in a subsequent refactor.",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fc8cd4_7aa725e0",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: Seems like this conditional doesn\u0027t need to check both parts of this?",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73b74ea_28d68590",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: Seems like this should be eliminated and code below read params-\u003etarget_contents?",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fb0bcd_9e4ac8ba",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: Please have comments saying what this test is verifying (not just what it\u0027s doing).",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb688f8_27fac018",
+        "filename": "chrome/browser/ui/browser_navigator_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: Too vague; \"try to fool it\" doesn\u0027t mean anything specific to me, say exactly what you\u0027re verifying instead.",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060dfab4_d1aba9ce",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T01:58:24Z",
+      "side": 1,
+      "message": "Nit: Since |params| cannot be null and is const, pass by const ref instead of const pointer.",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
