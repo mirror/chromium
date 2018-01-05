@@ -16,6 +16,24 @@
       "revId": "6e9a056d9b61280adc08801d383fa75e7d868b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca3c7ef_009a862a",
+        "filename": "third_party/WebKit/Source/modules/locks/LockManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2018-01-05T23:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41664e6f_a9d98663",
+      "revId": "6e9a056d9b61280adc08801d383fa75e7d868b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
