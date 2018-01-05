@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "89819644_039e4aad",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:52:57Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "0d6e0023_69b11f34",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d96fe52f_f505a8e1",
         "filename": "chrome/browser/resources/vr/OWNERS",
         "patchSetId": 4
