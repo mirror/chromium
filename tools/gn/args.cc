@@ -6,6 +6,7 @@
 
 #include "base/sys_info.h"
 #include "build/build_config.h"
+#include "tools/gn/source_file.h"
 #include "tools/gn/string_utils.h"
 #include "tools/gn/variables.h"
 
@@ -420,4 +421,10 @@ Scope::KeyValueMap& Args::OverridesForToolchainLocked(
     Scope* scope) const {
   lock_.AssertAcquired();
   return toolchain_overrides_[scope->settings()];
+}
+
+void Args::SetBuildArgsDependencyFiles(
+    const std::set<SourceFile>& build_args_dependency_files) {
+  for (const auto& file : build_args_dependency_files)
+    build_args_dependency_files_.insert(file);
 }
