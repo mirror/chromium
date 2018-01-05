@@ -22,6 +22,30 @@
       "revId": "dbf4e58e36716fb7f8babe14bfa3e6f306660075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db73508e_b5ebf329",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-01-05T23:59:57Z",
+      "side": 1,
+      "message": "oops, indeed it does for this **specific** config file: rm -rf ~/.viminfo",
+      "parentUuid": "983ce166_27a06599",
+      "range": {
+        "startLine": 1465,
+        "startChar": 0,
+        "endLine": 1465,
+        "endChar": 1
+      },
+      "revId": "dbf4e58e36716fb7f8babe14bfa3e6f306660075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
