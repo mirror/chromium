@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d57aa31_89a7d4a4",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T18:29:25Z",
+      "side": 1,
+      "message": "Since this is now getting a little large, should this be factored out to a helper function since we don\u0027t expect it to be hot, and so inlining it seems wasteful?\n\ne.g. void V8DOMActivityLogger::LogMethod(const char* api_name, v8::FunctionCallbackInfo\u003cv8::Value\u003e);",
+      "revId": "05c68a1de242b81d5847847fe79c75d75f4a86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84ebff6_bb0e94c9",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T18:29:25Z",
+      "side": 1,
+      "message": "Can this actually happen? I don\u0027t think V8 supports that many arguments on any of our platforms. Maybe a DCHECK at most would suffice?",
+      "revId": "05c68a1de242b81d5847847fe79c75d75f4a86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
