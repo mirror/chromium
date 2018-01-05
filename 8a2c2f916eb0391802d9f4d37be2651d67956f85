@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed31005d_e36e1912",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2018-01-05T20:24:38Z",
+      "side": 0,
+      "message": "I don\u0027t recall creating these, so I assume they were made automatically...will they also be removed automatically, or do you actually need to delete them in this CL?",
+      "revId": "8a2c2f916eb0391802d9f4d37be2651d67956f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
