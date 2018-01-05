@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "848c8e90_4b9cab68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "I think crbug/796933 is relevant here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dac1df2_2f0401d9",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
         "patchSetId": 12
@@ -25,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "f30e723a_c370f66c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Nit: assets",
+      "range": {
+        "startLine": 125,
+        "startChar": 56,
+        "endLine": 125,
+        "endChar": 72
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff149a0_7cd22eea",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "nit: out_image-\u003ereset();",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d055536e_e9693852",
         "filename": "chrome/browser/vr/assets.cc",
         "patchSetId": 12
@@ -36,6 +105,121 @@
       "writtenOn": "2018-01-05T17:17:33Z",
       "side": 1,
       "message": "This looked wrong, but later, I saw that you\u0027re trying to be tolerant of missing files.  I think that should be a version-related condition.  But separately, here, all the loads should be within a single if().",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f86b443_58a6209c",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "What happens if we fail to load the background image? We should probably also check that either all or none of the gradients loaded successfully.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 23
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f77977_359b02e5",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Is this still true and planned?",
+      "range": {
+        "startLine": 16,
+        "startChar": 49,
+        "endLine": 16,
+        "endChar": 63
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38017c6_0a329a8e",
+        "filename": "chrome/browser/vr/assets.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Nit: assets for consistency.",
+      "range": {
+        "startLine": 44,
+        "startChar": 64,
+        "endLine": 44,
+        "endChar": 77
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f09e40_e76339f3",
+        "filename": "chrome/browser/vr/elements/environment/background.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Nit: here too.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f53fa83_d6c80eff",
+        "filename": "chrome/browser/vr/elements/environment/background.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "We do now, right?",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 75
+      },
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +266,29 @@
     },
     {
       "key": {
+        "uuid": "a57a1956_a705c0e8",
+        "filename": "chrome/browser/vr/elements/environment/background.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Nit: 2018? Not sure if moving needs a date update.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dd250a6_2f0fd36d",
         "filename": "chrome/browser/vr/elements/environment/background.h",
         "patchSetId": 12
@@ -93,6 +300,29 @@
       "writtenOn": "2018-01-05T17:17:33Z",
       "side": 1,
       "message": "Please add a single comment describing what \"factor\" means for these calls.",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfea532_20d4c99f",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:21:28Z",
+      "side": 1,
+      "message": "Maybe I\u0027m blind. What is the t being used for?",
+      "range": {
+        "startLine": 82,
+        "startChar": 33,
+        "endLine": 82,
+        "endChar": 34
+      },
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
