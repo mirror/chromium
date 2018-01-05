@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf4e0d0_d020fcf6",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2018-01-05T20:39:13Z",
+      "side": 1,
+      "message": "piman@ commented:\n\u003e Because it\u0027s treated as a global constant for now, my suggestion is to add this to GPUInfo and collect it in CollectBasicGraphicsInfo instead.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/843132/19/gpu/ipc/in_process_command_buffer.cc#432",
+      "range": {
+        "startLine": 656,
+        "startChar": 0,
+        "endLine": 656,
+        "endChar": 57
+      },
+      "revId": "5a836fc0a2a534626bde2b522863050d0466de35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
