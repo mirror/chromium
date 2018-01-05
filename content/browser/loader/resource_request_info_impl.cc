@@ -87,6 +87,7 @@ void ResourceRequestInfo::AllocateForTesting(
       nullptr,                             // body
       false,                               // initiated_in_secure_context
       base::nullopt);                      // suggested_filename
+  CHECK(0);
   info->AssociateWithRequest(request);
   info->set_navigation_ui_data(std::move(navigation_ui_data));
 }
