@@ -28,8 +28,10 @@ import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.download.DownloadUpdate.PendingState;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
@@ -184,6 +186,25 @@ public class DownloadNotificationService2 {
     }
 
     /**
+     * Adds or updates a pending download notification.
+     * @param id                      The {@link ContentId} of the download.
+     * @param fileName                File name of the download.
+     * @param isOffTheRecord          Whether the download is off the record.
+     * @param canDownloadWhileMetered Whether the download can happen in metered network.
+     * @param isTransient             Whether or not clicking on the download should launch
+     *                                downloads home.
+     * @param icon                    A {@link Bitmap} to be used as the large icon for display.
+     * @param pendingState            Reason download is pending
+     */
+    void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
+            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon,
+            boolean hasUserGesture, PendingState pendingState) {
+        updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
+                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon, hasUserGesture,
+                pendingState);
+    }
+
+    /**
      * Helper method to update the notification for an active download, the download is either in
      * progress or pending.
      * @param id                      The {@link ContentId} of the download.
@@ -203,6 +224,32 @@ public class DownloadNotificationService2 {
             long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
             Bitmap icon, boolean hasUserGesture) {
+        updateActiveDownloadNotification(id, fileName, progress, timeRemainingInMillis, startTime,
+                isOffTheRecord, canDownloadWhileMetered, isDownloadPending, isTransient, icon,
+                hasUserGesture, PendingState.NOT_PENDING);
+    }
+
+    /**
+     * Helper method to update the notification for an active download, the download is either in
+     * progress or pending.
+     * @param id                      The {@link ContentId} of the download.
+     * @param fileName                File name of the download.
+     * @param progress                The current download progress.
+     * @param timeRemainingInMillis   Remaining download time in milliseconds or -1 if it is
+     *                                unknown.
+     * @param startTime               Time when download started.
+     * @param isOffTheRecord          Whether the download is off the record.
+     * @param canDownloadWhileMetered Whether the download can happen in metered network.
+     * @param isDownloadPending       Whether the download is pending.
+     * @param isTransient             Whether or not clicking on the download should launch
+     *                                downloads home.
+     * @param icon                    A {@link Bitmap} to be used as the large icon for display.
+     * @param pendingState            Reason download is pending
+     */
+    private void updateActiveDownloadNotification(ContentId id, String fileName, Progress progress,
+            long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
+            boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
+            Bitmap icon, boolean hasUserGesture, PendingState pendingState) {
         int notificationId = getNotificationId(id);
         Context context = ContextUtils.getApplicationContext();
 
@@ -217,6 +264,7 @@ public class DownloadNotificationService2 {
                                                 .setIsTransient(isTransient)
                                                 .setIcon(icon)
                                                 .setNotificationId(notificationId)
+                                                .setPendingState(pendingState)
                                                 .build();
         Notification notification = DownloadNotificationFactory.buildNotification(
                 context, DownloadNotificationFactory.DownloadStatus.IN_PROGRESS, downloadUpdate);
@@ -295,6 +343,26 @@ public class DownloadNotificationService2 {
     void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
             boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
             boolean hasUserGesture, boolean forceRebuild) {
+        notifyDownloadPaused(id, fileName, isResumable, isAutoResumable, isOffTheRecord,
+                isTransient, icon, hasUserGesture, forceRebuild, PendingState.NOT_PENDING);
+    }
+
+    /**
+     * Change a download notification to paused state.
+     * @param id              The {@link ContentId} of the download.
+     * @param fileName        File name of the download.
+     * @param isResumable     Whether download can be resumed.
+     * @param isAutoResumable Whether download is can be resumed automatically.
+     * @param isOffTheRecord  Whether the download is off the record.
+     * @param isTransient     Whether or not clicking on the download should launch downloads home.
+     * @param icon            A {@link Bitmap} to be used as the large icon for display.
+     * @param forceRebuild    Whether the notification was forcibly relaunched.
+     * @param pendingState    Reason download is pending
+     */
+    @VisibleForTesting
+    void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
+            boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
+            boolean hasUserGesture, boolean forceRebuild, PendingState pendingState) {
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (!isResumable) {
@@ -307,7 +375,7 @@ public class DownloadNotificationService2 {
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
             notifyDownloadPending(id, fileName, isOffTheRecord, canDownloadWhileMetered,
-                    isTransient, icon, hasUserGesture);
+                    isTransient, icon, hasUserGesture, pendingState);
             stopTrackingInProgressDownload(id);
             return;
         }
@@ -635,9 +703,16 @@ public class DownloadNotificationService2 {
 
                 // Right now this only happens in the paused case, so re-build and re-launch the
                 // paused notification, with the updated notification id..
-                notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
-                        entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
-                        null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
+                if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                    notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
+                            entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
+                            null /* icon */, true /* hasUserGesture */, true /* forceRebuild */,
+                            PendingState.NOT_PENDING);
+                } else {
+                    notifyDownloadPaused(entry.id, entry.fileName, true /* isResumable */,
+                            entry.isAutoResumable, entry.isOffTheRecord, entry.isTransient,
+                            null /* icon */, true /* hasUserGesture */, true /* forceRebuild */);
+                }
                 return;
             }
         }
@@ -651,8 +726,13 @@ public class DownloadNotificationService2 {
             // Move all regular downloads to pending.  Don't propagate the pause because
             // if native is still working and it triggers an update, then the service will be
             // restarted.
-            notifyDownloadPaused(entry.id, entry.fileName, true, true, false, entry.isTransient,
-                    null, false, false);
+            if (OfflinePageBridge.isOfflinePagesDescriptivePendingStatusEnabled()) {
+                notifyDownloadPaused(entry.id, entry.fileName, true, true, false, entry.isTransient,
+                        null, false, false, PendingState.PENDING_NETWORK);
+            } else {
+                notifyDownloadPaused(entry.id, entry.fileName, true, true, false, entry.isTransient,
+                        null, false, false);
+            }
         }
     }
 
