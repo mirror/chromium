@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b173605_9d18084f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-05T00:28:40Z",
+      "side": 1,
+      "message": "Document what this is doing.",
+      "revId": "7c9c058dfcff6070bf1e8a79672472d95da73986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7030b3_ed3cb0d9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-05T00:28:40Z",
+      "side": 1,
+      "message": "Document what this is doing.",
+      "revId": "7c9c058dfcff6070bf1e8a79672472d95da73986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
