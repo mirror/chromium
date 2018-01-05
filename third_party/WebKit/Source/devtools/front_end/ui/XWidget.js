@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 /**
- * @extends {UI.XElement}
+ * @extends {HTMLElement}
  */
-UI.XWidget = class extends UI.XElement {
+UI.XWidget = class extends HTMLElement {
   constructor() {
     super();
     this.style.setProperty('display', 'flex');

@@ -295,6 +295,11 @@ Element.prototype.removeChildren = function() {
     this.textContent = '';
 };
 
+DocumentFragment.prototype.removeChildren = function() {
+  if (this.firstChild)
+    this.textContent = '';
+};
+
 /**
  * @param {string} tagName
  * @param {string=} customElementType

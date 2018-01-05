@@ -398,3 +398,22 @@ label[is=dt-icon-label] {
     -webkit-mask-position: var(--spritesheet-position);
     background: white !important;
 }
+
+vbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+hbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+cbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

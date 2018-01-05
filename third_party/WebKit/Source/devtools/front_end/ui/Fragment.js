@@ -55,6 +55,18 @@ UI.Fragment = class {
   }
 
   /**
+   * @param {string} tagName
+   * @param {!Array<string>} params
+   * @param {function(!Element, !Object, !Array<!Node>):(!Element|!DocumentFragment|!UI.Fragment)} processor
+   */
+  static registerTemplate(tagName, params, processor) {
+    var paramsMap = new Map();
+    for (var param of params)
+      paramsMap.set(param.toUpperCase(), param);
+    UI.Fragment._registry.set(tagName.toUpperCase(), {params: paramsMap, processor: processor});
+  }
+
+  /**
    * @param {!Array<string>} strings
    * @param {...*} vararg
    * @return {!UI.Fragment}
@@ -82,7 +94,6 @@ UI.Fragment = class {
   /**
    * @param {!Array<string>} strings
    * @return {!UI.Fragment._Template}
-   * @suppressGlobalPropertiesCheck
    */
   static _template(strings) {
     var html = '';
@@ -96,15 +107,15 @@ UI.Fragment = class {
         else
           insideText = false;
       }
-      html += insideText ? UI.Fragment._textMarker : UI.Fragment._attributeMarker(i);
+      html += insideText ? UI.Fragment._textMarker(i) : UI.Fragment._attributeMarker(i);
     }
     html += strings[strings.length - 1];
 
-    var template = window.document.createElement('template');
+    var template = createElement('template');
     template.innerHTML = html;
-    var walker = template.ownerDocument.createTreeWalker(
-        template.content, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, null, false);
-    var valueIndex = 0;
+    var content = /** @type {!DocumentFragment} */ (UI.Fragment._preprocess(template.content));
+    var walker =
+        template.ownerDocument.createTreeWalker(content, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, null, false);
     var emptyTextNodes = [];
     var binds = [];
     var nodesToMark = [];
@@ -131,33 +142,32 @@ UI.Fragment = class {
             continue;
           }
 
-          if (!UI.Fragment._attributeMarkerRegex.test(name) &&
-              !UI.Fragment._attributeMarkerRegex.test(node.attributes[i].value))
+          var names = name.split(UI.Fragment._attributeMarkerRegex);
+          var values = node.attributes[i].value.split(UI.Fragment._attributeMarkerRegex);
+          if (names.length === 1 && values.length === 1)
             continue;
 
           attributesToRemove.push(name);
           nodesToMark.push(node);
-          var bind = {attr: {index: valueIndex}};
-          bind.attr.names = name.split(UI.Fragment._attributeMarkerRegex);
-          valueIndex += bind.attr.names.length - 1;
-          bind.attr.values = node.attributes[i].value.split(UI.Fragment._attributeMarkerRegex);
-          valueIndex += bind.attr.values.length - 1;
-          binds.push(bind);
+          binds.push({attr: {name: UI.Fragment._splitResult(names), value: UI.Fragment._splitResult(values)}});
         }
         for (var i = 0; i < attributesToRemove.length; i++)
           node.removeAttribute(attributesToRemove[i]);
       }
 
-      if (node.nodeType === Node.TEXT_NODE && node.data.indexOf(UI.Fragment._textMarker) !== -1) {
+      if (node.nodeType === Node.TEXT_NODE) {
         var texts = node.data.split(UI.Fragment._textMarkerRegex);
-        node.data = texts[texts.length - 1];
-        for (var i = 0; i < texts.length - 1; i++) {
-          if (texts[i])
-            node.parentNode.insertBefore(createTextNode(texts[i]), node);
-          var nodeToReplace = createElement('span');
-          nodesToMark.push(nodeToReplace);
-          binds.push({replaceNodeIndex: valueIndex++});
-          node.parentNode.insertBefore(nodeToReplace, node);
+        if (texts.length > 1) {
+          var split = UI.Fragment._splitResult(texts);
+          node.data = split.strings[split.strings.length - 1];
+          for (var i = 0; i < split.strings.length - 1; i++) {
+            if (split.strings[i])
+              node.parentNode.insertBefore(createTextNode(split.strings[i]), node);
+            var nodeToReplace = createElement('span');
+            nodesToMark.push(nodeToReplace);
+            binds.push({replaceNodeIndex: split.indices[i]});
+            node.parentNode.insertBefore(nodeToReplace, node);
+          }
         }
       }
 
@@ -172,7 +182,87 @@ UI.Fragment = class {
 
     for (var emptyTextNode of emptyTextNodes)
       emptyTextNode.remove();
-    return {template: template, binds: binds};
+    return {content: content, document: template.ownerDocument, binds: binds};
+  }
+
+  /**
+   * @param {!Array<string>} a
+   * @return {!UI.Fragment._Split}
+   */
+  static _splitResult(a) {
+    var strings = [];
+    var indices = [];
+    for (var i = 0; i < a.length; i += 2) {
+      strings.push(a[i]);
+      if (i + 1 < a.length)
+        indices.push(Number(a[i + 1]));
+    }
+    return {strings: strings, indices: indices};
+  }
+
+  /**
+   * @param {!Element|!DocumentFragment} node
+   * @return {!Element|!DocumentFragment}
+   */
+  static _preprocess(node) {
+    var template;
+    if (node.nodeType === Node.ELEMENT_NODE)
+      template = UI.Fragment._registry.get(node.tagName);
+    var params = template ? template.params : null;
+    var processor = template ? template.processor : UI.Fragment._defaultProcessor;
+    var children = [];
+    var paramsObject = {};
+
+    var child = node.firstChild;
+    while (child) {
+      var next = child.nextSibling;
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        var tagName = child.tagName.toUpperCase();
+        if (params && params.has(tagName)) {
+          var paramChildren = [];
+          for (var paramChild of child.childNodes) {
+            if (paramChild.nodeType === Node.ELEMENT_NODE || paramChild.nodeType === Node.DOCUMENT_FRAGMENT_NODE)
+              paramChildren.push(UI.Fragment._preprocess(/** @type {!Element|!DocumentFragment} */ (paramChild)));
+            else
+              paramChildren.push(paramChild);
+          }
+          if (paramChildren.length === 1) {
+            paramsObject[params.get(tagName)] = paramChildren[0];
+          } else {
+            var fragment = createDocumentFragment();
+            for (var paramChild of paramChildren)
+              fragment.appendChild(paramChild);
+            paramsObject[params.get(tagName)] = fragment;
+          }
+        } else {
+          children.push(UI.Fragment._preprocess(/** @type {!Element} */ (child)));
+        }
+      } else {
+        children.push(child);
+      }
+      child = next;
+    }
+    node.removeChildren();
+
+    var result = processor.call(null, node, paramsObject, children);
+    var resultNode = result instanceof UI.Fragment ? result._element : result;
+    if (resultNode !== node && resultNode.nodeType === Node.ELEMENT_NODE) {
+      for (var i = 0; i < node.attributes.length; i++)
+        resultNode.setAttribute(node.attributes[i].name, node.attributes[i].value);
+    }
+    return resultNode;
+  }
+
+  /**
+   * @param {!Element|!DocumentFragment} element
+   * @param {!Object} params
+   * @param {!Array<!Node>} children
+   * @return {!Element|!DocumentFragment}
+   */
+  static _defaultProcessor(element, params, children) {
+    for (var child of children)
+      element.appendChild(child);
+    return element;
   }
 
   /**
@@ -181,9 +271,10 @@ UI.Fragment = class {
    * @return {!UI.Fragment}
    */
   static _render(template, values) {
-    var content = template.template.ownerDocument.importNode(template.template.content, true);
-    var resultElement =
-        /** @type {!Element} */ (content.firstChild === content.lastChild ? content.firstChild : content);
+    var content = template.document.importNode(template.content, true);
+    if (content.firstChild !== content.lastChild || content.firstChild.nodeType !== Node.ELEMENT_NODE)
+      throw new Error('Fragment must have a single top-level element');
+    var resultElement = /** @type {!Element} */ (content.firstChild);
     var result = new UI.Fragment(resultElement);
 
     var idByElement = new Map();
@@ -203,15 +294,7 @@ UI.Fragment = class {
         idByElement.set(element, bind.elementId);
       } else if ('replaceNodeIndex' in bind) {
         var value = values[/** @type {number} */ (bind.replaceNodeIndex)];
-        var node = null;
-        if (value instanceof Node)
-          node = value;
-        else if (value instanceof UI.Fragment)
-          node = value._element;
-        else
-          node = createTextNode('' + value);
-
-        element.parentNode.insertBefore(node, element);
+        this._insertNodesBefore(value, element);
         element.remove();
       } else if ('state' in bind) {
         var list = result._states.get(bind.state.name) || [];
@@ -219,35 +302,36 @@ UI.Fragment = class {
             {attributeName: bind.state.attribute, attributeValue: bind.state.value, element: element, toggled: false});
         result._states.set(bind.state.name, list);
       } else if ('attr' in bind) {
-        if (bind.attr.names.length === 2 && bind.attr.values.length === 1 &&
-            typeof values[bind.attr.index] === 'function') {
-          values[bind.attr.index].call(null, element);
+        var name = bind.attr.name;
+        var value = bind.attr.value;
+        if (name.indices.length === 1 && value.indices.length === 0 && typeof values[name.indices[0]] === 'function') {
+          values[name.indices[0]].call(null, element);
         } else {
-          var name = bind.attr.names[0];
-          for (var i = 1; i < bind.attr.names.length; i++) {
-            name += values[bind.attr.index + i - 1];
-            name += bind.attr.names[i];
+          var nameString = name.strings[0];
+          for (var i = 1; i < name.strings.length; i++) {
+            nameString += values[name.indices[i - 1]];
+            nameString += name.strings[i];
           }
-          if (name) {
-            var value = bind.attr.values[0];
-            for (var i = 1; i < bind.attr.values.length; i++) {
-              value += values[bind.attr.index + bind.attr.names.length - 1 + i - 1];
-              value += bind.attr.values[i];
+          if (nameString) {
+            var valueString = value.strings[0];
+            for (var i = 1; i < value.strings.length; i++) {
+              valueString += values[value.indices[i - 1]];
+              valueString += value.strings[i];
             }
-            element.setAttribute(name, value);
+            element.setAttribute(nameString, valueString);
           }
         }
       } else {
-        throw 'Unexpected bind';
+        throw new Error('Unexpected bind');
       }
     }
 
     // We do this after binds so that querySelector works.
-    var shadows = result._element.querySelectorAll('x-shadow');
+    var shadows = content.querySelectorAll('x-shadow');
     for (var shadow of shadows) {
       if (!shadow.parentElement)
         throw 'There must be a parent element here';
-      var shadowRoot = UI.createShadowRootWithCoreStyles(shadow.parentElement);
+      var shadowRoot = UI.createShadowRootWithCoreStylesV1(shadow.parentElement);
       if (shadow.parentElement.tagName === 'X-WIDGET')
         shadow.parentElement._shadowRoot = shadowRoot;
       var children = [];
@@ -265,11 +349,34 @@ UI.Fragment = class {
 
     return result;
   }
+
+  /**
+   * @param {*} value
+   * @param {!Element} element
+   */
+  static _insertNodesBefore(value, element) {
+    if (Array.isArray(value)) {
+      for (var item of value)
+        UI.Fragment._insertNodesBefore(item, element);
+      return;
+    }
+    var node = null;
+    if (value instanceof Node)
+      node = value;
+    else if (value instanceof UI.Fragment)
+      node = value._element;
+    else if (value === null || value === undefined)
+      node = createTextNode('');
+    else
+      node = createTextNode('' + value);
+    element.parentNode.insertBefore(node, element);
+  }
 };
 
 /**
  * @typedef {!{
- *   template: !Element,
+ *   content: !DocumentFragment,
+ *   document: !Document,
  *   binds: !Array<!UI.Fragment._Bind>
  * }}
  */
@@ -287,6 +394,14 @@ UI.Fragment._State;
 
 /**
  * @typedef {!{
+ *   strings: !Array<string>,
+ *   indices: !Array<number>
+ * }}
+ */
+UI.Fragment._Split;
+
+/**
+ * @typedef {!{
  *   elementId: (string|undefined),
  *
  *   state: (!{
@@ -296,9 +411,8 @@ UI.Fragment._State;
  *   }|undefined),
  *
  *   attr: (!{
- *     index: number,
- *     names: !Array<string>,
- *     values: !Array<string>
+ *     name: !UI.Fragment._Split,
+ *     value: !UI.Fragment._Split,
  *   }|undefined),
  *
  *   replaceNodeIndex: (number|undefined)
@@ -306,12 +420,13 @@ UI.Fragment._State;
  */
 UI.Fragment._Bind;
 
-UI.Fragment._textMarker = '{{template-text}}';
-UI.Fragment._textMarkerRegex = /{{template-text}}/;
+UI.Fragment._textMarker = index => '{{template-text-' + index + '}}';
+UI.Fragment._textMarkerRegex = /{{template-text-(\d+)}}/;
 
 UI.Fragment._attributeMarker = index => 'template-attribute' + index;
-UI.Fragment._attributeMarkerRegex = /template-attribute\d+/;
+UI.Fragment._attributeMarkerRegex = /template-attribute(\d+)/;
 
 UI.Fragment._class = index => 'template-class-' + index;
 
 UI.Fragment._templateCache = new Map();
+UI.Fragment._registry = new Map();

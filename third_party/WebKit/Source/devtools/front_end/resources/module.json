@@ -49,7 +49,6 @@
         "ServiceWorkersView.js"
     ],
     "resources": [
-        "appManifestView.css",
         "clearStorageView.css",
         "indexedDBViews.css",
         "resourcesPanel.css",

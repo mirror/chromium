@@ -179,3 +179,8 @@
 .service-worker-filter-collapsed .service-worker-filter-toolbar {
     display: none;
 }
+
+.report-field-value-subtitle {
+    color: #888;
+    line-height: 14px;
+}
