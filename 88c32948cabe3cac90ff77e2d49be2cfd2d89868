@@ -16,6 +16,24 @@
       "revId": "88c32948cabe3cac90ff77e2d49be2cfd2d89868",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16df154f_a0423984",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T19:11:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c06469_c973fae5",
+      "revId": "88c32948cabe3cac90ff77e2d49be2cfd2d89868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
