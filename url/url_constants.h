@@ -32,6 +32,7 @@ URL_EXPORT extern const char kJavaScriptScheme[];
 URL_EXPORT extern const char kMailToScheme[];
 URL_EXPORT extern const char kWsScheme[];
 URL_EXPORT extern const char kWssScheme[];
+URL_EXPORT extern const char kGeoScheme[];
 
 // Special HTTP and HTTPS schemes for serialization of suborigins. See
 // https://w3c.github.io/webappsec-suborigins/.

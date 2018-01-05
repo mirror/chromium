@@ -61,13 +61,9 @@ constexpr std::pair<mojom::ChromePage, const char*> kMapping[] = {
     {mojom::ChromePage::ABOUTDOWNLOADS, "about:downloads"},
     {mojom::ChromePage::ABOUTHISTORY, "about:history"}};
 
-// TODO(djacobo): Propose geo: as a constant.
-constexpr const char* kArcSchemes[] = {url::kHttpScheme,
-                                       url::kHttpsScheme,
-                                       url::kContentScheme,
-                                       url::kFileScheme,
-                                       "geo",
-                                       url::kMailToScheme};
+constexpr const char* kArcSchemes[] = {url::kHttpScheme,    url::kHttpsScheme,
+                                       url::kContentScheme, url::kFileScheme,
+                                       url::kGeoScheme,     url::kMailToScheme};
 
 // mojom::ChromePage::LAST returns the ammout of valid entries - 1.
 static_assert(arraysize(kMapping) ==

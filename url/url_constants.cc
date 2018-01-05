@@ -26,6 +26,7 @@ const char kJavaScriptScheme[] = "javascript";
 const char kMailToScheme[] = "mailto";
 const char kWsScheme[] = "ws";
 const char kWssScheme[] = "wss";
+const char kGeoScheme[] = "geo";
 
 const char kHttpSuboriginScheme[] = "http-so";
 const char kHttpsSuboriginScheme[] = "https-so";
