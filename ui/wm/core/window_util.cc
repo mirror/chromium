@@ -78,7 +78,7 @@ bool IsActiveWindow(const aura::Window* window) {
 
 bool CanActivateWindow(aura::Window* window) {
   DCHECK(window);
-  if (!window->GetRootWindow())
+  if (!window->GetRootWindow() || window->is_destroying())
     return false;
   ActivationClient* client = GetActivationClient(window->GetRootWindow());
   return client && client->CanActivateWindow(window);

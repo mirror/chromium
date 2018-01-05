@@ -379,6 +379,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Returns whether this window is an embed window.
   bool IsEmbeddingClient() const;
 
+  bool is_destroying() const { return is_destroying_; }
+
  protected:
   // Deletes (or removes if not owned by parent) all child windows. Intended for
   // use from the destructor.
@@ -552,6 +554,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
 
   // Whether layer is initialized as non-opaque. Defaults to false.
   bool transparent_;
+
+  // Whether the window is in process of being destroyed.
+  bool is_destroying_ = false;
 
   std::unique_ptr<LayoutManager> layout_manager_;
   std::unique_ptr<ui::EventTargeter> targeter_;

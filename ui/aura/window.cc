@@ -87,6 +87,7 @@ Window::~Window() {
     layer()->CompleteAllAnimations();
   layer()->SuppressPaint();
 
+  is_destroying_ = true;
   // Let the delegate know we're in the processing of destroying.
   if (delegate_)
     delegate_->OnWindowDestroying(this);
@@ -130,6 +131,7 @@ Window::~Window() {
     RemoveObserver(&observer);
     observer.OnWindowDestroyed(this);
   }
+  is_destroying_ = false;
 
   // Delete the LayoutManager before properties. This way if the LayoutManager
   // depends upon properties existing the properties are still valid.
