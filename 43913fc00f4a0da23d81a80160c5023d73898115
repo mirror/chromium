@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd3aa3f_409539cd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "2018...let the year nits begin!",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e40f06_cc1520d9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "We typically keep the generic type on the variable definition side.  This could be:\n\nprivate static Map\u003cString, String\u003e sResponseMap \u003d new HashMap\u003c\u003e();\n\nYou can use the empty \u003c\u003e\u0027s in many cases when constructing the variable as it can be inferred by the compiler (https://docs.oracle.com/javase/tutorial/java/generics/types.html#diamond)",
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3762f060_30db5c40",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "do you want this runOnUiThreadBlocking?",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702d5107_5b83d0b1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "I think these should be indented 8 spaces per line (so +4 here and below)",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf54d82_c33d14dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "2018 :-)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f59c49_2b91260c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "could use a lambda here",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d88529_125799dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "The class variables usually go at the top",
+      "range": {
+        "startLine": 65,
+        "startChar": 11,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556581a7_dc77b325",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T17:06:16Z",
+      "side": 1,
+      "message": "should you do this before adding the mock response above?  Will the initial page load also be showing an interstitial?",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 54
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
