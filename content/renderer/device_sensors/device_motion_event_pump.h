@@ -46,6 +46,8 @@ class CONTENT_EXPORT DeviceMotionEventPump
 
   void GetDataFromSharedMemory(device::MotionData* data);
 
+  bool ShouldFireEvent() const;
+
   DISALLOW_COPY_AND_ASSIGN(DeviceMotionEventPump);
 };
 

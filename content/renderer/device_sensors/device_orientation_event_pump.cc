@@ -216,6 +216,16 @@ bool DeviceOrientationEventPump::ShouldFireEvent(
     return true;
   }
 
+  if (relative_orientation_sensor_.sensor &&
+      relative_orientation_sensor_.SensorReadingTimeStampIsZero()) {
+    return false;
+  }
+
+  if (absolute_orientation_sensor_.sensor &&
+      absolute_orientation_sensor_.SensorReadingTimeStampIsZero()) {
+    return false;
+  }
+
   return IsSignificantlyDifferent(data_, data);
 }
 
