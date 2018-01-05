@@ -6,6 +6,8 @@
 
 #if defined(ARCH_CPU_X86_FAMILY) && !defined(OS_MACOSX)
 
+#include "platform/audio/VectorMathScalar.h"
+#include "platform/audio/cpu/x86/VectorMathSSE.h"
 #include "platform/wtf/Assertions.h"
 
 #include <algorithm>
@@ -16,18 +18,8 @@
 namespace blink {
 namespace VectorMath {
 namespace SSE {
-namespace {
 
 #define MM_PS(name) _mm_##name##_ps
-
-using MType = __m128;
-
-constexpr size_t kBitsPerRegister = 128u;
-constexpr size_t kPackedFloatsPerRegister = kBitsPerRegister / 32u;
-constexpr size_t kFramesToProcessMask = ~(kPackedFloatsPerRegister - 1u);
-}
-
-namespace {
 
 bool IsAligned(const float* p) {
   constexpr size_t kBytesPerRegister = kBitsPerRegister / 8u;
@@ -292,7 +284,6 @@ void Zvmul(const float* real1p,
 
 #undef MM_PS
 
-}  // namespace
 }  // namespace SSE
 }  // namespace VectorMath
 }  // namespace blink
