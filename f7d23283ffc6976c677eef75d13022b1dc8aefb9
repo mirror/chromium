@@ -46,6 +46,30 @@
       "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82268376_fc6de339",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-05T12:45:27Z",
+      "side": 1,
+      "message": "Absolutely correct.\n\nAs useful as this test is to detect memory leaks and ensuring a sane number of PCs can be allocated, the spec says nothing about this and it does indeed rely on GC and (non-spec\u0027ed) internals.\n\nThe reason we added this test was because we hit the limit of how many threads can be created. The PC creates a number of threads, all of this is implementation-specific and the maximum number of threads (or other resources) is also platform-dependent.",
+      "parentUuid": "1c03757a_2dbe02ec",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
