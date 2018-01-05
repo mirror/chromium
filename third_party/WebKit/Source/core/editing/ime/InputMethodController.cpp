@@ -1229,31 +1229,39 @@ int InputMethodController::TextInputFlags() const {
   else if (spellcheck == kSpellcheckAttributeFalse)
     flags |= kWebTextInputFlagSpellcheckOff;
 
-  if (IsTextControlElement(element)) {
-    TextControlElement* text_control = ToTextControlElement(element);
-    if (text_control->SupportsAutocapitalize()) {
-      DEFINE_STATIC_LOCAL(const AtomicString, none, ("none"));
-      DEFINE_STATIC_LOCAL(const AtomicString, characters, ("characters"));
-      DEFINE_STATIC_LOCAL(const AtomicString, words, ("words"));
-      DEFINE_STATIC_LOCAL(const AtomicString, sentences, ("sentences"));
-
-      const AtomicString& autocapitalize = text_control->autocapitalize();
-      if (autocapitalize == none)
-        flags |= kWebTextInputFlagAutocapitalizeNone;
-      else if (autocapitalize == characters)
-        flags |= kWebTextInputFlagAutocapitalizeCharacters;
-      else if (autocapitalize == words)
-        flags |= kWebTextInputFlagAutocapitalizeWords;
-      else if (autocapitalize == sentences)
-        flags |= kWebTextInputFlagAutocapitalizeSentences;
-      else
-        NOTREACHED();
+  // We set the autocapitalization flag corresponding to the "used
+  // autocapitalization hint" for the focused element:
+  // https://html.spec.whatwg.org/multipage/interaction.html#used-autocapitalization-hint
+  if (auto* input = ToHTMLInputElementOrNull(*element)) {
+    const AtomicString& input_type = input->type();
+    if (input_type == InputTypeNames::email ||
+        input_type == InputTypeNames::url ||
+        input_type == InputTypeNames::password) {
+      // The autocapitalize IDL attribute value is ignored for these input
+      // types, so we don't set any flags.
+      return flags;
     }
   }
 
   if (HTMLInputElement* input = ToHTMLInputElementOrNull(element)) {
     if (input->HasBeenPasswordField())
       flags |= kWebTextInputFlagHasBeenPasswordField;
+  }
+
+  if (element->IsHTMLElement()) {
+    const String& autocapitalize = ToHTMLElement(element)->autocapitalize();
+    if (autocapitalize == "characters") {
+      flags |= kWebTextInputFlagAutocapitalizeCharacters;
+    } else if (autocapitalize == "words") {
+      flags |= kWebTextInputFlagAutocapitalizeWords;
+    } else if (autocapitalize == "sentences" || autocapitalize == "") {
+      // Note: we tell the IME to enable autocapitalization for both the default
+      // state ("") and the sentences states. We could potentially treat these
+      // differently if we had a platform that supported autocapitalization but
+      // didn't want to enable it unless explicitly requested by a web page, but
+      // this so far has not been necessary.
+      flags |= kWebTextInputFlagAutocapitalizeSentences;
+    }
   }
 
   return flags;

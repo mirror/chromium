@@ -237,6 +237,20 @@ void HTMLFormControlElement::SetAutofilled(bool autofilled) {
   PseudoStateChanged(CSSSelector::kPseudoAutofill);
 }
 
+String HTMLFormControlElement::autocapitalize() const {
+  if (FastHasAttribute(autocapitalizeAttr) &&
+      !FastGetAttribute(autocapitalizeAttr).IsEmpty())
+    return HTMLElement::autocapitalize();
+
+  // If the form control itself does not have the autocapitalize attribute set,
+  // but the form owner is non-null and does have the autocapitalize attribute
+  // set, we inherit from the form owner.
+  if (HTMLFormElement* form = Form())
+    return form->autocapitalize();
+
+  return "";
+}
+
 static bool ShouldAutofocusOnAttach(const HTMLFormControlElement* element) {
   if (!element->IsAutofocusable())
     return false;
