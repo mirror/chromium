@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "91519200_ef336c24",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-05T23:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd00abfc_4ad2ba04",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 24
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd4af15_a957941d",
         "filename": "cc/tiles/software_image_decode_cache_utils.cc",
         "patchSetId": 6
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f4def487_c012396d",
+        "filename": "cc/tiles/software_image_decode_cache_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-05T23:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd4af15_a957941d",
+      "range": {
+        "startLine": 71,
+        "startChar": 56,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a57267d_f22a9772",
         "filename": "cc/tiles/software_image_decode_cache_utils.cc",
         "patchSetId": 6
@@ -115,6 +163,30 @@
       "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386974a4_e98fb36c",
+        "filename": "cc/tiles/software_image_decode_cache_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-05T23:34:05Z",
+      "side": 1,
+      "message": "We relied on the can use original to determine what decode to do and target_size determined the size needed. This just ensures that if we ever use src_rect as a proxy for either the size or the original, it\u0027s consistent with the rest of the arguments. I don\u0027t really remember the exact like where this is required :\\",
+      "parentUuid": "4a57267d_f22a9772",
+      "range": {
+        "startLine": 241,
+        "startChar": 4,
+        "endLine": 241,
+        "endChar": 12
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
