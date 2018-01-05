@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb51a54a_bafb6f65",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-05T07:42:00Z",
+      "side": 1,
+      "message": "ExecutionContext::GetInterfaceProvider() can return null for detached documents. One option would be to only call GetInterface() when interface_provider is non-null, but always call MakeRequest() so |quota_host_| is always valid to call, even if it\u0027ll never connect to the browser. With WrapCallbackWithDefaultInvokeIfNotRun() that ends up doing the right thing.\n\nSee https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/permissions/PermissionUtils.cpp?type\u003dcs\u0026q\u003dConnectToPermissionService\u0026sq\u003dpackage:chromium\u0026l\u003d24 for an example of that pattern.",
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d649fe5_9f6d9a8a",
+        "filename": "third_party/WebKit/Source/modules/quota/DeprecatedStorageQuota.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-05T07:42:00Z",
+      "side": 1,
+      "message": "GetQuotaHost",
+      "range": {
+        "startLine": 81,
+        "startChar": 37,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69ff574_9599be74",
+        "filename": "third_party/WebKit/Source/modules/quota/StorageManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2018-01-05T07:42:00Z",
+      "side": 1,
+      "message": "This should be consistent with GetPermissionService() above.",
+      "revId": "54e949c0e63684e11923895a2bed6fd3b7968889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
