@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaa77798_f3ae6387",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T17:29:28Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "70e196b0_02fa01c6",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e432a58_f8cb5464",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9a12d0_fbba91a5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T17:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e432a58_f8cb5464",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "726031ac_3d17dc18",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T17:29:28Z",
+      "side": 1,
+      "message": "I don\u0027t know.\nI tried to put a NOTREACHED() in ResourceRequestInfoImpl constructor and it was not reached. ResourceRequestInfoImpl not used with the Network Service?",
+      "parentUuid": "57ee9e2c_bc40b514",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "259fcb1e_9f8928d3",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
         "patchSetId": 21
@@ -67,6 +121,24 @@
       "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac26dba_eb60de2e",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T17:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "259fcb1e_9f8928d3",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
