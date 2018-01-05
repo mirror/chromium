@@ -62,14 +62,7 @@ static bool HasOverflowClip(
 }
 
 bool ClipRectsContext::ShouldRespectRootLayerClip() const {
-  if (respect_overflow_clip == kIgnoreOverflowClip)
-    return false;
-
-  if (root_layer->IsRootLayer() &&
-      respect_overflow_clip_for_viewport == kIgnoreOverflowClip)
-    return false;
-
-  return true;
+  return respect_overflow_clip == kRespectOverflowClip;
 }
 
 static void AdjustClipRectsForChildren(
@@ -336,6 +329,7 @@ void PaintLayerClipper::CalculateRects(
     return;
   }
   DCHECK(!fragment_data);
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   bool is_clipping_root = &layer_ == context.root_layer;
   LayoutBoxModelObject& layout_object = layer_.GetLayoutObject();

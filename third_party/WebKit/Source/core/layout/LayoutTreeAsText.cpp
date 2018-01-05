@@ -654,10 +654,10 @@ void LayoutTreeAsText::WriteLayers(TextStream& ts,
   // Calculate the clip rects we should use.
   LayoutRect layer_bounds;
   ClipRect damage_rect, clip_rect_to_apply;
-  layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .CalculateRects(ClipRectsContext(root_layer, kUncachedClipRects), nullptr,
-                      paint_rect, layer_bounds, damage_rect,
-                      clip_rect_to_apply);
+  layer->Clipper(PaintLayer::kUseGeometryMapper)
+      .CalculateRects(ClipRectsContext(root_layer, kUncachedClipRects),
+                      &layer->GetLayoutObject().FirstFragment(), paint_rect,
+                      layer_bounds, damage_rect, clip_rect_to_apply);
 
   // Ensure our lists are up to date.
   layer->StackingNode()->UpdateLayerListsIfNeeded();
@@ -816,7 +816,9 @@ String ExternalRepresentation(LocalFrame* frame,
                               LayoutAsTextBehavior behavior,
                               const PaintLayer* marked_layer) {
   if (!(behavior & kLayoutAsTextDontUpdateLayout))
-    frame->GetDocument()->UpdateStyleAndLayout();
+    frame->View()->UpdateLifecycleToPrePaintClean();
+  else
+    LOG(ERROR) << "skpi";
 
   LayoutObject* layout_object = frame->ContentLayoutObject();
   if (!layout_object || !layout_object->IsBox())
