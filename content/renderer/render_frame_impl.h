@@ -1265,6 +1265,9 @@ class CONTENT_EXPORT RenderFrameImpl
     return custom_url_loader_factory_.get();
   }
 
+  // Notify render_view_ observers that a commit happend.
+  void NotifyObservers(bool is_new_navigation, bool is_same_document);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
