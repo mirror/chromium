@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d622442a_9ac83261",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "It could be private if you make WiredDisplayMediaRouteProviderTest a friend and move GetSinkId into the test fixture class.  I\u0027m not sure that\u0027s preferable though.",
+      "parentUuid": "3087bcc1_6a550573",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd632ac5_76b4fff4",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 3

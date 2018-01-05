@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900a7b18_5f74f209",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "Can you add a test that shows this doesn\u0027t happen until the WDPReceiver calls its termination callback, even if it\u0027s asynchronous?",
+      "range": {
+        "startLine": 348,
+        "startChar": 40,
+        "endLine": 348,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b036174_fbda79b9",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "Can you add a test for this?",
+      "range": {
+        "startLine": 364,
+        "startChar": 25,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d792c5_8dd05091",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "Can this be std::vector\u003cWiredDisplayPresentationReceiver*\u003e to avoid the lookups in the second loop?",
+      "range": {
+        "startLine": 386,
+        "startChar": 54,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4db5d1c_63574aab",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "#include \u003cmap\u003e\n\nnit: IWYU here and elsewhere: \u003cmemory\u003e, \u003cvector\u003e, \"ui/display/display.h\", etc.",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146a6f59_147e5c56",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2018-01-05T19:38:48Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 72
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
