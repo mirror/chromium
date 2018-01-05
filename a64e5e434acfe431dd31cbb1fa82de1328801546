@@ -2,6 +2,337 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ec620f8_e5068926",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Do we have a unittest for this?",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03faf7c2_41b88dd0",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: This comment adds little information. Mention that this is present for registration request responses but not for signing?",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daeda262_2a37073b",
+        "filename": "device/u2f/response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: #include \"base/strings/string_piece.h\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cae5525_bf191f1a",
+        "filename": "device/u2f/response_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Would it make sense to make these protected to prevent accidental slicing?",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510e1885_46c887c7",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: No longer used.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f84b915_a4919068",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Are these used?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a331357c_f9179b33",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: remove {}, save one line.",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7e544d_38432946",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Please have a unittest to exercise each branch where this returns nullopt.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feb0c7f_aed9691e",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Please define named constexpr size_t constants for these.",
+      "range": {
+        "startLine": 28,
+        "startChar": 70,
+        "endLine": 28,
+        "endChar": 74
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef47f66_1a36e524",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1fe8c3_0e22260e",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Can we use Extract for this and/or check if it is at least 1 byte long and return nullopt otherwise. Don\u0027t forget to add a unit test for this.",
+      "range": {
+        "startLine": 34,
+        "startChar": 57,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128a41b5_850637dd",
+        "filename": "device/u2f/sign_response_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a65618_e9a6c87a",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: I think no longer used.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876025ce_ef311958",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: This applies rather to the static method on line 23. How about moving this down and just linking the relevant part of the spec here?",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a11517f_cdb73458",
+        "filename": "device/u2f/sign_response_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Can we also just mention the class/dictionary name in the spec that this corresponds to?\n\n// Corresponds to XXXXX in the spec, see: goo.gl...",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2846452e_87c0bcbd",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "s/input/u2f_response_data/",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285fc9e9_0808064d",
+        "filename": "device/u2f/sign_response_data_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: auto",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7557066b_c24d31fa",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 5
@@ -19,6 +350,97 @@
         "endLine": 683,
         "endChar": 63
       },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c52453_a5bd8450",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fae7e8b_9e062186",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b02e98_60bd70b4",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: Need to include gmock.h",
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b83f6ba_d0e2ec07",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "nit: counter \u003d {0, 0, 0, 0x25}; + add comment what this means, possible make it a named constant.",
+      "range": {
+        "startLine": 333,
+        "startChar": 30,
+        "endLine": 333,
+        "endChar": 34
+      },
+      "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43338708_186ea862",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2018-01-05T14:39:55Z",
+      "side": 1,
+      "message": "Before this line: ASSERT_TRUE(response.has_value()), so that the unit test won\u0027t crash on this line if that expectation fails.",
       "revId": "a64e5e434acfe431dd31cbb1fa82de1328801546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
