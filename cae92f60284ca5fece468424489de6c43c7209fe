@@ -16,6 +16,24 @@
       "revId": "cae92f60284ca5fece468424489de6c43c7209fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5149dc6_c3b81d22",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-05T00:50:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee889ab_39b74a32",
+      "revId": "cae92f60284ca5fece468424489de6c43c7209fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
