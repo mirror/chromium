@@ -242,6 +242,8 @@ void PaintOpReader::Read(PaintImage* image,
                          TransferCacheDeserializeHelper* transfer_cache) {
   uint32_t transfer_cache_entry_id;
   ReadSimple(&transfer_cache_entry_id);
+  if (!valid_)
+    return;
 
   // If we encountered a decode failure, we may write an invalid id for the
   // image. In these cases, just return, leaving the image as nullptr.
