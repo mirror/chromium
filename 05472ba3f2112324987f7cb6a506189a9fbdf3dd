@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab07c9c1_4d6d5022",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-05T11:06:51Z",
+      "side": 1,
+      "message": "UpdateLifecyclePhases/layout can also have side effects on web content, e.g. cause loading of fonts or trigger events due to element resizes that may affect page load (for example when loading \"just enough\" content for infinite scroll pages).\n\nRegarding naming: side_effects_only indicates the intent of what we want to achieve, animate_only indicates (a part of) how we achieve it. I don\u0027t really mind which we choose, either way the param\u0027s comment needs to explain both :)\n\nAny other suggestions? Otherwise I\u0027ll rename it to animate_only.",
+      "parentUuid": "1d857aea_a4531153",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237fb620_bb015714",
         "filename": "cc/trees/proxy_main.cc",
         "patchSetId": 11
