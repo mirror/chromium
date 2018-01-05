@@ -19,6 +19,23 @@
 #include "chrome/browser/media/router/mojo/media_route_provider_util_win.h"
 #endif
 
+namespace {
+
+std::map<std::string, std::vector<std::string>> kAppOriginWhitelist = {
+    {"YouTube",
+     {"https://tv.youtube.com", "https://tv-green-qa.youtube.com",
+      "https://tv-release-qa.youtube.com", "https://web-green-qa.youtube.com",
+      "https://web-release-qa.youtube.com", "https://www.youtube.com"}},
+    {"Netflix", {"https://www.netflix.com"}},
+    {"Pandora", {"https://www.pandora.com"}},
+    {"Radio", {"https://www.pandora.com"}},
+    {"Hulu", {"https://www.hulu.com"}},
+    {"Vimeo", {"https://www.vimeo.com"}},
+    {"Dailymotion", {"https://www.dailymotion.com"}},
+    {"com.dailymotion", {"https://www.dailymotion.com"}}};
+
+}  // namespace
+
 namespace media_router {
 
 MediaRouterDesktop::~MediaRouterDesktop() = default;
@@ -203,6 +220,40 @@ void MediaRouterDesktop::InitializeWiredDisplayMediaRouteProvider() {
                         mojom::MediaRouteProviderConfigPtr config) {}));
 }
 
+bool MediaRouterDesktop::RegisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(observer);
+
+  MediaSource media_source = observer->source();
+  std::string app_name = AppNameFromMediaSource(media_source);
+
+  if (!app_name.empty()) {
+    app_name_media_source_map_[app_name].insert(media_source.id());
+    if (dial_media_sink_service_)
+      dial_media_sink_service_->StartMonitoringAvailableSinksForApp(app_name);
+  }
+
+  return MediaRouterMojoImpl::RegisterMediaSinksObserver(observer);
+}
+
+void MediaRouterDesktop::UnregisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(observer);
+
+  MediaSource media_source = observer->source();
+  std::string app_name = AppNameFromMediaSource(media_source);
+
+  if (!app_name.empty()) {
+    app_name_media_source_map_[app_name].erase(media_source.id());
+    if (dial_media_sink_service_)
+      dial_media_sink_service_->StopMonitoringAvailableSinksForApp(app_name);
+  }
+
+  MediaRouterMojoImpl::UnregisterMediaSinksObserver(observer);
+}
+
 #if defined(OS_WIN)
 void MediaRouterDesktop::EnsureMdnsDiscoveryEnabled() {
   if (media_router::CastDiscoveryEnabled()) {
@@ -224,5 +275,21 @@ void MediaRouterDesktop::OnFirewallCheckComplete(
     EnsureMdnsDiscoveryEnabled();
 }
 #endif
+
+void MediaRouterDesktop::OnAvailableSinksUpdated(
+    const std::string& app_name,
+    const std::vector<MediaSinkInternal>& available_sinks) {
+  std::vector<url::Origin> origins;
+  const auto& origins_it = kAppOriginWhitelist.find(app_name);
+  if (origins_it != kAppOriginWhitelist.end()) {
+    for (const auto& origin : origins_it->second)
+      origins.push_back(url::Origin::Create(GURL(origin)));
+  }
+
+  for (const auto& media_source_id : app_name_media_source_map_[app_name]) {
+    OnSinksReceived(MediaRouteProviderId::EXTENSION, media_source_id,
+                    available_sinks, origins);
+  }
+}
 
 }  // namespace media_router

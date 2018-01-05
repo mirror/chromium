@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner_helpers.h"
+#include "chrome/browser/media/router/media_sinks_observer.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service_util.h"
 #include "content/public/browser/browser_thread.h"
@@ -27,6 +28,14 @@ class DialMediaSinkServiceImpl;
 
 using OnDialSinkAddedCallback =
     base::RepeatingCallback<void(const MediaSinkInternal&)>;
+
+// Called when a new sink becomes available or an available sink becomes
+// unavailable for |app_name|.
+// |app_name|: app name on receiver device (e.g. YouTube)
+// |available_sinks|: list of currently available sinks for |app_name|
+using OnAvailableSinksUpdatedCallback = base::RepeatingCallback<void(
+    const std::string& app_name,
+    const std::vector<MediaSinkInternal>& available_sinks)>;
 
 // Service to discover DIAL media sinks.  All public methods must be invoked on
 // the UI thread.  Delegates to DialMediaSinkServiceImpl by posting tasks to its
@@ -44,8 +53,10 @@ class DialMediaSinkService {
   // discovered. The callback may be invoked on any thread, and may be invoked
   // after |this| is destroyed. Can be null.
   // Marked virtual for tests.
-  virtual void Start(const OnSinksDiscoveredCallback& sink_discovery_cb,
-                     const OnDialSinkAddedCallback& dial_sink_added_cb);
+  virtual void Start(
+      const OnSinksDiscoveredCallback& sink_discovery_cb,
+      const OnDialSinkAddedCallback& dial_sink_added_cb,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb);
 
   // Initiates discovery immediately in response to a user gesture
   // (i.e., opening the Media Router dialog). This method can only be called
@@ -53,6 +64,15 @@ class DialMediaSinkService {
   // TODO(imcheng): Rename to ManuallyInitiateDiscovery() or similar.
   // Marked virtual for tests.
   virtual void OnUserGesture();
+
+  // Starts monitoring available sinks for |app_name|. If available sinks
+  // change, invokes |available_sinks_updated_callback_|.
+  // Marked virtual for tests.
+  virtual void StartMonitoringAvailableSinksForApp(const std::string& app_name);
+
+  // Stops monitoring available sinks for |app_name|.
+  // Marked virtual for tests.
+  virtual void StopMonitoringAvailableSinksForApp(const std::string& app_name);
 
  private:
   friend class DialMediaSinkServiceTest;
@@ -62,6 +82,7 @@ class DialMediaSinkService {
   CreateImpl(
       const OnSinksDiscoveredCallback& sink_discovery_cb,
       const OnDialSinkAddedCallback& dial_sink_added_cb,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
       const scoped_refptr<net::URLRequestContextGetter>& request_context);
 
   void RunSinksDiscoveredCallback(

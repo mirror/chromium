@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_MEDIA_ROUTER_MOJO_MEDIA_ROUTER_DESKTOP_H_
 #define CHROME_BROWSER_MEDIA_ROUTER_MOJO_MEDIA_ROUTER_DESKTOP_H_
 
+#include <map>
+#include <set>
+
 #include "base/gtest_prod_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
@@ -56,6 +59,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   friend class MediaRouterDesktopTestBase;
   friend class MediaRouterFactory;
   FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest, ProvideSinks);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
+                           TestRegisterUnregisterObserver);
 
   // This constructor performs a firewall check on Windows and is not suitable
   // for use in unit tests; instead use the constructor below.
@@ -71,6 +76,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
       MediaRouteProviderId provider_id,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
 
   // Registers a Mojo pointer to the extension MRP with
   // |extension_provider_proxy_| and does initializations specific to the
@@ -114,6 +121,12 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void OnFirewallCheckComplete(bool firewall_can_use_local_ports);
 #endif
 
+  // Notifies media sink observers of |app_name|, when available sinks for
+  // |app_name| change.
+  void OnAvailableSinksUpdated(
+      const std::string& app_name,
+      const std::vector<MediaSinkInternal>& available_sinks);
+
   // MediaRouteProvider proxy that forwards calls to the MRPM in the component
   // extension.
   std::unique_ptr<ExtensionMediaRouteProviderProxy> extension_provider_proxy_;
@@ -123,6 +136,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   DualMediaSinkService* media_sink_service_;
   DualMediaSinkService::Subscription media_sink_service_subscription_;
+
+  // Map of media sources of media sink observers, keyed by app name.
+  std::map<std::string, std::set<MediaSource::Id>> app_name_media_source_map_;
 
   // A flag to ensure that we record the provider version once, during the
   // initial event page wakeup attempt.

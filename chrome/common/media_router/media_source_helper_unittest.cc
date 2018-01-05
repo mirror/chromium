@@ -73,4 +73,25 @@ TEST(MediaSourcesTest, CanConnectToMediaSource) {
   EXPECT_FALSE(CanConnectToMediaSource(MediaSource(GURL(""))));
 }
 
+TEST(MediaSourcesTest, IsDialMediaSource) {
+  EXPECT_TRUE(IsDialMediaSource(
+      MediaSource("cast-dial:YouTube?dialPostData=postData&clientId=1234")));
+  EXPECT_TRUE(IsDialMediaSource(MediaSource("dial:YouTube")));
+  // false scheme
+  EXPECT_FALSE(IsDialMediaSource(
+      MediaSource("https://google.com/cast#__castAppId__=233637DE")));
+}
+
+TEST(MediaSourcesTest, AppNameFromMediaSource) {
+  MediaSource media_source(
+      "cast-dial:YouTube?dialPostData=postData&clientId=1234");
+  EXPECT_EQ("YouTube", AppNameFromMediaSource(media_source));
+
+  media_source = MediaSource("dial:YouTube");
+  EXPECT_EQ("YouTube", AppNameFromMediaSource(media_source));
+
+  media_source = MediaSource("https://google.com/cast#__castAppId__=233637DE");
+  EXPECT_TRUE(AppNameFromMediaSource(media_source).empty());
+}
+
 }  // namespace media_router
