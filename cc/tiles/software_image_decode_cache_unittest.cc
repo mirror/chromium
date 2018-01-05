@@ -66,6 +66,44 @@ TEST(SoftwareImageDecodeCacheTest, ImageKeyNoneQuality) {
   EXPECT_EQ(100u * 100u * 4u, key.locked_bytes());
 }
 
+TEST(SoftwareImageDecodeCacheTest, ImageKeySubrectOriginal) {
+  PaintImage paint_image = CreateDiscardablePaintImage(
+      gfx::Size(10000, 10000), DefaultColorSpace().ToSkColorSpace(), false);
+  bool is_decomposable = true;
+  DrawImage draw_image(paint_image, SkIRect::MakeWH(100, 100),
+                       kLow_SkFilterQuality,
+                       CreateMatrix(SkSize::Make(1.f, 1.f), is_decomposable),
+                       PaintImage::kDefaultFrameIndex, DefaultColorSpace());
+
+  auto key = SoftwareImageDecodeCache::CacheKey::FromDrawImage(
+      draw_image, kN32_SkColorType);
+  EXPECT_EQ(draw_image.frame_key(), key.frame_key());
+  EXPECT_FALSE(key.is_nearest_neighbor());
+  EXPECT_EQ(100, key.target_size().width());
+  EXPECT_EQ(100, key.target_size().height());
+  EXPECT_EQ(key.type(), SoftwareImageDecodeCache::CacheKey::kSubrectOriginal);
+  EXPECT_EQ(100u * 100u * 4u, key.locked_bytes());
+}
+
+TEST(SoftwareImageDecodeCacheTest, ImageKeyWouldSubrectButSrcTooBig) {
+  PaintImage paint_image = CreateDiscardablePaintImage(
+      gfx::Size(10000, 10000), DefaultColorSpace().ToSkColorSpace(), false);
+  bool is_decomposable = true;
+  DrawImage draw_image(paint_image, SkIRect::MakeWH(9000, 9000),
+                       kLow_SkFilterQuality,
+                       CreateMatrix(SkSize::Make(1.f, 1.f), is_decomposable),
+                       PaintImage::kDefaultFrameIndex, DefaultColorSpace());
+
+  auto key = SoftwareImageDecodeCache::CacheKey::FromDrawImage(
+      draw_image, kN32_SkColorType);
+  EXPECT_EQ(draw_image.frame_key(), key.frame_key());
+  EXPECT_FALSE(key.is_nearest_neighbor());
+  EXPECT_EQ(10000, key.target_size().width());
+  EXPECT_EQ(10000, key.target_size().height());
+  EXPECT_EQ(key.type(), SoftwareImageDecodeCache::CacheKey::kOriginal);
+  EXPECT_EQ(10000u * 10000u * 4u, key.locked_bytes());
+}
+
 TEST(SoftwareImageDecodeCacheTest,
      ImageKeyLowQualityIncreasedToMediumIfDownscale) {
   PaintImage paint_image = CreatePaintImage(100, 100);
@@ -618,7 +656,7 @@ TEST(SoftwareImageDecodeCacheTest, ImageRectDoesNotContainSrcRect) {
   EXPECT_FALSE(key.is_nearest_neighbor());
   EXPECT_EQ(100, key.target_size().width());
   EXPECT_EQ(100, key.target_size().height());
-  EXPECT_EQ(gfx::Rect(25, 35, 75, 65), key.src_rect());
+  EXPECT_EQ(gfx::Rect(100, 100), key.src_rect());
   EXPECT_EQ(100u * 100u * 4u, key.locked_bytes());
 }
 

@@ -77,6 +77,10 @@ Size SkISizeToSize(const SkISize& size) {
   return Size(size.width(), size.height());
 }
 
+SkISize SizeToSkISize(const Size& size) {
+  return SkISize::Make(size.width(), size.height());
+}
+
 void TransformToFlattenedSkMatrix(const gfx::Transform& transform,
                                   SkMatrix* flattened) {
   // Convert from 4x4 to 3x3 by dropping the third row and column.

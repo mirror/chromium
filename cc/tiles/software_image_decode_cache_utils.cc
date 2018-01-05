@@ -6,6 +6,8 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/hash.h"
+#include "base/logging.h"
+#include "base/memory/discardable_memory.h"
 #include "base/memory/discardable_memory_allocator.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
@@ -14,6 +16,7 @@
 
 namespace cc {
 namespace {
+
 // If the size of the original sized image breaches kMemoryRatioToSubrect but we
 // don't need to scale the image, consider caching only the needed subrect.
 // The second part that much be true is that we cache only the needed subrect if
@@ -39,38 +42,35 @@ gfx::Rect GetSrcRect(const DrawImage& image) {
   return gfx::Rect(x, y, right - x, bottom - y);
 }
 
-SkImageInfo CreateImageInfo(const SkISize& size, SkColorType color_type) {
-  return SkImageInfo::Make(size.width(), size.height(), color_type,
-                           kPremul_SkAlphaType);
-}
-
-std::unique_ptr<base::DiscardableMemory> AllocateDiscardable(
-    const SkImageInfo& info) {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"), "AllocateDiscardable");
-  return base::DiscardableMemoryAllocator::GetInstance()
-      ->AllocateLockedDiscardableMemory(info.minRowBytes() * info.height());
-}
-
 }  // namespace
 
 // static
 std::unique_ptr<SoftwareImageDecodeCacheUtils::CacheEntry>
-SoftwareImageDecodeCacheUtils::DoDecodeImage(const CacheKey& key,
-                                             const PaintImage& paint_image,
-                                             SkColorType color_type) {
-  SkISize target_size =
-      SkISize::Make(key.target_size().width(), key.target_size().height());
+SoftwareImageDecodeCacheUtils::Decode(const CacheKey& key,
+                                      const PaintImage& paint_image,
+                                      SkColorType color_type) {
+  TRACE_EVENT2("cc", "SoftwareImageDecodeCacheUtils::Decode", "key",
+               key.ToString(), "type",
+               key.type() == CacheKey::kOriginal ? "decode original"
+                                                 : "decode to scale");
+  auto target_size = gfx::SizeToSkISize(key.target_size());
+  // We can handle any type of processing here, given that we don't subrect and
+  // that we can decode directly to the needed size.
+  DCHECK(key.src_rect() == gfx::Rect(paint_image.width(), paint_image.height()))
+      << key.src_rect().ToString() << " vs "
+      << gfx::Rect(gfx::Rect(paint_image.width(), paint_image.height()))
+             .ToString();
+
   DCHECK(target_size == paint_image.GetSupportedDecodeSize(target_size));
 
-  SkImageInfo target_info = CreateImageInfo(target_size, color_type);
+  SkImageInfo target_info =
+      SkImageInfo::Make(target_size.width(), target_size.height(), color_type,
+                        kPremul_SkAlphaType);
   std::unique_ptr<base::DiscardableMemory> target_pixels =
-      AllocateDiscardable(target_info);
+      base::DiscardableMemoryAllocator::GetInstance()
+          ->AllocateLockedDiscardableMemory(target_info.computeMinByteSize());
   DCHECK(target_pixels);
 
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-               "SoftwareImageDecodeCacheUtils::DoDecodeImage - "
-               "decode");
-  DCHECK_EQ(key.type(), CacheKey::kOriginal);
   bool result = paint_image.Decode(target_pixels->data(), &target_info,
                                    key.target_color_space().ToSkColorSpace(),
                                    key.frame_key().frame_index());
@@ -78,51 +78,54 @@ SoftwareImageDecodeCacheUtils::DoDecodeImage(const CacheKey& key,
     target_pixels->Unlock();
     return nullptr;
   }
+
   return std::make_unique<CacheEntry>(target_info, std::move(target_pixels),
                                       SkSize::Make(0, 0));
 }
 
 // static
 std::unique_ptr<SoftwareImageDecodeCacheUtils::CacheEntry>
-SoftwareImageDecodeCacheUtils::GenerateCacheEntryFromCandidate(
-    const CacheKey& key,
-    const DecodedDrawImage& candidate_image,
-    bool needs_extract_subset,
-    SkColorType color_type) {
+SoftwareImageDecodeCacheUtils::ScaleCandidateEntry(const CacheKey& key,
+                                                   const CacheEntry* candidate,
+                                                   bool needs_extract_subset,
+                                                   SkColorType color_type) {
+  TRACE_EVENT0("cc", "SoftwareImageDecodeCacheUtils::ScaleCandidateEntry");
+  DCHECK(candidate);
+  DCHECK(candidate->is_locked());
+  DCHECK(candidate->image());
+
   SkISize target_size =
       SkISize::Make(key.target_size().width(), key.target_size().height());
-  SkImageInfo target_info = CreateImageInfo(target_size, color_type);
+  SkImageInfo target_info =
+      SkImageInfo::Make(target_size.width(), target_size.height(), color_type,
+                        kPremul_SkAlphaType);
   std::unique_ptr<base::DiscardableMemory> target_pixels =
-      AllocateDiscardable(target_info);
+      base::DiscardableMemoryAllocator::GetInstance()
+          ->AllocateLockedDiscardableMemory(target_info.computeMinByteSize());
   DCHECK(target_pixels);
 
   if (key.type() == CacheKey::kSubrectOriginal) {
     DCHECK(needs_extract_subset);
     TRACE_EVENT0(
         TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-        "SoftwareImageDecodeCacheUtils::GenerateCacheEntryFromCandidate - "
-        "subrect");
-    bool result = candidate_image.image()->readPixels(
+        "SoftwareImageDecodeCacheUtils::ScaleCandidateEntry - subrect");
+    bool result = candidate->image()->readPixels(
         target_info, target_pixels->data(), target_info.minRowBytes(),
         key.src_rect().x(), key.src_rect().y(), SkImage::kDisallow_CachingHint);
     // We have a decoded image, and we're reading into already allocated memory.
     // This should never fail.
     DCHECK(result) << key.ToString();
     return std::make_unique<CacheEntry>(
-        target_info.makeColorSpace(candidate_image.image()->refColorSpace()),
+        target_info.makeColorSpace(candidate->image()->refColorSpace()),
         std::move(target_pixels),
         SkSize::Make(-key.src_rect().x(), -key.src_rect().y()));
   }
 
   DCHECK_EQ(key.type(), CacheKey::kSubrectAndScale);
-  TRACE_EVENT0(
-      TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-      "SoftwareImageDecodeCacheUtils::GenerateCacheEntryFromCandidate - "
-      "scale");
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
+               "SoftwareImageDecodeCacheUtils::ScaleCandidateEntry - scale");
   SkPixmap decoded_pixmap;
-  // We don't need to subrect this image, since all candidates passed in would
-  // already have a src_rect applied to them.
-  bool result = candidate_image.image()->peekPixels(&decoded_pixmap);
+  bool result = candidate->image()->peekPixels(&decoded_pixmap);
   DCHECK(result) << key.ToString();
   if (needs_extract_subset) {
     result = decoded_pixmap.extractSubset(&decoded_pixmap,
@@ -138,7 +141,7 @@ SoftwareImageDecodeCacheUtils::GenerateCacheEntryFromCandidate(
   result = decoded_pixmap.scalePixels(target_pixmap, kMedium_SkFilterQuality);
   DCHECK(result) << key.ToString();
   return std::make_unique<CacheEntry>(
-      target_info.makeColorSpace(candidate_image.image()->refColorSpace()),
+      target_info.makeColorSpace(candidate->image()->refColorSpace()),
       std::move(target_pixels),
       SkSize::Make(-key.src_rect().x(), -key.src_rect().y()));
 }
@@ -155,7 +158,7 @@ SoftwareImageDecodeCacheUtils::CacheKey::FromDrawImage(const DrawImage& image,
   // otherwise we might end up with uninitialized memory in the decode process.
   // Note that the scale is still unchanged and the target size is now a
   // function of the new src_rect.
-  const gfx::Rect& src_rect = GetSrcRect(image);
+  gfx::Rect src_rect = GetSrcRect(image);
 
   // Start with the exact target size. However, this will be adjusted below to
   // be either a mip level, the original size, or a subrect size. This is done
@@ -167,8 +170,9 @@ SoftwareImageDecodeCacheUtils::CacheKey::FromDrawImage(const DrawImage& image,
   // If the target size is empty, then we'll be skipping the decode anyway, so
   // the filter quality doesn't matter. Early out instead.
   if (target_size.IsEmpty()) {
-    return CacheKey(frame_key, kOriginal, false, src_rect, target_size,
-                    image.target_color_space());
+    return SoftwareImageDecodeCacheUtils::CacheKey(frame_key, kOriginal, false,
+                                                   src_rect, target_size,
+                                                   image.target_color_space());
   }
 
   ProcessingType type = kOriginal;
@@ -229,6 +233,12 @@ SoftwareImageDecodeCacheUtils::CacheKey::FromDrawImage(const DrawImage& image,
     }
   }
 
+  if (type == kOriginal) {
+    DCHECK(target_size == gfx::Size(image.paint_image().width(),
+                                    image.paint_image().height()));
+    src_rect = gfx::Rect(target_size);
+  }
+
   return CacheKey(frame_key, type, is_nearest_neighbor, src_rect, target_size,
                   image.target_color_space());
 }
@@ -266,8 +276,8 @@ SoftwareImageDecodeCacheUtils::CacheKey::CacheKey(
   hash_ = base::HashInts(hash_, target_color_space.GetHash());
 }
 
-SoftwareImageDecodeCacheUtils::CacheKey::CacheKey(const CacheKey& other) =
-    default;
+SoftwareImageDecodeCacheUtils::CacheKey::CacheKey(
+    const SoftwareImageDecodeCacheUtils::CacheKey& other) = default;
 
 std::string SoftwareImageDecodeCacheUtils::CacheKey::ToString() const {
   std::ostringstream str;
@@ -295,21 +305,20 @@ SoftwareImageDecodeCacheUtils::CacheEntry::CacheEntry()
     : tracing_id_(g_next_tracing_id_.GetNext()) {}
 SoftwareImageDecodeCacheUtils::CacheEntry::CacheEntry(
     const SkImageInfo& info,
-    std::unique_ptr<base::DiscardableMemory> in_memory,
+    std::unique_ptr<base::DiscardableMemory> memory,
     const SkSize& src_rect_offset)
-    : is_locked(true),
-      memory(std::move(in_memory)),
-      image_info_(info),
+    : is_locked_(true),
+      memory_(std::move(memory)),
       src_rect_offset_(src_rect_offset),
       tracing_id_(g_next_tracing_id_.GetNext()) {
-  DCHECK(memory);
-  SkPixmap pixmap(image_info_, memory->data(), image_info_.minRowBytes());
+  DCHECK(memory_);
+  SkPixmap pixmap(info, memory_->data(), info.minRowBytes());
   image_ = SkImage::MakeFromRaster(
       pixmap, [](const void* pixels, void* context) {}, nullptr);
 }
 
 SoftwareImageDecodeCacheUtils::CacheEntry::~CacheEntry() {
-  DCHECK(!is_locked);
+  DCHECK(!is_locked_);
 
   // We create temporary CacheEntries as a part of decoding. However, we move
   // the memory to cache entries that actually live in the cache. Destroying the
@@ -317,7 +326,7 @@ SoftwareImageDecodeCacheUtils::CacheEntry::~CacheEntry() {
   // if allowed to report, they would report every single temporary entry as
   // wasted, which is misleading. As a fix, don't report on a cache entry that
   // has never been in the cache.
-  if (!cached_)
+  if (!usage_stats_.cached)
     return;
 
   // lock_count | used  | last lock failed | result state
@@ -365,47 +374,50 @@ SoftwareImageDecodeCacheUtils::CacheEntry::~CacheEntry() {
         usage_stats_.first_lock_wasted);
 }
 
-void SoftwareImageDecodeCacheUtils::CacheEntry::MoveImageMemoryTo(
+void SoftwareImageDecodeCacheUtils::CacheEntry::TakeMemoryFromEntry(
     CacheEntry* entry) {
-  DCHECK(!is_budgeted);
-  DCHECK_EQ(ref_count, 0);
+  DCHECK(!entry->is_budgeted_);
+  DCHECK_EQ(entry->ref_count_, 0);
 
-  // Copy/move most things except budgeted and ref counts.
-  entry->decode_failed = decode_failed;
-  entry->is_locked = is_locked;
-  is_locked = false;
+  // We explicitly don't copy ref counts or budgeted state.
+  decode_failed_ = entry->decode_failed_;
+  is_locked_ = entry->is_locked_;
+  entry->is_locked_ = false;
 
-  entry->memory = std::move(memory);
-  entry->image_info_ = std::move(image_info_);
-  entry->src_rect_offset_ = std::move(src_rect_offset_);
-  entry->image_ = std::move(image_);
+  memory_ = std::move(entry->memory_);
+  src_rect_offset_ = entry->src_rect_offset_;
+  image_ = std::move(entry->image_);
 }
 
 bool SoftwareImageDecodeCacheUtils::CacheEntry::Lock() {
-  if (!memory)
+  if (!memory_)
     return false;
 
-  DCHECK(!is_locked);
-  bool success = memory->Lock();
-  if (!success) {
-    memory = nullptr;
-    usage_stats_.last_lock_failed = true;
-    return false;
+  DCHECK(!is_locked_);
+  if (memory_->Lock()) {
+    is_locked_ = true;
+    ++usage_stats_.lock_count;
+    return true;
   }
-  is_locked = true;
-  ++usage_stats_.lock_count;
-  return true;
+  ResetMemory();
+  usage_stats_.last_lock_failed = true;
+  return false;
 }
 
 void SoftwareImageDecodeCacheUtils::CacheEntry::Unlock() {
-  if (!memory)
+  if (!memory_)
     return;
 
-  DCHECK(is_locked);
-  memory->Unlock();
-  is_locked = false;
+  DCHECK(is_locked_);
+  memory_->Unlock();
+  is_locked_ = false;
   if (usage_stats_.lock_count == 1)
     usage_stats_.first_lock_wasted = !usage_stats_.used;
+}
+
+void SoftwareImageDecodeCacheUtils::CacheEntry::ResetMemory() {
+  memory_ = nullptr;
+  image_ = nullptr;
 }
 
 }  // namespace cc

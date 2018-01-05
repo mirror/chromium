@@ -58,9 +58,11 @@ sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size) {
       SkImageInfo::MakeN32Premul(size.width(), size.height()));
 }
 
-PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
-                                       sk_sp<SkColorSpace> color_space,
-                                       bool allocate_encoded_data) {
+PaintImage CreateDiscardablePaintImage(
+    const gfx::Size& size,
+    sk_sp<SkColorSpace> color_space,
+    bool allocate_encoded_data,
+    const std::vector<SkISize>& supported_sizes) {
   if (!color_space)
     color_space = SkColorSpace::MakeSRGB();
 
@@ -68,7 +70,8 @@ PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
       .set_id(PaintImage::GetNextId())
       .set_paint_image_generator(sk_make_sp<FakePaintImageGenerator>(
           SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space),
-          std::vector<FrameMetadata>{FrameMetadata()}, allocate_encoded_data))
+          std::vector<FrameMetadata>{FrameMetadata()}, allocate_encoded_data,
+          supported_sizes))
       // For simplicity, assume that any paint image created for testing is
       // unspecified decode mode as would be the case with most img tags on the
       // web.
