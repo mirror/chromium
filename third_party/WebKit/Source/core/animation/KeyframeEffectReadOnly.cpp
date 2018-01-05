@@ -65,7 +65,6 @@ KeyframeEffectReadOnly* KeyframeEffectReadOnly::Create(
       element, keyframes, composite, script_state, exception_state);
   if (exception_state.HadException())
     return nullptr;
-
   return Create(element, model, timing);
 }
 

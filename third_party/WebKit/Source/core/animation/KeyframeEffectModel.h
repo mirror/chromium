@@ -151,6 +151,8 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   void EnsureKeyframeGroups() const;
   void EnsureInterpolationEffectPopulated() const;
 
+  void ResetFrames();
+
   KeyframeVector keyframes_;
   // The spec describes filtering the normalized keyframes at sampling time
   // to get the 'property-specific keyframes'. For efficiency, we cache the
@@ -180,6 +182,11 @@ class KeyframeEffectModel final : public KeyframeEffectModelBase {
       scoped_refptr<TimingFunction> default_keyframe_easing = nullptr) {
     return new KeyframeEffectModel(keyframes, composite,
                                    std::move(default_keyframe_easing));
+  }
+
+  void SetFrames(KeyframeVector& keyframes) {
+    ResetFrames();
+    keyframes_.AppendVector(keyframes);
   }
 
  private:
