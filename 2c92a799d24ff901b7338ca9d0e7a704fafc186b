@@ -34,6 +34,24 @@
       "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0523f34_937ce646",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T15:21:45Z",
+      "side": 0,
+      "message": "Makes sense. I\u0027m okay with removing the assert.",
+      "parentUuid": "1aadd028_e326af97",
+      "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
