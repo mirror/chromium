@@ -16,6 +16,24 @@
       "revId": "8a19edea338069d5b09df5cf03c90de50fb30a32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d36ac9_fd366341",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T15:30:38Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll buy it. In this case, downstream is producing results as if the cursor was at the end anyways, so we might as well match it.",
+      "parentUuid": "514e74eb_57a16f50",
+      "revId": "8a19edea338069d5b09df5cf03c90de50fb30a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
