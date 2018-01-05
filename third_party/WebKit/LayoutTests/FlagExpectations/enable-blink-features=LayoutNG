@@ -57,6 +57,8 @@ crbug.com/626703 external/wpt/css/css-writing-modes/sizing-orthog-vlr-in-htb-001
 crbug.com/626703 external/wpt/css/css-writing-modes/sizing-orthog-vlr-in-htb-004.xht [ Pass ]
 crbug.com/626703 external/wpt/css/css-writing-modes/sizing-orthog-vrl-in-htb-001.xht [ Pass ]
 crbug.com/626703 external/wpt/css/css-writing-modes/sizing-orthog-vrl-in-htb-004.xht [ Pass ]
+crbug.com/626703 external/wpt/css/cssom/stylesheet-replacedata-dynamic.html [ Failure ]
+crbug.com/626703 external/wpt/html/form-elements/the-textarea-element/multiline-placeholder-crlf.html [ Failure ]
 
 # New failures are appended below by the script.
 crbug.com/714962 accessibility/adjacent-continuations-cause-assertion-failure.html [ Failure ]
@@ -3246,8 +3248,8 @@ crbug.com/714962 external/wpt/pointerevents/pointerevent_touch-action-pan-y-css_
 crbug.com/591099 external/wpt/pointerevents/pointerevent_touch-action-span-test_touch-manual.html [ Timeout ]
 crbug.com/591099 external/wpt/pointerevents/pointerevent_touch-action-svg-test_touch-manual.html [ Timeout ]
 crbug.com/714962 external/wpt/pointerevents/pointerevent_touch-action-table-test_touch-manual.html [ Timeout ]
-crbug.com/591099 external/wpt/quirks-mode/line-height-calculation.html [ Failure ]
-crbug.com/591099 external/wpt/quirks-mode/table-cell-width-calculation.html [ Pass ]
+crbug.com/591099 external/wpt/quirks/line-height-calculation.html [ Failure ]
+crbug.com/591099 external/wpt/quirks/table-cell-width-calculation.html [ Pass ]
 crbug.com/591099 external/wpt/selection/addRange-00.html [ Timeout ]
 crbug.com/591099 external/wpt/selection/addRange-04.html [ Timeout ]
 crbug.com/591099 external/wpt/selection/addRange-12.html [ Pass Timeout ]
