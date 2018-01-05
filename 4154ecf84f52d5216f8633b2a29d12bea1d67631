@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024ee16e_0ad44578",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-05T12:50:10Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better to just dim them by setting enabled \u003d NO on the items and reconfiguring them? That way we wouldn\u0027t need to reloadData?",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "4154ecf84f52d5216f8633b2a29d12bea1d67631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
