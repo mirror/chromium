@@ -16,6 +16,24 @@
       "revId": "18a65d57fd1fb100c1f071ceaa4b93379ce90b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfe52e6_cb5dd167",
+        "filename": "base/lazy_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2018-01-05T22:14:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b69179_a0ee12d1",
+      "revId": "18a65d57fd1fb100c1f071ceaa4b93379ce90b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
