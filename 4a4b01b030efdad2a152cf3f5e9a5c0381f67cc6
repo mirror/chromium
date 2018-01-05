@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c58bf34e_427f4b41",
+        "filename": "media/cdm/ppapi/clear_key_cdm/clear_key_cdm_proxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T09:03:50Z",
+      "side": 1,
+      "message": "Nit: Add a comment // CdmProxy overrides:",
+      "revId": "4a4b01b030efdad2a152cf3f5e9a5c0381f67cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8995bb8f_84e98db9",
+        "filename": "media/mojo/interfaces/interface_factory.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T09:03:50Z",
+      "side": 1,
+      "message": "Who specifies these guids? Ideally, we wouldn\u0027t be passing these guids around as strings, even if that\u0027s how it\u0027s done today.\n\n(What I\u0027m really curious about is where these GUIDs come from, because we currently have a base::IsValidGUID check, which would be nice to drop)\n\nIn fact, I\u0027d go so far as to say that we should just have a mojo GUID helper type (which could probably be typemapped to std::string, and do the base::IsValidGUID check there).",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "4a4b01b030efdad2a152cf3f5e9a5c0381f67cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
