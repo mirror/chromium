@@ -159,7 +159,8 @@ def GenerateTestResults(
                         status_code)
         current_result.SetType(base_test_result.ResultType.FAIL)
     if 'stack' in bundle:
-      if symbolizer and device_abi:
+      if (symbolizer and device_abi and
+          current_result.GetType() != base_test_result.ResultType.PASS):
         current_result.SetLog(
             '%s\n%s' % (
               bundle['stack'],
