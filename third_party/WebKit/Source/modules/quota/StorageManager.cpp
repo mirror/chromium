@@ -13,6 +13,7 @@
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/permissions/PermissionUtils.h"
+#include "modules/quota/QuotaDispatcher.h"
 #include "modules/quota/StorageEstimate.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
@@ -109,9 +110,12 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
     return promise;
   }
 
-  Platform::Current()->QueryStorageUsageAndQuota(
-      WrapRefCounted(security_origin), mojom::StorageType::kTemporary,
-      WTF::Bind(&QueryStorageUsageAndQuotaCallback, WrapPersistent(resolver)));
+  QuotaDispatcher::From(execution_context)
+      ->QueryStorageUsageAndQuota(execution_context->GetInterfaceProvider(),
+                                  WrapRefCounted(security_origin),
+                                  mojom::StorageType::kTemporary,
+                                  WTF::Bind(&QueryStorageUsageAndQuotaCallback,
+                                            WrapPersistent(resolver)));
   return promise;
 }
 
