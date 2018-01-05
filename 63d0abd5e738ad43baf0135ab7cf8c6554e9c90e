@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "305adacd_3f3b12ab",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-01-05T23:15:13Z",
+      "side": 1,
+      "message": "i\u0027m still concerned that this will be confusing. the member is named \"is_active\", but it appears (per this comment) to actually contain \"is the tab active in a visible browser\". the second sentence confuses me more by talking about whether the browser is at the forefront or not (why does stacking order matter?).\n\ni\u0027d prefer it if you instead just used this \"is_active\" member in concordance with how \"active\" is typically used: this is true if the tab is the currently-selected tab within its window. in other words, each browser window will have exactly one tab with is_active\u003dtrue, regardless of whether the browser is visible, focused, at the forefront, etc.\n\nyou already have other members for is_browser_focused and is_browser_visible, so i don\u0027t understand why it\u0027s necessary to integrate any other information about the tab\u0027s browser into the is_active member.",
+      "revId": "63d0abd5e738ad43baf0135ab7cf8c6554e9c90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
