@@ -6,6 +6,7 @@
   TestRunner.addResult(`Tests that interacting with the console gives appropriate focus.\n`);
 
   await TestRunner.loadModule('console_test_runner');
+  await TestRunner.loadModule('source_frame');
   await TestRunner.showPanel('console');
 
   var consoleView = Console.ConsoleView.instance();
