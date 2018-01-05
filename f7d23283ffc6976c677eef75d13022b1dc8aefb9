@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c03757a_2dbe02ec",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2018-01-05T12:37:15Z",
+      "side": 1,
+      "message": "Hey hbos@. This quarter I\u0027m looking at Chromium changes that *don\u0027t* use wpt to try to understand the most common remaining blockers. I came here as the first CL to look at because of the familiarity. Is my conclusion \"Depends on GC and internals to get the limit of how many peer connections to expect\" in https://docs.google.com/document/d/1kFYTqUMEbo9p87i6wAzORoicMWgHsuYwL2CgtvdhDaE/edit?usp\u003dsharing correct?\n\nIn other words, this is a type of test that we shouldn\u0027t expect to other share with wpt, since even if we could agree to some minimum supported number, we still want to set higher numbers on some platforms?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
