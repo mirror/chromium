@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ad8a743_520628fc",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2018-01-05T21:43:12Z",
+      "side": 1,
+      "message": "We should be able to support this by removing subset_rect from PaintImage. This would require some plumbing to put this on draw ops (like DrawImageRectOp) instead.",
+      "parentUuid": "6b4ffb2e_caf7bee5",
+      "range": {
+        "startLine": 136,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 16
+      },
+      "revId": "8cb98a9148bd707408ad5e1bf78e05986e153077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd00abfc_4ad2ba04",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 6
