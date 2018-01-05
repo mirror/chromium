@@ -245,7 +245,7 @@ void PaintOpReader::Read(PaintImage* image,
 
   // If we encountered a decode failure, we may write an invalid id for the
   // image. In these cases, just return, leaving the image as nullptr.
-  if (transfer_cache_entry_id == kInvalidImageTransferCacheEntryId)
+  if (!valid_ || transfer_cache_entry_id == kInvalidImageTransferCacheEntryId)
     return;
 
   if (auto* entry = transfer_cache->GetEntryAs<ServiceImageTransferCacheEntry>(
