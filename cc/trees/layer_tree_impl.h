@@ -473,6 +473,7 @@ class CC_EXPORT LayerTreeImpl {
 
   void RegisterSelection(const LayerSelection& selection);
 
+  bool GetHandleVisibilityChanged() const { return handle_visibility_changed_; }
   bool GetAndResetHandleVisibilityChanged();
 
   // Compute the current selection handle location and visbility with respect to
