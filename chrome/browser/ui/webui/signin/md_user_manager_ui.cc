@@ -21,6 +21,7 @@
 #include "chrome/common/features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -77,6 +78,7 @@ content::WebUIDataSource* MDUserManagerUI::CreateUIDataSource(
 
   source->SetJsonPath("strings.js");
 
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("control_bar.html", IDR_MD_CONTROL_BAR_HTML);
   source->AddResourcePath("control_bar.js", IDR_MD_CONTROL_BAR_JS);
   source->AddResourcePath("create_profile.html", IDR_MD_CREATE_PROFILE_HTML);

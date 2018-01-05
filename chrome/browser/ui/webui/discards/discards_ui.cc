@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/webui/discards/discards.mojom.h"
 #include "chrome/common/webui_url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
@@ -117,7 +118,7 @@ DiscardsUI::DiscardsUI(content::WebUI* web_ui)
     : MojoWebUIController<mojom::DiscardsDetailsProvider>(web_ui) {
   std::unique_ptr<content::WebUIDataSource> source(
       content::WebUIDataSource::Create(chrome::kChromeUIDiscardsHost));
-
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("discards.css", IDR_ABOUT_DISCARDS_CSS);
   source->AddResourcePath("discards.js", IDR_ABOUT_DISCARDS_JS);
   // Full paths (relative to src) are important for Mojom generated files.

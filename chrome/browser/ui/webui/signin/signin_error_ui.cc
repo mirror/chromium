@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/webui/signin/signin_error_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -62,6 +63,7 @@ void SigninErrorUI::Initialize(Browser* browser, bool is_system_profile) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUISigninErrorHost);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_SIGNIN_ERROR_HTML);
   source->AddResourcePath("signin_error.js", IDR_SIGNIN_ERROR_JS);
   source->AddResourcePath("signin_shared_css.html", IDR_SIGNIN_SHARED_CSS_HTML);

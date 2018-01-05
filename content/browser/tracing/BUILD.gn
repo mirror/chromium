@@ -43,6 +43,13 @@ grit("resources") {
     "tracing_resources.pak",
   ]
 
+  if (!is_android) {
+    outputs += [
+      "grit/tracing_resources_map.cc",
+      "grit/tracing_resources_map.h",
+    ]
+  }
+
   # resource_ids has an entry for our .grd file that looks like:
   # "<(SHARED_INTERMEDIATE_DIR)/content/browser/tracing/tracing_resources.grd"
   # and what we pass here should make that resolve to our .grd file.

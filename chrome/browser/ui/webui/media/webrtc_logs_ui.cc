@@ -23,6 +23,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/upload_list/upload_list.h"
@@ -64,6 +65,7 @@ content::WebUIDataSource* CreateWebRtcLogsUIHTMLSource() {
   source->AddLocalizedString("noLogsMessage",
                              IDS_WEBRTC_LOGS_NO_LOGS_MESSAGE);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("webrtc_logs.js", IDR_WEBRTC_LOGS_JS);
   source->SetDefaultResource(IDR_WEBRTC_LOGS_HTML);
   return source;

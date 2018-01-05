@@ -28,6 +28,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
@@ -79,6 +80,7 @@ content::WebUIDataSource* CreateSetAsDefaultBrowserUIHTMLSource() {
   data_source->AddLocalizedString("chromeLogoString",
                                   IDS_SHORT_PRODUCT_LOGO_ALT_TEXT);
   data_source->SetJsonPath("strings.js");
+  data_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   data_source->AddResourcePath("set_as_default_browser.js",
                                IDR_SET_AS_DEFAULT_BROWSER_JS);
   data_source->SetDefaultResource(IDR_SET_AS_DEFAULT_BROWSER_HTML);

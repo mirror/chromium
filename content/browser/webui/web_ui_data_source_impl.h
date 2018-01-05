@@ -13,6 +13,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/values.h"
 #include "content/browser/webui/url_data_manager.h"
@@ -38,6 +39,7 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   void AddBoolean(const std::string& name, bool value) override;
   void AddInteger(const std::string& name, int32_t value) override;
   void SetJsonPath(const std::string& path) override;
+  void AddGzipMap(const GzippedGritResourceMap* map, size_t map_size) override;
   void AddResourcePath(const std::string& path, int resource_id) override;
   void SetDefaultResource(int resource_id) override;
   void SetRequestFilter(
@@ -48,7 +50,8 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   void OverrideContentSecurityPolicyObjectSrc(const std::string& data) override;
   void OverrideContentSecurityPolicyChildSrc(const std::string& data) override;
   void DisableDenyXFrameOptions() override;
-  void UseGzip(const std::vector<std::string>& excluded_paths) override;
+  void ExcludePathsFromGzip(
+      const std::vector<std::string>& excluded_paths) override;
   const ui::TemplateReplacements* GetReplacements() const override;
 
   // Add the locale to the load time data defaults. May be called repeatedly.
@@ -68,6 +71,7 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   friend class InternalDataSource;
   friend class WebUIDataSource;
   friend class WebUIDataSourceTest;
+  FRIEND_TEST_ALL_PREFIXES(WebUIDataSourceTest, IsGzipped);
 
   explicit WebUIDataSourceImpl(const std::string& source_name);
 
@@ -79,6 +83,13 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
       const std::string& path,
       const ResourceRequestInfo::WebContentsGetter& wc_getter,
       const URLDataSource::GotDataCallback& callback);
+
+  // Exists/protected for testing.
+  bool IsGzipped(const std::string& path) const;
+
+  // Maps a |path| (i.e. "blah.js") to a resource ID (i.e. IDR_BLAH_JS). If
+  // |path| isn't found, |default_resource_| is returned.
+  int PathToIdrOrDefault(const std::string& path) const;
 
   // Note: this must be called before StartDataRequest() to have an effect.
   void disable_load_time_data_defaults_for_testing() {
@@ -93,6 +104,7 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   std::string json_path_;
   std::map<std::string, int> path_to_idr_map_;
   std::unordered_set<std::string> excluded_paths_;
+  std::map<int, bool> gzip_map_;
   // The replacements are initiallized in the main thread and then used in the
   // IO thread. The map is safe to read from multiple threads as long as no
   // futher changes are made to it after initialization.
@@ -112,7 +124,6 @@ class CONTENT_EXPORT WebUIDataSourceImpl : public URLDataSourceImpl,
   bool deny_xframe_options_;
   bool add_load_time_data_defaults_;
   bool replace_existing_source_;
-  bool use_gzip_;
 
   DISALLOW_COPY_AND_ASSIGN(WebUIDataSourceImpl);
 };

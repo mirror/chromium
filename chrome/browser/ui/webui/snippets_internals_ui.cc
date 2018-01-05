@@ -12,6 +12,7 @@
 #include "chrome/browser/ui/webui/snippets_internals_message_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -33,10 +34,10 @@ content::WebUIDataSource* CreateSnippetsInternalsHTMLSource() {
   source->AddBoolean("contextualSuggestionsEnabled", false);
 #endif
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("snippets_internals.js", IDR_SNIPPETS_INTERNALS_JS);
   source->AddResourcePath("snippets_internals.css", IDR_SNIPPETS_INTERNALS_CSS);
   source->SetDefaultResource(IDR_SNIPPETS_INTERNALS_HTML);
-  source->UseGzip();
   return source;
 }
 

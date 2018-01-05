@@ -17,6 +17,7 @@
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -39,6 +40,7 @@ void StartPageUI::InitDataSource() {
 
   source->SetJsonPath("strings.js");
 
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("start_page.css", IDR_APP_LIST_START_PAGE_CSS);
   source->AddResourcePath("start_page.js", IDR_APP_LIST_START_PAGE_JS);
   source->SetDefaultResource(IDR_APP_LIST_START_PAGE_HTML);

@@ -26,6 +26,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/browser_child_process_host_iterator.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
@@ -115,9 +116,9 @@ std::string GetChildDescription(const content::ChildProcessData& data) {
 content::WebUIDataSource* CreateMemoryInternalsUIHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIMemoryInternalsHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_MEMORY_INTERNALS_HTML);
   source->AddResourcePath("memory_internals.js", IDR_MEMORY_INTERNALS_JS);
-  source->UseGzip();
   return source;
 }
 

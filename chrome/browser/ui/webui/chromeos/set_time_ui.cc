@@ -17,6 +17,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/system_clock_client.h"
@@ -136,6 +137,7 @@ SetTimeUI::SetTimeUI(content::WebUI* web_ui) : WebDialogUI(web_ui) {
   values.SetString("currentTimezoneId", current_timezone_id);
   values.SetDouble("buildTime", base::GetBuildTime().ToJsTime());
 
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddLocalizedStrings(values);
   source->SetJsonPath("strings.js");
 

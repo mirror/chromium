@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/webui/chromeos/emulator/device_emulator_message_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -20,6 +21,7 @@ namespace {
 content::WebUIDataSource* CreateDeviceEmulatorUIDataSource() {
   content::WebUIDataSource* html =
       content::WebUIDataSource::Create(chrome::kChromeUIDeviceEmulatorHost);
+  html->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   // Add resources.
   html->AddResourcePath("audio_settings.html",

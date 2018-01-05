@@ -12,6 +12,7 @@
 #include "chrome/grit/chrome_unscaled_resources.h"
 #include "chrome/grit/component_extension_resources_map.h"
 #include "chrome/grit/theme_resources.h"
+#include "chrome/grit/theme_resources_map.h"
 
 #if defined(OS_CHROMEOS)
 #include "components/chrome_apps/chrome_apps_resource_util.h"
@@ -39,33 +40,29 @@ ChromeComponentExtensionResourceManager() {
 #endif
   };
 
-  AddComponentResourceEntries(
-      kComponentExtensionResources,
-      kComponentExtensionResourcesSize);
-  AddComponentResourceEntries(
+  AddComponentResourceEntries<GzippedGritResourceMap>(
+      kComponentExtensionResources, kComponentExtensionResourcesSize);
+  AddComponentResourceEntries<GritResourceMap>(
       kExtraComponentExtensionResources,
       arraysize(kExtraComponentExtensionResources));
 #if defined(OS_CHROMEOS)
   size_t chrome_apps_resource_size;
   const GritResourceMap* chrome_apps_resources =
       chrome_apps::GetChromeAppsResources(&chrome_apps_resource_size);
-  AddComponentResourceEntries(
-      chrome_apps_resources,
-      chrome_apps_resource_size);
+  AddComponentResourceEntries<GritResourceMap>(chrome_apps_resources,
+                                               chrome_apps_resource_size);
 
   size_t file_manager_resource_size;
   const GritResourceMap* file_manager_resources =
       file_manager::GetFileManagerResources(&file_manager_resource_size);
-  AddComponentResourceEntries(
-      file_manager_resources,
-      file_manager_resource_size);
+  AddComponentResourceEntries<GritResourceMap>(file_manager_resources,
+                                               file_manager_resource_size);
 
   size_t keyboard_resource_size;
   const GritResourceMap* keyboard_resources =
       keyboard::GetKeyboardExtensionResources(&keyboard_resource_size);
-  AddComponentResourceEntries(
-      keyboard_resources,
-      keyboard_resource_size);
+  AddComponentResourceEntries<GritResourceMap>(keyboard_resources,
+                                               keyboard_resource_size);
 #endif
 }
 
@@ -94,8 +91,9 @@ bool ChromeComponentExtensionResourceManager::IsComponentExtensionResource(
   return entry != path_to_resource_id_.end();
 }
 
+template <typename T>
 void ChromeComponentExtensionResourceManager::AddComponentResourceEntries(
-    const GritResourceMap* entries,
+    const T* entries,
     size_t size) {
   for (size_t i = 0; i < size; ++i) {
     base::FilePath resource_path = base::FilePath().AppendASCII(

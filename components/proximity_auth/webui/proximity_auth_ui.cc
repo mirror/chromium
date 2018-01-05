@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/proximity_auth/webui/proximity_auth_webui_handler.h"
 #include "components/proximity_auth/webui/url_constants.h"
 #include "content/public/browser/browser_context.h"
@@ -20,6 +21,7 @@ ProximityAuthUI::ProximityAuthUI(content::WebUI* web_ui,
     : content::WebUIController(web_ui) {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(kChromeUIProximityAuthHost);
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->SetDefaultResource(IDR_PROXIMITY_AUTH_INDEX_HTML);
   source->AddResourcePath("common.css", IDR_PROXIMITY_AUTH_COMMON_CSS);
   source->AddResourcePath("webui.js", IDR_PROXIMITY_AUTH_WEBUI_JS);

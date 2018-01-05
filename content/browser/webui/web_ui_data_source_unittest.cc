@@ -7,6 +7,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/webui/web_ui_data_source_impl.h"
+#include "content/grit/content_resources_map.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/test/test_content_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -85,6 +86,12 @@ class WebUIDataSourceTest : public testing::Test {
         source);
     source_impl->disable_load_time_data_defaults_for_testing();
     source_ = base::WrapRefCounted(source_impl);
+
+    const GzippedGritResourceMap kDummyResources[] = {
+        {"foobar", kDummyResourceId, false},
+        {"batbaz", kDummyDefaultResourceId, false},
+    };
+    source_->AddGzipMap(kDummyResources, arraysize(kDummyResources));
   }
 
   TestBrowserThreadBundle thread_bundle_;
@@ -210,6 +217,43 @@ TEST_F(WebUIDataSourceTest, MimeType) {
   EXPECT_EQ(GetMimeType("foo.html?abc?abc"), html);
   EXPECT_EQ(GetMimeType("foo.css?abc?abc"), css);
   EXPECT_EQ(GetMimeType("foo.js?abc?abc"), js);
+}
+
+TEST_F(WebUIDataSourceTest, IsGzipped) {
+  const int IDR_COMPRESSED_JS = 0;
+  const int IDR_COMPRESSED_HTML = 1;
+  const int IDR_UNCOMPRESSED_CSS = 2;
+
+  // Some fake resources, isolated for testing.
+  const GzippedGritResourceMap kResources[] = {
+      {"../css/uncompressed.css", IDR_UNCOMPRESSED_CSS, false},
+      {"../html/compressed.html", IDR_COMPRESSED_HTML, true},
+      {"../js/compressed.js", IDR_COMPRESSED_JS, true},
+  };
+  source()->AddGzipMap(kResources, arraysize(kResources));
+
+  // Note: pages often register paths that differ from the original grit path.
+  source()->AddResourcePath("compressed.js", IDR_COMPRESSED_JS);
+  EXPECT_TRUE(source()->IsGzipped("compressed.js"));
+
+  source()->AddResourcePath("uncompressed.css", IDR_UNCOMPRESSED_CSS);
+  EXPECT_FALSE(source()->IsGzipped("uncompressed.css"));
+
+  // Any unknown path triggers the default resource()-> If that's not set, the
+  // default (unknown) response is false to IsGzipped().
+  EXPECT_FALSE(source()->IsGzipped("blah blah blah"));
+
+  // If the default resource is gzipped, then unknown paths are gzipped.
+  source()->SetDefaultResource(IDR_COMPRESSED_HTML);
+  EXPECT_TRUE(source()->IsGzipped("blah blah blah"));
+
+  // The JSON path is a dynamically generated list of strings; it isn't gzipped.
+  source()->SetJsonPath("strings.js");
+  EXPECT_FALSE(source()->IsGzipped("strings.js"));
+
+  source()->ExcludePathsFromGzip({"json/special/path"});
+  EXPECT_FALSE(source()->IsGzipped("json/special/path"));
+  EXPECT_FALSE(source()->IsGzipped("json/special/path?url=parms&are=ignored"));
 }
 
 }  // namespace content

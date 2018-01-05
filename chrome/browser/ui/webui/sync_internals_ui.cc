@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/sync_internals_message_handler.h"
 #include "chrome/common/url_constants.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/sync/driver/about_sync_util.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -20,6 +21,7 @@ content::WebUIDataSource* CreateSyncInternalsHTMLSource() {
       content::WebUIDataSource::Create(chrome::kChromeUISyncInternalsHost);
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath(syncer::sync_ui_util::kSyncIndexJS,
                           IDR_SYNC_DRIVER_SYNC_INTERNALS_INDEX_JS);
   source->AddResourcePath(syncer::sync_ui_util::kChromeSyncJS,
@@ -45,7 +47,6 @@ content::WebUIDataSource* CreateSyncInternalsHTMLSource() {
   source->AddResourcePath(syncer::sync_ui_util::kTrafficLogJS,
                           IDR_SYNC_DRIVER_SYNC_INTERNALS_TRAFFIC_LOG_JS);
   source->SetDefaultResource(IDR_SYNC_DRIVER_SYNC_INTERNALS_INDEX_HTML);
-  source->UseGzip();
   return source;
 }
 

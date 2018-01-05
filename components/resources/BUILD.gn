@@ -23,6 +23,8 @@ grit("components_resources") {
   output_name = "components_resources_new"
   outputs = [
     "grit/components_resources.h",
+    "grit/components_resources_map.cc",
+    "grit/components_resources_map.h",
     "components_resources.pak",
   ]
   output_dir = "$root_gen_dir/components"

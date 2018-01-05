@@ -30,6 +30,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/drive/drive.pb.h"
 #include "components/drive/drive_api_util.h"
 #include "components/drive/drive_notification_manager.h"
@@ -901,6 +902,7 @@ DriveInternalsUI::DriveInternalsUI(content::WebUI* web_ui)
 
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIDriveInternalsHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("drive_internals.css", IDR_DRIVE_INTERNALS_CSS);
   source->AddResourcePath("drive_internals.js", IDR_DRIVE_INTERNALS_JS);
   source->SetDefaultResource(IDR_DRIVE_INTERNALS_HTML);

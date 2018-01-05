@@ -9,7 +9,9 @@
 #include "chrome/browser/ui/webui/welcome_handler.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chrome_unscaled_resources.h"
+#include "chrome/grit/chrome_unscaled_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
@@ -45,6 +47,9 @@ WelcomeUI::WelcomeUI(content::WebUI* web_ui, const GURL& url)
 
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(url.host());
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
+  html_source->AddGzipMap(kChromeUnscaledResources,
+                          kChromeUnscaledResourcesSize);
 
   // Check URL for variations.
   std::string value;

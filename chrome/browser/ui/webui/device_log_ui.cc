@@ -13,6 +13,7 @@
 #include "base/values.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/device_event_log/device_event_log.h"
 #include "content/public/browser/web_contents.h"
@@ -79,10 +80,10 @@ DeviceLogUI::DeviceLogUI(content::WebUI* web_ui)
 
   html->AddLocalizedString("logEntryFormat", IDS_DEVICE_LOG_ENTRY);
   html->SetJsonPath("strings.js");
+  html->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html->AddResourcePath("device_log_ui.css", IDR_DEVICE_LOG_UI_CSS);
   html->AddResourcePath("device_log_ui.js", IDR_DEVICE_LOG_UI_JS);
   html->SetDefaultResource(IDR_DEVICE_LOG_UI_HTML);
-  html->UseGzip();
 
   content::WebUIDataSource::Add(web_ui->GetWebContents()->GetBrowserContext(),
                                 html);

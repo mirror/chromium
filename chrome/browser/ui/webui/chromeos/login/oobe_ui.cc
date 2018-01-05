@@ -74,8 +74,11 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chrome_unscaled_resources.h"
+#include "chrome/grit/chrome_unscaled_resources_map.h"
 #include "chrome/grit/component_extension_resources.h"
+#include "chrome/grit/component_extension_resources_map.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/prefs/pref_service.h"
@@ -131,6 +134,7 @@ content::WebUIDataSource* CreateOobeUIDataSource(
       content::WebUIDataSource::Create(chrome::kChromeUIOobeHost);
   source->AddLocalizedStrings(localized_strings);
   source->SetJsonPath(kStringsJSPath);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
 
   if (display_type == OobeUI::kOobeDisplay) {
     source->SetDefaultResource(IDR_OOBE_HTML);
@@ -179,13 +183,16 @@ content::WebUIDataSource* CreateOobeUIDataSource(
                             IDR_CUSTOM_ELEMENTS_USER_POD_HTML);
   }
 
-  // Required for postprocessing of Goolge PlayStore Terms.
+  // Required for postprocessing of Google PlayStore Terms.
+  source->AddGzipMap(kComponentExtensionResources,
+                     kComponentExtensionResourcesSize);
   source->AddResourcePath(kArcPlaystoreCSSPath, IDR_ARC_SUPPORT_PLAYSTORE_CSS);
   source->AddResourcePath(kArcPlaystoreJSPath, IDR_ARC_SUPPORT_PLAYSTORE_JS);
   source->AddResourcePath(kArcPlaystoreLogoPath,
       IDR_ARC_SUPPORT_PLAYSTORE_LOGO);
 
   // Required in encryption migration screen.
+  source->AddGzipMap(kChromeUnscaledResources, kChromeUnscaledResourcesSize);
   source->AddResourcePath(kProductLogoPath, IDR_PRODUCT_LOGO_64);
 
   source->AddResourcePath(kKeyboardUtilsJSPath, IDR_KEYBOARD_UTILS_JS);

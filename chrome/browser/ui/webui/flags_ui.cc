@@ -26,6 +26,7 @@
 #include "components/flags_ui/flags_ui_pref_names.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/grit/components_scaled_resources.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -105,9 +106,9 @@ content::WebUIDataSource* CreateFlagsUIHTMLSource() {
   }
 #endif
 
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath(flags_ui::kFlagsJS, IDR_FLAGS_UI_FLAGS_JS);
   source->SetDefaultResource(IDR_FLAGS_UI_FLAGS_HTML);
-  source->UseGzip();
   return source;
 }
 

@@ -16,6 +16,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/task_scheduler_internals_resources.h"
+#include "chrome/grit/task_scheduler_internals_resources_map.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
 
@@ -104,13 +105,14 @@ TaskSchedulerInternalsUI::TaskSchedulerInternalsUI(content::WebUI* web_ui)
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(
           chrome::kChromeUITaskSchedulerInternalsHost);
+  html_source->AddGzipMap(kTaskSchedulerInternalsResources,
+                          kTaskSchedulerInternalsResourcesSize);
   html_source->AddResourcePath(
       "index.css", IDR_TASK_SCHEDULER_INTERNALS_RESOURCES_INDEX_CSS);
   html_source->AddResourcePath(
       "index.js", IDR_TASK_SCHEDULER_INTERNALS_RESOURCES_INDEX_JS);
   html_source->SetDefaultResource(
       IDR_TASK_SCHEDULER_INTERNALS_RESOURCES_INDEX_HTML);
-  html_source->UseGzip();
 
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), html_source);
 }

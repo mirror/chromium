@@ -15,6 +15,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "components/previews/content/previews_ui_service.h"
 #include "content/public/browser/web_ui_data_source.h"
 
@@ -23,6 +24,7 @@ namespace {
 content::WebUIDataSource* GetSource() {
   content::WebUIDataSource* source = content::WebUIDataSource::Create(
       chrome::kChromeUIInterventionsInternalsHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("index.js", IDR_INTERVENTIONS_INTERNALS_INDEX_JS);
   source->AddResourcePath(
       "chrome/browser/ui/webui/interventions_internals/"
@@ -30,15 +32,14 @@ content::WebUIDataSource* GetSource() {
       IDR_INTERVENTIONS_INTERNALS_MOJO_INDEX_JS);
   source->AddResourcePath("url/mojo/url.mojom.js", IDR_URL_MOJO_JS);
   source->SetDefaultResource(IDR_INTERVENTIONS_INTERNALS_INDEX_HTML);
-  source->UseGzip(std::vector<std::string>());
   return source;
 }
 
 content::WebUIDataSource* GetUnsupportedSource() {
   content::WebUIDataSource* source = content::WebUIDataSource::Create(
       chrome::kChromeUIInterventionsInternalsHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_INTERVENTIONS_INTERNALS_UNSUPPORTED_PAGE_HTML);
-  source->UseGzip(std::vector<std::string>());
   return source;
 }
 
