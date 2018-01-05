@@ -361,6 +361,10 @@ class ASH_EXPORT WallpaperController
   // |current_user_| is null.
   AccountId GetCurrentUserAccountId();
 
+  // Returns true if device wallpaper policy is in effect and we are at the
+  // login screen right now.
+  bool ShouldSetDevicePolicyWallpaper() const;
+
   // mojom::WallpaperController overrides:
   void Init(mojom::WallpaperControllerClientPtr client,
             const base::FilePath& user_data_path,
@@ -391,10 +395,6 @@ class ASH_EXPORT WallpaperController
   void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
   void UpdateCustomWallpaperLayout(mojom::WallpaperUserInfoPtr user_info,
                                    wallpaper::WallpaperLayout layout) override;
-  // TODO(crbug.com/776464): |ShowUserWallpaper| is incomplete until device
-  // policy wallpaper is migrated. Callers from chrome should use
-  // |WallpaperManager::ShowUserWallpaper| instead. Callers in ash can't use it
-  // for now.
   void ShowUserWallpaper(mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(mojom::WallpaperUserInfoPtr user_info,
@@ -544,10 +544,6 @@ class ASH_EXPORT WallpaperController
 
   // Returns whether the current wallpaper is set by device policy.
   bool IsDevicePolicyWallpaper() const;
-
-  // Returns true if device wallpaper policy is in effect and we are at the
-  // login screen right now.
-  bool ShouldSetDevicePolicyWallpaper() const;
 
   // Reads the device wallpaper file and sets it as the current wallpaper. Note
   // when it's called, it's guaranteed that ShouldSetDevicePolicyWallpaper()
