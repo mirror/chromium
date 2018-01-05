@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e9809ce_ff953948",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:43:39Z",
+      "side": 1,
+      "message": "Thanks, done. Incomplete depluralization of \"window\" :).",
+      "parentUuid": "7a433497_b06ff7df",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b816ff_853911d9",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b0eff6_f52d552d",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:43:39Z",
+      "side": 1,
+      "message": "See new patch set.",
+      "parentUuid": "25b816ff_853911d9",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "e6cea383_1b367450",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:43:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b8c52fa_5d778bf7",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "271a4d1a_152a92ce",
         "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9349d325_6d28ac6d",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:43:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "271a4d1a_152a92ce",
+      "revId": "2db69908b5936131e93ec87c32c648204b66c68e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

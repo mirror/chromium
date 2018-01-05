@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3840ef2e_9db89ef7",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2018-01-05T21:43:39Z",
+      "side": 1,
+      "message": "I struggled to find a name I liked for this property, since |parentWindow| is already claimed by |NSWindow|. I also considered making this some kind of wrapper object instead of an NSWindow subclass. Let me know if you have any thoughts?",
+      "revId": "3b5eb6ebfd05faf3221c72473abe20c12e8352f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
