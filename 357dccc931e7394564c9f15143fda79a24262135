@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63abc776_249ee4fc",
+        "filename": "tools/binary_size/libsupersize/testdata/Diff_Basic.golden",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2018-01-05T19:42:57Z",
+      "side": 1,
+      "message": "To be pedantic we should have a case to show \u00272,000 -\u003e 1,234 unique\u0027 or something, but oh well.",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "357dccc931e7394564c9f15143fda79a24262135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
