@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c9480aa_3e59cfe5",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-05T20:13:23Z",
+      "side": 1,
+      "message": "\u003e Brain dump\n\u003e \n\u003e This reduces sleep time on the main thread when the main thread has tasks to run:\n\u003e \n\u003e for (;;) {\n\u003e   bool has_task_scheduler_tasks \u003d \n\u003e       task_tracker_-\u003eHasIncompleteUndelayedTasksForTesting();\n\u003e   bool has_main_thread_tasks \u003d HasMainThreadTasks();\n\u003e \n\u003e   if (!has_task_scheduler_tasks \u0026\u0026 !has_main_thread_tasks)\n\u003e     break;\n\u003e \n\u003e   if (has_main_thread_tasks) {\n\u003e     // This RunLoop will run at least one task.\n\u003e     base::RunLoop::RunUntilIdle();\n\u003e   } else {\n\u003e     PlatformThread::Sleep(TimeDelta::FromMilliseconds(1));\n\u003e   }\n\u003e }\n\nHow so? In what I have once RunLoop().RunUntilIdle() returns we know that at least up until it exited we had !has_main_thread_tasks. Therefore if we have TaskScheduler work we can assume !has_main_thread_tasks and proceed with the sleep (checking HasMainThreadTasks() again is redundant).\n\n\u003e \n\u003e This avoids \"sleeping\", but requires signaling an event when a task is posted to the main thread, when a task completes on the main thread or when a task completes in TaskScheduler:\n\u003e \n\u003e while (task_tracker_-\u003eHasIncompleteUndelayedTasksForTesting() ||  \n\u003e        HasMainThreadTasks()) {\n\u003e   event-\u003eWait();\n\u003e   base::RunLoop::RunUntilIdle();\n\u003e }\n\nActually, now that I think even more about it, I think RunLoop()::Run() is fine here because we know we\u0027re driving a MessageLoop without mock time. And the way we want to implement mock time is no longer as an overriding RunLoop::Delegate but as an ExternalTaskSource (and ScopedTaskEnvironment could know not to advance time as part of its implementation of ExternalTaskSource::GetWork() in this case)!\n\nI\u0027ll take a stab at this, ping me if this looks insane..",
+      "parentUuid": "bcb96f34_f6870319",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b828527_5083ddcb",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4b57bb_e62a9ae5",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2018-01-05T20:13:23Z",
+      "side": 1,
+      "message": "Oh good catch, had assumed complete idleness and forgotten about delayed tasks on a real time timer.",
+      "parentUuid": "1b828527_5083ddcb",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "838c04804c0915be839a8bf91f1261cfae23e3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
