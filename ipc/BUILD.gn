@@ -182,6 +182,7 @@ mojom_component("mojom") {
   ]
   public_deps = [
     "//mojo/common:read_only_buffer",
+    "//mojo/public/interfaces/bindings:bindings",
   ]
 
   # Don't generate a variant sources since we depend on generated internal
