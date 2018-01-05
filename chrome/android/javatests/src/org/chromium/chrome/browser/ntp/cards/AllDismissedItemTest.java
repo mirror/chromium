@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.test.filters.MediumTest;
-import android.widget.FrameLayout;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,16 +42,9 @@ public class AllDismissedItemTest {
     @Rule
     public TestRule mChromeHomeStateRule = new ChromeHome.Processor();
 
-    private FrameLayout mContentView;
-
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            mContentView = new FrameLayout(mActivityTestRule.getActivity());
-            mActivityTestRule.getActivity().setContentView(mContentView);
-        });
     }
 
     @Test
@@ -61,7 +53,7 @@ public class AllDismissedItemTest {
     @ChromeHome.Disable
     public void testNewTabPageAppearance() throws IOException {
         SectionList sectionList = null;  // The SectionList is only used if the item is clicked on.
-        ViewHolder viewHolder = new ViewHolder(mContentView, sectionList);
+        ViewHolder viewHolder = new ViewHolder(mActivityTestRule.getActivity(), sectionList);
 
         renderAtHour(viewHolder, 9, "morning");
         renderAtHour(viewHolder, 14, "afternoon");
@@ -73,20 +65,12 @@ public class AllDismissedItemTest {
     @Feature({"Cards", "RenderTest"})
     @ChromeHome.Enable
     public void testChromeHomeAppearance() throws IOException {
-        renderAtHour(new ViewHolder(mContentView, null), 0, "modern");
+        renderAtHour(new ViewHolder(mActivityTestRule.getActivity(), null), 0, "modern");
     }
 
     private void renderAtHour(ViewHolder viewHolder, int hour, String renderId) throws IOException {
-        // TODO(peconn): Extract common code between this and ArticleSnippetsTest for rendering
-        // views in isolation.
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            viewHolder.onBindViewHolder(hour, null);
-            mContentView.addView(viewHolder.itemView);
-        });
-        mRenderTestRule.render(viewHolder.itemView, renderId);
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            mContentView.removeView(viewHolder.itemView);
-            viewHolder.recycle();
-        });
+        ThreadUtils.runOnUiThreadBlocking(() -> viewHolder.onBindViewHolder(hour, null));
+        mRenderTestRule.renderOnSimulatedDevices(viewHolder.itemView, renderId);
+        ThreadUtils.runOnUiThreadBlocking(() -> viewHolder.recycle());
     }
 }

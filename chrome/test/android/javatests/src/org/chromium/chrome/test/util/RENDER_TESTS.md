@@ -86,3 +86,36 @@ take into account while writing the tests. To help deal with this, you can use
 more troublesome attributes (for example, it disables the blinking cursor in
 `EditText`s).
 
+### Simulating Renders on other devices
+
+When rendered, UI which is specified in dp is converted to pixels:
+
+```
+pixels = dp * density
+```
+
+While we can control the size of the rendered View (and therefore render to a
+View matching the size of a different device's screen), it won't look correct
+because the density will be off. Additionally we cannot change the device
+density programmatically (although it can be done through `adb`).
+
+Here are the screen sizes and densities for two sample devices (density is
+`dpi / 160`):
+
+| Device | Width (px) | Height (px) | dpi   | density |
+| ---    | ---        | ---         | ---   | ---     |
+| Pixel  | `1080`     | `1920`      | `420` | `2.625` |
+| Galaxy J1 | `480`   | `800`       | `240` | `1.5`   |
+
+This means that if we were trying to use a **Pixel** to simulate rendering on
+a **Galaxy J1**, a UI element of width `120dp` would be rendered to
+`120 * 2.625 = 315px` instead of `120 * 1.5 = 180px` as it should be.
+
+To get a realistic render, we scale the final image.
+
+```
+desired_pixels = dp * desired_density
+  = scale * dp * host_density
+
+scale = desired_density / host_density
+```
