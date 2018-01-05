@@ -14,6 +14,7 @@
 #include "chrome/browser/extensions/extension_install_prompt.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/pepper_broker_infobar_delegate.h"
 #include "chrome/browser/previews/previews_infobar_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/themes/theme_service.h"
@@ -188,6 +189,7 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
   using IBD = infobars::InfoBarDelegate;
   const base::flat_map<std::string, IBD::InfoBarIdentifier> kIdentifiers = {
       {"app_banner", IBD::APP_BANNER_INFOBAR_DELEGATE},
+      {"pepper_broker", IBD::PEPPER_BROKER_INFOBAR_DELEGATE},
       {"file_access_disabled", IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE},
       {"collected_cookies", IBD::COLLECTED_COOKIES_INFOBAR_DELEGATE},
       {"alternate_nav", IBD::ALTERNATE_NAV_INFOBAR_DELEGATE},
@@ -206,6 +208,12 @@ void InfoBarUiTest::ShowUi(const std::string& name) {
     case IBD::APP_BANNER_INFOBAR_DELEGATE:
       banners::AppBannerInfoBarDelegateDesktop::Create(
           GetWebContents(), nullptr, nullptr, content::Manifest());
+      break;
+    case IBD::PEPPER_BROKER_INFOBAR_DELEGATE:
+      PepperBrokerInfoBarDelegate::Create(
+          GetInfoBarService(), GURL("http://example.com/"),
+          base::ASCIIToUTF16("Test Plugin"), nullptr, nullptr,
+          base::Callback<void(bool)>());
       break;
     case IBD::FILE_ACCESS_DISABLED_INFOBAR_DELEGATE:
       ChromeSelectFilePolicy(GetWebContents()).SelectFileDenied();
@@ -295,6 +303,10 @@ void InfoBarUiTest::UpdateInfoBars() {
 }
 
 IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_app_banner) {
+  ShowAndVerifyUi();
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUiTest, InvokeUi_pepper_broker) {
   ShowAndVerifyUi();
 }
 
