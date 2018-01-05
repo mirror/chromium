@@ -20,7 +20,6 @@
 #define IPC_MESSAGE_START ChromeUtilityPrintingMsgStart
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-// Preview and Cloud Print messages.
 IPC_STRUCT_TRAITS_BEGIN(printing::PrinterCapsAndDefaults)
   IPC_STRUCT_TRAITS_MEMBER(printer_capabilities)
   IPC_STRUCT_TRAITS_MEMBER(caps_mime_type)

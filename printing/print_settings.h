@@ -107,7 +107,7 @@ class PRINTING_EXPORT PrintSettings {
     dpi_ = gfx::Size(dpi_horizontal, dpi_vertical);
   }
 
-  int dpi() const { return std::max(dpi_.width(), dpi_.height()); }
+  int dpi() const { return std::min(dpi_.width(), dpi_.height()); }
   int dpi_horizontal() const { return dpi_.width(); }
   int dpi_vertical() const { return dpi_.height(); }
 
