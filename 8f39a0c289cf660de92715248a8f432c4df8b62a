@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b9b6639_e94ed3c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "nit: This title is longer than recommended. Maybe \"Support manual saved password creation on Android\"?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b753200_ca52ad4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "Is there an associated crbug for this change? Also, will you please post screenshots here or on the bug?",
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ffc4efa_eb4a6d17",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
         "patchSetId": 8
@@ -25,6 +65,75 @@
     },
     {
       "key": {
+        "uuid": "c1fde210_0c445218",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SavedPasswordEntry.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "How are saved passwords and payments related?",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a285da_59aa5ed1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "These payments classes should be moved to a different package if they need to be re-used here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8a0395_a18c9b1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "nit: This description could be more useful. What type of passwords does this allow users to edit?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8d4f4de_3af47f33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
         "patchSetId": 8
@@ -41,6 +150,213 @@
         "startChar": 4,
         "endLine": 30,
         "endChar": 11
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e04def_240533d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "nit: \"Only adding new passwords..\"?",
+      "range": {
+        "startLine": 39,
+        "startChar": 75,
+        "endLine": 39,
+        "endChar": 84
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0ceb29_1f8e68f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PasswordEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "These strings should be renamed to something more generic",
+      "range": {
+        "startLine": 53,
+        "startChar": 44,
+        "endLine": 53,
+        "endChar": 86
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ce25e1_260cff89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "nit: Public methods need JavaDocs. Or perhaps this method can be removed? It doesn\u0027t appear to be used anywhere.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4608a9a0_534383aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditorPreference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit error-prone that these two methods must be called in a specific order. Does it make sense to set mEditorDialog in this method (since it\u0027s just one line) rather than in a separate method?",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d038509_5ff19947",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "This needs to be passed to Java through chrome_feature_list.cc since it is defined in C++\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/android/chrome_feature_list.cc?dr\u003dC\u0026q\u003dchrome_feature_list\u0026sq\u003dpackage:chromium\u0026l\u003d42",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 61
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e7a887_ec686f73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "What\u0027s causing the disk write?",
+      "range": {
+        "startLine": 406,
+        "startChar": 58,
+        "endLine": 406,
+        "endChar": 73
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987696e8_3eff13ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "Please unify this with AutofillProfilesFrament, LanguageListPreference, AddExceptionPreference, and AutofillCreditCardsFragment.\n\nI\u0027d use the LanguageListPreference fragment implementation and add a helper method PreferenceUtils.java e.g. #getPreferencePlusDrawable",
+      "range": {
+        "startLine": 408,
+        "startChar": 12,
+        "endLine": 412,
+        "endChar": 43
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f9a45b_4ad789cf",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "Should the second sentence also end with a period?",
+      "range": {
+        "startLine": 439,
+        "startChar": 70,
+        "endLine": 439,
+        "endChar": 74
+      },
+      "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49b5744_b439ed1a",
+        "filename": "chrome/browser/android/password_ui_view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2018-01-05T22:47:20Z",
+      "side": 1,
+      "message": "This first param should have a name",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 50
       },
       "revId": "8f39a0c289cf660de92715248a8f432c4df8b62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
