@@ -7,7 +7,6 @@
 #include "base/mac/foundation_util.h"
 #import "ios/chrome/app/application_delegate/app_navigation.h"
 #import "ios/chrome/app/application_delegate/app_state.h"
-#import "ios/chrome/app/application_delegate/background_activity.h"
 #import "ios/chrome/app/application_delegate/browser_launcher.h"
 #import "ios/chrome/app/application_delegate/memory_warning_helper.h"
 #import "ios/chrome/app/application_delegate/metrics_mediator.h"
@@ -152,39 +151,6 @@
     return;
 
   [_memoryHelper handleMemoryPressure];
-}
-
-#pragma mark Downloading Data in the Background
-
-- (void)application:(UIApplication*)application
-    performFetchWithCompletionHandler:
-        (void (^)(UIBackgroundFetchResult))completionHandler {
-  if ([_appState isInSafeMode])
-    return;
-
-  if ([application applicationState] != UIApplicationStateBackground) {
-    // If this handler is called in foreground, it means it has to be activated.
-    // Returning |UIBackgroundFetchResultNewData| means that the handler will be
-    // called again in case of a crash.
-    completionHandler(UIBackgroundFetchResultNewData);
-    return;
-  }
-
-  [BackgroundActivity application:application
-      performFetchWithCompletionHandler:completionHandler
-                        metricsMediator:_metricsMediator
-                        browserLauncher:_browserLauncher];
-}
-
-- (void)application:(UIApplication*)application
-    handleEventsForBackgroundURLSession:(NSString*)identifier
-                      completionHandler:(void (^)(void))completionHandler {
-  if ([_appState isInSafeMode])
-    return;
-
-  [BackgroundActivity handleEventsForBackgroundURLSession:identifier
-                                        completionHandler:completionHandler
-                                          browserLauncher:_browserLauncher];
 }
 
 #pragma mark Continuing User Activity and Handling Quick Actions
