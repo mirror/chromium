@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e70a3d_03b63dd9",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T20:09:39Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure what we want to do about the EventDelegate yet. For now, I\u0027m copying it, but I need to understand what it does better.",
+      "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef209f4b_708c7c17",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectModel.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T20:09:39Z",
+      "side": 1,
+      "message": "This is disgusting, but I couldn\u0027t come up with a better way to deal with the fact that KeyframeEffectModelBase has a vector\u003cscoped_refptr\u003cKeyframe\u003e\u003e and we need to create vector\u003cscoped_refptr\u003cStringKeyframe\u003e\u003e or vector\u003cscoped_refptr\u003cTransitionKeyframe\u003e\u003e respectively for the appropriate Create() call.\n\nI\u0027m open to serious refactoring of all this template code, if anyone has a good suggestion.",
+      "revId": "cf50d328b7aa3b8ff001d95b66c660f8578d05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
