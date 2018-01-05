@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7be43b_acc95d30",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T16:00:29Z",
+      "side": 1,
+      "message": "nit: At the risk of straying outside the bindings area here: I think it is incorrect to use a HashMap here. To be compliant (as I understand the spec), you must preserve order, which a HashMap does not. A Vector\u003cstd::pair\u003cString, String\u003e\u003e would do fine (and be more efficient anyhow, since all you do is iterate, and you could even give it inline capacity if you wished).\n\nI believe the problematic case arises if a CSS property shorthand is used. e.g.\n\n{ \"margin\": \"4px\", \"margin-top\": \"8px\" }\n\nBoth of these will set the marginTop field of the underlying CSS property map, but if they are applied out of order, it will be 4px rather than 8px as it should. (Note that JS objects do preserve their property order.",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c687e5d1_75bd0230",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T16:00:29Z",
+      "side": 1,
+      "message": "You should check |exception_state.HadException()| when this loop finishes, in case it terminates because iteration threw.",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9806564_eaed5f45",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T16:00:29Z",
+      "side": 1,
+      "message": "Not new to this CL, but why bother creating an empty effect model when we\u0027re presumably going to wind up throwing it away (because we\u0027ll throw an exception to script rather than returning an object).\n\nShould the callers of EffectInput::Convert be prepared to just take |nullptr| when |exception_state.HadException()|? It\u0027s usual to see null or equivalent returned from functions when exceptions are thrown.",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd8ecc4_5d4ef2ec",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T16:00:29Z",
+      "side": 1,
+      "message": "Dictionary::Get will eat the exception here, so we\u0027ll actually create a an empty effect model, right? Is there a test that this does the right thing (presumably, rethrows to script) that we can eventually fix?",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6c5185_91836a05",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2018-01-05T16:00:29Z",
+      "side": 1,
+      "message": "super-nit: since you\u0027re taking care to throw this below the previous exception, you should actually allow the first one to be negative, and throw an exception for that later. I think this will suffice:\n\n  double previous_offset \u003d -std::numeric_limits\u003cdouble\u003e::infinity();\n\n(If we do care about this, something that would expose this difference might make an okay test case.)",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
