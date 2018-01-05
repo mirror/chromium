@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e211876e_5592ad86",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2018-01-05T18:00:56Z",
+      "side": 1,
+      "message": "This would change the relative order of events for the same request. I don\u0027t think we can do that, requestWillBeSent should come first.",
+      "revId": "437557e9687669105b78c65af4e71a38bb5f3114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
