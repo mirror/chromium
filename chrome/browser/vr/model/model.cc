@@ -19,4 +19,73 @@ const ColorScheme& Model::color_scheme() const {
   return ColorScheme::GetColorScheme(mode);
 }
 
+void Model::push_mode(UiMode mode) {
+  if (!ui_modes.empty() && ui_modes.back() == mode)
+    return;
+  ui_modes.push_back(mode);
+}
+
+void Model::pop_mode() {
+  pop_mode(ui_modes.back());
+}
+
+void Model::pop_mode(UiMode mode) {
+  if (ui_modes.empty() || ui_modes.back() != mode)
+    return;
+  // We should always have a mode to be in when we're clearing a mode.
+  DCHECK_GE(ui_modes.size(), 2u);
+  ui_modes.pop_back();
+}
+
+void Model::toggle_mode(UiMode mode) {
+  if (!ui_modes.empty() && ui_modes.back() == mode) {
+    pop_mode(mode);
+    return;
+  }
+  push_mode(mode);
+}
+
+UiMode Model::get_last_non_modal_mode() const {
+  for (auto iter = ui_modes.rbegin(); iter != ui_modes.rend(); ++iter) {
+    if (*iter < kFirstModalUiMode)
+      return *iter;
+  }
+  DCHECK(false) << "get_last_non_modal_mode should only be called with at "
+                   "least one non modal mode";
+  return kModeBrowsing;
+}
+
+bool Model::browsing_enabled() const {
+  return !web_vr_enabled();
+}
+
+bool Model::default_browsing_enabled() const {
+  return get_last_non_modal_mode() == kModeBrowsing;
+}
+
+bool Model::voice_search_enabled() const {
+  return get_last_non_modal_mode() == kModeVoiceSearch;
+}
+
+bool Model::omnibox_editing_enabled() const {
+  return get_last_non_modal_mode() == kModeEditingOmnibox;
+}
+
+bool Model::fullscreen_enabled() const {
+  return get_last_non_modal_mode() == kModeFullscreen;
+}
+
+bool Model::web_vr_enabled() const {
+  return get_last_non_modal_mode() == kModeWebVr ||
+         get_last_non_modal_mode() == kModeWebVrAutopresented;
+}
+
+bool Model::web_vr_autopresentation_enabled() const {
+  return get_last_non_modal_mode() == kModeWebVrAutopresented;
+}
+
+bool Model::reposition_window_enabled() const {
+  return ui_modes.back() == kModeRepositionWindow;
+}
+
 }  // namespace vr

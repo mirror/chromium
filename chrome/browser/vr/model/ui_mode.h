@@ -14,6 +14,12 @@ enum UiMode {
   kModeWebVrAutopresented,
   kModeVoiceSearch,
   kModeEditingOmnibox,
+
+  // Modal style modes. Switch to any of the following modes should NOT disable
+  // previous non modal modes above. Note that any modal mode MUST be added
+  // after kFirstModalUiMode.
+  kFirstModalUiMode,
+  kModeRepositionWindow,
 };
 
 }  // namespace vr
