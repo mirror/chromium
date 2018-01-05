@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63cfd77_8e4ef72a",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T18:30:18Z",
+      "side": 1,
+      "message": "How come we don\u0027t have symmetry on who calls CreateThrottles(), i.e. content/ calls that for workers but chrome/ calls it for subresources?",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb95a3f_bec0627b",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T18:30:18Z",
+      "side": 1,
+      "message": "nit: should FOR_RENDER_THREAD be FOR_FRAME to make it clear who the consumer is?\n\nalso, i thought convention would be something like\nPROVIDER_TYPE_FRAME,\nPROVIDER_TYPE_WORKER\n?",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137e2409_7fa96f5b",
+        "filename": "content/public/renderer/url_loader_throttle_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T18:30:18Z",
+      "side": 1,
+      "message": "nit: please document.\ne.g. I\u0027m not sure reading this what is the meaning of render_fame_id and url for workers?",
+      "revId": "0194e2acf6ff84e3f9893bee4d0387c8498b0cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
