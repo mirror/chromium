@@ -10,10 +10,12 @@
 #include <zircon/process.h>
 #include <zircon/processargs.h>
 
+#include "base/base_paths.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/fuchsia/default_job.h"
 #include "base/logging.h"
+#include "base/path_service.h"
 
 namespace base {
 
@@ -69,8 +71,15 @@ Process LaunchProcess(const std::vector<std::string>& argv,
                       const LaunchOptions& options) {
   std::vector<const char*> argv_cstr;
   argv_cstr.reserve(argv.size() + 1);
-  for (const auto& arg : argv)
-    argv_cstr.push_back(arg.c_str());
+  base::FilePath exe_path;
+  if (!PathService::Get(FILE_EXE, &exe_path)) {
+    LOG(ERROR) << "Couldn't get the executable path.";
+    return Process();
+  }
+  std::string exe_path_str = exe_path.MaybeAsASCII();
+  argv_cstr.push_back(exe_path_str.c_str());
+  for (size_t i = 1; i < argv.size(); ++i)
+    argv_cstr.push_back(argv[i].c_str());
   argv_cstr.push_back(nullptr);
 
   // Note that per launchpad.h, the intention is that launchpad_ functions are
