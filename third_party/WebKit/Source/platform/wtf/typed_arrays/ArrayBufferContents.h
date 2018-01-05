@@ -151,7 +151,6 @@ class WTF_EXPORT ArrayBufferContents {
                       SharingType is_shared,
                       InitializationPolicy);
   ArrayBufferContents(DataHandle,
-                      unsigned size_in_bytes,
                       SharingType is_shared);
   ArrayBufferContents(ArrayBufferContents&&) = default;
 
@@ -170,7 +169,7 @@ class WTF_EXPORT ArrayBufferContents {
     return DataMaybeShared();
   }
   void* DataMaybeShared() const { return holder_ ? holder_->Data() : nullptr; }
-  unsigned SizeInBytes() const { return holder_ ? holder_->SizeInBytes() : 0; }
+  size_t DataLength() const { return holder_ ? holder_->DataLength() : 0; }
   bool IsShared() const { return holder_ ? holder_->IsShared() : false; }
 
   void Transfer(ArrayBufferContents& other);
@@ -213,15 +212,15 @@ class WTF_EXPORT ArrayBufferContents {
     DataHolder();
     ~DataHolder();
 
-    void AllocateNew(unsigned size_in_bytes,
+    void AllocateNew(size_t length,
                      SharingType is_shared,
                      InitializationPolicy);
-    void Adopt(DataHandle, unsigned size_in_bytes, SharingType is_shared);
+    void Adopt(DataHandle, SharingType is_shared);
     void CopyMemoryFrom(const DataHolder& source);
 
     const void* Data() const { return data_.Data(); }
     void* Data() { return data_.Data(); }
-    unsigned SizeInBytes() const { return size_in_bytes_; }
+    size_t DataLength() const { return data_.DataLength(); }
     bool IsShared() const { return is_shared_ == kShared; }
 
     void RegisterExternalAllocationWithCurrentContext();
@@ -236,7 +235,7 @@ class WTF_EXPORT ArrayBufferContents {
       adjust_amount_of_external_allocated_memory_function_(diff);
     }
 
-    void AdjustAmountOfExternalAllocatedMemory(unsigned diff) {
+    void AdjustAmountOfExternalAllocatedMemory(size_t diff) {
       AdjustAmountOfExternalAllocatedMemory(static_cast<int64_t>(diff));
     }
 
@@ -256,7 +255,6 @@ class WTF_EXPORT ArrayBufferContents {
     }
 
     DataHandle data_;
-    unsigned size_in_bytes_;
     SharingType is_shared_;
     bool has_registered_external_allocation_;
   };
