@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79cd7cb8_03fbc269",
+        "filename": "components/metrics/gms_core_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T18:32:12Z",
+      "side": 1,
+      "message": "I suggest instead of having a new file for this to just have this method be in the anonymous namespace in stability_metrics_provider.cc.",
+      "range": {
+        "startLine": 17,
+        "startChar": 74,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "82b775075ed4fa0d3685f05162714b3ebb0293de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f04174_f97db0ec",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T18:32:12Z",
+      "side": 1,
+      "message": "Suggest this to be in StabilityMetricsProvider::RegisterPrefs",
+      "range": {
+        "startLine": 210,
+        "startChar": 68,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "82b775075ed4fa0d3685f05162714b3ebb0293de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f75755_cc7e37d4",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T18:32:12Z",
+      "side": 1,
+      "message": "How about moving this logic into the implementation of LogCrash() in StabilityMetricsProvider?\n\nMetricsService is already complicated, so I\u0027d prefer we don\u0027t add this logic directly to it.",
+      "range": {
+        "startLine": 482,
+        "startChar": 23,
+        "endLine": 482,
+        "endChar": 0
+      },
+      "revId": "82b775075ed4fa0d3685f05162714b3ebb0293de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9912805_ce9684e0",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T18:32:12Z",
+      "side": 1,
+      "message": "Nit: \"In android\" -\u003e \"On Android\"",
+      "revId": "82b775075ed4fa0d3685f05162714b3ebb0293de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4fa0ef_ae8e9fc0",
+        "filename": "components/metrics/stability_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T18:32:12Z",
+      "side": 1,
+      "message": "Nit: Maybe make a helper method to get the value and reset it to 0?\n\ne.g. \n\nif (GetPrefValue(prefs::kStabilityCrashCountWithoutGmsCoreUpdate, \u0026value))\n  stability-\u003eset_crash_count_without_gms_core_update(value);\n\nThen, all these calls can be simplified. The helper method GetPrefValue() can then do the clearing of the pref and return whether the value was non-0.\n\nYou can then use this helper in the other places that use this pattern. I\u0027d also be OK if you prefer to do that in a follow-up CL.",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "82b775075ed4fa0d3685f05162714b3ebb0293de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
