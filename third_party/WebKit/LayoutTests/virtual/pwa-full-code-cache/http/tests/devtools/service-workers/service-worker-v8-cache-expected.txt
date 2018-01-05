@@ -1,5 +1,12 @@
 Tests V8 cache information of Service Worker Cache Storage in timeline
 
+>>>> Loading performance_test_runner
+>>>> Loading application_test_runner
+>>>> Resetting state
+>>>> Showing resources panel
+>>>> Showing timeline panel
+>>>> evaluateInPagePromise
+>>>> invokeAsyncWithTimeline
 --- Trace events while installing -------------
 v8.compile Properties:
 {
