@@ -70,6 +70,30 @@
       "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78adcc77_d223df20",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2018-01-05T00:02:07Z",
+      "side": 1,
+      "message": "The removal is prepared in CL 846651. It touches 50+ files across a variety of folders that will require quite a few approvals.\n\nOnce the methods to remove are visibly empty, I\u0027m confident the call sites can be removed without controversy. I\u0027d rather not have all these reviewers look at this CL and start dissecting the internals of StatisticsRecorder. It might not be a good use of their time.",
+      "parentUuid": "bdfe8e2b_fb8e10de",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "5ecff177c9a4afa4b0df14e6bad914128369b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
