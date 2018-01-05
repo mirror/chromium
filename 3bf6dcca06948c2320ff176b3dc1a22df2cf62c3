@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1d22b1d_32d323e3",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T14:49:32Z",
+      "side": 1,
+      "message": "\u003e What is this interceptor for? It appears to be unused.\n\nOops, that was leftover code. removed.\n\n\u003e \n\u003e I presume that you need to use the interceptor_ test member variable so that it can be reset at the end of the test.",
+      "parentUuid": "81a30038_df051966",
+      "revId": "3bf6dcca06948c2320ff176b3dc1a22df2cf62c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe4cc32_d973b758",
         "filename": "chrome/browser/prerender/prerender_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T13:45:04Z",
       "side": 1,
       "message": "Presumably this will change to using the same CreateHangingFirstRequestInterceptor after everything is complete?\n\nIt seems a little dangerous to have to different versions of CreateHangingFirstRequestInterceptor in play without a least an explanatory comment (eg, here, or at the definition of this file\u0027s network-service enabled CreateHangingFirstRequestInterceptor).",
+      "revId": "3bf6dcca06948c2320ff176b3dc1a22df2cf62c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cddeb0e_adead378",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3298,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T14:49:32Z",
+      "side": 1,
+      "message": "\u003e Presumably this will change to using the same CreateHangingFirstRequestInterceptor after everything is complete?\n\nMy other change removes this one usage.\n\n\u003e \n\u003e It seems a little dangerous to have to different versions of CreateHangingFirstRequestInterceptor in play without a least an explanatory comment (eg, here, or at the definition of this file\u0027s network-service enabled CreateHangingFirstRequestInterceptor).\n\nI have a comment already there?",
+      "parentUuid": "1fe4cc32_d973b758",
       "revId": "3bf6dcca06948c2320ff176b3dc1a22df2cf62c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
