@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24dcebf8_34d7ce7e",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-05T03:01:54Z",
+      "side": 1,
+      "message": "You are right. It is possible.\n\nBuildWindowForCycleList API exposes mru windows that excludes some windows, see the code here: https://cs.chromium.org/chromium/src/ash/wm/mru_window_tracker.cc?sq\u003dpackage:chromium\u0026l\u003d127. In the test, I used TYPE_BUBBLE, which is not user positionable: https://cs.chromium.org/chromium/src/ash/wm/window_state.cc?sq\u003dpackage:chromium\u0026l\u003d202, thus it will not in the cycle list.\n\nHowever, it is possible to have transient child window with position-able window types: https://cs.chromium.org/chromium/src/ui/views/widget/native_widget_aura.cc?q\u003dnative_widget_aura\u0026dr\u003dC\u0026l\u003d180\n\nSo I changed the logic a little bit here. It can be explained as the code comment:\n// If |window| is transient window, move its first non-transient parent window\n// instead. Otherwise, it should be the first one in window cycle list.\n\nIn the test, I changed TYPE_BUBBLE to TYPE_WINDOW.",
+      "parentUuid": "838a30da_63c8e2d1",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 38
+      },
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e23aaa3f_f29d0565",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 2
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "There is nothing in code that prevents that, but in practice that should never happen.",
       "parentUuid": "e23aaa3f_f29d0565",
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9655f7c8_72330840",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-05T03:01:54Z",
+      "side": 1,
+      "message": "I see. So instead of DCHECK_NE, I make it early return when |window| becomes root window.",
+      "parentUuid": "6cabc400_8c20092a",
       "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
