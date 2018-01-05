@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f994e35_df3fa7aa",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-05T00:37:27Z",
+      "side": 1,
+      "message": "This might change how often this call runs. For example, if you do OOBE and then login, I think it gets called twice? Also, if you do crash-and-restore (--login-user) then I think chrome will skip the login screen and this will never run. It looks like in the old code this was guaranteed to be called exactly once. Do you know if it\u0027s OK to change that?",
+      "revId": "c4ce9f5f52abc8786c30207d212240eda55b4a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
