@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23691417_764cfe2e",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2018-01-05T18:02:08Z",
+      "side": 1,
+      "message": "This should be renamed NotifyObserversOfNavigationCommit. We do notify observers about other things as well, so the current name is confusing.",
+      "revId": "3fda8ca9e03f89ab49ca29d5d671eb384f851436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
