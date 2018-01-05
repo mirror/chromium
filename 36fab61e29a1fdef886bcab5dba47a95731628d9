@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc96db67_3aae13a2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-05T14:41:08Z",
+      "side": 1,
+      "message": "rename to locationBarIncognitoButton for clarity",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "36fab61e29a1fdef886bcab5dba47a95731628d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
