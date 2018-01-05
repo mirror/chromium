@@ -11,7 +11,10 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "chrome/common/prerender.mojom.h"
 #include "content/public/renderer/render_thread_observer.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 #include "third_party/WebKit/public/platform/WebPrerender.h"
 #include "third_party/WebKit/public/platform/WebPrerenderingSupport.h"
 
@@ -24,7 +27,8 @@ namespace prerender {
 // is triggered on navigation to those. It implements the prerendering interface
 // supplied to WebKit.
 class PrerenderDispatcher : public content::RenderThreadObserver,
-                            public blink::WebPrerenderingSupport {
+                            public blink::WebPrerenderingSupport,
+                            public chrome::mojom::PrerenderDispatcher {
  public:
   PrerenderDispatcher();
   ~PrerenderDispatcher() override;
@@ -34,16 +38,22 @@ class PrerenderDispatcher : public content::RenderThreadObserver,
  private:
   friend class PrerenderDispatcherTest;
 
-  // Message handlers for messages from the browser process.
-  void OnPrerenderStart(int prerender_id);
-  void OnPrerenderStopLoading(int prerender_id);
-  void OnPrerenderDomContentLoaded(int prerender_id);
-  void OnPrerenderAddAlias(const GURL& alias);
-  void OnPrerenderRemoveAliases(const std::vector<GURL>& aliases);
-  void OnPrerenderStop(int prerender_id);
+  // chrome::mojom::PrerenderDispatcher:
+  void PrerenderStart(int prerender_id) override;
+  void PrerenderStopLoading(int prerender_id) override;
+  void PrerenderDomContentLoaded(int prerender_id) override;
+  void PrerenderAddAlias(const GURL& alias) override;
+  void PrerenderRemoveAliases(const std::vector<GURL>& aliases) override;
+  void PrerenderStop(int prerender_id) override;
+
+  void OnPrerenderDispatcherRequest(
+      chrome::mojom::PrerenderDispatcherAssociatedRequest request);
 
   // From RenderThreadObserver:
-  bool OnControlMessageReceived(const IPC::Message& message) override;
+  void RegisterMojoInterfaces(
+      blink::AssociatedInterfaceRegistry* associated_interfaces) override;
+  void UnregisterMojoInterfaces(
+      blink::AssociatedInterfaceRegistry* associated_interfaces) override;
 
   // From WebPrerenderingSupport:
   void Add(const blink::WebPrerender& prerender) override;
@@ -57,6 +67,8 @@ class PrerenderDispatcher : public content::RenderThreadObserver,
   // From the browser process, which prerenders are running, indexed by URL.
   // Updated by the browser processes as aliases are discovered.
   std::multiset<GURL> running_prerender_urls_;
+
+  mojo::AssociatedBindingSet<chrome::mojom::PrerenderDispatcher> bindings_;
 };
 
 }  // namespace prerender
