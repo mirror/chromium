@@ -56,6 +56,7 @@ OpenPDFParamsParser.prototype = {
    * Parse view parameter of open PDF parameters. The PDF should be opened at
    * the specified fitting type mode and position.
    * @param {string} paramValue view value.
+   *    and thus need to be transformed.
    * @return {Object} Map with view parameters (view and viewPosition).
    */
   parseViewParam_: function(paramValue) {
@@ -65,16 +66,23 @@ OpenPDFParamsParser.prototype = {
 
     var params = {};
     var viewMode = viewModeComponents[0];
-    var acceptsPositionParam;
+    var acceptsPositionParam = false;
     if (viewMode === 'fit') {
       params['view'] = FittingType.FIT_TO_PAGE;
-      acceptsPositionParam = false;
     } else if (viewMode === 'fith') {
       params['view'] = FittingType.FIT_TO_WIDTH;
       acceptsPositionParam = true;
     } else if (viewMode === 'fitv') {
       params['view'] = FittingType.FIT_TO_HEIGHT;
       acceptsPositionParam = true;
+    } else if (viewMode === 'xyz' && viewModeComponents.length == 4) {
+      var x = parseFloat(viewModeComponents[1]);
+      var y = parseFloat(viewModeComponents[2]);
+      var zoom = parseFloat(viewModeComponents[3]);
+      if (!isNaN(x) && !isNaN(y) && !isNaN(zoom)) {
+        params['position'] = {x: x, y: y};
+        params['zoom'] = parseFloat(viewModeComponents[3]);
+      }
     }
 
     if (!acceptsPositionParam || viewModeComponents.length < 2)
@@ -174,13 +182,30 @@ OpenPDFParamsParser.prototype = {
   /**
    * This is called when a named destination is received and the page number
    * corresponding to the request for which a named destination is passed.
-   * @param {number} pageNumber The page corresponding to the named destination
-   *    requested.
+   * @param {Object} namedDestination Object containing the page corresponding
+   *    to the named destination and optionally the view type for that
+   *    destination.
    */
-  onNamedDestinationReceived: function(pageNumber) {
+  onNamedDestinationReceived: function(namedDestination) {
     var outstandingRequest = this.outstandingRequests_.shift();
-    if (pageNumber != -1)
-      outstandingRequest.params.page = pageNumber;
+    console.log('onNamedDestinationReceived');
+    console.log(namedDestination);
+
+    // Mark that the coordinates given will be in page space rather than screen
+    // space and therefore need to be transformed.
+    outstandingRequest.params.transformCoords = true;
+
+    if (namedDestination.pageNumber != -1)
+      outstandingRequest.params.page = namedDestination.pageNumber;
+
+    if (namedDestination.viewType) {
+      Object.assign(
+          outstandingRequest.params,
+          this.parseViewParam_(namedDestination.viewType));
+    }
+    console.log('  -> outstandingRequest');
+    console.log(outstandingRequest);
+
     outstandingRequest.callback(outstandingRequest.params);
   },
 };
