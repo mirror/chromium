@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "663838fe_51084ecf",
+        "filename": ".gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "I think the standard procedure is to have the .sha1 files in the same folder as the downloaded files. The .sha1 files should not be ignored.",
+      "parentUuid": "d7a61578_64e4c7d1",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cf7d85_c567d1c5",
         "filename": "DEPS",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e8a2a972_f0c8b0a6",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "Yep, that\u0027s why I added the chrome branded stuff in the testapp.",
+      "parentUuid": "38cf7d85_c567d1c5",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7168f5bb_2016d6e2",
         "filename": "DEPS",
         "patchSetId": 4
@@ -86,6 +122,24 @@
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3b46cd_70da3e0d",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "That seems to be the standard for the hooks. E.g., see above for gvr_static_shim_android_arm64.",
+      "parentUuid": "7168f5bb_2016d6e2",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +171,24 @@
       "writtenOn": "2018-01-05T20:37:06Z",
       "side": 1,
       "message": "It doesn\u0027t, and it will just chew up extra cpu. I\u0027d drop the arg.",
+      "parentUuid": "55efb31e_1429451d",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6e0023_69b11f34",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "Good question. It probably doesn\u0027t now since we only have one asset file. But it may when we have more. Copied that from what Bill did for the Oculus SDK. I\u0027m fine either way.",
       "parentUuid": "55efb31e_1429451d",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -158,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "6dc927bc_ad39605a",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "OOC, why should there be a runtime equivalent? This comes from a build flag. So, it\u0027ll never change its value.",
+      "parentUuid": "0736b740_df5c241d",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e29d98c_ae0cc668",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 4
@@ -169,6 +259,30 @@
       "writtenOn": "2018-01-05T18:51:43Z",
       "side": 1,
       "message": "How come you can\u0027t use one of the GetImage functions? Also, what thread does this code run on?",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 505,
+        "endChar": 45
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19982011_3b92800a",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "This code is part of a testapp that let\u0027s us inspect our VR UI on Linux. It\u0027s not a shipped product. I believe this app is single-threaded. Our code expects to take ownership of the image. I couldn\u0027t find a GetImage function that would allow that.",
+      "parentUuid": "2e29d98c_ae0cc668",
       "range": {
         "startLine": 505,
         "startChar": 6,
@@ -204,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "4b403329_559b9456",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "We mostly use the testapp in debug mode. Since this is not shipped it shouldn\u0027t really matter.",
+      "parentUuid": "b99ce8db_d6a5b913",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 8
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54842e56_107dbb52",
         "filename": "chrome/browser/vr/testapp/vr_testapp_resources.grd",
         "patchSetId": 4
@@ -218,6 +356,24 @@
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb63a8c_08b2e0ff",
+        "filename": "chrome/browser/vr/testapp/vr_testapp_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T20:41:48Z",
+      "side": 1,
+      "message": "Ohh, that\u0027s what that is. I was already wondering about that. Thanks! Fixed.",
+      "parentUuid": "54842e56_107dbb52",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
