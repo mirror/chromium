@@ -83,11 +83,6 @@ const base::Feature kCompositeOpaqueScrollers{"CompositeOpaqueScrollers",
 const base::Feature kCompositorImageAnimation{
     "CompositorImageAnimation", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables handling touch events in compositor using impl side touch action
-// knowledge.
-const base::Feature kCompositorTouchAction{"CompositorTouchAction",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Enables blocking cross-site document responses (not paying attention to
 // whether a site isolation mode is also enabled).
 const base::Feature kCrossSiteDocumentBlockingAlways{
