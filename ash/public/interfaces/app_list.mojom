@@ -1,0 +1,17 @@
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+// Allows clients (e.g. Chrome browser) to control the ash app list.
+interface AppListController {
+  SetClient(associated AppListControllerClient client);
+};
+
+// Allows ash app list to control a client (e.g. Chrome browser). Requests
+// often involve preferences, synchronization or searching that is not
+// available to ash.
+interface AppListControllerClient {
+  ActivateItem(string id, int32 event_flags);
+};

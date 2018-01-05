@@ -55,7 +55,7 @@ class ChromeAppListItem : public app_list::AppListItem {
   static gfx::ImageSkia CreateDisabledIcon(const gfx::ImageSkia& icon);
 
   // Activates (opens) the item. Does nothing by default.
-  void Activate(int event_flags) override;
+  virtual void Activate(int event_flags);
 
   // Returns a static const char* identifier for the subclass (defaults to "").
   // Pointers can be compared for quick type checking.

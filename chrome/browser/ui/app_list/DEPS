@@ -1,4 +1,5 @@
 include_rules = [
   # TODO(hejq): Remove this once app_list is migrated. http://crbug.com/733662
+  "+ash/app_list/controller",
   "+ash/app_list/model",
 ]
