@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc7be5f_5031838a",
+        "filename": "testing/buildbot/filters/viz.content_browsertests.filter",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2018-01-05T23:42:38Z",
+      "side": 1,
+      "message": "Please keep the list in alphabetical order.",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "82054e11dcf42d0d1474f70f0a56274b0573c9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
