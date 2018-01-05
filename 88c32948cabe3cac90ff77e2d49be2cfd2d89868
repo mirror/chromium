@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c06469_c973fae5",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T19:01:27Z",
+      "side": 1,
+      "message": "optionally cite the bug in a comment",
+      "revId": "88c32948cabe3cac90ff77e2d49be2cfd2d89868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
