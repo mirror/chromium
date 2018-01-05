@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e16a4515_d2ef937b",
+        "filename": "chrome/browser/component_updater/vr_assets_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T16:04:17Z",
+      "side": 1,
+      "message": "Yes, I don\u0027t think there\u0027s a need to UMA log it, since the Omaha logging is generally more comprehensive. If you don\u0027t intend to show any notification to the user about the failed download, I think just returning is fine.",
+      "parentUuid": "11f77ffb_1f01a22c",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aff551ad_07312ce1",
         "filename": "chrome/browser/component_updater/vr_assets_component_installer.h",
         "patchSetId": 2
