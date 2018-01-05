@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e7fa608_6e8d097a",
+        "filename": "chrome/browser/resources/settings/search_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T23:55:58Z",
+      "side": 1,
+      "message": "FYI, I am removing the need for this at https://chromium-review.googlesource.com/c/chromium/src/+/852635. Will rebase once that lands.",
+      "revId": "5141c6f0029378c58095c7ea42933e0f38f998ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
