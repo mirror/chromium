@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94b91d1a_18eaf4c6",
+        "filename": "ios/chrome/browser/ui/settings/autofill_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-05T16:19:09Z",
+      "side": 1,
+      "message": "Nit: did you try to call the weaker reconfigureCells method? https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/collection_view/collection_view_controller.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d48-52",
+      "range": {
+        "startLine": 494,
+        "startChar": 23,
+        "endLine": 494,
+        "endChar": 46
+      },
+      "revId": "6223a1e2f81bb887fad31c383d7e84b03d84e85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af17790c_768f6d77",
+        "filename": "ios/chrome/browser/ui/settings/autofill_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2018-01-05T16:19:09Z",
+      "side": 1,
+      "message": "Is this still needed now that toggling edition is lighter? (Maybe even more with \"reconfigure\" instead of \"reload\").",
+      "range": {
+        "startLine": 582,
+        "startChar": 33,
+        "endLine": 582,
+        "endChar": 42
+      },
+      "revId": "6223a1e2f81bb887fad31c383d7e84b03d84e85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
