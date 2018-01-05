@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4bbab641_c32a5348",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:54:08Z",
+      "side": 1,
+      "message": "In the old code, ~QuotaDispatcher() went through pending_quota_callbacks_ (callbacks that hadn\u0027t been run yet) and called DidFail() on them.\n\nNow, we need to have the same behaviour :) If QuotaDispatcher is deleted, or similar, the callbacks still need to run.",
+      "parentUuid": "78cac013_a0a14823",
+      "revId": "dba7f5e898a7ca4863e025b41c8c512c0da450ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eada36bd_8338bef0",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T06:49:56Z",
       "side": 1,
       "message": "Can we rename this to StorageQuotaCallbacks and use it in both QueryStorageUsageAndQuota and RequestStorageQuota?",
+      "revId": "dba7f5e898a7ca4863e025b41c8c512c0da450ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234f6db1_8441d71c",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:54:08Z",
+      "side": 1,
+      "message": "This is going away in the next patch anyway. :)\nAlso they\u0027re the same now but might actually be different types, it\u0027s a coincidence both mojom methods require the same signature at the moment.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/851592",
+      "parentUuid": "eada36bd_8338bef0",
       "revId": "dba7f5e898a7ca4863e025b41c8c512c0da450ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
