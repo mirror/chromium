@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee7e9d10_a8db4877",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T19:50:32Z",
+      "side": 1,
+      "message": "Oops, ignore this comment - we only do auth at this layer when tunnel_ is true, anyways.",
+      "parentUuid": "6e31e161_b44603f1",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fbf9c16_9745ada7",
         "filename": "net/http/http_proxy_client_socket_wrapper.cc",
         "patchSetId": 12
