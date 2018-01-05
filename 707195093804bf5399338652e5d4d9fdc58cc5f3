@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d4797a_3ef76d13",
+        "filename": "tools/gn/analyzer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T22:52:00Z",
+      "side": 1,
+      "message": "Nit: You got rid of SetUpABasicBuildGraph(), so \"Basic\" here makes less sense. Maybe rename this to TestAnalyze() or RunAnalyzeTest() or something like that?",
+      "revId": "707195093804bf5399338652e5d4d9fdc58cc5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2fb42d_3db6f72c",
+        "filename": "tools/gn/analyzer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T22:52:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure this test makes sense; a patch can\u0027t modify an action\u0027s output files, only the action can?",
+      "revId": "707195093804bf5399338652e5d4d9fdc58cc5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062bf124_8a4f8c6f",
+        "filename": "tools/gn/analyzer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T22:52:00Z",
+      "side": 1,
+      "message": "Nit: \"propagates\". Happens a couple times below as well.",
+      "revId": "707195093804bf5399338652e5d4d9fdc58cc5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048901bd_3aab4857",
+        "filename": "tools/gn/analyzer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T22:52:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is interestingly different from DotFileWasModified at this point? Same for the two other \"AndCompilingAll\" tests added below.",
+      "revId": "707195093804bf5399338652e5d4d9fdc58cc5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
