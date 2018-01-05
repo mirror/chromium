@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244866b4_3b34b869",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-05T02:39:17Z",
+      "side": 1,
+      "message": "All of the entries in this \"exceptions\" block should be pulled up to the top level, and the \"exceptions\" block deleted. Otherwise this is applying everywhere *except* your target hardware. Did you test this locally? This is why the pixel tests are failing on macOS -- it\u0027s falling back to 4x MSAA on the platforms where the change was intended.",
+      "revId": "578d1f5accae432e17e6ded036f01681feb90547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
