@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "b82dbae5_e3803bbb",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T17:54:18Z",
+      "side": 1,
+      "message": "arg, I forgot that we set it now.",
+      "parentUuid": "7c9ed495_4afa3d57",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a73b74ea_28d68590",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
