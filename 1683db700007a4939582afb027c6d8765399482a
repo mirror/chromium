@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "18cf61e2_55717070",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dac1df2_2f0401d9",
+      "range": {
+        "startLine": 364,
+        "startChar": 52,
+        "endLine": 364,
+        "endChar": 64
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f30e723a_c370f66c",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 12
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "63a58801_cf1d8d56",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff149a0_7cd22eea",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d055536e_e9693852",
         "filename": "chrome/browser/vr/assets.cc",
         "patchSetId": 12
@@ -111,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "738104de_4bf5fd7d",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d055536e_e9693852",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f86b443_58a6209c",
         "filename": "chrome/browser/vr/assets.cc",
         "patchSetId": 12
@@ -122,6 +188,30 @@
       "writtenOn": "2018-01-05T17:21:28Z",
       "side": 1,
       "message": "What happens if we fail to load the background image? We should probably also check that either all or none of the gradients loaded successfully.",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 23
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f8b656_ae54fc8e",
+        "filename": "chrome/browser/vr/assets.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "I think this is now handled better after addressing Chris\u0027s comment.",
+      "parentUuid": "0f86b443_58a6209c",
       "range": {
         "startLine": 157,
         "startChar": 2,
@@ -266,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "9e9cba0e_adb13bb3",
+        "filename": "chrome/browser/vr/elements/environment/background.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733b5241_6f77fabd",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 31
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57a1956_a705c0e8",
         "filename": "chrome/browser/vr/elements/environment/background.h",
         "patchSetId": 12
@@ -277,6 +391,30 @@
       "writtenOn": "2018-01-05T17:21:28Z",
       "side": 1,
       "message": "Nit: 2018? Not sure if moving needs a date update.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d3cc51_5e01ee71",
+        "filename": "chrome/browser/vr/elements/environment/background.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "I think it\u0027s the original date.",
+      "parentUuid": "a57a1956_a705c0e8",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -306,6 +444,24 @@
     },
     {
       "key": {
+        "uuid": "8576017f_37e97140",
+        "filename": "chrome/browser/vr/elements/environment/background.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd250a6_2f0fd36d",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dfea532_20d4c99f",
         "filename": "chrome/browser/vr/elements/environment/stars.cc",
         "patchSetId": 12
@@ -317,6 +473,30 @@
       "writtenOn": "2018-01-05T17:21:28Z",
       "side": 1,
       "message": "Maybe I\u0027m blind. What is the t being used for?",
+      "range": {
+        "startLine": 82,
+        "startChar": 33,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353e080f_ee56f24c",
+        "filename": "chrome/browser/vr/elements/environment/stars.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Ah! twinkling that I haven\u0027t yet implemented.",
+      "parentUuid": "7dfea532_20d4c99f",
       "range": {
         "startLine": 82,
         "startChar": 33,
@@ -346,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "299ba1fc_033a3b96",
+        "filename": "chrome/browser/vr/model/loaded_assets.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Removed. We will need more reviews, but I agree that these names are better. Did it in this CL, will ping those reviewers.",
+      "parentUuid": "93ef1242_dba83b48",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e82c3f6_3777ee05",
         "filename": "chrome/browser/vr/model/loaded_assets.h",
         "patchSetId": 12
@@ -363,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "d7cd43bb_f1cf6c98",
+        "filename": "chrome/browser/vr/model/loaded_assets.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e82c3f6_3777ee05",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b16bae6_efd7bc0a",
         "filename": "chrome/browser/vr/model/loaded_assets.h",
         "patchSetId": 12
@@ -374,6 +590,24 @@
       "writtenOn": "2018-01-05T17:17:33Z",
       "side": 1,
       "message": "Shouldn\u0027t this be checked via component minor version?  This is the first of many such changes.",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3261b2c8_e6d2d800",
+        "filename": "chrome/browser/vr/model/loaded_assets.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5b16bae6_efd7bc0a",
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -397,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "62661a5e_c891a435",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Eventually we may want to show error UI.",
+      "parentUuid": "cab69ff3_5181e780",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fab2edc_acfe8440",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 12
@@ -408,6 +660,24 @@
       "writtenOn": "2018-01-05T17:17:33Z",
       "side": 1,
       "message": "I thought the plan was to stuff the asset object into the model and bind to it?",
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b48a48_418ce62b",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Yep, it was, but bindings hate it when you mutate the model, so I kept it as you had it.",
+      "parentUuid": "7fab2edc_acfe8440",
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -434,6 +704,30 @@
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fabda5_1c33190b",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T18:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b722913_1bdd535b",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
