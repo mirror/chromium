@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1554fb_29681145",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "nit: can you move this at the end of the class (bellow callback_)",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 26
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2991e2a4_04a47699",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "nit: permitted by",
+      "range": {
+        "startLine": 196,
+        "startChar": 21,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72abfcd1_9cf4922a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "can you move this to chrome/common/chrome_features.h",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe08ed0_d7208dc5",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "nit: add DISALLOW_COPY_AND_ASSIGN",
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b72d775_c13b9cb9",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "WDYT about \"In the context of this API\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2b7687_49319619",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "I\u0027d put this comment above namespace cryptotokePrivate { line\n(possibly inside \u003cp\u003e\u003c/p\u003e)",
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e5ede7_827e1d0e",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "The AppId",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51ea43b_262cef28",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "Identifies",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ee639f_2abf2a5a",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "Is \"real\" needed here?\nIt should be implied that the API only handles \"real\" attestation data?",
+      "range": {
+        "startLine": 43,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038b8f6a_2f5f8ff2",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T17:53:09Z",
+      "side": 1,
+      "message": "can you clarify this a little?\nIt\u0027s unclear what \"generic attestation data\" is, and by what it is substituted.\n\nI think it would be OK to remove the second part of the sentence all together (as it\u0027s up to the extension to decide what to do depending on whether attestation data is available).",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "1af90e4f815a8369dede56d834f154ff576bc300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
