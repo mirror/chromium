@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class ToolbarButton;
 @class ToolbarButtonFactory;
 
 // View for the primary toolbar. In an adaptive toolbar paradigm, this is the
@@ -20,6 +21,9 @@
 @property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
 // The location bar view, containing the omnibox.
 @property(nonatomic, strong) UIView* locationBarView;
+
+// Buttons.
+@property(nonatomic, strong, readonly) ToolbarButton* tabGridButton;
 
 // Sets all the subviews.
 - (void)setUp;
