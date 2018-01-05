@@ -54,8 +54,6 @@ void Create(const CreateParams& create_params) {
     base::TaskScheduler::Create("");
 
     base::CommandLine::Init(create_params.argc, create_params.argv);
-
-    base::StatisticsRecorder::Initialize();
   });
 }
 

@@ -36,8 +36,6 @@ ChildProcess::ChildProcess(
   DCHECK(!g_lazy_tls.Pointer()->Get());
   g_lazy_tls.Pointer()->Set(this);
 
-  base::StatisticsRecorder::Initialize();
-
   // Initialize TaskScheduler if not already done. A TaskScheduler may already
   // exist when ChildProcess is instantiated in the browser process or in a
   // test process.
