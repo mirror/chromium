@@ -204,6 +204,7 @@ crazy_status_t crazy_library_open(crazy_library_t** library,
                                   crazy_context_t* context) {
   ScopedDelayedCallbackPoster poster(context);
   ScopedGlobalLock lock;
+  LOG("HEllo WorlD");
 
   LibraryView* wrap =
       crazy::Globals::GetLibraries()->LoadLibrary(lib_name,

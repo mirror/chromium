@@ -760,8 +760,12 @@ template("chrome_shared_library") {
       ldflags = [ "-Wl,--long-plt" ]
     }
 
-    if (chromium_linker_supported && use_lld) {
-      configs += [ "//build/config/android:lld_pack_relocations" ]
+    if (chromium_linker_supported) {
+      if (use_lld) {
+        configs += [ "//build/config/android:lld_pack_relocations" ]
+      } else {
+        configs += [ "//build/config/android:gold_pack_relocations_v2" ]
+      }
     }
 
     public_configs = extra_chrome_shared_library_configs

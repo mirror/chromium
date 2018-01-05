@@ -219,6 +219,10 @@ config("lld_pack_relocations") {
   ldflags = [ "-Wl,--pack-dyn-relocs=android" ]
 }
 
+config("gold_pack_relocations_v2") {
+  ldflags = [ "-Wl,--experimental-use-relrz" ]
+}
+
 # Instrumentation -------------------------------------------------------------
 #
 # The BUILDCONFIG file sets the "default_cygprofile_instrumentation" config on

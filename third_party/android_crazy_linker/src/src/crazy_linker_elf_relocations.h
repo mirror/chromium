@@ -8,7 +8,20 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <link.h>
+
+#include "crazy_linker_defines.h"
 #include "elf_traits.h"
+
+typedef Elf32_Word Elf32_Relr;
+
+typedef Elf64_Xword Elf64_Relr;
+
+#define Elf32_R_JUMP(val) ((val) >> 24)
+#define Elf32_R_BITS(val) ((val)&0xffffff)
+
+#define Elf64_R_JUMP(val) ((val) >> 56)
+#define Elf64_R_BITS(val) ((val)&0xffffffffffffff)
 
 namespace crazy {
 
@@ -19,6 +32,11 @@ class Error;
 // An ElfRelocations instance holds information about relocations in a mapped
 // ELF binary.
 class ElfRelocations {
+#if defined(USE_RELA)
+  typedef ELF::Rela rel_t;
+#else
+  typedef ELF::Rel rel_t;
+#endif
  public:
   ElfRelocations() { ::memset(this, 0, sizeof(*this)); }
   ~ElfRelocations() {}
@@ -64,42 +82,28 @@ class ElfRelocations {
                      ELF::Addr reloc,
                      ELF::Addr* sym_addr,
                      Error* error);
-  bool ApplyResolvedRelaReloc(const ELF::Rela* rela,
-                              ELF::Addr sym_addr,
-                              bool resolved,
-                              Error* error);
-  bool ApplyResolvedRelReloc(const ELF::Rel* rel,
-                             ELF::Addr sym_addr,
-                             bool resolved,
-                             Error* error);
-  bool ApplyRelaReloc(const ELF::Rela* rela,
-                      const ElfSymbols* symbols,
-                      SymbolResolver* resolver,
-                      Error* error);
-  bool ApplyRelReloc(const ELF::Rel* rel,
-                     const ElfSymbols* symbols,
-                     SymbolResolver* resolver,
-                     Error* error);
-  bool ApplyRelaRelocs(const ELF::Rela* relocs,
-                       size_t relocs_count,
-                       const ElfSymbols* symbols,
-                       SymbolResolver* resolver,
-                       Error* error);
-  bool ApplyRelRelocs(const ELF::Rel* relocs,
-                      size_t relocs_count,
-                      const ElfSymbols* symbols,
-                      SymbolResolver* resolver,
-                      Error* error);
+  bool ApplyResolvedReloc(const rel_t* rela,
+                          ELF::Addr sym_addr,
+                          bool resolved,
+                          Error* error);
+  bool ApplyReloc(const rel_t* rela,
+                  const ElfSymbols* symbols,
+                  SymbolResolver* resolver,
+                  Error* error);
+  bool ApplyRelocs(const rel_t* relocs,
+                   size_t relocs_count,
+                   const ElfSymbols* symbols,
+                   SymbolResolver* resolver,
+                   Error* error);
   void AdjustRelocation(ELF::Word rel_type,
                         ELF::Addr src_reloc,
                         size_t dst_delta,
                         size_t map_delta);
-  template<typename Rel>
   void RelocateRelocations(size_t src_addr,
                           size_t dst_addr,
                           size_t map_addr,
                           size_t size);
-  void AdjustAndroidRelocation(const ELF::Rela* relocation,
+  void AdjustAndroidRelocation(const rel_t* relocation,
                                size_t src_addr,
                                size_t dst_addr,
                                size_t map_addr,
@@ -108,10 +112,14 @@ class ElfRelocations {
   // Android packed relocations unpacker. Calls the given handler for
   // each relocation in the unpacking stream.
   typedef bool (*RelocationHandler)(ElfRelocations* relocations,
-                                    const ELF::Rela* relocation,
+                                    const rel_t* relocation,
                                     void* opaque);
   bool ForEachAndroidRelocation(RelocationHandler handler,
                                 void* opaque);
+  template <typename ElfRelIteratorT>
+  bool ForEachAndroidRelocationHelper(ElfRelIteratorT&& rel_iterator,
+                                      ElfRelocations::RelocationHandler handler,
+                                      void* opaque);
 
   // Apply Android packed relocations.
   // On error, return false and set |error| message.
@@ -120,7 +128,7 @@ class ElfRelocations {
                                SymbolResolver* resolver,
                                Error* error);
   static bool ApplyAndroidRelocation(ElfRelocations* relocations,
-                                     const ELF::Rela* relocation,
+                                     const rel_t* relocation,
                                      void* opaque);
 
   // Relocate Android packed relocations.
@@ -130,8 +138,10 @@ class ElfRelocations {
                                   size_t map_addr,
                                   size_t size);
   static bool RelocateAndroidRelocation(ElfRelocations* relocations,
-                                        const ELF::Rela* relocation,
+                                        const rel_t* relocation,
                                         void* opaque);
+
+  bool ApplyRelrRelocs();
 
 #if defined(__mips__)
   bool RelocateMipsGot(const ElfSymbols* symbols,
@@ -143,7 +153,6 @@ class ElfRelocations {
   size_t phdr_count_;
   size_t load_bias_;
 
-  ELF::Addr relocations_type_;
   ELF::Addr plt_relocations_;
   size_t plt_relocations_size_;
   ELF::Addr* plt_got_;
@@ -160,6 +169,9 @@ class ElfRelocations {
 
   uint8_t* android_relocations_;
   size_t android_relocations_size_;
+
+  ElfW(Relr) * relr_;
+  size_t relr_count_;
 
   bool has_text_relocations_;
   bool has_symbolic_;

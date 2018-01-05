@@ -86,13 +86,10 @@ template("chrome_public_apk_tmpl") {
                                 (current_cpu == "arm64" || current_cpu == "x64")
       }
     }
-    if (!defined(pack_relocations)) {
-      if (!defined(requires_sdk_api_level_23)) {
-        requires_sdk_api_level_23 = false
-      }
-      pack_relocations =
-          !use_lld && (use_chromium_linker || requires_sdk_api_level_23)
-    }
+
+    pack_relocations =
+        !use_lld && !use_chromium_linker && chromium_linker_supported
+
     command_line_flags_file = "chrome-command-line"
   }
 }

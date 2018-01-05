@@ -4,7 +4,6 @@
 
 package org.chromium.base.library_loader;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
@@ -547,7 +546,7 @@ public abstract class Linker {
         // * side-installing Chrome (possibly from another release channel)
         // * Play Store bugs leading to incorrect APK flavor being installed
         //
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return false;
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return false;
 
         // The auto-generated NativeLibraries.sUseLinker variable will be true if the
         // build has not explicitly disabled Linker features.
