@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ea2e71_9e55563a",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T21:26:48Z",
+      "side": 1,
+      "message": "Was this clang-format\u0027s choice? I\u0027d expect this and lines 491-2 to be indented +4.",
+      "revId": "533c12a2a4d5dec4573585069e30ce752406c2ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
