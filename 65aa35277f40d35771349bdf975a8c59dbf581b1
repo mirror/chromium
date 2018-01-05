@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9227ab2_7f928066",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T03:36:57Z",
+      "side": 1,
+      "message": "Moving these static methods here is to improve style guide compliance.",
+      "revId": "65aa35277f40d35771349bdf975a8c59dbf581b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
