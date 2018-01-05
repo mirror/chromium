@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ce985d3_02844410",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T18:59:35Z",
+      "side": 1,
+      "message": "what\u0027s with these unrelated behavior changes?",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd211814_fb351510",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T18:59:35Z",
+      "side": 1,
+      "message": "sorry, should have said non-null instead of alive",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
