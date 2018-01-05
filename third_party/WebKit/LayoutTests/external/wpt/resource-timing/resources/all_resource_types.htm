@@ -9,10 +9,10 @@
             if (window.parent.hasOwnProperty('on_test_body_created'))
                 window.parent.on_test_body_created();
         </script>
-        <link rel="stylesheet" href="nested.css"></link>
-        <img src="1x1-blue.png"></img>
+        <link rel="stylesheet" href="resource_timing_test0.css"></link>
+        <img src="blue.png"></img>
         <iframe src="blank_page_green.htm" width="100px" height="100px"></iframe>
-        <script src="empty_script.js"></script>
+        <script src="resource_timing_test0.js"></script>
         <script>
             var async_xhr = new XMLHttpRequest;
             async_xhr.open("GET", "generate_resource.php?type=image&id=async_xhr", true);
@@ -25,7 +25,7 @@
         <style>
             @font-face {
                 font-family: remoteFontAhem;
-                src: url('Ahem.ttf');
+                src: url('/fonts/Ahem.ttf');
             }
             iframe {
                 background: url('generate_resource.php?type=image&id=1');
