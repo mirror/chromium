@@ -22,6 +22,30 @@
       "revId": "42921e1e5b7222aba75df52510a8b209e4e2abd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f556a22a_89c38dd4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2018-01-05T17:16:04Z",
+      "side": 1,
+      "message": "I removed this since we already have several usage examples in our codebase.",
+      "parentUuid": "4aee8cbd_2fa39ea1",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "42921e1e5b7222aba75df52510a8b209e4e2abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
