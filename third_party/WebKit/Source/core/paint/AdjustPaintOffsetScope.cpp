@@ -40,7 +40,7 @@ bool AdjustPaintOffsetScope::AdjustPaintOffset(const LayoutBox& box) {
     return true;
   }
 
-  if (box.IsTableSection()) {
+  if (!old_paint_info_.IsPrinting() && box.IsTableSection()) {
     const auto& section = ToLayoutTableSection(box);
     if (section.IsRepeatingHeaderGroup() || section.IsRepeatingFooterGroup()) {
       adjusted_paint_offset_ = fragment->PaintOffset();
