@@ -67,6 +67,7 @@ bool Touch::HasStylusDelegate() const {
 
 void Touch::OnTouchEvent(ui::TouchEvent* event) {
   bool send_details = false;
+  LOG(ERROR) << "TouchEvent" << event->type();
 
   const int touch_pointer_id = event->pointer_details().id;
   switch (event->type()) {

@@ -154,8 +154,9 @@ void SetBoundsInScreen(aura::Window* window,
 
       // Set new bounds now so that the container's layout manager can adjust
       // the bounds if necessary.
-      window->SetBounds(new_bounds);
-
+      if (!wm::GetWindowState(window)->allow_set_bounds_direct()) {
+        window->SetBounds(new_bounds);
+      }
       dst_container->AddChild(window);
 
       // Restore focused/active window.
