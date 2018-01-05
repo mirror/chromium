@@ -13,6 +13,18 @@
 #include "ui/events/event_handler.h"
 #include "ui/events/event_utils.h"
 
+// A ref-counted object to enclose a weak pointer to the event monitor.
+// AppKit posts to all event monitors active when an event is received, so it's
+// possible for one monitor to remove another, and the removed monitor to still
+// see the event.
+@interface EventMonitorMacHandle : NSObject {
+ @public
+  views::EventMonitorMac* weakOwner;
+}
+@end
+@implementation EventMonitorMacHandle
+@end
+
 namespace views {
 
 // static
@@ -36,18 +48,28 @@ gfx::Point EventMonitor::GetLastMouseLocation() {
 EventMonitorMac::EventMonitorMac(ui::EventHandler* event_handler,
                                  gfx::NativeWindow target_window) {
   DCHECK(event_handler);
+  handle_.reset([[EventMonitorMacHandle alloc] init]);
+  handle_.get()->weakOwner = this;
+  EventMonitorMacHandle* handle = handle_;  // Ensure the object gets captured.
+
+  auto block = ^NSEvent*(NSEvent* event) {
+    if (!handle->weakOwner)
+      return event;
+
+    if (!target_window || [event window] == target_window) {
+      std::unique_ptr<ui::Event> ui_event = ui::EventFromNative(event);
+      if (ui_event)
+        event_handler->OnEvent(ui_event.get());
+    }
+    return event;
+  };
+
   monitor_ = [NSEvent addLocalMonitorForEventsMatchingMask:NSAnyEventMask
-      handler:^NSEvent*(NSEvent* event) {
-          if (!target_window || [event window] == target_window) {
-            std::unique_ptr<ui::Event> ui_event = ui::EventFromNative(event);
-            if (ui_event)
-              event_handler->OnEvent(ui_event.get());
-          }
-          return event;
-      }];
+                                                   handler:block];
 }
 
 EventMonitorMac::~EventMonitorMac() {
+  handle_.get()->weakOwner = nullptr;
   [NSEvent removeMonitor:monitor_];
 }
 
