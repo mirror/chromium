@@ -5,6 +5,7 @@
 import("//build/config/features.gni")
 import("//build/config/jumbo.gni")
 import("//media/media_options.gni")
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 
 # See //content/BUILD.gn for how this works.
@@ -137,4 +138,10 @@ target(link_target_type, "renderer_sources") {
   if (enable_plugins) {
     sources += [ "plugin_instance_throttler.h" ]
   }
+}
+
+mojom("mojo_bindings") {
+  sources = [
+    "fullscreen_video_element.mojom",
+  ]
 }
