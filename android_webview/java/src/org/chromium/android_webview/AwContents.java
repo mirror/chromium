@@ -78,6 +78,7 @@ import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
 import org.chromium.content_public.browser.NavigationHistory;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.navigation_controller.LoadURLType;
@@ -876,14 +877,14 @@ public class AwContents implements SmartClipProvider {
             ViewAndroidDelegate viewDelegate, InternalAccessDelegate internalDispatcher,
             WebContents webContents, WindowAndroid windowAndroid) {
         contentViewCore.initialize(viewDelegate, internalDispatcher, webContents, windowAndroid);
-        contentViewCore.setActionModeCallback(
-                new AwActionModeCallback(mContext, this,
-                        contentViewCore.getActionModeCallbackHelper()));
+        SelectionPopupController controller = SelectionPopupController.fromWebContents(webContents);
+        controller.setActionModeCallback(
+                new AwActionModeCallback(mContext, this, controller.getActionModeCallbackHelper()));
         if (mAutofillProvider != null) {
-            contentViewCore.setNonSelectionActionModeCallback(
+            controller.setNonSelectionActionModeCallback(
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
-        contentViewCore.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
+        controller.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
 
         // Listen for dpad events from IMEs (e.g. Samsung Cursor Control) so we know to enable
         // spatial navigation mode to allow these events to move focus out of the WebView.
@@ -1119,12 +1120,19 @@ public class AwContents implements SmartClipProvider {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setNewAwContentsPreO(newAwContentsPtr);
         } else {
-            // Move the TextClassifier to the new ContentViewCore.
+            // Move the TextClassifier to the new WebContents.
+            SelectionPopupController oldController = getSelectionPopupController();
+
             TextClassifier textClassifier =
-                    mContentViewCore == null ? null : mContentViewCore.getCustomTextClassifier();
+                    oldController != null ? oldController.getCustomTextClassifier() : null;
             setNewAwContentsPreO(newAwContentsPtr);
-            if (textClassifier != null) mContentViewCore.setTextClassifier(textClassifier);
+            if (textClassifier != null)
+                getSelectionPopupController().setTextClassifier(textClassifier);
         }
+    }
+
+    private SelectionPopupController getSelectionPopupController() {
+        return mWebContents != null ? SelectionPopupController.fromWebContents(mWebContents) : null;
     }
 
     // Helper for setNewAwContents containing everything which applies to pre-O.
@@ -2474,7 +2482,7 @@ public class AwContents implements SmartClipProvider {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (isDestroyedOrNoOperation(NO_WARN)) return;
         if (requestCode == PROCESS_TEXT_REQUEST_CODE) {
-            mContentViewCore.onReceivedProcessTextResult(resultCode, data);
+            getSelectionPopupController().onReceivedProcessTextResult(resultCode, data);
         } else {
             Log.e(TAG, "Received activity result for an unknown request code %d", requestCode);
         }
@@ -2820,13 +2828,13 @@ public class AwContents implements SmartClipProvider {
     }
 
     public void setTextClassifier(TextClassifier textClassifier) {
-        assert mContentViewCore != null;
-        mContentViewCore.setTextClassifier(textClassifier);
+        assert mWebContents != null;
+        getSelectionPopupController().setTextClassifier(textClassifier);
     }
 
     public TextClassifier getTextClassifier() {
-        assert mContentViewCore != null;
-        return mContentViewCore.getTextClassifier();
+        assert mWebContents != null;
+        return getSelectionPopupController().getTextClassifier();
     }
 
     //--------------------------------------------------------------------------------------------
