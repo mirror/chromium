@@ -389,6 +389,22 @@ var SelectToSpeak = function() {
    */
   this.intervalId_;
 
+  /**
+   * Fires a mock key down event for testing.
+   * @param {{keyCode: number}} event The fake key down event to fire.
+   */
+  this.fireMockKeyDownEvent = function(event) {
+    this.onKeyDown_(event);
+  };
+
+  /**
+   * Fires a mock key up event for testing.
+   * @param {{keyCode: number}} event The fake key up event to fire.
+   */
+  this.fireMockKeyUpEvent = function(event) {
+    this.onKeyUp_(event);
+  };
+
   this.initPreferences_();
 
   this.setUpEventListeners_();
