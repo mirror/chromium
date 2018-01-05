@@ -300,6 +300,7 @@ bool UtilityProcessHostImpl::StartProcess() {
 #endif
 #if defined(USE_AURA)
       switches::kMus,
+      switches::kMusHostingViz,
 #endif
       switches::kUseFakeDeviceForMediaStream,
       switches::kUseFileForFakeVideoCapture,
