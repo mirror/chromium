@@ -5,6 +5,7 @@
 module blink.mojom;
 
 import "third_party/WebKit/common/service_worker/service_worker_error_type.mojom";
+import "third_party/WebKit/common/service_worker/service_worker_client.mojom";
 import "url/mojo/url.mojom";
 
 // Host for a running service worker execution context. Implemented in the
@@ -19,9 +20,14 @@ interface ServiceWorkerHost {
   // Clears V8 code cache for |url| set by the above |SetCachedMetadata| before.
   ClearCachedMetadata(url.mojom.Url url);
 
-  // TODO(xiaofeng.zhang): Impl all methods.
+  // Corresponds to Clients.matchAll(options). Returns the service worker client
+  // objects. If |options| is not set, the method returns only the service
+  // worker clients controlled by the service worker.
+  GetClients(blink.mojom.ServiceWorkerClientQueryOptions options)
+    => (array<blink.mojom.ServiceWorkerClientInfo> clients);
+
+  // TODO(leonhsl): Impl all methods.
   // GetClient();
-  // GetClients();
   // OpenNewTab();
   // OpenNewPopup();
   // PostMessageToClient();
