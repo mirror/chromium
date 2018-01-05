@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c213e973_3b173127",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2018-01-05T17:00:06Z",
+      "side": 1,
+      "message": "nit: Instead of using the literal \u002795\u0027 here, event_location.x()/.y()? It makes it easier to read (and less chance of the location values on line 478 getting out of sync with the location values here. (I notice you already did this above with button location, thanks!)",
+      "revId": "0121d9c468bca827cd438e311d2c5c6abe309af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
