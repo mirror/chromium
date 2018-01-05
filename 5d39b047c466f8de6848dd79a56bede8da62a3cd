@@ -16,6 +16,24 @@
       "revId": "5d39b047c466f8de6848dd79a56bede8da62a3cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6df33bd_b95cb2de",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2018-01-05T23:10:33Z",
+      "side": 1,
+      "message": "agree, however i deem it expensive that follow up CLs of task force members will need to modify not just their 2 builders, but lots of others to add extra categories.",
+      "parentUuid": "4a7791af_128d84d9",
+      "revId": "5d39b047c466f8de6848dd79a56bede8da62a3cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
