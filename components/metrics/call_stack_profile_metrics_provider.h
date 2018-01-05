@@ -59,6 +59,12 @@ class CallStackProfileMetricsProvider : public MetricsProvider {
   static base::StackSamplingProfiler::CompletedCallback
   GetProfilerCallbackForBrowserProcessStartup();
 
+  // Returns a callback for use with StackSamplingProfiler that sets up
+  // parameters for IO thread startup sampling. The callback should be
+  // immediately passed to the StackSamplingProfiler, and should not be reused.
+  static base::StackSamplingProfiler::CompletedCallback
+  GetProfilerCallbackForIOThreadStartup();
+
   // Provides completed stack profiles to the metrics provider. Intended for use
   // when receiving profiles over IPC. In-process StackSamplingProfiler users
   // should instead use a variant of GetProfilerCallback*(). |profiles| is not
