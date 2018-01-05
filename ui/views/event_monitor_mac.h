@@ -5,9 +5,12 @@
 #ifndef UI_VIEWS_EVENT_MONITOR_MAC_H_
 #define UI_VIEWS_EVENT_MONITOR_MAC_H_
 
+#import "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/event_monitor.h"
+
+@class EventMonitorMacHandle;
 
 namespace views {
 
@@ -18,6 +21,7 @@ class EventMonitorMac : public EventMonitor {
   ~EventMonitorMac() override;
 
  private:
+  base::scoped_nsobject<EventMonitorMacHandle> handle_;
   id monitor_;
 
   DISALLOW_COPY_AND_ASSIGN(EventMonitorMac);
