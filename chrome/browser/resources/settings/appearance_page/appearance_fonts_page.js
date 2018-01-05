@@ -6,13 +6,13 @@
 'use strict';
 
 /** @const @private {!Array<number>} */
-var FONT_SIZE_RANGE_ = [
+const FONT_SIZE_RANGE_ = [
   9,  10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24,
   26, 28, 30, 32, 34, 36, 40, 44, 48, 56, 64, 72,
 ];
 
 /** @const @private {!Array<number>} */
-var MINIMUM_FONT_SIZE_RANGE_ =
+const MINIMUM_FONT_SIZE_RANGE_ =
     [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24];
 
 /**
@@ -117,8 +117,8 @@ Polymer({
    * @private
    */
   setFontsData_: function(response) {
-    var fontMenuOptions = [];
-    for (var fontData of response.fontList) {
+    const fontMenuOptions = [];
+    for (const fontData of response.fontList) {
       fontMenuOptions.push({value: fontData[0], name: fontData[1]});
     }
     this.fontOptions_ = fontMenuOptions;

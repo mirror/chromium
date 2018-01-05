@@ -16,7 +16,7 @@
  *     e.g. 'john'
  * @const {!RegExp}
  */
-var NAME_ONLY_REGEX =
+const NAME_ONLY_REGEX =
     new RegExp('^\\s*([\\w\\.!#\\$%&\'\\*\\+-\\/=\\?\\^`\\{\\|\\}~]+)\\s*$');
 
 /**
@@ -25,7 +25,7 @@ var NAME_ONLY_REGEX =
  *     e.g. 'john@chromium.org'
  * @const {!RegExp}
  */
-var EMAIL_REGEX = new RegExp(
+const EMAIL_REGEX = new RegExp(
     '^\\s*([\\w\\.!#\\$%&\'\\*\\+-\\/=\\?\\^`\\{\\|\\}~]+)@' +
     '([A-Za-z0-9\-]{2,63}\\..+)\\s*$');
 
@@ -56,7 +56,7 @@ Polymer({
    * @return {boolean}
    */
   validate_: function() {
-    var input = this.$.addUserInput.value;
+    const input = this.$.addUserInput.value;
     this.isValid_ = NAME_ONLY_REGEX.test(input) || EMAIL_REGEX.test(input);
     return this.isValid_;
   },
@@ -67,14 +67,14 @@ Polymer({
     if (!this.validate_())
       return;
 
-    var input = this.$.addUserInput.value;
+    const input = this.$.addUserInput.value;
 
-    var nameOnlyMatches = NAME_ONLY_REGEX.exec(input);
-    var userEmail;
+    const nameOnlyMatches = NAME_ONLY_REGEX.exec(input);
+    let userEmail;
     if (nameOnlyMatches) {
       userEmail = nameOnlyMatches[1] + '@gmail.com';
     } else {
-      var emailMatches = EMAIL_REGEX.exec(input);
+      const emailMatches = EMAIL_REGEX.exec(input);
       // Assuming the input validated, one of these two must match.
       assert(emailMatches);
       userEmail = emailMatches[1] + '@' + emailMatches[2];
