@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78cac013_a0a14823",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T06:49:56Z",
+      "side": 1,
+      "message": "Would you help me understand why we need to use WrapCallbackWithDefaultInvokeIfNotRun?",
+      "revId": "dba7f5e898a7ca4863e025b41c8c512c0da450ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eada36bd_8338bef0",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T06:49:56Z",
+      "side": 1,
+      "message": "Can we rename this to StorageQuotaCallbacks and use it in both QueryStorageUsageAndQuota and RequestStorageQuota?",
+      "revId": "dba7f5e898a7ca4863e025b41c8c512c0da450ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
