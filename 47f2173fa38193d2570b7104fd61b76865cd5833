@@ -16,6 +16,24 @@
       "revId": "47f2173fa38193d2570b7104fd61b76865cd5833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c92b976_0ad36db5",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2018-01-05T19:03:37Z",
+      "side": 1,
+      "message": "\u003e Good in principle, but this needs a comment.\n\nDone.\n\n\u003eThe code invites the question \"what\u0027s special about user_text_ being empty?\"  What if it simply was \" \"?  The comments needs to answer why we\u0027re handling this separately.  (I believe the reason is something like the only way to get a cursor position that\u0027s not in the user_text_ part of the range is to use tab-to-search.  And that always yields a blank user_text_.)\n\nActually, it has nothing to do with the key hit, but instead whether the pop-up was open, and that it is entering here at a different point in its lifecycle.\n\n\u003e (But what about doing \"www.wikipedia.orgfoo\" and going to before the \"foo\" and pressing space, and with the actual keyword is \"wikipedia.org\"?  Is that case handled right?)\n\nSee my previous comments. This is one of my test cases (although it\u0027s \".com\" for me.)",
+      "parentUuid": "c64a7622_f72a275f",
+      "revId": "47f2173fa38193d2570b7104fd61b76865cd5833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
