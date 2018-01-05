@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3398cdc8_07deb17d",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2018-01-05T23:26:47Z",
+      "side": 1,
+      "message": "SGTM. If that gets annoying on Linux we could add an IsRunningOnChromeOS check later.",
+      "parentUuid": "80a02ebf_c1458a28",
+      "revId": "5a8a1f8644f05ee20d6a0210ba2146ea6e8146dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d089d7d7_1c831527",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 1
