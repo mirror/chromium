@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f659bd8b_8b3ee195",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T02:35:11Z",
+      "side": 1,
+      "message": "Nit: Is this condition needed?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 79
+      },
+      "revId": "ecbe759469fdc0d798b279ec90be315eebf30f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
