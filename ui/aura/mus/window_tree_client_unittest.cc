@@ -193,8 +193,8 @@ class WindowTreeClientWmTestSurfaceSync
 
   // WindowTreeClientWmTest:
   void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kMus, switches::kMusHostVizValue);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kMusHostingViz);
     if (GetParam()) {
       base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
           switches::kForceDeviceScaleFactor, "2");
