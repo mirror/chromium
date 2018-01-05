@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7103b6_61354088",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T00:14:04Z",
+      "side": 1,
+      "message": "nit: join with \"else\" ?\n\nOr insert an empty line to make it more obvious.",
+      "revId": "903cfb8e13909aca7b8303b6e1d3c2e933dab5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310e7749_0027e8b3",
+        "filename": "chrome/common/chrome_paths.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T00:14:04Z",
+      "side": 1,
+      "message": "Too bad if this is from \"git cl format\"... I kinda like the old way.",
+      "revId": "903cfb8e13909aca7b8303b6e1d3c2e933dab5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
