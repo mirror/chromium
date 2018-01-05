@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68542774_135e243a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-05T12:00:01Z",
+      "side": 1,
+      "message": "can you link to the spec please?",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e0b7c8_5682e80a",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-05T12:00:01Z",
+      "side": 1,
+      "message": "\u003d \"\"; should not be needed here?",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acd6309_d7b841ef",
+        "filename": "third_party/WebKit/Source/platform/network/HeaderFieldTokenizer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-05T12:00:01Z",
+      "side": 1,
+      "message": "why? can this be documented in a comment on the function signature in the header?",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
