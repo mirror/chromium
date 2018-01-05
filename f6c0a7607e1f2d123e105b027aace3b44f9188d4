@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5b84bfe_8335c7ad",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T17:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7be43b_acc95d30",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c687e5d1_75bd0230",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5e8732_d9243053",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T17:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c687e5d1_75bd0230",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9bb04f2e_629f594c",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T17:07:52Z",
+      "side": 1,
+      "message": "Long overdue, you are correct. Done.",
+      "parentUuid": "c9806564_eaed5f45",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd8ecc4_5d4ef2ec",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "160e7162_215661fa",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T17:07:52Z",
+      "side": 1,
+      "message": "Yep; https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/web-animations/interfaces/KeyframeEffect/constructor.html?l\u003d194\u0026rcl\u003d243b47e97b8ebef9ae3b32bf29ddb1664a6714de\n\nAdded a TODO here to crbug.com/666661",
+      "parentUuid": "fdd8ecc4_5d4ef2ec",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6c5185_91836a05",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d61486_227dd770",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2018-01-05T17:07:52Z",
+      "side": 1,
+      "message": "Ooo, good catch. Done. I don\u0027t care about it enough, however, to make a test case for it. (Differentiating between different TypeErrors is a pain.)",
+      "parentUuid": "2d6c5185_91836a05",
+      "revId": "f6c0a7607e1f2d123e105b027aace3b44f9188d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
