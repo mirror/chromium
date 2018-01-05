@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c14b704a_305e41ab",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T18:08:49Z",
+      "side": 1,
+      "message": "It might be nice to name the png_ptr field riffled_palette or rgba_palette, to indicate what it means and match how it\u0027s used in these two functions.  row_tmp is a little noncommittal.",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5daaa934_fccfd527",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -82,6 +105,46 @@
       "writtenOn": "2018-01-05T17:55:08Z",
       "side": 1,
       "message": "Can we do this all in one pass with something like\n\n  uint8x8x3_t v \u003d vld3_u8((png_const_bytep)(palette + i));\n  vst4_u8(riffled_palette + (i \u003c\u003c 2), (uint8x8x4_t){\n    v.val[0],\n    v.val[1];\n    v.val[2];\n    num_trans \u003d\u003d 256 ? vld1_u8(trans_alpha + i) : vdup_n_u8(0xff)\n  });\n\n?  (Am I right in thinking num_trans is either 0 or 256?)",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fb2e37_0d597285",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T18:08:49Z",
+      "side": 1,
+      "message": "Did you happen to time the performance of an approach using vld4 and vst4, similar to _rgb() below?\n\nI see that it\u0027s nice and easy here to fill 32-bit lanes with 32-bit pixels, and that vld3/vst3 is more natural/essential for the 24-bit pixels in _rgb(), but it might be interesting to know how that strategy performs even when not so strictly necessary.",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c909f0fb_5bc8fd4d",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T18:08:49Z",
+      "side": 1,
+      "message": "Same sort of question here as in riffle_palette_rgba()... it seems just as easy to use q-registers and handle 16 pixels at a time.  Why stop at 8?",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 41
+      },
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
