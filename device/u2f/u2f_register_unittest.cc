@@ -315,7 +315,8 @@ class TestRegisterCallback {
 };
 
 TEST_F(U2fRegisterTest, TestRegisterSuccess) {
-  std::unique_ptr<MockU2fDevice> device(std::make_unique<MockU2fDevice>());
+  auto device = std::make_unique<MockU2fDevice>();
+
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device.get(), GetId())
@@ -342,7 +343,7 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
 }
 
 TEST_F(U2fRegisterTest, TestDelayedSuccess) {
-  std::unique_ptr<MockU2fDevice> device(std::make_unique<MockU2fDevice>());
+  auto device = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device.get(), GetId())
@@ -373,8 +374,8 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
 
 TEST_F(U2fRegisterTest, TestMultipleDevices) {
   // Second device will have a successful touch
-  std::unique_ptr<MockU2fDevice> device0(std::make_unique<MockU2fDevice>());
-  std::unique_ptr<MockU2fDevice> device1(std::make_unique<MockU2fDevice>());
+  auto device0 = std::make_unique<MockU2fDevice>();
+  auto device1 = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device0.get(), GetId())
@@ -419,7 +420,7 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithExclusionList) {
   std::vector<uint8_t> unknown_key2(32, 0xD);
   std::vector<std::vector<uint8_t>> handles = {unknown_key0, unknown_key1,
                                                unknown_key2};
-  std::unique_ptr<MockU2fDevice> device(std::make_unique<MockU2fDevice>());
+  auto device = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device.get(), GetId())
@@ -467,8 +468,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithExclusionList) {
   std::vector<uint8_t> unknown_key2(32, 0xD);
   std::vector<std::vector<uint8_t>> handles = {unknown_key0, unknown_key1,
                                                unknown_key2};
-  std::unique_ptr<MockU2fDevice> device0(std::make_unique<MockU2fDevice>());
-  std::unique_ptr<MockU2fDevice> device1(std::make_unique<MockU2fDevice>());
+  auto device0 = std::make_unique<MockU2fDevice>();
+  auto device1 = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device0.get(), GetId())
@@ -534,7 +535,7 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithDuplicateHandle) {
 
   std::vector<std::vector<uint8_t>> handles = {unknown_key0, unknown_key1,
                                                unknown_key2, duplicate_key};
-  std::unique_ptr<MockU2fDevice> device(std::make_unique<MockU2fDevice>());
+  auto device = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device.get(), GetId())
@@ -583,8 +584,8 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithDuplicateHandle) {
   std::vector<uint8_t> duplicate_key(32, 0xA);
   std::vector<std::vector<uint8_t>> handles = {unknown_key0, unknown_key1,
                                                unknown_key2, duplicate_key};
-  std::unique_ptr<MockU2fDevice> device0(new MockU2fDevice());
-  std::unique_ptr<MockU2fDevice> device1(new MockU2fDevice());
+  auto device0 = std::make_unique<MockU2fDevice>();
+  auto device1 = std::make_unique<MockU2fDevice>();
   MockU2fDiscovery discovery;
 
   EXPECT_CALL(*device0.get(), GetId())
@@ -682,13 +683,13 @@ TEST_F(U2fRegisterTest, TestAuthenticatorData) {
           GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
           std::move(public_key));
 
-  uint8_t flags =
+  constexpr uint8_t flags =
       static_cast<uint8_t>(AuthenticatorData::Flag::kTestOfUserPresence) |
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
 
-  auto authenticator_data = AuthenticatorData::Create(
-      kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
-      std::move(attested_data));
+  AuthenticatorData authenticator_data(kTestRelyingPartyId, flags,
+                                       std::vector<uint8_t>(4, 0) /* counter */,
+                                       std::move(attested_data));
 
   EXPECT_EQ(GetTestAuthenticatorDataBytes(),
             authenticator_data.SerializeToByteArray());
@@ -704,12 +705,12 @@ TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
           GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
           std::move(public_key));
 
-  uint8_t flags =
+  constexpr uint8_t flags =
       static_cast<uint8_t>(AuthenticatorData::Flag::kTestOfUserPresence) |
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
-  auto authenticator_data = AuthenticatorData::Create(
-      kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
-      std::move(attested_data));
+  AuthenticatorData authenticator_data(kTestRelyingPartyId, flags,
+                                       std::vector<uint8_t>(4, 0) /* counter */,
+                                       std::move(attested_data));
 
   // Construct the attestation statement.
   std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =
