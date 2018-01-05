@@ -4297,15 +4297,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
     render_view_->DidCommitProvisionalHistoryLoad();
 
-  for (auto& observer : render_view_->observers_)
-    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
-  {
-    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
-    for (auto& observer : observers_) {
-      observer.DidCommitProvisionalLoad(
-          is_new_navigation, navigation_state->WasWithinSameDocument());
-    }
-  }
+  NotifyObservers(is_new_navigation, navigation_state->WasWithinSameDocument());
 
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
@@ -5597,6 +5589,18 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.
   navigation_state->set_transition_type(ui::PAGE_TRANSITION_LINK);
+}
+
+void RenderFrameImpl::NotifyObservers(bool is_new_navigation,
+                                      bool is_same_document) {
+  for (auto& observer : render_view_->observers_)
+    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
+  {
+    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
+    for (auto& observer : observers_) {
+      observer.DidCommitProvisionalLoad(is_new_navigation, is_same_document);
+    }
+  }
 }
 
 bool RenderFrameImpl::SwapIn() {
