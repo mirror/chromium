@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8378013_767ade89",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-05T00:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764aa81a_a4103309",
+      "range": {
+        "startLine": 477,
+        "startChar": 64,
+        "endLine": 477,
+        "endChar": 65
+      },
+      "revId": "e0e6adc2cc138a5f7efb520115756b9a60ca1752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1f818c0_6f528b9a",
         "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T00:14:52Z",
       "side": 1,
       "message": "nit: enum class?",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "e0e6adc2cc138a5f7efb520115756b9a60ca1752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4b1329_4b7a0f08",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2018-01-05T00:40:27Z",
+      "side": 1,
+      "message": "I chose not to use enum class since you lose implicit integer promotion and thus have to static_cast everywhere you want an int. In this case I want an int almost everywhere the enum is used.",
+      "parentUuid": "d1f818c0_6f528b9a",
       "range": {
         "startLine": 84,
         "startChar": 2,
