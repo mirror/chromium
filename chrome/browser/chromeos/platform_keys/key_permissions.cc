@@ -146,6 +146,11 @@ bool PolicyAllowsCorporateKeyUsageForExtension(
   return allow_corporate_key_usage;
 }
 
+bool IsValidKeyLocation(KeyPermissions::KeyLocation key_location) {
+  return key_location == KeyPermissions::KeyLocation::USER_SLOT ||
+         key_location == KeyPermissions::KeyLocation::SYSTEM_SLOT;
+}
+
 }  // namespace
 
 struct KeyPermissions::PermissionsForExtension::KeyEntry {
@@ -189,9 +194,12 @@ KeyPermissions::PermissionsForExtension::~PermissionsForExtension() {
 }
 
 bool KeyPermissions::PermissionsForExtension::CanUseKeyForSigning(
-    const std::string& public_key_spki_der) {
+    const KeyId& key_id) {
+  if (!IsValidKeyLocation(key_id.key_location))
+    return false;
+
   std::string public_key_spki_der_b64;
-  base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
+  base::Base64Encode(key_id.public_key_spki_der, &public_key_spki_der_b64);
 
   KeyEntry* matching_entry = GetStateStoreEntry(public_key_spki_der_b64);
 
@@ -207,7 +215,8 @@ bool KeyPermissions::PermissionsForExtension::CanUseKeyForSigning(
 
   // Usage of corporate keys is solely determined by policy. The user must not
   // circumvent this decision.
-  if (key_permissions_->IsCorporateKey(public_key_spki_der_b64))
+  if (key_permissions_->IsCorporateKey(public_key_spki_der_b64,
+                                       key_id.key_location))
     return PolicyAllowsCorporateKeyUsage();
 
   // Only permissions for keys that are not designated for corporate usage are
@@ -216,14 +225,18 @@ bool KeyPermissions::PermissionsForExtension::CanUseKeyForSigning(
 }
 
 void KeyPermissions::PermissionsForExtension::SetKeyUsedForSigning(
-    const std::string& public_key_spki_der) {
+    const KeyId& key_id) {
+  if (!IsValidKeyLocation(key_id.key_location))
+    return;
+
   std::string public_key_spki_der_b64;
-  base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
+  base::Base64Encode(key_id.public_key_spki_der, &public_key_spki_der_b64);
 
   KeyEntry* matching_entry = GetStateStoreEntry(public_key_spki_der_b64);
 
   if (!matching_entry->sign_once) {
-    if (matching_entry->sign_unlimited)
+    if (matching_entry->sign_unlimited ||
+        key_id.key_location == KeyLocation::SYSTEM_SLOT)
       VLOG(1) << "Key is already marked as not usable for signing, skipping.";
     else
       LOG(ERROR) << "Key was not allowed for signing.";
@@ -235,9 +248,12 @@ void KeyPermissions::PermissionsForExtension::SetKeyUsedForSigning(
 }
 
 void KeyPermissions::PermissionsForExtension::RegisterKeyForCorporateUsage(
-    const std::string& public_key_spki_der) {
+    const KeyId& key_id) {
+  if (!IsValidKeyLocation(key_id.key_location))
+    return;
+
   std::string public_key_spki_der_b64;
-  base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
+  base::Base64Encode(key_id.public_key_spki_der, &public_key_spki_der_b64);
 
   KeyEntry* matching_entry = GetStateStoreEntry(public_key_spki_der_b64);
 
@@ -248,6 +264,13 @@ void KeyPermissions::PermissionsForExtension::RegisterKeyForCorporateUsage(
 
   matching_entry->sign_once = true;
   WriteToStateStore();
+
+  // Keys on the system slot are implicitly corporate. We have still stored the
+  // sign_once permission, so the enrolling extension in the same profile can
+  // use the key for signing once in order to build a CSR even if it doesn't
+  // have permission to use corporate keys.
+  if (key_id.key_location == KeyLocation::SYSTEM_SLOT)
+    return;
 
   DictionaryPrefUpdate update(profile_prefs_, prefs::kPlatformKeys);
 
@@ -260,8 +283,11 @@ void KeyPermissions::PermissionsForExtension::RegisterKeyForCorporateUsage(
 }
 
 void KeyPermissions::PermissionsForExtension::SetUserGrantedPermission(
-    const std::string& public_key_spki_der) {
-  if (!key_permissions_->CanUserGrantPermissionFor(public_key_spki_der)) {
+    const KeyId& key_id) {
+  if (!IsValidKeyLocation(key_id.key_location))
+    return;
+
+  if (!key_permissions_->CanUserGrantPermissionFor(key_id)) {
     LOG(WARNING) << "Tried to grant permission for a key although prohibited "
                     "(either key is a corporate key or this account is "
                     "managed).";
@@ -269,7 +295,7 @@ void KeyPermissions::PermissionsForExtension::SetUserGrantedPermission(
   }
 
   std::string public_key_spki_der_b64;
-  base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
+  base::Base64Encode(key_id.public_key_spki_der, &public_key_spki_der_b64);
   KeyEntry* matching_entry = GetStateStoreEntry(public_key_spki_der_b64);
 
   if (matching_entry->sign_unlimited) {
@@ -389,19 +415,18 @@ void KeyPermissions::GetPermissionsForExtension(
                  weak_factory_.GetWeakPtr(), extension_id, callback));
 }
 
-bool KeyPermissions::CanUserGrantPermissionFor(
-    const std::string& public_key_spki_der) const {
+bool KeyPermissions::CanUserGrantPermissionFor(const KeyId& key_id) const {
   // As keys cannot be tagged for non-corporate usage, the user can currently
   // not grant any permissions if the profile is managed.
   if (profile_is_managed_)
     return false;
 
   std::string public_key_spki_der_b64;
-  base::Base64Encode(public_key_spki_der, &public_key_spki_der_b64);
+  base::Base64Encode(key_id.public_key_spki_der, &public_key_spki_der_b64);
 
   // If this profile is not managed but we find a corporate key, don't allow
   // the user to grant permissions.
-  return !IsCorporateKey(public_key_spki_der_b64);
+  return !IsCorporateKey(public_key_spki_der_b64, key_id.key_location);
 }
 
 // static
@@ -443,9 +468,10 @@ std::vector<std::string> KeyPermissions::GetCorporateKeyUsageAllowedAppIds(
   return permissions;
 }
 
-bool KeyPermissions::IsCorporateKey(
-    const std::string& public_key_spki_der_b64) const {
-  return IsCorporateKeyForProfile(public_key_spki_der_b64, profile_prefs_);
+bool KeyPermissions::IsCorporateKey(const std::string& public_key_spki_der_b64,
+                                    KeyLocation key_location) const {
+  return key_location == KeyLocation::SYSTEM_SLOT ||
+         IsCorporateKeyForProfile(public_key_spki_der_b64, profile_prefs_);
 }
 
 void KeyPermissions::RegisterProfilePrefs(

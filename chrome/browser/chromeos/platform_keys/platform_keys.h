@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -65,9 +66,10 @@ typedef base::Callback<void(const std::string& public_key_spki_der,
                             const std::string& error_message)>
     GenerateKeyCallback;
 
-// Generates a RSA key pair with |modulus_length_bits|. |token_id| is currently
-// ignored, instead the user token associated with |browser_context| is always
-// used. |callback| will be invoked with the resulting public key or an error.
+// Generates a RSA key pair with |modulus_length_bits|. |token_id| specifies the
+// token to store the keypair on and can currently be |kTokenIdUser| or
+// |kTokenIdSystem|. |callback| will be invoked with the resulting public key or
+// an error.
 void GenerateRSAKey(const std::string& token_id,
                     unsigned int modulus_length_bits,
                     const GenerateKeyCallback& callback,
@@ -151,9 +153,9 @@ typedef base::Callback<void(std::unique_ptr<net::CertificateList> certs,
     GetCertificatesCallback;
 
 // Returns the list of all certificates with stored private key available from
-// the given token. |token_id| is currently ignored, instead the user token
-// associated with |browser_context| is always used. |callback| will be invoked
-// with the list of available certificates or an error message.
+// the given token. If an empty |token_id| is provided, all certificates the
+// user associated with |browser_context| has access to are listed. |callback|
+// will be invoked with the list of available certificates or an error message.
 void GetCertificates(const std::string& token_id,
                      const GetCertificatesCallback& callback,
                      content::BrowserContext* browser_context);
@@ -165,9 +167,10 @@ typedef base::Callback<void(const std::string& error_message)>
 
 // Imports |certificate| to the given token if the certified key is already
 // stored in this token. Any intermediate of |certificate| will be ignored.
-// |token_id| is currently ignored, instead the user token associated with
-// |browser_context| is always used. |callback| will be invoked when the import
-// is finished, possibly with an error message.
+// |token_id| specifies the token to store the certificate on and can currently
+// be |kTokenIdUser| or |kTokenIdSystem|. The private key must be stored on the
+// same token. |callback| will be invoked when the import is finished, possibly
+// with an error message.
 void ImportCertificate(const std::string& token_id,
                        const scoped_refptr<net::X509Certificate>& certificate,
                        const ImportCertificateCallback& callback,
@@ -199,6 +202,38 @@ typedef base::Callback<void(std::unique_ptr<std::vector<std::string>> token_ids,
 // Must be called and calls |callback| on the UI thread.
 void GetTokens(const GetTokensCallback& callback,
                content::BrowserContext* browser_context);
+
+// A mapping from public key (X.509 Subject Public Key Info of the key in DER)
+// to token id. Please see comment on GetKeyLocationsCallback, especially about
+// missing entries.
+using KeyToTokenIdMap = std::map<std::string, std::string>;
+
+// If the mapping of public keys to token ids has been successfully retrieved,
+// |error_message| will be empty. For each public key passed to GetKeyLocations,
+// two cases are possible:
+// - |key_to_token_id_map| contains an entry keyed by the public key. This means
+//   that the private key was found, it resides on a token which the user has
+//   access to, and the value of the entry is the token id. Currently, it can be
+//   either |kTokenIdUser| or |kTokenIdSystem|.
+// - |key_to_token_id_map| does not contain en entry keyed by the public key.
+// This
+//    means that the private key as not been found on any token the user has
+//    access to. Note that this is also the case if the key exists on the system
+//    token, but the current user does not have access to the system token.
+// If the mapping could not be retrieved, |key_to_token_id_map| will be empty
+// and |error_message| will be set to an error message.
+typedef base::RepeatingCallback<void(const KeyToTokenIdMap& key_to_token_id_map,
+                                     const std::string& error_message)>
+    GetKeyLocationsCallback;
+
+// For each public key listed in |public_keys|, determines the token on which
+// the corresponding private key is stored. |callback| will be invoked when the
+// mapping of public key to token id is determined, possibly with an error
+// message.
+// Must be called and calls |callback| on the UI thread.
+void GetKeyLocations(const std::vector<std::string>& public_keys,
+                     const GetKeyLocationsCallback& callback,
+                     content::BrowserContext* browser_context);
 
 }  // namespace platform_keys
 
