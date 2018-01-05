@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4bfb14a_aba04473",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T12:08:10Z",
+      "side": 1,
+      "message": "nit: The \u003cdiv\u003e inside the iframe changes nothing, so let\u0027s remove it.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceaf11d_5e26d4ec",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-overflow-div.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T12:08:10Z",
+      "side": 1,
+      "message": "The div is not scrollable so IsNavigableContainer returns false for it. \u003d\u003e This test also passes on master \u003d\u003e We don\u0027t need this test because the bug only happens on iframes?",
+      "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23fc794_cd434d32",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T12:08:10Z",
+      "side": 1,
+      "message": "I do understand that we need the skiplist but I don\u0027t like the complexity it adds. I will approve this CL because I understand this use case is important for you and I\u0027m thinking long term, once we\u0027ve implemented snav2* , we will get rid of the extra complexity of skip lists.\n\n* http://bit.ly/snav2 tackles this bug, I hope, by focusing iframes before going in/out from them.\n\nWhy do we need skiplists? (I\u0027m gonna answer this question myself to make sure I understood this).\nInstead of adding a skiplist, say we make IsNavigableContainer return false also when iframes can\u0027t scroll. That won\u0027t work because snav would then ignore non-scrollable iframes\u0027 focusables \u003d\u003e We must run FindFocusCandidateInContainer on the iframe and if it finds nothing, then we need to go back and look for another focus candidate but *skip* the iframes that we know had nothing...",
+      "revId": "e378617ba8df39cbd8c1d6778e8a4a46137e2b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
