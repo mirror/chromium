@@ -22,6 +22,30 @@
       "revId": "9dbfa313f4ba352d39a329090328b8c250c326d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13ebca8_388e78a2",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-05T22:21:02Z",
+      "side": 1,
+      "message": "Yes - a helper function will probably a cleaner approach.  Done.",
+      "parentUuid": "8dac2574_17f17c77",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "9dbfa313f4ba352d39a329090328b8c250c326d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
