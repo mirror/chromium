@@ -123,6 +123,24 @@
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea64d978_d2a01b96",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T16:43:35Z",
+      "side": 1,
+      "message": "PTAL at PS6 where I changed the destruction order. I added a comment about it.\n\nWhere would you like to put the DCHECK?",
+      "parentUuid": "8695f6db_308c3862",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
