@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a7791af_128d84d9",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1002080
+      },
+      "writtenOn": "2018-01-05T22:29:15Z",
+      "side": 1,
+      "message": "Categories are just there to differentiate between neighbors, since this is currently a console of size 4, i\u0027d just make these two \"linux\" and the two below \"win\" and call it a day, for now.",
+      "revId": "5d39b047c466f8de6848dd79a56bede8da62a3cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
