@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d97d2b5_e75a323a",
+        "filename": "chrome/browser/task_manager/providers/browser_process_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T17:27:20Z",
+      "side": 1,
+      "message": "I just want to understand. What are the benefits of having a private static member over a file-private variable?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "9db4126dadedc991faa3dcc8d4e36d484e1539a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fba29f_eecff27f",
+        "filename": "chrome/browser/task_manager/providers/task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T17:27:20Z",
+      "side": 1,
+      "message": "remove `an`.",
+      "range": {
+        "startLine": 178,
+        "startChar": 54,
+        "endLine": 178,
+        "endChar": 56
+      },
+      "revId": "9db4126dadedc991faa3dcc8d4e36d484e1539a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
