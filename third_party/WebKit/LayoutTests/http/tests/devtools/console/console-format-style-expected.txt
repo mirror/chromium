@@ -7,5 +7,5 @@ Styled text #0: color: blue;
 Styled text #1: color: red;
 console-format-style.js:16 www.google.com
 Styled text #0: color: blue;
-Styled text #1: color: blue;
+Styled text #1: -webkit-text-stroke: 0px !important; text-decoration: underline !important; color: rgb(84, 84, 84) !important; background-color: rgb(255, 255, 255) !important;
 
