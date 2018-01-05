@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac8e70e1_2824ac76",
+        "filename": "chrome/browser/browsing_data/browsing_data_local_storage_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26bf7cf9_29a93cff",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d6c08d_457e987e",
         "filename": "chrome/browser/browsing_data/mock_browsing_data_local_storage_helper.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0662ee3f_58bd3efb",
+        "filename": "chrome/browser/browsing_data/mock_browsing_data_local_storage_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "f3d6c08d_457e987e",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e8701807_83a16952",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "I changed it to use a lambda and a local runloop. I just discovered that there is a BindLambdaForTesting function that allows to bind lambdas with a [\u0026] scope. That makes the whole thing much simpler :D\n\ncontext-\u003eGetLocalStorageUsage(base::BindLambdaForTesting(\n   [\u0026](const std::vector\u003cLocalStorageUsageInfo\u003e\u0026 u) {\n      usage \u003d u;\n      loop.Quit();\n   }));\nloop.Run()",
+      "parentUuid": "80c1fc25_71b10afc",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4de7ab69_cef49def",
         "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
         "patchSetId": 9
@@ -70,6 +130,30 @@
       "writtenOn": "2018-01-04T18:56:33Z",
       "side": 1,
       "message": "ReceivedMojoClosure seems like a pretty terrible name for this. Also any particular reason for allowing null callbacks? Without it you could possibly just bind directly to TaskRunner::PostTask rather than having this extra helper method. Although a properly named helper method might be clearer, don\u0027t really have strong opinions there.",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4014148f_87577169",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "I changed it to require a callback.\nI renamed it to GotMojoDeletionCallback similar to GotMojoLocalStorageUsage",
+      "parentUuid": "4de7ab69_cef49def",
       "range": {
         "startLine": 68,
         "startChar": 5,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ff397ec0_b2f6486e",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "I changed it to \n// Wait for callbacks for each entry in |usage| and a callback for |origin|.\n\nIs that fine? I could maybe just remove the comment but I wanted to explain the +1",
+      "parentUuid": "c2cf6cf3_6734f102",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ad532aa_2d32d8ba",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.h",
         "patchSetId": 9
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "dbc2f894_6d6ec179",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad532aa_2d32d8ba",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71485e4f_ce79399b",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45e1681_0ec8da2c",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71485e4f_ce79399b",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "48e200d9_f6a4a293",
+        "filename": "content/public/browser/dom_storage_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "I changed the function to require a callback.",
+      "parentUuid": "d069c182_8bcf556d",
+      "range": {
+        "startLine": 43,
+        "startChar": 55,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec3fcdf_fac6a99a",
         "filename": "content/public/browser/dom_storage_context.h",
         "patchSetId": 9
@@ -167,6 +329,24 @@
       "writtenOn": "2018-01-04T18:56:33Z",
       "side": 1,
       "message": "can you be more explicit with what \"done\" means? From the implementation it seems you consider it done when the request to delete data has been sent to the database (or is about to be sent to the database), but you\u0027re not always waiting for the database to actually commit the change. So \"done\" seems to mean that GetLocalStorageUsage will no longer include the deleted origin, but on disk nothing might have changed yet.",
+      "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00594fcc_602ccc20",
+        "filename": "content/public/browser/dom_storage_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2018-01-05T12:25:21Z",
+      "side": 1,
+      "message": "I changed the comment to explain this in more detail. For the deletion UI it is important that GetLocalStorageUsage() doesn\u0027t return this data anymore. Would it make sense to also wait for the commit to happen? What event would I have to wait for?",
+      "parentUuid": "4ec3fcdf_fac6a99a",
       "revId": "264ae09aa55c7d1d03327f40eaf63bb361584bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
