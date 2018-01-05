@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2181f176_85a5c718",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/performanceobservers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "When would we hit this case? If the JSON is the same, won\u0027t the startTime\u0027s be the same?",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b210937_c534cf44",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "Why 5?",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b72b942_27a19c51",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/performance-timeline/po-customusertiming.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "These should have startTimes too, shouldn\u0027t they? Computed via the default path of using performance.now()?",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93e5582_7cf01b26",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "This should probably be startTimeOr...\n\n(Sorry, I know this came from the doc.)",
+      "range": {
+        "startLine": 62,
+        "startChar": 141,
+        "endLine": 62,
+        "endChar": 146
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a519778_d37b8d74",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "Let\u0027s not call now() unless we need to - it can be expensive.",
+      "range": {
+        "startLine": 458,
+        "startChar": 2,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa27b9a_d7941b35",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "If hasDetail() is false, what\u0027s the return value here?\nI\u0027m wondering if we can just pass performanceMarkOptions.detail() directly into user_timing_-\u003eMark, but I\u0027m not sure.",
+      "range": {
+        "startLine": 465,
+        "startChar": 15,
+        "endLine": 465,
+        "endChar": 46
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd56796e_43ae9c6c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMark.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "It isn\u0027t completely clear to me that this is correct. Is this based on the CustomEvent detail field? Do they provide justification for this?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7ef217_91ddef4c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceMeasureOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2018-01-05T16:39:40Z",
+      "side": 1,
+      "message": "Let\u0027s remove this from the first patch.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 38
+      },
+      "revId": "b461a1ba60fee63785b3a9b5df3773cb1b377ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
