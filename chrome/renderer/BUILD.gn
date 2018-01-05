@@ -153,7 +153,6 @@ static_library("renderer") {
     "//third_party/icu",
     "//third_party/re2",
     "//third_party/widevine/cdm:headers",
-    "//tools/v8_context_snapshot",
     "//ui/surface",
     "//v8:v8",
   ]
@@ -408,6 +407,10 @@ static_library("renderer") {
       "searchbox/searchbox_extension.h",
     ]
   }
+
+  data = [
+    "$root_out_dir/v8_context_snapshot.bin",
+  ]
 }
 
 static_library("test_support") {

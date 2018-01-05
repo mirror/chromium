@@ -14,6 +14,7 @@ import("//testing/test.gni")
 import("//third_party/icu/config.gni")
 import("//third_party/protobuf/proto_library.gni")
 import("//tools/grit/grit_rule.gni")
+import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("//url/features.gni")
 
 if (!is_proto_quic) {
@@ -2767,6 +2768,11 @@ if (use_v8_in_net) {
       "//url",
       "//v8",
     ]
+    if (use_v8_context_snapshot) {
+      data = [
+        "$root_out_dir/v8_context_snapshot.bin",
+      ]
+    }
   }
 }
 
