@@ -22,6 +22,7 @@
 #include "net/base/test_proxy_delegate.h"
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/base/upload_file_element_reader.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/http/http_auth_scheme.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_network_session_peer.h"
@@ -3035,61 +3036,133 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushOnClosedPushedStream) {
   EXPECT_TRUE(data.AllWriteDataConsumed());
 }
 
+// Regression test for https://crbug.com/776415.
+// A client-initiated request can only pool to an existing HTTP/2 connection if
+// the IP address matches.  However, a resource can be pushed by the server on a
+// connection even if the IP address does not match.  This test verifies that if
+// the request binds to such a pushed stream, and after that the server resets
+// the stream before SpdySession::GetPushedStream() is called, then the retry
+// (using a client-initiated stream) does not pool to this connection.
 TEST_F(SpdyNetworkTransactionTest, ServerCancelsPush) {
-  SpdySerializedFrame req(
-      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, LOWEST, true));
+  const char* kUrl1 = "https://www.example.org";
+  const char* kUrl2 = "https://mail.example.org";
+
+  auto resolver = std::make_unique<MockHostResolver>();
+  resolver->rules()->ClearRules();
+  resolver->rules()->AddRule("www.example.org", "127.0.0.1");
+  resolver->rules()->AddRule("mail.example.org", "127.0.0.2");
+
+  auto session_deps = std::make_unique<SpdySessionDependencies>();
+  session_deps->host_resolver = std::move(resolver);
+  NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_,
+                                     std::move(session_deps));
+
+  SpdySerializedFrame req1(spdy_util_.ConstructSpdyGet(kUrl1, 1, LOWEST));
   SpdySerializedFrame priority(
       spdy_util_.ConstructSpdyPriority(2, 1, IDLE, true));
-  MockWrite writes[] = {CreateMockWrite(req, 0), CreateMockWrite(priority, 3)};
+  MockWrite writes1[] = {CreateMockWrite(req1, 0),
+                         CreateMockWrite(priority, 3)};
 
-  SpdySerializedFrame reply(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
-  SpdySerializedFrame push(spdy_util_.ConstructSpdyPush(
-      nullptr, 0, 2, 1, GetDefaultUrlWithPath("/foo.dat").c_str()));
-  SpdySerializedFrame body(spdy_util_.ConstructSpdyDataFrame(1, true));
+  SpdySerializedFrame reply1(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
+  SpdySerializedFrame push(
+      spdy_util_.ConstructSpdyPush(nullptr, 0, 2, 1, kUrl2));
+  SpdySerializedFrame body1(spdy_util_.ConstructSpdyDataFrame(1, true));
   SpdySerializedFrame rst(
       spdy_util_.ConstructSpdyRstStream(2, ERROR_CODE_INTERNAL_ERROR));
-  MockRead reads[] = {CreateMockRead(reply, 1), CreateMockRead(push, 2),
-                      CreateMockRead(body, 4), CreateMockRead(rst, 5),
-                      MockRead(ASYNC, 0, 6)};
+  MockRead reads1[] = {
+      CreateMockRead(reply1, 1),          CreateMockRead(push, 2),
+      CreateMockRead(body1, 4),           CreateMockRead(rst, 5),
+      MockRead(ASYNC, ERR_IO_PENDING, 6), MockRead(ASYNC, 0, 7)};
 
-  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  SequencedSocketData data1(reads1, arraysize(reads1), writes1,
+                            arraysize(writes1));
 
-  NormalSpdyTransactionHelper helper(request_, DEFAULT_PRIORITY, log_, nullptr);
+  SpdyTestUtil spdy_util2;
+  SpdySerializedFrame req2(spdy_util2.ConstructSpdyGet(kUrl2, 1, LOWEST));
+  MockWrite writes2[] = {CreateMockWrite(req2, 0)};
+
+  SpdySerializedFrame reply2(spdy_util2.ConstructSpdyGetReply(nullptr, 0, 1));
+  base::StringPiece kData("Response on the second connection.");
+  SpdySerializedFrame body2(
+      spdy_util2.ConstructSpdyDataFrame(1, kData.data(), kData.size(), true));
+  MockRead reads2[] = {CreateMockRead(reply2, 1), CreateMockRead(body2, 2),
+                       MockRead(ASYNC, 0, 3)};
+
+  SequencedSocketData data2(reads2, arraysize(reads2), writes2,
+                            arraysize(writes2));
+
   helper.RunPreTestSetup();
-  helper.AddData(&data);
+  helper.AddData(&data1);
+  helper.AddData(&data2);
 
-  // First request to open up connection.
+  // First request opens up connection to www.example.org.
   HttpNetworkTransaction* trans1 = helper.trans();
+  HttpRequestInfo request1;
+  request1.method = "GET";
+  request1.url = GURL(kUrl1);
   TestCompletionCallback callback1;
-  int rv = trans1->Start(&request_, callback1.callback(), log_);
+  int rv = trans1->Start(&request1, callback1.callback(), log_);
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
 
   // Read until response body arrives.  PUSH_PROMISE comes earlier.
   rv = callback1.WaitForResult();
   EXPECT_THAT(rv, IsOk());
-  HttpResponseInfo response = *trans1->GetResponseInfo();
-  EXPECT_TRUE(response.headers);
-  EXPECT_EQ("HTTP/1.1 200", response.headers->GetStatusLine());
-  SpdyString result;
-  ReadResult(trans1, &result);
-  EXPECT_EQ("hello!", result);
+  const HttpResponseInfo* response = trans1->GetResponseInfo();
+  EXPECT_TRUE(response->headers);
+  EXPECT_EQ("HTTP/1.1 200", response->headers->GetStatusLine());
+  std::string result1;
+  ReadResult(trans1, &result1);
+  EXPECT_EQ("hello!", result1);
+
+  SpdySessionPool* spdy_session_pool = helper.session()->spdy_session_pool();
+  SpdySessionKey key1(HostPortPair::FromURL(GURL(kUrl1)), ProxyServer::Direct(),
+                      PRIVACY_MODE_DISABLED);
+  base::WeakPtr<SpdySession> spdy_session1 =
+      spdy_session_pool->FindAvailableSession(
+          key1, /* enable_ip_based_pooling = */ true, log_);
+  EXPECT_EQ(1u, num_unclaimed_pushed_streams(spdy_session1));
+
+  // While cross-origin push for kUrl2 is allowed on spdy_session1,
+  // a client-initited request would not pool to this connection,
+  // because the IP address does not match.
+  SpdySessionKey key2(HostPortPair::FromURL(GURL(kUrl2)), ProxyServer::Direct(),
+                      PRIVACY_MODE_DISABLED);
+  EXPECT_FALSE(spdy_session_pool->FindAvailableSession(
+      key2, /* enable_ip_based_pooling = */ true, log_));
 
   // Create request matching pushed stream.
-  HttpRequestInfo request = CreateGetPushRequest();
   HttpNetworkTransaction trans2(DEFAULT_PRIORITY, helper.session());
+  HttpRequestInfo request2;
+  request2.method = "GET";
+  request2.url = GURL(kUrl2);
   TestCompletionCallback callback2;
-  rv = trans2.Start(&request, callback2.callback(), log_);
+  rv = trans2.Start(&request2, callback2.callback(), log_);
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
 
-  // Read RST_STREAM from server closing pushed stream.
+  // Pushed stream is now claimed by second request.
+  EXPECT_EQ(0u, num_unclaimed_pushed_streams(spdy_session1));
+
+  // Second request receives RST_STREAM and is retried on a new connection.
   rv = callback2.WaitForResult();
-  EXPECT_THAT(rv, IsError(ERR_SPDY_PUSHED_STREAM_NOT_AVAILABLE));
+  EXPECT_THAT(rv, IsOk());
+  response = trans2.GetResponseInfo();
+  EXPECT_TRUE(response->headers);
+  EXPECT_EQ("HTTP/1.1 200", response->headers->GetStatusLine());
+  std::string result2;
+  ReadResult(&trans2, &result2);
+  EXPECT_EQ("Response on the second connection.", result2);
+
+  // Make sure that the first connection is still open. This is important in
+  // order to test that the retry created its own connection (because the IP
+  // address does not match), instead of using the connection of the cancelled
+  // pushed stream.
+  EXPECT_TRUE(spdy_session1);
 
   // Read EOF.
+  data1.Resume();
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(data.AllReadDataConsumed());
-  EXPECT_TRUE(data.AllWriteDataConsumed());
+  helper.VerifyDataConsumed();
 }
 
 // Regression test for https://crbug.com/727653.
