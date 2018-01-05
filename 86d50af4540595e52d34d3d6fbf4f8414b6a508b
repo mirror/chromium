@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32c797ed_c53cda1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptTabModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T22:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73202cfb_76a8e679",
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa9ce29_d9772a89",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptTabModalDialog.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f67cab_69d65b97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptTabModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T22:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa9ce29_d9772a89",
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e768e750_fdffe661",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/JavascriptTabModalDialogTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T22:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8c694f_09e770cb",
+      "range": {
+        "startLine": 5,
+        "startChar": 35,
+        "endLine": 5,
+        "endChar": 36
+      },
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "735272a5_9ec191d0",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/JavascriptTabModalDialogTest.java",
         "patchSetId": 2
@@ -79,6 +139,30 @@
       "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5998c3f1_b856ee17",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/JavascriptTabModalDialogTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T22:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "735272a5_9ec191d0",
+      "range": {
+        "startLine": 315,
+        "startChar": 39,
+        "endLine": 315,
+        "endChar": 60
+      },
+      "revId": "86d50af4540595e52d34d3d6fbf4f8414b6a508b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
