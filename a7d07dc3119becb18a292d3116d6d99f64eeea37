@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bf88f69_7b2f3fb1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 10961,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-05T15:58:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e14ff5_474616a0",
+      "revId": "a7d07dc3119becb18a292d3116d6d99f64eeea37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb31ad41_b7e6c5d8",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T12:03:37Z",
       "side": 1,
       "message": "the correct spelling is WiFi.\n\nLooking at the source, this error also occurs when the frame drop rate is too high, independent of the network type. Is that the case? We should pick a string that reflects this (and doesn\u0027t imply it\u0027s WiFi related, if this can also be caused e.g. by poor 2G connectivity)",
+      "revId": "a7d07dc3119becb18a292d3116d6d99f64eeea37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49ad96a_b67b6840",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 10964,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-05T15:58:43Z",
+      "side": 1,
+      "message": "Corrected the spelling. Thanks.\n\nYes, the high drop rate could be caused by other reasons, which we can\u0027t tell. The main purpose of the message here is to let the user know that the switching is caused by network condition or/and the video content, not by errors. I will double check with our PM/designer on this.",
+      "parentUuid": "bb31ad41_b7e6c5d8",
       "revId": "a7d07dc3119becb18a292d3116d6d99f64eeea37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
