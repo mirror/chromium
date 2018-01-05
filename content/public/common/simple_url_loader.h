@@ -63,7 +63,17 @@ class CONTENT_EXPORT SimpleURLLoader {
   };
 
   // The maximum size DownloadToString will accept.
-  const size_t kMaxBoundedStringDownloadSize = 1024 * 1024;
+  static const size_t kMaxBoundedStringDownloadSize;
+
+  // Maximum upload body size to send as a block to the URLLoaderFactory. This
+  // data may appear in memory twice for a while, in the retry case, and there
+  // may briefly be 3 to 5 copies as it's copied over the Mojo pipe:  This
+  // class's copy (With retries enabled), the source mojo pipe's input copy, the
+  // copy on the IPC buffer, the destination mojo pipe's copy, and the network
+  // service's copy.
+  //
+  // Only exposed for tests.
+  static const size_t kMaxUploadStringSizeToCopy;
 
   // Callback used when downloading the response body as a std::string.
   // |response_body| is the body of the response, or nullptr on failure.
@@ -83,7 +93,8 @@ class CONTENT_EXPORT SimpleURLLoader {
 
   // Creates a SimpleURLLoader for |resource_request|. The request can be
   // started by calling any one of the Download methods once. The loader may not
-  // be reused.
+  // be reused. If |resource_request| includes a base::File, it will be deleted
+  // on another thread.
   static std::unique_ptr<SimpleURLLoader> Create(
       std::unique_ptr<ResourceRequest> resource_request,
       const net::NetworkTrafficAnnotationTag& annotation_tag);
@@ -171,15 +182,26 @@ class CONTENT_EXPORT SimpleURLLoader {
   // TODO(mmenke): Consider adding a new error code for this.
   virtual void SetAllowHttpErrorResults(bool allow_http_error_results) = 0;
 
+  // Attaches the specified string as the upload body. Depending on the length
+  // of the string, the string may be copied to the URLLoader, or may be
+  // streamed to it from the current process. May only be called once, and only
+  // if ResourceRequest passed to the constructor had a null |request_body|.
+  //
+  // |content_type| will overwrite any Content-Type header in the
+  // ResourceRequest passed to Create().
+  //
+  // TODO(mmenke): This currently always requires a copy. Update DataElement not
+  // to require this.
+  virtual void AttachStringForUpload(
+      const std::string& upload_data,
+      const std::string& upload_content_type) = 0;
+
   // Helper method to attach a file for upload, so the consumer won't need to
   // open the file itself off-thread. May only be called once, and only if the
   // ResourceRequest passed to the constructor had a null |request_body|.
   //
   // |content_type| will overwrite any Content-Type header in the
   // ResourceRequest passed to Create().
-  //
-  // TODO(mmenke):  This current attaches the upload as a FilePath. Make it open
-  // the file off-thread and attach it as a base::File instead.
   virtual void AttachFileForUpload(const base::FilePath& upload_file_path,
                                    const std::string& upload_content_type) = 0;
 
@@ -196,6 +218,10 @@ class CONTENT_EXPORT SimpleURLLoader {
   //
   // Calling this multiple times will overwrite the values previously passed to
   // this method. May only be called before the request is started.
+  //
+  // Requests with an upload body that contains a data pipe cannot be retried.
+  // AttachStringForUpload may use data pipes, but it will create new ones as
+  // needed, so can safely be used with retries.
   virtual void SetRetryOptions(int max_retries, int retry_mode) = 0;
 
   // Returns the net::Error representing the final status of the request. May
