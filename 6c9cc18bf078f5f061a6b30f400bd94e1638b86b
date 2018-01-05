@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01dfbbce_96409cf8",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T22:15:26Z",
+      "side": 1,
+      "message": "Yes; the order matches the enum order in infobar_delegate.h.",
+      "parentUuid": "afef8ada_f86742dd",
+      "revId": "6c9cc18bf078f5f061a6b30f400bd94e1638b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb2f8d73_6b8ea00b",
         "filename": "chrome/browser/plugins/reload_plugin_infobar_delegate.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6c9cc18bf078f5f061a6b30f400bd94e1638b86b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152ac14e_1d66f24b",
+        "filename": "chrome/browser/plugins/reload_plugin_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T22:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb2f8d73_6b8ea00b",
+      "revId": "6c9cc18bf078f5f061a6b30f400bd94e1638b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
