@@ -227,6 +227,12 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
+  Member& operator=(const Member& other) {
+    Parent::operator=(other);
+    WriteBarrier(this->raw_);
+    return *this;
+  }
+
   template <typename U>
   Member& operator=(const Member<U>& other) {
     Parent::operator=(other);

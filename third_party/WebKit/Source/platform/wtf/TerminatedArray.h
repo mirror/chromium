@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/ConstructTraits.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/VectorTraits.h"
 #include "platform/wtf/allocator/Partitions.h"
@@ -23,11 +24,6 @@ class TerminatedArray {
   DISALLOW_NEW();
 
  public:
-  // When TerminatedArray::Allocator implementations grow the backing
-  // store, old is copied into the new and larger block.
-  static_assert(VectorTraits<T>::kCanCopyWithMemcpy,
-                "Array elements must be memory copyable");
-
   T& at(size_t index) { return reinterpret_cast<T*>(this)[index]; }
   const T& at(size_t index) const {
     return reinterpret_cast<const T*>(this)[index];
