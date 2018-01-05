@@ -155,6 +155,12 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
   source->AddLocalizedString("errorsPageHeading",
                              IDS_MD_EXTENSIONS_ERROR_PAGE_HEADING);
   source->AddLocalizedString("clearAll", IDS_MD_EXTENSIONS_ERROR_CLEAR_ALL);
+  source->AddLocalizedString("clearLog", IDS_MD_EXTENSIONS_LOG_CLEAR);
+  source->AddLocalizedString("clearWarn", IDS_MD_EXTENSIONS_WARN_CLEAR);
+  source->AddLocalizedString("clearError", IDS_MD_EXTENSIONS_ERROR_CLEAR);
+  source->AddLocalizedString("logLevel", IDS_EXTENSIONS_LOG_LEVEL_INFO);
+  source->AddLocalizedString("warnLevel", IDS_EXTENSIONS_LOG_LEVEL_WARN);
+  source->AddLocalizedString("errorLevel", IDS_EXTENSIONS_LOG_LEVEL_ERROR);
   source->AddLocalizedString("anonymousFunction",
                              IDS_MD_EXTENSIONS_ERROR_ANONYMOUS_FUNCTION);
   source->AddLocalizedString("errorContext", IDS_MD_EXTENSIONS_ERROR_CONTEXT);
