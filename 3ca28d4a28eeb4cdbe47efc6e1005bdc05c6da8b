@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d18f2090_fe7d98dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-05T02:51:13Z",
+      "side": 1,
+      "message": "The concern here is that styles inside one message might \u0027flow outside\u0027 and cover up text in another message.\n\nExamples include:\n`-webkit-text-stroke: 10000px`\n`line-height: 1px; font-size: 1000px`\ntext-shadow that goes outside of the wrapper",
+      "parentUuid": "9581e915_523a76f6",
+      "revId": "3ca28d4a28eeb4cdbe47efc6e1005bdc05c6da8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8335c8db_8ff96d27",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T02:38:28Z",
       "side": 1,
       "message": "If we don\u0027t apply any styling, why do we need these important ones?",
+      "revId": "3ca28d4a28eeb4cdbe47efc6e1005bdc05c6da8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124624fa_1f029e22",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2018-01-05T02:51:13Z",
+      "side": 1,
+      "message": "We also apply styling to the container, which contains other text nodes as well as our link.  Some properties applied on the parent can be inherited, so these extra rules are here to \u0027reset\u0027 them.\n\n\u003cdiv style\u003d\"background-color: red\"\u003e\n  Foo\n  \u003clink style\u003d\"background-color: white !important\"\u003escript.js\u003c/link\u003e\n  bar\n\u003c/div\u003e\n\nOne alternative is to upgrade all text nodes \u0027Foo\u0027 and \u0027bar\u0027 into \u003cspan style\u003d\"...\"\u003e\u0027s.  However, this requires traversing through nodes and ends up changing functionality (\u0027border\u0027 rules could appear on way more elements than expected.)",
+      "parentUuid": "8335c8db_8ff96d27",
       "revId": "3ca28d4a28eeb4cdbe47efc6e1005bdc05c6da8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
