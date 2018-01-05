@@ -39,6 +39,16 @@ using mojom::blink::PermissionService;
 
 namespace {
 
+PermissionDescriptorPtr GetSensorPermission(ScriptState* script_state,
+                                            ExceptionState& exception_state,
+                                            PermissionName name) {
+  if (!OriginTrials::sensorEnabled(ExecutionContext::From(script_state))) {
+    exception_state.ThrowTypeError("GenericSensor flag is not enabled.");
+    return nullptr;
+  }
+  return CreatePermissionDescriptor(name);
+}
+
 // Parses the raw permission dictionary and returns the Mojo
 // PermissionDescriptor if parsing was successful. If an exception occurs, it
 // will be stored in |exceptionState| and null will be returned. Therefore, the
@@ -101,24 +111,28 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
     return CreatePermissionDescriptor(PermissionName::BACKGROUND_SYNC);
   // TODO(riju): Remove runtime flag check when Generic Sensor feature is
   // stable.
-  if (name == "ambient-light-sensor" || name == "accelerometer" ||
-      name == "gyroscope" || name == "magnetometer") {
-    if (!OriginTrials::sensorEnabled(ExecutionContext::From(script_state))) {
-      exception_state.ThrowTypeError("GenericSensor flag is not enabled.");
+  if (name == "ambient-light-sensor") {
+    if (!RuntimeEnabledFeatures::SensorExtraClassesEnabled()) {
+      exception_state.ThrowTypeError(
+          "GenericSensorExtraClasses flag is not enabled.");
       return nullptr;
     }
-
-    // Magnetometer and ALS require an extra flag.
-    if (name == "ambient-light-sensor") {
-      if (!RuntimeEnabledFeatures::SensorExtraClassesEnabled()) {
-        exception_state.ThrowTypeError(
-            "GenericSensorExtraClasses flag is not enabled.");
-        return nullptr;
-      }
-    }
-
-    return CreatePermissionDescriptor(PermissionName::SENSORS);
+    return GetSensorPermission(script_state, exception_state,
+                               PermissionName::AMBIENT_LIGHT_SENSOR);
   }
+  if (name == "accelerometer") {
+    return GetSensorPermission(script_state, exception_state,
+                               PermissionName::ACCELEROMETER);
+  }
+  if (name == "gyroscope") {
+    return GetSensorPermission(script_state, exception_state,
+                               PermissionName::GYROSCOPE);
+  }
+  if (name == "magnetometer") {
+    return GetSensorPermission(script_state, exception_state,
+                               PermissionName::MAGNETOMETER);
+  }
+
   if (name == "accessibility-events") {
     if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled()) {
       exception_state.ThrowTypeError(

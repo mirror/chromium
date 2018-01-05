@@ -145,7 +145,7 @@ bool PermissionUtil::GetPermissionType(ContentSettingsType type,
     *out = PermissionType::PROTECTED_MEDIA_IDENTIFIER;
 #endif
   } else if (type == CONTENT_SETTINGS_TYPE_SENSORS) {
-    *out = PermissionType::SENSORS;
+    return false;  // TODO(Mikahil): properly handle multiple permission types.
   } else if (type == CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS) {
     *out = PermissionType::ACCESSIBILITY_EVENTS;
   } else if (type == CONTENT_SETTINGS_TYPE_CLIPBOARD_READ) {
