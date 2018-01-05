@@ -29932,6 +29932,41 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="InstallPing.AdMob.NumberOfRetriesBeforeTerminate"
+    units="count">
+  <owner>pkl@chromium.org</owner>
+  <summary>
+    The number of retries attempted before unsuccessfully terminating the
+    sending of installation pings for AdMob ad campaigns.
+  </summary>
+</histogram>
+
+<histogram name="InstallPing.AdMob.NumberOfRetriesToSuccess" units="count">
+  <owner>pkl@chromium.org</owner>
+  <summary>
+    The number of retries attempted before successfully sending an installation
+    ping for AdMob ad campaigns.
+  </summary>
+</histogram>
+
+<histogram name="InstallPing.DoubleClick.NumberOfRetriesBeforeTerminate"
+    units="count">
+  <owner>pkl@chromium.org</owner>
+  <summary>
+    The number of retries attempted before unsuccessfully terminating the
+    sending of installation pings for DoubleClick ad compaigns.
+  </summary>
+</histogram>
+
+<histogram name="InstallPing.DoubleClick.NumberOfRetriesToSuccess"
+    units="count">
+  <owner>pkl@chromium.org</owner>
+  <summary>
+    The number of retries attempted before successfully sending an installation
+    ping for DoubleClick ad campaigns.
+  </summary>
+</histogram>
+
 <histogram name="InstallSigner.InvalidCount">
   <obsolete>
     Deprecated 4/2015. It appears the code at some point changed to use the
