@@ -105,6 +105,24 @@
       "revId": "bcc12be49ee2d7bb6cadd2ff0e4e5b20e6b7bdd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de8d8815_9a791850",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T23:13:08Z",
+      "side": 1,
+      "message": "\u003e Done. While we\u0027re at it, should HasDamage call GetHandleVisibilityChanged? Then we could have just CalculateRenderPasses call ResetHandleVisibilityChanged after calling HasDamage.\n\nthat works too",
+      "parentUuid": "5e336ad5_fd162a7b",
+      "revId": "bcc12be49ee2d7bb6cadd2ff0e4e5b20e6b7bdd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
