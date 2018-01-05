@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2960831e_dd0411fd",
+        "filename": "third_party/WebKit/Source/platform/heap/IncrementalMarkingTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T14:51:59Z",
+      "side": 1,
+      "message": "These tests depend on \n  https://chromium-review.googlesource.com/c/chromium/src/+/852258",
+      "range": {
+        "startLine": 1272,
+        "startChar": 29,
+        "endLine": 1272,
+        "endChar": 62
+      },
+      "revId": "18b8945f00119920fa37973d57b347beed700a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
