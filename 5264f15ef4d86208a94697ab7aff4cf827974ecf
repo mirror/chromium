@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "4e1fdc95_533d1c03",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-05T12:18:56Z",
+      "side": 1,
+      "message": "While I think I understand why it is as it is, can you explain in this comment why we only check if the offset is above the bottom of the opportunity rect?",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f16478_ab2cbc02",
         "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
         "patchSetId": 10
@@ -968,6 +985,24 @@
       "side": 1,
       "message": "So for a given shelf.block_offset there may exist multiple \"closed-off\" opportunities, in the opportunities_ list, these are generated from that shelf.\n\nThis is done with the first is_below, which calls InsertOpportunity.\n\nThis function then iterates over both the \"open\" shelves_, and the \"closed-off\" opportunities_ vectors producing the result vector.\n\nThis just makes sure we prefer the opportunities_ list over the shelves_ list. Both are able to create a result opportunity, but if they exist at the same offset, we prefer the \"closed\" first.\n\nAn opportunity from the opportunities_ vector may have been produced from a shelf which is still in the shelves_ vector, hence will have the same block_offset.\n\nFrom my testing at least when we add a float - the end offset (of the exclusion) is treated as exclusive, hence the resulting opportunity should be inclusive of this offset.\n\nThis is my understanding at least. :/",
       "parentUuid": "960d1085_42de24a3",
+      "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c304a033_1eaacc96",
+        "filename": "third_party/WebKit/Source/core/layout/ng/floats/ng_exclusion_space.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-05T12:18:56Z",
+      "side": 1,
+      "message": "Ok, I think I get it, and it makes sense. Can you add a comment (that we prefer closed-off opportunities)?",
+      "parentUuid": "9163251b_9596e215",
       "revId": "5264f15ef4d86208a94697ab7aff4cf827974ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
