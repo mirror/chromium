@@ -55,6 +55,7 @@ DownloadFilePicker::DownloadFilePicker(DownloadItem* item,
     : suggested_path_(suggested_path),
       file_selected_callback_(callback),
       should_record_file_picker_result_(false) {
+  LOG(ERROR) << "joy: DownloadFilePicker";
   const DownloadPrefs* prefs =
       DownloadPrefs::FromBrowserContext(item->GetBrowserContext());
   DCHECK(prefs);
@@ -103,6 +104,7 @@ DownloadFilePicker::~DownloadFilePicker() {
 void DownloadFilePicker::OnFileSelected(const base::FilePath& path) {
   if (should_record_file_picker_result_)
     RecordFilePickerResult(suggested_path_, path);
+  LOG(ERROR) << "joy: OnFileSelected: " << path;
   file_selected_callback_.Run(path.empty()
                                   ? DownloadConfirmationResult::CANCELED
                                   : DownloadConfirmationResult::CONFIRMED,
@@ -113,6 +115,7 @@ void DownloadFilePicker::OnFileSelected(const base::FilePath& path) {
 void DownloadFilePicker::FileSelected(const base::FilePath& path,
                                       int index,
                                       void* params) {
+  LOG(ERROR) << "joy: FileSelected (Listener)";
   OnFileSelected(path);
   // Deletes |this|
 }
@@ -126,6 +129,7 @@ void DownloadFilePicker::FileSelectionCanceled(void* params) {
 void DownloadFilePicker::ShowFilePicker(DownloadItem* item,
                                         const base::FilePath& suggested_path,
                                         const ConfirmationCallback& callback) {
+  LOG(ERROR) << "joy: ShowFilePicker";
   new DownloadFilePicker(item, suggested_path, callback);
   // DownloadFilePicker deletes itself.
 }
