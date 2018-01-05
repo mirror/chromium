@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "ed5a4947_60b0b1be",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-05T02:51:43Z",
+      "side": 1,
+      "message": "Another NSStreamEventHasBytesAvailable event will be triggered in this case(like epoll\u0027s LT I think), so I don\u0027t think we need to check the data length in the stream. \n\nI tested this case myself, and I will try to write it in unit test to have a double check.",
+      "parentUuid": "4e8ccb1f_0c6c519c",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8aa6a44a_1c150e0b",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 5
@@ -105,6 +129,30 @@
     },
     {
       "key": {
+        "uuid": "53e539bd_e6abfbb4",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-05T02:51:43Z",
+      "side": 1,
+      "message": "In fact, read 0 byte happens just before NSStreamEventEndEncountered is triggered(last NSStreamEventHasBytesAvailable has been handled and all bytes read). I found this during my test.\nIf the situation you said was happening, I did not think we should end the request. Read 0 byte do not mean any error, and NSStreamEventEndEncountered is the way to judge if it is the end.\nThat is my thought, and what do you think?",
+      "parentUuid": "80b182f5_1d07247a",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd42e45_e19939b4",
         "filename": "ios/net/chunked_data_stream_uploader.cc",
         "patchSetId": 5
@@ -116,6 +164,30 @@
       "writtenOn": "2018-01-04T00:40:52Z",
       "side": 1,
       "message": "In practice, NSInputStream can return an error on reading, i.e. return \u0027-1\u0027. I think we should fail the request in that case.\n\nIt happened that \u0027-1\u0027 is also the value of net::ERR_IO_PENDING. If that value is returned, the request can stall.",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "af5457891a254ebf5e058ee099045ce671b4ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d76b32b_d7e49fab",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1255203
+      },
+      "writtenOn": "2018-01-05T02:51:43Z",
+      "side": 1,
+      "message": "I did cover the situation that NSInputStream returns \u003c0 after NSStreamEventHasBytesAvailable event in my test. I think you are right, this can be a bug. I will fix it.",
+      "parentUuid": "0fd42e45_e19939b4",
       "range": {
         "startLine": 98,
         "startChar": 9,
