@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "560b4869_44d9f854",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-05T18:26:23Z",
+      "side": 1,
+      "message": "\u003e iframe_width_px gets ignored?\n\nThat\u0027s how I understood Tom\u0027s expectation.",
+      "parentUuid": "631c1dd2_a500203d",
+      "range": {
+        "startLine": 182,
+        "startChar": 14,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4a87a8_37cc4666",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -68,6 +92,30 @@
       "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454702ee_b6ddd9b0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2018-01-05T18:26:23Z",
+      "side": 1,
+      "message": "Done, much better.",
+      "parentUuid": "aa4a87a8_37cc4666",
+      "range": {
+        "startLine": 1002,
+        "startChar": 69,
+        "endLine": 1002,
+        "endChar": 0
+      },
+      "revId": "e421792f7aaab2564ed72030e4d4b081af8ed9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
