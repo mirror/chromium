@@ -270,7 +270,7 @@ void RequestTextCheck(int document_tag,
                 [result range].length));
           }
           // TODO(groby): Verify we don't need to post from here.
-          callback.Run(check_results);
+          std::move(callback).Run(check_results);
       }];
 }
 

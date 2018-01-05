@@ -282,10 +282,10 @@ void SpellcheckCustomDictionary::Load() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::PostTaskAndReplyWithResult(
       task_runner_.get(), FROM_HERE,
-      base::Bind(&SpellcheckCustomDictionary::LoadDictionaryFile,
-                 custom_dictionary_path_),
-      base::Bind(&SpellcheckCustomDictionary::OnLoaded,
-                 weak_ptr_factory_.GetWeakPtr()));
+      base::BindOnce(&SpellcheckCustomDictionary::LoadDictionaryFile,
+                     custom_dictionary_path_),
+      base::BindOnce(&SpellcheckCustomDictionary::OnLoaded,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 syncer::SyncMergeResult SpellcheckCustomDictionary::MergeDataAndStartSyncing(
