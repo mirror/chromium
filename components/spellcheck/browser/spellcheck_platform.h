@@ -18,6 +18,7 @@ struct SpellCheckResult;
 
 namespace spellcheck_platform {
 
+// TODO(crbug.com/714018): This should be OnceCallback
 typedef base::Callback<void(
         const std::vector<SpellCheckResult>& /* results */)>
             TextCheckCompleteCallback;

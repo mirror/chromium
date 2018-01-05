@@ -447,8 +447,8 @@ void SpellCheck::PostDelayedSpellCheckTask(SpellcheckRequest* request) {
     return;
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&SpellCheck::PerformSpellCheck, AsWeakPtr(),
-                            base::Owned(request)));
+      FROM_HERE, base::BindOnce(&SpellCheck::PerformSpellCheck, AsWeakPtr(),
+                                base::Owned(request)));
 }
 #endif
 

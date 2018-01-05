@@ -44,8 +44,8 @@ class SpellcheckPlatformMacTest: public testing::Test {
     results_ = results;
     callback_finished_ = true;
     message_loop_.task_runner()->PostTask(
-        FROM_HERE, base::Bind(&SpellcheckPlatformMacTest::QuitMessageLoop,
-                              base::Unretained(this)));
+        FROM_HERE, base::BindOnce(&SpellcheckPlatformMacTest::QuitMessageLoop,
+                                  base::Unretained(this)));
   }
 
   base::MessageLoopForUI message_loop_;
