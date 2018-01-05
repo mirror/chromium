@@ -874,8 +874,6 @@ void RenderWidgetHostViewAura::UpdateScreenInfo(gfx::NativeView view) {
     return;
 
   window_->AllocateLocalSurfaceId();
-  host_->DidAllocateLocalSurfaceIdForAutoResize(
-      host_->last_auto_resize_request_number());
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
 }

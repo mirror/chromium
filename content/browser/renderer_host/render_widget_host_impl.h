@@ -500,10 +500,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     return max_size_for_auto_resize_;
   }
 
-  // Called to notify the RenderWidget that a viz::LocalSurfaceId was allocated
-  // for the auto-resize request specified by |sequence_number|.
-  void DidAllocateLocalSurfaceIdForAutoResize(uint64_t sequence_number);
-
   void DidReceiveRendererFrame();
 
   // Returns the ID that uniquely describes this component to the latency

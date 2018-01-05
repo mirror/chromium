@@ -26,7 +26,7 @@ class VIZ_COMMON_EXPORT ParentLocalSurfaceIdAllocator {
   LocalSurfaceId GenerateId();
 
  private:
-  uint32_t next_id_;
+  uint32_t next_parent_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ParentLocalSurfaceIdAllocator);
 };

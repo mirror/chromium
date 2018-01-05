@@ -2467,21 +2467,6 @@ void RenderWidgetHostImpl::DetachDelegate() {
   latency_tracker_.reset_delegate();
 }
 
-void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
-    uint64_t sequence_number) {
-  if (!view_ || last_auto_resize_request_number_ != sequence_number)
-    return;
-
-  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
-  if (local_surface_id.is_valid()) {
-    ScreenInfo screen_info;
-    GetScreenInfo(&screen_info);
-    Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
-        routing_id_, sequence_number, min_size_for_auto_resize_,
-        max_size_for_auto_resize_, screen_info, local_surface_id));
-  }
-}
-
 void RenderWidgetHostImpl::DidReceiveRendererFrame() {
   view_->DidReceiveRendererFrame();
 }

@@ -341,15 +341,6 @@ IPC_MESSAGE_ROUTED0(ViewMsg_Close)
 // rect so that we don't have to fetch it every time WebKit asks for it.
 IPC_MESSAGE_ROUTED1(ViewMsg_Resize, content::ResizeParams /* params */)
 
-// Tells the widget to use the provided viz::LocalSurfaceId to submit
-// CompositorFrames for autosize.
-IPC_MESSAGE_ROUTED5(ViewMsg_SetLocalSurfaceIdForAutoResize,
-                    uint64_t /* sequence_number */,
-                    gfx::Size /* min_size */,
-                    gfx::Size /* max_size */,
-                    content::ScreenInfo /* screen_info */,
-                    viz::LocalSurfaceId /* local_surface_id */)
-
 // Enables device emulation. See WebDeviceEmulationParams for description.
 IPC_MESSAGE_ROUTED1(ViewMsg_EnableDeviceEmulation,
                     blink::WebDeviceEmulationParams /* params */)
