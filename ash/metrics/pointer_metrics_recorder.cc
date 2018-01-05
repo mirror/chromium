@@ -4,6 +4,7 @@
 
 #include "ash/metrics/pointer_metrics_recorder.h"
 
+#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/public/cpp/app_types.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
@@ -22,7 +23,8 @@ namespace {
 // and new values should be inserted immediately above FORM_FACTOR_COUNT.
 enum class DownEventFormFactor {
   CLAMSHELL = 0,
-  TABLET_MODE,
+  TABLET_MODE_LANDSCAPE,
+  TABLET_MODE_PORTRAIT,
   FORM_FACTOR_COUNT,
 };
 
@@ -36,6 +38,61 @@ enum class DownEventSource {
   SOURCE_COUNT,
 };
 
+// Input, FormFactor, and Destination Combination of the down event.
+// This enum is used to back an UMA histogram and new values should
+// be inserted immediately above COMBINATION_COUNT.
+enum class DownEventInputFormFactorDestinationCombination {
+  UNKOWN_CLAMSHELL_OTHERS = 0,
+  UNKOWN_CLAMSHELL_BROWSER,
+  UNKOWN_CLAMSHELL_CHROME_APP,
+  UNKOWN_CLAMSHELL_ARC_APP,
+  UNKOWN_TABLET_LANDSCAPE_OTHERS,
+  UNKOWN_TABLET_LANDSCAPE_BROWSER,
+  UNKOWN_TABLET_LANDSCAPE_CHROME_APP,
+  UNKOWN_TABLET_LANDSCAPE_ARC_APP,
+  UNKOWN_TABLET_PORTRAIT_OTHERS,
+  UNKOWN_TABLET_PORTRAIT_BROWSER,
+  UNKOWN_TABLET_PORTRAIT_CHROME_APP,
+  UNKOWN_TABLET_PORTRAIT_ARC_APP,
+  MOUSE_CLAMSHELL_OTHERS,
+  MOUSE_CLAMSHELL_BROWSER,
+  MOUSE_CLAMSHELL_CHROME_APP,
+  MOUSE_CLAMSHELL_ARC_APP,
+  MOUSE_TABLET_LANDSCAPE_OTHERS,
+  MOUSE_TABLET_LANDSCAPE_BROWSER,
+  MOUSE_TABLET_LANDSCAPE_CHROME_APP,
+  MOUSE_TABLET_LANDSCAPE_ARC_APP,
+  MOUSE_TABLET_PORTRAIT_OTHERS,
+  MOUSE_TABLET_PORTRAIT_BROWSER,
+  MOUSE_TABLET_PORTRAIT_CHROME_APP,
+  MOUSE_TABLET_PORTRAIT_ARC_APP,
+  STYLUS_CLAMSHELL_OTHERS,
+  STYLUS_CLAMSHELL_BROWSER,
+  STYLUS_CLAMSHELL_CHROME_APP,
+  STYLUS_CLAMSHELL_ARC_APP,
+  STYLUS_TABLET_LANDSCAPE_OTHERS,
+  STYLUS_TABLET_LANDSCAPE_BROWSER,
+  STYLUS_TABLET_LANDSCAPE_CHROME_APP,
+  STYLUS_TABLET_LANDSCAPE_ARC_APP,
+  STYLUS_TABLET_PORTRAIT_OTHERS,
+  STYLUS_TABLET_PORTRAIT_BROWSER,
+  STYLUS_TABLET_PORTRAIT_CHROME_APP,
+  STYLUS_TABLET_PORTRAIT_ARC_APP,
+  TOUCH_CLAMSHELL_OTHERS,
+  TOUCH_CLAMSHELL_BROWSER,
+  TOUCH_CLAMSHELL_CHROME_APP,
+  TOUCH_CLAMSHELL_ARC_APP,
+  TOUCH_TABLET_LANDSCAPE_OTHERS,
+  TOUCH_TABLET_LANDSCAPE_BROWSER,
+  TOUCH_TABLET_LANDSCAPE_CHROME_APP,
+  TOUCH_TABLET_LANDSCAPE_ARC_APP,
+  TOUCH_TABLET_PORTRAIT_OTHERS,
+  TOUCH_TABLET_PORTRAIT_BROWSER,
+  TOUCH_TABLET_PORTRAIT_CHROME_APP,
+  TOUCH_TABLET_PORTRAIT_ARC_APP,
+  COMBINATION_COUNT,
+};
+
 int GetDestination(views::Widget* target) {
   if (!target)
     return static_cast<int>(AppType::OTHERS);
@@ -45,18 +102,29 @@ int GetDestination(views::Widget* target) {
   return window->GetProperty(aura::client::kAppType);
 }
 
+int FindCombination(int input_type, int form_factor, int destination) {
+  int num_combination_per_input =
+      kAppCount * static_cast<int>(DownEventFormFactor::FORM_FACTOR_COUNT);
+  return input_type * num_combination_per_input + form_factor * kAppCount +
+         destination;
+}
+
 void RecordUMA(ui::EventPointerType type, views::Widget* target) {
   DownEventFormFactor form_factor = DownEventFormFactor::CLAMSHELL;
   if (Shell::Get()
           ->tablet_mode_controller()
           ->IsTabletModeWindowManagerEnabled()) {
-    form_factor = DownEventFormFactor::TABLET_MODE;
+    blink::WebScreenOrientationLockType screen_orientation =
+        Shell::Get()->screen_orientation_controller()->GetCurrentOrientation();
+    if (screen_orientation ==
+            blink::kWebScreenOrientationLockLandscapePrimary ||
+        screen_orientation ==
+            blink::kWebScreenOrientationLockLandscapeSecondary) {
+      form_factor = DownEventFormFactor::TABLET_MODE_LANDSCAPE;
+    } else {
+      form_factor = DownEventFormFactor::TABLET_MODE_PORTRAIT;
+    }
   }
-  UMA_HISTOGRAM_ENUMERATION(
-      "Event.DownEventCount.PerFormFactor",
-      static_cast<base::HistogramBase::Sample>(form_factor),
-      static_cast<base::HistogramBase::Sample>(
-          DownEventFormFactor::FORM_FACTOR_COUNT));
 
   DownEventSource input_type = DownEventSource::UNKNOWN;
   switch (type) {
@@ -78,12 +146,11 @@ void RecordUMA(ui::EventPointerType type, views::Widget* target) {
   }
 
   UMA_HISTOGRAM_ENUMERATION(
-      "Event.DownEventCount.PerInput",
-      static_cast<base::HistogramBase::Sample>(input_type),
-      static_cast<base::HistogramBase::Sample>(DownEventSource::SOURCE_COUNT));
-
-  UMA_HISTOGRAM_ENUMERATION("Event.DownEventCount.PerDestination",
-                            GetDestination(target), kAppCount);
+      "Event.DownEventCount.PerInputFormFactorDestinationCombination",
+      FindCombination(static_cast<int>(input_type),
+                      static_cast<int>(form_factor), GetDestination(target)),
+      static_cast<base::HistogramBase::Sample>(
+          DownEventInputFormFactorDestinationCombination::COMBINATION_COUNT));
 }
 
 }  // namespace
