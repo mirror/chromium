@@ -2,7 +2,8 @@
   var {page, session, dp} = await testRunner.startBlank(
       `Tests interception for redirects in a chain but rewrite last response.`);
 
-  var headersMaskList = new Set(['date', 'server', 'last-modified', 'etag', 'keep-alive', 'x-powered-by', 'expires']);
+  var headersMaskList = new Set(['date', 'server', 'last-modified', 'etag', 'keep-alive', 'expires']);
+  var headersHideList = new Set(['x-powered-by']);
   var fileNameForRequestId = new Map();
   var responseReceivedEventProimseForFile = new Map();
   var responseReceivedResolverForFile = new Map();
@@ -119,6 +120,8 @@
       testRunner.log('  responseHeaders:');
       for (var headerName of Object.keys(event.params.responseHeaders).sort()) {
         var headerValue = event.params.responseHeaders[headerName].split(';')[0]; // Sometimes "; charset=UTF-8" gets in here.
+        if (headersHideList.has(headerName.toLowerCase()))
+          continue;
         if (headersMaskList.has(headerName.toLowerCase()))
           headerValue = '<Masked>';
         testRunner.log(`    ${headerName}: ${headerValue}`);
