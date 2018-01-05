@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b227a6_58b5cd89",
+        "filename": "chrome/browser/vr/model/model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T17:16:04Z",
+      "side": 1,
+      "message": "nit: can you please a std::set of \"transient\" modes that the model hangs onto and check membership with that instead? I think transient is a clearer name and having a named member for the set of transient elements will make the code pretty easy to read here, too, and reduces the risk of making a mistake in the enum.",
+      "revId": "79db28d3c47171d022a332486f8ebe10ac8a5944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
