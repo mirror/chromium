@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d2b623_348b7783",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T00:11:35Z",
+      "side": 1,
+      "message": "Hmm, is there any particular reason to prefer base::Time rather than base::TimeTicks? In general, base::TimeTicks is preferred for measuring durations, as it is guaranteed to be monotonically non-decreasing.",
+      "range": {
+        "startLine": 185,
+        "startChar": 35,
+        "endLine": 185,
+        "endChar": 39
+      },
+      "revId": "69ca447eaed39ee41e1f94756f90f8cb0e8c4f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
