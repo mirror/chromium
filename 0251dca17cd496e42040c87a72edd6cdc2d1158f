@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c60599e9_e11c4221",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a2205f4_d0b9248f",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a010fc3_1b5c86ba",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a624026_fe56b17d",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "It gets DCHECKed in the HoverButton constructor, so I deleted that instead :O",
+      "parentUuid": "2a010fc3_1b5c86ba",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59510f1a_adebd24e",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb07f00_dfac8a64",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7473f4a_01587b68",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f2eca5_ca695f33",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Ooh, I think it doesn\u0027t need it - can\u0027t remember why I put it in in the first place but it\u0027s removed now. Thanks!",
+      "parentUuid": "d7473f4a_01587b68",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ee887252_02b18916",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d21eea2_36681dc1",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be885a6d_bb4c0c88",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca99e6b_7d420f28",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be885a6d_bb4c0c88",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f80f9b2e_19907b38",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": ":O Thanks, done!",
+      "parentUuid": "57eaf078_9b200a5c",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f249f317_8d179816",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21ed068_f9d07060",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f249f317_8d179816",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a527d080_ce7f9f28",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Yep!",
+      "parentUuid": "09594598_546c1b5a",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d827a0f4_f96875e4",
         "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad9634f_e3afd5ec",
+        "filename": "chrome/browser/ui/views/hover_button_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2018-01-05T01:31:34Z",
+      "side": 1,
+      "message": "Not really - changed it to iterate over the array like you suggested :)",
+      "parentUuid": "d827a0f4_f96875e4",
+      "revId": "0251dca17cd496e42040c87a72edd6cdc2d1158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
