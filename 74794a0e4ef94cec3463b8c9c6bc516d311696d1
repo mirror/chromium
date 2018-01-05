@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c12e89_2a8aa0bb",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-05T16:44:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering what would happen if weakSelf is nil. IIUC, since propertiesBlock is a property, then weakSelf.propertiesBlock will be nil, and we would be calling a nil block which is undefined behaviour, isn\u0027t it?\n\nMy understanding comes from the fact that the following code would be equivalent:\n\n  PropertiesBlock propertiesBlockMayBeNil \u003d weakSelf.propertiesBlock; \n  propertiesBlockMayBeNil(task, error);\n\nI think it would be safer to check that the property is not nil:\n\n  WebThread::PostTask(WebThread::UI, FROM_HERE, base::BindBlockArc(^{\n                        PropertiesBlock propertiesBlock \u003d weakSelf.propertiesBlock;\n                        if (propertiesBlock)\n                          propertiesBlock(task, error);\n                      }));",
+      "range": {
+        "startLine": 108,
+        "startChar": 24,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "74794a0e4ef94cec3463b8c9c6bc516d311696d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d255aa8_b124fb40",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-05T16:44:10Z",
+      "side": 1,
+      "message": "I think the semaphore is leaked. According to the documentation:\n\n\u003e When your application no longer needs the semaphore, it should call dispatch_release to release its reference to the semaphore object and ultimately free its memory.\n\nIn addition, I think it is wasteful to create/destroy the semaphore for each chunk of the NSData. Instead, it would be better, IMO, to create it outside of the block:\n\n  // Block this background queue until the chunk of data is written.\n  dispatch_semaphore_t semaphore \u003d dispatch_semaphore_create(0);\n  [data enumerateByteRangesUsingBlock:^(Bytes bytes, NSRange range, BOOL*) {\n    ...\n  }];\n  dispatch_semaphore_release(semaphore);",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 66
+      },
+      "revId": "74794a0e4ef94cec3463b8c9c6bc516d311696d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086c5c24_3ac376a9",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-05T16:44:10Z",
+      "side": 1,
+      "message": "ditto, I think we should check that weakSelf.dataBlock is not nil here.",
+      "range": {
+        "startLine": 122,
+        "startChar": 26,
+        "endLine": 122,
+        "endChar": 44
+      },
+      "revId": "74794a0e4ef94cec3463b8c9c6bc516d311696d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
