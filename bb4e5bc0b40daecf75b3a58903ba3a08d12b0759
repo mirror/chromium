@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b40c36d_ae2b2d76",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-05T00:31:09Z",
+      "side": 1,
+      "message": "I was going to limit this to just the repro case, but this doesn\u0027t hurt. Done.",
+      "parentUuid": "cda1400e_f4c7a331",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "bb4e5bc0b40daecf75b3a58903ba3a08d12b0759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7853dd8_896f5431",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T23:48:01Z",
       "side": 1,
       "message": "Should this be mBottomSheet \u003d\u003d null || (!mBottomSheet.isRunningContentSwapAnimation() \u0026\u0026 mBottomSheet.getSheetState() !\u003d BottomSheet.SHEET_STATE_SCROLLING)?",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 89
+      },
+      "revId": "bb4e5bc0b40daecf75b3a58903ba3a08d12b0759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905aad59_5b5fde11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2018-01-05T00:31:09Z",
+      "side": 1,
+      "message": "Flipped the name like I originally intended :\\",
+      "parentUuid": "a7853dd8_896f5431",
       "range": {
         "startLine": 139,
         "startChar": 12,
