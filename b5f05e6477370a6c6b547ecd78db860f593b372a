@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fc5244e9_6beb8496",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T16:19:15Z",
+      "side": 1,
+      "message": "Right, I get that there\u0027s compiler generated constructors for the base class (and for this class), but this reads (to me) like we wrote something special in the base class to be constexpr and this is inheriting it. I would maybe instead explain that \u003ddefault generates a constexpr constructor, since there\u0027s no non-constexpr constructor in the base class?",
+      "parentUuid": "d29b8119_58465300",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "482959ee_8cd03831",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "6c7134fd_8aaed8a9",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T16:19:15Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right, my eyes skipped over the trivially before the {copy,move} the first time, sorry.",
+      "parentUuid": "db1c60e3_3197c30f",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0751ec2_b007b500",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Yes it does. Specifically, without this, in_place_t ctor is not inherited.",
       "parentUuid": "f0751ec2_b007b500",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e745d682_1ad2b997",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2018-01-05T16:19:15Z",
+      "side": 1,
+      "message": "Oh ok, thanks.",
+      "parentUuid": "d02f1a2d_d5fa3fd4",
       "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
