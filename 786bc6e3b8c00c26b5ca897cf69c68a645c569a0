@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae8b2f0_525b991d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network-data-length.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2018-01-05T18:05:24Z",
+      "side": 1,
+      "message": "let\u0027s leave a comment:\n// reportedTotalSize is not stable across platforms.",
+      "revId": "786bc6e3b8c00c26b5ca897cf69c68a645c569a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55151865_941341a7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2018-01-05T18:05:24Z",
+      "side": 1,
+      "message": "another comment:\n// Hide these headers which are not shown in newer versions of PHP.",
+      "revId": "786bc6e3b8c00c26b5ca897cf69c68a645c569a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
