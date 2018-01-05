@@ -19,6 +19,7 @@ class TickClock;
 
 namespace ash {
 
+class ConvertiblePowerButtonController;
 class TabletPowerButtonController;
 
 // Handles power button screenshot accelerator. The screenshot condition is
@@ -32,7 +33,8 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
       base::TimeDelta::FromMilliseconds(150);
 
   PowerButtonScreenshotController(
-      TabletPowerButtonController* tablet_controller,
+      ConvertiblePowerButtonController* tablet_controller,
+      TabletPowerButtonController* power_off_menu_controller,
       base::TickClock* tick_clock,
       bool force_clamshell_power_button);
   ~PowerButtonScreenshotController() override;
@@ -86,6 +88,7 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
   // Runs OnClamshellTimeout to start clamshell power button behavior.
   base::OneShotTimer clamshell_power_button_timer_;
 
+  ConvertiblePowerButtonController* convertible_controller_;  // Not owned.
   TabletPowerButtonController* tablet_controller_;  // Not owned.
 
   // Time source for performed action times.

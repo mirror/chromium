@@ -7,8 +7,8 @@
 
 #include <memory>
 
+#include "ash/system/power/convertible_power_button_controller.h"
 #include "ash/system/power/power_button_controller.h"
-#include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/test/ash_test_base.h"
 #include "ui/events/keycodes/keyboard_codes_posix.h"
 
@@ -30,6 +30,8 @@ namespace ash {
 class LockStateController;
 class LockStateControllerTestApi;
 class PowerButtonScreenshotController;
+class ConvertiblePowerButtonControllerTestApi;
+class TabletPowerButtonController;
 class TabletPowerButtonControllerTestApi;
 enum class LoginStatus;
 
@@ -43,15 +45,15 @@ class PowerButtonTestBase : public AshTestBase {
 
   // Vector pointing up (e.g. keyboard in clamshell).
   static constexpr gfx::Vector3dF kUpVector = {
-      0, 0, TabletPowerButtonController::kGravity};
+      0, 0, ConvertiblePowerButtonController::kGravity};
 
   // Vector pointing down (e.g. keyboard in tablet sitting on table).
   static constexpr gfx::Vector3dF kDownVector = {
-      0, 0, -TabletPowerButtonController::kGravity};
+      0, 0, -ConvertiblePowerButtonController::kGravity};
 
   // Vector pointing sideways (e.g. screen in 90-degree clamshell).
   static constexpr gfx::Vector3dF kSidewaysVector = {
-      0, TabletPowerButtonController::kGravity, 0};
+      0, ConvertiblePowerButtonController::kGravity, 0};
 
   // AshTestBase:
   void SetUp() override;
@@ -63,13 +65,13 @@ class PowerButtonTestBase : public AshTestBase {
 
   // Initializes |power_button_controller_| and other members that point at
   // objects owned by it. If |send_accelerometer_update| is true, an
-  // accelerometer update is sent to create TabletPowerButtonController and
+  // accelerometer update is sent to create ConvertiblePowerButtonController and
   // PowerButtonScreenshotController.
   void InitPowerButtonControllerMembers(bool send_accelerometer_update);
 
   // Sends an update with screen and keyboard accelerometer readings to
-  // PowerButtonController, and also |tablet_controller_| if it's non-null and
-  // has registered as an observer.
+  // PowerButtonController, and also |convertible_controller_| if it's non-null
+  // and has registered as an observer.
   void SendAccelerometerUpdate(const gfx::Vector3dF& screen,
                                const gfx::Vector3dF& keyboard);
 
@@ -104,8 +106,12 @@ class PowerButtonTestBase : public AshTestBase {
   // Enables or disables tablet mode based on |enable|.
   void EnableTabletMode(bool enable);
 
-  void set_has_tablet_mode_switch(bool has_tablet_mode_switch) {
-    has_tablet_mode_switch_ = has_tablet_mode_switch;
+  void set_has_convertible_switch(bool has_convertible_switch) {
+    has_convertible_switch_ = has_convertible_switch;
+  }
+
+  void set_has_tablet_switch(bool has_tablet_switch) {
+    has_tablet_switch_ = has_tablet_switch;
   }
 
   // Ownership is passed on to chromeos::DBusThreadManager.
@@ -114,15 +120,22 @@ class PowerButtonTestBase : public AshTestBase {
 
   PowerButtonController* power_button_controller_ = nullptr;  // Not owned.
   LockStateController* lock_state_controller_ = nullptr;      // Not owned.
-  TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
+  ConvertiblePowerButtonController* convertible_controller_ =
+      nullptr;  // Not owned.
   PowerButtonScreenshotController* screenshot_controller_ =
       nullptr;  // Not owned.
+  TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
+  std::unique_ptr<ConvertiblePowerButtonControllerTestApi>
+      convertible_test_api_;
   std::unique_ptr<TabletPowerButtonControllerTestApi> tablet_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
 
   // Indicates whether switches::kAshEnableTabletMode is appended.
-  bool has_tablet_mode_switch_ = true;
+  bool has_convertible_switch_ = true;
+
+  // Indicates whether switches::kIsTablet is appended.
+  bool has_tablet_switch_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonTestBase);
 };
@@ -131,7 +144,7 @@ class PowerButtonTestBase : public AshTestBase {
 // is not set.
 class NoTabletModePowerButtonTestBase : public PowerButtonTestBase {
  public:
-  NoTabletModePowerButtonTestBase() { set_has_tablet_mode_switch(false); }
+  NoTabletModePowerButtonTestBase() { set_has_convertible_switch(false); }
   ~NoTabletModePowerButtonTestBase() override {}
 
  private:

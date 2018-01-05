@@ -10,6 +10,7 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/power/convertible_power_button_controller_test_api.h"
 #include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/wm/lock_state_controller.h"
@@ -45,10 +46,12 @@ void PowerButtonTestBase::SetUp() {
   session_manager_client_ = new chromeos::FakeSessionManagerClient;
   dbus_setter->SetSessionManagerClient(
       base::WrapUnique(session_manager_client_));
-  if (has_tablet_mode_switch_) {
+  if (has_convertible_switch_) {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnableTabletMode);
   }
+  if (has_tablet_switch_)
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(switches::kIsTablet);
   AshTestBase::SetUp();
 
   lock_state_controller_ = Shell::Get()->lock_state_controller();
@@ -78,16 +81,26 @@ void PowerButtonTestBase::InitPowerButtonControllerMembers(
 
   if (send_accelerometer_update) {
     SendAccelerometerUpdate(kSidewaysVector, kUpVector);
-    tablet_controller_ =
-        power_button_controller_->tablet_power_button_controller_for_test();
-    tablet_test_api_ = std::make_unique<TabletPowerButtonControllerTestApi>(
-        tablet_controller_);
+    convertible_controller_ =
+        power_button_controller_
+            ->convertible_power_button_controller_for_test();
+    convertible_test_api_ =
+        std::make_unique<ConvertiblePowerButtonControllerTestApi>(
+            convertible_controller_);
     screenshot_controller_ =
         power_button_controller_->screenshot_controller_for_test();
   } else {
-    tablet_test_api_ = nullptr;
-    tablet_controller_ = nullptr;
+    convertible_test_api_ = nullptr;
+    convertible_controller_ = nullptr;
     screenshot_controller_ = nullptr;
+  }
+  tablet_controller_ =
+      power_button_controller_->tablet_power_button_controller_for_test();
+  if (tablet_controller_) {
+    tablet_test_api_ = std::make_unique<TabletPowerButtonControllerTestApi>(
+        tablet_controller_);
+  } else {
+    tablet_test_api_ = nullptr;
   }
 }
 
@@ -102,8 +115,8 @@ void PowerButtonTestBase::SendAccelerometerUpdate(
               keyboard.y(), keyboard.z());
 
   power_button_controller_->OnAccelerometerUpdated(update);
-  tablet_controller_ =
-      power_button_controller_->tablet_power_button_controller_for_test();
+  convertible_controller_ =
+      power_button_controller_->convertible_power_button_controller_for_test();
   screenshot_controller_ =
       power_button_controller_->screenshot_controller_for_test();
 }

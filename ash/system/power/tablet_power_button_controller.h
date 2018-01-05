@@ -1,51 +1,35 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #ifndef ASH_SYSTEM_POWER_TABLET_POWER_BUTTON_CONTROLLER_H_
 #define ASH_SYSTEM_POWER_TABLET_POWER_BUTTON_CONTROLLER_H_
 
-#include <memory>
-#include <utility>
-
 #include "ash/ash_export.h"
-#include "ash/wm/tablet_mode/tablet_mode_observer.h"
-#include "base/macros.h"
-#include "base/scoped_observer.h"
-#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "ui/events/devices/input_device_event_observer.h"
-#include "ui/events/event_handler.h"
-#include "ui/gfx/geometry/vector3d_f.h"
+
+namespace gfx {
+class Rect;
+}  // namespace gfx
+
+namespace views {
+class Widget;
+}  // namespace views
 
 namespace base {
 class TickClock;
 }  // namespace base
 
 namespace ash {
-
-class LockStateController;
 class PowerButtonDisplayController;
 
-// Handles power button events on convertible/tablet device. This class is
-// instantiated and used in PowerButtonController.
 class ASH_EXPORT TabletPowerButtonController
-    : public chromeos::PowerManagerClient::Observer,
-      public TabletModeObserver {
+    : public chromeos::PowerManagerClient::Observer {
  public:
-  // Public for tests.
-  static constexpr float kGravity = 9.80665f;
-
-  // Amount of time since last screen state change that power button event needs
-  // to be ignored.
-  static constexpr base::TimeDelta kScreenStateChangeDelay =
-      base::TimeDelta::FromMilliseconds(500);
-
-  // Ignore button-up events occurring within this many milliseconds of the
-  // previous button-up event. This prevents us from falling behind if the power
-  // button is pressed repeatedly.
-  static constexpr base::TimeDelta kIgnoreRepeatedButtonUpDelay =
+  // Time that power button should be pressed before to start showing the power
+  // off menu animation.
+  static constexpr base::TimeDelta kStartPowerOffMenuAnimationTimeout =
       base::TimeDelta::FromMilliseconds(500);
 
   TabletPowerButtonController(PowerButtonDisplayController* display_controller,
@@ -55,36 +39,38 @@ class ASH_EXPORT TabletPowerButtonController
   // Handles a power button event.
   void OnPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
 
-  // Overridden from chromeos::PowerManagerClient::Observer:
-  void SuspendDone(const base::TimeDelta& sleep_duration) override;
+  // True if the menu is opened.
+  bool IsMenuOpened() const;
 
-  // TabletModeObserver:
-  void OnTabletModeStarted() override;
-  void OnTabletModeEnded() override;
+  // Dismisses the menu.
+  void DismissMenu();
 
-  // Cancel the ongoing tablet power button behavior.
+  // Cancel the ongoing power button behavior of tablet.
   void CancelTabletPowerButton();
 
  private:
   friend class TabletPowerButtonControllerTestApi;
 
-  // Starts |shutdown_timer_| when the power button is pressed while in
-  // tablet mode.
-  void StartShutdownTimer();
+  // Called by |power_off_menu_timer_| to start showing the power off menu.
+  void OnPowerOffMenuTimeout();
 
-  // Called by |shutdown_timer_| to start the pre-shutdown animation.
-  void OnShutdownTimeout();
+  // Creates the fullscreen widget responsible for showing the power off menu.
+  std::unique_ptr<views::Widget> CreateFullscreenWidget();
 
-  // Locks the screen if the "require password to wake from sleep" pref is set
-  // and locking is possible.
-  void LockScreenIfRequired();
+  // chromeos::PowerManagerClient::Observer:
+  void SuspendDone(const base::TimeDelta& sleep_duration) override;
+
+  // Used to interact with the display.
+  PowerButtonDisplayController* display_controller_;  // Not owned
+
+  // Started when the power button is pressed and stopped when it's released.
+  // Runs OnPowerOffMenuTimeout() to show the power off menu.
+  base::OneShotTimer power_off_menu_timer_;
+
+  std::unique_ptr<views::Widget> fullscreen_widget_;
 
   // True if the screen was off when the power button was pressed.
   bool screen_off_when_power_button_down_ = false;
-
-  // Saves the most recent timestamp that powerd is resuming from suspend,
-  // updated in SuspendDone().
-  base::TimeTicks last_resume_time_;
 
   // Saves the most recent timestamp that power button is released.
   base::TimeTicks last_button_up_time_;
@@ -92,14 +78,9 @@ class ASH_EXPORT TabletPowerButtonController
   // True if power button released should force off display.
   bool force_off_on_button_up_ = true;
 
-  // Started when the tablet power button is pressed and stopped when it's
-  // released. Runs OnShutdownTimeout() to start shutdown.
-  base::OneShotTimer shutdown_timer_;
-
-  LockStateController* lock_state_controller_;  // Not owned.
-
-  // Used to interact with the display.
-  PowerButtonDisplayController* display_controller_;  // Not owned.
+  // Saves the most recent timestamp that powerd is resuming from suspend,
+  // updated in SuspendDone().
+  base::TimeTicks last_resume_time_;
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.

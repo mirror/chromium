@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -8,31 +8,30 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 
-namespace ui {
-class KeyEvent;
-}  // namespace ui
+namespace gfx {
+class Rect;
+}
 
 namespace ash {
-
 class TabletPowerButtonController;
+class PowerOffMenuView;
 
-// Helper class used by tests to access TabletPowerButtonController's internal
-// state.
 class TabletPowerButtonControllerTestApi {
  public:
-  explicit TabletPowerButtonControllerTestApi(
-      TabletPowerButtonController* controller);
+  TabletPowerButtonControllerTestApi(TabletPowerButtonController* controller);
   ~TabletPowerButtonControllerTestApi();
 
-  // Returns true when |controller_->shutdown_timer_| is running.
-  bool ShutdownTimerIsRunning() const;
+  // Returns true when |power_off_menu_timer_| is running.
+  bool PowerOffMenuTimerIsRunning() const;
 
-  // If |controller_->shutdown_timer_| is running, stops it, runs its task, and
-  // returns true. Otherwise, returns false.
-  bool TriggerShutdownTimeout() WARN_UNUSED_RESULT;
+  // If |controller_->power_off_menu_timer_| is running, stops it, runs its
+  // task, and returns true. Otherwise, returns false.
+  bool TriggerPowerOffMenuTimeout() WARN_UNUSED_RESULT;
 
-  // Sends |event| to |controller_->display_controller_|.
-  void SendKeyEvent(ui::KeyEvent* event);
+  gfx::Rect GetMenuBoundsInScreen() const;
+  PowerOffMenuView* GetPowerOffMenuView() const;
+  bool IsMenuOpened() const;
+  bool HasSignOut() const;
 
  private:
   TabletPowerButtonController* controller_;  // Not owned.
