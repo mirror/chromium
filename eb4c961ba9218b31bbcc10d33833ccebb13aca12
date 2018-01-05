@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a1648f3_f5fced2d",
+        "filename": "chrome/browser/resources/settings/controls/settings_slider.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T03:15:56Z",
+      "side": 1,
+      "message": "Removed. It is not necessary anymore.",
+      "parentUuid": "a814147e_140d4533",
+      "revId": "eb4c961ba9218b31bbcc10d33833ccebb13aca12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b889ccc_92bf2f08",
         "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "eb4c961ba9218b31bbcc10d33833ccebb13aca12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031666da_1c2c346f",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T03:15:56Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4b889ccc_92bf2f08",
+      "revId": "eb4c961ba9218b31bbcc10d33833ccebb13aca12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
