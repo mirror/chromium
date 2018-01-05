@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6dfa0016_e44b1888",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Folded this into the calling context. See if this looks better to you.",
+      "parentUuid": "2c544e2b_406e2428",
+      "range": {
+        "startLine": 30,
+        "startChar": 39,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "765bc4db_dcd93b61",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa339bab_b9a75932",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done. Will also make another CL that removes the call in other files.",
+      "parentUuid": "765bc4db_dcd93b61",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 32
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "015babc4_3d9e9d85",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9546ff52_8f4c3f37",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a924d75_7407c97b",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fc3441_10277429",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a924d75_7407c97b",
+      "range": {
+        "startLine": 130,
+        "startChar": 58,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b0f65b51_41f27ff7",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af6ec5b5_b151b9e5",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 33
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66823d1f_86fd7cc6",
         "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
         "patchSetId": 11
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-04T11:29:01Z",
       "side": 1,
       "message": "I\u0027m confused -- why can\u0027t this just be replaced by a call to -openURL:options:completionHandler:?",
+      "range": {
+        "startLine": 194,
+        "startChar": 14,
+        "endLine": 194,
+        "endChar": 63
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff782cfb_8daca79a",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "The new openURL:options:completionHandler is asynchronous, whereas the older call is synchronous so that it can return a success boolean. This was not very clear on the crbug so I added a comment there, and modified the comment here. The refactoring to make these calls asynchronous is best suited for another CL.",
+      "parentUuid": "66823d1f_86fd7cc6",
       "range": {
         "startLine": 194,
         "startChar": 14,
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "ed143b2b_b52af940",
+        "filename": "ios/chrome/browser/ui/app_launcher/app_launcher_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "We discussed offline that this should remain close to the caller.",
+      "parentUuid": "912a20cf_a2562400",
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9ee8ddc_0cfc6dbd",
         "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
         "patchSetId": 11
@@ -168,6 +330,30 @@
       "writtenOn": "2018-01-04T00:00:59Z",
       "side": 1,
       "message": "Is there a reason why this is called AppLauncherPresenter and not AppLauncherTabHelperDelegate? \n TabHelperDelegate seems to be a common pattern. Presenter word means something different in New Architecture.\n\nAlso per Coding Guidelines for Cocoa:\n\n\"Most protocols group related methods that aren’t associated with any class in particular. This type of protocol should be named so that the protocol won’t be confused with a class. A common convention is to use a gerund (“...ing”) form\"\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingBasics.html#//apple_ref/doc/uid/20001281-1002242-BBCIJGDB",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996a672d_a3cfa170",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Per our offline chat, we will try AppLaunching as the protocol name. Let\u0027s see if it resonates with us.",
+      "parentUuid": "c9ee8ddc_0cfc6dbd",
       "range": {
         "startLine": 13,
         "startChar": 10,
@@ -200,6 +386,30 @@
       "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8442e461_169f3698",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff0f0eb_79db71f9",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +484,30 @@
     },
     {
       "key": {
+        "uuid": "501f2801_46fe5005",
+        "filename": "ios/chrome/browser/web/app_launcher_presenter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "In this case, I am sticking with ProceduralBlockWithBool since this is quite often used.",
+      "parentUuid": "1523703c_8b726630",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2abe1d47_dcc7b00d",
         "filename": "ios/chrome/browser/web/app_launcher_tab_helper.h",
         "patchSetId": 11
@@ -285,6 +519,24 @@
       "writtenOn": "2018-01-04T00:00:59Z",
       "side": 1,
       "message": "Can we add tests for this class now?",
+      "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1427671_9f11b561",
+        "filename": "ios/chrome/browser/web/app_launcher_tab_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "2abe1d47_dcc7b00d",
       "revId": "9b96863fdc95bc807a92011eb58e8c9950d7d963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

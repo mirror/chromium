@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "ea5ddbf0_c3f89385",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Okay, will do.",
+      "parentUuid": "59025cfe_e2cfbd3c",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c764ea42_e67dbb96",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
         "patchSetId": 10
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "Sure, but there is a value in using nullable annotations. And seems like there is no downside. Many things are not included into Style Guide to keep it small, so people actually read it. I will not push, but using nullability annotations is a good way to document the code.",
       "parentUuid": "33e4a3c7_7f5d01f2",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 60
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fada96a_0c8b3ff3",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "If it is valuable enough, it should be required in our style guide. Otherwise we will enforce it in some CLs and leave it out of others.",
+      "parentUuid": "1239c45d_2dca2ade",
       "range": {
         "startLine": 18,
         "startChar": 44,
@@ -372,6 +420,24 @@
     },
     {
       "key": {
+        "uuid": "fd934713_d710c54c",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb13108c_06e9b788",
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb9c891_2369cbe9",
         "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
         "patchSetId": 10
@@ -488,6 +554,30 @@
       "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce55bb24_723c85d7",
+        "filename": "ios/chrome/browser/ui/external_app/external_app_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T03:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445199ae_625dbef3",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "a95fae0ad94bd78f4e37d5371f6373e482851b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
