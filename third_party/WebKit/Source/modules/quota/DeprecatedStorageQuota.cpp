@@ -36,6 +36,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "modules/quota/DOMError.h"
+#include "modules/quota/QuotaDispatcher.h"
 #include "modules/quota/StorageQuotaClient.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
@@ -125,11 +126,12 @@ void DeprecatedStorageQuota::queryUsageAndQuota(
     return;
   }
 
-  Platform::Current()->QueryStorageUsageAndQuota(
-      WrapRefCounted(security_origin), storage_type,
-      WTF::Bind(&QueryStorageUsageAndQuotaCallback,
-                WrapPersistent(success_callback),
-                WrapPersistent(error_callback)));
+  QuotaDispatcher::From(execution_context)
+      ->QueryStorageUsageAndQuota(execution_context->GetInterfaceProvider(),
+                                  WrapRefCounted(security_origin), storage_type,
+                                  WTF::Bind(&QueryStorageUsageAndQuotaCallback,
+                                            WrapPersistent(success_callback),
+                                            WrapPersistent(error_callback)));
 }
 
 void DeprecatedStorageQuota::requestQuota(
