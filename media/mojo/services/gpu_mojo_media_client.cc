@@ -14,6 +14,7 @@
 #include "media/base/video_decoder.h"
 #include "media/gpu/features.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
+#include "media/gpu/ipc/service/vda_video_decoder.h"
 
 #if defined(OS_ANDROID)
 #include "base/memory/ptr_util.h"
@@ -65,8 +66,6 @@ std::unique_ptr<MediaDrmStorage> CreateMediaDrmStorage(
 }
 #endif  // defined(OS_ANDROID)
 
-#if defined(OS_ANDROID) || \
-    (defined(OS_WIN) && BUILDFLAG(ENABLE_D3D11_VIDEO_DECODER))
 gpu::CommandBufferStub* GetCommandBufferStub(
     base::WeakPtr<MediaGpuChannelManager> media_gpu_channel_manager,
     base::UnguessableToken channel_token,
@@ -81,7 +80,6 @@ gpu::CommandBufferStub* GetCommandBufferStub(
 
   return channel->LookupCommandBuffer(route_id);
 }
-#endif  // OS_ANDROID || BUILDFLAG(ENABLE_MEDIA_CODEC_VIDEO_D3D11)
 
 }  // namespace
 
@@ -131,9 +129,15 @@ std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
       base::BindRepeating(&GetCommandBufferStub, media_gpu_channel_manager_,
                           command_buffer_id->channel_token,
                           command_buffer_id->route_id));
+#elif defined(OS_MACOSX)
+  return base::MakeUnique<VdaVideoDecoder>(
+      task_runner, gpu_task_runner_,
+      base::BindRepeating(&GetCommandBufferStub, media_gpu_channel_manager_,
+                          command_buffer_id->channel_token,
+                          command_buffer_id->route_id));
 #else
   return nullptr;
-#endif  // BUILDFLAG(ENABLE_{MEDIA_CODEC | D3D11}_VIDEO_DECODER)
+#endif  // defined(OS_ANDROID)
 }
 
 std::unique_ptr<CdmFactory> GpuMojoMediaClient::CreateCdmFactory(
