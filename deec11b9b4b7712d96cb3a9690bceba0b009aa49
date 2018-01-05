@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "547592f4_ece482f4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "nit: Update order, as in public file.",
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c224ff5_c0f17e4d",
+        "filename": "content/public/browser/global_frame_routing_id.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "nit: RenderFrameHost",
+      "range": {
+        "startLine": 14,
+        "startChar": 43,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4c6d6f_64d260b7",
+        "filename": "content/public/browser/global_frame_routing_id.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "nit: RenderFrame, using a combination of the RenderFrameHost\u0027s routing ID and the corresponding RenderProcessHost ID.\n\n(Then we can drop the second sentence.)",
+      "range": {
+        "startLine": 14,
+        "startChar": 69,
+        "endLine": 14,
+        "endChar": 75
+      },
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f37976_778e65cb",
+        "filename": "content/public/browser/global_frame_routing_id.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "RenderProcessHost",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae6d592_829f5f43",
+        "filename": "content/public/browser/global_frame_routing_id.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "Drop, since this isn\u0027t about URLRequests anymore.",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b24b483_c46f9db2",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "nit: Returns a globally unique ID for this RenderFrameHost, using a combination of the routing ID and RenderrProcessHost ID.",
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b52f46a_8877f602",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:48:21Z",
+      "side": 1,
+      "message": "nit: This should be just below GetRoutingID at the top.",
+      "revId": "deec11b9b4b7712d96cb3a9690bceba0b009aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
