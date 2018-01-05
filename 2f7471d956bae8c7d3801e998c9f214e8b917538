@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c10769_8045d1e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingCastSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2018-01-05T14:28:23Z",
+      "side": 1,
+      "message": "Good ol\u0027 days :) You might want to set this to 2018.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2f7471d956bae8c7d3801e998c9f214e8b917538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
