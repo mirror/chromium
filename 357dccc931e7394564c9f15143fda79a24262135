@@ -22,6 +22,30 @@
       "revId": "357dccc931e7394564c9f15143fda79a24262135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17fe7996_a1cbdf7d",
+        "filename": "tools/binary_size/libsupersize/testdata/Diff_Basic.golden",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2018-01-05T19:50:16Z",
+      "side": 1,
+      "message": "yeah, test output isn\u0027t great. I tried it out on the ndk roll to at least verify that the two numbers are different.",
+      "parentUuid": "63abc776_249ee4fc",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "357dccc931e7394564c9f15143fda79a24262135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
