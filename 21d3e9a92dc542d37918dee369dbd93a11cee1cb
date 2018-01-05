@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0210e41_524dfbfc",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-05T07:18:58Z",
+      "side": 1,
+      "message": "You can split the rest of this function into a DispatchMouseWheelEvent() function in this CL if you want. (because I believe you will need one for using the async api)",
+      "revId": "21d3e9a92dc542d37918dee369dbd93a11cee1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9212bb07_61c5122d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-05T07:18:58Z",
+      "side": 1,
+      "message": "Can this return a RenderWidgetTargetResult instead?",
+      "revId": "21d3e9a92dc542d37918dee369dbd93a11cee1cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
