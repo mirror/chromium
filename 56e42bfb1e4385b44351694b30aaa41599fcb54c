@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d1a6362_c4dfc549",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T09:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45b52480_f65d221f",
+      "range": {
+        "startLine": 161,
+        "startChar": 19,
+        "endLine": 161,
+        "endChar": 21
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85ba175_01dc4dc0",
         "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.h",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "It might be better to keep the destructor private due to the chance that other components can get the pointer of the object.",
       "parentUuid": "d85ba175_01dc4dc0",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c16512c_758b1635",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_characteristic_bluez.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T09:49:29Z",
+      "side": 1,
+      "message": "I would like to keep the destructor public, if possible. The Chromium style guide lists the convention to return raw pointers when no transfer of ownership happens, so that clients should not feel responsible to call delete on the obtained raw pointer: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions\n\nFurthermore, having a public destructor would be consistent with how BluetoothDeviceBlueZ handles the ownership and clean up of BluetoothRemoteGattServiceBlueZ:\n- https://codesearch.chromium.org/chromium/src/device/bluetooth/bluez/bluetooth_remote_gatt_service_bluez.h?l\u003d44-45,82-87\u0026rcl\u003d7e04a9d1f143fb6d37d380833f766bf938cc0284\n- https://codesearch.chromium.org/chromium/src/device/bluetooth/bluetooth_device.h?l\u003d108-112,657\u0026rcl\u003d7e04a9d1f143fb6d37d380833f766bf938cc0284\n- https://codesearch.chromium.org/chromium/src/device/bluetooth/bluez/bluetooth_device_bluez.cc?l\u003d193-201,747-750\u0026rcl\u003d7e04a9d1f143fb6d37d380833f766bf938cc0284",
+      "parentUuid": "b1938881_38fa755a",
       "range": {
         "startLine": 49,
         "startChar": 2,
@@ -115,6 +163,30 @@
       "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904da61_693570ea",
+        "filename": "device/bluetooth/bluez/bluetooth_remote_gatt_service_bluez.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T09:49:29Z",
+      "side": 1,
+      "message": "Done. Initially I didn\u0027t chose the name |characteristic| here, since technically it is a \n{dbus::ObjectPath, std::unique_ptr\u003cBluetoothRemoteGattCharacteristicBlueZ\u003e} pair. But I agree that |el| was a poorly chosen name.",
+      "parentUuid": "972f79ba_def009cc",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "56e42bfb1e4385b44351694b30aaa41599fcb54c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
