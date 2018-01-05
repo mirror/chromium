@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9683682a_fa74d2f9",
+        "filename": "base/lazy_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2018-01-05T22:50:17Z",
+      "side": 1,
+      "message": "nit: I\u0027m not thrilled by the base::Time::Now() dependency in here, since it\u0027s typically a surprisingly slow operation.\n\nResorting immediately to Sleep(1ms) upon discovering this race seems likely sufficient to me, given that this is a one-off operation, not something we do repeatedly. Perhaps the pathological case of racey initialization of a whole sequence of LazyInstances is a concern, though?",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "f48f1c2be3ce1edb7aac2c9918d8560f5bc882cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
