@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf30dcce_778b91e8",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/infinitely-tall-multicol-with-infitely-tall-child-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-05T18:42:39Z",
+      "side": 1,
+      "message": "\"Infinity\". Gets truncated to a few pixels less than LayoutUnit::Max() because it\u0027s represented internally as a float inside the Length structure.",
+      "revId": "0efc506548c448ba0674c4be978fead6e6218f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f9904d_5295b949",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/infinitely-tall-multicol-with-infitely-tall-child-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2018-01-05T18:42:39Z",
+      "side": 1,
+      "message": "But if we multiply that by 2, we\u0027ll end up at LayoutUnit::Max() for sure. :)",
+      "revId": "0efc506548c448ba0674c4be978fead6e6218f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
