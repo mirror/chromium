@@ -37,6 +37,7 @@ class PLATFORM_EXPORT SurfaceLayerBridge
   SurfaceLayerBridge(WebLayerTreeView*, WebSurfaceLayerBridgeObserver*);
   virtual ~SurfaceLayerBridge();
 
+  void CreateOffscreenCanvasSurface();
   void CreateSolidColorLayer();
 
   // Implementation of blink::mojom::blink::OffscreenCanvasSurfaceClient

@@ -69,6 +69,8 @@
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "third_party/WebKit/public/web/WebView.h"
+// #include "components/viz/common/surfaces/surface_id.h"
+// #include "components/viz/common/surfaces/local_surface_id.h"
 
 #if defined(OS_ANDROID)
 #include "media/base/android/media_codec_util.h"
@@ -249,10 +251,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   DCHECK(client_);
   DCHECK(delegate_);
 
-  if (surface_layer_for_video_enabled_)
-    bridge_ = params->create_bridge_callback().Run(this);
-
   if (surface_layer_for_video_enabled_) {
+    bridge_ = params->create_bridge_callback().Run(this);
     vfc_task_runner_->PostTask(
         FROM_HERE, base::Bind(&VideoFrameCompositor::EnableSubmission,
                               base::Unretained(compositor_.get()),
@@ -371,6 +371,14 @@ void WebMediaPlayerImpl::RegisterContentsLayer(blink::WebLayer* web_layer) {
 void WebMediaPlayerImpl::UnregisterContentsLayer(blink::WebLayer* web_layer) {
   // |client_| will unregister its WebLayer if given a nullptr.
   client_->SetWebLayer(nullptr);
+}
+
+void WebMediaPlayerImpl::OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                                            uint32_t parent_id,
+                                            base::UnguessableToken nonce) {
+  frame_sink_id_ = frame_sink_id;
+  parent_id_ = parent_id;
+  nonce_ = nonce;
 }
 
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
@@ -738,6 +746,14 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   // The play state is updated because the player might have left the autoplay
   // muted state.
   UpdatePlayState();
+}
+
+void WebMediaPlayerImpl::PictureInPicture() {
+  in_picture_in_picture_mode_ = true;
+
+  // Creates picture in picture window, routes video there.
+  delegate_->PictureInPictureSurfaceIdUpdated(delegate_id_, frame_sink_id_,
+                                              parent_id_, nonce_);
 }
 
 void WebMediaPlayerImpl::SetSinkId(
