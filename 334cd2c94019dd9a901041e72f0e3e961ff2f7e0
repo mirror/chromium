@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f77dc0e_ed60d90f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T01:31:40Z",
+      "side": 1,
+      "message": "Thinking about this more. We probably want to have an immediate download no matter if there is already a component. E.g., the new background we implemented causes quite some change even though it is backwards compatible.",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 40
+      },
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11f77ffb_1f01a22c",
         "filename": "chrome/browser/component_updater/vr_assets_component_installer.cc",
         "patchSetId": 2
