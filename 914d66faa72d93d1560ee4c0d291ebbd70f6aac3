@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f9f9847_afa080b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-05T21:29:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3a021a4e_b8682ff2",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1542cae9_2db612fa",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T23:23:45Z",
       "side": 1,
       "message": "do links work? e.g. background: url(...);",
+      "range": {
+        "startLine": 2309,
+        "startChar": 6,
+        "endLine": 2309,
+        "endChar": 36
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca96266d_08a7d18c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-05T21:29:59Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "1542cae9_2db612fa",
       "range": {
         "startLine": 2309,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e705020d_be89747b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2652,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-05T21:29:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e9114a91_cc2394de",
+      "range": {
+        "startLine": 2652,
+        "startChar": 2,
+        "endLine": 2652,
+        "endChar": 30
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "222cfdbb_02cc714b",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d1a25860_7e61f73b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-05T21:29:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "222cfdbb_02cc714b",
+      "range": {
+        "startLine": 2912,
+        "startChar": 48,
+        "endLine": 2912,
+        "endChar": 55
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9438d4d1_cc905fce",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements_test_runner/ElementsTestRunner.js",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-04T23:23:45Z",
       "side": 1,
       "message": "why setImmediate? looks flaky!",
+      "range": {
+        "startLine": 273,
+        "startChar": 89,
+        "endLine": 273,
+        "endChar": 101
+      },
+      "revId": "914d66faa72d93d1560ee4c0d291ebbd70f6aac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba679c6_53d5b4ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements_test_runner/ElementsTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2018-01-05T21:29:59Z",
+      "side": 1,
+      "message": "No longer needed, but it back how it was.",
+      "parentUuid": "9438d4d1_cc905fce",
       "range": {
         "startLine": 273,
         "startChar": 89,
