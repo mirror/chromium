@@ -141,14 +141,16 @@ int FuzzedSocket::SetSendBufferSize(int32_t size) {
 }
 
 int FuzzedSocket::Connect(const CompletionCallback& callback) {
-  // Sockets can normally be reused, but don't support it here.
-  DCHECK_NE(net_error_, OK);
   DCHECK(!connect_pending_);
   DCHECK(!read_pending_);
   DCHECK(!write_pending_);
   DCHECK(!error_pending_);
   DCHECK(!total_bytes_read_);
   DCHECK(!total_bytes_written_);
+
+  // Socket is already connected.
+  if (net_error_ == OK)
+    return net_error_;
 
   bool sync = true;
   Error result = OK;
