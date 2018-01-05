@@ -6,14 +6,23 @@
 
 #include <stddef.h>
 
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
+#include "chrome/browser/extensions/extension_tab_util.h"
+#include "chrome/browser/permissions/permission_request.h"
+#include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "crypto/sha2.h"
 #include "extensions/common/error_utils.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
+#include "ui/base/l10n/l10n_util.h"
 
 namespace {
 
@@ -50,6 +59,10 @@ bool ContainsAppIdByHash(const base::ListValue& list,
 }  // namespace
 
 namespace extensions {
+
+const base::Feature kSecurityKeyAttestationPrompt{
+    "SecurityKeyAttestationPrompt", base::FEATURE_DISABLED_BY_DEFAULT};
+
 namespace api {
 
 void CryptotokenRegisterProfilePrefs(
@@ -58,9 +71,7 @@ void CryptotokenRegisterProfilePrefs(
 }
 
 CryptotokenPrivateCanOriginAssertAppIdFunction::
-    CryptotokenPrivateCanOriginAssertAppIdFunction()
-    : chrome_details_(this) {
-}
+    CryptotokenPrivateCanOriginAssertAppIdFunction() = default;
 
 ExtensionFunction::ResponseAction
 CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
@@ -80,7 +91,7 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   }
 
   if (origin_url == app_id_url) {
-    return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
+    return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
   }
 
   // Fetch the eTLD+1 of both.
@@ -101,7 +112,7 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
         "Could not find an eTLD for appId *", params->app_id_url)));
   }
   if (origin_etldp1 == app_id_etldp1) {
-    return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
+    return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
   }
   // For legacy purposes, allow google.com origins to assert certain
   // gstatic.com appIds.
@@ -109,15 +120,14 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   if (origin_etldp1 == kGoogleDotCom) {
     for (const char* id : kGoogleGstaticAppIds) {
       if (params->app_id_url == id)
-        return RespondNow(OneArgument(base::MakeUnique<base::Value>(true)));
+        return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
     }
   }
-  return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
+  return RespondNow(OneArgument(std::make_unique<base::Value>(false)));
 }
 
 CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction::
-    CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction()
-    : chrome_details_(this) {}
+    CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction() {}
 
 ExtensionFunction::ResponseAction
 CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction::Run() {
@@ -135,6 +145,106 @@ CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction::Run() {
   return RespondNow(ArgumentList(
       cryptotoken_private::IsAppIdHashInEnterpriseContext::Results::Create(
           ContainsAppIdByHash(*permit_attestation, params->app_id_hash))));
+}
+
+class AttestationPermissionRequest : public PermissionRequest {
+ public:
+  AttestationPermissionRequest(const GURL& app_id,
+                               base::OnceCallback<void(bool)> callback)
+      : app_id_(app_id), callback_(std::move(callback)) {}
+
+  PermissionRequest::IconId GetIconId() const override {
+    return kUsbSecurityKeyIcon;
+  }
+
+  base::string16 GetMessageTextFragment() const override {
+    return l10n_util::GetStringUTF16(
+        IDS_SECURITY_KEY_ATTESTATION_PERMISSION_FRAGMENT);
+  }
+  GURL GetOrigin() const override { return app_id_; }
+  void PermissionGranted() override { std::move(callback_).Run(true); }
+  void PermissionDenied() override { std::move(callback_).Run(false); }
+  void Cancelled() override { std::move(callback_).Run(false); }
+
+  void RequestFinished() override {
+    if (callback_)
+      std::move(callback_).Run(false);
+    delete this;
+  }
+
+  PermissionRequestType GetPermissionRequestType() const override {
+    return PermissionRequestType::PERMISSION_SECURITY_KEY_ATTESTATION;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AttestationPermissionRequest);
+
+  const GURL app_id_;
+  base::OnceCallback<void(bool)> callback_;
+};
+
+CryptotokenPrivateCanAppIdGetAttestationFunction::
+    CryptotokenPrivateCanAppIdGetAttestationFunction() {}
+
+ExtensionFunction::ResponseAction
+CryptotokenPrivateCanAppIdGetAttestationFunction::Run() {
+  std::unique_ptr<cryptotoken_private::CanAppIdGetAttestation::Params> params =
+      cryptotoken_private::CanAppIdGetAttestation::Params::Create(*args_);
+  EXTENSION_FUNCTION_VALIDATE(params);
+  const std::string& app_id = params->options.app_id;
+
+  // If the appId is listed in the enterprise policy then no permission prompt
+  // is shown.
+  Profile* const profile = Profile::FromBrowserContext(browser_context());
+  const PrefService* const prefs = profile->GetPrefs();
+  const base::ListValue* const permit_attestation =
+      prefs->GetList(prefs::kSecurityKeyPermitAttestation);
+
+  if (std::find_if(permit_attestation->begin(), permit_attestation->end(),
+                   [&app_id](const base::Value& v) -> bool {
+                     return v.GetString() == app_id;
+                   }) != permit_attestation->end()) {
+    return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
+  }
+
+  // If prompting is disabled, allow attestation because that is the historical
+  // behavior.
+  if (!base::FeatureList::IsEnabled(kSecurityKeyAttestationPrompt)) {
+    return RespondNow(OneArgument(std::make_unique<base::Value>(true)));
+  }
+
+  // Otherwise, show a permission prompt and pass the user's decision back.
+  const GURL app_id_url(app_id);
+  if (!app_id_url.is_valid()) {
+    return RespondNow(Error(extensions::ErrorUtils::FormatErrorMessage(
+        "AppId * is not a valid URL", app_id)));
+  }
+
+  content::WebContents* web_contents = nullptr;
+  if (!ExtensionTabUtil::GetTabById(params->options.tab_id, browser_context(),
+                                    true /* include incognito windows */,
+                                    nullptr /* out_browser */,
+                                    nullptr /* out_tab_strip */, &web_contents,
+                                    nullptr /* out_tab_index */)) {
+    return RespondNow(Error("cannot find specified tab"));
+  }
+
+  PermissionRequestManager* permission_request_manager =
+      PermissionRequestManager::FromWebContents(web_contents);
+  if (permission_request_manager == nullptr) {
+    return RespondNow(Error("no PermissionRequestManager"));
+  }
+
+  // The created AttestationPermissionRequest deletes itself once complete.
+  permission_request_manager->AddRequest(new AttestationPermissionRequest(
+      app_id_url,
+      base::BindOnce(
+          &CryptotokenPrivateCanAppIdGetAttestationFunction::Complete, this)));
+  return RespondLater();
+}
+
+void CryptotokenPrivateCanAppIdGetAttestationFunction::Complete(bool result) {
+  Respond(OneArgument(std::make_unique<base::Value>(result)));
 }
 
 }  // namespace api
