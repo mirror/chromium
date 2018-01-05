@@ -16,6 +16,7 @@ import("//services/catalog/public/tools/catalog.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//testing/test.gni")
 import("//third_party/WebKit/public/public_features.gni")
+import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("//v8/gni/v8.gni")
 
 # Use a static library here because many test binaries depend on this but don't
@@ -288,7 +289,6 @@ static_library("test_support") {
     "//media/mojo/interfaces",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
-    "//tools/v8_context_snapshot",
   ]
   deps = [
     ":content_test_mojo_bindings",
@@ -334,7 +334,6 @@ static_library("test_support") {
     "//storage/common",
     "//testing/gmock",
     "//testing/gtest",
-    "//tools/v8_context_snapshot:v8_context_snapshot",
     "//ui/accessibility:ax_gen",
     "//ui/base",
     "//ui/base:test_support",
@@ -476,6 +475,11 @@ static_library("test_support") {
 
   if (v8_use_external_startup_data) {
     deps += [ "//gin:gin" ]
+    if (use_v8_context_snapshot) {
+      data = [
+        "$root_out_dir/v8_context_snapshot.bin",
+      ]
+    }
   }
 
   if (is_mac) {
