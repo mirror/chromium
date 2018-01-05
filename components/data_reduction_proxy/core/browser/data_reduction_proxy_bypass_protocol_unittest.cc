@@ -19,6 +19,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/mock_entropy_provider.h"
+#include "build/build_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_bypass_stats.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_test_utils.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_interceptor.h"
@@ -153,8 +154,17 @@ class DataReductionProxyProtocolEmbeddedServerTest : public testing::Test {
 
 // Tests that if the embedded test server resets the connection after accepting
 // it, then the data saver proxy is bypassed, and the request is retried.
+// TODO(crbug.com/799496): Fix flakiness on Windows 10
+#if defined(OS_WIN)
+#define MAYBE_EmbeddedTestServerBypassRetryOnPostConnectionErrors \
+  DISABLED_EmbeddedTestServerBypassRetryOnPostConnectionErrors
+#else
+#define MAYBE_EmbeddedTestServerBypassRetryOnPostConnectionErrors \
+  EmbeddedTestServerBypassRetryOnPostConnectionErrors
+#endif
+
 TEST_F(DataReductionProxyProtocolEmbeddedServerTest,
-       EmbeddedTestServerBypassRetryOnPostConnectionErrors) {
+       MAYBE_EmbeddedTestServerBypassRetryOnPostConnectionErrors) {
   base::HistogramTester histogram_tester;
   embedded_test_server_.AddDefaultHandlers(
       base::FilePath(FILE_PATH_LITERAL("net/data/url_request_unittest")));
