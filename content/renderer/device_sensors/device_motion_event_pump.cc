@@ -70,7 +70,9 @@ void DeviceMotionEventPump::FireEvent() {
   DCHECK(listener());
 
   GetDataFromSharedMemory(&data);
-  listener()->DidChangeDeviceMotion(data);
+
+  if (ShouldFireEvent())
+    listener()->DidChangeDeviceMotion(data);
 }
 
 void DeviceMotionEventPump::SendStartMessageImpl() {
@@ -135,6 +137,25 @@ void DeviceMotionEventPump::GetDataFromSharedMemory(device::MotionData* data) {
     data->has_rotation_rate_gamma =
         !std::isnan(gyroscope_.reading.gyro.z.value());
   }
+}
+
+bool DeviceMotionEventPump::ShouldFireEvent() const {
+  // Fire event when all available sensors' data have valid timestamp.
+
+  if (accelerometer_.sensor && accelerometer_.SensorReadingTimeStampIsZero()) {
+    return false;
+  }
+
+  if (linear_acceleration_sensor_.sensor &&
+      linear_acceleration_sensor_.SensorReadingTimeStampIsZero()) {
+    return false;
+  }
+
+  if (gyroscope_.sensor && gyroscope_.SensorReadingTimeStampIsZero()) {
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace content
