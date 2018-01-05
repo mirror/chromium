@@ -754,6 +754,7 @@ bool SniffMimeType(const char* content,
                    size_t content_size,
                    const GURL& url,
                    const std::string& type_hint,
+                   bool allow_sniffing_files_urls_as_html,
                    std::string* result) {
   DCHECK_LT(content_size, 1000000U);  // sanity check
   DCHECK(content);
@@ -777,7 +778,8 @@ bool SniffMimeType(const char* content,
   const bool hint_is_unknown_mime_type = IsUnknownMimeType(type_hint);
 
   // First check for HTML
-  if (hint_is_unknown_mime_type) {
+  if (hint_is_unknown_mime_type &&
+      (!url.SchemeIsFile() && allow_sniffing_files_urls_as_html)) {
     // We're only willing to sniff HTML if the server has not supplied a mime
     // type, or if the type it did supply indicates that it doesn't know what
     // the type should be.
