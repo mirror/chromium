@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109c3667_a2dd4b32",
+        "filename": "chrome/browser/chromeos/display/display_preferences.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "Please add a comment if |mixed_params| is nullptr then the prefs will be cleared...",
+      "range": {
+        "startLine": 68,
+        "startChar": 42,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5f994d_9edb0d9a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "How about this:\n\n  if (!mixed || !enabled) {\n    display_manager-\u003eSetMirrorMode(enabled);\n    return true;\n  }",
+      "range": {
+        "startLine": 1066,
+        "startChar": 0,
+        "endLine": 1076,
+        "endChar": 3
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3383116_fa17d4f7",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "Nit: mixed_param(s)?",
+      "range": {
+        "startLine": 1095,
+        "startChar": 7,
+        "endLine": 1095,
+        "endChar": 18
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d49e870_c11b5b0a",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "Nit: const",
+      "range": {
+        "startLine": 1097,
+        "startChar": 2,
+        "endLine": 1097,
+        "endChar": 20
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5400a2ab_f5c957bc",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "I think it would be nice to document this function parameters here too very briefly.",
+      "range": {
+        "startLine": 97,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b38e2b_ca68164c",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "Nit: enable_mixed_mode?",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9a047e_b85566b5",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 359,
+        "startChar": 22,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644eaa50_5c167214",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "similarly, would be nicer to call this \"enable_mixed_mode\"",
+      "range": {
+        "startLine": 376,
+        "startChar": 16,
+        "endLine": 376,
+        "endChar": 21
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e083c442_d5b1ce94",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "That is still clear from the function name! :)\n\nHere is a suggestion:\n- Rename the function to IsSoftwareMirroringEnforced().\n- Document it something like: \"Returns true if hardware mirroring should not be used in cases of ... etc. etc.\".\n\nThe \"why\" is more important than the \"what\". So the idea is to explains why we might want to enforce software mirroring without hardware mirroring; i.e. in what cases, examples, ...etc.",
+      "range": {
+        "startLine": 118,
+        "startChar": 47,
+        "endLine": 119,
+        "endChar": 47
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d43d13_38422c8e",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "\"enabled\" is better.",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 19
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56728f82_6b11c81b",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "is disabled?",
+      "range": {
+        "startLine": 647,
+        "startChar": 17,
+        "endLine": 647,
+        "endChar": 37
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5e84e5_e4ba45e6",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2018-01-05T18:55:39Z",
+      "side": 1,
+      "message": "I would write this:\n\nif (!specified_display_ids.insert(id).second)\n  return MixedMirrorModeParamsErrors::kErrorDuplicateId;",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 37
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
