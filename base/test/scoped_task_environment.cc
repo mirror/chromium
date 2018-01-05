@@ -49,13 +49,7 @@ class ScopedTaskEnvironment::TestTaskTracker
   void AllowRunTasks();
 
   // Disallow running tasks. Returns true on success; success requires there to
-  // be no tasks currently running. Returns false if >0 tasks are currently
-  // running. Prior to returning false, it will attempt to block until at least
-  // one task has completed (in an attempt to avoid callers busy-looping
-  // DisallowRunTasks() calls with the same set of slowly ongoing tasks). This
-  // block attempt will also have a short timeout (in an attempt to prevent the
-  // fallout of blocking: if the only task remaining is blocked on the main
-  // thread, waiting for it to complete results in a deadlock...).
+  // be no tasks currently running.
   bool DisallowRunTasks();
 
  private:
@@ -74,9 +68,6 @@ class ScopedTaskEnvironment::TestTaskTracker
 
   // Signaled when |can_run_tasks_| becomes true.
   ConditionVariable can_run_tasks_cv_;
-
-  // Signaled when a task is completed.
-  ConditionVariable task_completed_;
 
   // Number of tasks that are currently running.
   int num_tasks_running_ = 0;
@@ -143,83 +134,38 @@ ScopedTaskEnvironment::GetMainThreadTaskRunner() {
 }
 
 void ScopedTaskEnvironment::RunUntilIdle() {
-  // TODO(gab): This can be heavily simplified to essentially:
-  //     bool HasMainThreadTasks() {
-  //      if (message_loop_)
-  //        return !message_loop_->IsIdleForTesting();
-  //      return mock_time_task_runner_->NextPendingTaskDelay().is_zero();
-  //     }
-  //     while (task_tracker_->HasIncompleteTasks() || HasMainThreadTasks()) {
-  //       base::RunLoop().RunUntilIdle();
-  //       // Avoid busy-looping.
-  //       if (task_tracker_->HasIncompleteTasks())
-  //         PlatformThread::Sleep(TimeDelta::FromMilliSeconds(1));
-  //     }
-  // Challenge: HasMainThreadTasks() requires support for proper
-  // IncomingTaskQueue::IsIdleForTesting() (check all queues).
-  //
-  // Other than that it works because once |task_tracker_->HasIncompleteTasks()|
-  // is false we know for sure that the only thing that can make it true is a
-  // main thread task (ScopedTaskEnvironment owns all the threads). As such we
-  // can't racily see it as false on the main thread and be wrong as if it the
-  // main thread sees the atomic count at zero, it's the only one that can make
-  // it go up. And the only thing that can make it go up on the main thread are
-  // main thread tasks and therefore we're done if there aren't any left.
-  //
-  // This simplification further allows simplification of DisallowRunTasks().
-  //
-  // This can also be simplified even further once TaskTracker becomes directly
-  // aware of main thread tasks. https://crbug.com/660078.
-
-  for (;;) {
+  if (execution_control_mode_ == ExecutionMode::QUEUED)
     task_tracker_->AllowRunTasks();
 
-    // First run as many tasks as possible on the main thread in parallel with
-    // tasks in TaskScheduler. This increases likelihood of TSAN catching
-    // threading errors and eliminates possibility of hangs should a
-    // TaskScheduler task synchronously block on a main thread task
-    // (TaskScheduler::FlushForTesting() can't be used here for that reason).
-    RunLoop().RunUntilIdle();
-
-    // Then halt TaskScheduler. DisallowRunTasks() failing indicates that there
-    // were TaskScheduler tasks currently running. In that case, try again from
-    // top when DisallowRunTasks() yields control back to this thread as they
-    // may have posted main thread tasks.
-    if (!task_tracker_->DisallowRunTasks())
-      continue;
-
-    // Once TaskScheduler is halted. Run any remaining main thread tasks (which
-    // may have been posted by TaskScheduler tasks that completed between the
-    // above main thread RunUntilIdle() and TaskScheduler DisallowRunTasks()).
-    // Note: this assumes that no main thread task synchronously blocks on a
-    // TaskScheduler tasks (it certainly shouldn't); this call could otherwise
-    // hang.
-    RunLoop().RunUntilIdle();
-
-    // The above RunUntilIdle() guarantees there are no remaining main thread
-    // tasks (the TaskScheduler being halted during the last RunUntilIdle() is
-    // key as it prevents a task being posted to it racily with it determining
-    // it had no work remaining). Therefore, we're done if there is no more work
-    // on TaskScheduler either (there can be TaskScheduler work remaining if
-    // DisallowRunTasks() preempted work and/or the last RunUntilIdle() posted
-    // more TaskScheduler tasks).
-    // Note: this last |if| couldn't be turned into a |do {} while();|. A
-    // conditional loop makes it such that |continue;| results in checking the
-    // condition (not unconditionally loop again) which would be incorrect for
-    // the above logic as it'd then be possible for a TaskScheduler task to be
-    // running during the DisallowRunTasks() test, causing it to fail, but then
-    // post to the main thread and complete before the loop's condition is
-    // verified which could result in HasIncompleteUndelayedTasksForTesting()
-    // returning false and the loop erroneously exiting with a pending task on
-    // the main thread.
-    if (!task_tracker_->HasIncompleteUndelayedTasksForTesting())
-      break;
+  // Tasks in |task_tracker_| are running in parallel with this check. It is
+  // non-racy however because :
+  //   A) The main thread is running this very check and hence not also
+  //      processing tasks in parallel.
+  //   B) HasIncompleteUndelayedTasksForTesting() is atomic and once it returns
+  //      false it can only be made true again by a task on the main thread.
+  //   C) Any task posted to the main thread from a completed |task_tracker_|
+  //      task has an happens-before relationship with
+  //      HasIncompleteUndelayedTasksForTesting() returning false and is
+  //      therefore guaranteed to make HasMainThreadTasks() return true if it
+  //      wasn't yet processed.
+  // Note: HasIncompleteUndelayedTasksForTesting() has to be checked before
+  // HasMainThreadTasks() to take advantage of (C).
+  // The last part of this check re-disallows running tasks in QUEUED
+  // ExecutionMode once idle. Failing to do so means a delayed task became ripe
+  // and started running right after determining idleness which breaks the
+  // condition and forces this loop to keep going.
+  while (task_tracker_->HasIncompleteUndelayedTasksForTesting() ||
+         HasMainThreadTasks() ||
+         (execution_control_mode_ == ExecutionMode::QUEUED &&
+          !task_tracker_->DisallowRunTasks())) {
+    base::RunLoop().RunUntilIdle();
+    // Avoid busy-looping.
+    if (task_tracker_->HasIncompleteUndelayedTasksForTesting()) {
+      // TODO(gab): Consider a shorter timeout/better solution
+      // (https://crbug.com/789756).
+      PlatformThread::Sleep(TimeDelta::FromMilliseconds(1));
+    }
   }
-
-  // The above loop always ends with running tasks being disallowed. Re-enable
-  // parallel execution before returning unless in ExecutionMode::QUEUED.
-  if (execution_control_mode_ != ExecutionMode::QUEUED)
-    task_tracker_->AllowRunTasks();
 }
 
 void ScopedTaskEnvironment::FastForwardBy(TimeDelta delta) {
@@ -232,8 +178,15 @@ void ScopedTaskEnvironment::FastForwardUntilNoTasksRemain() {
   mock_time_task_runner_->FastForwardUntilNoTasksRemain();
 }
 
+bool ScopedTaskEnvironment::HasMainThreadTasks() {
+  if (message_loop_)
+    return !message_loop_->IsIdleForTesting();
+  DCHECK(mock_time_task_runner_);
+  return mock_time_task_runner_->NextPendingTaskDelay().is_zero();
+}
+
 ScopedTaskEnvironment::TestTaskTracker::TestTaskTracker()
-    : can_run_tasks_cv_(&lock_), task_completed_(&lock_) {}
+    : can_run_tasks_cv_(&lock_) {}
 
 void ScopedTaskEnvironment::TestTaskTracker::AllowRunTasks() {
   AutoLock auto_lock(lock_);
@@ -245,13 +198,8 @@ bool ScopedTaskEnvironment::TestTaskTracker::DisallowRunTasks() {
   AutoLock auto_lock(lock_);
 
   // Can't disallow run task if there are tasks running.
-  if (num_tasks_running_ > 0) {
-    // Attempt to wait a bit so that the caller doesn't busy-loop with the same
-    // set of pending work. A short wait is required to avoid deadlock
-    // scenarios. See DisallowRunTasks()'s declaration for more details.
-    task_completed_.TimedWait(TimeDelta::FromMilliseconds(1));
+  if (num_tasks_running_ > 0)
     return false;
-  }
 
   can_run_tasks_ = false;
   return true;
@@ -280,8 +228,6 @@ void ScopedTaskEnvironment::TestTaskTracker::RunOrSkipTask(
     CHECK(can_run_tasks_);
 
     --num_tasks_running_;
-
-    task_completed_.Broadcast();
   }
 }
 

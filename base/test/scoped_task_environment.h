@@ -111,6 +111,10 @@ class ScopedTaskEnvironment {
  private:
   class TestTaskTracker;
 
+  // Returns true if RunLoop::RunUntileIdle() would process any tasks before
+  // returning.
+  bool HasMainThreadTasks();
+
   const ExecutionMode execution_control_mode_;
 
   // Exactly one of these will be non-null to provide the task environment on
