@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "389fd3a8_2a391dcf",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-05T00:34:18Z",
+      "side": 1,
+      "message": "bikeshedding: Maybe call this kNullFilter? I feel like invalid usually means \"this should not be used\", but this is the case for all null filters.\n\nAlternatively, store a bool whether it\u0027s null or not, I guess?",
+      "revId": "b6e678b56a911a6484cd76afd970774a78c64072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
