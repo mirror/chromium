@@ -277,6 +277,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
                 });
             }
         }, secondsToWait);
+        ChromeTabUtils.waitForInteractable(tab);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         return result.get();
     }
@@ -332,6 +333,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
             Assert.fail("Failed to create new tab");
         }
         ChromeTabUtils.waitForTabPageLoaded(tab, url);
+        ChromeTabUtils.waitForInteractable(tab);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         return tab;
     }
