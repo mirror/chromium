@@ -104,6 +104,8 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
 
   viz::ContextProvider* GetMediaContextProvider() override;
 
+  void SetHDRRenderingStatus(bool status) override;
+
   void ReleaseContextProvider();
   scoped_refptr<ui::ContextProviderCommandBuffer> ContextProviderMainThread();
 
@@ -142,6 +144,8 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
   const viz::BufferUsageAndFormatList texture_target_exception_list_;
   // Whether video acceleration encoding/decoding should be enabled.
   const bool video_accelerator_enabled_;
+
+  bool is_hdr_rendering_enabled_;
 
   gpu::GpuMemoryBufferManager* const gpu_memory_buffer_manager_;
 

@@ -87,6 +87,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
           enable_gpu_memory_buffer_video_frames),
       texture_target_exception_list_(texture_target_exception_list),
       video_accelerator_enabled_(enable_video_accelerator),
+      is_hdr_rendering_enabled_(false),
       gpu_memory_buffer_manager_(
           RenderThreadImpl::current()->GetGpuMemoryBufferManager()),
       thread_safe_sender_(ChildThreadImpl::current()->thread_safe_sender()) {
@@ -364,6 +365,10 @@ GpuVideoAcceleratorFactoriesImpl::GetVideoEncodeAcceleratorSupportedProfiles() {
 viz::ContextProvider*
 GpuVideoAcceleratorFactoriesImpl::GetMediaContextProvider() {
   return CheckContextLost() ? nullptr : context_provider_;
+}
+
+void GpuVideoAcceleratorFactoriesImpl::SetHDRRenderingStatus(bool status) {
+  is_hdr_rendering_enabled_ = status;
 }
 
 void GpuVideoAcceleratorFactoriesImpl::ReleaseContextProvider() {
