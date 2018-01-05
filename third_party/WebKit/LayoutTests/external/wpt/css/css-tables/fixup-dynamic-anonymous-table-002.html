@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<title>CSS Test: CSS Tables fixup anonymous block + anonymous table</title>
+<link rel="author" title="Rune Lillesveen" href="mailto:futhark@chromium.org">
+<link rel="match" href="../reference/pass_if_pass_below.html">
+<link rel="help" href="https://drafts.csswg.org/css-tables/#fixup-algorithm">
+<p>Test passes if there is the word "PASS" below.</p>
+<div>
+  <!-- The two spans will each have an anonymous block before #row1 is removed.
+       After removal they should be merged into the same block. The two rows
+       will each be wrapped in an anonymous table + table-row-group. This test
+       exercises the combination of anonymous blocks and anonymous tables.
+  -->
+  <div></div>
+  <span></span>
+  <span id="row1" style="display:table-row">FAIL</span>
+  <span></span>
+  <span id="row2" style="display:table-row">PASS</span>
+</div>
+<script>
+  document.body.offsetTop;
+  row1.remove();
+</script>
