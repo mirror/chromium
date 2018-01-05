@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "09ad94d4_6d5b457b",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T23:58:49Z",
+      "side": 1,
+      "message": "In that case, I\u0027d consider adding Profile* as an argument in the CL where you add pref implementations.",
+      "parentUuid": "4c5641b4_ba067114",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "648c9508_ef20ef4d",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
         "patchSetId": 6
@@ -295,6 +319,30 @@
       "side": 1,
       "message": "Removing these methods will make the callers code more complicate.\nI think that possible optimization (by storing actual pointer to pref implementation and reusing it to get/set preference value) is not worth it.",
       "parentUuid": "9635955e_68d7be55",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695db7f2_2486c795",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T23:58:49Z",
+      "side": 1,
+      "message": "there is no that much difference with the current usages (given that you always call HasPref before using any of these methods), but yeah, I guess I can see some value in keeping these.",
+      "parentUuid": "0389e498_ead951b1",
       "range": {
         "startLine": 54,
         "startChar": 0,
@@ -418,6 +466,23 @@
         "endLine": 46,
         "endChar": 58
       },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb31817_864ff34f",
+        "filename": "chrome/browser/extensions/api/settings_private/settings_private_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2018-01-05T23:58:49Z",
+      "side": 1,
+      "message": "You should remove observers from generated prefs, too. Otherwise they will keep accumulating (and this will start sending out duplicate on pref changed events).",
       "revId": "fead490422081b34a533394627104192b7c8d067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
