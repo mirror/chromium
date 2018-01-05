@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8641289_c2166c20",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ed298b_74b08db1",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29151724_b24410ab",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c78ee8cc_7a476599",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29151724_b24410ab",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d1689e_77e2be86",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2018-01-04T17:08:30Z",
       "side": 1,
       "message": "Does it? Isn\u0027t it just that default copy/move constructors defined by the compiler are constexpr? The base class doesn\u0027t define any such constructors..",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29b8119_58465300",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "I may not fully understand your comment...\nThe compiler generated ctors for the base class should be constexpr. And the constexpr-ness should be inherited by \"\u003d default;\" otherwise, e.g., copy ctor at L148 in PS3 is not constexpr as it is not marked constexpr, though maybe my wording is confusing or incorrect. Any suggestion...?",
+      "parentUuid": "b0d1689e_77e2be86",
       "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ae4cceb8_2637d112",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482959ee_8cd03831",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc15cf7_cbb8ea5d",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112c37ab_606abf44",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc15cf7_cbb8ea5d",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "db1c60e3_3197c30f",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Looks correct spelling...?",
+      "parentUuid": "7fb50272_2e5c9338",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0751ec2_b007b500",
         "filename": "base/optional.h",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2018-01-04T17:08:30Z",
       "side": 1,
       "message": "Erm, does this do something? The constructors of the base class are inherited anyways, and it\u0027s a struct so they are public?",
+      "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02f1a2d_d5fa3fd4",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2018-01-05T14:41:40Z",
+      "side": 1,
+      "message": "Yes it does. Specifically, without this, in_place_t ctor is not inherited.",
+      "parentUuid": "f0751ec2_b007b500",
       "revId": "b5f05e6477370a6c6b547ecd78db860f593b372a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
