@@ -82,7 +82,7 @@ class CONTENT_EXPORT LegacyInputRouterImpl
 
   void SetFrameTreeNodeId(int frameTreeNodeId) override;
 
-  cc::TouchAction AllowedTouchAction() override;
+  base::Optional<cc::TouchAction> AllowedTouchAction() override;
 
   void SetForceEnableZoom(bool enabled) override;
 
