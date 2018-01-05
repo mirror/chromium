@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c36107_a2e2af02",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "Function comment?",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f942e834_6ab815c5",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "Rewrap lines",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b899a32_4dc9ef6e",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "It looks like your intention is that these are append structures (as opposed to cleared before use), mention that in the function comment?",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10f81f8_e2550093",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "Rewrap",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1461195a_e08ee316",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "Policy",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 24
+      },
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f12768a_4539b94e",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2018-01-05T22:47:52Z",
+      "side": 1,
+      "message": "You could avoid hitting the map twice (both here and around line 208) by just trying to insert and seeing whether it was successful, but since we don\u0027t have an InsertIfNotPresent utility function in Chromium, it may be less readable.  Your call.",
+      "revId": "e9cc869a60a2d4ffd01bc6f10caf17a90ded3384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
