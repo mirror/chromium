@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d494c7dd_79052a0c",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42701bcf_0611ff87",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44b6299c_3184d482",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6708e27d_3fa9e974",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b6299c_3184d482",
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c954a948_8230c815",
         "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "fead490422081b34a533394627104192b7c8d067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71cdf11_e6ba8915",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c954a948_8230c815",
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "93afb98e_326aa393",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_pref.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb569ea_2d591b68",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51501c4_3b81cc15",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
         "patchSetId": 6
@@ -93,6 +177,30 @@
       "writtenOn": "2018-01-05T22:30:46Z",
       "side": 1,
       "message": "why require profile in ctor if it\u0027s not used anywhere?",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5641b4_ba067114",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "I removed Time Zone prefs implementation fro this Cl (see PS4), and moved it to another CL.\nProfile will be needed for all the generated preferences as they are still user-based.\nYou can look at PS4 for details.",
+      "parentUuid": "d51501c4_3b81cc15",
       "range": {
         "startLine": 16,
         "startChar": 31,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "c680a449_8efffffd",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Done.\n\nThe idea is that any generated pref should be managed by this class ;)",
+      "parentUuid": "648c9508_ef20ef4d",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9635955e_68d7be55",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
         "patchSetId": 6
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "0389e498_ead951b1",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Removing these methods will make the callers code more complicate.\nI think that possible optimization (by storing actual pointer to pref implementation and reusing it to get/set preference value) is not worth it.",
+      "parentUuid": "9635955e_68d7be55",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c663ae93_216504da",
         "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
         "patchSetId": 6
@@ -162,6 +318,30 @@
       "writtenOn": "2018-01-05T22:30:46Z",
       "side": 1,
       "message": "this is not really what this code does :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53339a5_9a4eeaa2",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "Yes. It should probably be removed.",
+      "parentUuid": "c663ae93_216504da",
       "range": {
         "startLine": 38,
         "startChar": 0,
@@ -208,6 +388,30 @@
       "writtenOn": "2018-01-05T22:30:46Z",
       "side": 1,
       "message": "can GeneratedPrefs take a BrowserContext, so you don\u0027t have to do a cast here?",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "fead490422081b34a533394627104192b7c8d067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508eb864_8d97e6b8",
+        "filename": "chrome/browser/extensions/api/settings_private/generated_prefs_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2018-01-05T23:23:47Z",
+      "side": 1,
+      "message": "This way I\u0027ll have to do cast in GeneratedPrefs.\nCast is still needed, because we actually need user prefs.",
+      "parentUuid": "ea32ab76_16acd549",
       "range": {
         "startLine": 46,
         "startChar": 28,
