@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590bf3a5_4bf09d9a",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T23:06:33Z",
+      "side": 1,
+      "message": "Looks like there could a race condition that the user policy might not applied when this code runs. We need to figure out a way to ensure user policy is applied.",
+      "revId": "b979273c681c55b92fdbfd48e1be50e4727d6002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
