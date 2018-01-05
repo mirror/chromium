@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680cf25e_9afe4c4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2018-01-05T18:22:32Z",
+      "side": 1,
+      "message": "Can you include a link to the sites page? (https://dev.chromium.org/developers/debugging-with-crash-keys) I’ve made sure that archive.org has picked up a current copy.",
+      "revId": "fdca248e179f803c86afa9cc0bb9044db97960db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
