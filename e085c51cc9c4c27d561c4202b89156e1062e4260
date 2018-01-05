@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "165619d1_e60f01ba",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-05T22:07:01Z",
+      "side": 1,
+      "message": "Right, I don\u0027t think we should be calling GetTerminationStatus when we didn\u0027t launch the process. It didn\u0027t before, that\u0027s a behavior change. Looking at the code on posix, I don\u0027t think it will give you any useful information (or at least not what you think it will). I actually think it will be harmful (will call waitpid(0, ...) which means it will eat the termination status of any child that may have terminated but hasn\u0027t been reaped yet).",
+      "parentUuid": "bd9af639_caa8b809",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd211814_fb351510",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
