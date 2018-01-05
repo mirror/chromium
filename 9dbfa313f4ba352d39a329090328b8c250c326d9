@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dac2574_17f17c77",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160827
+      },
+      "writtenOn": "2018-01-05T21:44:17Z",
+      "side": 1,
+      "message": "I\u0027m wondering if at this point it\u0027d be preferable to test for (\"equals(prefix)\" || \"startswith(prefix + \"+\")), rather than special casing something that\u0027s technically not even a valid content type.   \n\nI saw this considered in earlier comments, and the note about verbosity of the duplicated checks is certainly valid; maybe hide that in a helper function that checks prefix, and if it\u0027s not an exact match, insist that the next character is a \u0027+\u0027?  Or use a regex...",
+      "range": {
+        "startLine": 95,
+        "startChar": 44,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "9dbfa313f4ba352d39a329090328b8c250c326d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
