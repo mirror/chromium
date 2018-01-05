@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e6ab91c_55bdf5e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-05T15:00:19Z",
+      "side": 1,
+      "message": "That was my intention behind this refactoring - to add the first Java file with \"Copyright 2018\". Just kidding :-)",
+      "parentUuid": "5fddeb74_98ea562a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4ffa0c_fa1cdbc0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFragment.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "196d9d42_e22560aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-05T15:00:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d4ffa0c_fa1cdbc0",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5a2f1ff_09852faa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunPage.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c7b9f8_93ce032b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunPage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2018-01-05T15:00:19Z",
+      "side": 1,
+      "message": "Wow, that\u0027s really cool! Done.",
+      "parentUuid": "c5a2f1ff_09852faa",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "c0bcafb7bf6d9108b46a7689741197fb1066fe88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
