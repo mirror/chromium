@@ -163,9 +163,8 @@ RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
 
 viz::FrameSinkId RenderWidgetInputHandler::GetFrameSinkIdAtPoint(
     const gfx::Point& point) {
-  gfx::PointF point_in_pixel =
-      gfx::ConvertPointToPixel(widget_->GetOriginalDeviceScaleFactor(),
-                               gfx::PointF(point.x(), point.y()));
+  gfx::PointF point_in_pixel = gfx::ConvertPointToPixel(
+      widget_->GetOriginalDeviceScaleFactor(), gfx::PointF(point));
   blink::WebNode result_node = widget_->GetWebWidget()
                                    ->HitTestResultAt(blink::WebPoint(
                                        point_in_pixel.x(), point_in_pixel.y()))
