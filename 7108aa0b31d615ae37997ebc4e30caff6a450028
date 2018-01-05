@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "d11663e3_98887aa4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "5f24194c_4256e1e2",
+      "range": {
+        "startLine": 95,
+        "startChar": 35,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d22f1fd_6f005ffb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 11
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "e0e06b03_abbc4fed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d22f1fd_6f005ffb",
+      "range": {
+        "startLine": 183,
+        "startChar": 27,
+        "endLine": 183,
+        "endChar": 44
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e222022_6e269cf0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
         "patchSetId": 11
@@ -76,6 +124,30 @@
       "writtenOn": "2018-01-04T23:50:39Z",
       "side": 1,
       "message": "Why do we need to wrap mView to another LinearLayout here? Does p.customView \u003d mView not work?",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2130813e_18faaeb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "5e222022_6e269cf0",
       "range": {
         "startLine": 86,
         "startChar": 21,
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "eb3b1bbc_d7b46742",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrAlertDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "It should not be a fixed number. We still don\u0027t have the VR UX design for this, so the position, size, distance, shadow, ... are all dummy.",
+      "parentUuid": "e2d1e3cf_65bed01b",
+      "range": {
+        "startLine": 95,
+        "startChar": 46,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71e97f2_a57e3063",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 11
@@ -125,6 +221,24 @@
       "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8382924_5019c3ae",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71e97f2_a57e3063",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "184276ac_251a16db",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b116e3a7_09c057ff",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4258ecc_f690f342",
         "filename": "chrome/browser/vr/ui_scene_creator.h",
         "patchSetId": 11
@@ -162,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "bce19f76_4e34725a",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4258ecc_f690f342",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab5616f_2a4b390a",
         "filename": "chrome/browser/vr/ui_scene_creator.h",
         "patchSetId": 11
@@ -176,6 +326,24 @@
       "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1da52f_fd7574cb",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2018-01-05T17:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab5616f_2a4b390a",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
