@@ -26,7 +26,7 @@ class PLATFORM_EXPORT TracedValue final
   void SetInteger(const char* name, int value);
   void SetDouble(const char* name, double value);
   void SetBoolean(const char* name, bool value);
-  void SetString(const char* name, const String& value);
+  void SetString(const char* name, const StringView& value);
   void BeginArray(const char* name);
   void BeginDictionary(const char* name);
 

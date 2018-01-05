@@ -41,7 +41,7 @@ void TracedValue::SetBooleanWithCopiedName(const char* name, bool value) {
   traced_value_.SetBooleanWithCopiedName(name, value);
 }
 
-void TracedValue::SetString(const char* name, const String& value) {
+void TracedValue::SetString(const char* name, const StringView& value) {
   StringUTF8Adaptor adaptor(value);
   traced_value_.SetString(name, adaptor.AsStringPiece());
 }

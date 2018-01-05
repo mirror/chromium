@@ -46,7 +46,7 @@ class StringUTF8Adaptor final {
   DISALLOW_NEW();
 
  public:
-  StringUTF8Adaptor(const String& string,
+  StringUTF8Adaptor(const StringView& string,
                     UTF8ConversionMode mode = kLenientUTF8Conversion)
       : data_(nullptr), length_(0) {
     if (string.IsEmpty())
@@ -59,7 +59,7 @@ class StringUTF8Adaptor final {
       data_ = reinterpret_cast<const char*>(string.Characters8());
       length_ = string.length();
     } else {
-      utf8_buffer_ = string.Utf8(mode);
+      utf8_buffer_ = string.ToString().Utf8(mode);
       data_ = utf8_buffer_.data();
       length_ = utf8_buffer_.length();
     }
