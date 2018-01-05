@@ -19,6 +19,7 @@ constexpr uint32_t kStreamSignature = 0xF6103B71;
 constexpr uint32_t kAllocPacketType = 0xA1A1A1A1;
 constexpr uint32_t kFreePacketType = 0xFEFEFEFE;
 constexpr uint32_t kBarrierPacketType = 0xBABABABA;
+constexpr uint32_t kStringMappingPacketType = 0xCDCDCDCD;
 
 constexpr uint32_t kMaxStackEntries = 256;
 constexpr uint32_t kMaxContextLen = 256;
@@ -68,6 +69,19 @@ struct BarrierPacket {
 
   uint32_t barrier_id;
 };
+
+// Clients will sometimes use pointers to const strings in place of instruction
+// addresses in AllocPackets. Prior to using such a pointer, the client should
+// send a StringMappingPacket to inform the profiling service.
+struct StringMappingPacket {
+  const uint32_t op = kStringMappingPacketType;
+  uint64_t address;
+  uint32_t string_len;
+
+  // Immediately followed by |string_len| bytes of string (not null
+  // terminated).
+};
+
 #pragma pack(pop)
 
 }  // namespace profiling

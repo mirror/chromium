@@ -7,6 +7,7 @@
 
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "chrome/common/profiling/profiling_client.mojom.h"
 
 namespace profiling {
 
@@ -17,7 +18,7 @@ void InitTLSSlot();
 
 // Begin profiling all allocations in the process. Send the results to
 // |sender_pipe|.
-void InitAllocatorShim(MemlogSenderPipe* sender_pipe);
+void InitAllocatorShim(MemlogSenderPipe* sender_pipe, mojom::StackMode stack_mode);
 
 // Stop profiling allocations by dropping shim callbacks. There is no way to
 // consistently, synchronously stop the allocator shim without negatively

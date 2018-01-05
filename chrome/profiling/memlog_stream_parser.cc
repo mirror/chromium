@@ -14,12 +14,6 @@
 
 namespace profiling {
 
-namespace {
-
-using AddressVector = base::StackVector<Address, kMaxStackEntries>;
-
-}  // namespace
-
 MemlogStreamParser::Block::Block(std::unique_ptr<char[]> d, size_t s)
     : data(std::move(d)), size(s) {}
 
@@ -70,6 +64,9 @@ bool MemlogStreamParser::OnStreamData(std::unique_ptr<char[]> data, size_t sz) {
         break;
       case kBarrierPacketType:
         status = ParseBarrier();
+        break;
+      case kStringMappingPacketType:
+        status = ParseStringMapping();
         break;
       default:
         // Invalid message type.
@@ -212,6 +209,22 @@ MemlogStreamParser::ReadStatus MemlogStreamParser::ParseBarrier() {
     return READ_NO_DATA;
 
   receiver_->OnBarrier(barrier_packet);
+  return READ_OK;
+}
+
+MemlogStreamParser::ReadStatus MemlogStreamParser::ParseStringMapping() {
+  StringMappingPacket string_mapping_packet;
+  if (!ReadBytes(sizeof(StringMappingPacket), &string_mapping_packet))
+    return READ_NO_DATA;
+
+  if (!AreBytesAvailable(string_mapping_packet.string_len))
+    return READ_NO_DATA;
+
+  std::vector<char> string_bytes;
+  string_bytes.resize(string_mapping_packet.string_len);
+  ReadBytes(string_mapping_packet.string_len, string_bytes.data());
+
+  receiver_->OnStringMapping(string_mapping_packet, std::move(string_bytes));
   return READ_OK;
 }
 

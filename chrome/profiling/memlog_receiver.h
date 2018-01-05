@@ -25,6 +25,7 @@ class MemlogReceiver {
                        std::string&& context) = 0;
   virtual void OnFree(const FreePacket& free_packet) = 0;
   virtual void OnBarrier(const BarrierPacket& barrier_packet) = 0;
+  virtual void OnStringMapping(const StringMappingPacket& string_mapping_packet, std::vector<char> raw_string) = 0;
   virtual void OnComplete() = 0;
 };
 
