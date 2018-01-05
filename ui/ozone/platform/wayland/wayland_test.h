@@ -12,6 +12,10 @@
 #include "ui/ozone/platform/wayland/wayland_connection.h"
 #include "ui/ozone/platform/wayland/wayland_window.h"
 
+#if BUILDFLAG(USE_XKBCOMMON)
+#include "ui/events/ozone/layout/xkb/xkb_evdev_codes.h"
+#endif
+
 namespace ui {
 
 const uint32_t kXdgShellV5 = 5;
@@ -43,6 +47,10 @@ class WaylandTest : public ::testing::TestWithParam<uint32_t> {
   gfx::AcceleratedWidget widget = gfx::kNullAcceleratedWidget;
 
  private:
+#if BUILDFLAG(USE_XKBCOMMON)
+  XkbEvdevCodes xkb_evdev_code_converter_;
+#endif
+
   DISALLOW_COPY_AND_ASSIGN(WaylandTest);
 };
 

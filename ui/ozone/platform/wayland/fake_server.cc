@@ -15,6 +15,10 @@
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 
+#if BUILDFLAG(USE_XKBCOMMON)
+#include "ui/events/keycodes/keyboard_code_conversion.h"
+#endif
+
 namespace wl {
 namespace {
 
@@ -394,6 +398,16 @@ MockKeyboard::MockKeyboard(wl_resource* resource) : ServerObject(resource) {
 }
 
 MockKeyboard::~MockKeyboard() {}
+
+#if BUILDFLAG(USE_XKBCOMMON)
+bool MockWaylandXkbKeyboardLayoutEngine::Lookup(
+    ui::DomCode dom_code,
+    int event_flags,
+    ui::DomKey* dom_key,
+    ui::KeyboardCode* key_code) const {
+  return DomCodeToUsLayoutDomKey(dom_code, event_flags, dom_key, key_code);
+}
+#endif
 
 void GlobalDeleter::operator()(wl_global* global) {
   wl_global_destroy(global);

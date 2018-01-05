@@ -12,7 +12,13 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
 #include "testing/gmock/include/gmock/gmock.h"
+#include "ui/base/ui_features.h"
 #include "ui/gfx/geometry/rect.h"
+
+#if BUILDFLAG(USE_XKBCOMMON)
+#include "ui/events/ozone/layout/xkb/xkb_evdev_codes.h"
+#include "ui/ozone/platform/wayland/wayland_xkb_keyboard_layout_engine.h"
+#endif
 
 struct wl_client;
 struct wl_display;
@@ -118,6 +124,29 @@ class MockKeyboard : public ServerObject {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockKeyboard);
 };
+
+#if BUILDFLAG(USE_XKBCOMMON)
+class MockWaylandXkbKeyboardLayoutEngine
+    : public ui::WaylandXkbKeyboardLayoutEngine {
+ public:
+  MockWaylandXkbKeyboardLayoutEngine(const ui::XkbKeyCodeConverter& converter)
+      : WaylandXkbKeyboardLayoutEngine(converter) {}
+
+  void UpdateModifiers(uint32_t depressed_mods,
+                       uint32_t latched_mods,
+                       uint32_t locked_mods,
+                       uint32_t group) override {}
+  void SetEventModifiers(ui::EventModifiers* event_modifiers) override {}
+
+ private:
+  bool Lookup(ui::DomCode dom_code,
+              int event_flags,
+              ui::DomKey* dom_key,
+              ui::KeyboardCode* key_code) const override;
+
+  DISALLOW_COPY_AND_ASSIGN(MockWaylandXkbKeyboardLayoutEngine);
+};
+#endif
 
 struct GlobalDeleter {
   void operator()(wl_global* global);
