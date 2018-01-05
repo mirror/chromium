@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42903da4_262e6995",
+        "filename": "content/browser/android/gesture_listener_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-05T05:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce813057_dc79a63c",
+      "revId": "f0b784afdd7a96fb3fa2d362fba129bb6906d187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5f758e9_00bc6a34",
         "filename": "content/browser/web_contents/web_contents_view_android.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f0b784afdd7a96fb3fa2d362fba129bb6906d187",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd2c099_67d5b62b",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2018-01-05T05:05:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f758e9_00bc6a34",
+      "revId": "f0b784afdd7a96fb3fa2d362fba129bb6906d187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
