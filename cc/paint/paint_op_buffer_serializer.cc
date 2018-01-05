@@ -31,7 +31,7 @@ PaintOpBufferSerializer::PaintOpBufferSerializer(
     ImageProvider* image_provider,
     TransferCacheSerializeHelper* transfer_cache)
     : serialize_cb_(std::move(serialize_cb)),
-      canvas_(100, 100),
+      canvas_(0, 0),
       image_provider_(image_provider),
       transfer_cache_(transfer_cache) {
   DCHECK(serialize_cb_);
@@ -42,15 +42,26 @@ PaintOpBufferSerializer::~PaintOpBufferSerializer() = default;
 void PaintOpBufferSerializer::Serialize(const PaintOpBuffer* buffer,
                                         const std::vector<size_t>* offsets,
                                         const Preamble& preamble) {
+  // Reset the canvas to the maximum extents of our playback rect, ensuring this
+  // rect will not be clipped.
+  canvas_.resetCanvas(preamble.playback_rect.right(),
+                      preamble.playback_rect.bottom());
+  DCHECK(canvas_.getTotalMatrix().isIdentity());
+  static const int kInitialSaveCount = 1;
+  DCHECK_EQ(kInitialSaveCount, canvas_.getSaveCount());
+
+  // These SerializeOptions and PlaybackParams use the initial (identity) canvas
+  // matrix, as they are only used for serializing the preamble and the initial
+  // save / final restore. SerializeBuffer will create its own SerializeOptions
+  // and PlaybackParams based on the post-preamble canvas.
   PaintOp::SerializeOptions options(image_provider_, transfer_cache_, &canvas_,
                                     canvas_.getTotalMatrix());
   PlaybackParams params(image_provider_, canvas_.getTotalMatrix());
 
-  int save_count = canvas_.getSaveCount();
   Save(options, params);
   SerializePreamble(preamble, options, params);
   SerializeBuffer(buffer, offsets);
-  RestoreToCount(save_count, options, params);
+  RestoreToCount(kInitialSaveCount, options, params);
 }
 
 void PaintOpBufferSerializer::SerializePreamble(
