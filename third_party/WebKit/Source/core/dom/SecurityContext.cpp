@@ -36,7 +36,7 @@ namespace blink {
 
 SecurityContext::SecurityContext()
     : sandbox_flags_(kSandboxNone),
-      address_space_(kWebAddressSpacePublic),
+      address_space_(mojom::NetAddressSpace::kPublic),
       insecure_request_policy_(kLeaveInsecureRequestsAlone),
       require_safe_types_(false) {}
 
@@ -78,13 +78,13 @@ void SecurityContext::ApplySandboxFlags(SandboxFlags mask,
 
 String SecurityContext::addressSpaceForBindings() const {
   switch (address_space_) {
-    case kWebAddressSpacePublic:
+    case mojom::NetAddressSpace::kPublic:
       return "public";
 
-    case kWebAddressSpacePrivate:
+    case mojom::NetAddressSpace::kPrivate:
       return "private";
 
-    case kWebAddressSpaceLocal:
+    case mojom::NetAddressSpace::kLocal:
       return "local";
   }
   NOTREACHED();
