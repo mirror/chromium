@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3df5816_f4f12d1c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T18:35:24Z",
+      "side": 1,
+      "message": "Can this be written without the unique_ptr? i.e. base::SharedMemory shm(handle, false /* read_only */);",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c308ef8_55a6675c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T18:35:24Z",
+      "side": 1,
+      "message": "Is this explicit call still necessary? This will happen by default as things go out of scope right? And the base::SharedMemory object has longer lifetime than SkBitmap, so there\u0027s no UAF either.",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83147a3e_f20641a8",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2350,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T18:35:24Z",
+      "side": 1,
+      "message": "Nit: it\u0027d probably be slightly more accurate to say that the IPC system takes ownership of the shared memory handle.",
+      "revId": "d3cc577330db1c7aaa50b2c8681f3ea2e4276445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
