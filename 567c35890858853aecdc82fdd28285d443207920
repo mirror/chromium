@@ -159,6 +159,24 @@
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e56af4_4a64fdb2",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T17:21:36Z",
+      "side": 1,
+      "message": "Done in PS7.",
+      "parentUuid": "2b46edde_3273d0ff",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
