@@ -10,7 +10,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "gpu/gpu_export.h"
+#include "gpu/gpu_gles2_export.h"
 #include "ui/gl/gl_state_restorer.h"
 
 namespace gpu {
@@ -20,7 +20,7 @@ struct ContextState;
 }
 
 // This class implements a GLStateRestorer that forwards to a GLES2Decoder.
-class GPU_EXPORT GLStateRestorerImpl : public gl::GLStateRestorer {
+class GPU_GLES2_EXPORT GLStateRestorerImpl : public gl::GLStateRestorer {
  public:
    explicit GLStateRestorerImpl(base::WeakPtr<gles2::GLES2Decoder> decoder);
    ~GLStateRestorerImpl() override;
