@@ -170,6 +170,7 @@ source_set("native_handle_type_converters") {
   ]
   public_deps = [
     ":message_support",
+    "//mojo/public/interfaces/bindings:bindings__parser",
     "//mojo/public/interfaces/bindings:bindings_shared__generator",
   ]
 }
