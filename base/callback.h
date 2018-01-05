@@ -19,6 +19,9 @@
 
 namespace base {
 
+struct null_callback_t {};
+constexpr null_callback_t null_callback;
+
 template <typename R, typename... Args>
 class OnceCallback<R(Args...)> : public internal::CallbackBase {
  public:
@@ -26,7 +29,8 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  OnceCallback() : internal::CallbackBase(nullptr) {}
+  OnceCallback() = default;
+  OnceCallback(null_callback_t) {}
 
   explicit OnceCallback(internal::BindStateBase* bind_state)
       : internal::CallbackBase(bind_state) {}
@@ -36,6 +40,11 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
 
   OnceCallback(OnceCallback&&) = default;
   OnceCallback& operator=(OnceCallback&&) = default;
+
+  OnceCallback& operator=(null_callback_t) {
+    Reset();
+    return *this;
+  }
 
   OnceCallback(RepeatingCallback<RunType> other)
       : internal::CallbackBase(std::move(other)) {}
@@ -73,7 +82,8 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   using PolymorphicInvoke = R (*)(internal::BindStateBase*,
                                   internal::PassingTraitsType<Args>...);
 
-  RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
+  RepeatingCallback() = default;
+  RepeatingCallback(null_callback_t) {}
 
   explicit RepeatingCallback(internal::BindStateBase* bind_state)
       : internal::CallbackBaseCopyable(bind_state) {}
@@ -83,6 +93,11 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   RepeatingCallback& operator=(const RepeatingCallback&) = default;
   RepeatingCallback(RepeatingCallback&&) = default;
   RepeatingCallback& operator=(RepeatingCallback&&) = default;
+
+  RepeatingCallback& operator=(null_callback_t) {
+    Reset();
+    return *this;
+  }
 
   bool Equals(const RepeatingCallback& other) const {
     return EqualsInternal(other);

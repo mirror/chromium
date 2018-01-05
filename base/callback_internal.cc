@@ -66,8 +66,9 @@ bool CallbackBase::EqualsInternal(const CallbackBase& other) const {
   return bind_state_ == other.bind_state_;
 }
 
+CallbackBase::CallbackBase() {}
 CallbackBase::CallbackBase(BindStateBase* bind_state)
-    : bind_state_(bind_state ? AdoptRef(bind_state) : nullptr) {
+    : bind_state_(AdoptRef(bind_state)) {
   DCHECK(!bind_state_.get() || bind_state_->HasOneRef());
 }
 

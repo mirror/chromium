@@ -46,31 +46,32 @@ class CallbackTest : public ::testing::Test {
  protected:
   Callback<void()> callback_a_;
   const Callback<void()> callback_b_;  // Ensure APIs work with const.
-  Callback<void()> null_callback_;
 };
 
 // Ensure we can create unbound callbacks. We need this to be able to store
 // them in class members that can be initialized later.
 TEST_F(CallbackTest, DefaultConstruction) {
   Callback<void()> c0;
-  Callback<void(int)> c1;
-  Callback<void(int,int)> c2;
-  Callback<void(int,int,int)> c3;
-  Callback<void(int,int,int,int)> c4;
-  Callback<void(int,int,int,int,int)> c5;
-  Callback<void(int,int,int,int,int,int)> c6;
+  Callback<void(int, int)> c1;
+
+  EXPECT_FALSE(c0);
+  EXPECT_FALSE(c1);
 
   EXPECT_TRUE(c0.is_null());
   EXPECT_TRUE(c1.is_null());
-  EXPECT_TRUE(c2.is_null());
-  EXPECT_TRUE(c3.is_null());
-  EXPECT_TRUE(c4.is_null());
-  EXPECT_TRUE(c5.is_null());
-  EXPECT_TRUE(c6.is_null());
+}
+
+TEST_F(CallbackTest, NullCallback) {
+  Callback<void()> cb = base::null_callback;
+  EXPECT_FALSE(cb);
+
+  ASSERT_TRUE(callback_a_);
+  callback_a_ = base::null_callback;
+  ASSERT_FALSE(callback_a_);
 }
 
 TEST_F(CallbackTest, IsNull) {
-  EXPECT_TRUE(null_callback_.is_null());
+  EXPECT_TRUE(Closure().is_null());
   EXPECT_FALSE(callback_a_.is_null());
   EXPECT_FALSE(callback_b_.is_null());
 }
@@ -87,30 +88,31 @@ TEST_F(CallbackTest, Equals) {
   EXPECT_FALSE(callback_a_.Equals(callback_c));
 
   // Empty, however, is always equal to empty.
+  Callback<void()> empty;
   Callback<void()> empty2;
-  EXPECT_TRUE(null_callback_.Equals(empty2));
+  EXPECT_TRUE(empty.Equals(empty2));
 }
 
 TEST_F(CallbackTest, Reset) {
   // Resetting should bring us back to empty.
   ASSERT_FALSE(callback_a_.is_null());
-  ASSERT_FALSE(callback_a_.Equals(null_callback_));
+  ASSERT_FALSE(callback_a_.Equals(Closure()));
 
   callback_a_.Reset();
 
   EXPECT_TRUE(callback_a_.is_null());
-  EXPECT_TRUE(callback_a_.Equals(null_callback_));
+  EXPECT_TRUE(callback_a_.Equals(Closure()));
 }
 
 TEST_F(CallbackTest, Move) {
   // Moving should reset the callback.
   ASSERT_FALSE(callback_a_.is_null());
-  ASSERT_FALSE(callback_a_.Equals(null_callback_));
+  ASSERT_FALSE(callback_a_.Equals(Closure()));
 
   auto tmp = std::move(callback_a_);
 
   EXPECT_TRUE(callback_a_.is_null());
-  EXPECT_TRUE(callback_a_.Equals(null_callback_));
+  EXPECT_TRUE(callback_a_.Equals(Closure()));
 }
 
 struct TestForReentrancy {
