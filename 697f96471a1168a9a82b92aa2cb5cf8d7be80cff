@@ -142,6 +142,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fefd55_19643b48",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-05T01:30:48Z",
+      "side": 1,
+      "message": "I\u0027ve resolved the merge conflict and applied the above change in a new CL, in case Trent is too busy to pick this up soon:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/851000\n\nBut, Trent, please feel free to pick this up if you are able. Either way we\u0027ll make sure you get credit. But since it\u0027s your work, I\u0027d like to give you the pleasure of landing it if expedient. :)",
+      "parentUuid": "36b2db25_a50489c8",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
