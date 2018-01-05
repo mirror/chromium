@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a55972f_bbc09f1d",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T18:39:58Z",
+      "side": 1,
+      "message": "auto checker \u003d std::make_unique\u003cAvailabilityChecker\u003e(std::move(callback));\n\nEven better, elim the local and inline make_unique.",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f5f889_55ab19a9",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T18:39:58Z",
+      "side": 1,
+      "message": "nit: inline",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08404fe_38de4094",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T18:39:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we call Resolve() here instead so that Cancel() gets called?",
+      "revId": "3ecb99596e5532c8ec337774f243d6391a7c3d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
