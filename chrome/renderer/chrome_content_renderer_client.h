@@ -18,6 +18,7 @@
 #include "base/strings/string16.h"
 #include "chrome/common/plugin.mojom.h"
 #include "chrome/renderer/media/chrome_key_systems_provider.h"
+#include "chrome/renderer/url_loader_throttle_provider_impl.h"
 #include "components/nacl/common/features.h"
 #include "components/rappor/public/interfaces/rappor_recorder.mojom.h"
 #include "components/safe_browsing/common/safe_browsing.mojom.h"
@@ -221,6 +222,8 @@ class ChromeContentRendererClient
       const GURL& url,
       base::Time cert_validity_start,
       std::string* console_messsage) override;
+  std::unique_ptr<content::URLLoaderThrottleProvider>
+  CreateWorkerURLLoaderThrottleProvider() override;
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   // Sets a new |spellcheck|. Used for testing only.
@@ -288,6 +291,8 @@ class ChromeContentRendererClient
       prescient_networking_dispatcher_;
 
   ChromeKeySystemsProvider key_systems_provider_;
+
+  std::unique_ptr<URLLoaderThrottleProviderImpl> throttle_provider_;
 
   safe_browsing::mojom::SafeBrowsingPtr safe_browsing_;
 
