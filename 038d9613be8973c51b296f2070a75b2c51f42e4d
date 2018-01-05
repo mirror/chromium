@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "5fbf6c36_7e55372b",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Perhaps its best to check them in HostResolverImpl::AddDnsOverHttpsServer",
+      "parentUuid": "5ba184a3_8ffdddf9",
+      "range": {
+        "startLine": 99,
+        "startChar": 21,
+        "endLine": 99,
+        "endChar": 24
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "618cc39a_e5629120",
         "filename": "net/dns/dns_config_service.h",
         "patchSetId": 12
@@ -114,6 +138,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4862cc56_81dc1106",
+        "filename": "net/dns/dns_config_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "618cc39a_e5629120",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 100,
+        "endChar": 38
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +205,24 @@
     },
     {
       "key": {
+        "uuid": "cf342bde_0b5f00c3",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ea64bb_b275d677",
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8a939f_ebffbd60",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 12
@@ -177,6 +243,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1db95c_ff25b47f",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8a939f_ebffbd60",
+      "range": {
+        "startLine": 368,
+        "startChar": 36,
+        "endLine": 368,
+        "endChar": 52
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +293,30 @@
     },
     {
       "key": {
+        "uuid": "ba88aeb1_6aef4f1a",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec54c185_b2c7ab7a",
+      "range": {
+        "startLine": 370,
+        "startChar": 34,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "410a6f9e_742cc531",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 12
@@ -223,6 +337,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064cfe79_0b63d22e",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "410a6f9e_742cc531",
+      "range": {
+        "startLine": 382,
+        "startChar": 17,
+        "endLine": 382,
+        "endChar": 18
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "2a48bf2b_6e20dc3d",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b3cacc8_de12e7a4",
+      "range": {
+        "startLine": 398,
+        "startChar": 3,
+        "endLine": 398,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332dcf32_486e063d",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 12
@@ -272,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "3d1aa0e8_7f9db2d1",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332dcf32_486e063d",
+      "range": {
+        "startLine": 403,
+        "startChar": 6,
+        "endLine": 403,
+        "endChar": 28
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ede0c0_99320de2",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 12
@@ -292,6 +478,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49877b5f_c92990b3",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ede0c0_99320de2",
+      "range": {
+        "startLine": 422,
+        "startChar": 11,
+        "endLine": 422,
+        "endChar": 14
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +562,30 @@
       "writtenOn": "2018-01-04T20:50:33Z",
       "side": 1,
       "message": "Is there a reason for using HttpStreamParser::kMaxBufSize here?  2 MB seems a bit large for a DNS response.  Doesn\u0027t look like DnsTcpAttempt has a size limit, or I\u0027d suggest using it.",
+      "range": {
+        "startLine": 433,
+        "startChar": 45,
+        "endLine": 433,
+        "endChar": 61
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30b82b1_22e13960",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Its a bit arbitrary, but I figured better to cap it somewhere and the size that would cause the parser to DCHECK seemed like a reasonable place.",
+      "parentUuid": "22ffe19e_7f849344",
       "range": {
         "startLine": 433,
         "startChar": 45,
@@ -464,6 +698,30 @@
       "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef7aaa9_a020aabb",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2018-01-05T22:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0522e6b3_f6931896",
+      "range": {
+        "startLine": 486,
+        "startChar": 38,
+        "endLine": 486,
+        "endChar": 0
+      },
+      "revId": "038d9613be8973c51b296f2070a75b2c51f42e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
