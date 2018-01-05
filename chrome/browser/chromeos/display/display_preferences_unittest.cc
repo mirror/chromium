@@ -1223,22 +1223,7 @@ TEST_F(DisplayPreferencesTest, LegacyTouchCalibrationDataSupport) {
             data_2);
 }
 
-class MultiMirroringDisplayPreferencesTest : public DisplayPreferencesTest {
- public:
-  MultiMirroringDisplayPreferencesTest() = default;
-  ~MultiMirroringDisplayPreferencesTest() override = default;
-
-  void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        ::switches::kEnableMultiMirroring);
-    DisplayPreferencesTest::SetUp();
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MultiMirroringDisplayPreferencesTest);
-};
-
-TEST_F(MultiMirroringDisplayPreferencesTest, ExternalDisplayMirrorInfo) {
+TEST_F(DisplayPreferencesTest, ExternalDisplayMirrorInfo) {
   LoggedInAsUser();
 
   const int64_t internal_display_id =
