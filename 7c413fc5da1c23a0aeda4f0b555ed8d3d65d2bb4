@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b390d15_9d8aacf9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2018-01-05T01:28:51Z",
+      "side": 1,
+      "message": "nits: Although all transforms involved here must be integer translation, thus are commutative, it is nicer to convert in canonical order:\n\nFloatRect layer_bounds(FloatPoint(fragment_data.PaintOffset()), FloatSize(layer_.Size()));\nGeometryMapper::SourceToDestinationRect(current_transform,\n                                        root_transform, layer_bounds);\nDCHECK_EQ(root_fragment.PaintOffset(), context.sub_pixel_accumulation);\noffset \u003d LayoutPoint(layer_bounds.Location());\n\nOPTIONAL: Even better if we actually inspect into the matrix. Not only we save some computation, but also preserve full precision!:\n\nconst TransformationMatrix\u0026 transform \u003d \n    GeometryMapper::SourceToDestinationProjection(current_transform, root_transform);\nDCHECK(transform.IsIntegerTranslation());\noffset \u003d fragment_data.PaintOffset() + LayoutSize(((int)transform.E(), (int)transform.F());\nDCHECK_EQ(root_fragment.PaintOffset(), context.sub_pixel_accumulation);",
+      "revId": "7c413fc5da1c23a0aeda4f0b555ed8d3d65d2bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
