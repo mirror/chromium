@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e66c2b_ae9c7539",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "Let\u0027s also save this to field, since retrieving from state is a bit slow.",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc499d5_bdaa1992",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "I wonder what happens with POST navigations? We should probably report post data for non-xhrs no matter what the size - or else it won\u0027t be possible to retrieve it ever.",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bc6cf3_a56c54cf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3209,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "nit: missing dot at the end.",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f9c802_5da74de6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3575,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "maxPostDataSize",
+      "range": {
+        "startLine": 3575,
+        "startChar": 23,
+        "endLine": 3575,
+        "endChar": 54
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0237cb4_5de86359",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3613,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "- getRequestPostData\n- Returns post data sent with request. Returns an error if request did not have postData (see Request.hasPostData).",
+      "range": {
+        "startLine": 3613,
+        "startChar": 10,
+        "endLine": 3613,
+        "endChar": 28
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d43c740_7288b773",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3617,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "Can it be base64Encoded?",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ad4657_b2c7e577",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 3619,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "postData",
+      "range": {
+        "startLine": 3619,
+        "startChar": 13,
+        "endLine": 3619,
+        "endChar": 21
+      },
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8299848f_1b5fcb4d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T19:19:24Z",
+      "side": 1,
+      "message": "Let\u0027s make this async but return synchronously and turn into separate patch.",
+      "revId": "ad0b79bd7405017767aba6550b2f9aff24994bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
