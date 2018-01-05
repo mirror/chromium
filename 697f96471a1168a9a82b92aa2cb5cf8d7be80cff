@@ -124,6 +124,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b2db25_a50489c8",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2018-01-05T01:11:35Z",
+      "side": 1,
+      "message": "Given the argument in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d794923, which I have quite a bit of sympathy for, what if instead we do\n\n  exception_state.ThrowDOMException(kQuotaExceededError, \"Throttling history state...\");\n\nThat gets us the developer-facing message and a better API behavior in 1 go.",
+      "parentUuid": "5c50ed3d_26bb91b7",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
