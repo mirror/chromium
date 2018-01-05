@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba4de4d1_699d5bd3",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-05T21:02:45Z",
+      "side": 1,
+      "message": "We have these resources in chrome/app/generated_resources.grd. Please file a bug to clean up them if it doesn\u0027t exist yet.",
+      "revId": "57496cba8c3184b1e22b34f45c79dbfaaf5ed576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fcbf925_d04aef2e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2018-01-05T21:02:45Z",
+      "side": 1,
+      "message": "bool login_primary \u003d seession_state \u003d\u003d SessionState::LOGNIN_PRIMARY);\n...-\u003eSetVisible(login_primary);\n...-\u003eSetVisible(login_primary);\nwould be easier to read.",
+      "revId": "57496cba8c3184b1e22b34f45c79dbfaaf5ed576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
