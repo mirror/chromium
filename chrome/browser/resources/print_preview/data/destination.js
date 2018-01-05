@@ -56,6 +56,22 @@ print_preview.DestinationProvisionalType = {
 };
 
 /**
+ * Enumeration specifying the status of a destination's 2018 certificate.
+ * Values UKNOWN and YES are returned directly by the GCP server.
+ * @enum {string}
+ */
+print_preview.DestinationCertificateStatus = {
+  /** Destination is not a cloud printer or no status was retrieved. */
+  NONE: 'NONE',
+  /** Printer does not have a valid 2018 certificate. Currently unused. */
+  NO: 'NO',
+  /** Printer may or may not have a valid certificate. Sent by GCP server. */
+  UNKNOWN: 'UNKNOWN',
+  /** Printer has a valid 2018 certificate. Sent by GCP server. */
+  YES: 'YES'
+};
+
+/**
  * Capabilities of a print destination represented in a CDD.
  *
  * @typedef {{
@@ -171,7 +187,8 @@ cr.define('print_preview', function() {
      *              (print_preview.DestinationProvisionalType|undefined),
      *          extensionId: (string|undefined),
      *          extensionName: (string|undefined),
-     *          description: (string|undefined)}=} opt_params Optional
+     *          description: (string|undefined),
+     *          certificateStatus: (string|undefined)}=} opt_params Optional
      *     parameters for the destination.
      */
     constructor(
@@ -293,6 +310,13 @@ cr.define('print_preview', function() {
        */
       this.provisionalType_ = (opt_params && opt_params.provisionalType) ||
           print_preview.DestinationProvisionalType.NONE;
+
+      /**
+       * Printer 2018 certificate status
+       * @private {print_preview.DestinationCertificateStatus}
+       */
+      this.certificateStatus_ = (opt_params && opt_params.certificateStatus) ||
+          print_preview.DestinationCertificateStatus.NONE;
 
       assert(
           this.provisionalType_ !=
@@ -481,6 +505,14 @@ cr.define('print_preview', function() {
       this.connectionStatus_ = status;
     }
 
+    get hasInvalidCertificate() {
+      return arrayContains(
+          [
+            print_preview.DestinationCertificateStatus.NO,
+          ],
+          this.certificateStatus_);
+    }
+
     /** @return {boolean} Whether the destination is considered offline. */
     get isOffline() {
       return arrayContains(
@@ -491,23 +523,27 @@ cr.define('print_preview', function() {
           this.connectionStatus_);
     }
 
-    /** @return {string} Human readable status for offline destination. */
-    get offlineStatusText() {
-      if (!this.isOffline) {
+    /**
+     * @return {string} Human readable status for a destination that is offline
+     *     or has a bad certificate. */
+    get connectionStatusText() {
+      if (!this.isOffline && !this.hasInvalidCertificate) {
         return '';
       }
       const offlineDurationMs = Date.now() - this.lastAccessTime_;
-      let offlineMessageId;
-      if (offlineDurationMs > 31622400000.0) {  // One year.
-        offlineMessageId = 'offlineForYear';
+      let statusMessageId;
+      if (this.hasInvalidCertificate) {
+        statusMessageId = 'noLongerSupported';
+      } else if (offlineDurationMs > 31622400000.0) {  // One year.
+        statusMessageId = 'offlineForYear';
       } else if (offlineDurationMs > 2678400000.0) {  // One month.
-        offlineMessageId = 'offlineForMonth';
+        statusMessageId = 'offlineForMonth';
       } else if (offlineDurationMs > 604800000.0) {  // One week.
-        offlineMessageId = 'offlineForWeek';
+        statusMessageId = 'offlineForWeek';
       } else {
-        offlineMessageId = 'offline';
+        statusMessageId = 'offline';
       }
-      return loadTimeData.getString(offlineMessageId);
+      return loadTimeData.getString(statusMessageId);
     }
 
     /**
@@ -590,6 +626,14 @@ cr.define('print_preview', function() {
      */
     get provisionalType() {
       return this.provisionalType_;
+    }
+
+    /**
+     * Gets the destination's certificate status.
+     * @return {print_preview.DestinationCertificateStatus}
+     */
+    get certificateStatus() {
+      return this.certificateStatus_;
     }
 
     /**
