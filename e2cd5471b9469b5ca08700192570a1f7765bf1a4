@@ -46,6 +46,30 @@
       "revId": "e2cd5471b9469b5ca08700192570a1f7765bf1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90b8371_d027b5fc",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2018-01-05T21:23:51Z",
+      "side": 1,
+      "message": "I just mean that you shouldn\u0027t be verifying that the scrollbars are overlay or not. So instead of trying to disable them here, you can replace the first DCHECK, before enabling emulation, with:\n\nbool uses_overlays \u003d VerticalScrollbar()-\u003eIsOverlayScrollbar();\n\nThen after emulation is turned off:\n\nDCHECK(VerticalScrollbar()-\u003eIsOverlayScrollbar() \u003d\u003d uses_overlays)\n\nAs an aside, doesn\u0027t setMockScrollbarsEnabled below mean we\u0027re no longer using the mock theme?",
+      "parentUuid": "ac766aa6_1f31605b",
+      "range": {
+        "startLine": 987,
+        "startChar": 0,
+        "endLine": 990,
+        "endChar": 6
+      },
+      "revId": "e2cd5471b9469b5ca08700192570a1f7765bf1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
