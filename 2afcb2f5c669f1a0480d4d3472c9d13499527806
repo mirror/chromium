@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384f0d00_ed76ae01",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "suggest calling it GetAvailableTcpPort() because \u0027open\u0027 may be ambiguous",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f1b136_db3223eb",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Use super():\nsuper(QemuTarget, self).__init__(output_dir, target_cpu)",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bc34f8_fdafda87",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "I don\u0027t think you need 2 blank lines between class methods.",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0aaa64_710af481",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Shutdown() calls RunCommand(), which may fail, and it\u0027s best to avoid exceptions in __exit__(). For QEMU targets it\u0027s more reliable to just kill qemu.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfda6db_de8d563a",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "maybe make this a class method, then this would be self.get_target_cpu()",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 65
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1274d808_21c28655",
+        "filename": "build/fuchsia/runner_v2/qemu_target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "super(QemuTarget, self).Shutdown()",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30085303_1df9a290",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Do we need absolute path? Why can\u0027t we rely on it being in PATH?",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3dc8e5_59540364",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "I don\u0027t see these being used anywhere.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b273b495_faee31e1",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "RunPipedSsh",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac9e632_e41f5381",
+        "filename": "build/fuchsia/runner_v2/remote_cmd.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "os.devnull",
+      "range": {
+        "startLine": 89,
+        "startChar": 17,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641fdd49_cc2397aa",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "I suggest calling it GetSdkArch() or TargetCpuToSdkArch() to make it clear that it returns a arch name for the SDK",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd0c4d1_15e11a41",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Is it really necessary to use ABC for this class? What is it used for?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cf68f8_e42cdef2",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Not sure this logic belongs to this class. Potentially we could run tests on machines that are already provisioned and already have OS and SSH configured.",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 19
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1216bddd_a9c72fa8",
+        "filename": "build/fuchsia/runner_v2/target.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T19:40:55Z",
+      "side": 1,
+      "message": "Why double underscore?",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 8
+      },
+      "revId": "2afcb2f5c669f1a0480d4d3472c9d13499527806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
