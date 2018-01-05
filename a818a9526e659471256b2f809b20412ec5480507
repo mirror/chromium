@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf12162_e62c40f4",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2018-01-05T21:55:35Z",
+      "side": 1,
+      "message": "These are nice, thanks!",
+      "revId": "a818a9526e659471256b2f809b20412ec5480507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
