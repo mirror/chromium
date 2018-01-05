@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2a42052_dc3259d6",
+        "filename": "ios/chrome/app/deferred_initialization_runner.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "The comment isn\u0027t repeated in the implementation file.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 64
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "795f0fc1_bc5133f4",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 8
@@ -25,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "07dc00da_ee2cddae",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2063,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "This call was removed in your last CL. Why does it need to be reinstated?",
+      "range": {
+        "startLine": 2063,
+        "startChar": 48,
+        "endLine": 2063,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36962e7c_fe98ca33",
         "filename": "ios/chrome/browser/ui/key_commands_provider.h",
         "patchSetId": 8
@@ -41,6 +87,190 @@
         "startChar": 10,
         "endLine": 56,
         "endChar": 37
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb097308_73401ec6",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "The original code had something like:\nif (settingsNavigationController) return;\n\nIt should be added here to keep the same behavior.",
+      "range": {
+        "startLine": 230,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 57
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e0ff92_1068b48e",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "This slightly changes the behavior. Previously it was not possible to call |settingsWillBeDismissed| twice. But now it is. Why?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 2,
+        "endLine": 1051,
+        "endChar": 35
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cf122f_70191026",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "Passing in the |browserState| is much more common in our code base. \nSee examples like: AccountsCollectionViewController, SigninPromoViewController, ClearBrowsingDataCollectionViewController, SettingsCollectionViewController,\nand others in Settings.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ec0a21_06b659e0",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "Did you mean to put a DCHECK(sharedSettingsNavigationController) here?",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 71
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0848ba51_948ae4e5",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "This is unnecessary since the weak pointer automatically zeros when the last strong reference releases.",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 5
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d7afbc_0cc478f6",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "The call to |closeSettings|, and the delegate that defines it is no longer necessary. These 3 lines are good enough to close settings.",
+      "range": {
+        "startLine": 372,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 80
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d5875c_b500c8c8",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "If you move this method to the top, you don\u0027t need the required keyword. This is more consistent with the code base.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1228b4f_e684a250",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 1,
+      "message": "This file did not create or have anything to do with settings previously. This file should not need to be modified for this CL.",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 70
       },
       "revId": "9b7ceaf708bdfd1929050d95a27d50cf7a7c8f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

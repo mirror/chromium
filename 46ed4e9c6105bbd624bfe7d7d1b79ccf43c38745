@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ed3d6fd_985bc161",
+        "filename": "ios/chrome/app/application_delegate/app_navigation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 0,
+      "message": "+1. Nice reduction of a superfluous variable.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "46ed4e9c6105bbd624bfe7d7d1b79ccf43c38745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935be7fd_6f8f3acc",
+        "filename": "ios/chrome/app/application_delegate/app_state.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2018-01-05T06:24:09Z",
+      "side": 0,
+      "message": "+1. Good idea.",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 51
+      },
+      "revId": "46ed4e9c6105bbd624bfe7d7d1b79ccf43c38745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
