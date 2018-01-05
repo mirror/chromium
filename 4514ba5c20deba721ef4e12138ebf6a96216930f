@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "600ec6fe_6d4cdee0",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2018-01-05T06:49:36Z",
+      "side": 1,
+      "message": "I think we can use this callback to determine whether or not to trigger overscroll (i.e. update the state of |scroll_state_|). Can you please file a bug and leave a TODO here referencing that?",
+      "revId": "4514ba5c20deba721ef4e12138ebf6a96216930f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
