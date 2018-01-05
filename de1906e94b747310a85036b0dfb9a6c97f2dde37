@@ -128,6 +128,24 @@
       "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031d56c4_e4b2456e",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T17:49:21Z",
+      "side": 1,
+      "message": "Thanks for the explanation.",
+      "parentUuid": "76bb92ad_9eba4c0f",
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
