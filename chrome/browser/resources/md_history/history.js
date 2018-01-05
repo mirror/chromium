@@ -8,9 +8,9 @@ chrome.send('queryHistory', ['', RESULTS_PER_PAGE]);
 chrome.send('getForeignSessions');
 
 /** @type {Promise} */
-var upgradePromise = null;
+let upgradePromise = null;
 /** @type {boolean} */
-var resultsRendered = false;
+let resultsRendered = false;
 
 /**
  * @return {!Promise} Resolves once the history-app has been fully upgraded.
@@ -38,7 +38,7 @@ function waitForAppUpgrade() {
  */
 function historyResult(info, results) {
   waitForAppUpgrade().then(function() {
-    var app = /** @type {HistoryAppElement} */ ($('history-app'));
+    const app = /** @type {HistoryAppElement} */ ($('history-app'));
     app.historyResult(info, results);
     document.body.classList.remove('loading');
 
@@ -57,7 +57,7 @@ function historyResult(info, results) {
  */
 function showNotification(includeOtherFormsOfBrowsingHistory) {
   waitForAppUpgrade().then(function() {
-    var app = /** @type {HistoryAppElement} */ ($('history-app'));
+    const app = /** @type {HistoryAppElement} */ ($('history-app'));
     app.showSidebarFooter = includeOtherFormsOfBrowsingHistory;
   });
 }
