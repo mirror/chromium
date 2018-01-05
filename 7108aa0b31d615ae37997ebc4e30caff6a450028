@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9315d131_344a4b58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T16:26:15Z",
+      "side": 1,
+      "message": "nit: 2018. here and elsewhere.",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f24194c_4256e1e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 11
@@ -88,6 +105,74 @@
         "endLine": 95,
         "endChar": 58
       },
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71e97f2_a57e3063",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T16:26:15Z",
+      "side": 1,
+      "message": "Please move the body of this function into the binding\u0027s setter and remove this function.",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b116e3a7_09c057ff",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T16:26:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4258ecc_f690f342",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T16:26:15Z",
+      "side": 1,
+      "message": "Please remove this. The creator does not exist after the construction of the scene. All dynamism is handled by the bindings. If you need to have the UI respond to a size change, you should put this in the model and bind the element to that size.",
+      "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab5616f_2a4b390a",
+        "filename": "chrome/browser/vr/ui_scene_creator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2018-01-05T16:26:15Z",
+      "side": 1,
+      "message": "Ui is ambiguous since this is all Ui. CreateHostedDialog, CreateNativeDialog, etc would be more clear, I think.",
       "revId": "7108aa0b31d615ae37997ebc4e30caff6a450028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
