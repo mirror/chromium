@@ -34,6 +34,7 @@
 #include "base/win/pe_image.h"
 #include "base/win/registry.h"
 #include "base/win/win_util.h"
+#include "base/win/windows_version.h"
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/conflicts/enumerate_input_method_editors_win.h"
@@ -43,6 +44,7 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/install_verification/win/install_verification.h"
 #include "chrome/browser/memory/swap_thrashing_monitor.h"
+#include "chrome/browser/notifications/notification_platform_bridge_win.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_shortcut_manager.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/settings_resetter_win.h"
@@ -171,6 +173,12 @@ void DetectFaultTolerantHeap() {
     detected = static_cast<FTHFlags>(detected | FTH_ACXTRNAL_LOADED);
 
   UMA_HISTOGRAM_ENUMERATION("FaultTolerantHeap", detected, FTH_FLAGS_COUNT);
+}
+
+void StartNativeNotificationListenerThread() {
+  auto* bridge = reinterpret_cast<NotificationPlatformBridgeWin*>(
+      g_browser_process->notification_platform_bridge());
+  bridge->StartActivationListener();
 }
 
 // Notes on the OnModuleEvent() callback.
@@ -489,6 +497,12 @@ int ChromeBrowserMainPartsWin::PreCreateThreads() {
   return ChromeBrowserMainParts::PreCreateThreads();
 }
 
+void ChromeBrowserMainPartsWin::PreShutdown() {
+  auto* bridge = reinterpret_cast<NotificationPlatformBridgeWin*>(
+      g_browser_process->notification_platform_bridge());
+  bridge->StopActivationListener();
+}
+
 void ChromeBrowserMainPartsWin::ShowMissingLocaleMessageBox() {
   ui::MessageBox(NULL,
                  base::ASCIIToUTF16(chrome_browser::kMissingLocaleDataMessage),
@@ -550,6 +564,15 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
       FROM_HERE,
       base::Bind(&DetectFaultTolerantHeap),
       base::TimeDelta::FromMinutes(1));
+
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10_RS1 &&
+      base::FeatureList::IsEnabled(features::kNativeNotifications)) {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&StartNativeNotificationListenerThread));
+  }
+#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 }
 
 // static
