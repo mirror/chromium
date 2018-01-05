@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e3131fe_ac12ba9f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:33:03Z",
+      "side": 1,
+      "message": "Changed to always check for updates on VR enter.",
+      "parentUuid": "4f77dc0e_ed60d90f",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 40
+      },
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f77ffb_1f01a22c",
         "filename": "chrome/browser/component_updater/vr_assets_component_installer.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a0ab166c_32eb6191",
+        "filename": "chrome/browser/component_updater/vr_assets_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:33:03Z",
+      "side": 1,
+      "message": "Thanks. TODO removed.",
+      "parentUuid": "e16a4515_d2ef937b",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aff551ad_07312ce1",
         "filename": "chrome/browser/component_updater/vr_assets_component_installer.h",
         "patchSetId": 2
@@ -86,6 +134,24 @@
       "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbd287c_0428aa29",
+        "filename": "chrome/browser/component_updater/vr_assets_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T17:33:03Z",
+      "side": 1,
+      "message": "I thought this rots quickly. However, it seems to be common practice to have a parameter name for friend declaration. Name added.",
+      "parentUuid": "aff551ad_07312ce1",
+      "revId": "334cd2c94019dd9a901041e72f0e3e961ff2f7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
