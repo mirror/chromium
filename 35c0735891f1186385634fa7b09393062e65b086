@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9251c24_66c9c8ee",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-05T15:12:36Z",
+      "side": 1,
+      "message": "super nit: maybe drop the first part (\"if referrer chain is imcomplete\").\n\nafaict, we append recent navigations only based on finch (assuming sber \u0026\u0026 !incognito), right? So the part about about the referrer chain being incomplete could be misleading since it implies that we\u0027re trying to figure out which entries are missing from the chain.",
+      "range": {
+        "startLine": 396,
+        "startChar": 26,
+        "endLine": 396,
+        "endChar": 36
+      },
+      "revId": "35c0735891f1186385634fa7b09393062e65b086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb67eb3_a80e59cc",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2018-01-05T15:12:36Z",
+      "side": 1,
+      "message": "looks like profile can be a const\u0026?",
+      "range": {
+        "startLine": 487,
+        "startChar": 4,
+        "endLine": 487,
+        "endChar": 11
+      },
+      "revId": "35c0735891f1186385634fa7b09393062e65b086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
