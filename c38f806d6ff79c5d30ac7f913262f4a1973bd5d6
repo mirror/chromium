@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e31e161_b44603f1",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "It looks like we don\u0027t have any logic to crash in the proxy auth case.  Maybe add an (unconditional) CHECk_EQ(STATE_NONE, next_state_)?  That ensures this isn\u0027t called until proxy auth is completed (And presto, we then support the proxy auth case!)",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbf9c16_9745ada7",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "Normally, we should avoid CHECKs in production code, but I think the combination of obscurity of the issue and importance in consumers makes this check reasonable.",
+      "range": {
+        "startLine": 303,
+        "startChar": 13,
+        "endLine": 303,
+        "endChar": 14
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09fabbf_100ab474",
+        "filename": "net/socket/client_socket_pool_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "This seems weird - it seems like this should either be a member of SocketParams, or a member of Request, but not both.\n\nI\u0027d go with making it a member of request.  See other comment on this.",
+      "range": {
+        "startLine": 714,
+        "startChar": 40,
+        "endLine": 714,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacd0d37_d198985c",
+        "filename": "net/socket/ssl_client_socket_pool.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "Do we really need a CHECK here, or would a NOTREACHED() be fine?  We\u0027ll crash on the next line, anyways.  Or could just do what SSLSocketParams::GetConnectionType does - seems like we should use the same pattern in both places, though this pattern may be more robust.",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 7
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfa3ab0_c092e4fc",
+        "filename": "net/socket/transport_client_socket_pool.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "We really should only be pooling sockets when their transport socket params are identical.  Eventually I\u0027d like to get to a point where we can just compare TransportSocketParams to determine pooling, instead of having a \"group name\" which reflects a subset of the params.  I think that we should just make this a value that\u0027s just passed to the socket pool, like priority.",
+      "range": {
+        "startLine": 54,
+        "startChar": 23,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06d0c90_f0aff1b6",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "EXPECT_EQ?",
+      "range": {
+        "startLine": 1201,
+        "startChar": 29,
+        "endLine": 1201,
+        "endChar": 30
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145f8e06_6052fba8",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we should require synchronous completion of a write here - the underlying socket implementation may gaurantee it, but I\u0027d rather not rely on that.\n\nSo just do:\n\nint rv \u003d ...-\u003eWrite(...);\nEXPECT_EQ((int)strlen(kRequest1), write_callback1.GetResult(rv);",
+      "range": {
+        "startLine": 1207,
+        "startChar": 34,
+        "endLine": 1207,
+        "endChar": 35
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1903826c_0b85eb15",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "How safe are we in assuming the connection does not complete synchronously, when using real sockets connecting to localhost?  That makes me very nervous.",
+      "range": {
+        "startLine": 1220,
+        "startChar": 26,
+        "endLine": 1220,
+        "endChar": 40
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41060bb3_42bce19e",
+        "filename": "net/socket/transport_client_socket_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T17:10:07Z",
+      "side": 1,
+      "message": "Same comment as above - let\u0027s not rely on a synchronous write.",
+      "range": {
+        "startLine": 1234,
+        "startChar": 36,
+        "endLine": 1234,
+        "endChar": 0
+      },
+      "revId": "c38f806d6ff79c5d30ac7f913262f4a1973bd5d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
