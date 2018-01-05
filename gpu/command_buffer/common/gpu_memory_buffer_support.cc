@@ -178,4 +178,14 @@ uint32_t GetPlatformSpecificTextureTarget() {
 #endif
 }
 
+GPU_EXPORT uint32_t GetBufferTextureTarget(gfx::BufferUsage usage,
+                                           gfx::BufferFormat format,
+                                           const Capabilities& capabilities) {
+  bool found = std::find(capabilities.texture_target_exception_list.begin(),
+                         capabilities.texture_target_exception_list.end(),
+                         gfx::BufferUsageAndFormat(usage, format)) !=
+               capabilities.texture_target_exception_list.end();
+  return found ? gpu::GetPlatformSpecificTextureTarget() : GL_TEXTURE_2D;
+}
+
 }  // namespace gpu
