@@ -19,6 +19,7 @@
 #include "content/browser/loader/navigation_resource_handler.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/url_loader_request_handler.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
@@ -37,6 +38,7 @@
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_ui_data.h"
+#include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/content_features.h"
@@ -61,6 +63,9 @@ namespace {
 // Request ID for browser initiated requests. We start at -2 on the same lines
 // as ResourceDispatcherHostImpl.
 int g_next_request_id = -2;
+int MakeRequestID() {
+  return g_next_request_id--;
+}
 
 size_t GetCertificateChainsSizeInKB(const net::SSLInfo& ssl_info) {
   base::Pickle cert_pickle;
@@ -172,11 +177,15 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       std::unique_ptr<ResourceRequest> resource_request,
       ResourceContext* resource_context,
       scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter,
+      const GURL& url,
+      base::Optional<std::string> suggested_filename,
       const base::WeakPtr<NavigationURLLoaderNetworkService>& owner)
       : handlers_(std::move(initial_handlers)),
         resource_request_(std::move(resource_request)),
         resource_context_(resource_context),
         default_url_loader_factory_getter_(default_url_loader_factory_getter),
+        url_(url),
+        suggested_filename_(suggested_filename),
         owner_(owner),
         response_loader_binding_(this),
         weak_factory_(this) {}
@@ -219,9 +228,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
           resource_context_, url_request_context_getter->GetURLRequestContext(),
           upload_file_system_context, *request_info,
-          std::move(navigation_ui_data), nullptr, std::move(url_loader_client),
-          std::move(url_loader), service_worker_navigation_handle_core,
-          appcache_handle_core,
+          std::move(navigation_ui_data), nullptr, &request_id_,
+          std::move(url_loader_client), std::move(url_loader),
+          service_worker_navigation_handle_core, appcache_handle_core,
           GetURLLoaderOptions(request_info->is_main_frame));
     }
 
@@ -274,6 +283,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(!started_);
+    request_id_ = MakeRequestID();
     frame_tree_node_id_ = frame_tree_node_id;
     started_ = true;
     web_contents_getter_ =
@@ -492,7 +502,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // mojom::URLLoaderClient implementation:
   void OnReceiveResponse(
       const ResourceResponseHead& head,
-      const base::Optional<net::SSLInfo>& ssl_info,
+      const base::Optional<net::SSLInfo>& maybe_ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     received_response_ = true;
 
@@ -514,6 +524,43 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
 
+    GlobalRequestID global_request_id(-1, request_id_);
+    net::SSLInfo ssl_info;
+    bool is_download;
+    bool is_stream;
+    std::unique_ptr<NavigationData> cloned_navigation_data;
+    if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+      is_download = IsDownload(*response.get(), url_, suggested_filename_);
+      is_stream = false;
+
+      // TODO(scottmg): This needs to do more of what
+      // NavigationResourceHandler::OnResponseStarted() does.
+      if (maybe_ssl_info.has_value())
+        ssl_info = maybe_ssl_info.value();
+
+    } else {
+      ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
+      DCHECK(rdh);
+      net::URLRequest* url_request = rdh->GetURLRequest(global_request_id);
+      DCHECK(url_request);
+      ResourceRequestInfoImpl* info =
+          ResourceRequestInfoImpl::ForRequest(url_request);
+      DCHECK(info);
+      is_download = info->IsDownload();
+      is_stream = info->is_stream();
+      if (rdh->delegate()) {
+        NavigationData* navigation_data =
+            rdh->delegate()->GetNavigationData(url_request);
+
+        // Clone the embedder's NavigationData before moving it to the UI
+        // thread.
+        if (navigation_data)
+          cloned_navigation_data = navigation_data->Clone();
+      }
+      DCHECK(maybe_ssl_info);
+      ssl_info = maybe_ssl_info.value();
+    }
+
     // Make a copy of the ResourceResponse before it is passed to another
     // thread.
     //
@@ -523,9 +570,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
-                       owner_, std::move(url_loader_client_endpoints),
-                       response->DeepCopy(), ssl_info,
-                       base::Passed(&downloaded_file)));
+                       owner_, response->DeepCopy(),
+                       std::move(url_loader_client_endpoints), ssl_info,
+                       std::move(cloned_navigation_data), global_request_id,
+                       is_download, is_stream, base::Passed(&downloaded_file)));
   }
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -542,6 +590,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
+    url_ = redirect_info.new_url;
 
     // Make a copy of the ResourceResponse before it is passed to another
     // thread.
@@ -620,6 +669,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   std::unique_ptr<ResourceRequest> resource_request_;
   int frame_tree_node_id_ = 0;
+  int request_id_ = -1;
   net::RedirectInfo redirect_info_;
   int redirect_limit_ = net::URLRequest::kMaxRedirects;
   ResourceContext* resource_context_;
@@ -631,6 +681,14 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   BlobHandles blob_handles_;
   std::vector<GURL> url_chain_;
+
+  // Current URL that is being navigated, updated after redirection.
+  GURL url_;
+
+  // If this request was triggered by an anchor tag with a download attribute,
+  // the |suggested_filename_| will be the (possibly empty) value of said
+  // attribute.
+  base::Optional<std::string> suggested_filename_;
 
   // Currently used by the AppCache loader to pass its factory to the
   // renderer which enables it to handle subresources.
@@ -686,8 +744,6 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> initial_handlers)
     : delegate_(delegate),
       allow_download_(request_info->common_params.allow_download),
-      suggested_filename_(request_info->begin_params->suggested_filename),
-      url_(request_info->common_params.url),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   int frame_tree_node_id = request_info->frame_tree_node_id;
@@ -711,7 +767,10 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
         /* initial_handlers = */
         std::vector<std::unique_ptr<URLLoaderRequestHandler>>(),
         /* resource_request = */ nullptr, resource_context,
-        /* default_url_factory_getter = */ nullptr, weak_factory_.GetWeakPtr());
+        /* default_url_factory_getter = */ nullptr,
+        request_info->common_params.url,
+        request_info->begin_params->suggested_filename,
+        weak_factory_.GetWeakPtr());
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
@@ -784,13 +843,13 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
             .PassInterface();
   }
 
-  g_next_request_id--;
-
   auto* partition = static_cast<StoragePartitionImpl*>(storage_partition);
   DCHECK(!request_controller_);
   request_controller_ = std::make_unique<URLLoaderRequestController>(
       std::move(initial_handlers), std::move(new_request), resource_context,
-      partition->url_loader_factory_getter(), weak_factory_.GetWeakPtr());
+      partition->url_loader_factory_getter(), request_info->common_params.url,
+      request_info->begin_params->suggested_filename,
+      weak_factory_.GetWeakPtr());
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&URLLoaderRequestController::Start,
@@ -836,31 +895,23 @@ void NavigationURLLoaderNetworkService::FollowRedirect() {
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
 
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
-    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
     scoped_refptr<ResourceResponse> response,
-    const base::Optional<net::SSLInfo>& maybe_ssl_info,
+    mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
+    const net::SSLInfo& ssl_info,
+    std::unique_ptr<NavigationData> navigation_data,
+    const GlobalRequestID& global_request_id,
+    bool is_download,
+    bool is_stream,
     mojom::DownloadedTempFilePtr downloaded_file) {
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderNetworkService", this, "success",
                          true);
-
-  // TODO(scottmg): This needs to do more of what
-  // NavigationResourceHandler::OnResponseStarted() does.
-  net::SSLInfo ssl_info;
-  if (maybe_ssl_info.has_value())
-    ssl_info = maybe_ssl_info.value();
-
-  // TODO(arthursonzogni): In NavigationMojoResponse, this is false. The info
-  // coming from the MimeSniffingResourceHandler must be used.
   DCHECK(response);
-  bool is_download =
-      allow_download_ && IsDownload(*response.get(), url_, suggested_filename_);
 
   delegate_->OnResponseStarted(
       std::move(response), std::move(url_loader_client_endpoints), nullptr,
-      std::move(ssl_info), std::unique_ptr<NavigationData>(),
-      GlobalRequestID(-1, g_next_request_id), is_download,
-      false /* is_stream */,
+      std::move(ssl_info), std::move(navigation_data), global_request_id,
+      allow_download_ && is_download, is_stream,
       request_controller_->TakeSubresourceLoaderParams());
 }
 
@@ -868,7 +919,6 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     scoped_refptr<ResourceResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  url_ = redirect_info.new_url;
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
 }
 
