@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89d96712_ba2de784",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1203986
+      },
+      "writtenOn": "2018-01-05T16:43:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68542774_135e243a",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5e0b7c8_5682e80a",
         "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T12:00:01Z",
       "side": 1,
       "message": "\u003d \"\"; should not be needed here?",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455018fe_b3bad725",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1203986
+      },
+      "writtenOn": "2018-01-05T16:43:57Z",
+      "side": 1,
+      "message": "I prefer to init with empty string because of what happens downstream:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/network/ServerTimingHeader.cpp?type\u003dcs\u0026q\u003dServerTimingHeader::SetParameter\u0026sq\u003dpackage:chromium\u0026l\u003d9\n\nFrom:\nhttps://w3c.github.io/server-timing/#-dfn-server-timing-header-parsing-algorithm-dfn-\nUnspecified durations should be 0 (\"\".ToDouble() \u003d\u003d 0)\nUnspecified descriptions should be empty-string.",
+      "parentUuid": "f5e0b7c8_5682e80a",
       "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25130ac_7d8aaf2c",
+        "filename": "third_party/WebKit/Source/platform/network/HeaderFieldTokenizer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1203986
+      },
+      "writtenOn": "2018-01-05T16:43:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6acd6309_d7b841ef",
+      "revId": "03e6576d281163b600ab8fa038b12ac8f8311f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
