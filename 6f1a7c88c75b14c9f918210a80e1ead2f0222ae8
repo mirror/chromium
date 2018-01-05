@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "226cf462_7cddeefe",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-05T06:55:29Z",
+      "side": 1,
+      "message": "Could you check if this is consistent with how other attributes handle non-predefined values? e.g. on, off, word, etc? I was thinking autocapitalize !\u003d \"none\" could be an alternative logic here.",
+      "range": {
+        "startLine": 1257,
+        "startChar": 48,
+        "endLine": 1257,
+        "endChar": 68
+      },
+      "revId": "6f1a7c88c75b14c9f918210a80e1ead2f0222ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
