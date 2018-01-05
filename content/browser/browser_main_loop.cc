@@ -8,7 +8,6 @@
 
 #include <algorithm>
 #include <memory>
-#include <string>
 #include <utility>
 #include <vector>
 
@@ -1134,6 +1133,8 @@ int BrowserMainLoop::CreateThreads() {
       // Start the thread if an existing |message_loop| wasn't provided.
       if (!message_loop && !(*thread_to_start)->StartWithOptions(options))
         LOG(FATAL) << "Failed to start the browser thread: id == " << id;
+      else if (thread_id == BrowserThread::IO && parts_)
+        parts_->StartProfilingThread(io_thread_->GetThreadId());
     } else {
       scoped_refptr<base::SingleThreadTaskRunner> redirection_task_runner;
 #if defined(OS_WIN)
@@ -1353,6 +1354,8 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
           break;
         }
         case BrowserThread::IO: {
+          if (parts_)
+            parts_->EndProfilingThread();
           TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:IOThread");
           ResetThread_IO(std::move(io_thread_));
           break;
