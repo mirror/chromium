@@ -4,10 +4,10 @@
 
 package org.chromium.chrome.browser.ntp.cards;
 
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.chromium.base.metrics.RecordUserAction;
@@ -60,8 +60,8 @@ public class AllDismissedItem extends OptionalLeaf {
     public static class ViewHolder extends NewTabPageViewHolder {
         private final TextView mBodyTextView;
 
-        public ViewHolder(ViewGroup root, final SectionList sections) {
-            super(LayoutInflater.from(root.getContext()).inflate(getLayout(), root, false));
+        public ViewHolder(Context context, final SectionList sections) {
+            super(LayoutInflater.from(context).inflate(getLayout(), null));
             mBodyTextView = itemView.findViewById(R.id.body_text);
 
             if (!FeatureUtilities.isChromeHomeEnabled()) {

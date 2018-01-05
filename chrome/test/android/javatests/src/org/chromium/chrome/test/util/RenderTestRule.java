@@ -6,13 +6,16 @@ package org.chromium.chrome.test.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 
 import org.junit.Assert;
 import org.junit.rules.TestWatcher;
@@ -23,7 +26,6 @@ import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
-import org.chromium.ui.UiUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -107,6 +109,40 @@ public class RenderTestRule extends TestWatcher {
     }
 
     /**
+     * Device screen sizes (in pixels) for an arbitrary selection of phones.
+     */
+    public enum ScreenProperties {
+        Pixel(1080, 1920, 420),
+        GalaxyJ1(480, 800, 250);
+
+        public final int mWidth;
+        public final int mHeight;
+        public final int mDpi;
+
+        ScreenProperties(int width, int height, int dpi) {
+            mWidth = width;
+            mHeight = height;
+            mDpi = dpi;
+        }
+
+        public float getDensity() {
+            return ((float) mDpi) / 160f;
+        }
+
+        public int getTargetViewWidth(int hostDpi) {
+            return mWidth * hostDpi / mDpi;
+        }
+
+        public int getTargetViewHeight(int hostDpi) {
+            return mHeight * hostDpi / mDpi;
+        }
+
+        public float getScalingFactor(int hostDpi) {
+            return ((float) mDpi) / ((float) hostDpi);
+        }
+    }
+
+    /**
      * Constructor using {@code "chrome/test/data/android/render_tests"} as default golden folder.
      */
     public RenderTestRule() {
@@ -142,20 +178,29 @@ public class RenderTestRule extends TestWatcher {
      *
      * @throws IOException if the rendered image cannot be saved to the device.
      */
-    public void render(final View view, String id) throws IOException {
+    public void render(View view, String id) throws IOException {
+        render(view, id, 1f);
+    }
+
+    private void render(final View view, String id, float scale) throws IOException {
         Assert.assertTrue("Render Tests must have the RenderTest feature.", mHasRenderTestFeature);
 
         Bitmap testBitmap = ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Bitmap>() {
             @Override
             public Bitmap call() throws Exception {
-                int height = view.getMeasuredHeight();
-                int width = view.getMeasuredWidth();
+                int height = (int) (view.getMeasuredHeight() * scale);
+                int width = (int) (view.getMeasuredWidth() * scale);
                 if (height <= 0 || width <= 0) {
                     throw new IllegalStateException(
                             "Invalid view dimensions: " + width + "x" + height);
                 }
 
-                return UiUtils.generateScaledScreenshot(view, 0, Bitmap.Config.ARGB_8888);
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                canvas.scale(scale, scale);
+
+                view.draw(canvas);
+                return bitmap;
             }
         });
 
@@ -187,6 +232,73 @@ public class RenderTestRule extends TestWatcher {
                 saveBitmap(result.second, createOutputPath(DIFF_FOLDER_RELATIVE, filename));
                 break;
         }
+    }
+
+    /**
+     * Simulates rendering the view (which must be detached) on a selection of device
+     * configurations. See {@link #simulateRenderForDevice(View, ScreenProperties, String)}
+     */
+    public void renderOnSimulatedDevices(View view, String id) throws IOException {
+        simulateRenderForDevice(view, ScreenProperties.Pixel, id + "-Pixel");
+        simulateRenderForDevice(view, ScreenProperties.GalaxyJ1, id + "-GalaxyJ1");
+    }
+
+    /**
+     * Renders the View (which must be detached) as if it were on the given device.
+     *
+     * Simply rendering to a View the same size (in pixels) as the desired device would not work
+     * because UI elements are sized in dp which depends on the density of the device. Therefore the
+     * View is rendered and then scaled to simulate the device's density.
+     *
+     * There is more about this process in RENDER_TESTS.md
+     */
+    public void simulateRenderForDevice(View view, ScreenProperties screenProperties, String id)
+            throws IOException {
+        int hostDpi = view.getContext().getResources().getDisplayMetrics().densityDpi;
+        int width = screenProperties.getTargetViewWidth(hostDpi);
+        int height = screenProperties.getTargetViewHeight(hostDpi);
+        float scalingFactor = screenProperties.getScalingFactor(hostDpi);
+
+        renderDetachedInternal(view, width, height, scalingFactor, id);
+    }
+
+    /**
+     * Attaches the given View to a blank View the size of the device screen and renders it.
+     */
+    public void renderDetached(View view, String id) throws IOException {
+        DisplayMetrics dm = view.getContext().getResources().getDisplayMetrics();
+        renderDetached(view, dm.widthPixels, dm.heightPixels, id);
+    }
+
+    /**
+     * Attaches the given View to a blank View of the given size and renders it.
+     */
+    public void renderDetached(View view, int width, int height, String id) throws IOException {
+        renderDetachedInternal(view, width, height, 1f, id);
+    }
+
+    private void renderDetachedInternal(View view, int width, int height, float scale, String id)
+            throws IOException {
+        assert view.getParent() == null;
+
+        FrameLayout[] contentView = new FrameLayout[1];
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            contentView[0] = new FrameLayout(view.getContext());
+            contentView[0].addView(view);
+
+            contentView[0].measure(
+                    View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.AT_MOST),
+                    View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.AT_MOST));
+            contentView[0].layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        });
+
+        render(contentView[0], id, scale);
+
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            // Even though we're discarding of |contentView[0]|, we must remove |view| since Views
+            // keeps a reference to their parent.
+            contentView[0].removeView(view);
+        });
     }
 
     /**

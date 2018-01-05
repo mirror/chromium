@@ -201,7 +201,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                 return new Footer.ViewHolder(mRecyclerView, mUiDelegate.getNavigationDelegate());
 
             case ItemViewType.ALL_DISMISSED:
-                return new AllDismissedItem.ViewHolder(mRecyclerView, mSections);
+                return new AllDismissedItem.ViewHolder(mRecyclerView.getContext(), mSections);
 
             case ItemViewType.CAROUSEL:
                 return new SuggestionsCarousel.ViewHolder(mRecyclerView);
