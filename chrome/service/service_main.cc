@@ -28,8 +28,6 @@ int CloudPrintServiceProcessMain(
   VLOG(1) << "Service process launched: "
           << parameters.command_line.GetCommandLineString();
 
-  base::StatisticsRecorder::Initialize();
-
   // If there is already a service process running, quit now.
   std::unique_ptr<ServiceProcessState> state(new ServiceProcessState);
   if (!state->Initialize())

@@ -640,8 +640,6 @@ class ContentMainRunnerImpl : public ContentMainRunner {
       return TerminateForFatalInitializationError();
 #endif  // OS_ANDROID && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
 
-    base::StatisticsRecorder::Initialize();
-
     InitializeV8IfNeeded(command_line, process_type);
 
 #if !defined(OFFICIAL_BUILD)
