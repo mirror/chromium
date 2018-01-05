@@ -360,16 +360,21 @@ PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
     return DOCLINK_AREA;
 
   target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
-  GetPageYTarget(destination, target);
+
+  base::Optional<std::pair<float, float>> xy = GetPageXYTarget(destination);
+  if (!xy)
+    return DOCLINK_AREA;
+
+  target->y_in_pixels =
+      TransformPageToScreenXY(xy.value().first, xy.value().second).second;
 
   return DOCLINK_AREA;
 }
 
-void PDFiumPage::GetPageYTarget(FPDF_DEST destination, LinkTarget* target) {
-  if (!available_) {
-    target->y_in_pixels.reset();
-    return;
-  }
+base::Optional<std::pair<float, float>> PDFiumPage::GetPageXYTarget(
+    FPDF_DEST destination) {
+  if (!available_)
+    return {};
 
   FPDF_BOOL has_x_coord;
   FPDF_BOOL has_y_coord;
@@ -380,14 +385,20 @@ void PDFiumPage::GetPageYTarget(FPDF_DEST destination, LinkTarget* target) {
   FPDF_BOOL success = FPDFDest_GetLocationInPage(
       destination, &has_x_coord, &has_y_coord, &has_zoom, &x, &y, &zoom);
 
-  if (!success || !has_x_coord || !has_y_coord) {
-    target->y_in_pixels.reset();
-    return;
+  if (!success || !has_x_coord || !has_y_coord)
+    return {};
+
+  return {{x, y}};
+}
+
+std::pair<float, float> PDFiumPage::TransformPageToScreenXY(float x, float y) {
+  if (!available_) {
+    return {0, 0};
   }
 
   pp::FloatRect page_rect(x, y, 0, 0);
   pp::FloatRect pixel_rect(FloatPageRectToPixelRect(GetPage(), page_rect));
-  target->y_in_pixels = pixel_rect.y();
+  return {pixel_rect.x(), pixel_rect.y()};
 }
 
 PDFiumPage::Area PDFiumPage::GetURITarget(FPDF_ACTION uri_action,
