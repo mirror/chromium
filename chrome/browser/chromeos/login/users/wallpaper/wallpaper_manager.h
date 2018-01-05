@@ -75,10 +75,6 @@ class WallpaperManager {
   // Adds |this| as an observer to various settings.
   void AddObservers();
 
-  // Loads wallpaper asynchronously if the current wallpaper is not the
-  // wallpaper of logged in user.
-  void EnsureLoggedInUserWallpaperLoaded();
-
   // A wrapper of |WallpaperController::IsPolicyControlled|.
   bool IsPolicyControlled(const AccountId& account_id) const;
 
@@ -94,17 +90,6 @@ class WallpaperManager {
   // Note that before device is enrolled, it proceeds with untrusted setting.
   void InitializeRegisteredDeviceWallpaper();
 
-  // A wrapper of |WallpaperController::GetUserWallpaperInfo|.
-  bool GetUserWallpaperInfo(const AccountId& account_id,
-                            wallpaper::WallpaperInfo* info) const;
-
-  // Record the Wallpaper App that the user is using right now on Chrome OS.
-  void RecordWallpaperAppType();
-
-  // Returns the cached logged-in user wallpaper info, or a dummy value under
-  // mash.
-  wallpaper::WallpaperInfo* GetCachedWallpaperInfo();
-
   std::unique_ptr<CrosSettings::ObserverSubscription>
       show_user_name_on_signin_subscription_;
 
@@ -115,9 +100,6 @@ class WallpaperManager {
 
   // If non-NULL, used in place of the real command line.
   base::CommandLine* command_line_for_testing_ = nullptr;
-
-  // A placeholder for |current_user_wallpaper_info_| under mash.
-  wallpaper::WallpaperInfo dummy_current_user_wallpaper_info_;
 
   bool should_cache_wallpaper_ = false;
 
