@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cb8aa45_6131e0ed",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-05T03:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55af2f0_a2800b37",
+      "range": {
+        "startLine": 100,
+        "startChar": 25,
+        "endLine": 100,
+        "endChar": 59
+      },
+      "revId": "8c1db9e588e13601a0cceda63b46db9950e6c1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bca5056d_52a86ce8",
         "filename": "chrome/browser/resources/print_preview/data/destination.js",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T00:41:28Z",
       "side": 1,
       "message": "Can we explicitly mention that \u0027NO\u0027, \u0027UNKNOWN\u0027 and \u0027YES\u0027 values are coming from the server?",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 73
+      },
+      "revId": "8c1db9e588e13601a0cceda63b46db9950e6c1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bdb9267_0b921b11",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-05T03:22:09Z",
+      "side": 1,
+      "message": "Did this for UNKNOWN and YES. NO is not actually sent from the server yet. It is a placeholder for some new value they will hopefully add that indicates a printer is definitely broken. Currently however they only have flags for distinguishing definitely valid vs unknown.",
+      "parentUuid": "bca5056d_52a86ce8",
       "range": {
         "startLine": 59,
         "startChar": 3,
