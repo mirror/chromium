@@ -22,6 +22,30 @@
       "revId": "2f7471d956bae8c7d3801e998c9f214e8b917538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0e29ec_703e41c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingCastSession.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2018-01-05T19:45:03Z",
+      "side": 1,
+      "message": ":P Done!",
+      "parentUuid": "f6c10769_8045d1e6",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2f7471d956bae8c7d3801e998c9f214e8b917538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
