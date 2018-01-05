@@ -264,7 +264,7 @@ void ShelfWidget::PostCreateShelf() {
 
   shelf_layout_manager_->LayoutShelf();
   shelf_layout_manager_->UpdateAutoHideState();
-  Show();
+  ShowIfHidden();
 }
 
 bool ShelfWidget::IsShowingAppList() const {
@@ -366,13 +366,13 @@ void ShelfWidget::WillDeleteShelfLayoutManager() {
 
 void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
   if (!IsUsingViewsShelf()) {
-    login_shelf_view_->SetVisible(false);
-    shelf_view_->SetVisible(false);
+    HideIfShown();
   } else {
     switch (state) {
       case session_manager::SessionState::ACTIVE:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(true);
+        ShowIfHidden();
         // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
         // in PostCreateShelf() when view-based shelf on login screen is
         // supported.
@@ -381,20 +381,42 @@ void ShelfWidget::OnSessionStateChanged(session_manager::SessionState state) {
       case session_manager::SessionState::LOGIN_SECONDARY:
         shelf_view_->SetVisible(false);
         login_shelf_view_->SetVisible(true);
+        ShowIfHidden();
         break;
       case session_manager::SessionState::OOBE:
       case session_manager::SessionState::LOGIN_PRIMARY:
       case session_manager::SessionState::LOGGED_IN_NOT_ACTIVE:
         login_shelf_view_->SetVisible(true);
         shelf_view_->SetVisible(false);
+        ShowIfHidden();
         break;
       case session_manager::SessionState::UNKNOWN:
         login_shelf_view_->SetVisible(false);
         shelf_view_->SetVisible(false);
+        // Do not show widget here - it might be called before shelf was
+        // initialized.
         break;
     }
   }
   login_shelf_view_->UpdateAfterSessionStateChange(state);
+}
+
+void ShelfWidget::HideIfShown() {
+  if (!is_shown_)
+    return;
+
+  login_shelf_view_->SetVisible(false);
+  shelf_view_->SetVisible(false);
+  Hide();
+  is_shown_ = false;
+}
+
+void ShelfWidget::ShowIfHidden() {
+  if (is_shown_)
+    return;
+
+  Show();
+  is_shown_ = true;
 }
 
 }  // namespace ash

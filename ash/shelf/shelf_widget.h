@@ -112,6 +112,12 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   class DelegateView;
   friend class DelegateView;
 
+  // Hides shelf widget if |is_shown_| is true.
+  void HideIfShown();
+
+  // Shows shelf widget if |is_shown_| is false.
+  void ShowIfHidden();
+
   Shelf* shelf_;
 
   // Owned by the shelf container's window.
@@ -131,6 +137,11 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // View containing the shelf items for Login/Lock/OOBE/Add User screens.
   // Owned by the views hierarchy.
   LoginShelfView* const login_shelf_view_;
+
+  // Indicates if views shelf is shown. Views shelf needs to be hidden when web
+  // UI shelf is present, otherwise it consumes mouse events even when not
+  // active and when shelf views are invisible.
+  bool is_shown_ = false;
 
   ShelfBackgroundAnimator background_animator_;
 
