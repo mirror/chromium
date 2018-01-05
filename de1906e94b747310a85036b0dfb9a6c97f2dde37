@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82170bd4_ff2d0d15",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-05T16:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9033e8a_1ad04ae0",
+      "range": {
+        "startLine": 163,
+        "startChar": 51,
+        "endLine": 163,
+        "endChar": 72
+      },
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff73e75_69199d20",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f662ccda_fefc3838",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-05T16:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff73e75_69199d20",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55666f9b_5655b76a",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2018-01-04T22:58:34Z",
       "side": 1,
       "message": "Should we just DCHECK that index is 0?",
+      "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bb92ad_9eba4c0f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2018-01-05T16:21:30Z",
+      "side": 1,
+      "message": "I don\u0027t think DCHECK is appropriate here because it\u0027s not part of this function\u0027s contract that index has to be 0 when empty_window_open_item_ is not null. It can\u0027t be part of the function contract because the client is not supposed to know about empty_window_open_item_.\n\nThe function contract is that if index is out of bound, we return nullptr. So an alternative is to let the case of index !\u003d 0 fall through to line 442 and below. However, because WKBackForwardList is updated out-of-band with NavigationManager, I\u0027m slightly paranoid that we\u0027d run into edge cases where GetNavigationItemImplAtIndex is called just after WKBackForwardList is updated (e.g. navigation committed in WKWebView) but the |didCommitNavigation:| callback has not been triggered. We\u0027ll end up unnecessarily inferring a NavigationItem for this WKBackForwardListItem (line 449), which may be missing some fields that are set when creating a pending navigation.",
+      "parentUuid": "55666f9b_5655b76a",
       "revId": "de1906e94b747310a85036b0dfb9a6c97f2dde37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
