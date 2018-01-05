@@ -17,13 +17,11 @@ class MockLayerTreeMutator : public LayerTreeMutator {
   ~MockLayerTreeMutator();
   // gmock cannot mock methods with move-only args so we forward it ourself.
   void Mutate(std::unique_ptr<MutatorInputState> input_state) override {
-    MutateRef(input_state);
+    MutateRef(input_state.get());
   }
 
-  MOCK_METHOD1(MutateRef,
-               void(std::unique_ptr<MutatorInputState>& input_state));
+  MOCK_METHOD1(MutateRef, void(MutatorInputState* input_state));
   MOCK_METHOD1(SetClient, void(LayerTreeMutatorClient* client));
-  MOCK_METHOD0(HasAnimators, bool());
 };
 
 }  // namespace cc
