@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "572691b3_1c1b3681",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "This part of the test is not in the function, and hence seems odd as a comment here.",
+      "range": {
+        "startLine": 90,
+        "startChar": 3,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f3b899_40973c1c",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "I know the original code was like this.  Nonetheless, I\u0027d like to know: should this be true?  (Better to have some suggestions than none at all.)  Or is there worries about disrupting the user experience by being inconsistent (no suggestions -\u003e personalized is better than most visited -\u003e personalized)?\n\nPlease revise and/or comment.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52917056_d8bb3524",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "Good catch that we weren\u0027t cleaning this up right.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0189c36_add3f46b",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "Given how you\u0027re using service_running_, I *think* you can get rid of this variable now.\n\nBe sure not to regress bug 755165 in the process.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c38830_7260d433",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "This seems to make sense to me.  The old code was different, however.  I\u0027m worried we may be missing something.  Can you think through whether it might\u0027ve been important to update matches when |results_updated| was false, such as when the result fails, parsing failed, or we got a response that wasn\u0027t for the query we expected, or ... [one of the other cases]",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9655c21_559e6cd1",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 341,
+        "startChar": 5,
+        "endLine": 341,
+        "endChar": 13
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf06dcec_c0d0e6d1",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "We used to not store empty json_data.  Are you sure you want to change this?",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f3a7d3_07cfaaa5",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "Is this right?  I would think |matches_| can often contain the current URL, even if the cache is empty.",
+      "range": {
+        "startLine": 353,
+        "startChar": 4,
+        "endLine": 353,
+        "endChar": 59
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4787d6a9_0b2c4e9f",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "optional nit: This uses very few member variables in straightforward ways.  Consider making this function static so that the variables it looks at are clear.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3203522e_40ec2ccf",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "Please comment.  Even I offhand don\u0027t recall what this is and how it\u0027s different than the DEFAULT_SRP ones.\n\n(At first glance, I think it should be the same as DEFAULT_SERP_WITHOUT_URL...)\n\nUpon later reading of the code, is the difference from DEFAULT_SERP_WITHOUT_URL simply the caching of suggestions?\n\nMaybe we should consider combining them?  I\u0027m not sure.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b98b89_f1d92415",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "What does this part mean?  Shouldn\u0027t results always be updated whenever we receive a reply?\n\n(I don\u0027t see any code in the implementation that corresponds to this phrase.)",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2db6722_8ccbd314",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "...\nLogs UMA metrics.  Should be called exactly once, on Start(), otherwise the meaning of the data logged would change.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0dc58_a2049ba0",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 1,
+      "message": "Please be clearer that you use this a state variable that get cleared when the provider is no longer running.  For example, once the provider returns matches, this gets sent to NONE regardless of what service type returned the matches.",
+      "revId": "bd52d2302b49ce5ed7fb3367e1290210724e3a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

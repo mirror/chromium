@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ce7a63_e07c8095",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T20:42:55Z",
+      "side": 0,
+      "message": "Please keep this comment justifying the const_cast.",
+      "revId": "1b05bd073e87f8b8b0f5be131c29da116636622f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
