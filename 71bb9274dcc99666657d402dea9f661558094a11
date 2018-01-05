@@ -106,6 +106,24 @@
       "revId": "71bb9274dcc99666657d402dea9f661558094a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b4093a_4712626c",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-05T00:04:40Z",
+      "side": 1,
+      "message": "Ack.  I was hoping we could just do this bit now: \"(or I could add the extra checks now, and make sure the URLs a renderer tries to create match the origin it says it was going to create URLs for)\" but I\u0027m also fine pursuing this in a followup, since this CL maintains current protections.",
+      "parentUuid": "6d8ac41e_f8aba55b",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
