@@ -225,7 +225,7 @@ AutomationPredicate.object = function(node) {
   if (node.name && node.name.length > constants.OBJECT_MAX_CHARCOUNT)
     return false;
 
-  return node.state.focusable ||
+  return (node.state.focusable && node.name) ||
       (AutomationPredicate.leafOrStaticText(node) &&
        (/\S+/.test(node.name) ||
         (node.role != Role.LINE_BREAK && node.role != Role.STATIC_TEXT &&
