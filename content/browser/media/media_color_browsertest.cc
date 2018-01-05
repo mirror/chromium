@@ -12,6 +12,13 @@ namespace content {
 
 class MediaColorTest : public MediaBrowserTest {
  public:
+#if defined(OS_LINUX)
+  void SetUp() override {
+    UseSoftwareCompositing();
+    MediaBrowserTest::SetUp();
+  }
+#endif
+
   void RunColorTest(const std::string& video_file) {
     base::FilePath path = media::GetTestDataFilePath("blackwhite.html");
     std::string final_title =
