@@ -145,8 +145,9 @@ cr.define('print_preview', function() {
         connectionStatusEl.textContent = connectionStatusText;
         connectionStatusEl.title = connectionStatusText;
 
-        const hasConnectionError =
-            destination.isOffline || destination.hasInvalidCertificate;
+        const hasConnectionError = destination.isOffline ||
+            (destination.hasInvalidCertificate &&
+             !loadTimeData.getBoolean('isEnterpriseManaged'));
         destinationSettingsBoxEl.classList.toggle(
             print_preview.DestinationSettingsClasses_.STALE,
             hasConnectionError);
