@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5394a75c_54eba9fc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2018-01-05T11:42:35Z",
+      "side": 1,
+      "message": "nit: Could you use scheduler::Sequence::WorkType enum instead of a bool?",
+      "range": {
+        "startLine": 427,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 16
+      },
+      "revId": "c67e3aace1daa55a1fc1b951811338a96f2e51b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
