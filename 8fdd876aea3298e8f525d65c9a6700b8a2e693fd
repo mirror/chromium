@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b57aba_3f9be2ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2018-01-05T17:42:16Z",
+      "side": 1,
+      "message": "Test description got split",
+      "revId": "8fdd876aea3298e8f525d65c9a6700b8a2e693fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
