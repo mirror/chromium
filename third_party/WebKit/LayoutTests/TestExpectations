@@ -1752,11 +1752,11 @@ crbug.com/638621 [ Win7 ] http/tests/media/video-buffered-range-contains-current
 
 crbug.com/637930 http/tests/media/video-buffered.html [ Pass Failure ]
 
-crbug.com/613659 external/wpt/quirks-mode/percentage-height-calculation.html [ Failure ]
-crbug.com/613661 external/wpt/quirks-mode/table-cell-nowrap-minimum-width-calculation.html [ Failure ]
-crbug.com/613663 external/wpt/quirks-mode/table-cell-width-calculation.html [ Failure ]
+crbug.com/613659 external/wpt/quirks/percentage-height-calculation.html [ Failure ]
+crbug.com/613661 external/wpt/quirks/table-cell-nowrap-minimum-width-calculation.html [ Failure ]
+crbug.com/613663 external/wpt/quirks/table-cell-width-calculation.html [ Failure ]
 
-crbug.com/646133 external/wpt/quirks-mode/unitless-length.html [ Pass Timeout ]
+crbug.com/646133 external/wpt/quirks/unitless-length.html [ Pass Timeout ]
 
 # Note: this test was previously marked as slow on Debug builds. Skipping until crash is fixed
 crbug.com/619978 fast/css/giant-stylesheet-crash.html [ Skip ]
@@ -1896,6 +1896,13 @@ crbug.com/751952 http/tests/devtools/console/console-uncaught-promise.js [ Pass 
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/css/cssom/stylesheet-replacedata-dynamic.html [ Failure ]
+crbug.com/626703 external/wpt/css/css-tables/fixup-dynamic-anonymous-inline-table-002.html [ Failure ]
+crbug.com/626703 external/wpt/quirks/active-and-hover-manual.html [ Skip ]
+crbug.com/626703 external/wpt/css/css-tables/fixup-dynamic-anonymous-table-001.html [ Failure ]
+crbug.com/626703 external/wpt/css/css-tables/fixup-dynamic-anonymous-inline-table-001.html [ Failure ]
+crbug.com/626703 external/wpt/html/form-elements/the-textarea-element/multiline-placeholder-cr.html [ Failure ]
+crbug.com/626703 external/wpt/html/form-elements/the-textarea-element/multiline-placeholder-crlf.html [ Failure ]
 crbug.com/626703 external/wpt/svg/path/bearing/zero.svg [ Failure ]
 crbug.com/626703 external/wpt/svg/path/bearing/relative.svg [ Failure ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/string-compilation-integrity-classic.html [ Skip ]
@@ -3189,7 +3196,6 @@ crbug.com/757165 [ Win ] compositing/culling/filter-occlusion-blur.html [ Skip ]
 crbug.com/757165 [ Win ] css3/blending/mix-blend-mode-with-filters.html [ Skip ]
 crbug.com/757165 [ Win ] external/wpt/preload/download-resources.html [ Skip ]
 crbug.com/757165 [ Win ] external/wpt/preload/preload-default-csp.sub.html [ Skip ]
-crbug.com/757165 [ Win ] external/wpt/service-workers/service-worker/navigation-redirect.https.html [ Skip ]
 crbug.com/757165 [ Win ] fast/forms/file/recover-file-input-in-unposted-form.html [ Skip ]
 crbug.com/757165 [ Win ] fast/spatial-navigation/snav-aligned-not-aligned.html [ Pass Failure Timeout Crash ]
 crbug.com/757165 [ Win ] fast/spatial-navigation/snav-clipped-overflowed-content.html [ Pass Failure Timeout Crash ]
