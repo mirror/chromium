@@ -46,6 +46,30 @@
       "revId": "052b496a1924e194fd18a98f67ba72cbab4803fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ec71bc_9e526a98",
+        "filename": "content/test/content_browser_test_utils_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2018-01-05T19:06:14Z",
+      "side": 1,
+      "message": "Thanks for the pointer.  Sadly GetCrashKeyValue is in //components and so cannot be used from //content.  I guess we could refactor things (so that equivalent of GetCrashKeyValue is exposed from a layer accessible by //content), but then we probably have other, more important things to do. :-)",
+      "parentUuid": "195ab3f1_cc3b12e4",
+      "range": {
+        "startLine": 471,
+        "startChar": 0,
+        "endLine": 474,
+        "endChar": 12
+      },
+      "revId": "052b496a1924e194fd18a98f67ba72cbab4803fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
