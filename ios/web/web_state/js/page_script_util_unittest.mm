@@ -43,6 +43,15 @@ TEST_F(PageScriptUtilTest, WKWebViewEarlyPageScript) {
   EXPECT_NSEQ(@"object", ExecuteJavaScript(web_view, @"typeof __gCrWeb"));
 }
 
+// Tests that WKWebView early page script provides autofill controller script.
+TEST_F(PageScriptUtilTest, WKWebViewEarlyPageScriptAutofillController) {
+  WKWebView* web_view = BuildWKWebView(CGRectZero, GetBrowserState());
+  ExecuteJavaScript(web_view,
+                    GetEarlyPageScriptForMainFrame(GetBrowserState()));
+  EXPECT_NSEQ(@"object",
+              ExecuteJavaScript(web_view, @"typeof __gCrWeb.autofill"));
+}
+
 // Tests that embedder's WKWebView script is included into early script.
 TEST_F(PageScriptUtilTest, WKEmbedderScript) {
   GetWebClient()->SetEarlyPageScript(@"__gCrEmbedder = {};");
