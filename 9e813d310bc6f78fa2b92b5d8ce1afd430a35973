@@ -285,6 +285,24 @@
     },
     {
       "key": {
+        "uuid": "699c7585_a495d26a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Marking resolved.  There is room for further verifying here, but the order of things has been switched up a bit anyway and waiting for capture is the long tail now.",
+      "parentUuid": "ef60b51e_e6ce0347",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6045e7d_903a5918",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -707,6 +725,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3370b956_ac6222e5",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Marking this resolved.  We still have some waits in the tests, but they aren\u0027t due to waiting for the fullscreen IPC as would be addressed by the suggestion here.",
+      "parentUuid": "3d89d1fc_80fd24ce",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

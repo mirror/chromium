@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9e380e7_ac7a7aff",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0239173f_57d08c53",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed5fff87_3c3218bc",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0ff162b6_8ab7c718",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5fff87_3c3218bc",
+      "range": {
+        "startLine": 217,
+        "startChar": 53,
+        "endLine": 217,
+        "endChar": 54
+      },
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904181cb_5ea6a316",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 13
@@ -56,6 +98,24 @@
       "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef393e71_f861e1cd",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "904181cb_5ea6a316",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4a849e23_b4da9558",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fb01bd_ee23a8b5",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9332e8b4_ba6ff2a6",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 13
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "25fda5de_a8fc97bb",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done. I\u0027ve gone with 1.  The whole setup was from a much earlier patch set where things were getting potentially accessed after the delete, but looking at it now this case doesn\u0027t do anything else so I agree that just delete this should be fine.",
+      "parentUuid": "9332e8b4_ba6ff2a6",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61a65d7_0ede8217",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 13
@@ -107,6 +203,24 @@
       "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2005df1d_c0dfcea9",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61a65d7_0ede8217",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

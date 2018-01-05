@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5637e6f2_fa5b032c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Closing this out as not blocking for this change.  Per offline discussion we ended on keeping the polling for now, and we will address it in future changes (both via updating the capture api to be event based as well as improving MR state observers etc).",
+      "parentUuid": "2cbef0ee_14c4c25a",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61fea95e_cfb70180",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 6

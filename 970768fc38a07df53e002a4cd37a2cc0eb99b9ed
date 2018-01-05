@@ -878,6 +878,24 @@
     },
     {
       "key": {
+        "uuid": "c7e8e791_823e69ee",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7093,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "I tried to switch to use registry directly, but I got compiler errors I didn\u0027t understand so I stayed with the AssociatedInterfaceRegistry (I\u0027m not sure I understand what either means though).",
+      "parentUuid": "4a0e45da_9c4553f2",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63638918_f86af067",
         "filename": "third_party/WebKit/public/platform/fullscreen_video_element.mojom",
         "patchSetId": 9
@@ -910,6 +928,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0d6c21_64634f21",
+        "filename": "third_party/WebKit/public/platform/fullscreen_video_element.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2018-01-05T20:24:50Z",
+      "side": 1,
+      "message": "Per latest discussion keeping the new interface, but moved it to content/public/renderer.",
+      "parentUuid": "f32b2847_a4360d72",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
