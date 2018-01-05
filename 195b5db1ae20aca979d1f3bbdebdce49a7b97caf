@@ -22,6 +22,47 @@
       "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f720f49_f1a12e67",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T15:04:10Z",
+      "side": 1,
+      "message": "Yeah, agreed.\n\nNot directly related to this CL, I don\u0027t fully understand why we have kCanCopyWithMemcpy and kCanMoveWithMemcpy. I cannot come up with any practical scenario where an object is kCanCopyWithMemcpy but not kCanMoveWithMemcpy (or vice versa).",
+      "parentUuid": "b63a883b_8e0be1d6",
+      "range": {
+        "startLine": 561,
+        "startChar": 20,
+        "endLine": 561,
+        "endChar": 38
+      },
+      "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef62ab4d_d42e481a",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T15:04:10Z",
+      "side": 1,
+      "message": "Nit: We won\u0027t need to call this for PartitionAllocator though.",
+      "revId": "195b5db1ae20aca979d1f3bbdebdce49a7b97caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

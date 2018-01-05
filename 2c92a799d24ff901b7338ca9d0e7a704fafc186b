@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef0b278_18b4d648",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2018-01-05T15:04:10Z",
+      "side": 0,
+      "message": "We can keep this assert, right? (unless I\u0027m missing the point of this CL.)",
+      "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
