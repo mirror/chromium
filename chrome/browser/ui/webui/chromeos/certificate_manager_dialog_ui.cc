@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/webui/chromeos/bluetooth_dialog_localized_strings_provider.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/user_manager/user_manager.h"
@@ -54,6 +55,7 @@ CertificateManagerDialogUI::CertificateManagerDialogUI(content::WebUI* web_ui)
           user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp());
 
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_CERT_MANAGER_DIALOG_HTML);
   source->DisableContentSecurityPolicy();
 

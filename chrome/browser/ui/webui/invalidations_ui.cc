@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/invalidations_message_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/invalidations_resources.h"
+#include "chrome/grit/invalidations_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
@@ -18,9 +19,9 @@ content::WebUIDataSource* CreateInvalidationsHTMLSource() {
   // This method does not fire when refreshing the page
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIInvalidationsHost);
+  source->AddGzipMap(kInvalidationsResources, kInvalidationsResourcesSize);
   source->AddResourcePath("about_invalidations.js", IDR_ABOUT_INVALIDATIONS_JS);
   source->SetDefaultResource(IDR_ABOUT_INVALIDATIONS_HTML);
-  source->UseGzip();
   return source;
 }
 

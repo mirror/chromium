@@ -21,6 +21,7 @@
 #include "ui/base/template_expressions.h"
 #include "ui/base/webui/jstemplate_builder.h"
 #include "ui/base/webui/web_ui_util.h"
+#include "ui/resources/grit/webui_resources_map.h"
 
 namespace content {
 
@@ -88,8 +89,7 @@ class WebUIDataSourceImpl::InternalDataSource : public URLDataSource {
     return parent_->deny_xframe_options_;
   }
   bool IsGzipped(const std::string& path) const override {
-    return parent_->use_gzip_ &&
-        parent_->excluded_paths_.find(path) == parent_->excluded_paths_.end();
+    return parent_->IsGzipped(path);
   }
 
  private:
@@ -106,8 +106,7 @@ WebUIDataSourceImpl::WebUIDataSourceImpl(const std::string& source_name)
       frame_src_set_(false),
       deny_xframe_options_(true),
       add_load_time_data_defaults_(true),
-      replace_existing_source_(true),
-      use_gzip_(false) {}
+      replace_existing_source_(true) {}
 
 WebUIDataSourceImpl::~WebUIDataSourceImpl() {
 }
@@ -161,12 +160,20 @@ void WebUIDataSourceImpl::SetJsonPath(const std::string& path) {
   excluded_paths_.insert(json_path_);
 }
 
-void WebUIDataSourceImpl::AddResourcePath(const std::string &path,
+void WebUIDataSourceImpl::AddGzipMap(const GzippedGritResourceMap* map,
+                                     size_t map_size) {
+  for (size_t i = 0; i < map_size; ++i)
+    gzip_map_[map[i].value] = map[i].gzipped;
+}
+
+void WebUIDataSourceImpl::AddResourcePath(const std::string& path,
                                           int resource_id) {
+  CHECK(gzip_map_.find(resource_id) != gzip_map_.end()) << path;
   path_to_idr_map_[path] = resource_id;
 }
 
 void WebUIDataSourceImpl::SetDefaultResource(int resource_id) {
+  CHECK(gzip_map_.find(resource_id) != gzip_map_.end()) << "default resource";
   default_resource_ = resource_id;
 }
 
@@ -209,9 +216,8 @@ void WebUIDataSourceImpl::DisableDenyXFrameOptions() {
   deny_xframe_options_ = false;
 }
 
-void WebUIDataSourceImpl::UseGzip(
+void WebUIDataSourceImpl::ExcludePathsFromGzip(
     const std::vector<std::string>& excluded_paths) {
-  use_gzip_ = true;
   for (const auto& path : excluded_paths)
     excluded_paths_.insert(path);
 }
@@ -273,17 +279,30 @@ void WebUIDataSourceImpl::StartDataRequest(
     return;
   }
 
-  int resource_id = default_resource_;
-  std::map<std::string, int>::iterator result;
-  // Remove the query string for named resource lookups.
-  std::string file_path = path.substr(0, path.find_first_of('?'));
-  result = path_to_idr_map_.find(file_path);
-  if (result != path_to_idr_map_.end())
-    resource_id = result->second;
+  int resource_id = PathToIdrOrDefault(path);
   DCHECK_NE(resource_id, -1);
+
   scoped_refptr<base::RefCountedMemory> response(
       GetContentClient()->GetDataResourceBytes(resource_id));
   callback.Run(response.get());
+}
+
+bool WebUIDataSourceImpl::IsGzipped(const std::string& path) const {
+  // TODO(dbeam): split the request filter mechanism into 2 parts: whether a
+  // URL should be handled (so this method can use that to determine these
+  // paths are dynamic) and the actual handling of that path (i.e. getting and
+  // responding with bytes).
+  if (excluded_paths_.find(path) != excluded_paths_.end())
+    return false;
+  const auto gzipped_it = gzip_map_.find(PathToIdrOrDefault(path));
+  return gzipped_it == gzip_map_.end() ? false : gzipped_it->second;
+}
+
+int WebUIDataSourceImpl::PathToIdrOrDefault(const std::string& path) const {
+  // Remove the query string for named resource lookups.
+  std::string file_path = path.substr(0, path.find_first_of('?'));
+  auto it = path_to_idr_map_.find(file_path);
+  return it == path_to_idr_map_.end() ? default_resource_ : it->second;
 }
 
 void WebUIDataSourceImpl::SendLocalizedStringsAsJSON(
