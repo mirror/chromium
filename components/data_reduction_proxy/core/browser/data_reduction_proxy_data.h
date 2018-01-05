@@ -33,6 +33,9 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
   DataReductionProxyData();
   ~DataReductionProxyData() override;
 
+  // Allow copying.
+  DataReductionProxyData(const DataReductionProxyData& other);
+
   // Convert from/to a base::Value.
   base::Value ToValue();
   explicit DataReductionProxyData(const base::Value& value);
@@ -162,7 +165,7 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
   // data saver session. Only present on main frame requests.
   base::Optional<uint64_t> page_id_;
 
-  DISALLOW_COPY_AND_ASSIGN(DataReductionProxyData);
+  DISALLOW_ASSIGN(DataReductionProxyData);
 };
 
 }  // namespace data_reduction_proxy
