@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ef85a14b_6cb2c39c",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-05T00:06:28Z",
+      "side": 1,
+      "message": "Sure. Deleted.",
+      "parentUuid": "26a73fae_eee8d691",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1071a0a6_238a9705",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -178,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "2c36a081_f164e06a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-05T00:06:28Z",
+      "side": 1,
+      "message": "(have uploaded now.)",
+      "parentUuid": "8eef1a92_7758a143",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ec7b512_1e763970",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 8
@@ -228,6 +264,24 @@
       "revId": "fdcff477c36718af03cc05c889a229084461c29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5faf886_d64ae0c5",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2018-01-05T00:06:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba2bab44_d762a356",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
