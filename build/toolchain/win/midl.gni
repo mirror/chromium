@@ -41,7 +41,12 @@ template("midl") {
     dynamic_guid = "none"
   }
 
-  header_file = "{{source_name_part}}.h"
+  if (defined(invoker.header_file)) {
+    header_file = invoker.header_file
+  } else {
+    header_file = "{{source_name_part}}.h"
+  }
+
   dlldata_file = "{{source_name_part}}.dlldata.c"
   interface_identifier_file = "{{source_name_part}}_i.c"
   proxy_file = "{{source_name_part}}_p.c"
