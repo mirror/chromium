@@ -361,6 +361,7 @@ class ChromePrintContext : public PrintContext {
 
       current_height += page_size_in_pixels.Height() + 1;
     }
+
     canvas->drawPicture(context.EndRecording());
   }
 
@@ -384,9 +385,34 @@ class ChromePrintContext : public PrintContext {
     context.ConcatCTM(transform);
     context.ClipRect(page_rect);
 
+    auto* frame_view = GetFrame()->View();
+    ClipPaintPropertyNode* viewport_clip_node = nullptr;
+    FloatRoundedRect original_viewport_clip_rect;
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+        if (const auto* layout_view = frame_view->GetLayoutView()) {
+          if (const auto* properties =
+                  layout_view->FirstFragment().PaintProperties()) {
+            viewport_clip_node =
+                const_cast<ClipPaintPropertyNode*>(properties->OverflowClip());
+          }
+        }
+      } else {
+        viewport_clip_node = frame_view->ContentClip();
+      }
+
+      if (viewport_clip_node) {
+        original_viewport_clip_rect = viewport_clip_node->ClipRect();
+        viewport_clip_node->Update(
+            viewport_clip_node->Parent(),
+            viewport_clip_node->LocalTransformSpace(),
+            FloatRoundedRect(LayoutRect::InfiniteIntRect()));
+      }
+    }
+
     PaintRecordBuilder builder(&context.Canvas()->getMetaData(), &context);
-    GetFrame()->View()->PaintContents(builder.Context(),
-                                      kGlobalPaintNormalPhase, page_rect);
+    frame_view->PaintContents(builder.Context(), kGlobalPaintNormalPhase,
+                              page_rect);
     {
       DrawingRecorder line_boundary_recorder(
           builder.Context(), builder,
@@ -396,6 +422,12 @@ class ChromePrintContext : public PrintContext {
     context.DrawRecord(builder.EndRecording());
 
     context.Restore();
+
+    if (viewport_clip_node) {
+      viewport_clip_node->Update(viewport_clip_node->Parent(),
+                                 viewport_clip_node->LocalTransformSpace(),
+                                 original_viewport_clip_rect);
+    }
 
     return scale;
   }
