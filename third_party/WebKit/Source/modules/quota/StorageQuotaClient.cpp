@@ -38,6 +38,7 @@
 #include "core/page/Page.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/quota/DOMError.h"
+#include "modules/quota/QuotaDispatcher.h"
 #include "public/platform/TaskType.h"
 #include "public/web/WebFrameClient.h"
 
@@ -79,14 +80,22 @@ void StorageQuotaClient::RequestQuota(ScriptState* script_state,
   DCHECK(execution_context->IsDocument())
       << "Quota requests are not supported in workers";
 
+  auto callback = WTF::Bind(&RequestStorageQuotaCallback,
+                            WrapWeakPersistent(success_callback),
+                            WrapWeakPersistent(error_callback));
+
   Document* document = ToDocument(execution_context);
-  WebLocalFrameImpl* web_frame =
-      WebLocalFrameImpl::FromFrame(document->GetFrame());
-  web_frame->Client()->RequestStorageQuota(
-      storage_type, new_quota_in_bytes,
-      WTF::Bind(&RequestStorageQuotaCallback,
-                WrapWeakPersistent(success_callback),
-                WrapWeakPersistent(error_callback)));
+  const SecurityOrigin* security_origin = document->GetSecurityOrigin();
+  if (security_origin->IsUnique()) {
+    // Unique origins cannot store persistent state.
+    std::move(callback).Run(blink::mojom::QuotaStatusCode::kErrorAbort, 0, 0);
+    return;
+  }
+
+  QuotaDispatcher::From(execution_context)
+      ->RequestStorageQuota(execution_context->GetInterfaceProvider(),
+                            WrapRefCounted(security_origin), storage_type,
+                            new_quota_in_bytes, std::move(callback));
 }
 
 const char* StorageQuotaClient::SupplementName() {

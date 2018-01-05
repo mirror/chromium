@@ -59,6 +59,7 @@
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/presentation/presentation_service_impl.h"
+#include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/input/timeout_monitor.h"
@@ -3182,6 +3183,10 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   registry_->AddInterface(
       base::BindRepeating(GetRestrictedCookieManager, base::Unretained(this)));
+
+  // TODO(775792): Move to RendererInterfaceBinders.
+  registry_->AddInterface(base::BindRepeating(
+      &QuotaDispatcherHost::CreateForFrame, GetProcess(), routing_id_));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
