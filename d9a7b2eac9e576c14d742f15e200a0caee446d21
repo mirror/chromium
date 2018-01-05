@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e57f45d_6574c2ee",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "nit: Please put standard warning here:\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1eb2b5_0cedeaf0",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t sound like \"sent\".  It sounds like \"will send\".",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59521a4_75853a9e",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "It seems odd to me (and error-prone) that you emit kSentWithoutAnalysis in two places.",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9f2423_d41dc23c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 8056,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "All these labels are long and will look strange in the dashboard.  Please consider shorter labels and put the more detailed information elsewhere:\n\u003cint value\u003d\"0\" label\u003d\"foo\"\u003edetailed comment\u003c/int\u003e",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba782a83_71e099f7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 8057,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "Are you missing a word in this label?",
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cd4682_6c008360",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 13269,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T01:13:03Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_TIMES only goes up to 10 seconds.  Do you want to use a different timing macro?\n\nOr did you mean 5 milliseconds here?\n\nIf the latter, the sentence is still inconsistent with the code, which implies long times can still be recorded if tasks are delayed.\n  // The crash processing time should be between 1 ms and 5 seconds, but the\n  // buckets go to 10 seconds to record cases where the delayed task is deferred\n  // for longer than that.\n\nWhich reminds me: you should test your changes with about:histograms.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Testing",
+      "range": {
+        "startLine": 13269,
+        "startChar": 12,
+        "endLine": 13269,
+        "endChar": 0
+      },
+      "revId": "d9a7b2eac9e576c14d742f15e200a0caee446d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
