@@ -37,13 +37,14 @@
 #include "core/dom/ExecutionContext.h"
 #include "modules/quota/DOMError.h"
 #include "modules/quota/StorageQuotaClient.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -125,11 +126,14 @@ void DeprecatedStorageQuota::queryUsageAndQuota(
     return;
   }
 
-  Platform::Current()->QueryStorageUsageAndQuota(
-      WrapRefCounted(security_origin), storage_type,
-      WTF::Bind(&QueryStorageUsageAndQuotaCallback,
-                WrapPersistent(success_callback),
-                WrapPersistent(error_callback)));
+  auto callback = WTF::Bind(&QueryStorageUsageAndQuotaCallback,
+                            WrapPersistent(success_callback),
+                            WrapPersistent(error_callback));
+  QuotaHost(execution_context->GetInterfaceProvider())
+      ->QueryStorageUsageAndQuota(
+          WrapRefCounted(security_origin), storage_type,
+          mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+              std::move(callback), mojom::QuotaStatusCode::kErrorAbort, 0, 0));
 }
 
 void DeprecatedStorageQuota::requestQuota(
@@ -158,6 +162,13 @@ void DeprecatedStorageQuota::requestQuota(
 
   client->RequestQuota(script_state, storage_type, new_quota_in_bytes,
                        success_callback, error_callback);
+}
+
+mojom::blink::QuotaDispatcherHost* DeprecatedStorageQuota::QuotaHost(
+    service_manager::InterfaceProvider* interface_provider) {
+  if (!quota_host_)
+    interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
+  return quota_host_.get();
 }
 
 }  // namespace blink

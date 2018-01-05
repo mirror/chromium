@@ -38,8 +38,10 @@
 #include "core/page/Page.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "modules/quota/DOMError.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "public/platform/TaskType.h"
 #include "public/web/WebFrameClient.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -79,13 +81,23 @@ void StorageQuotaClient::RequestQuota(ScriptState* script_state,
   DCHECK(execution_context->IsDocument())
       << "Quota requests are not supported in workers";
 
-  Document* document = ToDocument(execution_context);
-  WebLocalFrameImpl* web_frame =
-      WebLocalFrameImpl::FromFrame(document->GetFrame());
-  web_frame->Client()->RequestStorageQuota(
-      storage_type, new_quota_in_bytes,
+  auto callback =
       WTF::Bind(&RequestStorageQuotaCallback, WrapPersistent(success_callback),
-                WrapPersistent(error_callback)));
+                WrapPersistent(error_callback));
+
+  Document* document = ToDocument(execution_context);
+  const SecurityOrigin* security_origin = document->GetSecurityOrigin();
+  if (security_origin->IsUnique()) {
+    // Unique origins cannot store persistent state.
+    std::move(callback).Run(blink::mojom::QuotaStatusCode::kErrorAbort, 0, 0);
+    return;
+  }
+
+  QuotaHost(execution_context->GetInterfaceProvider())
+      ->RequestStorageQuota(
+          WrapRefCounted(security_origin), storage_type, new_quota_in_bytes,
+          mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+              std::move(callback), mojom::QuotaStatusCode::kErrorAbort, 0, 0));
 }
 
 const char* StorageQuotaClient::SupplementName() {
@@ -97,6 +109,13 @@ StorageQuotaClient* StorageQuotaClient::From(ExecutionContext* context) {
     return nullptr;
   return static_cast<StorageQuotaClient*>(
       Supplement<Page>::From(ToDocument(context)->GetPage(), SupplementName()));
+}
+
+mojom::blink::QuotaDispatcherHost* StorageQuotaClient::QuotaHost(
+    service_manager::InterfaceProvider* interface_provider) {
+  if (!quota_host_)
+    interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
+  return quota_host_.get();
 }
 
 void ProvideStorageQuotaClientTo(Page& page, StorageQuotaClient* client) {

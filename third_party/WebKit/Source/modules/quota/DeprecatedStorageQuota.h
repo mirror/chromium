@@ -34,6 +34,11 @@
 #include "core/dom/ExceptionCode.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "third_party/WebKit/common/quota/quota_dispatcher_host.mojom-blink.h"
+
+namespace service_manager {
+class InterfaceProvider;
+}
 
 namespace blink {
 
@@ -71,7 +76,13 @@ class DeprecatedStorageQuota final : public ScriptWrappable {
  private:
   explicit DeprecatedStorageQuota(Type);
 
+  // Binds the interface (if not already bound) with the given interface
+  // provider, and returns it,
+  mojom::blink::QuotaDispatcherHost* QuotaHost(
+      service_manager::InterfaceProvider*);
+
   Type type_;
+  mojom::blink::QuotaDispatcherHostPtr quota_host_;
 };
 
 }  // namespace blink

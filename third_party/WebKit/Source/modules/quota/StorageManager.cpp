@@ -14,10 +14,11 @@
 #include "core/frame/LocalFrame.h"
 #include "modules/permissions/PermissionUtils.h"
 #include "modules/quota/StorageEstimate.h"
+#include "mojo/public/cpp/bindings/callback_helpers.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -109,9 +110,13 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
     return promise;
   }
 
-  Platform::Current()->QueryStorageUsageAndQuota(
-      WrapRefCounted(security_origin), mojom::StorageType::kTemporary,
-      WTF::Bind(&QueryStorageUsageAndQuotaCallback, WrapPersistent(resolver)));
+  auto callback =
+      WTF::Bind(&QueryStorageUsageAndQuotaCallback, WrapPersistent(resolver));
+  QuotaHost(execution_context->GetInterfaceProvider())
+      ->QueryStorageUsageAndQuota(
+          WrapRefCounted(security_origin), mojom::StorageType::kTemporary,
+          mojo::WrapCallbackWithDefaultInvokeIfNotRun(
+              std::move(callback), mojom::QuotaStatusCode::kErrorAbort, 0, 0));
   return promise;
 }
 
@@ -137,6 +142,13 @@ void StorageManager::PermissionRequestComplete(ScriptPromiseResolver* resolver,
       resolver->GetExecutionContext()->IsContextDestroyed())
     return;
   resolver->Resolve(status == PermissionStatus::GRANTED);
+}
+
+mojom::blink::QuotaDispatcherHost* StorageManager::QuotaHost(
+    service_manager::InterfaceProvider* interface_provider) {
+  if (!quota_host_)
+    interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
+  return quota_host_.get();
 }
 
 STATIC_ASSERT_ENUM(mojom::QuotaStatusCode::kErrorNotSupported,

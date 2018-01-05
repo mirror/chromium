@@ -37,7 +37,11 @@
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
-#include "third_party/WebKit/common/quota/quota_types.mojom-blink.h"
+#include "third_party/WebKit/common/quota/quota_dispatcher_host.mojom-blink.h"
+
+namespace service_manager {
+class InterfaceProvider;
+}
 
 namespace blink {
 
@@ -72,6 +76,13 @@ class MODULES_EXPORT StorageQuotaClient
 
  private:
   StorageQuotaClient();
+
+  // Binds the interface (if not already bound) with the given interface
+  // provider, and returns it,
+  mojom::blink::QuotaDispatcherHost* QuotaHost(
+      service_manager::InterfaceProvider*);
+
+  mojom::blink::QuotaDispatcherHostPtr quota_host_;
 };
 
 MODULES_EXPORT void ProvideStorageQuotaClientTo(Page&, StorageQuotaClient*);
