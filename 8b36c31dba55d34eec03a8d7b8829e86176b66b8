@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6accf60_8eaca1f5",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3046,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-05T17:31:41Z",
+      "side": 1,
+      "message": "While I would also like to make this test shorter, I do not see a clear path.\n\nA basic test where server cancels the push: after this change, HttpNetworkTransaction will retry the request.  I am adding another test that uses only one origin and only one connection.  This will make it easier to understand the more complicated cross-origin case, but this does not test that retry obeys the pooling requirements, so the more complicated one is still necessary.\n\nFor retry on this specific error, I could call HttpNetworkTransaction::OnStreamFailed(), even though it is not called in any current test.  But I would need two connections with mock data on both anyway, and in order to have the cross-origin push, I need another request that opens that connection first, so I do not see how this is easier than just reading a RST_STREAM.\n\nIf you have any specific ideas, please let me know.",
+      "parentUuid": "f1f56b7d_6fd25074",
+      "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85cf25a4_2c1cd980",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce6efc32_bce3359a",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-05T17:31:41Z",
+      "side": 1,
+      "message": "There are seven existing occurrences of enable_ip_based_pooling in this file, all with the syntax I use here (I copied one of those when writing this test).  There is also nine /*fin\u003d*/, four /*content_length\u003d*/, and one /* owns_buffer \u003d */ in this very file.  I do not find any examples of the syntax you propose in this file.  Maybe it\u0027s better to be consistent with this file?\n\nBTW a quick count shows about 800 instances of |/* arg \u003d */ value| (with or without the equation sign and whitespace) and about 1100 instances of |value /* arg */| (with or without whitespace) in //net, so the one you propose is more commonly used but not by a huge margin.  I used\nfind net \\( -name \"*.cc\" -o -name \"*.h\" \\) -exec grep -h /[*].*[*]/ {} + | sed \"s/[(),]/\\\\\\n/g;s/^ *//\" | sort | grep /[*].*[*]/\nto find these.",
+      "parentUuid": "85cf25a4_2c1cd980",
+      "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa7fc94_e4a09ed5",
         "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5ba00d_d6b4ffce",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2018-01-05T17:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa7fc94_e4a09ed5",
+      "revId": "8b36c31dba55d34eec03a8d7b8829e86176b66b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
