@@ -56,7 +56,7 @@
   font-size: 75%;
 }
 
-.destination-list-item .offline-status {
+.destination-list-item .connection-status {
   -webkit-margin-start: 1em;
   flex: 0 0 auto;
   font-size: 75%;
