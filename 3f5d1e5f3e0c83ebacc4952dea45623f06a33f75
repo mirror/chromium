@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a5a3dd_4b7ccb6e",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2018-01-05T20:07:04Z",
+      "side": 1,
+      "message": "Because it\u0027s treated as a global constant for now, my suggestion is to add this to GPUInfo and collect it in CollectBasicGraphicsInfo instead.",
+      "revId": "3f5d1e5f3e0c83ebacc4952dea45623f06a33f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
