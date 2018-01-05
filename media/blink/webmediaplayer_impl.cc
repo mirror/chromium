@@ -328,7 +328,7 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
   // Destruct compositor resources in the proper order.
   client_->SetWebLayer(nullptr);
 
-  client_->MediaRemotingStopped();
+  client_->MediaRemotingStopped(WebString());
 
   if (!surface_layer_for_video_enabled_ && video_weblayer_) {
     static_cast<cc::VideoLayer*>(video_weblayer_->layer())->StopUsingProvider();
@@ -2811,7 +2811,8 @@ void WebMediaPlayerImpl::SwitchToRemoteRenderer(
   }
 }
 
-void WebMediaPlayerImpl::SwitchToLocalRenderer() {
+void WebMediaPlayerImpl::SwitchToLocalRenderer(
+    const std::string& user_message) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   disable_pipeline_auto_suspend_ = false;
 
@@ -2822,7 +2823,7 @@ void WebMediaPlayerImpl::SwitchToLocalRenderer() {
   // the |renderer_factory_selector_|.
   ScheduleRestart();
   if (client_)
-    client_->MediaRemotingStopped();
+    client_->MediaRemotingStopped(WebString::FromUTF8(user_message));
 }
 
 void WebMediaPlayerImpl::RecordUnderflowDuration(base::TimeDelta duration) {
