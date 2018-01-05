@@ -251,7 +251,9 @@ class ArcCertStoreBridgeTest : public InProcessBrowserTest {
     std::string client_cert1_spki(
         client_cert1_->derPublicKey.data,
         client_cert1_->derPublicKey.data + client_cert1_->derPublicKey.len);
-    permissions_for_ext->RegisterKeyForCorporateUsage(client_cert1_spki);
+    const chromeos::KeyPermissions::KeyId client_cert1_key_id = {
+        client_cert1_spki, chromeos::KeyPermissions::KeyLocation::USER_SLOT};
+    permissions_for_ext->RegisterKeyForCorporateUsage(client_cert1_key_id);
     done_callback.Run();
   }
 

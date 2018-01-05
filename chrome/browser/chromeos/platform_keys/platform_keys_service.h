@@ -98,11 +98,10 @@ class PlatformKeysService : public KeyedService {
                           const std::string& error_message)>;
 
   // Generates an RSA key pair with |modulus_length_bits| and registers the key
-  // to allow a single sign operation by the given extension. |token_id| is
-  // currently ignored, instead the user token associated with |browser_context|
-  // is always used. |callback| will be invoked with the resulting public key or
-  // an error.
-  // Will only call back during the lifetime of this object.
+  // to allow a single sign operation by the given extension. |token_id|
+  // specifies the token to store the keypair on. |callback| will be invoked
+  // with the resulting public key or an error. Will only call back during the
+  // lifetime of this object.
   void GenerateRSAKey(const std::string& token_id,
                       unsigned int modulus_length_bits,
                       const std::string& extension_id,
