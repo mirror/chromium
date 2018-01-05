@@ -16,6 +16,64 @@
       "revId": "3b5eb6ebfd05faf3221c72473abe20c12e8352f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15ed3353_1d2ae16f",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T22:53:28Z",
+      "side": 1,
+      "message": "I\u0027m a fan of the |-addObserverForName:object:queue:usingBlock:| API but you\u0027d still need an NSObject for the KVO observing, so I think this is good.",
+      "parentUuid": "3840ef2e_9db89ef7",
+      "revId": "3b5eb6ebfd05faf3221c72473abe20c12e8352f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f70b7fd_beb5aae2",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T22:53:28Z",
+      "side": 1,
+      "message": "This one lone use of dot-notation is odd. Just [] it ?",
+      "range": {
+        "startLine": 103,
+        "startChar": 36,
+        "endLine": 103,
+        "endChar": 37
+      },
+      "revId": "3b5eb6ebfd05faf3221c72473abe20c12e8352f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931e6db7_8c2d3bbb",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T22:53:28Z",
+      "side": 1,
+      "message": "Unlike notifications, you can only remove registered observers, so this needs to be conditional.",
+      "revId": "3b5eb6ebfd05faf3221c72473abe20c12e8352f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

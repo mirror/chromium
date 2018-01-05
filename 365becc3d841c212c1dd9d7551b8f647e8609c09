@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afb996f_087c5d50",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T22:53:28Z",
+      "side": 0,
+      "message": "I wonder why this wasn\u0027t scoped_nsobject\u003c\u003e before…",
+      "revId": "365becc3d841c212c1dd9d7551b8f647e8609c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
