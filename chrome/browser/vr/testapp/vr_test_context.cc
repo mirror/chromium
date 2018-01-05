@@ -23,6 +23,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "chrome/grit/vr_testapp_resources.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
@@ -63,7 +64,7 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   base::FilePath pak_path;
   PathService::Get(base::DIR_MODULE, &pak_path);
   ui::ResourceBundle::InitSharedInstanceWithPakPath(
-      pak_path.AppendASCII("vr_test.pak"));
+      pak_path.AppendASCII("vr_testapp.pak"));
 
   base::i18n::InitializeICU();
 
@@ -499,8 +500,19 @@ void VrTestContext::CycleOrigin() {
 }
 
 void VrTestContext::LoadAssets() {
-  // TODO(793380): Load asset files once they are available for development.
+#if defined(GOOGLE_CHROME_BUILD)
+  base::StringPiece data =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
+          IDR_VR_BACKGROUND_IMAGE);
+  auto background_image = base::MakeUnique<SkBitmap>();
+  DCHECK(
+      gfx::PNGCodec::Decode(reinterpret_cast<const unsigned char*>(data.data()),
+                            data.size(), background_image.get()));
+  ui_->SetBackgroundImage(std::move(background_image));
+#else   // defined(GOOGLE_CHROME_BUILD)
+  LOG(ERROR) << "Cannot load background. Make testapp Chrome branded.";
   model_->can_apply_new_background = false;
+#endif  // defined(GOOGLE_CHROME_BUILD)
 }
 
 }  // namespace vr
