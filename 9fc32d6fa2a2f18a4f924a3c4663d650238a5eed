@@ -46,6 +46,30 @@
       "revId": "9fc32d6fa2a2f18a4f924a3c4663d650238a5eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc883f28_faf841b4",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2018-01-05T16:05:22Z",
+      "side": 0,
+      "message": "Thanks for the clarification. I agree it\u0027s safe to unconditionally expose AudioWorkletProcessor, if it can only be accessed from an origin trial enabled scope.\n\nI\u0027ve summarized my investigation so far on the related bug. As you suggest, the root cause can be addressed in a later CL.",
+      "parentUuid": "9d57271f_531311e1",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "9fc32d6fa2a2f18a4f924a3c4663d650238a5eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
