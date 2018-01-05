@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a579069_aa423fbf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9249,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 0,
+      "message": "Please leave these enums in place, so that historical data remains viewable.",
+      "range": {
+        "startLine": 9232,
+        "startChar": 0,
+        "endLine": 9249,
+        "endChar": 32
+      },
+      "revId": "cf191db5ae1de2edd7ab622e8e9613b8b7982b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffe8787_2650b0be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19804,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 0,
+      "message": "Please mark these histograms as \u003cobsolete\u003e rather than removing their metadata.",
+      "range": {
+        "startLine": 19777,
+        "startChar": 0,
+        "endLine": 19804,
+        "endChar": 12
+      },
+      "revId": "cf191db5ae1de2edd7ab622e8e9613b8b7982b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

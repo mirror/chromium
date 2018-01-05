@@ -33,6 +33,98 @@
       "revId": "ac044e679b5bd085dfbad10537fd0331468b0b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912063a8_e3e96728",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 1,
+      "message": "nit: Could this return a DownEventInputFormFactorDestinationCombination?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 3
+      },
+      "revId": "ac044e679b5bd085dfbad10537fd0331468b0b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d60a54_4ccd1bc7",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 1,
+      "message": "I think it would be a good idea to have an assertion that this doesn\u0027t overflow the expected range.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 21
+      },
+      "revId": "ac044e679b5bd085dfbad10537fd0331468b0b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d995c53_e852eb90",
+        "filename": "ash/metrics/pointer_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 1,
+      "message": "nit: This static_cast shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 152,
+        "startChar": 6,
+        "endLine": 152,
+        "endChar": 46
+      },
+      "revId": "ac044e679b5bd085dfbad10537fd0331468b0b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acaa09b_8ff63d1e",
+        "filename": "ash/public/cpp/app_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T20:56:50Z",
+      "side": 1,
+      "message": "This enum isn\u0027t really used to back an UMA histogram anymore – at least, not directly – so this comment should probably be updated in some way.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "ac044e679b5bd085dfbad10537fd0331468b0b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
