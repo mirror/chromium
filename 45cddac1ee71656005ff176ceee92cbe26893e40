@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fd56bb_94d50cfa",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T22:26:41Z",
+      "side": 1,
+      "message": "^^^",
+      "range": {
+        "startLine": 977,
+        "startChar": 0,
+        "endLine": 978,
+        "endChar": 72
+      },
+      "revId": "45cddac1ee71656005ff176ceee92cbe26893e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
