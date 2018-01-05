@@ -8,6 +8,7 @@
 #include "chrome/browser/ui/webui/certificate_viewer_webui.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/render_view_host.h"
@@ -53,6 +54,7 @@ content::WebUIDataSource* GetWebUIDataSource(const std::string& host) {
   html_source->SetJsonPath("strings.js");
 
   // Add required resources.
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->AddResourcePath("certificate_viewer.js",
       IDR_CERTIFICATE_VIEWER_JS);
   html_source->AddResourcePath("certificate_viewer.css",

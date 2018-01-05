@@ -13,6 +13,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -80,13 +81,13 @@ SiteEngagementUI::SiteEngagementUI(content::WebUI* web_ui)
   // Set up the chrome://site-engagement/ source.
   std::unique_ptr<content::WebUIDataSource> source(
       content::WebUIDataSource::Create(chrome::kChromeUISiteEngagementHost));
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("site_engagement.js", IDR_SITE_ENGAGEMENT_JS);
   source->AddResourcePath(
       "chrome/browser/engagement/site_engagement_details.mojom.js",
       IDR_SITE_ENGAGEMENT_MOJO_JS);
   source->AddResourcePath("url/mojo/url.mojom.js", IDR_URL_MOJO_JS);
   source->SetDefaultResource(IDR_SITE_ENGAGEMENT_HTML);
-  source->UseGzip();
   content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source.release());
 }
 

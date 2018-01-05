@@ -10,6 +10,7 @@
 #include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
@@ -52,9 +53,9 @@ static void SetSandboxStatusData(content::WebUIDataSource* source) {
 content::WebUIDataSource* CreateDataSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUISandboxHost);
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->SetDefaultResource(IDR_SANDBOX_INTERNALS_HTML);
   source->AddResourcePath("sandbox_internals.js", IDR_SANDBOX_INTERNALS_JS);
-  source->UseGzip();
 
 #if defined(OS_LINUX)
   SetSandboxStatusData(source);

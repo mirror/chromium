@@ -15,6 +15,7 @@
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/common/url_constants.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/image_fetcher/core/image_fetcher_impl.h"
 #include "components/ntp_tiles/field_trial.h"
@@ -114,12 +115,11 @@ void ChromeNTPTilesInternalsMessageHandlerClient::CallJavascriptFunctionVector(
 content::WebUIDataSource* CreateNTPTilesInternalsHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUINTPTilesInternalsHost);
-
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath("ntp_tiles_internals.js", IDR_NTP_TILES_INTERNALS_JS);
   source->AddResourcePath("ntp_tiles_internals.css",
                           IDR_NTP_TILES_INTERNALS_CSS);
   source->SetDefaultResource(IDR_NTP_TILES_INTERNALS_HTML);
-  source->UseGzip();
   return source;
 }
 

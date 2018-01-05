@@ -45,6 +45,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/net_internals_resources.h"
+#include "chrome/grit/net_internals_resources_map.h"
 #include "components/net_log/chrome_net_log.h"
 #include "components/onc/onc_constants.h"
 #include "components/prefs/pref_member.h"
@@ -179,10 +180,10 @@ content::WebUIDataSource* CreateNetInternalsHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUINetInternalsHost);
 
+  source->AddGzipMap(kNetInternalsResources, kNetInternalsResourcesSize);
   source->SetDefaultResource(IDR_NET_INTERNALS_INDEX_HTML);
   source->AddResourcePath("index.js", IDR_NET_INTERNALS_INDEX_JS);
   source->SetJsonPath("strings.js");
-  source->UseGzip();
   return source;
 }
 

@@ -7,6 +7,8 @@
       <emit emit_type='prepend'></emit>
     </output>
     <output filename="net_internals_resources.pak" type="data_package" />
+    <output filename="grit/net_internals_resources_map.cc" type="gzipped_resource_file_map_source" />
+    <output filename="grit/net_internals_resources_map.h" type="gzipped_resource_map_header" />
   </outputs>
   <release seq="1">
     <includes>
