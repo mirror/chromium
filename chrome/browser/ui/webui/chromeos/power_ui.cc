@@ -223,6 +223,8 @@ PowerUI::PowerUI(content::WebUI* web_ui) : content::WebUIController(web_ui) {
   html->AddLocalizedString("samplesText",
                            IDS_ABOUT_POWER_AVERAGE_SAMPLES_TEXT);
 
+  html->AddLocalizedString("cpuTemperatureSectionTitle",
+                           IDS_ABOUT_POWER_CPU_TEMPERATURE_SECTION_TITLE);
   html->AddLocalizedString("cpuIdleSectionTitle",
                            IDS_ABOUT_POWER_CPU_IDLE_SECTION_TITLE);
   html->AddLocalizedString("idleStateOccupancyPercentageHeader",
