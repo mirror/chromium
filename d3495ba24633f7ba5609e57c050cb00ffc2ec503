@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e196b0_02fa01c6",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T15:11:39Z",
+      "side": 1,
+      "message": "why not have BeginNavigationRequest return GlobalRequestID, so that this method doesn\u0027t have to duplicate the knowledge that -1 is used for child id for the browser process?",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e432a58_f8cb5464",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T15:11:39Z",
+      "side": 1,
+      "message": "nit: these 3 dchecks are unnecessary. if the variable is null, the usage right below will serve the same signal",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ee9e2c_bc40b514",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T15:11:39Z",
+      "side": 1,
+      "message": "nit: I think we only want to call this if we do end up creating a ResourceRequestInfo, since some of the paths below early return.",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259fcb1e_9f8928d3",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2018-01-05T15:11:39Z",
+      "side": 1,
+      "message": "nit: i thought the style guide was that a method\u0027s in parameters are listed first, then the out parameters. if my understanding is correct, then this should be the last parameter",
+      "revId": "d3495ba24633f7ba5609e57c050cb00ffc2ec503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
