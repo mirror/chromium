@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd78bf53_0622ee5f",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransfer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-05T14:18:46Z",
+      "side": 1,
+      "message": "My only concern is that this might be a very conservative size limit if the content is iframed. I presume we use it because nothing else is easily available but maybe we could get the root frame? Regardless, add a todo if you agree it\u0027s a potential problem.",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "2634d63e0ad127704b34ec7e1799423a6f9a6ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cacd89_54877975",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatSize.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2018-01-05T14:18:46Z",
+      "side": 1,
+      "message": "Could create a bug to find out where else we could use this? Assign it to me.",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "2634d63e0ad127704b34ec7e1799423a6f9a6ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
