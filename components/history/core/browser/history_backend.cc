@@ -1828,18 +1828,24 @@ void HistoryBackend::CloneFaviconMappingsForPages(
   }
 }
 
+bool HistoryBackend::CanSetOnDemandFavicons(const GURL& page_url) {
+  if (backend_client_ && backend_client_->IsBookmarked(page_url)) {
+    // For bookmarked urls we allow to write on demand favicons even if there is
+    // a synced favicon.
+    return AreAllFaviconsForPageURLFromSync(page_url);
+  }
+
+  // Otherwise, block the write if there is any icon stored for the page URL.
+  return thumbnail_db_->GetIconMappingsForPageURL(page_url,
+                                                  /*mapping_data=*/nullptr);
+}
+
 bool HistoryBackend::SetOnDemandFavicons(const GURL& page_url,
                                          favicon_base::IconType icon_type,
                                          const GURL& icon_url,
                                          const std::vector<SkBitmap>& bitmaps) {
-  if (!thumbnail_db_ || !db_)
+  if (!thumbnail_db_ || !db_ || !CanSetOnDemandFavicons(page_url))
     return false;
-
-  // Verify there's no known data for the page URL.
-  if (thumbnail_db_->GetIconMappingsForPageURL(page_url,
-                                               /*mapping_data=*/nullptr)) {
-    return false;
-  }
 
   return SetFaviconsImpl({page_url}, icon_type, icon_url, bitmaps,
                          FaviconBitmapType::ON_DEMAND);
@@ -2302,6 +2308,27 @@ void HistoryBackend::SendFaviconChangedNotificationForPageAndRedirects(
 void HistoryBackend::SendFaviconChangedNotificationForIconURL(
     const GURL& icon_url) {
   NotifyFaviconsChanged(std::set<GURL>(), icon_url);
+}
+
+bool HistoryBackend::AreAllFaviconsForPageURLFromSync(const GURL& page_url) {
+  std::vector<IconMapping> mapping_data;
+  thumbnail_db_->GetIconMappingsForPageURL(page_url, &mapping_data);
+
+  for (const IconMapping& mapping : mapping_data) {
+    // All icons from sync are stored as type kFavicon.
+    if (mapping.icon_type != favicon_base::IconType::kFavicon)
+      return false;
+
+    // All icons from sync have size 16x16.
+    std::vector<FaviconBitmapIDSize> bitmap_id_sizes;
+    thumbnail_db_->GetFaviconBitmapIDSizes(mapping.icon_id, &bitmap_id_sizes);
+    for (const FaviconBitmapIDSize& size : bitmap_id_sizes) {
+      if (size.pixel_size.width() > 16 && size.pixel_size.height() > 16) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 void HistoryBackend::Commit() {

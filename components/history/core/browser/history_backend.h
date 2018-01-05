@@ -340,6 +340,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                            const GURL& icon_url,
                            const std::vector<SkBitmap>& bitmaps);
 
+  bool CanSetOnDemandFavicons(const GURL& page_url);
+
   void SetFaviconsOutOfDateForPage(const GURL& page_url);
 
   void TouchOnDemandFavicon(const GURL& icon_url);
@@ -804,6 +806,12 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // changed. Sending this notification is important because the favicon at
   // |icon_url| may be mapped to hundreds of page URLs.
   void SendFaviconChangedNotificationForIconURL(const GURL& icon_url);
+
+  // Returns whether all favicons mapped to |page_url| originate from sync
+  // (returns true if there is no mapped icon). As there is no way to tell for
+  // sure whether an icon comes from sync, the function can return false
+  // positives (if all the icons have the properties of icons from sync).
+  bool AreAllFaviconsForPageURLFromSync(const GURL& page_url);
 
   // Generic stuff -------------------------------------------------------------
 
