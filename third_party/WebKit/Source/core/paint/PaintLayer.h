@@ -893,7 +893,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
       ClipRectsCacheSlot,
-      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -904,7 +903,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const PaintLayer* root_layer,
       const LayoutRect& dirty_rect,
       ClipRectsCacheSlot,
-      GeometryMapperOption,
       OverlayScrollbarClipBehavior = kIgnorePlatformOverlayScrollbarSize,
       ShouldRespectOverflowClipType = kRespectOverflowClip,
       const LayoutPoint* offset_from_root = nullptr,
@@ -1122,7 +1120,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
       const HitTestLocation&,
       const HitTestingTransformState*,
       double* z_offset,
-      ClipRectsCacheSlot);
+      ClipRectsCacheSlot,
+      ShouldRespectOverflowClipType);
   bool HitTestClippedOutByClipPath(PaintLayer* root_layer,
                                    const HitTestLocation&) const;
 
