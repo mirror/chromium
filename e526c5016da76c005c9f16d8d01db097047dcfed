@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea8dabd7_264aa93a",
+        "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T23:21:35Z",
+      "side": 1,
+      "message": "std::make_unique\u003cThemeInstalledInfoBarDelegate\u003e",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69b9d9e_99f4d681",
+        "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T23:21:35Z",
+      "side": 1,
+      "message": "Both of these arguments end up in an std::string. extensions::ExtensionId is just a typedef for std::string. I don\u0027t really care which you use here but the types of the arguments should at least be consistently one or the other.\n\nUnless the intent is to express that theme_id must be valid while previous_theme_id could be empty in which case it should probably be documented as such.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b35fec7_cca03693",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T23:21:35Z",
+      "side": 1,
+      "message": "If the previous theme ID was the default theme then this should be true.",
+      "range": {
+        "startLine": 216,
+        "startChar": 47,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
