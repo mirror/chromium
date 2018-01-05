@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2173ba1d_44b89245",
+        "filename": "ui/gfx/canvas_skia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T17:58:03Z",
+      "side": 1,
+      "message": "q: I\u0027m not quite sure I understand this DCHECK, why must this be PLATFORM?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfd03a3_d87f69cc",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T17:58:03Z",
+      "side": 1,
+      "message": "Are MacViews surfaces and the Mac-Views-Browser doing the right thing for DEFAULT/PLATFORM? Shouldn\u0027t those be using HarfBuzz, or am I mistaken about that?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41bd4c2_97025e8d",
+        "filename": "ui/gfx/text_elider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T17:58:03Z",
+      "side": 1,
+      "message": "q: Why not provide a default here?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a1594e_d4d259a6",
+        "filename": "ui/gfx/text_utils_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T17:58:03Z",
+      "side": 1,
+      "message": "Maybe DCHECK the typesetter value?",
+      "revId": "99fcf61713b0a69d1f1a3e76f4230af0a603789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

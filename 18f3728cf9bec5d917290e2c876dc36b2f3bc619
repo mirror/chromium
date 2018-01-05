@@ -16,6 +16,24 @@
       "revId": "18f3728cf9bec5d917290e2c876dc36b2f3bc619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f776a9b_4feb3ef0",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2018-01-05T17:58:03Z",
+      "side": 1,
+      "message": "Will Mac Views UI surfaces (eg. c/b/ui/views dialogs) do the correct thing if they\u0027re using the default argument? It seems like passing \u0027DEFAULT\u0027, which equals \u0027PLATFORM\u0027, would yield RenderTextMac (unless the commandline explicitly specifies kEnableHarfBuzzRenderText, which I doubt is the case).",
+      "parentUuid": "2010a99e_9dfc3ba0",
+      "revId": "18f3728cf9bec5d917290e2c876dc36b2f3bc619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
