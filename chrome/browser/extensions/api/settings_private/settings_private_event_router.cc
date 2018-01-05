@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/extensions/api/settings_private/generated_prefs_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/settings_private.h"
 #include "components/prefs/pref_service.h"
@@ -90,6 +91,8 @@ void SettingsPrivateEventRouter::StartOrStopListeningForPrefsChanges() {
       api::settings_private::OnPrefsChanged::kEventName);
 
   if (should_listen && !listening_) {
+    settings_private::GeneratedPrefs* generated_prefs =
+        settings_private::GeneratedPrefsFactory::GetForBrowserContext(context_);
     const PrefsUtil::TypedPrefMap& keys = prefs_util_->GetWhitelistedKeys();
     for (const auto& it : keys) {
       std::string pref_name = it.first;
@@ -103,6 +106,11 @@ void SettingsPrivateEventRouter::StartOrStopListeningForPrefsChanges() {
         cros_settings_subscription_map_.insert(
             make_pair(pref_name, std::move(subscription)));
 #endif
+      } else if (generated_prefs && generated_prefs->HasPref(pref_name)) {
+        generated_prefs->AddPrefObserver(
+            pref_name, base::BindRepeating(
+                           &SettingsPrivateEventRouter::OnPreferenceChanged,
+                           weak_ptr_factory_.GetWeakPtr()));
       } else {
         FindRegistrarForPref(it.first)
             ->Add(pref_name,
