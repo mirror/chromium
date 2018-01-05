@@ -22,6 +22,30 @@
       "revId": "052b496a1924e194fd18a98f67ba72cbab4803fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195ab3f1_cc3b12e4",
+        "filename": "content/test/content_browser_test_utils_internal.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2018-01-05T15:29:00Z",
+      "side": 1,
+      "message": "There\u0027s GetCrashKeyValue() in crash_key.h for use by tests. Note though that on Breakpad clients that operates on the post-chunked key_names.",
+      "parentUuid": "ec9c8996_e870c389",
+      "range": {
+        "startLine": 471,
+        "startChar": 0,
+        "endLine": 474,
+        "endChar": 12
+      },
+      "revId": "052b496a1924e194fd18a98f67ba72cbab4803fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
