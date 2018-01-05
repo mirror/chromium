@@ -30,8 +30,11 @@ favicon_base::FaviconImageResult GetDummyFaviconResult() {
   return result;
 }
 
-void VerifyFetchedFavicon(const gfx::Image& favicon) {
+void VerifyFetchedFaviconAndIncrementCount(int* count,
+                                           const gfx::Image& favicon) {
   EXPECT_FALSE(favicon.IsEmpty());
+  if (count)
+    ++*count;
 }
 
 void ExpectNoAsyncFavicon(const gfx::Image& favicon) {
@@ -52,7 +55,8 @@ TEST(FaviconCacheTest, Basic) {
 
   FaviconCache cache(&favicon_service);
   gfx::Image result = cache.GetFaviconForPageUrl(
-      page_url, base::BindOnce(&VerifyFetchedFavicon));
+      page_url,
+      base::BindOnce(&VerifyFetchedFaviconAndIncrementCount, nullptr));
 
   // Expect the synchronous result to be empty.
   EXPECT_TRUE(result.IsEmpty());
@@ -66,4 +70,29 @@ TEST(FaviconCacheTest, Basic) {
   result = cache.GetFaviconForPageUrl(page_url,
                                       base::BindOnce(&ExpectNoAsyncFavicon));
   EXPECT_FALSE(result.IsEmpty());
+}
+
+TEST(FaviconCacheTest, MultipleRequestsAreCoalesced) {
+  GURL page_url("http://a.com/");
+  favicon_base::FaviconImageCallback service_response_callback;
+
+  // Mock verifies that backing FaviconService is only called once.
+  testing::NiceMock<favicon::MockFaviconService> favicon_service;
+  EXPECT_CALL(favicon_service, GetFaviconImageForPageURL(page_url, _, _))
+      .WillOnce(DoAll(SaveArg<1>(&service_response_callback),
+                      Return(base::CancelableTaskTracker::kBadTaskId)));
+
+  int callback_count = 0;
+
+  FaviconCache cache(&favicon_service);
+  for (int i = 0; i < 10; ++i) {
+    cache.GetFaviconForPageUrl(
+        page_url, base::BindOnce(&VerifyFetchedFaviconAndIncrementCount,
+                                 &callback_count));
+  }
+
+  // Simulate the favicon service returning the result.
+  service_response_callback.Run(GetDummyFaviconResult());
+
+  EXPECT_EQ(10, callback_count);
 }
