@@ -70,6 +70,30 @@
       "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c11def_c86ed3d9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-05T22:20:42Z",
+      "side": 1,
+      "message": "Seems to work locally with IDS_LEARN_MORE.",
+      "parentUuid": "2b3950ab_9ead5f9e",
+      "range": {
+        "startLine": 6001,
+        "startChar": 10,
+        "endLine": 6001,
+        "endChar": 20
+      },
+      "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
