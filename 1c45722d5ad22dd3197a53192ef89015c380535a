@@ -46,6 +46,30 @@
       "revId": "1c45722d5ad22dd3197a53192ef89015c380535a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c62c932_b2e74a24",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T21:03:57Z",
+      "side": 1,
+      "message": "Ok.  For future reference, if you find yourself needing several histograms that all have a similar structure, then it would be best to design them to use fewer than 100 buckets.  But, for a single histogram, this is probably the simplest approach, and good enough.",
+      "parentUuid": "886dc0ec_836f7343",
+      "range": {
+        "startLine": 151,
+        "startChar": 55,
+        "endLine": 151,
+        "endChar": 74
+      },
+      "revId": "1c45722d5ad22dd3197a53192ef89015c380535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
