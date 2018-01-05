@@ -956,6 +956,12 @@ void VrShell::OnVoiceResults(const base::string16& result) {
 
 void VrShell::OnAssetsLoaded(vr::AssetsLoadStatus status,
                              const base::Version& component_version) {
+  if (status == vr::AssetsLoadStatus::kSuccess) {
+    VLOG(1) << "Successfully loaded VR assets component";
+  } else {
+    VLOG(1) << "Failed to load VR assets component";
+  }
+
   vr::Assets::GetInstance()->GetMetricsHelper()->OnAssetsLoaded(
       status, component_version);
 }
