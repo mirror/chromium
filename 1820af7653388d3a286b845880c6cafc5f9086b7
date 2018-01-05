@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4ab393_f650b964",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "bool accelerometer_active \u003d true;\nbool linear_acceleration_sensor_active \u003d true;\nbool gyroscope_active \u003d true;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eaa6a34_ae3f1f19",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "accelerometer_active \u003d accelerometer_.timestamp !\u003d 0.0;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4ba5f6_1bd5502b",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "linear_acceleration_sensor_active \u003d linear_acceleration_sensor_.timestamp !\u003d 0.0;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432fab45_683d6986",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "gyroscope_active \u003d gyroscope_.reading.timestamp !\u003d 0.0;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a9e957_fbb30b9f",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "data-\u003eall_available_sensors_are_active \u003d\n  accelerometer_active \u0026\u0026 linear_acceleration_sensor_active \u0026\u0026\n  gyroscope_active;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5a69b7_c90d1e91",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "return data.all_available_sensors_are_active;",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ddfe33_c9cb3813",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "data-\u003eall_available_sensors_are_active \u003d false;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d34ab1_4d3b1b41",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "data-\u003eall_available_sensors_are_active \u003d relative_orientation_sensor_.reading.timestamp !\u003d 0.0;\nif (!data-\u003eall_available_sensors_are_active)\n  return;",
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2759ed4b_afc9a3ca",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:59:25Z",
+      "side": 1,
+      "message": "Put this first in the function:\n\nif (!data.all_available_sensors_active)\n  return false;",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 3
+      },
+      "revId": "1820af7653388d3a286b845880c6cafc5f9086b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
