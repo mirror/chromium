@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "f7a594fc_8c1378a5",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2018-01-05T08:33:51Z",
+      "side": 1,
+      "message": "I\u0027m somewhat confused as well.\n\nIf I were to add an accessor to the proto, this publicizes the proto\u0027s existence and means there is no point in having accessors to the fields of the proto. i.e. hidehiko@\u0027s comment would result in a no-op because I already had an accessor for the proto at that point, it was the only thing I was storing and returning. (perhaps this is what should have happened but I\u0027m not clear on this)\n\nSo there are 3 options:\n\n1. Store the fields and return them, 1 to 1 (patchset 4)\n2. Store the proto and return it, 1 to 1 (patchset 6)\n3. Store the proto and return the fields, 1 to many (what we have now)\n\nIf I, on top of #3, add an accessor to the proto, it begs the question why even have accessors for the proto fields as I would then be exposing the implementation details of the system and the proto itself already has an API.\n\nIf this is a complete misunderstanding and the original issue was solely around naming, then my apologies as I missed that completely.\n\nAt any rate I\u0027m going to submit now, if there are lingering issues let\u0027s follow up later so we don\u0027t block the rest of the CL.",
+      "parentUuid": "e4a9037c_c37f2f36",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a852e831_850685b7",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 4
