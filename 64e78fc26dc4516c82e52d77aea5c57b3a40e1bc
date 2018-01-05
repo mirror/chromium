@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9f2973_38727e94",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2018-01-05T11:51:36Z",
+      "side": 1,
+      "message": "Could we either change this case or add another case that tests between 0.2 and 0.3 is not high at the beginning?",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 36
+      },
+      "revId": "64e78fc26dc4516c82e52d77aea5c57b3a40e1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
