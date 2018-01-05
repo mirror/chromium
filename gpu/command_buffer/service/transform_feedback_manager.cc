@@ -12,10 +12,13 @@ namespace gles2 {
 
 TransformFeedback::TransformFeedback(TransformFeedbackManager* manager,
                                      GLuint client_id,
-                                     GLuint service_id)
+                                     GLuint service_id,
+                                     bool do_buffer_refcounting)
     : IndexedBufferBindingHost(
           manager->max_transform_feedback_separate_attribs(),
-          manager->needs_emulation()),
+          GL_TRANSFORM_FEEDBACK_BUFFER,
+          manager->needs_emulation(),
+          do_buffer_refcounting),
       manager_(manager),
       client_id_(client_id),
       service_id_(service_id),
@@ -39,7 +42,7 @@ void TransformFeedback::DoBindTransformFeedback(GLenum target) {
   DCHECK_LT(0u, service_id_);
   glBindTransformFeedback(target, service_id_);
   has_been_bound_ = true;
-  OnBindHost(target);
+  SetIsBound(true);
   if (active_ && !paused_) {
     // This could only happen during virtual context switching.
     // Otherwise the validation should generate a GL error without calling
@@ -77,13 +80,15 @@ void TransformFeedback::DoResumeTransformFeedback() {
   paused_ = false;
 }
 
-
 TransformFeedbackManager::TransformFeedbackManager(
-    GLuint max_transform_feedback_separate_attribs, bool needs_emulation)
+    GLuint max_transform_feedback_separate_attribs,
+    bool needs_emulation,
+    bool do_buffer_refcounting)
     : max_transform_feedback_separate_attribs_(
           max_transform_feedback_separate_attribs),
       needs_emulation_(needs_emulation),
-      lost_context_(false) {
+      lost_context_(false),
+      do_buffer_refcounting_(do_buffer_refcounting) {
   DCHECK(needs_emulation);
 }
 
@@ -97,8 +102,8 @@ void TransformFeedbackManager::Destroy() {
 
 TransformFeedback* TransformFeedbackManager::CreateTransformFeedback(
     GLuint client_id, GLuint service_id) {
-  scoped_refptr<TransformFeedback> transform_feedback(
-      new TransformFeedback(this, client_id, service_id));
+  scoped_refptr<TransformFeedback> transform_feedback(new TransformFeedback(
+      this, client_id, service_id, do_buffer_refcounting_));
   auto result = transform_feedbacks_.insert(
       std::make_pair(client_id, transform_feedback));
   DCHECK(result.second);
