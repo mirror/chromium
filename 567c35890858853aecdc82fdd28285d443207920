@@ -87,6 +87,24 @@
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80adae67_32e470d7",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T15:59:36Z",
+      "side": 1,
+      "message": "Yes, that works fine and I wanted to do that already back in https://codereview.chromium.org/2973723003/ but piman@ argued \"Relying on destruction order is fragile [...].\".",
+      "parentUuid": "3a09c1fd_9e1d3a32",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
