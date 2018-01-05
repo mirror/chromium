@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a814147e_140d4533",
+        "filename": "chrome/browser/resources/settings/controls/settings_slider.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-05T02:22:55Z",
+      "side": 1,
+      "message": "is the /** @const */ needed?",
+      "revId": "eb4c961ba9218b31bbcc10d33833ccebb13aca12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b889ccc_92bf2f08",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2018-01-05T02:22:55Z",
+      "side": 1,
+      "message": "These @const look unnecessary.",
+      "revId": "eb4c961ba9218b31bbcc10d33833ccebb13aca12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
