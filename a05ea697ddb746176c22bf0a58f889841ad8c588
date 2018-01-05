@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52a3e45_ae7cbb70",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-05T23:06:25Z",
+      "side": 1,
+      "message": "Unlabelled Button",
+      "range": {
+        "startLine": 178,
+        "startChar": 14,
+        "endLine": 178,
+        "endChar": 37
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f847a6ae_80703a88",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-05T23:06:25Z",
+      "side": 1,
+      "message": "Let screen readers treat this section like a button. (Prevents focusing icon and text within \u0027button\u0027)",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 35
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6f2916_5c93e9bf",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-05T23:06:25Z",
+      "side": 1,
+      "message": "Icon has meaning. This will be read as part of the label for the \u0027button\u0027 parent.",
+      "range": {
+        "startLine": 199,
+        "startChar": 24,
+        "endLine": 199,
+        "endChar": 70
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0d66b4_8c142a95",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2018-01-05T23:06:25Z",
+      "side": 1,
+      "message": "Unlabelled.\nDescription to add context for screen readers.",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 69
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
