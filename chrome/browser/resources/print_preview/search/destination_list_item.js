@@ -198,16 +198,19 @@ cr.define('print_preview', function() {
 
       // Initialize the element which renders the destination's connection
       // status.
+      const showInvalidCertificateError =
+          this.destination_.hasInvalidCertificate &&
+          !loadTimeData.getBoolean('isEnterpriseManaged');
       this.getElement().classList.toggle(
-          'stale',
-          this.destination_.isOffline ||
-              this.destination_.hasInvalidCertificate);
+          'stale', this.destination_.isOffline || showInvalidCertificateError);
       const connectionStatusEl = this.getChildElement('.connection-status');
       connectionStatusEl.textContent = this.destination_.connectionStatusText;
       setIsVisible(
           connectionStatusEl,
-          this.destination_.isOffline ||
-              this.destination_.hasInvalidCertificate);
+          this.destination_.isOffline || showInvalidCertificateError);
+      setIsVisible(
+          this.getChildElement('.learn-more-link'),
+          showInvalidCertificateError);
 
       // Initialize registration promo element for Privet unregistered printers.
       setIsVisible(

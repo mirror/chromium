@@ -57,7 +57,7 @@ print_preview.DestinationProvisionalType = {
 
 /**
  * Enumeration specifying the status of a destination's 2018 certificate.
- * Values UKNOWN and YES are returned directly by the GCP server.
+ * Values UNKNOWN and YES are returned directly by the GCP server.
  * @enum {string}
  */
 print_preview.DestinationCertificateStatus = {
