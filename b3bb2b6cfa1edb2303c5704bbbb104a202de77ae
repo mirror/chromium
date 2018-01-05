@@ -22,6 +22,30 @@
       "revId": "b3bb2b6cfa1edb2303c5704bbbb104a202de77ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4e0819_134cacb6",
+        "filename": "chrome/browser/resource_coordinator/tab_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2018-01-05T23:45:26Z",
+      "side": 1,
+      "message": "I\u0027m fine with moving TabActivityWatcher to resource_coordinator/.\n\nTabManager::WebContentsData will go away, so this should be \"Merge this into TabLifecycleUnit.\", but the code is otherwise correct for now.",
+      "parentUuid": "17d34b35_695e022c",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "b3bb2b6cfa1edb2303c5704bbbb104a202de77ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
