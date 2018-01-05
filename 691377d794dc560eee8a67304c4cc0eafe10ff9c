@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc9d42e7_da1ae36f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d59acdb3_dc7e37ce",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e547c58_088c20cc",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e640c2_adce1b05",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e547c58_088c20cc",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47f1c424_3f10c7e5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b7a025_6bb4c64e",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c352f7b2_6351a0d2",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5337d62d_57a61208",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c352f7b2_6351a0d2",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d67dc8c3_b106947c",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2086f6d_cc17e722",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423bb757_a3862c8c",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
         "patchSetId": 17
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-04T22:31:44Z",
       "side": 1,
       "message": "We\u0027ve converted other code to use the system request context, instead of a profile-specific one.  The system context allows dial_app_discovery_service to work as a global singleton.\n\nWhich one is used in the real dial_app_discovery_service?",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849c5f7f_b01b1374",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "It will use system request context, since caller (DialMSSImpl) of DialAppDiscoveryService::FetchDialAppInfo() will pass in |request_context| as a parameter.",
+      "parentUuid": "423bb757_a3862c8c",
       "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9ba36dd6_911bca29",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de9476cf_0db69144",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ca378e_55472557",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
         "patchSetId": 17
@@ -135,6 +261,24 @@
       "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be55d2cf_fe9518e5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ca378e_55472557",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "3eae0087_abba5782",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcd1bace_f49b8ec3",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76a433d_ab714648",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
         "patchSetId": 17
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "4045176b_2b5747b0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e76a433d_ab714648",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17ee4ed2_86989564",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
         "patchSetId": 17
@@ -186,6 +366,24 @@
       "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30b3219_05cf4bf9",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2018-01-05T00:12:13Z",
+      "side": 1,
+      "message": "Thanks a lot :)",
+      "parentUuid": "17ee4ed2_86989564",
+      "revId": "691377d794dc560eee8a67304c4cc0eafe10ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
