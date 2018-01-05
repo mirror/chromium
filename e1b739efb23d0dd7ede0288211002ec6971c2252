@@ -233,6 +233,30 @@
       "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41837ad7_0cae8b8c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6932,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2018-01-05T01:16:31Z",
+      "side": 1,
+      "message": "You should also remove base\u003d\"true\" then.",
+      "parentUuid": "bc1222e6_8dbc1b6f",
+      "range": {
+        "startLine": 6932,
+        "startChar": 5,
+        "endLine": 6932,
+        "endChar": 80
+      },
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
