@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "47a27514_35787660",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-05T15:40:08Z",
+      "side": 1,
+      "message": "WebState has a method IsLoading(). According to eugenebut@ [1], there is no need to track whether the page is loading or not on iOS, instead WebState::IsLoading() should be used.\n\n[1]: https://chromium-review.googlesource.com/c/chromium/src/+/744012/1/components/dom_distiller/ios/distiller_page_ios.mm#201",
+      "revId": "54d4cd9ae949a93438927f13bb55a6e47d39f282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f741007e_19d02d7c",
+        "filename": "ios/chrome/browser/history/history_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2018-01-05T15:40:08Z",
+      "side": 1,
+      "message": "Can we put this constant in components/history/core/browser/history_constants.h? This would avoid duplicating it in both tab helpers (there is already lots of duplication).",
+      "range": {
+        "startLine": 186,
+        "startChar": 46,
+        "endLine": 186,
+        "endChar": 77
+      },
+      "revId": "54d4cd9ae949a93438927f13bb55a6e47d39f282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56262b35_9f730029",
         "filename": "ios/chrome/browser/history/history_tab_helper.mm",
         "patchSetId": 4
