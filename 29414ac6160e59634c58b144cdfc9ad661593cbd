@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640d2e0a_54f9f0bb",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 2859,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2018-01-05T22:13:52Z",
+      "side": 1,
+      "message": "Is there a reason for having a separate SetDelegate method, instead of passible delegate to the constructor? Looks like we already inconsistent with that, but passing delegate to the constructor seems like more common approach.",
+      "range": {
+        "startLine": 2859,
+        "startChar": 26,
+        "endLine": 2859,
+        "endChar": 37
+      },
+      "revId": "29414ac6160e59634c58b144cdfc9ad661593cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
