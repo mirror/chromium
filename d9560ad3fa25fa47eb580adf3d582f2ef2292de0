@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "5daaa934_fccfd527",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T17:55:08Z",
+      "side": 1,
+      "message": "Any particular reason we do this 8 at a time, not 16 with vld3q_u8 and vst4q_u8?",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bd8064_e0a00ffb",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T17:55:08Z",
+      "side": 1,
+      "message": "my first thought when reading \"garbage\" was that it was uninitialized, but here it\u0027s actually just 0xff... might want to replace \"garbage\" with \"0xff\" or \"opaque\" or \"phony\"?",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc32535_ee94c3b9",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T17:55:08Z",
+      "side": 1,
+      "message": "Since you\u0027ve already checked above, this might read more clearly as just \"256\"?",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad08af6_c2a06f5b",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T17:55:08Z",
+      "side": 1,
+      "message": "Can we do this all in one pass with something like\n\n  uint8x8x3_t v \u003d vld3_u8((png_const_bytep)(palette + i));\n  vst4_u8(riffled_palette + (i \u003c\u003c 2), (uint8x8x4_t){\n    v.val[0],\n    v.val[1];\n    v.val[2];\n    num_trans \u003d\u003d 256 ? vld1_u8(trans_alpha + i) : vdup_n_u8(0xff)\n  });\n\n?  (Am I right in thinking num_trans is either 0 or 256?)",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9286f35_eea87121",
         "filename": "third_party/libpng/patches/0000-plte.patch",
         "patchSetId": 5
@@ -49,6 +135,29 @@
       "side": 1,
       "message": "We will try to upstream this optimization to the canonical libpng in the near future.",
       "parentUuid": "f9ac82ce_faf83d47",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fee479_4a2150a6",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2018-01-05T17:55:08Z",
+      "side": 1,
+      "message": "This i -\u003e pixel_in_row rewrite seems like more of a style change than one of interesting substance.  Consider reverting it for now?  It\u0027s kind of a different type of change than the more interesting one we\u0027re making here, and might be better upstreamed independently, first or as a follow up.",
+      "range": {
+        "startLine": 4218,
+        "startChar": 15,
+        "endLine": 4218,
+        "endChar": 27
+      },
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
