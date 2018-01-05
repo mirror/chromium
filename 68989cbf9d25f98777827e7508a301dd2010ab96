@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "36adffbb_992f0c08",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:30:58Z",
+      "side": 1,
+      "message": "There really should be a PM or UX person involved for this :(\n\nI\u0027ll look at the context in the UI CL, but it\u0027s not clear from the comment what exactly this list contains. Do we use radio buttons to choose the method now? If so, what\u0027s in the list?",
+      "parentUuid": "a5b5a955_b249ffd8",
+      "revId": "68989cbf9d25f98777827e7508a301dd2010ab96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19bc5bfd_4fb17cc7",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.h",
         "patchSetId": 3
