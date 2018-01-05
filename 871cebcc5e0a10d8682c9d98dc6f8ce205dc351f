@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "908eeb15_d67617c6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-05T06:46:51Z",
+      "side": 1,
+      "message": "Please add TODO comment.\nWill you add \"array\u003cblink.mojom.WebFeature\u003e used_features\" in ControllerServiceWorkerInfo?",
+      "revId": "871cebcc5e0a10d8682c9d98dc6f8ce205dc351f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab38609_be30aa1d",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2018-01-05T06:46:51Z",
+      "side": 1,
+      "message": "nit: bool CanCreateSubresourceLoaderFactory() const;",
+      "revId": "871cebcc5e0a10d8682c9d98dc6f8ce205dc351f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
