@@ -64,6 +64,15 @@ CallStackProfileParams g_browser_process_sampling_params(
     CallStackProfileParams::PROCESS_STARTUP,
     CallStackProfileParams::MAY_SHUFFLE);
 
+// Parameters for IO thread of browser process sampling. Not const since these
+// may be changed when transitioning from start-up profiling to periodic
+// profiling.
+CallStackProfileParams g_io_thread_sampling_params(
+    CallStackProfileParams::BROWSER_PROCESS,
+    CallStackProfileParams::IO_THREAD,
+    CallStackProfileParams::PROCESS_STARTUP,
+    CallStackProfileParams::MAY_SHUFFLE);
+
 // ProfilesState --------------------------------------------------------------
 
 // A set of profiles and the CallStackProfileMetricsProvider state associated
@@ -556,6 +565,11 @@ CallStackProfileMetricsProvider::~CallStackProfileMetricsProvider() {
 StackSamplingProfiler::CompletedCallback
 CallStackProfileMetricsProvider::GetProfilerCallbackForBrowserProcessStartup() {
   return internal::GetProfilerCallback(&g_browser_process_sampling_params);
+}
+
+StackSamplingProfiler::CompletedCallback
+CallStackProfileMetricsProvider::GetProfilerCallbackForIOThreadStartup() {
+  return internal::GetProfilerCallback(&g_io_thread_sampling_params);
 }
 
 // static
