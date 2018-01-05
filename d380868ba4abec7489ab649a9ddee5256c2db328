@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43d957b7_bb9920ea",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-05T22:01:59Z",
+      "side": 1,
+      "message": "When the user switches display mode, (resolution or refresh rate or both), the display zoom should change accordingly. It may confuse the user if the display zoom of the previous mode is applied (It may be zoomed in too much or zoomed out too much). \nIts safer and more convenient to the user to save the display zoom per display mode.\n\nFor this reason we are also using width as the unique identifier. Since if the user changes display mode which does not result in the change of the resolution and only results in the change of the refresh rate, we can keep the previous display zoom. However if the change results in the display resolution being changed (thus width being changed), we do not want to confuse the user by applying a display zoom that was used for the previous display mode.\n\nThe other option is to simply reset the display zoom to 100% when the display mode is changed. This would mean we only have to store 1 display zoom per display instead of 1 display zoom per display mode per display.",
+      "parentUuid": "f91d8cef_0f2b5d26",
+      "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2ba11dd_698de5ef",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c941062_21f93f0b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-05T22:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ba11dd_698de5ef",
+      "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a8e8051_2df66a10",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-05T22:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b478801a_5bc5518c",
+      "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ab5e54_bcfe8d62",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2018-01-05T20:56:29Z",
       "side": 1,
       "message": "Display::device_scale_factor() should return the scale factor for given display.",
+      "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83cad28_2d064be7",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2018-01-05T22:01:59Z",
+      "side": 1,
+      "message": "Display::device_scale_factor() is a combination of display zoom factor * any other scaling applied.\n\ne.g. In samus the internal display has a device scale factor of 2.0 based on the physical PPI of the display. \nThe user can then apply further display zoom on top of this 2.0. \nSo the net device scale factor would be (2.0 * display_zoom_factor), which is what\nDisplay::device_scale_factor() would return.\n\nDuring settings\u003edisplay, the user is only aware of the display zoom factor, and not the \u00272.0\u0027 in the above example.\n\nTo get only the display zoom factor component, we need GetZoomFactorForDisplay()\n\n\nThis is only required for internal displays, which may have a device scale factor set based on their PPI. For external displays GetZoomFactorForDisplay() will always return the same value as Display::device_scale_factor().",
+      "parentUuid": "a2ab5e54_bcfe8d62",
       "revId": "d380868ba4abec7489ab649a9ddee5256c2db328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
