@@ -77,6 +77,7 @@ template <typename T>
 struct SimpleClassVectorTraits : VectorTraitsBase<T> {
   static const bool kCanInitializeWithMemset = true;
   static const bool kCanClearUnusedSlotsWithMemset = true;
+  static const bool kCanCopyWithMemcpy = true;
   static const bool kCanMoveWithMemcpy = true;
   static const bool kCanCompareWithMemcmp = true;
 };
@@ -163,6 +164,7 @@ struct VectorTraits<std::pair<First, Second>> {
   struct VectorTraits<ClassName> : VectorTraitsBase<ClassName> {              \
     static const bool kCanInitializeWithMemset = true;                        \
     static const bool kCanClearUnusedSlotsWithMemset = true;                  \
+    static const bool kCanCopyWithMemcpy = true;                              \
     static const bool kCanMoveWithMemcpy = true;                              \
   };                                                                          \
   }
