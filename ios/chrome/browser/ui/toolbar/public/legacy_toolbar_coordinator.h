@@ -11,7 +11,7 @@
 // This protocol is containing the legacy methods implemented by the
 // LegacyToolbarCoordinator. It is used to separate those methods from the ones
 // used in the refactored toolbar.
-@protocol LegacyToolbarCoordinator<BubbleViewAnchorPointProvider>
+@protocol LegacyToolbarCoordinator<BubbleViewAnchorPointProvider, NSObject>
 
 - (void)selectedTabChanged;
 - (void)setTabCount:(NSInteger)tabCount;
