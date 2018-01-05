@@ -9,6 +9,7 @@
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #import "chrome/browser/ui/cocoa/l10n_util.h"
 #import "third_party/google_toolbox_for_mac/src/AppKit/GTMNSBezierPath+RoundRect.h"
+#include "ui/base/material_design/material_design_controller.h"
 
 @implementation InfoBubbleView
 
@@ -18,8 +19,14 @@
 
 - (id)initWithFrame:(NSRect)frameRect {
   if ((self = [super initWithFrame:frameRect])) {
-    arrowLocation_ = info_bubble::kTopLeading;
-    alignment_ = info_bubble::kAlignArrowToAnchor;
+    if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+      // Under MD, bubbles never have arrows.
+      arrowLocation_ = info_bubble::kNoArrow;
+      alignment_ = info_bubble::kAlignTrailingEdgeToAnchorEdge;
+    } else {
+      arrowLocation_ = info_bubble::kTopLeading;
+      alignment_ = info_bubble::kAlignArrowToAnchor;
+    }
     cornerFlags_ = info_bubble::kRoundedAllCorners;
     backgroundColor_.reset([[NSColor whiteColor] retain]);
   }
@@ -137,11 +144,20 @@
 }
 
 - (void)setArrowLocation:(info_bubble::BubbleArrowLocation)location {
+  // Arrow location is constant under MD.
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial())
+    return;
+
   if (arrowLocation_ == location)
     return;
 
   arrowLocation_ = location;
   [self setNeedsDisplayInRect:[self bounds]];
+}
+
+- (void)setAlignment:(info_bubble::BubbleAlignment)alignment {
+  if (!ui::MaterialDesignController::IsSecondaryUiMaterial())
+    alignment_ = alignment;
 }
 
 @end
