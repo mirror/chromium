@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "536a03f4_7b9fbfa3",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-05T13:58:17Z",
+      "side": 0,
+      "message": "This code deals with filling, we should fill whatever we have (i.e. what user saved), how we can use maxlength or pattern? So I believe this comment doesn\u0027t make sense now.\nMaxlength or pattern could be useful for generation where we should generate password of appropriate form (maxlength is used actually).",
+      "parentUuid": "92fc908d_a76e4bd9",
+      "revId": "c9f5fc2de639dac40c6cc956ef3caca343513099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7acab7ad_3c001c51",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T12:56:54Z",
       "side": 0,
       "message": "Do you fully understand the implications of this change? I noticed that line 1783 in the old code (1792 in the new code) still has the \"if (old !\u003d new)\" pattern instead of \"if (!new.empty() \u0026\u0026 old.empty())\"",
+      "revId": "c9f5fc2de639dac40c6cc956ef3caca343513099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53da587b_59c2da63",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1766,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2018-01-05T13:58:17Z",
+      "side": 0,
+      "message": "My CL changes nothing in the current logic, namely in the old code\n1. in line 1853 username is autofilled when the site didn\u0027t prefilled username\n2. The line 1767 is redundant, because or we filled in line 1853 if username field is empty or username is selected from username set by page (and in this case |username| \u003d\u003d username_element-\u003eValue().Utf16()).\ni.e. old logic is to fill username if username is empty and autocompletable. That\u0027s exactly wha\u0027t in this CL, but in one function (FillUsernameAndPassword) not in two functions, which I think makes code easier.",
+      "parentUuid": "7acab7ad_3c001c51",
       "revId": "c9f5fc2de639dac40c6cc956ef3caca343513099",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
