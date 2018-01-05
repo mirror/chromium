@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769d953c_0b3de241",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "Nit: Looking at the code, the JSON string has already been parsed before being passed to this method, so the comment seems not accurate.",
+      "range": {
+        "startLine": 70,
+        "startChar": 46,
+        "endLine": 70,
+        "endChar": 50
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178fae24_31b8df49",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "!Array\u003cstring\u003e",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2081fe6c_8031c719",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "Nit: Use one line syntax comment, when the comment fits in one line.\n\n// Destination is not a cloud printer or no status was retrieved.\n\nAlso note that \"/**\" is a special string to indicate to the Closure compiler that a JSDoc comment follows. It is otherwise not needed, instead \"/*\" would suffice.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 71
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac78fc8_52992144",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "Should this be print_preview.DestinationCertificateStatus instead?",
+      "range": {
+        "startLine": 191,
+        "startChar": 36,
+        "endLine": 191,
+        "endChar": 42
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9766fda_ff4b05c3",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "@return {boolean}",
+      "range": {
+        "startLine": 510,
+        "startChar": 4,
+        "endLine": 510,
+        "endChar": 31
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50616feb_d353dc99",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T18:02:58Z",
+      "side": 1,
+      "message": "Can we simply do the following for now?\n\nreturn this.certificateStatus_ \u003d\u003d print_preview.DestinationCertificateStatus.NO;",
+      "range": {
+        "startLine": 511,
+        "startChar": 6,
+        "endLine": 515,
+        "endChar": 35
+      },
+      "revId": "327896b35ac6568d2157ec614d72c92143d2e3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
