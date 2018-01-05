@@ -87,6 +87,24 @@
       "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cf45d1_463793d2",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2018-01-05T07:41:11Z",
+      "side": 1,
+      "message": "yes, as you said, I thought that we need to make a new EscapeProtocolHandlerUrl() in order to meet the spec. Let me prepare the new function next week.",
+      "parentUuid": "2610343e_d2da19f8",
+      "revId": "b5a301340730bf08c388663e0d4160d33d65b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
