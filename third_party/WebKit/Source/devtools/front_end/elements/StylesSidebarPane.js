@@ -1462,7 +1462,11 @@ Elements.StylePropertiesSection = class {
       event.consume();
       return;
     }
-    this.addNewBlankProperty().startEditing();
+    var deepTarget = event.deepElementFromPoint();
+    if (deepTarget.treeElement)
+      this.addNewBlankProperty(deepTarget.treeElement.property.index + 1).startEditing();
+    else
+      this.addNewBlankProperty().startEditing();
     event.consume(true);
   }
 
@@ -2300,9 +2304,14 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
   onattach() {
     this.updateTitle();
 
-    this.listItemElement.addEventListener('mousedown', this._mouseDown.bind(this));
-    this.listItemElement.addEventListener('mouseup', this._resetMouseDownElement.bind(this));
-    this.listItemElement.addEventListener('click', this._mouseClick.bind(this));
+    this.listItemElement.addEventListener('mousedown', () => {
+      this._parentPane[Elements.StylePropertyTreeElement.ActiveSymbol] = this;
+    }, false);
+    this.listItemElement.addEventListener('mouseup', this._mouseUp.bind(this));
+    this.listItemElement.addEventListener('click', event => {
+      if (!event.target.hasSelection() && event.target !== this.listItemElement)
+        event.consume(true);
+    });
   }
 
   /**
@@ -2393,6 +2402,7 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
       enabledCheckboxElement.className = 'enabled-button';
       enabledCheckboxElement.type = 'checkbox';
       enabledCheckboxElement.checked = !this.property.disabled;
+      enabledCheckboxElement.addEventListener('mouseup', event => event.consume(), false);
       enabledCheckboxElement.addEventListener('click', this._toggleEnabled.bind(this), false);
       this.listItemElement.insertBefore(enabledCheckboxElement, this.listItemElement.firstChild);
     }
@@ -2401,22 +2411,18 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
   /**
    * @param {!Event} event
    */
-  _mouseClick(event) {
+  _mouseUp(event) {
+    var activeTreeElement = this._parentPane[Elements.StylePropertyTreeElement.ActiveSymbol];
+    this._parentPane[Elements.StylePropertyTreeElement.ActiveSymbol] = null;
+    if (activeTreeElement !== this)
+      return;
     if (event.target.hasSelection())
       return;
 
     event.consume(true);
 
-    if (event.target === this.listItemElement) {
-      var section = this.section();
-      if (!section || !section.editable)
-        return;
-
-      if (section._checkWillCancelEditing())
-        return;
-      section.addNewBlankProperty(this.property.index + 1).startEditing();
+    if (event.target === this.listItemElement)
       return;
-    }
 
     if (UI.KeyboardShortcut.eventHasCtrlOrMeta(/** @type {!MouseEvent} */ (event)) && this.section().navigable) {
       this._navigateToSource(/** @type {!Element} */ (event.target));
@@ -2539,18 +2545,10 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
      * @this {Elements.StylePropertyTreeElement}
      */
     function blurListener(context, event) {
-      var treeElement = this._parentPane._mouseDownTreeElement;
-      var moveDirection = '';
-      if (treeElement === this) {
-        if (isEditingName && this._parentPane._mouseDownTreeElementIsValue)
-          moveDirection = 'forward';
-        if (!isEditingName && this._parentPane._mouseDownTreeElementIsName)
-          moveDirection = 'backward';
-      }
       var text = event.target.textContent;
       if (!context.isEditingName)
         text = this.value || text;
-      this._editingCommitted(text, context, moveDirection);
+      this._editingCommitted(text, context, '');
     }
 
     this._originalPropertyText = this.property.propertyText;
@@ -2963,6 +2961,7 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
 
 /** @typedef {{expanded: boolean, hasChildren: boolean, isEditingName: boolean, previousContent: string}} */
 Elements.StylePropertyTreeElement.Context;
+Elements.StylePropertyTreeElement.ActiveSymbol = Symbol('ActiveSymbol');
 
 Elements.StylesSidebarPane.CSSPropertyPrompt = class extends UI.TextPrompt {
   /**
