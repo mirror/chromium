@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/accessibility/accessibility_permission_context.h"
+#include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/background_sync/background_sync_permission_context.h"
 #include "chrome/browser/clipboard/clipboard_read_permission_context.h"
 #include "chrome/browser/clipboard/clipboard_write_permission_context.h"
@@ -346,7 +347,9 @@ int PermissionManager::RequestPermissions(
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host);
 
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
+  if (vr::VrTabHelper::IsInVr(web_contents) &&
+      !base::FeatureList::IsEnabled(
+          chrome::android::kVrBrowsingNativeAndroidUi)) {
     vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kPermissionRequest);
     callback.Run(
         std::vector<ContentSetting>(permissions.size(), CONTENT_SETTING_BLOCK));

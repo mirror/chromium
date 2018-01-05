@@ -89,10 +89,15 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
   void SetOmniboxSuggestions(
       std::unique_ptr<OmniboxSuggestions> suggestions) override;
   void OnAssetsComponentReady() override;
-
+  void SetAlertDialogEnabled(bool enabled,
+                             ContentInputDelegate* delegate,
+                             int width,
+                             int height) override;
+  void SetAlertDialogSize(int width, int height) override;
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
                        UiElementRenderer::TextureLocation content_location,
+                       unsigned int ui_texture_id,
                        bool use_ganesh);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(

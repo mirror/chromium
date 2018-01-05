@@ -155,4 +155,8 @@ bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
   return false;
 }
 
+void ContentElement::SetDelegate(ContentInputDelegate* delegate) {
+  delegate_ = delegate;
+}
+
 }  // namespace vr
