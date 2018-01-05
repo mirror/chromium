@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eca8f227_0dfcaf80",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Ack. Only using one switch block now, so the function is no longer necessary.",
+      "parentUuid": "2325dcd1_8166f052",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b2da80_10d81f3c",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66d3680_3d81f28b",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done. That\u0027s nicer.",
+      "parentUuid": "93b2da80_10d81f3c",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d04805b1_d961d5a5",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86af55ca_51f95aa4",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c162deaa_fdefca32",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "03910a11_6f30e455",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c162deaa_fdefca32",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936ac332_51efb029",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73068e8_76573065",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Added NOTIMPLEMENTED().",
+      "parentUuid": "936ac332_51efb029",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 80
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +280,30 @@
       "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb967c2_12845ac2",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Some code assumes that a data file located at the deployment root, such as icudtl.dat, must be a sibling to the Chrome executable because it is also located at the root. That assumption no longer holds when the executable is moved to a child subdir, as it is here.",
+      "parentUuid": "941e5903_a196ba59",
+      "range": {
+        "startLine": 74,
+        "startChar": 29,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

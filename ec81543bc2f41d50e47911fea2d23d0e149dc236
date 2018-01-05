@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06753a6c_eaddf618",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3956af08_60de0853",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc26584e_a91b3452",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcf5c59_6d571b8d",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc26584e_a91b3452",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 1
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "299e0451_42beb4bf",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "\u003eIf we instead modify the CommandLine so that GetProgram() returns the package-relative path (i.e. /pkg/bin/...) then that removes the need for any work-arounds in either PathService nor LaunchProcess.\n\nDone.\n\n\u003eIf it is only visible as \"app\", but we can launch sub-processes from other arbitrary binaries in the package, then we could have a trivial \"app\" stub that launches the real binary by its package-relative name, and passes the command-line parameters, etc, unmodified, perhaps, to work around that limitation...\n\nAs discussed offline, this limitation might not exist in a few weeks, as (IIRC) there will soon be support for multiple named app binaries in a single package, which would impact our assumptions here. So it\u0027s probably better to wait and see how that shakes out before we code up a solution for handling \u003e1 executable.",
+      "parentUuid": "6a32de2c_09022188",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150f8749_c239e564",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "51ad4bb7_6833330f",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150f8749_c239e564",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb60c39_f8c6e066",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2018-01-05T00:21:49Z",
       "side": 1,
       "message": "Can we derived this from e.g. FILE_EXE, in the same way that we do for Mac \u0026 Windows?\n\nAlternatively, the POSIX version allows overriding via an environment variable, so we could potentially just set that in the runner, and fail here if it isn\u0027t set - it should only be used by tests in any case.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 20
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c006e59_0ca5a717",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "\u003eCan we derived this from e.g. FILE_EXE, in the same way that we do for Mac \u0026 Windows?\n\nIt isn\u0027t rooted in the same directory, so not without making changes to calling code.\n\n\u003eAlternatively, the POSIX version allows overriding via an environment variable, so we could potentially just set that in the runner, and fail here if it isn\u0027t set - it should only be used by tests in any case.\n\nbase_paths_posix.cc isn\u0027t compiled on Fuchsia builds, so that\u0027s not functionality that we get for free. Nor can we re-use existing code which sets the environmental variable; the only entity which sets that variable is a Python harness. I think that it\u0027s more direct if we just specify the path here.",
+      "parentUuid": "4bb60c39_f8c6e066",
       "range": {
         "startLine": 67,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "56e8d10a_cbacca55",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "\u003eIs this correct? Shouldn\u0027t it be /pkg/bin?\n\nShared library loaders build on this path, and shared libraries aren\u0027t a good fit for \"bin\" since they aren\u0027t standalone executables.\n\nThis path choice is speculative BTW; shared library loading isn\u0027t even supported yet. (I ran the path by maggi@ to double check if it made sense, though; he OK\u0027d it.)\n\n\u003eWhy do we need DIR_EXE for packaged, but not bootfs?\n\nWith bootfs, everything is rooted at /system which is similar to how other platforms install Chrome in a shared folder. Moving the executable to a subdir breaks assumptions made about the directory structure, e.g. icu_util expects the the ICU data file to be a sibling of the Chrome executable.",
+      "parentUuid": "6de52dde_d798ea45",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c14760dc_190a1717",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe072ab_8831a4c1",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c14760dc_190a1717",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 3
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "798699a5_3fdbd996",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Ack. This file is now reverted.",
+      "parentUuid": "24894490_31b232eb",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 3
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350d1a90_ac2321e2",
         "filename": "build/config/fuchsia/build_manifest.py",
         "patchSetId": 11
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ac64a47c_e5e846a5",
+        "filename": "build/config/fuchsia/build_manifest.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "350d1a90_ac2321e2",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "656119b1_e902622a",
         "filename": "build/config/fuchsia/sandbox_policy",
         "patchSetId": 11
@@ -229,6 +445,30 @@
       "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af852cad_8d15a702",
+        "filename": "build/config/fuchsia/sandbox_policy",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2018-01-05T19:07:07Z",
+      "side": 1,
+      "message": "It\u0027s strict JSON, so no comments here. :( :( :( :( I think the names are descriptive enough by themselves, though?\n\nNo official documentation for them yet; I had to inspect bin/appmgr/namespace_builder.cc to understand which features were available and what their function was.",
+      "parentUuid": "656119b1_e902622a",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "ec81543bc2f41d50e47911fea2d23d0e149dc236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
