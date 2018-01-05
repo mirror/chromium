@@ -27,12 +27,17 @@ namespace {
 // MIME types
 const char kTextHtml[] = "text/html";
 const char kTextXml[] = "text/xml";
-const char kAppRssXml[] = "application/rss+xml";
 const char kAppXml[] = "application/xml";
 const char kAppJson[] = "application/json";
+const char kAppJsonP[] = "application/jsonp";
+const char kImageSvg[] = "image/svg+xml";
 const char kTextJson[] = "text/json";
 const char kTextXjson[] = "text/x-json";
 const char kTextPlain[] = "text/plain";
+
+// MIME type suffixes
+const char kJsonSuffix[] = "+json";
+const char kXmlSuffix[] = "+xml";
 
 void AdvancePastWhitespace(StringPiece* data) {
   size_t offset = data->find_first_not_of(" \t\r\n");
@@ -76,24 +81,40 @@ CrossSiteDocumentClassifier::Result MatchesSignature(
 }  // namespace
 
 CrossSiteDocumentMimeType CrossSiteDocumentClassifier::GetCanonicalMimeType(
-    const std::string& mime_type) {
-  if (base::LowerCaseEqualsASCII(mime_type, kTextHtml)) {
+    base::StringPiece mime_type) {
+  // Checking for image/svg+xml early ensures that it won't get classified as
+  // CROSS_SITE_DOCUMENT_MIME_TYPE_XML by the presence of the "+xml" suffix.
+  if (base::LowerCaseEqualsASCII(mime_type, kImageSvg))
+    return CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS;
+
+  // Checking for application/jsonp early ensures that it won't get classified
+  // as CROSS_SITE_DOCUMENT_MIME_TYPE_JSON because of the presence of the
+  // application/json *prefix*.  Note that application/jsonp is not a valid
+  // content type, but there's some mention of it around the web, so it's
+  // conceivable there are sites that use it.
+  if (base::LowerCaseEqualsASCII(mime_type, kAppJsonP))
+    return CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS;
+
+  if (base::LowerCaseEqualsASCII(mime_type, kTextHtml))
     return CROSS_SITE_DOCUMENT_MIME_TYPE_HTML;
-  }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kTextPlain)) {
+  if (base::LowerCaseEqualsASCII(mime_type, kTextPlain))
     return CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN;
-  }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kAppJson) ||
-      base::LowerCaseEqualsASCII(mime_type, kTextJson) ||
-      base::LowerCaseEqualsASCII(mime_type, kTextXjson)) {
+  // StartsWith rather than LowerCaseEqualsASCII is used to account both for
+  // mime types similar to 1) application/json and to 2)
+  // application/json+protobuf.
+  constexpr auto kCaseInsensitive = base::CompareCase::INSENSITIVE_ASCII;
+  if (base::StartsWith(mime_type, kAppJson, kCaseInsensitive) ||
+      base::StartsWith(mime_type, kTextJson, kCaseInsensitive) ||
+      base::StartsWith(mime_type, kTextXjson, kCaseInsensitive) ||
+      base::EndsWith(mime_type, kJsonSuffix, kCaseInsensitive)) {
     return CROSS_SITE_DOCUMENT_MIME_TYPE_JSON;
   }
 
-  if (base::LowerCaseEqualsASCII(mime_type, kTextXml) ||
-      base::LowerCaseEqualsASCII(mime_type, kAppRssXml) ||
-      base::LowerCaseEqualsASCII(mime_type, kAppXml)) {
+  if (base::StartsWith(mime_type, kAppXml, kCaseInsensitive) ||
+      base::StartsWith(mime_type, kTextXml, kCaseInsensitive) ||
+      base::EndsWith(mime_type, kXmlSuffix, kCaseInsensitive)) {
     return CROSS_SITE_DOCUMENT_MIME_TYPE_XML;
   }
 
