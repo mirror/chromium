@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fbc7d5d_7719dcb4",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T21:23:06Z",
+      "side": 1,
+      "message": "(BTW, I just discovered your long message on this changelist sent while I was on vacation in which you investigated this issue.  Now I understand better.  But only from knowing the context.  This comment still needs improvement.)",
+      "parentUuid": "9d8152cb_94c76b27",
+      "range": {
+        "startLine": 399,
+        "startChar": 7,
+        "endLine": 399,
+        "endChar": 57
+      },
+      "revId": "7c3823b7535e631259266da5f840008720af3133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5beba18_659a0d27",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 7
