@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d7ecd7f_78364f82",
+        "filename": "chrome/browser/extensions/external_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-05T00:30:43Z",
+      "side": 1,
+      "message": "Yes, my intention was \"} else if {\". Thank you for catch. It works in both case :) but we must be precise.",
+      "parentUuid": "1e7103b6_61354088",
+      "revId": "903cfb8e13909aca7b8303b6e1d3c2e933dab5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "310e7749_0027e8b3",
         "filename": "chrome/common/chrome_paths.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T00:14:04Z",
       "side": 1,
       "message": "Too bad if this is from \"git cl format\"... I kinda like the old way.",
+      "revId": "903cfb8e13909aca7b8303b6e1d3c2e933dab5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c326eb3_4c9bad6a",
+        "filename": "chrome/common/chrome_paths.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2018-01-05T00:30:43Z",
+      "side": 1,
+      "message": "Yep, this is from git cl format. I would not to modify it. Once you prefer old code I leave it as it was before.",
+      "parentUuid": "310e7749_0027e8b3",
       "revId": "903cfb8e13909aca7b8303b6e1d3c2e933dab5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
