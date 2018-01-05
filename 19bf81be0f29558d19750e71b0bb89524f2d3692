@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "4d42d566_01b27ef1",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2018-01-05T22:54:31Z",
+      "side": 1,
+      "message": "Working on top of your patch, just run into a dcheck because this is blocking and therefore Unzip cannot be called from the UI Thread for example.\nIdeally it could be called from any thread.\nCould you either make it work from the UI thread or add a note and TODO in the .h file?",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 79
+      },
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af4d2f98_5427a55b",
         "filename": "components/unzip_service/public/cpp/unzip.cc",
         "patchSetId": 17
