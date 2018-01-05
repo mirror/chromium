@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 
+#include "ash/app_list/controller/app_list_controller_impl.h"
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_item.h"
 #include "ash/app_list/model/app_list_model.h"
@@ -145,7 +146,7 @@ void AppListMainView::ActivateApp(AppListItem* item, int event_flags) {
                               kMaxFolderOpened);
   } else {
     base::RecordAction(base::UserMetricsAction("AppList_ClickOnApp"));
-    item->Activate(event_flags);
+    ash::AppListControllerImpl::Get()->ActivateItem(item->id(), event_flags);
     UMA_HISTOGRAM_BOOLEAN(features::IsFullscreenAppListEnabled()
                               ? kAppListAppLaunchedFullscreen
                               : kAppListAppLaunched,

@@ -23,7 +23,7 @@ class AppListTestModel : public AppListModel {
    public:
     AppListTestItem(const std::string& id, AppListTestModel* model);
     ~AppListTestItem() override;
-    void Activate(int event_flags) override;
+    void Activate(int event_flags);
     const char* GetItemType() const override;
 
     void SetPosition(const syncer::StringOrdinal& new_position);
