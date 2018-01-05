@@ -558,6 +558,7 @@ struct VectorTraits<blink::Member<T>> : VectorTraitsBase<blink::Member<T>> {
   static const bool kNeedsDestruction = false;
   static const bool kCanInitializeWithMemset = true;
   static const bool kCanClearUnusedSlotsWithMemset = true;
+  static const bool kCanCopyWithMemcpy = true;
   static const bool kCanMoveWithMemcpy = true;
 };
 
