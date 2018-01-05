@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d72575bc_8d61d2e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "The comment seems to reference something that\u0027s not very clear in the code.  I don\u0027t think it adds any value",
+      "range": {
+        "startLine": 86,
+        "startChar": 20,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0845e8_7e7362ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 224,
+        "startChar": 17,
+        "endLine": 224,
+        "endChar": 49
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a40bbd_fe4a5afd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "let\u0027s make this one call notifyDownloadPaused(id, fileName, isResumable, ..., null) or whatever you think makes sense for default pending state",
+      "range": {
+        "startLine": 375,
+        "startChar": 9,
+        "endLine": 375,
+        "endChar": 29
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd620e58_712432bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "ditto - prefer not to copy/paste method overrides. Have one call the other with a default param",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 41
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc821ae_98999d63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier2.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 41
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869ea9fc_200bd0ab",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadNotificationService2Test.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "testBasicDownloadFlowWithPendingStates?",
+      "range": {
+        "startLine": 129,
+        "startChar": 16,
+        "endLine": 129,
+        "endChar": 38
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f464a87_ada02b15",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadNotificationService2Test.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "testDownloadPendingNetworkAndCancelled? or testDownloadPendingAndCancelledWithStatus?",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 48
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54558d6e_f60f8ac7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadNotificationService2Test.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2018-01-05T03:20:41Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 271,
+        "startChar": 16,
+        "endLine": 271,
+        "endChar": 49
+      },
+      "revId": "4fa0ac4c7db35a801cccbd9b8479028de3b780c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
