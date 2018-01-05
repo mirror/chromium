@@ -28,7 +28,8 @@ struct DataReductionProxyPageLoadTiming {
       int64_t network_bytes,
       int64_t original_network_bytes,
       bool app_background_occurred,
-      bool opt_out_occurred);
+      bool opt_out_occurred,
+      int host_id);
 
   DataReductionProxyPageLoadTiming(
       const DataReductionProxyPageLoadTiming& other);
@@ -63,6 +64,8 @@ struct DataReductionProxyPageLoadTiming {
   const bool app_background_occurred;
   // True when the user clicks "Show Original" on the Previews infobar.
   const bool opt_out_occurred;
+  // The host id of the renderer if there was a renderer crash.
+  const int host_id;
 };
 
 }  // namespace data_reduction_proxy
