@@ -1,0 +1,31 @@
+This is a testharness.js-based test.
+PASS window.performance.getEntriesByName() and window.performance.getEntriesByNameType() return same data (iframe)
+PASS PerformanceEntry has correct name, initiatorType, startTime, and duration (iframe)
+PASS PerformanceEntry has correct order of timing attributes (iframe)
+PASS PerformanceEntry has correct network transfer attributes (iframe)
+PASS PerformanceEntry has correct protocol attribute (iframe)
+PASS window.performance.getEntriesByName() and window.performance.getEntriesByNameType() return same data (img)
+PASS PerformanceEntry has correct name, initiatorType, startTime, and duration (img)
+PASS PerformanceEntry has correct order of timing attributes (img)
+PASS PerformanceEntry has correct network transfer attributes (img)
+PASS PerformanceEntry has correct protocol attribute (img)
+PASS window.performance.getEntriesByName() and window.performance.getEntriesByNameType() return same data (link)
+PASS PerformanceEntry has correct name, initiatorType, startTime, and duration (link)
+PASS PerformanceEntry has correct order of timing attributes (link)
+PASS PerformanceEntry has correct network transfer attributes (link)
+PASS PerformanceEntry has correct protocol attribute (link)
+PASS window.performance.getEntriesByName() and window.performance.getEntriesByNameType() return same data (script)
+PASS PerformanceEntry has correct name, initiatorType, startTime, and duration (script)
+PASS PerformanceEntry has correct order of timing attributes (script)
+PASS PerformanceEntry has correct network transfer attributes (script)
+PASS PerformanceEntry has correct protocol attribute (script)
+PASS window.performance.getEntriesByName() and window.performance.getEntriesByNameType() return same data (xmlhttprequest)
+PASS PerformanceEntry has correct name, initiatorType, startTime, and duration (xmlhttprequest)
+FAIL PerformanceEntry has correct order of timing attributes (xmlhttprequest) assert_greater_than_equal: domainLookupEnd after domainLookupStart expected a number greater than or equal to 26.30000000135624 but got 26.29999999771826
+PASS PerformanceEntry has correct network transfer attributes (xmlhttprequest)
+PASS PerformanceEntry has correct protocol attribute (xmlhttprequest)
+PASS window.performance Resource Timing Entries exist
+PASS window.performance Resource Timing Entries exist 1
+PASS window.performance Resource Timing Entries exist 2
+Harness: the test ran to completion.
+
