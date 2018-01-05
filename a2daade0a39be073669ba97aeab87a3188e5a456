@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e66ea10f_73ed2174",
+        "filename": "chrome/browser/extensions/api/debugger/extension_dev_tools_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:46:11Z",
+      "side": 1,
+      "message": "Can you replace this with a class-level comment and put this class and the global declarations below it into the anonymous namespace?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "a2daade0a39be073669ba97aeab87a3188e5a456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983a5aac_66dfb99d",
+        "filename": "chrome/browser/extensions/api/debugger/extension_dev_tools_infobar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:46:11Z",
+      "side": 1,
+      "message": "auto delegate \u003d std::make_unique\u003cExtensionDevToolsInfoBarDelegate\u003e(",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "a2daade0a39be073669ba97aeab87a3188e5a456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b36e5d_44a69dc2",
+        "filename": "chrome/browser/extensions/api/debugger/extension_dev_tools_infobar.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:46:11Z",
+      "side": 1,
+      "message": "Can you replace this with a class-level comment?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "a2daade0a39be073669ba97aeab87a3188e5a456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
