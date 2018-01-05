@@ -34,6 +34,7 @@
 #include "core/CoreProbeSink.h"
 #include "core/dom/events/Event.h"
 #include "core/dom/events/EventTarget.h"
+#include "core/event_type_names.h"
 #include "core/inspector/InspectorCSSAgent.h"
 #include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/inspector/InspectorNetworkAgent.h"
@@ -57,6 +58,11 @@ void* AsyncId(void* task) {
   // with internal V8 async events.
   return reinterpret_cast<void*>(reinterpret_cast<intptr_t>(task) << 1);
 }
+
+bool ShouldInstrumentEvent(const AtomicString& event_name) {
+  return event_name == EventTypeNames::load ||
+         event_name == EventTypeNames::error;
+}
 }  // namespace
 
 AsyncTask::AsyncTask(ExecutionContext* context,
@@ -74,6 +80,20 @@ AsyncTask::AsyncTask(ExecutionContext* context,
     TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask",
                           TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)));
   }
+  if (debugger_)
+    debugger_->AsyncTaskStarted(task_);
+}
+
+AsyncTask::AsyncTask(ExecutionContext* context,
+                     void* task,
+                     const AtomicString& event_type)
+    : debugger_(ShouldInstrumentEvent(event_type)
+                    ? ThreadDebugger::From(ToIsolate(context))
+                    : nullptr),
+      task_(AsyncId(task)),
+      recurring_(true) {
+  TRACE_EVENT_FLOW_STEP0("devtools.timeline.async", "AsyncTask",
+                         TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)), "");
   if (debugger_)
     debugger_->AsyncTaskStarted(task_);
 }
@@ -96,6 +116,13 @@ void AsyncTaskScheduled(ExecutionContext* context,
     debugger->AsyncTaskScheduled(name, AsyncId(task), true);
 }
 
+void AsyncTaskScheduledForEvent(ExecutionContext* context,
+                                const AtomicString& event_type,
+                                void* task) {
+  if (ShouldInstrumentEvent(event_type))
+    AsyncTaskScheduled(context, String(event_type), task);
+}
+
 void AsyncTaskScheduledBreakable(ExecutionContext* context,
                                  const char* name,
                                  void* task) {
@@ -104,7 +131,11 @@ void AsyncTaskScheduledBreakable(ExecutionContext* context,
 }
 
 void AsyncTaskCanceled(ExecutionContext* context, void* task) {
-  if (ThreadDebugger* debugger = ThreadDebugger::From(ToIsolate(context)))
+  AsyncTaskCanceled(ToIsolate(context), task);
+}
+
+void AsyncTaskCanceled(v8::Isolate* isolate, void* task) {
+  if (ThreadDebugger* debugger = ThreadDebugger::From(isolate))
     debugger->AsyncTaskCanceled(AsyncId(task));
   TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask",
                         TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)));

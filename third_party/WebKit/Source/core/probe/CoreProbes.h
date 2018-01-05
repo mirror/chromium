@@ -56,6 +56,7 @@ class CORE_EXPORT AsyncTask {
             void* task,
             const char* step = nullptr,
             bool enabled = true);
+  AsyncTask(ExecutionContext*, void* task, const AtomicString& event_type);
   ~AsyncTask();
 
  private:
@@ -93,10 +94,14 @@ inline CoreProbeSink* ToCoreProbeSink(EventTarget* event_target) {
 CORE_EXPORT void AsyncTaskScheduled(ExecutionContext*,
                                     const String& name,
                                     void*);
+CORE_EXPORT void AsyncTaskScheduledForEvent(ExecutionContext*,
+                                            const AtomicString& event_type,
+                                            void*);
 CORE_EXPORT void AsyncTaskScheduledBreakable(ExecutionContext*,
                                              const char* name,
                                              void*);
 CORE_EXPORT void AsyncTaskCanceled(ExecutionContext*, void*);
+CORE_EXPORT void AsyncTaskCanceled(v8::Isolate*, void*);
 CORE_EXPORT void AsyncTaskCanceledBreakable(ExecutionContext*,
                                             const char* name,
                                             void*);
