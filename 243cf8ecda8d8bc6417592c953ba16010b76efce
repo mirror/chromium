@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50b2edda_d93e299e",
+        "filename": "chrome/browser/extensions/zipfile_installer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2018-01-05T20:38:31Z",
+      "side": 1,
+      "message": "Can you add a TODO here to update LoadErrorReporter::Observer so that it can be used here to detect installation failure? The documentation claims it only works for unpacked extensions.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "243cf8ecda8d8bc6417592c953ba16010b76efce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
