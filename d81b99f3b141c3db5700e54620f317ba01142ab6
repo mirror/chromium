@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81154a57_fbbd0321",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T23:05:28Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "129a8ac6_c1b1d041",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "d81b99f3b141c3db5700e54620f317ba01142ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19c6c20d_7f41f624",
         "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T06:07:42Z",
       "side": 1,
       "message": "I don\u0027t think we can add relative layout here. Android Developer document recommends developers to implement two line list item with RelativeLayout or LinearLayout.\n\nhttps://developer.android.com/reference/android/widget/TwoLineListItem.html",
+      "range": {
+        "startLine": 258,
+        "startChar": 9,
+        "endLine": 258,
+        "endChar": 53
+      },
+      "revId": "d81b99f3b141c3db5700e54620f317ba01142ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b17ef58_33bd1226",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T23:05:28Z",
+      "side": 1,
+      "message": "Removed this and handled slightly differently in ChromeVox directly.",
+      "parentUuid": "19c6c20d_7f41f624",
       "range": {
         "startLine": 258,
         "startChar": 9,
