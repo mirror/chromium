@@ -213,15 +213,15 @@ PerfUI.FilmStripView.Dialog = class {
     nextButton.title = Common.UIString('Next frame');
 
     this._fragment = UI.Fragment.build`
-      <x-widget flex=none margin=12px>
-        <x-hbox overflow=auto border='1px solid #ddd' max-height=80vh max-width=80vw>
+      <x-widget style='flex: none; margin: 12px'>
+        <hbox style='overflow: auto; border: 1px solid #ddd; max-height: 80vh; max-width: 80vw'>
           <img $=image></img>
-        </x-hbox>
-        <x-hbox x-center justify-content=center margin-top=10px>
+        </hbox>
+        <hbox style='align-items: center; justify-content: center; margin-top: 10px'>
           ${prevButton}
-          <x-hbox $=time margin=8px></x-hbox>
+          <hbox $=time style='margin: 8px'></hbox>
           ${nextButton}
-        </x-hbox>
+        </hbox>
       </x-widget>
     `;
 

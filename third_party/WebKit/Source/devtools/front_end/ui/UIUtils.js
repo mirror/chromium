@@ -697,13 +697,32 @@ UI.installComponentRootStyles = function(element) {
  */
 UI.createShadowRootWithCoreStyles = function(element, cssFile) {
   var shadowRoot = element.createShadowRoot();
+  UI._addCoreStylesToShadowRoot(shadowRoot, cssFile);
+  return shadowRoot;
+};
+
+/**
+ * @param {!Element} element
+ * @param {string=} cssFile
+ * @return {!DocumentFragment}
+ */
+UI.createShadowRootWithCoreStylesV1 = function(element, cssFile) {
+  var shadowRoot = element.attachShadow({mode: 'open'});
+  UI._addCoreStylesToShadowRoot(shadowRoot, cssFile);
+  return shadowRoot;
+};
+
+/**
+ * @param {!DocumentFragment} shadowRoot
+ * @param {string=} cssFile
+ */
+UI._addCoreStylesToShadowRoot = function(shadowRoot, cssFile) {
   UI.appendStyle(shadowRoot, 'ui/inspectorCommon.css');
   UI.themeSupport.injectHighlightStyleSheets(shadowRoot);
   UI.themeSupport.injectCustomStyleSheets(shadowRoot);
   if (cssFile)
     UI.appendStyle(shadowRoot, cssFile);
   shadowRoot.addEventListener('focus', UI._focusChanged.bind(UI), true);
-  return shadowRoot;
 };
 
 /**

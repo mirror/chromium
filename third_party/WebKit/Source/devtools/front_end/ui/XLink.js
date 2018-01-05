@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 /**
- * @extends {UI.XElement}
+ * @extends {HTMLElement}
  */
-UI.XLink = class extends UI.XElement {
+UI.XLink = class extends HTMLElement {
   /**
    * @param {string} url
    * @param {string=} linkText
@@ -53,8 +53,7 @@ UI.XLink = class extends UI.XElement {
    * @return {!Array<string>}
    */
   static get observedAttributes() {
-    // TODO(dgozman): should be super.observedAttributes, but it does not compile.
-    return UI.XElement.observedAttributes.concat(['href', 'no-click']);
+    return ['href', 'no-click'];
   }
 
   /**
@@ -82,8 +81,6 @@ UI.XLink = class extends UI.XElement {
       this._updateClick();
       return;
     }
-
-    super.attributeChangedCallback(attr, oldValue, newValue);
   }
 
   _updateClick() {

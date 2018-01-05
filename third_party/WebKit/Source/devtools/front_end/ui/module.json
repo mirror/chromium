@@ -6,7 +6,6 @@
         "host"
     ],
     "scripts": [
-        "XElement.js",
         "Widget.js",
         "View.js",
         "treeoutline.js",
@@ -56,6 +55,7 @@
         "ShortcutsScreen.js",
         "Geometry.js",
         "XLink.js",
+        "XReport.js",
         "XWidget.js"
     ],
     "resources": [
