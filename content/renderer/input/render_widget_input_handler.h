@@ -26,6 +26,10 @@ namespace ui {
 class LatencyInfo;
 }
 
+namespace viz {
+class FrameSinkId;
+}
+
 namespace content {
 
 class RenderWidget;
@@ -41,7 +45,7 @@ class CONTENT_EXPORT RenderWidgetInputHandler {
 
   // Hit test the given point to find out the frame underneath and
   // return the routing id for that frame.
-  int GetWidgetRoutingIdAtPoint(const gfx::Point& point);
+  viz::FrameSinkId GetFrameSinkIdAtPoint(const gfx::Point& point);
 
   // Handle input events from the input event provider.
   virtual void HandleInputEvent(
