@@ -16,6 +16,52 @@
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e29d98c_ae0cc668",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-05T18:51:43Z",
+      "side": 1,
+      "message": "How come you can\u0027t use one of the GetImage functions? Also, what thread does this code run on?",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 505,
+        "endChar": 45
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99ce8db_d6a5b913",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-05T18:51:43Z",
+      "side": 1,
+      "message": "Remember that DCHECK is compiled out in release builds.",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 8
+      },
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
