@@ -81,6 +81,9 @@ class WTF_EXPORT ArrayBufferView : public RefCounted<ArrayBufferView> {
   static bool VerifySubRange(const ArrayBuffer* buffer,
                              unsigned byte_offset,
                              unsigned num_elements) {
+    printf("buffer=%lx,byte_offset=%lx,num_elements=%lx\n", (long)buffer,
+           (long)byte_offset, (long)num_elements);
+    printf("buffer->ByteLength()=%lx\n", (long)buffer->ByteLength());
     if (!buffer)
       return false;
     if (sizeof(T) > 1 && byte_offset % sizeof(T))
