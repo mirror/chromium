@@ -312,11 +312,12 @@ events::HistogramValue GetEventHistogramValue(const std::string& event_name) {
   return events::UNKNOWN;
 }
 
-// We hide events from the system context as well as sensitive requests.
+// We hide events from the system context, requests for PAC scripts, and
+// sensitive requests.
 bool ShouldHideEvent(void* browser_context,
                      const InfoMap* extension_info_map,
                      const WebRequestInfo& request) {
-  return (!browser_context ||
+  return (!browser_context || request.is_pac_request ||
           WebRequestPermissions::HideRequest(extension_info_map, request));
 }
 
