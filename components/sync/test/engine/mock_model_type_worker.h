@@ -14,6 +14,7 @@
 
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/sync/engine/commit_queue.h"
 #include "components/sync/engine/model_type_processor.h"
 #include "components/sync/engine/non_blocking_sync_common.h"
@@ -32,6 +33,9 @@ class MockModelTypeWorker : public CommitQueue {
   MockModelTypeWorker(const sync_pb::ModelTypeState& model_type_state,
                       ModelTypeProcessor* processor);
   ~MockModelTypeWorker() override;
+
+  // Callback when local changes are received from the processor.
+  void LocalChangesReceived(CommitRequestDataList&& commit_request);
 
   // Implementation of ModelTypeWorker.
   void NudgeForCommit() override;
@@ -135,6 +139,9 @@ class MockModelTypeWorker : public CommitQueue {
   // Map of versions by client tag hash.
   // This is an essential part of the mocked server state.
   std::map<const std::string, int64_t> server_versions_;
+
+  // WeakPtrFactory for this worker which will be sent to sync thread.
+  base::WeakPtrFactory<MockModelTypeWorker> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MockModelTypeWorker);
 };

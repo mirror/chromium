@@ -7,40 +7,38 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/debug/stack_trace.h"
 #include "components/sync/base/model_type.h"
 #include "components/sync/syncable/syncable_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace syncer {
 
-namespace {
-
-void CaptureCommitRequest(CommitRequestDataList* dst,
-                          CommitRequestDataList&& src) {
-  *dst = std::move(src);
-}
-
-}  // namespace
-
 MockModelTypeWorker::MockModelTypeWorker(
     const sync_pb::ModelTypeState& model_type_state,
     ModelTypeProcessor* processor)
-    : model_type_state_(model_type_state), processor_(processor) {
+    : model_type_state_(model_type_state), processor_(processor),weak_ptr_factory_(this)  {
   model_type_state_.set_initial_sync_done(true);
 }
 
 MockModelTypeWorker::~MockModelTypeWorker() {}
 
 void MockModelTypeWorker::NudgeForCommit() {
-  CommitRequestDataList commit_request;
+  //base::debug::StackTrace stack; stack.Print();
   processor_->GetLocalChanges(
-      INT_MAX, base::Bind(&CaptureCommitRequest, &commit_request));
+      INT_MAX, base::Bind(&MockModelTypeWorker::LocalChangesReceived, weak_ptr_factory_.GetWeakPtr()));
+}
+
+void MockModelTypeWorker::LocalChangesReceived(CommitRequestDataList&& commit_request) {
   // Verify that all request entities have valid id, version combinations.
   for (const CommitRequestData& commit_request_data : commit_request) {
     EXPECT_TRUE(commit_request_data.base_version == -1 ||
                 !commit_request_data.entity->id.empty());
+    LOG(WARNING) << "commit_request_data.entity->id: " << commit_request_data.entity->non_unique_name;
   }
+  LOG(WARNING) << "commit_request.size(): " << commit_request.size();
   pending_commits_.push_back(commit_request);
+  LOG(WARNING) << "pending_commits.size(): " << pending_commits_.size();
 }
 
 size_t MockModelTypeWorker::GetNumPendingCommits() const {
@@ -93,9 +91,11 @@ void MockModelTypeWorker::VerifyNthPendingCommit(
 
 void MockModelTypeWorker::VerifyPendingCommits(
     const std::vector<std::string>& tag_hashes) {
+  //base::debug::StackTrace stack; stack.Print();
   EXPECT_EQ(tag_hashes.size(), GetNumPendingCommits());
   for (size_t i = 0; i < tag_hashes.size(); i++) {
     const CommitRequestDataList& commits = GetNthPendingCommit(i);
+    LOG(WARNING) << "VerifyPendingCommits: " << i;
     EXPECT_EQ(1U, commits.size());
     EXPECT_EQ(tag_hashes[i], commits[0].entity->client_tag_hash)
         << "Hash for tag " << tag_hashes[i] << " doesn't match.";

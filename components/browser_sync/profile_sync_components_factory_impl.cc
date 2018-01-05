@@ -136,6 +136,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     syncer::SyncService* sync_service,
     syncer::ModelTypeSet disabled_types,
     syncer::ModelTypeSet enabled_types) {
+  LOG(WARNING) << "RegisterCommonDataTypes";
   base::Closure error_callback =
       base::Bind(&syncer::ReportUnrecoverableError, channel_);
 
@@ -151,12 +152,14 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     // disabled.
     if (!disabled_types.Has(syncer::AUTOFILL)) {
       if (FeatureList::IsEnabled(switches::kSyncUSSAutocomplete)) {
+        LOG(WARNING) << "kSyncUSSAutocomplete is enabled";
         sync_service->RegisterDataTypeController(
             std::make_unique<autofill::WebDataModelTypeController>(
                 syncer::AUTOFILL, sync_client_, db_thread_, web_data_service_,
                 base::Bind(
                     &autofill::AutocompleteSyncBridge::FromWebDataService)));
       } else {
+        LOG(WARNING) << "kSyncUSSAutocomplete is disabled";
         sync_service->RegisterDataTypeController(
             std::make_unique<AutofillDataTypeController>(
                 db_thread_, error_callback, sync_client_, web_data_service_));
