@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64a7622_f72a275f",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2018-01-05T18:05:04Z",
+      "side": 1,
+      "message": "Good in principle, but this needs a comment.  The code invites the question \"what\u0027s special about user_text_ being empty?\"  What if it simply was \" \"?  The comments needs to answer why we\u0027re handling this separately.  (I believe the reason is something like the only way to get a cursor position that\u0027s not in the user_text_ part of the range is to use tab-to-search.  And that always yields a blank user_text_.)\n\n(But what about doing \"www.wikipedia.orgfoo\" and going to before the \"foo\" and pressing space, and with the actual keyword is \"wikipedia.org\"?  Is that case handled right?)",
+      "revId": "47f2173fa38193d2570b7104fd61b76865cd5833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
