@@ -69,6 +69,24 @@
       "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5555cc8_ff6847cc",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-05T14:31:50Z",
+      "side": 1,
+      "message": "(I was talking about skip_paint_and_commit and non-skip_paint_and_commit paths here.)\n\nThinking about it, what we don\u0027t verify yet is whether the second side_effects_only BMF in this sequence skips the full pipeline (as opposed to only paint and commit):\n\nSetNeedsCommit(COMMIT_PIPELINE_STAGE)\nBMF() // side_effects_only\nBMF() // side_effects_only\n\nI don\u0027t see a way to do this in the headless integration test - we\u0027d have to add a unit test with an ExternalBFS for this I believe.",
+      "parentUuid": "75a2b6f0_af095592",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
