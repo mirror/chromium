@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5466282c_318f924c",
+        "filename": "ios/web/web_state/js/common_js_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-05T01:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb46016_752e0c7c",
+      "range": {
+        "startLine": 259,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 13
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "112d1435_2049fd12",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "03ed9e72_519cedd5",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-05T01:36:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it could hurt to explain more, PTAL.",
+      "parentUuid": "112d1435_2049fd12",
+      "range": {
+        "startLine": 708,
+        "startChar": 31,
+        "endLine": 708,
+        "endChar": 39
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb7bc0c_06e57c9f",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-04T23:12:03Z",
       "side": 1,
       "message": "Missed var for |i|, which creates a global variable. BTW, it is better to move all vars to the pot, because JS interpreter does that anyway.",
+      "range": {
+        "startLine": 719,
+        "startChar": 10,
+        "endLine": 719,
+        "endChar": 11
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67fd70c_ac28fbb5",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-05T01:36:33Z",
+      "side": 1,
+      "message": "added var is DONE.\n\nI noticed we are not consistent with putting all vars at the top and I don\u0027t think it\u0027s good for readability. Is childrenCount ok here or should I put it at the top of the function?",
+      "parentUuid": "2bb7bc0c_06e57c9f",
       "range": {
         "startLine": 719,
         "startChar": 10,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5ce49fab_2e97bd0b",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-05T01:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51bf120c_edb4e10e",
+      "range": {
+        "startLine": 737,
+        "startChar": 6,
+        "endLine": 737,
+        "endChar": 24
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a0b1de_64f2ffa9",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22b9701_0957c6d4",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2018-01-05T01:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a0b1de_64f2ffa9",
+      "range": {
+        "startLine": 742,
+        "startChar": 11,
+        "endLine": 742,
+        "endChar": 12
+      },
+      "revId": "4ad7b099b0ebb423b49682d2474dbbba517ec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
