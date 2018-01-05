@@ -204,7 +204,6 @@ public class IncognitoNotificationService extends IntentService {
                         tabbedActivity.getBottomSheet().setSheetState(
                                 BottomSheet.SHEET_STATE_PEEK, false);
                     }
-
                     tabbedActivity.getTabModelSelector().getModel(true).closeAllTabs(
                             false, false);
                 }
