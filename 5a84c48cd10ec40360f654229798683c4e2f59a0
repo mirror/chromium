@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8789d9f0_9f3a9af3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2018-01-05T22:19:45Z",
+      "side": 1,
+      "message": "Please create a new bug for it. This one is marked as fixed.",
+      "revId": "5a84c48cd10ec40360f654229798683c4e2f59a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
