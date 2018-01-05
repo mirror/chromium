@@ -6,6 +6,10 @@
 
 #include <stddef.h>
 
+#include <algorithm>
+#include <utility>
+#include <vector>
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/memory/ptr_util.h"
@@ -952,6 +956,25 @@ scoped_refptr<content::DevToolsAgentHost> TabAndroid::GetDevToolsAgentHost() {
 void TabAndroid::SetDevToolsAgentHost(
     scoped_refptr<content::DevToolsAgentHost> host) {
   devtools_host_ = std::move(host);
+}
+
+intptr_t TabAndroid::GetOrCreateDevToolsAgentHost(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  // TODO(joaodasilva): should this use devtools_host_?
+  if (!web_contents_) {
+    return 0;
+  }
+  scoped_refptr<content::DevToolsAgentHost> host =
+      content::DevToolsAgentHost::GetOrCreateFor(web_contents_.get());
+  if (!host) {
+    return 0;
+  }
+  // Add an explicit reference until the native DevToolsAgentHostAndroid gets
+  // the raw pointer and creates its own scoped_refptr. It will then Release()
+  // this extra ref.
+  host->AddRef();
+  return reinterpret_cast<intptr_t>(host.get());
 }
 
 static void JNI_Tab_Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {

@@ -29,6 +29,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.assistant.WebAssistantController;
 import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
@@ -345,6 +346,7 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
      *         buttons, returns null.
      */
     public CustomButtonParams getCustomButtonOnToolbar() {
+        if (shouldEnableWebAssistant()) return null;
         return mToolbarButton;
     }
 
@@ -541,5 +543,15 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
      */
     boolean shouldShowDownloadButton() {
         return !mDisableDownload;
+    }
+
+    /**
+     * @return Whether the Web Assistant should be enabled for this custom tab.
+     */
+    public boolean shouldEnableWebAssistant() {
+        // TODO(joaodasilva): define an extra field in the Intent to opt-in to the Web Assistant
+        // for this tab. Assuming that this is always enabled for now.
+        boolean hasWebAssistantFlag = true;
+        return hasWebAssistantFlag && WebAssistantController.isWebAssistantEnabled();
     }
 }

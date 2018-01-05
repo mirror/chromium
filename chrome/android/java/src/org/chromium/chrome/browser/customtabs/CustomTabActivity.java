@@ -14,6 +14,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -54,6 +55,8 @@ import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.WebContentsFactory;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
+import org.chromium.chrome.browser.assistant.WebAssistantController;
+import org.chromium.chrome.browser.assistant.WebAssistantDelegate;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentHandler;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
@@ -61,6 +64,7 @@ import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
+import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.gsa.GSAState;
 import org.chromium.chrome.browser.metrics.PageLoadMetrics;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
@@ -79,6 +83,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorImpl;
 import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
+import org.chromium.chrome.browser.toolbar.ToolbarManager;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
@@ -118,6 +123,7 @@ public class CustomTabActivity extends ChromeActivity {
     private Tab mMainTab;
     private CustomTabBottomBarDelegate mBottomBarDelegate;
     private CustomTabTabPersistencePolicy mTabPersistencePolicy;
+    private WebAssistantController mWebAssistantController;
 
     // This is to give the right package name while using the client's resources during an
     // overridePendingTransition call.
@@ -353,10 +359,16 @@ public class CustomTabActivity extends ChromeActivity {
 
         // Setting task title and icon to be null will preserve the client app's title and icon.
         ApiCompatibilityUtils.setTaskDescription(this, null, null, toolbarColor);
-        showCustomButtonOnToolbar();
-        mBottomBarDelegate = new CustomTabBottomBarDelegate(this, mIntentDataProvider,
-                getFullscreenManager());
-        mBottomBarDelegate.showBottomBarIfNecessary();
+
+        if (mIntentDataProvider.shouldEnableWebAssistant()) {
+            mWebAssistantController =
+                    WebAssistantController.makeNewController(makeWebAssistantDelegate());
+        } else {
+            showCustomButtonOnToolbar();
+            mBottomBarDelegate = new CustomTabBottomBarDelegate(
+                    this, mIntentDataProvider, getFullscreenManager());
+            mBottomBarDelegate.showBottomBarIfNecessary();
+        }
     }
 
     @Override
@@ -520,6 +532,11 @@ public class CustomTabActivity extends ChromeActivity {
                     getIntent().getIntExtra(ServiceTabLauncher.LAUNCH_REQUEST_ID_EXTRA, 0),
                     getActivityTab().getWebContents());
         }
+
+        if (mWebAssistantController != null) {
+            mWebAssistantController.onTabReady();
+        }
+
         super.finishNativeInitialization();
     }
 
@@ -640,7 +657,9 @@ public class CustomTabActivity extends ChromeActivity {
     public void initializeCompositor() {
         super.initializeCompositor();
         getTabModelSelector().onNativeLibraryReady(getTabContentManager());
-        mBottomBarDelegate.addContextualSearchObserver();
+        if (mBottomBarDelegate != null) {
+            mBottomBarDelegate.addContextualSearchObserver();
+        }
     }
 
     private void recordClientPackageName() {
@@ -1217,5 +1236,26 @@ public class CustomTabActivity extends ChromeActivity {
         }
 
         return super.requiresFirstRunToBeCompleted(intent);
+    }
+
+    private WebAssistantDelegate makeWebAssistantDelegate() {
+        return new WebAssistantDelegate() {
+            @Override
+            public Resources getResources() {
+                return CustomTabActivity.this.getResources();
+            }
+            @Override
+            public ToolbarManager getToolbarManager() {
+                return CustomTabActivity.this.getToolbarManager();
+            }
+            @Override
+            public ChromeActivity getActivity() {
+                return CustomTabActivity.this;
+            }
+            @Override
+            public ChromeFullscreenManager getFullscreenManager() {
+                return CustomTabActivity.this.getFullscreenManager();
+            }
+        };
     }
 }

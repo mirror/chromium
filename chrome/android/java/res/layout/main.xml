@@ -55,6 +55,15 @@
                 android:layout="@layout/custom_tabs_bottombar" />
 
             <ViewStub
+                android:id="@+id/assistant_bottombar_stub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:layout_gravity="start|bottom"
+                android:inflatedId="@+id/assistant_bottombar"
+                android:layout="@layout/assistant_bottombar" />
+
+            <ViewStub
                 android:id="@+id/tab_modal_dialog_container_stub"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

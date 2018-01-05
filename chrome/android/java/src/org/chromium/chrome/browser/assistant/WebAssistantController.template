@@ -1,0 +1,41 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+package org.chromium.chrome.browser.assistant;
+
+/** Main controller for tabs that are assisted by the Web Assistant. */
+public interface WebAssistantController {
+    /**
+     * @return true if the current build has the Web Assistant feature enabled.
+     */
+    public static boolean isWebAssistantEnabled() {
+        return getServiceUrl() != null;
+    }
+
+    /**
+     * @return The endpoint to use for the Web Assistant service, if it is enabled in this build.
+     */
+    public static String getServiceUrl() {
+#if defined(ENABLE_WEB_ASSISTANT)
+        return "http://localhost:9999/webAssistant";
+#else
+        return null;
+#endif
+    }
+
+    /**
+     * @return a new WebAssistantController implementation. Always returns null if the current
+     * build doesn't include support for this feature.
+     */
+    public static WebAssistantController makeNewController(WebAssistantDelegate delegate) {
+#if defined(ENABLE_WEB_ASSISTANT)
+        return new WebAssistantControllerImpl(delegate);
+#else
+        return null;
+#endif
+    }
+
+    public void onTabReady();
+    public void close();
+}

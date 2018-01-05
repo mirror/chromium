@@ -91,6 +91,9 @@ android_resources("chrome_java_resources") {
     "java/res",
     "//chrome/android/java/res_chromium",
   ]
+  if (enable_web_assistant) {
+    resource_dirs += [ "java/res_assistant" ]
+  }
   deps = [
     ":chrome_strings_grd",
     "//chrome/app:java_strings_grd",
@@ -274,6 +277,7 @@ android_library("chrome_java") {
     ":chrome_version_srcjar",
     ":photo_picker_aidl",
     ":resource_id_javagen",
+    ":web_assistant_srcjar",
     "//chrome:assist_ranker_prediction_enum_javagen",
     "//chrome:content_setting_javagen",
     "//chrome:content_settings_type_javagen",
@@ -319,6 +323,10 @@ android_library("chrome_java") {
   }
   srcjar_deps += [ ":chrome_vr_android_java_enums_srcjar" ]
 
+  if (enable_web_assistant) {
+    java_files += web_assistant_java_sources
+  }
+
   # Add the actual implementation where necessary so that downstream targets
   # can provide their own implementations.
   jar_excluded_patterns = [ "*/AppHooksImpl.class" ]
@@ -361,6 +369,17 @@ java_cpp_enum("chrome_vr_android_java_enums_srcjar") {
     "//chrome/browser/android/vr_shell/vr_shell_delegate.h",
     "//chrome/browser/vr/ui_unsupported_mode.h",
   ]
+}
+
+java_cpp_template("web_assistant_srcjar") {
+  sources = [
+    "java/src/org/chromium/chrome/browser/assistant/WebAssistantController.template",
+  ]
+  package_path = "org/chromium/chrome/browser/assistant"
+  defines = []
+  if (enable_web_assistant) {
+    defines += [ "ENABLE_WEB_ASSISTANT" ]
+  }
 }
 
 proto_java_library("document_tab_model_info_proto_java") {

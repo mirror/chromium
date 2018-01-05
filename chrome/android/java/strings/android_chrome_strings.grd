@@ -1228,8 +1228,12 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Allow all sites
       </message>
 
+      <!-- TODO: don't submit this string change!
+           It's just a placeholder to make it obvious that CCT is using our
+           patched Clankium during development.
+      -->
       <message name="IDS_POWERED_BY_CHROME_MESSAGE" desc="A message indicating that the current page is running in Chrome.">
-        Powered by Chrome
+        Powered by Chrome with Assistant
       </message>
 
       <!-- Sync strings in account management dialog -->
@@ -3313,6 +3317,14 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_NEAR_OOM_INTERVENTION_DECLINE" desc="The text of the button letting the user decline the browser's intervention, so that the page can resume what it was doing.">
          Resume
+      </message>
+
+      <!-- Assistant -->
+      <message name="IDS_DISMISS_ASSISTANT" desc="Description for a button that closes the Assistant UI.">
+        Close
+      </message>
+      <message name="IDS_ASSISTANT_ICON" desc="Description for an icon of the Assistant.">
+        Web Assistant
       </message>
     </messages>
   </release>

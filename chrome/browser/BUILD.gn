@@ -1950,6 +1950,8 @@ split_static_library("browser") {
       "android/data_usage/external_data_use_reporter.h",
       "android/data_usage/tab_data_use_entry.cc",
       "android/data_usage/tab_data_use_entry.h",
+      "android/devtools/devtools_agent_host_android.cc",
+      "android/devtools/devtools_agent_host_android.h",
       "android/devtools_manager_delegate_android.cc",
       "android/devtools_manager_delegate_android.h",
       "android/devtools_server.cc",
@@ -2334,6 +2336,13 @@ split_static_library("browser") {
         "supervised_user/child_accounts/child_account_feedback_reporter_android.h",
         "supervised_user/child_accounts/child_account_service_android.cc",
         "supervised_user/child_accounts/child_account_service_android.h",
+      ]
+    }
+
+    if (enable_web_assistant) {
+      sources += [
+        "android/assistant/web_assistant_service_android.cc",
+        "android/assistant/web_assistant_service_android.h",
       ]
     }
   } else {
@@ -4220,6 +4229,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/database/SQLiteCursor.java",
       "../android/java/src/org/chromium/chrome/browser/datausage/DataUseTabUIManager.java",
       "../android/java/src/org/chromium/chrome/browser/datausage/ExternalDataUseObserver.java",
+      "../android/java/src/org/chromium/chrome/browser/devtools/DevToolsAgentHostImpl.java",
       "../android/java/src/org/chromium/chrome/browser/document/DocumentWebContentsDelegate.java",
       "../android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerServiceFactory.java",
       "../android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerTabUtils.java",
@@ -4388,6 +4398,11 @@ if (is_android) {
     if (enable_offline_pages_harness) {
       sources += [ "../android/java/src/org/chromium/chrome/browser/offlinepages/evaluation/OfflinePageEvaluationBridge.java" ]
     }
+
+    if (enable_web_assistant) {
+      sources += [ "../android/java/src/org/chromium/chrome/browser/assistant/WebAssistantService.java" ]
+    }
+
     jni_package = "chrome"
   }
 

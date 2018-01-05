@@ -88,6 +88,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/appmenu/AppMenuIconRowFooter.java",
   "java/src/org/chromium/chrome/browser/appmenu/AppMenuObserver.java",
   "java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+  "java/src/org/chromium/chrome/browser/assistant/WebAssistantDelegate.java",
   "java/src/org/chromium/chrome/browser/autofill/AutofillKeyboardAccessoryBridge.java",
   "java/src/org/chromium/chrome/browser/autofill/AutofillLogger.java",
   "java/src/org/chromium/chrome/browser/autofill/AutofillPopupBridge.java",
@@ -329,6 +330,8 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/datausage/DataUseTabUIManager.java",
   "java/src/org/chromium/chrome/browser/datausage/ExternalDataUseObserver.java",
   "java/src/org/chromium/chrome/browser/device/DeviceClassManager.java",
+  "java/src/org/chromium/chrome/browser/devtools/DevToolsAgentHost.java",
+  "java/src/org/chromium/chrome/browser/devtools/DevToolsAgentHostImpl.java",
   "java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
   "java/src/org/chromium/chrome/browser/document/DocumentActivity.java",
   "java/src/org/chromium/chrome/browser/document/DocumentUtils.java",
@@ -1430,6 +1433,21 @@ chrome_vr_java_sources = [
   "java/src/org/chromium/chrome/browser/vr_shell/OnDispatchTouchEventCallback.java",
   "java/src/org/chromium/chrome/browser/vr_shell/keyboard/BuildConstants.java",
   "java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
+]
+
+web_assistant_java_sources = [
+  "java/src/org/chromium/chrome/browser/assistant/BottomBarController.java",
+  "java/src/org/chromium/chrome/browser/assistant/WebAssistantControllerImpl.java",
+  "java/src/org/chromium/chrome/browser/assistant/WebAssistantService.java",
+  "java/src/org/chromium/chrome/browser/assistant/assist_actions/AssistAction.java",
+  "java/src/org/chromium/chrome/browser/assistant/assist_actions/AssistActionChips.java",
+  "java/src/org/chromium/chrome/browser/assistant/assist_actions/AssistActionMessage.java",
+  "java/src/org/chromium/chrome/browser/assistant/assist_actions/Conditions.java",
+  "java/src/org/chromium/chrome/browser/assistant/page_actions/PageAction.java",
+  "java/src/org/chromium/chrome/browser/assistant/page_actions/PageActionClick.java",
+  "java/src/org/chromium/chrome/browser/assistant/page_actions/PageActionInput.java",
+  "java/src/org/chromium/chrome/browser/assistant/page_actions/PageActionList.java",
+  "java/src/org/chromium/chrome/browser/assistant/page_actions/Selector.java",
 ]
 
 chrome_test_java_sources = [
