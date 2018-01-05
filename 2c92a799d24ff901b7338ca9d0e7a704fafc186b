@@ -70,6 +70,24 @@
       "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ce3321d_15a0517c",
+        "filename": "third_party/WebKit/Source/platform/wtf/TerminatedArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T20:33:15Z",
+      "side": 0,
+      "message": "Didn\u0027t know about WTF_ALLOW_MOVE_AND_INIT_WITH_MEM_FUNCTIONS.\n\nI adjusted this one properly so we can leave the static_assert in place. I think this is currently the best compromise. Ideally, we would piggy-back on std::is_trivially_copy_assignable but that is not possible everywhere so we use that macro.",
+      "parentUuid": "1bcd517d_1ed1e2e1",
+      "revId": "2c92a799d24ff901b7338ca9d0e7a704fafc186b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
