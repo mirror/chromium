@@ -40,6 +40,9 @@ class UpdateClientImpl : public UpdateClient {
   void Install(const std::string& id,
                CrxDataCallback crx_data_callback,
                Callback callback) override;
+  void Install(const std::vector<std::string>& ids,
+               CrxDataCallback crx_data_callback,
+               Callback callback) override;
   void Update(const std::vector<std::string>& ids,
               CrxDataCallback crx_data_callback,
               Callback callback) override;

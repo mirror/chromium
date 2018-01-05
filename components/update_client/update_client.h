@@ -338,6 +338,15 @@ class UpdateClient : public base::RefCounted<UpdateClient> {
                        CrxDataCallback crx_data_callback,
                        Callback callback) = 0;
 
+  // Installs the specified CRXs. Calls back on |crx_data_callback| before the
+  // update is attempted to give the caller the opportunity to provide the
+  // instances of CrxComponent to be used for this update.
+  // This |Install| function is intended to be used for foreground updates of
+  // several CRXs. The installs of CRXs are seriallized.
+  virtual void Install(const std::vector<std::string>& ids,
+                       CrxDataCallback crx_data_callback,
+                       Callback callback) = 0;
+
   // Updates the specified CRXs. Calls back on |crx_data_callback| before the
   // update is attempted to give the caller the opportunity to provide the
   // instances of CrxComponent to be used for this update. The |Update| function
