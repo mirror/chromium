@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "695c89a3_871f0e30",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T16:37:44Z",
+      "side": 1,
+      "message": "Ah, yes, private ctor... Then this is okay.",
+      "parentUuid": "852d770f_fdfd0130",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 34
+      },
+      "revId": "2e2fbbd8071a46b35bfdb5c13aac49f377018df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c87a7ed_64ea37fb",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 3
