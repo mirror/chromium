@@ -46,6 +46,30 @@
       "revId": "96fe9307614a2269cf6dd037a7bbaf749247e226",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b3f53c1_8c7624f7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43833,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2018-01-05T00:05:26Z",
+      "side": 0,
+      "message": "It\u0027s indeed preferred to keep the \u003cowner\u003e field, as an initial point of contact in case anyone has any questions about the histogram.  (Though it\u0027s admittedly unlikely that anyone would have questions about such removed histograms, it\u0027s still preferred to keep the contact point available, just in case.)",
+      "parentUuid": "413ce4b5_5c779130",
+      "range": {
+        "startLine": 43833,
+        "startChar": 3,
+        "endLine": 43833,
+        "endChar": 8
+      },
+      "revId": "96fe9307614a2269cf6dd037a7bbaf749247e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
