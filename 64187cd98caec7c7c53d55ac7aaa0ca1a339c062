@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b486d624_faf9f549",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T22:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f146938_8f98b840",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "818e527a_afe7879b",
         "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2a9687_919867b9",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T22:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818e527a_afe7879b",
+      "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7f4ab399_fce27e77",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T22:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02616ddb_abc881eb",
+      "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "318a7ed5_15063f2d",
         "filename": "chrome/browser/chromeos/accessibility/dictation.h",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2018-01-04T03:29:57Z",
       "side": 1,
       "message": "As mentioned earlier, StartDictation, perhaps?",
+      "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2174a673_93a60ff7",
+        "filename": "chrome/browser/chromeos/accessibility/dictation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2018-01-05T22:06:53Z",
+      "side": 1,
+      "message": "This is now a proper toggle after coments from dmazzoni@. In particular, with on-going dictation in progress, calling this again stops dictation.",
+      "parentUuid": "318a7ed5_15063f2d",
       "revId": "64187cd98caec7c7c53d55ac7aaa0ca1a339c062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
