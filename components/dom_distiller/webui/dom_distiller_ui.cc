@@ -9,6 +9,7 @@
 #include "components/dom_distiller/core/dom_distiller_service.h"
 #include "components/dom_distiller/webui/dom_distiller_handler.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
@@ -24,6 +25,7 @@ DomDistillerUi::DomDistillerUi(content::WebUI* web_ui,
   // Set up WebUIDataSource.
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(kChromeUIDomDistillerHost);
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->SetDefaultResource(IDR_ABOUT_DOM_DISTILLER_HTML);
   source->AddResourcePath("about_dom_distiller.css",
                           IDR_ABOUT_DOM_DISTILLER_CSS);

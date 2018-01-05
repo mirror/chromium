@@ -30,6 +30,8 @@ grit("chrome_unscaled_resources") {
   defines = chrome_grit_defines
   outputs = [
     "grit/chrome_unscaled_resources.h",
+    "grit/chrome_unscaled_resources_map.cc",
+    "grit/chrome_unscaled_resources_map.h",
     "chrome_unscaled_resources.pak",
   ]
 

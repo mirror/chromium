@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/user_actions/user_actions_ui_handler.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -18,10 +19,10 @@ UserActionsUI::UserActionsUI(content::WebUI* web_ui)
   // Set up the chrome://user-actions/ source.
   content::WebUIDataSource* html_source =
       content::WebUIDataSource::Create(chrome::kChromeUIUserActionsHost);
+  html_source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   html_source->SetDefaultResource(IDR_USER_ACTIONS_HTML);
   html_source->AddResourcePath("user_actions.css", IDR_USER_ACTIONS_CSS);
   html_source->AddResourcePath("user_actions.js", IDR_USER_ACTIONS_JS);
-  html_source->UseGzip();
 
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile, html_source);

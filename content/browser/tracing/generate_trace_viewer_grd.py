@@ -23,6 +23,10 @@ kGrdTemplate = '''<?xml version="1.0" encoding="UTF-8"?>
       <emit emit_type='prepend'></emit>
     </output>
     <output filename="tracing_resources.pak" type="data_package" />
+    <output filename="grit/tracing_resources_map.cc"
+        type="gzipped_resource_file_map_source" />
+    <output filename="grit/tracing_resources_map.h"
+        type="gzipped_resource_map_header" />
   </outputs>
   <release seq="1">
     <includes>
