@@ -11,6 +11,7 @@
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/text/AtomicString.h"
 
+class PlatformAXTree;
 class ScriptPromise;
 class ScriptState;
 
@@ -40,11 +41,12 @@ class ComputedAccessibleNode : public ScriptWrappable {
 
   explicit ComputedAccessibleNode(Element*);
 
+  // Given a snapshot of the AXTree stored in content/renderer, populate the
+  // accessible properties stored within this ComputedAccessibleNode.
+  PopulateAccessibleProperties(PlatformAXTree*);
+
   Member<ComputedPromiseProperty> computed_property_;
   Member<Element> element_;
-
-  // TODO(meredithl): This should eventually create AXTree and subscribe to
-  // accessibility updates from the Document.
 };
 
 }  // namespace blink
