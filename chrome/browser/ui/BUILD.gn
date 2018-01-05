@@ -1607,6 +1607,8 @@ split_static_library("ui") {
       "views/close_bubble_on_tab_activation_helper.h",
       "views/external_protocol_dialog.cc",
       "views/external_protocol_dialog.h",
+      "views/profiles/accounts_menu.cc",
+      "views/profiles/accounts_menu.h",
       "views/profiles/avatar_button_style.h",
       "views/profiles/badged_profile_photo.cc",
       "views/profiles/badged_profile_photo.h",

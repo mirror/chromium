@@ -44,6 +44,7 @@
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/hover_button.h"
+#include "chrome/browser/ui/views/profiles/accounts_menu.h"
 #include "chrome/browser/ui/views/profiles/badged_profile_photo.h"
 #include "chrome/browser/ui/views/profiles/signin_view_controller_delegate_views.h"
 #include "chrome/browser/ui/views/profiles/user_manager_view.h"
@@ -410,11 +411,11 @@ void ProfileChooserView::ResetView() {
   gaia_signin_cancel_button_ = nullptr;
   remove_account_button_ = nullptr;
   account_removal_cancel_button_ = nullptr;
+  sync_to_another_account_button_ = nullptr;
 }
 
 void ProfileChooserView::Init() {
   set_close_on_deactivate(close_on_deactivate_for_testing_);
-
   avatar_menu_.reset(new AvatarMenu(
       &g_browser_process->profile_manager()->GetProfileAttributesStorage(),
       this, browser_));
@@ -694,6 +695,12 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
         signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
         signin_with_gaia_account_id_);
 
+  } else if (sender == sync_to_another_account_button_) {
+    // Display a submenu listing the web accounts (without the first one).
+    // Make sure not to close the user menu.
+    set_close_on_deactivate(false);
+    AccountsMenu::ShowBubble(std::vector<AccountInfo>(), this, sender);
+    set_close_on_deactivate(true);
   } else {
     // Either one of the "other profiles", or one of the profile accounts
     // buttons was pressed.
@@ -1126,14 +1133,13 @@ views::View* ProfileChooserView::CreateDiceSigninView() {
   signin_with_gaia_account_id_ = accounts[0].account_id;
 
   constexpr int kSmallMenuIconSize = 16;
-  HoverButton* sync_to_another_account_button = new HoverButton(
+  sync_to_another_account_button_ = new HoverButton(
       this,
       gfx::CreateVectorIcon(kSyncSwitchAccountIcon, kSmallMenuIconSize,
                             gfx::kChromeIconGrey),
       l10n_util::GetStringUTF16(
           IDS_PROFILES_DICE_SIGNIN_WITH_ANOTHER_ACCOUNT_BUTTON));
-  signin_current_profile_button_ = sync_to_another_account_button;
-  promo_button_container->AddChildView(sync_to_another_account_button);
+  promo_button_container->AddChildView(sync_to_another_account_button_);
 
   view->AddChildView(promo_button_container);
   return view;
