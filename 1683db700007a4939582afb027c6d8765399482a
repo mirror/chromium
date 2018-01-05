@@ -293,6 +293,30 @@
     },
     {
       "key": {
+        "uuid": "e3402bdf_fcbd4fd5",
+        "filename": "chrome/browser/vr/elements/environment/background.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T19:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f09e40_e76339f3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f53fa83_d6c80eff",
         "filename": "chrome/browser/vr/elements/environment/background.cc",
         "patchSetId": 12
@@ -424,6 +448,30 @@
       "revId": "1683db700007a4939582afb027c6d8765399482a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64e7eea_67ee5f4e",
+        "filename": "chrome/browser/vr/elements/environment/background.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2018-01-05T19:28:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50d3cc51_5e01ee71",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1683db700007a4939582afb027c6d8765399482a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
