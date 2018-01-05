@@ -78,16 +78,42 @@ bool SelectToSpeakEventRewriter::OnKeyEvent(const ui::KeyEvent* event) {
     if (event->type() == ui::ET_KEY_PRESSED && state_ == INACTIVE) {
       state_ = SEARCH_DOWN;
     } else if (event->type() == ui::ET_KEY_RELEASED) {
-      if (state_ == CAPTURING) {
+      if (state_ == CAPTURING_MOUSE) {
         cancel_event = true;
         state_ = WAIT_FOR_MOUSE_RELEASE;
       } else if (state_ == MOUSE_RELEASED) {
+        cancel_event = true;
+        state_ = INACTIVE;
+      } else if (state_ == CAPTURING_S) {
+        cancel_event = true;
+        state_ = WAIT_FOR_S_RELEASE;
+      } else if (state_ == S_RELEASED) {
         cancel_event = true;
         state_ = INACTIVE;
       } else if (state_ == SEARCH_DOWN) {
         // They just tapped the search key without clicking the mouse.
         // Don't cancel this event -- the search key may still be used
         // by another part of Chrome, and we didn't use it here.
+        state_ = INACTIVE;
+      }
+    }
+  } else if (key_code == ui::VKEY_S) {
+    if (event->type() == ui::ET_KEY_PRESSED &&
+        (state_ == SEARCH_DOWN || state_ == S_RELEASED)) {
+      // They pressed the S key while search was down.
+      // It's possible to press S multiple times to read the same
+      // region over and over, so state S_RELEASED can become state
+      // CAPTURING_S if the search key is not lifted.
+      cancel_event = true;
+      state_ = CAPTURING_S;
+    } else if (event->type() == ui::ET_KEY_RELEASED) {
+      if (state_ == CAPTURING_S) {
+        // They released the S key while S was being captured.
+        cancel_event = true;
+        state_ = S_RELEASED;
+      } else if (state_ == WAIT_FOR_S_RELEASE) {
+        // They have already released the search key
+        cancel_event = true;
         state_ = INACTIVE;
       }
     }
@@ -111,7 +137,7 @@ bool SelectToSpeakEventRewriter::OnMouseEvent(const ui::MouseEvent* event) {
 
   if ((state_ == SEARCH_DOWN || state_ == MOUSE_RELEASED) &&
       event->type() == ui::ET_MOUSE_PRESSED) {
-    state_ = CAPTURING;
+    state_ = CAPTURING_MOUSE;
   }
 
   if (state_ == WAIT_FOR_MOUSE_RELEASE &&
@@ -120,7 +146,7 @@ bool SelectToSpeakEventRewriter::OnMouseEvent(const ui::MouseEvent* event) {
     return false;
   }
 
-  if (state_ != CAPTURING)
+  if (state_ != CAPTURING_MOUSE)
     return false;
 
   if (event->type() == ui::ET_MOUSE_RELEASED)
@@ -129,7 +155,7 @@ bool SelectToSpeakEventRewriter::OnMouseEvent(const ui::MouseEvent* event) {
   ui::MouseEvent mutable_event(*event);
   ConvertMouseEventToDIPs(&mutable_event);
 
-  // If we're in the capturing state, forward the mouse event to
+  // If we're in the capturing mouse state, forward the mouse event to
   // select-to-speak.
   if (event_delegate_for_testing_) {
     event_delegate_for_testing_->OnForwardEventToSelectToSpeakExtension(
