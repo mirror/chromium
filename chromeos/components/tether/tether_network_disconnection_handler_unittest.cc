@@ -7,10 +7,12 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/fake_active_host.h"
 #include "chromeos/components/tether/fake_disconnect_tethering_request_sender.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_test.h"
@@ -100,6 +102,8 @@ class TetherNetworkDisconnectionHandlerTest : public NetworkStateTest {
 
   std::unique_ptr<TetherNetworkDisconnectionHandler> handler_;
 
+  base::HistogramTester histogram_tester_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(TetherNetworkDisconnectionHandlerTest);
 };
@@ -123,6 +127,10 @@ TEST_F(TetherNetworkDisconnectionHandlerTest, TestConnectAndDisconnect) {
 
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
             fake_active_host_->GetActiveHostStatus());
+
+  histogram_tester_.ExpectBucketCount(
+      "InstantTethering.SessionCompletionReason",
+      TetherDisconnector::SessionCompletionReason::CONNECTION_DROPPED, 1);
 }
 
 }  // namespace tether

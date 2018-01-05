@@ -8,8 +8,10 @@
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "chromeos/components/tether/disconnect_tethering_request_sender.h"
 #include "chromeos/components/tether/network_configuration_remover.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
@@ -45,6 +47,12 @@ void TetherNetworkDisconnectionHandler::NetworkConnectionStateChanged(
       !network->IsConnectedState()) {
     PA_LOG(INFO) << "Connection to active host (Wi-Fi network GUID "
                  << network->guid() << ") has been lost.";
+
+    UMA_HISTOGRAM_ENUMERATION(
+        "InstantTethering.SessionCompletionReason",
+        TetherDisconnector::SessionCompletionReason::CONNECTION_DROPPED,
+        TetherDisconnector::SessionCompletionReason::
+            SESSION_COMPLETION_REASON_MAX);
 
     network_configuration_remover_->RemoveNetworkConfiguration(
         active_host_->GetWifiNetworkGuid());

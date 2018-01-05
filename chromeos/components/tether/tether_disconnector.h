@@ -20,6 +20,18 @@ namespace tether {
 // Disconnects from an active Tether connection.
 class TetherDisconnector {
  public:
+  enum SessionCompletionReason {
+    OTHER = 0,
+    USER_DISCONNECTED = 1,
+    CONNECTION_DROPPED = 2,
+    USER_LOGGED_OUT = 3,
+    USER_CLOSED_LID = 4,
+    PREF_DISABLED = 5,
+    BLUETOOTH_DISABLED = 6,
+    CELLULAR_DISABLED = 7,
+    SESSION_COMPLETION_REASON_MAX
+  };
+
   TetherDisconnector() {}
   virtual ~TetherDisconnector() {}
 
@@ -30,7 +42,8 @@ class TetherDisconnector {
   virtual void DisconnectFromNetwork(
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback) = 0;
+      const network_handler::StringResultCallback& error_callback,
+      const SessionCompletionReason& session_completion_reason) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TetherDisconnector);

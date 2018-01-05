@@ -187,10 +187,21 @@ class TestTetherComponentFactory final
     return base::WrapUnique(active_tether_component_);
   }
 
+  const chromeos::tether::TetherDisconnector::SessionCompletionReason&
+  last_session_completion_reason() {
+    return last_session_completion_reason_;
+  }
+
  private:
-  void OnActiveTetherComponentDeleted() { active_tether_component_ = nullptr; }
+  void OnActiveTetherComponentDeleted() {
+    last_session_completion_reason_ =
+        active_tether_component_->last_session_completion_reason();
+    active_tether_component_ = nullptr;
+  }
 
   FakeTetherComponentWithDestructorCallback* active_tether_component_ = nullptr;
+  chromeos::tether::TetherDisconnector::SessionCompletionReason
+      last_session_completion_reason_;
 };
 
 class FakeRemoteDeviceProviderFactory
@@ -397,6 +408,13 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         test_tether_component_factory_->active_tether_component() != nullptr);
   }
 
+  void VerifyLastSessionCompletionReason(
+      const chromeos::tether::TetherDisconnector::SessionCompletionReason&
+          expected_session_completion_reason) {
+    EXPECT_EQ(expected_session_completion_reason,
+              test_tether_component_factory_->last_session_completion_reason());
+  }
+
   const cryptauth::RemoteDeviceList test_devices_;
   const content::TestBrowserThreadBundle thread_bundle_;
 
@@ -442,6 +460,9 @@ TEST_F(TetherServiceTest, TestShutdown) {
             network_state_handler()->GetTechnologyState(
                 chromeos::NetworkTypePattern::Tether()));
   VerifyTetherActiveStatus(false /* expected_active */);
+  VerifyLastSessionCompletionReason(
+      chromeos::tether::TetherDisconnector::SessionCompletionReason::
+          USER_LOGGED_OUT);
 }
 
 TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
@@ -478,6 +499,8 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
   test_tether_component_factory_->active_tether_component()
       ->FinishAsynchronousShutdown();
   VerifyTetherActiveStatus(false /* expected_active */);
+  VerifyLastSessionCompletionReason(chromeos::tether::TetherDisconnector::
+                                        SessionCompletionReason::PREF_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestSuspend) {
@@ -506,6 +529,10 @@ TEST_F(TetherServiceTest, TestSuspend) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::OTHER_OR_UNKNOWN,
       2 /* expected_count */);
+
+  VerifyLastSessionCompletionReason(
+      chromeos::tether::TetherDisconnector::SessionCompletionReason::
+          USER_CLOSED_LID);
 }
 
 TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
@@ -522,6 +549,8 @@ TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::BLE_ADVERTISING_NOT_SUPPORTED,
       1 /* expected_count */);
+  VerifyLastSessionCompletionReason(
+      chromeos::tether::TetherDisconnector::SessionCompletionReason::OTHER);
 }
 
 TEST_F(TetherServiceTest,
@@ -759,6 +788,9 @@ TEST_F(TetherServiceTest, TestIsBluetoothPowered) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::BLUETOOTH_DISABLED,
       2 /* expected_count */);
+  VerifyLastSessionCompletionReason(
+      chromeos::tether::TetherDisconnector::SessionCompletionReason::
+          BLUETOOTH_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestCellularIsUnavailable) {
@@ -776,6 +808,8 @@ TEST_F(TetherServiceTest, TestCellularIsUnavailable) {
       network_state_handler()->GetTechnologyState(
           chromeos::NetworkTypePattern::Tether()));
   VerifyTetherActiveStatus(false /* expected_active */);
+  VerifyLastSessionCompletionReason(chromeos::tether::TetherDisconnector::
+                                        SessionCompletionReason::PREF_DISABLED);
 
   SetTetherTechnologyStateEnabled(true);
   EXPECT_EQ(chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED,
@@ -842,6 +876,9 @@ TEST_F(TetherServiceTest, TestCellularIsAvailable) {
   VerifyTetherFeatureStateRecorded(
       TetherService::TetherFeatureState::CELLULAR_DISABLED,
       2 /* expected_count */);
+  VerifyLastSessionCompletionReason(
+      chromeos::tether::TetherDisconnector::SessionCompletionReason::
+          CELLULAR_DISABLED);
 }
 
 TEST_F(TetherServiceTest, TestDisabled) {

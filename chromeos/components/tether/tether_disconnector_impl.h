@@ -38,7 +38,8 @@ class TetherDisconnectorImpl : public TetherDisconnector {
   void DisconnectFromNetwork(
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback) override;
+      const network_handler::StringResultCallback& error_callback,
+      const SessionCompletionReason& session_completion_reason) override;
 
  private:
   friend class TetherDisconnectorImplTest;

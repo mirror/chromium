@@ -18,8 +18,11 @@ void FakeTetherComponent::FinishAsynchronousShutdown() {
   TransitionToStatus(TetherComponent::Status::SHUT_DOWN);
 }
 
-void FakeTetherComponent::RequestShutdown() {
+void FakeTetherComponent::RequestShutdown(
+    const TetherDisconnector::SessionCompletionReason&
+        session_completion_reason) {
   DCHECK(status() == TetherComponent::Status::ACTIVE);
+  last_session_completion_reason_ = session_completion_reason;
 
   if (has_asynchronous_shutdown_)
     TransitionToStatus(TetherComponent::Status::SHUTTING_DOWN);

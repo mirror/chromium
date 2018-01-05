@@ -131,12 +131,16 @@ TetherComponentImpl::TetherComponentImpl(
 
 TetherComponentImpl::~TetherComponentImpl() = default;
 
-void TetherComponentImpl::RequestShutdown() {
+void TetherComponentImpl::RequestShutdown(
+    const TetherDisconnector::SessionCompletionReason&
+        session_completion_reason) {
   has_shutdown_been_requested_ = true;
 
   // If shutdown has already happened, there is nothing else to do.
   if (status() != TetherComponent::Status::ACTIVE)
     return;
+
+  session_completion_reason_ = session_completion_reason;
 
   // If crash recovery has not yet completed, wait for it to complete before
   // continuing.
@@ -180,7 +184,8 @@ void TetherComponentImpl::InitiateShutdown() {
                  << "\".";
     tether_disconnector->DisconnectFromNetwork(
         active_host->GetTetherNetworkGuid(), base::Bind(&base::DoNothing),
-        base::Bind(&OnDisconnectErrorDuringShutdown));
+        base::Bind(&OnDisconnectErrorDuringShutdown),
+        session_completion_reason_);
   }
 
   TransitionToStatus(TetherComponent::Status::SHUTTING_DOWN);

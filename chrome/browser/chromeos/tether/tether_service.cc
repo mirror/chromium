@@ -19,6 +19,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/components/tether/gms_core_notifications_state_tracker_impl.h"
 #include "chromeos/components/tether/tether_component_impl.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 #include "chromeos/components/tether/tether_host_fetcher_impl.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_connect.h"
@@ -202,8 +203,38 @@ void TetherService::StopTetherIfNecessary() {
 
   PA_LOG(INFO) << "Shutting down TetherComponent.";
 
+  chromeos::tether::TetherDisconnector::SessionCompletionReason
+      session_completion_reason;
+  switch (GetTetherFeatureState()) {
+    case CELLULAR_DISABLED:
+      session_completion_reason = chromeos::tether::TetherDisconnector::
+          SessionCompletionReason::CELLULAR_DISABLED;
+      break;
+    case BLUETOOTH_DISABLED:
+      session_completion_reason = chromeos::tether::TetherDisconnector::
+          SessionCompletionReason::BLUETOOTH_DISABLED;
+      break;
+    case USER_PREFERENCE_DISABLED:
+      session_completion_reason = chromeos::tether::TetherDisconnector::
+          SessionCompletionReason::PREF_DISABLED;
+      break;
+    // TODO(hansberry): Update once this value has been broken up.
+    case OTHER_OR_UNKNOWN:
+      session_completion_reason = chromeos::tether::TetherDisconnector::
+          SessionCompletionReason::USER_CLOSED_LID;
+      break;
+    default:
+      session_completion_reason =
+          chromeos::tether::TetherDisconnector::SessionCompletionReason::OTHER;
+      break;
+  }
+  if (shut_down_) {
+    session_completion_reason = chromeos::tether::TetherDisconnector::
+        SessionCompletionReason::USER_LOGGED_OUT;
+  }
+
   tether_component_->AddObserver(this);
-  tether_component_->RequestShutdown();
+  tether_component_->RequestShutdown(session_completion_reason);
 }
 
 void TetherService::Shutdown() {

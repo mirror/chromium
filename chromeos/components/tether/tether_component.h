@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "chromeos/components/tether/tether_disconnector.h"
 
 namespace chromeos {
 
@@ -34,7 +35,9 @@ class TetherComponent {
   // asynchronous shutdown, the class transitions to the SHUTTING_DOWN status;
   // once an asynchronous shutdown completes, TetherComponent transitions to the
   // SHUT_DOWN status and notifies observers.
-  virtual void RequestShutdown() = 0;
+  virtual void RequestShutdown(
+      const TetherDisconnector::SessionCompletionReason&
+          session_completion_reason) = 0;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);

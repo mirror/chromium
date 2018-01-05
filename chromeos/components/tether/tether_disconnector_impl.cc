@@ -4,6 +4,7 @@
 
 #include "chromeos/components/tether/tether_disconnector_impl.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "base/values.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
@@ -38,7 +39,8 @@ TetherDisconnectorImpl::~TetherDisconnectorImpl() = default;
 void TetherDisconnectorImpl::DisconnectFromNetwork(
     const std::string& tether_network_guid,
     const base::Closure& success_callback,
-    const network_handler::StringResultCallback& error_callback) {
+    const network_handler::StringResultCallback& error_callback,
+    const SessionCompletionReason& session_completion_reason) {
   DCHECK(!tether_network_guid.empty());
 
   ActiveHost::ActiveHostStatus status = active_host_->GetActiveHostStatus();
@@ -80,6 +82,9 @@ void TetherDisconnectorImpl::DisconnectFromNetwork(
   DCHECK(!active_wifi_network_guid.empty());
   DisconnectActiveWifiConnection(tether_network_guid, active_wifi_network_guid,
                                  success_callback, error_callback);
+  UMA_HISTOGRAM_ENUMERATION(
+      "InstantTethering.SessionCompletionReason", session_completion_reason,
+      SessionCompletionReason::SESSION_COMPLETION_REASON_MAX);
 }
 
 void TetherDisconnectorImpl::DisconnectActiveWifiConnection(

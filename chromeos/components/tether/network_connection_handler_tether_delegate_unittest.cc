@@ -39,7 +39,8 @@ class DummyTetherDisconnector : public FakeTetherDisconnector {
   void DisconnectFromNetwork(
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback) override {}
+      const network_handler::StringResultCallback& error_callback,
+      const SessionCompletionReason& session_completion_reason) override {}
 };
 
 class TestNetworkConnectionHandler : public NetworkConnectionHandler {
@@ -194,6 +195,8 @@ TEST_F(NetworkConnectionHandlerTetherDelegateTest, TestDisconnect) {
   CallTetherDisconnect("tetherNetworkGuid");
   EXPECT_EQ("tetherNetworkGuid",
             fake_tether_disconnector_->last_disconnected_tether_network_guid());
+  EXPECT_EQ(TetherDisconnector::SessionCompletionReason::USER_DISCONNECTED,
+            fake_tether_disconnector_->last_session_completion_reason());
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
 }
 

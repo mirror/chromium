@@ -29,15 +29,21 @@ class FakeTetherDisconnector : public TetherDisconnector {
     disconnection_error_name_ = disconnection_error_name;
   }
 
+  SessionCompletionReason last_session_completion_reason() {
+    return last_session_completion_reason_;
+  }
+
   // TetherDisconnector:
   void DisconnectFromNetwork(
       const std::string& tether_network_guid,
       const base::Closure& success_callback,
-      const network_handler::StringResultCallback& error_callback) override;
+      const network_handler::StringResultCallback& error_callback,
+      const SessionCompletionReason& session_completion_reason) override;
 
  private:
   std::string last_disconnected_tether_network_guid_;
   std::string disconnection_error_name_;
+  SessionCompletionReason last_session_completion_reason_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeTetherDisconnector);
 };

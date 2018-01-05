@@ -97,7 +97,8 @@ class TetherComponentImpl : public TetherComponent {
   ~TetherComponentImpl() override;
 
   // TetherComponent:
-  void RequestShutdown() override;
+  void RequestShutdown(const TetherDisconnector::SessionCompletionReason&
+                           session_completion_reason) override;
 
  private:
   void OnPreCrashStateRestored();
@@ -111,6 +112,7 @@ class TetherComponentImpl : public TetherComponent {
   std::unique_ptr<CrashRecoveryManager> crash_recovery_manager_;
 
   bool has_shutdown_been_requested_ = false;
+  TetherDisconnector::SessionCompletionReason session_completion_reason_;
 
   base::WeakPtrFactory<TetherComponentImpl> weak_ptr_factory_;
 

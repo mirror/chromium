@@ -219,7 +219,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Disconnected) {
   InvokeCrashRecoveryCallback();
   EXPECT_FALSE(test_observer_->shutdown_complete());
 
-  component_->RequestShutdown();
+  component_->RequestShutdown(
+      TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID);
   EXPECT_TRUE(was_synchronous_container_deleted_);
   EXPECT_FALSE(was_asynchronous_container_deleted_);
   EXPECT_FALSE(test_observer_->shutdown_complete());
@@ -239,7 +240,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Connecting) {
   EXPECT_FALSE(test_observer_->shutdown_complete());
 
   fake_active_host_->SetActiveHostConnecting("deviceId", "tetherNetworkGuid");
-  component_->RequestShutdown();
+  component_->RequestShutdown(
+      TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID);
   EXPECT_TRUE(was_synchronous_container_deleted_);
   EXPECT_FALSE(was_asynchronous_container_deleted_);
   EXPECT_FALSE(test_observer_->shutdown_complete());
@@ -247,6 +249,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Connecting) {
   // A disconnection attempt should have occurred.
   EXPECT_EQ("tetherNetworkGuid",
             fake_tether_disconnector_->last_disconnected_tether_network_guid());
+  EXPECT_EQ(TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID,
+            fake_tether_disconnector_->last_session_completion_reason());
 
   InvokeAsynchronousShutdownCallback();
   EXPECT_TRUE(was_asynchronous_container_deleted_);
@@ -259,7 +263,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Connected) {
 
   fake_active_host_->SetActiveHostConnected("deviceId", "tetherNetworkGuid",
                                             "wifiNetworkGuid");
-  component_->RequestShutdown();
+  component_->RequestShutdown(
+      TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID);
   EXPECT_TRUE(was_synchronous_container_deleted_);
   EXPECT_FALSE(was_asynchronous_container_deleted_);
   EXPECT_FALSE(test_observer_->shutdown_complete());
@@ -267,6 +272,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Connected) {
   // A disconnection attempt should have occurred.
   EXPECT_EQ("tetherNetworkGuid",
             fake_tether_disconnector_->last_disconnected_tether_network_guid());
+  EXPECT_EQ(TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID,
+            fake_tether_disconnector_->last_session_completion_reason());
 
   InvokeAsynchronousShutdownCallback();
   EXPECT_TRUE(was_asynchronous_container_deleted_);
@@ -274,7 +281,8 @@ TEST_F(TetherComponentImplTest, TestShutdown_Connected) {
 }
 
 TEST_F(TetherComponentImplTest, TestShutdown_BeforeCrashRecoveryComplete) {
-  component_->RequestShutdown();
+  component_->RequestShutdown(
+      TetherDisconnector::SessionCompletionReason::USER_CLOSED_LID);
   EXPECT_FALSE(test_observer_->shutdown_complete());
 
   // A shutdown attempt should not have occurred since crash recovery has
