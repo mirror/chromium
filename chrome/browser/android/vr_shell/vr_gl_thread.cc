@@ -12,6 +12,7 @@
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 #include "chrome/browser/vr/assets.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
+#include "chrome/browser/vr/model/loaded_assets.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
 #include "chrome/browser/vr/ui.h"
@@ -360,15 +361,9 @@ bool VrGLThread::OnGlThread() const {
 }
 
 void VrGLThread::OnAssetsLoaded(vr::AssetsLoadStatus status,
-                                std::unique_ptr<SkBitmap> background_image,
+                                std::unique_ptr<vr::LoadedAssets> assets,
                                 const base::Version& component_version) {
-  if (status == vr::AssetsLoadStatus::kSuccess) {
-    VLOG(1) << "Successfully loaded VR assets component";
-    vr_shell_gl_->OnAssetsLoaded(std::move(background_image),
-                                 component_version);
-  } else {
-    VLOG(1) << "Failed to load VR assets component";
-  }
+  vr_shell_gl_->OnAssetsLoaded(status, std::move(assets), component_version);
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&VrShell::OnAssetsLoaded, weak_vr_shell_,
                                 status, component_version));

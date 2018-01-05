@@ -12,9 +12,10 @@
 #include "base/files/file_path.h"
 #include "base/memory/weak_ptr.h"
 #include "base/version.h"
-#include "chrome/browser/vr/assets_load_status.h"
 
-class SkBitmap;
+// TODO(vollick): this should live in the model. UI may trigger based on its
+// change.
+#include "chrome/browser/vr/assets_load_status.h"
 
 namespace base {
 class DictionaryValue;
@@ -28,6 +29,7 @@ constexpr uint32_t kCompatibleMajorVrAssetsComponentVersion = 1;
 
 class MetricsHelper;
 struct AssetsSingletonTrait;
+struct LoadedAssets;
 
 // Manages VR assets such as the environment. Gets updated by the VR assets
 // component.
@@ -39,7 +41,7 @@ struct AssetsSingletonTrait;
 class Assets {
  public:
   typedef base::OnceCallback<void(AssetsLoadStatus status,
-                                  std::unique_ptr<SkBitmap> background_image,
+                                  std::unique_ptr<LoadedAssets> loaded_assets,
                                   const base::Version& component_version)>
       OnAssetsLoadedCallback;
   typedef base::RepeatingCallback<void()> OnComponentReadyCallback;
