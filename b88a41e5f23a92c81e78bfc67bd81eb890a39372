@@ -16,6 +16,24 @@
       "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df4d298_ae1d6bfc",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2018-01-05T02:47:36Z",
+      "side": 1,
+      "message": "There is no other CL related except the mojom interface:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/830999\n\nWe made no changes to VaapiPicture. The change we made here is to derive the BufferFromat from the argument \"pixel_format\" instead of the member \"output_format_\".",
+      "parentUuid": "adbe2c08_cd016ec1",
+      "revId": "b88a41e5f23a92c81e78bfc67bd81eb890a39372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
