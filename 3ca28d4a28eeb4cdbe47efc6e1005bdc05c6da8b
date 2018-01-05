@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9581e915_523a76f6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T02:38:28Z",
+      "side": 1,
+      "message": "Why this one?",
+      "revId": "3ca28d4a28eeb4cdbe47efc6e1005bdc05c6da8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8335c8db_8ff96d27",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T02:38:28Z",
+      "side": 1,
+      "message": "If we don\u0027t apply any styling, why do we need these important ones?",
+      "revId": "3ca28d4a28eeb4cdbe47efc6e1005bdc05c6da8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
