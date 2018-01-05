@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7b862e86_8c981007",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "I tried to contrast the \"Ticks\" against the \"WallTime\" above. This way renaming s/getForegroundStartTime/getForegroundStartTicks/ looks the most appropriate for consistency. Done this way.",
+      "parentUuid": "11a21251_095aff6c",
+      "range": {
+        "startLine": 141,
+        "startChar": 23,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cee182fe_0ff2c633",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 5
@@ -131,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "fd6aa710_80d3a059",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "Thank you. I like being explicit, added in these details. Wondering if it should be documented at this detail somewhere more visibly, like in UmaUtils.java. Let me know.",
+      "parentUuid": "7cec5207_d24b1241",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0680259_94c454cf",
         "filename": "chrome/browser/android/metrics/uma_utils.cc",
         "patchSetId": 5
@@ -142,6 +190,30 @@
       "writtenOn": "2018-01-03T22:28:21Z",
       "side": 1,
       "message": "BTW, TimeTicks has several platform-specific \"From\" methods (e.g. FromQPCValue), we could add Android-specific FromUptimeMillis(). That way we avoid using FromInternalValue(), avoid magic *1000 thing, and overall better state our intent.",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 43
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1496df07_4ee0b030",
+        "filename": "chrome/browser/android/metrics/uma_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "yep! Ilya asked about proper naming and API in http://crbug.com/634507, I posted your proposal there, let\u0027s reach the conclusion, after that I am happy to send a followup change for the rename.",
+      "parentUuid": "b0680259_94c454cf",
       "range": {
         "startLine": 35,
         "startChar": 26,
@@ -201,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "c84f3071_d538fdf1",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "yes, in previous comments fdoray@ pointed out that a static initializer is no longer generated for these: https://chromium-review.googlesource.com/c/chromium/src/+/844775/1/components/startup_metric_utils/browser/startup_metric_utils.cc#51",
+      "parentUuid": "6c2f7ecf_3533dbec",
+      "range": {
+        "startLine": 51,
+        "startChar": 16,
+        "endLine": 51,
+        "endChar": 48
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65c129d3_bd4935c1",
         "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
         "patchSetId": 5
@@ -224,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "c2f98f5b_0d37007c",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "Added:\n// TODO(pasko): Stop recording the \"...MainEntry2\" histogram after M65 hits Stable.",
+      "parentUuid": "65c129d3_bd4935c1",
+      "range": {
+        "startLine": 601,
+        "startChar": 0,
+        "endLine": 604,
+        "endChar": 74
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8a2f31c_10bda8b0",
         "filename": "components/startup_metric_utils/browser/startup_metric_utils.h",
         "patchSetId": 5
@@ -235,6 +355,30 @@
       "writtenOn": "2018-01-03T22:08:35Z",
       "side": 1,
       "message": "nit: This looks like an accidental formatting change?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bef452_4008378f",
+        "filename": "components/startup_metric_utils/browser/startup_metric_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "thank you, I undid the change",
+      "parentUuid": "e8a2f31c_10bda8b0",
       "range": {
         "startLine": 59,
         "startChar": 0,
@@ -306,6 +450,30 @@
       "side": 1,
       "message": "Does desktop receive sync messages if it isn\u0027t running?  I actually think that is a case where mobile and desktop are inconsistent.  You can receive a sync message on Android, spinning up the application, and then five minutes later you click on the chrome icon that actually triggers the browser process start (so we record a 5+ min long start time).  I didn\u0027t think desktop had the concept of this sort of split startup that would cause that sort of discrepancy.\n\nThat being said it isn\u0027t any different than the previous metric as recordMainEntryPointTime logs both of the time values used.\n\nI just think that Main Entry was and still is confusing with regards to Android, but I\u0027m not sure you could describe it\u0027s oddness without a 38page novel right here with the different lifecycle timing of various android components.",
       "parentUuid": "dd704049_f8d10962",
+      "range": {
+        "startLine": 84157,
+        "startChar": 56,
+        "endLine": 84157,
+        "endChar": 60
+      },
+      "revId": "d9b1b0cbf2c5085dff9872042d29c63c7b18bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa89dea4_8d0b33f8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 84157,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T19:05:06Z",
+      "side": 1,
+      "message": "\u003e Does desktop receive sync messages if it isn\u0027t running?\n\nI am pretty sure desktop Chrome does not receive sync messages when not running\n(as much as sync non-expert can be sure here).\n\n\u003e I actually think that is a case where mobile and desktop are inconsistent.\n\u003e You can receive a sync message on Android, spinning up the application, and\n\u003e then five minutes later you click on the chrome icon that actually triggers\n\u003e the browser process start (so we record a 5+ min long start time).  I didn\u0027t\n\u003e think desktop had the concept of this sort of split startup that would cause\n\u003e that sort of discrepancy.\n\nYou are right! I forgot about this possibility for \"main entry point\"\nhistograms. Initially I wanted to remove them altogether for Android (now\nabandoned: https://chromium-review.googlesource.com/c/chromium/src/+/796772),\nforgetting another thing: we actually record a trace event as well, and want to\nuse the values from this trace event for benchmarking, since this would be a\nlesser noise target for perf bisects.\n\nAwkward :/\n\n\u003e That being said it isn\u0027t any different than the previous metric as\n\u003e recordMainEntryPointTime logs both of the time values used.\n\nAs I noted in http://crbug.com/797762 there are possible reasons for it to be\ndifferent. Not as much different as in your point above, but still kinda good\nfor filtering out this skew (it was a couple of ms in my local runs, but could\nbe worse on real devices with real connectivity and NTP (network time sync, fun\nambiguity) - see the bug for my\nguesses.\n\nI just added your point to http://crbug.com/795836 (which is blocked on the bug\nmentioned above). The broadcasts and other ways to instantiate the Application\nare *the* elephant in the room for this metric, and something that this change\nis not addressing (though it is still worth avoiding wall-to-ticks conversion).\n\n\u003e I just think that Main Entry was and still is confusing with regards to\n\u003e Android, but I\u0027m not sure you could describe it\u0027s oddness without a 38page\n\u003e novel right here with the different lifecycle timing of various android\n\u003e components.\n\nSo true. Still often I get questions \"Why startup metrics on Android cannot be\nunified with Desktop?\" Which I guess at some point will overflow and I\u0027ll finally sit\ndown and write these [...] 38 pages.",
+      "parentUuid": "a9fe5555_e058f6db",
       "range": {
         "startLine": 84157,
         "startChar": 56,
