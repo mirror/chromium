@@ -48,6 +48,7 @@
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/stop_find_action.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/renderer/fullscreen_video_element.mojom.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/input/input_target_client_impl.h"
@@ -182,6 +183,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::mojom::MediaEngagementClient,
       mojom::Frame,
       mojom::FrameNavigationControl,
+      mojom::FullscreenVideoElementHandler,
       mojom::HostZoom,
       mojom::FrameBindingsControl,
       public blink::WebFrameClient,
@@ -532,6 +534,9 @@ class CONTENT_EXPORT RenderFrameImpl
       const base::Optional<std::string>& error_page_content,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders) override;
 
+  // mojom::FullscreenVideoElementHandler implementation:
+  void RequestFullscreenVideoElement() override;
+
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
 
@@ -748,6 +753,10 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Binds to the site engagement service in the browser.
   void BindEngagement(blink::mojom::EngagementClientAssociatedRequest request);
+
+  // Binds to the fullscreen service in the browser.
+  void BindFullscreen(
+      mojom::FullscreenVideoElementHandlerAssociatedRequest request);
 
   // Binds to the media engagement service in the browser.
   void BindMediaEngagement(
@@ -1511,6 +1520,8 @@ class CONTENT_EXPORT RenderFrameImpl
       frame_bindings_control_binding_;
   mojo::AssociatedBinding<mojom::FrameNavigationControl>
       frame_navigation_control_binding_;
+  mojo::AssociatedBinding<mojom::FullscreenVideoElementHandler>
+      fullscreen_binding_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;
