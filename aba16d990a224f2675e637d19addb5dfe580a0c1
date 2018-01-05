@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "854d57e6_5b324b69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T20:44:32Z",
+      "side": 1,
+      "message": "s/ContentViewCore/WebContents",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15876ba2_dfe6ad1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T20:44:32Z",
+      "side": 1,
+      "message": "s/content view core/WebContents\n\nSame below",
+      "range": {
+        "startLine": 194,
+        "startChar": 30,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e60323_28a717ba",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T20:44:32Z",
+      "side": 1,
+      "message": "Why does this class own a strong ref to the popup controller?  Why not fetch it from userdata?\n\nI think this gets to the create/fromWebContents question though.  create seems more like an initialize function.\n\nShould fromWebContents actually return null until this class initializes it?",
+      "range": {
+        "startLine": 372,
+        "startChar": 36,
+        "endLine": 372,
+        "endChar": 64
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591104fb_e7bed735",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
         "patchSetId": 2
