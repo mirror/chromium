@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51cef38a_46fab637",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2a566cd_6221dcde",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76da76b3_3e08eb74",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0924d4d4_9c2cf4f7",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76da76b3_3e08eb74",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a865bd2c_2689e766",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ed2a121_4fadbe49",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb4fb2be_0af3a561",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcc2e4d_ba219f6f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4fb2be_0af3a561",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,42 @@
     },
     {
       "key": {
+        "uuid": "6dd8e783_00aa1ea5",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "good idea!",
+      "parentUuid": "d6aec899_323d6acf",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b22c7c60_1e592131",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "but it can be less error-prone if we move column-entry into the template file.",
+      "parentUuid": "e5273979_22ea7abe",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b0ea1bf_627aa5ba",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 8
@@ -119,6 +227,24 @@
       "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426ff5df_02779d36",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "I can only run it through cider, but it didn\u0027t catch this. :(",
+      "parentUuid": "6b0ea1bf_627aa5ba",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "6e58200f_12a05f0f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379f091a_7ffa3c54",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe75ac3_8d965ec8",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 8
@@ -153,6 +297,24 @@
       "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb92b23c_45a47ab6",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Because we\u0027re concatenating two absolute paths, os.path.join won\u0027t work here.",
+      "parentUuid": "dfe75ac3_8d965ec8",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -271,6 +433,30 @@
       "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c913cb0a_442ea516",
+        "filename": "tools/code_coverage/html_templates/footer.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T19:16:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c3ed5c3_4c7ef443",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
