@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de489e1a_bed7ad34",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-05T23:31:31Z",
+      "side": 1,
+      "message": "Maybe strip client lofi at least for HasCacheControlNoTransform? I wonder if the server would ever ignore it. Probably not?",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e8406d_8cd1ed56",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-05T23:31:31Z",
+      "side": 1,
+      "message": "Would be nice to send this to interventions internals. Mind filing a bug?",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903aa0c5_92943418",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2018-01-05T23:31:31Z",
+      "side": 1,
+      "message": "nit: We have mixed casing for our getters. If you could change this to hacker case alogn with GetCommitterPreviewsType, that would be nice.",
+      "revId": "0a076a5ecc15624cb7d1a0bafaab3f9409620aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
