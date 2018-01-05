@@ -16,6 +16,24 @@
       "revId": "07affbeef911c0b9b56090bcaf46a6c5f53e5681",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719590c5_693ac848",
+        "filename": "ash/app_list/model/app_list_item.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2018-01-05T19:34:44Z",
+      "side": 1,
+      "message": "`git cl lint` wants this for std::move in L67",
+      "parentUuid": "12ed892b_a260dcdb",
+      "revId": "07affbeef911c0b9b56090bcaf46a6c5f53e5681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
