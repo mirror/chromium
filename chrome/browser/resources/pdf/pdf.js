@@ -234,6 +234,8 @@ function PDFViewer(browserApi) {
   });
 
   document.body.addEventListener('change-page-and-xy', e => {
+    console.log('handler for change-page-and-xy');
+    console.log(e.detail);
     this.outstandingTransformPagePointRequests_.push({
       callback: this.goToPageAndXY_.bind(this, e.detail.origin, e.detail.page)
     });
@@ -533,6 +535,68 @@ PDFViewer.prototype = {
    * @param {Object} params The open params passed in the URL.
    */
   handleURLParams_: function(params) {
+    console.log('handleURLParams_');
+    console.log(params);
+
+    if (params.transformCoords) {
+      if (params.position) {
+        this.outstandingTransformPagePointRequests_.push({
+          callback: this.handlePositionTransform_.bind(this),
+          params: params
+        });
+        this.plugin_.postMessage({
+          type: 'transformPagePoint',
+          page: params.page ? params.page : 0,
+          x: params.position.x,
+          y: params.position.y
+        });
+        return;
+      } else if (params.viewPosition) {
+        if (params.view == FittingType.FIT_TO_WIDTH) {
+          this.outstandingTransformPagePointRequests_.push({
+            callback: this.handlePositionTransform_.bind(this),
+            params: params
+          });
+          this.plugin_.postMessage({
+            type: 'transformPagePoint',
+            page: params.page ? params.page : 0,
+            x: 0,
+            y: params.viewPosition
+          });
+          return;
+        } else if (params.view == FittingType.FIT_TO_HEIGHT) {
+          this.outstandingTransformPagePointRequests_.push({
+            callback: this.handlePositionTransform_.bind(this),
+            params: params
+          });
+          this.plugin_.postMessage({
+            type: 'transformPagePoint',
+            page: params.page ? params.page : 0,
+            x: params.viewPosition,
+            y: 0
+          });
+          return;
+        }
+      }
+    }
+
+    this.handleURLParamsSync_(params);
+  },
+
+  handlePositionTransform_: function(message, params) {
+    if (params.position) {
+      params.position = {x: message.x, y: message.y};
+    } else if (params.viewPosition) {
+      if (params.view == FittingType.FIT_TO_WIDTH) {
+        params.viewPosition = message.y;
+      } else if (params.view == FittingType.FIT_TO_HEIGHT) {
+        params.viewPosition = message.x;
+      }
+    }
+    this.handleURLParamsSync_(params);
+  },
+
+  handleURLParamsSync_: function(params) {
     if (params.zoom)
       this.viewport_.setZoom(params.zoom);
 
@@ -568,7 +632,7 @@ PDFViewer.prototype = {
    * @param {Object} message Message received from the plugin containing the
    *     x and y to navigate to in screen coordinates.
    */
-  goToPageAndXY_: function(origin, page, message) {
+  goToPageAndXY_: function(origin, page, message, params) {
     this.viewport_.goToPageAndXY(page, message.x, message.y);
     if (origin == 'bookmark')
       this.metrics.onFollowBookmark();
@@ -732,7 +796,7 @@ PDFViewer.prototype = {
           this.toolbar_.docTitle = document.title;
         break;
       case 'getNamedDestinationReply':
-        this.paramsParser_.onNamedDestinationReceived(message.data.pageNumber);
+        this.paramsParser_.onNamedDestinationReceived(message.data);
         break;
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;
@@ -740,7 +804,7 @@ PDFViewer.prototype = {
       case 'transformPagePointReply':
         var outstandingRequest =
             this.outstandingTransformPagePointRequests_.shift();
-        outstandingRequest.callback(message.data);
+        outstandingRequest.callback(message.data, outstandingRequest.params);
         break;
     }
   },
