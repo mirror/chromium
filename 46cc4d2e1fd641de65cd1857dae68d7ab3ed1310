@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ddfbb01_6d6df076",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T21:30:11Z",
+      "side": 1,
+      "message": "From the looks of it, I wouldn\u0027t register this until the bottom sheet is initialized.  I would have a separate one that only listens to onNativeLibraryReady.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 28
+      },
+      "revId": "46cc4d2e1fd641de65cd1857dae68d7ab3ed1310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7952ace5_551ddac0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2018-01-05T21:30:11Z",
+      "side": 1,
+      "message": "should this be done only if the bottom sheet is not null?",
+      "range": {
+        "startLine": 745,
+        "startChar": 21,
+        "endLine": 745,
+        "endChar": 39
+      },
+      "revId": "46cc4d2e1fd641de65cd1857dae68d7ab3ed1310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
