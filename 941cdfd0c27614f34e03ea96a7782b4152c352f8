@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3968b000_bf3a2e9b",
+        "filename": "content/app/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2018-01-05T00:52:03Z",
+      "side": 0,
+      "message": "Should this also be removed from content/app/DEPS?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "941cdfd0c27614f34e03ea96a7782b4152c352f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
