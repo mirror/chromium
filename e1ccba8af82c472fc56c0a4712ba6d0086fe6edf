@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "e4a9037c_c37f2f36",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2018-01-05T08:01:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I\u0027m understanding Hidehiko\u0027s comment correctly, but I don\u0027t see any reason not to provide an accessor for the stored proto.\n\nAnyways, I\u0027m OK with either way as I don\u0027t have strong feeling about this.",
+      "parentUuid": "ea69aea2_82bb560f",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a852e831_850685b7",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 4
