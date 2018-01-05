@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b65ba308_3cd5b8d2",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2018-01-05T03:08:22Z",
+      "side": 1,
+      "message": "Forget to reply other questions. In the tests, I made tests both transient child and parented to |parent|. See the test code in Line 459. So Line 459 should be removed to make it siblings?\n\nAnd if transient child has type TYPE_WINDOW. It will be in window cycle list.",
+      "parentUuid": "24dcebf8_34d7ce7e",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 38
+      },
+      "revId": "5bd32fe82e01c12d069f30ee29a71a3f0167ac99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e23aaa3f_f29d0565",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 2
