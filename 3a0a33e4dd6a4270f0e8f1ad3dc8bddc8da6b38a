@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d071d7c_654590b5",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T01:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866ab952_d44e84e5",
+      "range": {
+        "startLine": 23,
+        "startChar": 34,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc68a828_cd79ace0",
         "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f2300d_b8957969",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T01:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc68a828_cd79ace0",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcff7fe_8e12750f",
+        "filename": "chrome/browser/android/webapk/chrome_webapk_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T01:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2957f6c0_b9c912ef",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "3a0a33e4dd6a4270f0e8f1ad3dc8bddc8da6b38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
