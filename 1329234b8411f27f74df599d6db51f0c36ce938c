@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db16adbc_08287e86",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T17:35:43Z",
+      "side": 1,
+      "message": "ack. Yeah, I agree this may need more tweak, I\u0027ll file a bug to track, and we can ask a few users to decide what\u0027s best.",
+      "parentUuid": "de9d1522_4a440ad2",
+      "range": {
+        "startLine": 830,
+        "startChar": 75,
+        "endLine": 831,
+        "endChar": 19
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae266bf5_fa21a522",
         "filename": "tools/code_coverage/html_templates/footer.html",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T19:38:20Z",
       "side": 1,
       "message": "It would be great to have a TOTAL row at the bottom of the table. I think we have necessary information calculated already (i.e. we know totals for each directory, and the overall total should be known / easy to calculate).\n\nNot a blocker, can be done in a separate CL since this one is always quite large.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8c6b68_415da5f7",
+        "filename": "tools/code_coverage/html_templates/footer.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2018-01-05T17:35:43Z",
+      "side": 1,
+      "message": "sg, I\u0027ll file a bug.",
+      "parentUuid": "ae266bf5_fa21a522",
       "range": {
         "startLine": 1,
         "startChar": 0,
