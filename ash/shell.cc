@@ -141,6 +141,7 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/trace_event/trace_event.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/login/login_state.h"
 #include "chromeos/system/devicemode.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -226,8 +227,6 @@ Shell* Shell::instance_ = nullptr;
 aura::WindowTreeClient* Shell::window_tree_client_ = nullptr;
 // static
 aura::WindowManagerClient* Shell::window_manager_client_ = nullptr;
-// static
-bool Shell::initially_hide_cursor_ = false;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Shell, public:
@@ -1067,7 +1066,8 @@ void Shell::Init(ui::ContextFactory* context_factory,
     virtual_keyboard_controller_.reset(new VirtualKeyboardController);
 
   if (cursor_manager_) {
-    if (initially_hide_cursor_)
+    // Hide the mouse cursor completely at boot, unless already logged in.
+    if (!chromeos::LoginState::Get()->IsUserLoggedIn())
       cursor_manager_->HideCursor();
     cursor_manager_->SetCursor(ui::CursorType::kPointer);
   }
