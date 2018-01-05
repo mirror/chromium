@@ -33,7 +33,7 @@ sort_headers = __import__('sort-headers')
 import sort_sources
 
 
-HANDLED_EXTENSIONS = ['.cc', '.mm', '.h', '.hh', '.cpp']
+HANDLED_EXTENSIONS = frozenset(['.cc', '.mm', '.h', '.hh', '.cpp', '.mojom'])
 
 
 def IsHandledFile(path):
@@ -96,6 +96,8 @@ def UpdatePostMove(from_path, to_path, in_blink):
   from_path = from_path.replace('\\', '/')
   to_path = to_path.replace('\\', '/')
 
+  always_confirm = lambda a, b: True
+
   if os.path.splitext(from_path)[1] in ['.h', '.hh']:
     UpdateIncludeGuard(from_path, to_path)
 
@@ -113,9 +115,30 @@ def UpdatePostMove(from_path, to_path, in_blink):
 
     # Reorder headers in files that changed.
     for changed_file in files_with_changed_includes:
-      def AlwaysConfirm(a, b): return True
-      sort_headers.FixFileWithConfirmFunction(changed_file, AlwaysConfirm, True,
-                                              in_blink)
+      sort_headers.FixFileWithConfirmFunction(changed_file, always_confirm,
+                                              True, in_blink)
+
+  elif os.path.splitext(from_path)[1] == '.mojom':
+    # Update mojom import references.
+    files_with_changed_includes = mffr.MultiFileFindReplace(
+        r'import "%s";' % re.escape(from_path), r'import "%s";' % to_path,
+        ['*.mojom'])
+
+    # Reorder imports in files that changed.
+    for changed_file in files_with_changed_includes:
+      sort_headers.FixFileWithConfirmFunction(changed_file, always_confirm,
+                                              True, False)
+
+    # Update C++ include references to generated headers.
+    files_with_changed_includes = mffr.MultiFileFindReplace(
+        r'(#include\s*")%s((?:-(?:(?:shared(?:-internal)?)|blink))?\.h")' %
+        re.escape(from_path), r'\1%s\2' % to_path,
+        ['*.cc', '*.h', '*.m', '*.mm', '*.cpp'])
+
+    # Reorder headers in files that changed.
+    for changed_file in files_with_changed_includes:
+      sort_headers.FixFileWithConfirmFunction(changed_file, always_confirm,
+                                              True, in_blink)
 
   # Update comments; only supports // comments, which are primarily
   # used in our code.
@@ -126,7 +149,7 @@ def UpdatePostMove(from_path, to_path, in_blink):
   mffr.MultiFileFindReplace(
       r'(//.*)%s' % re.escape(from_path),
       r'\1%s' % to_path,
-      ['*.cc', '*.h', '*.m', '*.mm', '*.cpp'])
+      ['*.cc', '*.h', '*.m', '*.mm', '*.cpp', '*.mojom'])
 
   # Update references in GYP and BUILD.gn files.
   #
