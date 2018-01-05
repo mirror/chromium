@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45bdb717_b1714bc5",
+        "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T23:46:13Z",
+      "side": 1,
+      "message": "This won\u0027t compile, since the constructor is private.  (This is why basically no infobars use make_unique\u003c\u003e().)",
+      "parentUuid": "ea8dabd7_264aa93a",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b69b9d9e_99f4d681",
         "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4830d515_e1b6320d",
+        "filename": "chrome/browser/extensions/theme_installed_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T23:46:13Z",
+      "side": 1,
+      "message": "I was trying to be consistent with the types actually passed in, but there\u0027s no good answer here, because the rest of the codebase seems wildly inconsistent about which types it returns/expects for these.  Surprisingly (to me), std::string seems much more common, even in the extensions APIs being referenced, than ExtensionId; so, using that.\n\n(This seems like maybe someone should fix things globally...)",
+      "parentUuid": "b69b9d9e_99f4d681",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b35fec7_cca03693",
         "filename": "chrome/browser/infobars/infobars_browsertest.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2018-01-05T23:21:35Z",
       "side": 1,
       "message": "If the previous theme ID was the default theme then this should be true.",
+      "range": {
+        "startLine": 216,
+        "startChar": 47,
+        "endLine": 216,
+        "endChar": 52
+      },
+      "revId": "e526c5016da76c005c9f16d8d01db097047dcfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089c6695_e50364da",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T23:46:13Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter since this only affects what the \"cancel\" button in the infobar will do, and we only care about showing the infobar onscreen (it can\u0027t be interacted with safely), but that means there\u0027s no harm in changing.  Done.",
+      "parentUuid": "8b35fec7_cca03693",
       "range": {
         "startLine": 216,
         "startChar": 47,
