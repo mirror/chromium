@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709e469f_97c983d2",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "What is this being used for? Let\u0027s eliminate the use of vague enum values such as OTHER.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71800316_411fb586",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be called in more tests? Should we add something in TearDown() to verify that it has been called?",
+      "range": {
+        "startLine": 411,
+        "startChar": 7,
+        "endLine": 411,
+        "endChar": 40
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ae2673_1b4800ad",
+        "filename": "chromeos/components/tether/fake_tether_component.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "You need to set a default value for this; otherwise, it will just be initialized to whatever happened to be in memory at the time this class was constructed.\n\nBut, if you set a default value of X, then your class expects X to be returned by last_session_completion_reason(), your test could pass when it really shouldn\u0027t pass. So, the correct thing would be to use a base::Optional\u003cSessionCompleteionReason\u003e here.\n\nSame thing in FakeTetherDisconnector.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 78
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0aa370_65fd996d",
+        "filename": "chromeos/components/tether/tether_component.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "I know this is a little annoying, but I think we need to have a separate enumeration here. Not every SessionCompleteionReason is a valid reason to call RequestShutdown(). For example, TetherComponent would never be shut down because of the CONNECTION_DROPPED reason. We should enforce this via the compiler by adding a TetherComponent::ShutdownReason enum which only has some of the values.",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143f2421_5de5dbd1",
+        "filename": "chromeos/components/tether/tether_disconnector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "TetherDisconnector is used to initiate a disconnection based on user input, but it isn\u0027t the only place that a disconnection is handled for other reasons. Thus, I don\u0027t think this is the correct place to have the enum.\n\nI\u0027d recommend moving it to its own file. Since you\u0027re already doing that, it might also make sense to make a class out of it like you did for HostConnectionMetricsLogger. That way, you can use the UMA macro in one place and just call a logger class function elsewhere.",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afff654b_947074fd",
+        "filename": "chromeos/components/tether/tether_disconnector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "Have you tested this out on a real device? I\u0027d assume that this function call would trigger TetherNetworkDisconnectionHandler to log another metric for CONNECTION_DROPPED. Please make sure that only one metric is logged.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03772373_3bb52c91",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2018-01-05T22:25:20Z",
+      "side": 1,
+      "message": "This situation also occurs when the user disables Wi-Fi, which should not be categorized as a dropped connection. Let\u0027s add a new enum value for that case.\n\nHere, I think it is safe to log CONNECTION_DROPPED if Wi-Fi is still enabled and to log the new metric enum value if Wi-Fi is disabled at this point.",
+      "range": {
+        "startLine": 53,
+        "startChar": 53,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "48230f1fefa76bbd4f8486a6c8accbb015f9c785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
