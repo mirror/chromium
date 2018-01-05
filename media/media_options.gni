@@ -138,8 +138,8 @@ declare_args() {
   # |mojo_media_services|). When enabled, selected mojo paths will be enabled in
   # the media pipeline and corresponding services will hosted in the selected
   # remote process (e.g. "utility" process, see |mojo_media_host|).
-  enable_mojo_media = is_android || is_chromecast || enable_library_cdms ||
-                      enable_d3d11_video_decoder
+  enable_mojo_media = is_android || is_chromecast || is_mac ||
+                      enable_library_cdms || enable_d3d11_video_decoder
 
   # Enable the TestMojoMediaClient to be used in mojo MediaService. This is for
   # testing only and will override the default platform MojoMediaClient, if any.
@@ -223,13 +223,21 @@ declare_args() {
       mojo_media_services = [
         "cdm",
         "audio_decoder",
+        "video_decoder",
       ]
-      mojo_media_services += [ "video_decoder" ]
       mojo_media_host = "gpu"
     } else if (enable_library_cdms) {
       mojo_media_services = [ "cdm" ]
       mojo_media_host = "gpu"
       enable_standalone_cdm_service = true
+    }
+
+    if (is_mac) {
+      mojo_media_services += [ "video_decoder" ]
+
+      # May or may not have fallen into the |enable_library_cdms| case above,
+      # but in either case "gpu" is correct.
+      mojo_media_host = "gpu"
     }
 
     if (is_win) {
