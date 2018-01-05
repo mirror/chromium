@@ -9,18 +9,19 @@
 
 namespace ash {
 
-TabletPowerButtonControllerTestApi::TabletPowerButtonControllerTestApi(
-    TabletPowerButtonController* controller)
+ConvertiblePowerButtonControllerTestApi::
+    ConvertiblePowerButtonControllerTestApi(
+        ConvertiblePowerButtonController* controller)
     : controller_(controller) {}
 
-TabletPowerButtonControllerTestApi::~TabletPowerButtonControllerTestApi() =
-    default;
+ConvertiblePowerButtonControllerTestApi::
+    ~ConvertiblePowerButtonControllerTestApi() = default;
 
-bool TabletPowerButtonControllerTestApi::ShutdownTimerIsRunning() const {
+bool ConvertiblePowerButtonControllerTestApi::ShutdownTimerIsRunning() const {
   return controller_->shutdown_timer_.IsRunning();
 }
 
-bool TabletPowerButtonControllerTestApi::TriggerShutdownTimeout() {
+bool ConvertiblePowerButtonControllerTestApi::TriggerShutdownTimeout() {
   if (!controller_->shutdown_timer_.IsRunning())
     return false;
 
@@ -30,7 +31,8 @@ bool TabletPowerButtonControllerTestApi::TriggerShutdownTimeout() {
   return true;
 }
 
-void TabletPowerButtonControllerTestApi::SendKeyEvent(ui::KeyEvent* event) {
+void ConvertiblePowerButtonControllerTestApi::SendKeyEvent(
+    ui::KeyEvent* event) {
   controller_->display_controller_->OnKeyEvent(event);
 }
 

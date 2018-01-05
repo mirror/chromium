@@ -177,6 +177,10 @@ This file contains the strings for ash.
         Cancel
       </message>
 
+      <message name="IDS_ASH_POWER_OFF_MENU_POWER_OFF_BUTTON" desc="Text shown on sign out button on power off menu.">
+        Power off
+      </message>
+
       <message name="IDS_ASH_KEYBOARD_OVERLAY_TITLE" desc="The title of the keyboard overlay.">
         Keyboard overlay
       </message>
