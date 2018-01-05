@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d28b0bbb_1dcc35e0",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2018-01-05T18:10:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we report complete again if a new service is added?  Then you wouldn\u0027t have to disable the test you are disabling.",
+      "revId": "bab5cef2e8053ba72d4d143aef37e4ffcd1d4549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
