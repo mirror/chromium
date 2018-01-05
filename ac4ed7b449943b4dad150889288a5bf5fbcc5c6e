@@ -22,6 +22,30 @@
       "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d76a80_a7eabbbc",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2018-01-05T21:51:04Z",
+      "side": 1,
+      "message": "No. I did not find that one and assumed each UI had its own from the other LEARN_MORE strings in this file. Removed.",
+      "parentUuid": "88669dac_064aeca9",
+      "range": {
+        "startLine": 6001,
+        "startChar": 10,
+        "endLine": 6001,
+        "endChar": 20
+      },
+      "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
