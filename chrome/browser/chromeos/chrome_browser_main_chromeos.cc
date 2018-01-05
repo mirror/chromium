@@ -75,7 +75,6 @@
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/net/network_connect_delegate_chromeos.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_impl.h"
@@ -831,10 +830,6 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
     MagnificationManager::Initialize();
   }
 
-  // TODO(crbug.com/776464): Remove WallpaperManager after everything is
-  // migrated to WallpaperController.
-  WallpaperManager::Initialize();
-
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::Bind(&version_loader::GetVersion, version_loader::VERSION_FULL),
@@ -1192,12 +1187,10 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
 
   system::StatisticsProvider::GetInstance()->Shutdown();
 
-  // Let the UserManager and WallpaperManager unregister itself as an observer
-  // of the CrosSettings singleton before it is destroyed. This also ensures
-  // that the UserManager has no URLRequest pending (see
-  // http://crbug.com/276659).
+  // Let the UserManager unregister itself as an observer of the CrosSettings
+  // singleton before it is destroyed. This also ensures that the UserManager
+  // has no URLRequest pending (see http://crbug.com/276659).
   g_browser_process->platform_part()->user_manager()->Shutdown();
-  WallpaperManager::Shutdown();
 
   wallpaper_controller_client_.reset();
 
