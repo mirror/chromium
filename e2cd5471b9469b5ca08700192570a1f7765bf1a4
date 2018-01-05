@@ -22,6 +22,30 @@
       "revId": "e2cd5471b9469b5ca08700192570a1f7765bf1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac766aa6_1f31605b",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2018-01-05T21:04:10Z",
+      "side": 1,
+      "message": "We can not get platform scrollbar theme here because SimTest use mock overlay scrollbar by default (SimTest - WebViewHelper - UseMockScrollbarSettings).",
+      "parentUuid": "9c1ca5a0_c229c9b8",
+      "range": {
+        "startLine": 987,
+        "startChar": 0,
+        "endLine": 990,
+        "endChar": 6
+      },
+      "revId": "e2cd5471b9469b5ca08700192570a1f7765bf1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
