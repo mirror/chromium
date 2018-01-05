@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c1cedcba_ce1a11ee",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-05T19:44:08Z",
+      "side": 1,
+      "message": "nit: Default arguments are not allowed on virtual function.\n\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "parentUuid": "8aaae25c_604ca37f",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 69
+      },
+      "revId": "1e11df481335064778dcb2d36466a1ca0ac2637a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "212ca298_d8057a75",
         "filename": "cc/layers/layer.cc",
         "patchSetId": 18

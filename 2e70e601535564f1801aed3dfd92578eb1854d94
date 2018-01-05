@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f94f73_4d3bc83e",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-05T19:44:08Z",
+      "side": 1,
+      "message": "nit:s/x_delta/y_delta/",
+      "range": {
+        "startLine": 1573,
+        "startChar": 17,
+        "endLine": 1573,
+        "endChar": 24
+      },
+      "revId": "2e70e601535564f1801aed3dfd92578eb1854d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e8cda5_2da3d600",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1601,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2018-01-05T19:44:08Z",
+      "side": 1,
+      "message": "nit:s/x_delta/delta/",
+      "range": {
+        "startLine": 1601,
+        "startChar": 17,
+        "endLine": 1601,
+        "endChar": 24
+      },
+      "revId": "2e70e601535564f1801aed3dfd92578eb1854d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
