@@ -3966,7 +3966,7 @@ TEST_P(WebViewTest, TextInputFlags) {
 
   // (A) <input>
   // (A.1) Verifies autocorrect/autocomplete/spellcheck flags are Off and
-  // autocapitalize is set to none.
+  // no autocapitalize flags are set (meaning autocapitalization is disabled).
   HTMLInputElement* input_element =
       ToHTMLInputElement(document->getElementById("input"));
   document->SetFocusedElement(
@@ -3975,8 +3975,7 @@ TEST_P(WebViewTest, TextInputFlags) {
   web_view_impl->SetFocus(true);
   WebTextInputInfo info1 = active_input_method_controller->TextInputInfo();
   EXPECT_EQ(kWebTextInputFlagAutocompleteOff | kWebTextInputFlagAutocorrectOff |
-                kWebTextInputFlagSpellcheckOff |
-                kWebTextInputFlagAutocapitalizeNone,
+                kWebTextInputFlagSpellcheckOff,
             info1.flags);
 
   // (A.2) Verifies autocorrect/autocomplete/spellcheck flags are On and
@@ -3992,8 +3991,8 @@ TEST_P(WebViewTest, TextInputFlags) {
                 kWebTextInputFlagAutocapitalizeSentences,
             info2.flags);
 
-  // (B) <textarea> Verifies the default text input flags are
-  // WebTextInputFlagAutocapitalizeSentences.
+  // (B) <textarea> Verifies only input flag on by default is sentences
+  // capitalization.
   HTMLTextAreaElement* text_area_element =
       ToHTMLTextAreaElement(document->getElementById("textarea"));
   document->SetFocusedElement(

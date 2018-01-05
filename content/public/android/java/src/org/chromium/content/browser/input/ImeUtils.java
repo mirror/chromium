@@ -112,21 +112,7 @@ public class ImeUtils {
         outAttrs.imeOptions |= getImeAction(inputType, inputFlags, inputMode,
                 (outAttrs.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0);
 
-        // Handling of autocapitalize. Blink will send the flag taking into account the element's
-        // type. This is not using AutocapitalizeNone because Android does not autocapitalize by
-        // default and there is no way to express no capitalization.
-        // Autocapitalize is meant as a hint to the virtual keyboard.
-        if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_CHARACTERS) != 0) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
-        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_WORDS) != 0) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_WORDS;
-        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
-        }
-        // Content editable doesn't use autocapitalize so we need to set it manually.
-        if (inputType == TextInputType.CONTENT_EDITABLE) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
-        }
+        outAttrs.inputType |= getAutocapitalizeFlags(inputFlags);
 
         if ((inputFlags & WebTextInputFlags.HAS_BEEN_PASSWORD_FIELD) != 0) {
             outAttrs.inputType =
@@ -154,6 +140,25 @@ public class ImeUtils {
             imeAction |= EditorInfo.IME_ACTION_GO;
         }
         return imeAction;
+    }
+
+    private static int getAutocapitalizeFlags(int inputFlags) {
+        // Handling of autocapitalize. Blink gives us a value we can use as-is, with the default
+        // state for the "used autocapitalization hint" mapped to "sentences".
+        // https://html.spec.whatwg.org/multipage/interaction.html#used-autocapitalization-hint
+        if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_CHARACTERS) != 0) {
+            return InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
+        }
+
+        if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_WORDS) != 0) {
+            return InputType.TYPE_TEXT_FLAG_CAP_WORDS;
+        }
+
+        if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0) {
+            return InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
+        }
+
+        return 0;
     }
 
     /**
