@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "dd119208_4ac702fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T21:43:42Z",
+      "side": 1,
+      "message": "We can match each one with regex, but I guess parseFloat() should be enough?",
+      "parentUuid": "0eeac28e_8935d56f",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cfd1460_2fd2ddda",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 9
@@ -186,6 +204,23 @@
       "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65d2b96a_966f0384",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2018-01-05T21:43:42Z",
+      "side": 1,
+      "message": "Let\u0027s make this /deg|g?rad|turn$/ just to be sure.",
+      "revId": "4c78d0626e46e9ea7d6baa92066811e5486206f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
