@@ -281,7 +281,7 @@ IN_PROC_BROWSER_TEST_F(AutofillTest, ProfilesNotAggregatedWithSubmitHandler) {
                                false, false);
 
   // The AutofillManager will NOT update the user's profile.
-  EXPECT_EQ(0u, personal_data_manager()->GetProfiles().size());
+  EXPECT_EQ(1u, personal_data_manager()->GetProfiles().size());
 
   // We remove the submit handler and resubmit the form. This time the profile
   // will be updated. This is to guard against the underlying mechanics changing
@@ -298,11 +298,11 @@ IN_PROC_BROWSER_TEST_F(AutofillTest, ProfilesNotAggregatedWithSubmitHandler) {
   observer.Wait();
 
   // The AutofillManager will update the user's profile this time.
-  ASSERT_EQ(1u, personal_data_manager()->GetProfiles().size());
+  ASSERT_EQ(2u, personal_data_manager()->GetProfiles().size());
   EXPECT_EQ(ASCIIToUTF16("John"),
-            personal_data_manager()->GetProfiles()[0]->GetRawInfo(NAME_FIRST));
+            personal_data_manager()->GetProfiles()[1]->GetRawInfo(NAME_FIRST));
   EXPECT_EQ(ASCIIToUTF16("Doe"),
-            personal_data_manager()->GetProfiles()[0]->GetRawInfo(NAME_LAST));
+            personal_data_manager()->GetProfiles()[1]->GetRawInfo(NAME_LAST));
 }
 
 // Test Autofill does not aggregate profiles with no address info.
