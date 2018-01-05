@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73ac7b8e_41af124f",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-05T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112095e5_c2d92612",
+      "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a823fee2_14ee1835",
         "filename": "device/ctap/ctap_make_credential_request_param.h",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1147c7f_3fb3cb70",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-05T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a823fee2_14ee1835",
+      "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f93f4540_ec5c38d9",
+        "filename": "device/ctap/ctap_request_param.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-05T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8f6538_2fef6939",
+      "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e568a3_a7aafdf8",
         "filename": "device/ctap/ctap_request_param.h",
         "patchSetId": 25
@@ -67,6 +121,24 @@
       "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6ae4f7_73b8e467",
+        "filename": "device/ctap/ctap_request_param.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2018-01-05T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e568a3_a7aafdf8",
+      "revId": "2c484a56acc6a2e19de0d5a90ea045e737003f19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
