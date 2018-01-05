@@ -1,0 +1,433 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4a5378_fcc6403b",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: kMaxMutexWaitMs",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19ef8d3_eeaf8185",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "kSHA1Length?",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7d4b03_fdc6a7b5",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "i\u0027m wondering if the code complexity of keeping these in sync with the vectors is really needed. how often do you expect the log to be drained? the cost of computing these on the fly seems fairly small when considering the cost of the memcpys. wdyt of getting rid of them?",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51bf826_ec01dd36",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "this looks like another great candidate for a member function on a thin wrapper class around the vector.",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f1bd60_45dba932",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "this comment doesn\u0027t say anything about what the function does. please replace it with a simple doc string. for example:\n// Returns the number of bytes of memory needed to hold a LogEntry containing a path of |string_length| characters.\nor something like that.",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7b0c68_85780428",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "dst-\u003eblocked \u003d blocked;",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5737ebe7_beb4d112",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit:\n ::memcpy(dst-\u003epath, src.full_path.c_str(), dst-\u003epath_len + 1);\nwill be more efficient since it won\u0027t need to check for the string terminator",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a349099_a795c031",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: omit return at end of void fn",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b4d72a1_f943760f",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "i think this would be more clear if the vector were passed in:\nvoid DequeueEntries(DWORD count, std::vector\u003cLogEntryInternal\u003e* log) {\n\nit would also make a fine member function of a simple class that encapsulates the vector.",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9911d984_384d5ace",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: omit \"return\" at end of void function",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3423a0fb_18d0727a",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "this will allow the size to grow one beyond the max. should this be \u003d\u003d rather than \u003e?",
+      "range": {
+        "startLine": 137,
+        "startChar": 17,
+        "endLine": 137,
+        "endChar": 18
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57d1ea7_9e6dabd5",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "q: ContainsEntry for consistency with base::ContainsKey and such?",
+      "range": {
+        "startLine": 138,
+        "startChar": 18,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e064a3_0b92d7c9",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: omit \" \u003d {}\" since the POD members are all assigned below.",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 29
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2020ee88_c3bb701e",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: \"\u0026entry.basename_hash[0]\" to explicitly get a pointer to the zeroth element.",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6f9a36_09bb8539",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "how about replacing this by putting the following up on line 143:\n\n  log.emplace_back();\n  LogEntryInternal *entry \u003d \u0026log.back();\n\nthen populate |entry| as you have it to avoid an extra copy of all data.",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4495aef_6489346d",
+        "filename": "chrome_elf/whitelist/whitelist_log.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "looks like you could do away with g_initialized and test g_log_mutex for nullness here.",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 162,
+        "endChar": 23
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd103f78_b5e60585",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "this seems like an implementation comment that belongs in the .cc file if it\u0027s important. please add a doc comment here explaining what this does so that consumers know how to hold it.",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422dc8e6_60c5225a",
+        "filename": "chrome_elf/whitelist/whitelist_log.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "q: LogLoadAttempt?",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335e55d3_349ed3db",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "i\u0027m not sure how much to care about memory use, but it seems that this could be replaced with an inline function that computes the location of the next entry. we don\u0027t have to worry about version skew across the module boundary, right?\n\nmaybe this is right:\n\n  // Returns a pointer to the entry immediately following this one.\n  const LogEntry* next() const {\n    // |this| must be properly aligned.\n    assert((reinterpret_cast\u003cuintptr_t\u003e(this) \u0026 0x3) \u003d\u003d 0);\n    // Compute the aligned address following this entry\u0027s path terminator.\n    return reinterpret_cast\u003cconst LogEntry*\u003e(\n        reinterpret_cast\u003cuintptr_t\u003e(\u0026path[path_len] + 4) \u0026 ~3U);\n  }\n  LogEntry* next() {\n    return const_cast\u003cLogEntry*\u003e(const_cast\u003cconst LogEntry*\u003e(this)-\u003enext());\n  }\n\nafter looking at more of the code, it may make sense to make a \"size() const\" method that returns the total size of the instance, and then have next() use that to compute the next pointer. it looks like size() could be used elsewhere.",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51907c6_42e9ce9f",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "please specify the character encoding (e.g., UTF-8).",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccee4fdd_0d3850c2",
+        "filename": "chrome_elf/whitelist/whitelist_packed_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2018-01-05T13:31:42Z",
+      "side": 1,
+      "message": "nit: move this into the declaration of DrainLog rather than using a block.",
+      "revId": "7a6134563606ee8b43a89f52a8364b0ac80fd5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
