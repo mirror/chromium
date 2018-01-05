@@ -177,6 +177,23 @@
     },
     {
       "key": {
+        "uuid": "70502bc2_e7136d7f",
+        "filename": "components/update_client/test_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-05T17:26:33Z",
+      "side": 1,
+      "message": "Please use patch::mojom::FilePatcher::Name_ instead of writing out the string literal.",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60d94deb_23779c4e",
         "filename": "components/update_client/test_configurator.cc",
         "patchSetId": 17
@@ -206,6 +223,24 @@
       "side": 1,
       "message": "The issue is that the code under test takes only a single connector (https://cs.chromium.org/chromium/src/components/update_client/configurator.h?l\u003d103) but it requests two services over it - patch::mojom::FilePatcher and unzip::mojom::Unzipper.\n\nIs there a way to multiplex between the two TestConnectorFactories?",
       "parentUuid": "60d94deb_23779c4e",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df1ff4c_c563333f",
+        "filename": "components/update_client/test_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2018-01-05T17:26:33Z",
+      "side": 1,
+      "message": "Not at the moment, but it sounds like a good change we can make to TestConnectorFactory (not asking you to do it here :))\n\nIn that case this is fine as-is % comment above",
+      "parentUuid": "7d72ad0e_2feddaef",
       "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
