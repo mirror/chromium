@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc06d55_f19d6735",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T00:50:07Z",
+      "side": 1,
+      "message": "nit: than",
+      "range": {
+        "startLine": 505,
+        "startChar": 67,
+        "endLine": 505,
+        "endChar": 72
+      },
+      "revId": "90ad6928f4c3860bdc716dbb35b46f43c2a1faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb67e55_aace1fae",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T00:50:07Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t need to",
+      "range": {
+        "startLine": 508,
+        "startChar": 29,
+        "endLine": 508,
+        "endChar": 38
+      },
+      "revId": "90ad6928f4c3860bdc716dbb35b46f43c2a1faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698d7a4c_4106e540",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T00:50:07Z",
+      "side": 1,
+      "message": "Sanity check: This doesn\u0027t need a change, right?",
+      "revId": "90ad6928f4c3860bdc716dbb35b46f43c2a1faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ff9240_86148420",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T00:50:07Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 1579,
+        "startChar": 25,
+        "endLine": 1579,
+        "endChar": 30
+      },
+      "revId": "90ad6928f4c3860bdc716dbb35b46f43c2a1faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93bc61c1_44eebb0e",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T00:50:07Z",
+      "side": 1,
+      "message": "Which part should not crash?  The WaitForRequestStart line above?  Maybe move that line below this comment.",
+      "range": {
+        "startLine": 1674,
+        "startChar": 58,
+        "endLine": 1674,
+        "endChar": 80
+      },
+      "revId": "90ad6928f4c3860bdc716dbb35b46f43c2a1faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
