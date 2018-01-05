@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b3e98e4_730cffa8",
+        "filename": "components/unzip_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f002a9ca_1bdd3e9c",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "534f87a9_430466c0",
         "filename": "components/unzip_service/DEPS",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8236339_770c5a13",
+        "filename": "components/unzip_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "534f87a9_430466c0",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bd3dc872_2cd045ca",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af4d2f98_5427a55b",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da992486_b25ab907",
         "filename": "components/unzip_service/public/interfaces/BUILD.gn",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be187ba_39a842ea",
+        "filename": "components/unzip_service/public/interfaces/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da992486_b25ab907",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c11365be_fd4e35f8",
+        "filename": "components/unzip_service/public/interfaces/unzipper.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e29fd5d0_449c7b41",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d94deb_23779c4e",
         "filename": "components/update_client/test_configurator.cc",
         "patchSetId": 17
@@ -98,6 +188,24 @@
       "writtenOn": "2018-01-04T15:58:01Z",
       "side": 1,
       "message": "Please consider using TestConnectorFactory[1] instead. You can create one for each service. It wires a Connector impl directly to a Service impl for testing.\n\n[1] https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/test/test_connector_factory.h?rcl\u003d569dd0ccbd64a2311aaf6df9f90cec997ddd30f0\u0026l\u003d39",
+      "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d72ad0e_2feddaef",
+        "filename": "components/update_client/test_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T17:05:03Z",
+      "side": 1,
+      "message": "The issue is that the code under test takes only a single connector (https://cs.chromium.org/chromium/src/components/update_client/configurator.h?l\u003d103) but it requests two services over it - patch::mojom::FilePatcher and unzip::mojom::Unzipper.\n\nIs there a way to multiplex between the two TestConnectorFactories?",
+      "parentUuid": "60d94deb_23779c4e",
       "revId": "19bf81be0f29558d19750e71b0bb89524f2d3692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
