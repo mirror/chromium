@@ -23,6 +23,7 @@
 #include "chrome/grit/chromium_strings.h"
 #include "components/crash/core/browser/crashes_ui_util.h"
 #include "components/grit/components_resources.h"
+#include "components/grit/components_resources_map.h"
 #include "components/grit/components_scaled_resources.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/web_contents.h"
@@ -54,9 +55,9 @@ content::WebUIDataSource* CreateCrashesUIHTMLSource() {
   source->AddLocalizedString(crash::kCrashesUIShortProductName,
                              IDS_SHORT_PRODUCT_NAME);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kComponentsResources, kComponentsResourcesSize);
   source->AddResourcePath(crash::kCrashesUICrashesJS, IDR_CRASH_CRASHES_JS);
   source->SetDefaultResource(IDR_CRASH_CRASHES_HTML);
-  source->UseGzip();
   return source;
 }
 

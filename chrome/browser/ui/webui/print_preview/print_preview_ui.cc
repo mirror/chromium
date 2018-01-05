@@ -35,6 +35,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "chrome/grit/browser_resources_map.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/print_preview_resources.h"
@@ -358,6 +359,7 @@ void AddPrintPreviewStrings(content::WebUIDataSource* source) {
 }
 
 void AddPrintPreviewImages(content::WebUIDataSource* source) {
+  source->AddGzipMap(kBrowserResources, kBrowserResourcesSize);
   source->AddResourcePath("images/1x/printer.png",
                           IDR_PRINT_PREVIEW_IMAGES_1X_PRINTER);
   source->AddResourcePath("images/2x/printer.png",
@@ -401,6 +403,7 @@ content::WebUIDataSource* CreateNewPrintPreviewUISource(Profile* profile) {
       content::WebUIDataSource::Create(chrome::kChromeUIPrintHost);
   AddPrintPreviewStrings(source);
   source->SetJsonPath("strings.js");
+  source->AddGzipMap(kPrintPreviewResources, kPrintPreviewResourcesSize);
   for (size_t i = 0; i < kPrintPreviewResourcesSize; ++i) {
     source->AddResourcePath(kPrintPreviewResources[i].name,
                             kPrintPreviewResources[i].value);

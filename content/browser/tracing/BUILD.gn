@@ -40,6 +40,8 @@ grit("resources") {
 
   outputs = [
     "grit/tracing_resources.h",
+    "grit/tracing_resources_map.cc",
+    "grit/tracing_resources_map.h",
     "tracing_resources.pak",
   ]
 
