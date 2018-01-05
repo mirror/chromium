@@ -686,7 +686,7 @@ TEST_F(U2fRegisterTest, TestAuthenticatorData) {
       static_cast<uint8_t>(AuthenticatorData::Flag::kTestOfUserPresence) |
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
 
-  auto authenticator_data = AuthenticatorData::Create(
+  auto authenticator_data = AuthenticatorData(
       kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
       std::move(attested_data));
 
@@ -707,7 +707,7 @@ TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
   uint8_t flags =
       static_cast<uint8_t>(AuthenticatorData::Flag::kTestOfUserPresence) |
       static_cast<uint8_t>(AuthenticatorData::Flag::kAttestation);
-  auto authenticator_data = AuthenticatorData::Create(
+  auto authenticator_data = AuthenticatorData(
       kTestRelyingPartyId, flags, std::vector<uint8_t>(4, 0) /* counter */,
       std::move(attested_data));
 
