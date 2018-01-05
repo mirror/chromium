@@ -22,6 +22,30 @@
       "revId": "79514cef4d927d64aa1f4c9e6eaa12204004d234",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe59692_6b622bb3",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T16:37:57Z",
+      "side": 1,
+      "message": "Okay, I will do it right now.\nI will rebase and relaunch trybots on https://chromium-review.googlesource.com/c/chromium/src/+/852094 to to be sure it won\u0027t regress any tests.\n\nIt also mean I can (and I will) update the DCHECK:\n```cpp\nMojoAsyncResourceHandler::MojoAsyncResourceHandler([...]\n  DCHECK(IsResourceTypeFrame(resource_type) ||\n         !(url_loader_options_ \u0026 mojom::kURLLoadOptionSendSSLInfoWithResponse));\n  DCHECK(resource_type \u003d\u003d RESOURCE_TYPE_MAIN_FRAME ||\n         !(url_loader_options_ \u0026\n           mojom::kURLLoadOptionSendSSLInfoForCertificateError));\n```",
+      "parentUuid": "33ec18d3_8c0e76c1",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 67
+      },
+      "revId": "79514cef4d927d64aa1f4c9e6eaa12204004d234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
