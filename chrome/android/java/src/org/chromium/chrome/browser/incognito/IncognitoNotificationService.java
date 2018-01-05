@@ -17,13 +17,16 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.View;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
@@ -204,7 +207,9 @@ public class IncognitoNotificationService extends IntentService {
                         tabbedActivity.getBottomSheet().setSheetState(
                                 BottomSheet.SHEET_STATE_PEEK, false);
                     }
-
+                    if (SysUtils.isLowEndDevice()) {
+                        tabbedActivity.findViewById(R.id.button_wrapper).setVisibility(View.GONE);
+                    }
                     tabbedActivity.getTabModelSelector().getModel(true).closeAllTabs(
                             false, false);
                 }
