@@ -70,6 +70,30 @@
       "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f48fb5fa_5dc1a6f4",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2018-01-05T12:48:32Z",
+      "side": 1,
+      "message": "It would be useful though if we could, in wpt, test that a closed PC is GC\u0027d. And perhaps that a non-closed one is not GC\u0027d so that it can get events. But that requires internals and and the latter requires intentionally leaking from a test.",
+      "parentUuid": "82268376_fc6de339",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
