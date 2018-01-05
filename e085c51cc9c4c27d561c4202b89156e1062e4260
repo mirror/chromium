@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bd9af639_caa8b809",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T19:14:06Z",
+      "side": 1,
+      "message": "\u003e No behavior change here... I just moved out the status code fetching to be able to reach it from the DCHECK.\n\nI don\u0027t know what it means to query the status of a in-process \"process\"",
+      "parentUuid": "1ca2fad8_c16e4223",
+      "revId": "e085c51cc9c4c27d561c4202b89156e1062e4260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd211814_fb351510",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 7
