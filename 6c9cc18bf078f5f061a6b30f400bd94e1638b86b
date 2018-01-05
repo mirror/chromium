@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afef8ada_f86742dd",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-05T17:29:19Z",
+      "side": 1,
+      "message": "Do we have a method to the order here? This question applies to the other CL too...",
+      "revId": "6c9cc18bf078f5f061a6b30f400bd94e1638b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2f8d73_6b8ea00b",
+        "filename": "chrome/browser/plugins/reload_plugin_infobar_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2018-01-05T17:29:19Z",
+      "side": 1,
+      "message": "2018 also here and cc",
+      "revId": "6c9cc18bf078f5f061a6b30f400bd94e1638b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
