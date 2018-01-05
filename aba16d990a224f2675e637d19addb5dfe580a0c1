@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2001b62_89b82114",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "don\u0027t bother. just call fromWebContents directly from above. null check here doesn\u0027t make much sense",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591104fb_e7bed735",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "why is this check needed now?",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0240f50_9b9aa234",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCoreImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 767,
+        "startChar": 16,
+        "endLine": 767,
+        "endChar": 54
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe94028c_9f5c18d2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupControllerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "why is there a create and a fromWebContents? fromWebContents should never return something that\u0027s partially initialized",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c0e17f_fd306c84",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/ActionModeCallbackHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "keep implementation on ControllerImpl",
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c28c3f_37982933",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T15:25:33Z",
+      "side": 1,
+      "message": "content test can directly use the impl class",
+      "range": {
+        "startLine": 112,
+        "startChar": 17,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "aba16d990a224f2675e637d19addb5dfe580a0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
