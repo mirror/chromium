@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aee8cbd_2fa39ea1",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T16:23:40Z",
+      "side": 1,
+      "message": "Load isn\u0027t static anymore, so this snippet isn\u0027t correct.",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "42921e1e5b7222aba75df52510a8b209e4e2abd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
