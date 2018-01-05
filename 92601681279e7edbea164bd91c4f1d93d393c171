@@ -22,6 +22,30 @@
       "revId": "92601681279e7edbea164bd91c4f1d93d393c171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba5a7ca_56fa02c2",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-05T11:48:01Z",
+      "side": 1,
+      "message": "Got it. Thanks!",
+      "parentUuid": "4caf27ca_f918d91d",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "92601681279e7edbea164bd91c4f1d93d393c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

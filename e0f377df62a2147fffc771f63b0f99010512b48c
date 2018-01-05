@@ -2035,6 +2035,24 @@
     },
     {
       "key": {
+        "uuid": "428e917a_c1bc2b09",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-05T11:48:01Z",
+      "side": 1,
+      "message": "Ack. Will do in https://chromium-review.googlesource.com/c/chromium/src/+/831171.",
+      "parentUuid": "435ec980_c7eeee63",
+      "revId": "e0f377df62a2147fffc771f63b0f99010512b48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a67b69d_ecc6a73a",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 7
