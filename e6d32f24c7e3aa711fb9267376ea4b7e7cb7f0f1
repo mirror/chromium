@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a705173_84bf5b71",
+        "filename": "ios/chrome/browser/download/download_directory_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2018-01-05T22:48:47Z",
+      "side": 1,
+      "message": "Comment to explain that caller is responsible for ensuring that directory exists would be helpful.",
+      "revId": "e6d32f24c7e3aa711fb9267376ea4b7e7cb7f0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
