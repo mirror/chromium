@@ -520,10 +520,15 @@ GpuProcessHost::~GpuProcessHost() {
 
   std::string message;
   bool block_offscreen_contexts = true;
+  int exit_code;
+  base::TerminationStatus status =
+      process_->GetTerminationStatus(false /* known_dead */, &exit_code);
+
+  // If the GPU thread is alive its host must be too.
+  DCHECK(!in_process_ || !in_process_gpu_thread_->IsRunning() ||
+         status == base::TERMINATION_STATUS_STILL_RUNNING);
+
   if (!in_process_ && process_launched_) {
-    int exit_code;
-    base::TerminationStatus status = process_->GetTerminationStatus(
-        false /* known_dead */, &exit_code);
     UMA_HISTOGRAM_ENUMERATION("GPU.GPUProcessTerminationStatus",
                               status,
                               base::TERMINATION_STATUS_MAX_ENUM);
