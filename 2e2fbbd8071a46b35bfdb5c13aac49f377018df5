@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "852d770f_fdfd0130",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-05T08:29:11Z",
+      "side": 1,
+      "message": "Doesn\u0027t work due to private constructor. Relevant chromium-dev thread suggests this as acceptable alternative.",
+      "parentUuid": "14efefea_ba731571",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 34
+      },
+      "revId": "2e2fbbd8071a46b35bfdb5c13aac49f377018df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c87a7ed_64ea37fb",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "71503d01_a0119951",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-05T08:29:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c87a7ed_64ea37fb",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "2e2fbbd8071a46b35bfdb5c13aac49f377018df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54877aec_f4bec2f1",
         "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "2e2fbbd8071a46b35bfdb5c13aac49f377018df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb4b2bb_dc898435",
+        "filename": "chrome/browser/chromeos/tpm_firmware_update.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2018-01-05T08:29:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54877aec_f4bec2f1",
+      "revId": "2e2fbbd8071a46b35bfdb5c13aac49f377018df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
