@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c6060f_5f094b9a",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Is this div necessary? Could the |hidden| attribute be applied on \u003clabel\u003e directly (as well as adding display: block)?",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10ab9eb_1d884308",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Do we need to cache the \"checked\" and \"isHidden\" bits on a new data structure (meaning |item|)? Can we not just request that information on demand?\n\nBasically I am wondering if using a dom-repeat to create those settings is beneficial, or just makes things more complicated (more intermediate data structures between model and the UI).",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54321b1_5b2a14df",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Can we move this constants outside of the class, near the top of this file?\n\ncr.exportPath(\u0027print_preview_new\u0027);\n\n...\nprint_preview_new.OptionCheckbox;\n\n(function() {\n\u0027use strict\u0027;\n\n/** @type {!Array\u003cstring\u003e} */\nconst SETTINGS_NAMES \u003d [...];\n\n/** @type {!Array\u003cstring\u003e} */\nconst IDS \u003d [...]\n\nPolymer({\n  ...\n});\n})();",
+      "range": {
+        "startLine": 41,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 4
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1af5319_3a0f9c92",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Let\u0027s move this to a constant too, so that we don\u0027t have to re-define it every time computeOptions_ is called.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2217123_c6b0450f",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Can we use Array#map() instead?\n\nreturn this.settingNames_.map((name, index) \u003d\u003e {\n  return {\n    ...\n  };\n});",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c443b8_5b2de27f",
+        "filename": "chrome/browser/resources/print_preview/new/other_options_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T19:43:40Z",
+      "side": 1,
+      "message": "Instead of updating all checkboxes when a single setting changes, should we add individual observers for each checkbox? And only update that one?",
+      "revId": "ee41d130ee5c6aab8283b9fff2bee040c2baf9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
