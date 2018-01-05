@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "398262ac_fc18bab3",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T21:56:57Z",
+      "side": 1,
+      "message": "this is actually relaxing the precision of this check, which is not good. what are the actual values here? can you track where we lost the precision exactly?",
+      "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead13037_a9694650",
+        "filename": "content/public/browser/android/synchronous_compositor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2018-01-05T21:56:57Z",
+      "side": 1,
+      "message": "this seem to be opposite of what the code does. I think the code is right?",
+      "revId": "a5d217e6161b5d6953adde513cfd2b9032a8f717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
