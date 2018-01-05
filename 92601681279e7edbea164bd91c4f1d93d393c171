@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4caf27ca_f918d91d",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2018-01-05T10:51:12Z",
+      "side": 1,
+      "message": "MSVC apparently doesn\u0027t like constexpr here, should be const instead, so it matches the declaration in collected_client_data.h.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "92601681279e7edbea164bd91c4f1d93d393c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
