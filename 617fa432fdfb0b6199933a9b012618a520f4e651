@@ -113,6 +113,48 @@
       "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce6cd96b_f0845c61",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-05T09:59:55Z",
+      "side": 1,
+      "message": "This means that those events are Arc specific and doesn\u0027t exist in Android. I\u0027m going to move this to outside of AccessibilityEventType as it\u0027s confusing.",
+      "parentUuid": "c6d70d20_94c395b9",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b34ea6_0e4018f9",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2018-01-05T09:59:55Z",
+      "side": 1,
+      "message": "I think adding OnNotificationStateChanged to accessibility_helper.mojom would be simple. I\u0027m going to change the CL in the way.\n\nIIUC, nothing is guaranteed about the order of mojom calls between two different hosts. If we make this part of notifications.mojom, we will need to consider the case where the order has changed.",
+      "parentUuid": "5296f6a6_a44c96f8",
+      "revId": "617fa432fdfb0b6199933a9b012618a520f4e651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
