@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "120f512b_be81bf05",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4484574f_7cc7ff91",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db55e312_6f6e7461",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
         "patchSetId": 15
@@ -36,6 +60,24 @@
       "writtenOn": "2018-01-05T05:10:46Z",
       "side": 1,
       "message": "Why does this need an if now?",
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a77e063_5eecfdac",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "I think some tests failed without this... Lemme add it back and try again.",
+      "parentUuid": "db55e312_6f6e7461",
       "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "03d5d1b1_d2d532b7",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e73a8704_4a76799e",
+      "range": {
+        "startLine": 57,
+        "startChar": 10,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e594017_06550313",
         "filename": "content/common/speech_recognizer.mojom",
         "patchSetId": 15
@@ -76,6 +142,30 @@
       "writtenOn": "2018-01-05T05:10:46Z",
       "side": 1,
       "message": "Origin? \u003d)\n\nAlso, why not do it now in the mojom: the sending side already have a WebSecurityOrigin.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2706940_74f41a00",
+        "filename": "content/common/speech_recognizer.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "It\u0027s a bit more complicated than that, since url::Origin doesn\u0027t have a ToString() method and GURL\u0027s Serialize() may not be the same (eg doesn\u0027t convert to \"null\" for an empty origin). Changed the TODO to \"origin\" and will do in a separate patch to keep these behavior fixes isolated.",
+      "parentUuid": "9e594017_06550313",
       "range": {
         "startLine": 20,
         "startChar": 19,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ccd2d9d9_de993fce",
+        "filename": "content/common/speech_recognizer.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "Thanks; changed all to int32. There\u0027s a TODO for removing them too. :)",
+      "parentUuid": "17bd5761_a7ea14be",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 35
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96a3b43_5c09a83c",
         "filename": "content/common/speech_recognizer.mojom",
         "patchSetId": 15
@@ -122,6 +236,30 @@
       "writtenOn": "2018-01-05T05:10:46Z",
       "side": 1,
       "message": "oh hmm... I guess this will require consulting with dmazzoni to understand how this interacts with the system.\n\nbut we should definitely be trying to figure out how to get rid of the routing IDs, since they lead to us having to add checks that shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd78ec60_0f97a2e4",
+        "filename": "content/common/speech_recognizer.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "Yeah, np. :)",
+      "parentUuid": "e96a3b43_5c09a83c",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "1d3f35ea_742a7560",
+        "filename": "content/public/common/speech_recognition_grammar_struct_traits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "Np, done. :)",
+      "parentUuid": "2d0e16cf_0bc8aff1",
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3857cc39_54edec86",
         "filename": "content/renderer/speech_recognition_dispatcher.cc",
         "patchSetId": 15
@@ -171,6 +327,30 @@
       "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d13a4d_cf7f1922",
+        "filename": "content/renderer/speech_recognition_dispatcher.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2018-01-05T06:58:33Z",
+      "side": 1,
+      "message": "I have a design on the bug to remove these; added a TODO to the mojom to keep track of it :)",
+      "parentUuid": "3857cc39_54edec86",
+      "range": {
+        "startLine": 101,
+        "startChar": 48,
+        "endLine": 101,
+        "endChar": 60
+      },
+      "revId": "8f1da2b843db1d81a2241e47a291733574e40e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
