@@ -46,6 +46,23 @@
       "revId": "b9a1e8652ad3efe4b9f5851ba607b64df753af63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1688e8cf_4420d5cf",
+        "filename": "ios/chrome/browser/ui/animations/locationbar_animation_configurator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2018-01-05T10:44:23Z",
+      "side": 1,
+      "message": "I thought about exposing the views to an object, like you do; but this doesn\u0027t scale very well because with autolayout you have to animate constraints, not frames. This means that effectively for each view that takes part in the animation, you will have to expose the view, any of the constraints for this view, and if you need to add/remove views in the animation, you\u0027ll need all the views to set up the new constraints, etc. \n\nI think in CL 850400 it\u0027s a bit better, since you only expose the actions to be animated in a form of methods; this way the animator knows that it needs to \"expand omnibox in the toolbar\", but it doesn\u0027t really know what the omnibox is and how to expand it. But it shouldn\u0027t: it only should care that it needs to happen at the same time as \"fading out omnibox buttons\".",
+      "revId": "b9a1e8652ad3efe4b9f5851ba607b64df753af63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
