@@ -22,6 +22,30 @@
       "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95279786_37592b50",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-many.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2018-01-05T12:42:19Z",
+      "side": 1,
+      "message": "That\u0027s my reading. We want to test an implementation-imposed limit, and we have non-standard instrumentation to see what that limit is and how close we are to it.\nThere\u0027s a related test that could be WPT\u0027ed - simply allocate PCs until we hit an error. Before the patch that this test was initially written for was landed, that would have crashed Chrome.",
+      "parentUuid": "1c03757a_2dbe02ec",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 4
+      },
+      "revId": "f7d23283ffc6976c677eef75d13022b1dc8aefb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
