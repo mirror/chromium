@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "693e5f4f_7a3f8bba",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T16:56:18Z",
+      "side": 1,
+      "message": "That\u0027s possible, but I\u0027m not sure it falsifies what I said.\n\nFiguring out precisely which parts of the below code could run in which cases would be the tricky part.",
+      "parentUuid": "4e388a10_5ea330fc",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82fc8cd4_7aa725e0",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "The following code clobbers target contents regardless, which we don\u0027t want for singletons, and \u0027target_contents\u0027 may or may not be set (if we can trust the comment.)",
       "parentUuid": "82fc8cd4_7aa725e0",
+      "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c9ed495_4afa3d57",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2018-01-05T16:56:18Z",
+      "side": 1,
+      "message": "I\u0027m confused.  I was proposing removing \"\u0026\u0026 singleton_index \u003c 0\", which can\u0027t be false when target_contents is null, AFAICT (since if we have a singleton, we set the target_contents above).\n\nIt doesn\u0027t seem like your reply responds to that?",
+      "parentUuid": "c0c2a0d7_0fdcf721",
       "revId": "9a602b6896ef31a8ea546c500d97a9bf94ef18ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
