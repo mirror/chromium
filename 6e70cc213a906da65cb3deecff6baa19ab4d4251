@@ -16,6 +16,24 @@
       "revId": "6e70cc213a906da65cb3deecff6baa19ab4d4251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d157034a_16dfa597",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5386,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2018-01-05T15:26:59Z",
+      "side": 1,
+      "message": "It\u0027s not doing manipulation about the premultiply_alpha value here; the CopyImageToTexture() function inverts the unpack_premultiply_alpha and unpack_flip_y values in call to CopySubTextureCHROMIUM, specifically catered to the texImage2D from canvas. Because I merge the function with that by TexImage2D from imagebitmap, I can to hardcode a value \"true\" here to invert it to \"false\" in CopySubTextureCHROMIUM.\n\nAs I move on with this Issue, I think I got to deal with this flipY and premultiplyAlpha values again; if there\u0027s anything wrong in conformance tests, that might be revealed again. I will follow up this in emails.",
+      "parentUuid": "d316f348_e8b935ad",
+      "revId": "6e70cc213a906da65cb3deecff6baa19ab4d4251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
