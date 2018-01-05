@@ -12,6 +12,12 @@
 #include "ui/base/ui_base_export.h"
 #include "ui/gfx/native_widget_types.h"
 
+#if defined(__OBJC__)
+@class BubbleCloserHandleToClosure;
+#else
+class BubbleCloserHandleToClosure;
+#endif
+
 namespace ui {
 
 // Monitors mouse events to allow a regular window to have menu-like popup
@@ -26,10 +32,8 @@ class UI_BASE_EXPORT BubbleCloser {
   ~BubbleCloser();
 
  private:
-  void OnClickOutside();
-
+  BubbleCloserHandleToClosure* handle_to_closure_;  // Strong.
   id event_tap_;  // Weak. Owned by AppKit.
-  base::RepeatingClosure on_click_outside_;
 
   DISALLOW_COPY_AND_ASSIGN(BubbleCloser);
 };
