@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635bb860_4fe28335",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-05T21:24:42Z",
+      "side": 1,
+      "message": "Should we set ukm_download_id here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 34,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "52f55286eb44ef3c5ef3944790a5f49d9c3013ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ad367b_15eb96c5",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-05T21:24:42Z",
+      "side": 1,
+      "message": "Can this go out of bounds if it immediately becomes an int64?",
+      "range": {
+        "startLine": 559,
+        "startChar": 57,
+        "endLine": 559,
+        "endChar": 75
+      },
+      "revId": "52f55286eb44ef3c5ef3944790a5f49d9c3013ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd8d95a_35e70fc1",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2018-01-05T21:24:42Z",
+      "side": 1,
+      "message": "Maybe make a function \"CreateDownloadEntryFromItem(const DownloadItem\u0026 item)\" up top?  That way if you address the rand issue it\u0027s fixed in all places.",
+      "range": {
+        "startLine": 684,
+        "startChar": 45,
+        "endLine": 685,
+        "endChar": 56
+      },
+      "revId": "52f55286eb44ef3c5ef3944790a5f49d9c3013ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
