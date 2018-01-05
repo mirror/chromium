@@ -412,7 +412,8 @@ void ObjectPaintInvalidatorWithContext::InvalidatePaintRectangleWithContext(
   // on the same backing, skip the invalidation.
   if (ParentFullyInvalidatedOnSameBacking() &&
       (context_.parent_context->old_visual_rect.Contains(rect) ||
-       object_.Parent()->FragmentsVisualRectBoundingBox().Contains(rect))) {
+       (!object_.
+        object_.Parent()->FirstFragment().Contains(rect))) {
     if (!object_.GetFrameView()->IsTrackingPaintInvalidations())
       return;
     // If we are tracking paint invalidations (e.g. when running a text-based-
