@@ -46,6 +46,30 @@
       "revId": "e8136f3a68ffa6b12cff9311534a79cc0e3d45dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33668877_bc8ac8ca",
+        "filename": "media/media_options.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2018-01-05T23:59:54Z",
+      "side": 1,
+      "message": "I do felt this is probably a bit too much into implementation details. For example, for a different browser where they want to host a mojo video decoder in the browser/utility process by overridding \"mojo_media_host\", this would assert which is a bit annoying.",
+      "parentUuid": "ad9b312d_2a4f6f29",
+      "range": {
+        "startLine": 237,
+        "startChar": 13,
+        "endLine": 237,
+        "endChar": 28
+      },
+      "revId": "e8136f3a68ffa6b12cff9311534a79cc0e3d45dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
