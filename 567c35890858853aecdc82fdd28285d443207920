@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3009535c_06e9363b",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T14:45:43Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "ac027bc7_24957d92",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61b0b993_4209cb92",
         "filename": "content/browser/gpu/gpu_process_host.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-04T21:41:31Z",
       "side": 1,
       "message": "I don\u0027t actually understand this one. what is it racing with exactly?",
+      "revId": "567c35890858853aecdc82fdd28285d443207920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8654f89c_04e48f85",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2018-01-05T14:45:43Z",
+      "side": 1,
+      "message": "Here\u0027s the UML:\n\nInProcessGpuThread owns a InProcessChildThreadParams.\nThat InProcessChildThreadParams has a pointer to an OutgoingBrokerClientInvitation.\n\nThe pointed OutgoingBrokerClientInvitation is owned by BrowserChildProcessHostImpl.\nGpuProcessHost owns both BrowserChildProcessHostImpl and InProcessGpuThread. \n\nHere\u0027s the race:\n\nThe destruction order goes bottom up in gpu_process_host.h so the IO thread destructs BrowserChildProcessHostImpl before InProcessGpuThread \u003d\u003e InProcessGpuThread::Init() starts to execute the deleted (!) OutgoingBrokerClientInvitation it has a pointer to.\n\nWhen the GPU thread runs the deleted OutgoingBrokerClientInvitation\u0027s ExtractInProcessMessagePipe() it crashes on the NOTREACHED because attached_ports_ has already been destructed.\n\nA simpler solution may be to just fix the destruction order. I already suggested that here https://codereview.chromium.org/2973723003/diff/1/content/browser/gpu/gpu_process_host.h (as a solution to another race). What do you think?",
+      "parentUuid": "61b0b993_4209cb92",
       "revId": "567c35890858853aecdc82fdd28285d443207920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
