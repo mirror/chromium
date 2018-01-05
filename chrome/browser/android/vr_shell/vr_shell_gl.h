@@ -55,6 +55,7 @@ class BrowserUiInterface;
 class FPSMeter;
 class SlidingTimeDeltaAverage;
 class Ui;
+struct LoadedAssets;
 }  // namespace vr
 
 namespace vr_shell {
@@ -120,7 +121,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
 
   void OnSwapContents(int new_content_id);
 
-  void OnAssetsLoaded(std::unique_ptr<SkBitmap> background_image,
+  void OnAssetsLoaded(vr::AssetsLoadStatus status,
+                      std::unique_ptr<vr::LoadedAssets> background_image,
                       const base::Version& component_version);
 
  private:
