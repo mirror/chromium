@@ -34,8 +34,22 @@ class UserActivityLoggerDelegateUkm : public UserActivityLoggerDelegate {
  private:
   ukm::UkmRecorder* ukm_recorder_;  // not owned
 
+  struct TabProperty {
+    // Whether the tab is the selected one in the last active browser that's
+    // visible. When we take a snapshot to log data into UKM, there can be at
+    // most one tab that has |is_active| set to true: this tab's containing
+    // browser should be the one at forefront. The browser may not be in-focus
+    // if there is another app that's focused. If all browsers are minimized
+    // then there will be no tabs with |is_active| set to true.
+    bool is_active;
+    // Whether the containing browser is in focus.
+    bool is_browser_focused;
+    // Whether the containing browser is visible.
+    bool is_browser_visible;
+  };
+
   // Source IDs of open tabs' URLs.
-  std::vector<ukm::SourceId> source_ids_;
+  std::map<ukm::SourceId, TabProperty> source_ids_;
 
   DISALLOW_COPY_AND_ASSIGN(UserActivityLoggerDelegateUkm);
 };
