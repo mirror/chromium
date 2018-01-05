@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9a80bd_b8f1c1f7",
+        "filename": "components/update_client/update_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T16:07:02Z",
+      "side": 1,
+      "message": "UPDATE_IN_PROGRESS makes more sense, I think.\n\nIf we truly expect this not to be hit, does it make more sense to just run the callback w/ error if even one is updating?",
+      "range": {
+        "startLine": 122,
+        "startChar": 35,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "f0f33d2477bb5995f5837ed478f5504a3de94884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
