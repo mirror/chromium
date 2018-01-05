@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fa578bd_bf566133",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:14:52Z",
+      "side": 1,
+      "message": "\u003e Note that these constants will now be used in \"prefix matching\" code below, even though these constants do not have a plus at the end.  I think this is fine - it should be okay to match all of:\n\u003e - application/json (matched by the old code)\n\u003e - application/json+protobuf (matched by the new code - this is the bug we are trying to fix)\n\u003e - application/jsonfoobar (matched by the new code - somewhat unexpectedly, but probably desirably)\n\u003e - application/xmlfoobarformat (matched by the new code - somewhat unexpectedly, but probably also desirably)\n\u003e \n\u003e WDYT?\n\nI\u0027m a bit concerned by the last two, since they don\u0027t seem like formats we should treat at JSON or XML.\n\nThen again, it\u0027s also not great to have to do all the comparisons twice (once for equality and once for StartsWith including a +).  It also seems somewhat unlikely that a word starting with json or xml will end up being a subresource we need to allow (like JS, image, media, etc).  So maybe it\u0027s ok if we can\u0027t easily avoid it?\n\nWhile we\u0027re on the topic, you\u0027ve reminded me that Don had concerns about blocking cross-site SVG files when writing up http://www.chromium.org/developers/design-documents/blocking-cross-site-documents.  I don\u0027t think we would block image/svg+xml from our current rules, so I\u0027m curious if there are other SVG MIME types we would have blocked.  However, I think your suffix logic below would cause us to block them.",
+      "parentUuid": "f1f8994e_6e64c4f2",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a41583dd_d4cd4b6f",
         "filename": "content/common/cross_site_document_classifier.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-04T23:58:41Z",
       "side": 1,
       "message": "Including the plus character in the suffixes.\n\nWDYT?",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f6db03_97eac867",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:14:52Z",
+      "side": 1,
+      "message": "\u003e Including the plus character in the suffixes.\n\u003e \n\u003e WDYT?\n\nYes, this is worthwhile.\n\nHowever, I think +xml breaks SVG images, as mentioned above.",
+      "parentUuid": "a41583dd_d4cd4b6f",
       "range": {
         "startLine": 38,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2c6c8175_475af6e2",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:14:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1cc58738_3d580770",
+      "range": {
+        "startLine": 94,
+        "startChar": 17,
+        "endLine": 94,
+        "endChar": 33
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f53b94c_5c6637bf",
         "filename": "content/common/cross_site_document_classifier.h",
         "patchSetId": 1
@@ -88,6 +160,47 @@
         "endLine": 50,
         "endChar": 23
       },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7284a9_60492f47",
+        "filename": "content/common/cross_site_document_classifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:14:52Z",
+      "side": 1,
+      "message": "\u003e We could in theory keep |const std::string\u0026| as the type.  At one point I thought that I need to change the type in order to use base::StringPiece::starts_with, but this is not really true.  Still - taking base::StringPiece is input is desirable (the function is more versatile this way), right?\n\nSeems fine to change to StringPiece.",
+      "parentUuid": "3f53b94c_5c6637bf",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb90c7ab_14e6ea29",
+        "filename": "content/common/cross_site_document_classifier_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2018-01-05T08:14:52Z",
+      "side": 1,
+      "message": "Let\u0027s add some SVG cases as we decide what they should do.",
       "revId": "9a20d74fa4653deec26a17e04678d812ca0b5cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
