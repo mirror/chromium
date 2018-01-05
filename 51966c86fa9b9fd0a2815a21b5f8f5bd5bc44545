@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d25dc46_e6c1dd10",
+        "filename": "chrome/browser/chromeos/display/display_preferences.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109c3667_a2dd4b32",
+      "range": {
+        "startLine": 68,
+        "startChar": 42,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5f994d_9edb0d9a",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3b00d3_37025af4",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5f994d_9edb0d9a",
+      "range": {
+        "startLine": 1066,
+        "startChar": 0,
+        "endLine": 1076,
+        "endChar": 3
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d8bc24d8_9722c548",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3383116_fa17d4f7",
+      "range": {
+        "startLine": 1095,
+        "startChar": 7,
+        "endLine": 1095,
+        "endChar": 18
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d49e870_c11b5b0a",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048105a6_9e43298b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d49e870_c11b5b0a",
+      "range": {
+        "startLine": 1097,
+        "startChar": 2,
+        "endLine": 1097,
+        "endChar": 20
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b048ff6e_87410b04",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5400a2ab_f5c957bc",
+      "range": {
+        "startLine": 97,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b38e2b_ca68164c",
         "filename": "extensions/browser/api/system_display/display_info_provider.h",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2018-01-05T18:55:39Z",
       "side": 1,
       "message": "Nit: enable_mixed_mode?",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 16
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc96ada7_fe0108ae",
+        "filename": "extensions/browser/api/system_display/display_info_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "\u0027Mixed\u0027 is one special type of mirror mode, should we call it a mode.",
+      "parentUuid": "84b38e2b_ca68164c",
       "range": {
         "startLine": 101,
         "startChar": 11,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5032d9f3_2a4fe70a",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9a047e_b85566b5",
+      "range": {
+        "startLine": 359,
+        "startChar": 22,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "644eaa50_5c167214",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2018-01-05T18:55:39Z",
       "side": 1,
       "message": "similarly, would be nicer to call this \"enable_mixed_mode\"",
+      "range": {
+        "startLine": 376,
+        "startChar": 16,
+        "endLine": 376,
+        "endChar": 21
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82745c13_42298a9d",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "I think that it\u0027s not a separate mode, it is a special type of mirror mode.",
+      "parentUuid": "644eaa50_5c167214",
       "range": {
         "startLine": 376,
         "startChar": 16,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "89178f22_a1296d5b",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Oh, I see. let me add example to the comment. thanks.",
+      "parentUuid": "e083c442_d5b1ce94",
+      "range": {
+        "startLine": 118,
+        "startChar": 47,
+        "endLine": 119,
+        "endChar": 47
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d43d13_38422c8e",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 8
@@ -229,6 +445,30 @@
       "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c99ab44_39fbd773",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d43d13_38422c8e",
+      "range": {
+        "startLine": 408,
+        "startChar": 11,
+        "endLine": 408,
+        "endChar": 19
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "0ed02737_16ce864d",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56728f82_6b11c81b",
+      "range": {
+        "startLine": 647,
+        "startChar": 17,
+        "endLine": 647,
+        "endChar": 37
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa5e84e5_e4ba45e6",
         "filename": "ui/display/manager/display_manager_utilities.cc",
         "patchSetId": 8
@@ -275,6 +539,30 @@
       "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c49df62_cbba6f85",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T22:08:29Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. Done.",
+      "parentUuid": "fa5e84e5_e4ba45e6",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 37
+      },
+      "revId": "51966c86fa9b9fd0a2815a21b5f8f5bd5bc44545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
