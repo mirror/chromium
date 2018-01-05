@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f78b971d_564cf0e5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/lib/runtime_library/IWebApkApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-05T21:52:46Z",
+      "side": 1,
+      "message": "Added a README on how to regenrate it. I\u0027m not excited about maintaining a separate AIDL",
+      "parentUuid": "db4e7fed_9e9f4218",
+      "revId": "5fbc5935328b026213461a86e9f4c8497a1e2060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73cb7f5c_a9b02b0b",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/DexLoader.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-01T20:13:59Z",
       "side": 1,
       "message": "I never saw this code",
+      "range": {
+        "startLine": 26,
+        "startChar": 80,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "5fbc5935328b026213461a86e9f4c8497a1e2060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa95704_03fdd108",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/DexLoader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2018-01-05T21:52:46Z",
+      "side": 1,
+      "message": "I moved this out from WebApkUtils to break DexLoader\u0027s dependency on it",
+      "parentUuid": "73cb7f5c_a9b02b0b",
       "range": {
         "startLine": 26,
         "startChar": 80,
