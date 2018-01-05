@@ -16,6 +16,24 @@
       "revId": "aa00f1943ede6fc272b377260ebe8e86a3883161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59fdf03_fbd289ff",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/invalidation/shadow-root-sibling-invalidation-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2018-01-05T10:39:14Z",
+      "side": 1,
+      "message": "Indeed, thanks for spotting. Fix here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/852095",
+      "parentUuid": "da7a8661_c0abe2c1",
+      "revId": "aa00f1943ede6fc272b377260ebe8e86a3883161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
