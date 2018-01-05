@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "571c02b2_bb10c912",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-05T23:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900a7b18_5f74f209",
+      "range": {
+        "startLine": 348,
+        "startChar": 40,
+        "endLine": 348,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b036174_fbda79b9",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28d4768_f5254444",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-05T23:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b036174_fbda79b9",
+      "range": {
+        "startLine": 364,
+        "startChar": 25,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f6dc3eb_608c87ee",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-05T23:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d792c5_8dd05091",
+      "range": {
+        "startLine": 386,
+        "startChar": 54,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4db5d1c_63574aab",
         "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-05T19:38:48Z",
       "side": 1,
       "message": "#include \u003cmap\u003e\n\nnit: IWYU here and elsewhere: \u003cmemory\u003e, \u003cvector\u003e, \"ui/display/display.h\", etc.",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83cd1ba_4f434944",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-05T23:32:26Z",
+      "side": 1,
+      "message": "Added what was requested by `git cl lint`, although that only tells you about standard library usage. Do you know how to list the usage of other files?",
+      "parentUuid": "e4db5d1c_63574aab",
       "range": {
         "startLine": 9,
         "startChar": 37,
@@ -114,6 +210,30 @@
       "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c61b3e_2cfe0987",
+        "filename": "chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2018-01-05T23:32:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "146a6f59_147e5c56",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 72
+      },
+      "revId": "c8cd7543415b868bac98dc3fdbac6240739200c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
