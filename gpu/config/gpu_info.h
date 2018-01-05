@@ -228,6 +228,9 @@ struct GPU_EXPORT GPUInfo {
   // True if the current set of outputs supports overlays.
   bool supports_overlays = false;
 
+  // True if the current system compositor supports HDR rendering.
+  bool supports_hdr_rendering = false;
+
   // True only on android when extensions for threaded mailbox sharing are
   // present. Threaded mailbox sharing is used on Android only, so this check
   // is only implemented on Android.
