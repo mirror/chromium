@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f5929be_4ed83710",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d93f660_1e9cb5a2",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75067c3d_58f26602",
         "filename": "components/metrics/gms_core_version.h",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3efdbe9b_d714b8f4",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75067c3d_58f26602",
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c2927a6_139b41e4",
         "filename": "components/metrics/gms_core_version.h",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7868e449_e5bb4d30",
+        "filename": "components/metrics/gms_core_version.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c2927a6_139b41e4",
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4690261_43636812",
+        "filename": "components/metrics/metrics_pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9600b2f8_a0871d7f",
+      "range": {
+        "startLine": 115,
+        "startChar": 39,
+        "endLine": 115,
+        "endChar": 55
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "7e0c0b9c_5a0a17d5",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a32426df_93959e44",
+      "range": {
+        "startLine": 484,
+        "startChar": 77,
+        "endLine": 484,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80130a9d_34bfc230",
         "filename": "components/metrics/metrics_state_manager.h",
         "patchSetId": 4
@@ -197,6 +305,30 @@
       "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1ad30e_5521fec6",
+        "filename": "components/metrics/metrics_state_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2018-01-05T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80130a9d_34bfc230",
+      "range": {
+        "startLine": 197,
+        "startChar": 35,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "8cb46da5b5c9e98a36be9a46e15b7fbc1cb5e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
