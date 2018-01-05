@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f70d838_d8f7c83b",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-05T19:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a5b212_137be38c",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c712bb27_618c6393",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e636eabe_7f756440",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-05T19:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c712bb27_618c6393",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07063132_1cc05ee9",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-05T19:22:03Z",
+      "side": 1,
+      "message": "The only time I can think of us using --disable-features is for WebVrVsyncAlign, but I guess that doesn\u0027t matter for non-performance tests. Removed.",
+      "parentUuid": "ef6adab0_0425e8e4",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff9d019_a370a2fd",
         "filename": "chrome/browser/vr/test/vr_browser_test.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3927028_213c0df3",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2018-01-05T19:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff9d019_a370a2fd",
+      "revId": "00a0ef5519c9bac58994b64725c10afce1037e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
