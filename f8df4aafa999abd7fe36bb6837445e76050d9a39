@@ -22,6 +22,40 @@
       "revId": "f8df4aafa999abd7fe36bb6837445e76050d9a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b3fb88_fa0b512e",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-05T11:52:30Z",
+      "side": 1,
+      "message": "why IsWindowFeaturesSeparator(buffer[i])?\n\nstep 6 only checks for i \u003c length \u0026\u0026 buffer[i] !\u003d \u0027\u003d\u0027?",
+      "revId": "f8df4aafa999abd7fe36bb6837445e76050d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428d108b_8d3e065e",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2018-01-05T11:52:30Z",
+      "side": 1,
+      "message": "this should check for buffer[i] \u003d\u003d \u0027,\u0027 and break if yes?",
+      "revId": "f8df4aafa999abd7fe36bb6837445e76050d9a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
