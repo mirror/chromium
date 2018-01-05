@@ -22,6 +22,30 @@
       "revId": "ecbe759469fdc0d798b279ec90be315eebf30f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17a2542_ad2fad29",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2018-01-05T05:09:44Z",
+      "side": 1,
+      "message": "It works without it, so I removed it.",
+      "parentUuid": "f659bd8b_8b3ee195",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 79
+      },
+      "revId": "ecbe759469fdc0d798b279ec90be315eebf30f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
