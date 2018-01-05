@@ -1,0 +1,70 @@
+{
+  "name": "Chrome Media Router",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Provider for discovery and services for mirroring of Chrome Media Router",
+  "minimum_chrome_version": "37",
+
+  "permissions": [
+    "alarms",
+    "cast",
+    "cast.streaming",
+    "declarativeWebRequest",
+    "desktopCapture",
+    "dial",
+    "gcm",
+    # This is needed for extension to access Google TV device description
+    # and is also used to make Eureka Info requests.
+    "http://*/*",
+    "identity",
+    "identity.email",
+    "management",
+    "mdns",
+    "mediaRouterPrivate",
+    "metricsPrivate",
+    "networkingPrivate",
+    "processes",
+    "storage",
+    "system.cpu",
+    "settingsPrivate",
+    "tabCapture",
+    "tabs",
+    "webview",
+    # This is needed to access hangouts logging upload urls.
+    # The server provides proper access control headers, but the browser blocks
+    # extension cross origin requests anyway without the permissions here.
+    "https://hangouts.google.com/*",
+    # Needed for Imax Second Screen Experience requests.
+    "https://*.google.com/cast/chromecast/home/gsse"
+  ],
+
+  # Background script.
+  "background": {
+    "scripts": [
+      "chromium_bootstrap.js",
+      "fake_goog.js",
+      "common.js",
+      "mirroring_common.js",
+      "background_script.js",
+    ],
+    "persistent": false
+  },
+
+  # Google Feedback requires:
+  # script-src: https://feedback.googleusercontent.com https://www.google.com
+  #      https://www.gstatic.com/feedback
+  # child-src: https://www.google.com
+  #
+  # Apairy (for Castouts/Cloud) requires:
+  # script-src: https://apis.google.com
+  # child-src: https://accounts.google.com https://content.googleapis.com
+  #
+  # Webview elements are implemented as a custom <object> elements that loads
+  # dynamic plugin data. Without an "object-src 'self'" permission in the CSP,
+  # webview elements fail to attach to extension pages (crbug.com/509854).
+  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' https://apis.google.com https://feedback.googleusercontent.com https://www.google.com https://www.gstatic.com; child-src https://accounts.google.com https://content.googleapis.com https://www.google.com; connect-src 'self' http://*:* https://*:*; font-src https://fonts.gstatic.com; object-src 'self';",
+
+  # Setting the public key fixes the extension id to:
+  # enhhojjnijigcajfphajepfemndkmdlo
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+hlN5FB+tjCsBszmBIvIcD/djLLQm2zZfFygP4U4/o++ZM91EWtgII10LisoS47qT2TIOg4Un4+G57elZ9PjEIhcJfANqkYrD3t9dpEzMNr936TLB2u683B5qmbB68Nq1Eel7KVc+F0BqhBondDqhvDvGPEV0vBsbErJFlNH7SQIDAQAB",
+}
