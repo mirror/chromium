@@ -21,7 +21,11 @@ class MEDIA_EXPORT MediaObserverClient {
   // |remote_device_friendly_name| can be empty if the remote device is unknown.
   virtual void SwitchToRemoteRenderer(
       const std::string& remote_device_friendly_name) = 0;
-  virtual void SwitchToLocalRenderer() = 0;
+
+  // When switching back to the local renderer, if |user_message| is non-empty,
+  // it will contain locale-specific text that can be displayed to explain why
+  // the switch occurred.
+  virtual void SwitchToLocalRenderer(const std::string& user_message) = 0;
 
   // Requests to activate monitoring changes on viewport intersection.
   virtual void ActivateViewportIntersectionMonitoring(bool activate) = 0;
