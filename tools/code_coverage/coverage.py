@@ -209,6 +209,21 @@ class _DirectoryCoverageReportHtmlGenerator(object):
 
     assert False, 'Invalid coverage percentage: "%d"' % percentage
 
+  def CreateTotalEntry(self, summary):
+    """Creates an entry corresponds to the 'TOTALS' row in the html report."""
+    self._total_entry = {}
+    summary_dict = summary.Get()
+    for feature in summary_dict:
+      percentage = round((float(summary_dict[feature]['covered']
+                               ) / summary_dict[feature]['total']) * 100, 2)
+      color_class = self._GetColorClass(percentage)
+      self._total_entry[feature] = {
+          'total': summary_dict[feature]['total'],
+          'covered': summary_dict[feature]['covered'],
+          'percentage': percentage,
+          'color_class': color_class
+      }
+
   def WriteHtmlCoverageReport(self, output_path):
     """Write html coverage report for the directory.
 
@@ -231,7 +246,8 @@ class _DirectoryCoverageReportHtmlGenerator(object):
     css_path = os.path.join(OUTPUT_DIR, os.extsep.join(['style', 'css']))
     html_header = self._header_template.render(
         css_path=os.path.relpath(css_path, os.path.dirname(output_path)))
-    html_table = self._table_template.render(entries=self._table_entries)
+    html_table = self._table_template.render(
+        entries=self._table_entries, total_entry=self._total_entry)
     html_footer = self._footer_template.render()
 
     with open(output_path, 'w') as html_file:
@@ -401,6 +417,7 @@ def _GenerateCoverageInHtmlForDirectory(
           entry_html_report_relative_path, os.path.basename(entry_path),
           per_file_coverage_summary[entry_path])
 
+  html_generator.CreateTotalEntry(per_directory_coverage_summary[dir_path])
   html_generator.WriteHtmlCoverageReport(html_report_path)
 
 
