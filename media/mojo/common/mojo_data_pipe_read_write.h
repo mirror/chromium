@@ -35,6 +35,10 @@ class MojoDataPipeReader {
 
   bool IsPipeValid() const;
 
+  // Unbind the data pipe if bound. IsPipeValid() will return false after this
+  // is called.
+  void Close();
+
  private:
   void CompleteCurrentRead();
   void OnPipeReadable(MojoResult result, const mojo::HandleSignalsState& state);
@@ -81,6 +85,10 @@ class MojoDataPipeWriter {
   void Write(const uint8_t* buffer, uint32_t num_bytes, DoneCB done_cb);
 
   bool IsPipeValid() const;
+
+  // Unbind the data pipe if bound. IsPipeValid() will return false after this
+  // is called.
+  void Close();
 
  private:
   void OnPipeWritable(MojoResult result, const mojo::HandleSignalsState& state);
