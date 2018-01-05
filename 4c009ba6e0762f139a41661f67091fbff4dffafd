@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f536ba_9e9bb13f",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2018-01-05T21:11:35Z",
+      "side": 0,
+      "message": "Removed this line because we use get by default, so doesn\u0027t seem to be any need for this call.",
+      "range": {
+        "startLine": 178,
+        "startChar": 34,
+        "endLine": 178,
+        "endChar": 0
+      },
+      "revId": "4c009ba6e0762f139a41661f67091fbff4dffafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
