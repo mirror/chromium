@@ -2772,7 +2772,6 @@ crbug.com/709227 external/wpt/offscreen-canvas/fill-and-stroke-styles/2d.pattern
 # ====== Begin of display: contents tests ======
 
 crbug.com/795217 external/wpt/css/css-display/display-contents-details.html [ Failure ]
-crbug.com/181374 external/wpt/css/css-display/display-contents-dynamic-table-001-inline.html [ Failure ]
 
 # ====== End of display: contents tests ======
 
