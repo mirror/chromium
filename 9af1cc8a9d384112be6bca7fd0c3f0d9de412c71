@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6ef057c_7ff0becd",
+        "filename": "chrome/browser/vr/elements/repositioner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-05T17:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2d06d59_8a6bf2db",
+      "revId": "9af1cc8a9d384112be6bca7fd0c3f0d9de412c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e375d9_b361589d",
         "filename": "chrome/browser/vr/model/model.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9af1cc8a9d384112be6bca7fd0c3f0d9de412c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2780655d_d792ce49",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-05T17:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e375d9_b361589d",
+      "revId": "9af1cc8a9d384112be6bca7fd0c3f0d9de412c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
