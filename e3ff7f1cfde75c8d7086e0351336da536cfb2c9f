@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b22d86c_a62d65a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2018-01-05T18:44:19Z",
+      "side": 1,
+      "message": "We have discussed about this offline, and I believe we agree on that this can be replaced but changing PermissionDialogController to the new framework is probably out of the scope of this CL. So I suggested that we can move forward by little with using just the ModalDialogView with this class handling the VR dialog for now. Does that sound good?",
+      "parentUuid": "7fc01eb5_311cb6fc",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "e3ff7f1cfde75c8d7086e0351336da536cfb2c9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbb8efbd_de64bdec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeAlertDialog.java",
         "patchSetId": 12
