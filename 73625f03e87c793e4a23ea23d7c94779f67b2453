@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db8c7f2c_d4bbfd64",
+        "filename": "components/unzip_service/public/cpp/unzip.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Yes, because of the call to std::make_unique\u003cfilesystem::DirectoryImpl\u003e(output_dir, nullptr, nullptr)",
+      "parentUuid": "965e54f0_1437d90c",
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab3d9d9a_8c04f811",
         "filename": "components/unzip_service/public/cpp/unzip.h",
         "patchSetId": 18
@@ -30,6 +48,30 @@
       "writtenOn": "2018-01-05T17:38:37Z",
       "side": 1,
       "message": "That does not look right.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 52
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd57f759_e216d258",
+        "filename": "components/unzip_service/public/cpp/unzip.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Whoops, fixed.",
+      "parentUuid": "ab3d9d9a_8c04f811",
       "range": {
         "startLine": 5,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5981c42b_076cfc48",
+        "filename": "components/unzip_service/public/cpp/unzip.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a173c7_6544cf8f",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffb62167_c2e64de6",
         "filename": "components/unzip_service/unzip_service.h",
         "patchSetId": 18
@@ -85,6 +151,30 @@
       "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acc2341_41fac2b2",
+        "filename": "components/unzip_service/unzip_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb62167_c2e64de6",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "c465782f_a531fda5",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "We could. My experience has been that debug logs are generally useless. YMMV.",
+      "parentUuid": "20232713_b30b8a11",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f91e1c4_ebc3320d",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd548407_b3154f45",
+      "range": {
+        "startLine": 62,
+        "startChar": 11,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf80c443_9caf88c5",
         "filename": "components/unzip_service/unzipper_impl.cc",
         "patchSetId": 18
@@ -145,6 +283,30 @@
       "writtenOn": "2018-01-05T17:38:37Z",
       "side": 1,
       "message": "should we log an error?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 1
+      },
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8349ca_8821e673",
+        "filename": "components/unzip_service/unzipper_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "We could. My experience has been that debug logs are generally useless. YMMV.",
+      "parentUuid": "bf80c443_9caf88c5",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -194,6 +356,24 @@
       "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e6ee90_21b78435",
+        "filename": "components/update_client/action_runner.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2018-01-05T19:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a71271c_28830562",
+      "revId": "73625f03e87c793e4a23ea23d7c94779f67b2453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
