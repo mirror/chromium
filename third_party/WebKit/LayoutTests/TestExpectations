@@ -3255,7 +3255,6 @@ crbug.com/757165 [ Win ] paint/invalidation/filters/filter-repaint-on-accelerate
 crbug.com/757165 [ Win ] paint/invalidation/scroll/scrollbar-damage-and-full-viewport-repaint.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-filter-modified-save-restore.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-filter-modified.html [ Skip ]
-crbug.com/757165 [ Win ] virtual/threaded/animations/svg/animated-filter-svg-element.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/wheelscrolllatching/fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-main.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-blending-clipping.html [ Skip ]
 crbug.com/757165 [ Win ] virtual/gpu/fast/canvas/canvas-blending-color-over-color.html [ Skip ]

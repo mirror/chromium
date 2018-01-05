@@ -15,10 +15,26 @@
   }
 </style>
 
-<svg id="root" height="100">
-  <rect fill="blue" x="0" y="0" height="100" width="100" />
+<svg id="root" height="25">
+  <rect fill="blue" x="0" y="0" height="25" width="25" />
 </svg>
 
 <svg>
-  <rect id="child" fill="blue" x="0" y="0" height="100" width="100" />
+  <rect id="child" fill="blue" x="0" y="0" height="25" width="25" />
 </svg>
+<div id="footer"></div>
+
+<script>
+if (window.testRunner)
+  testRunner.waitUntilDone();
+
+function waitForCompositor() {
+  return footer.animate({opacity: [1, 1]}, 1).finished;
+}
+
+footer.offsetTop; // force style recalc
+waitForCompositor().then(() => {
+  if (window.testRunner)
+    testRunner.notifyDone();
+});
+</script>
