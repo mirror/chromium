@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d178cea1_dca6bf03",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCaptureCamera2.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2018-01-05T20:48:27Z",
+      "side": 0,
+      "message": "mcasas@: This code block for triggering a focus adjustment will be lost with the revert, because it depends on the revert. Could you give a quick assessment of what the user impact of that would be when we push the revert to stable?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 9,
+        "endLine": 1051,
+        "endChar": 0
+      },
+      "revId": "5d1d994cc75777a9f875286410cbf9dce767e60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
