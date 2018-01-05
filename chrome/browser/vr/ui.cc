@@ -15,6 +15,7 @@
 #include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/ganesh_surface_provider.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
+#include "chrome/browser/vr/model/loaded_assets.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/speech_recognizer.h"
@@ -321,11 +322,17 @@ void Ui::Dump(bool include_bindings) {
   LOG(ERROR) << os.str();
 }
 
-void Ui::SetBackgroundImage(std::unique_ptr<SkBitmap> bitmap) {
-  Background* background = reinterpret_cast<Background*>(
+void Ui::OnAssetsLoaded(AssetsLoadStatus status,
+                        std::unique_ptr<LoadedAssets> assets,
+                        const base::Version& component_version) {
+  if (status != AssetsLoadStatus::kSuccess) {
+    return;
+  }
+
+  Background* background = static_cast<Background*>(
       scene_->GetUiElementByName(k2dBrowsingTexturedBackground));
   DCHECK(background);
-  background->SetImage(std::move(bitmap));
+  background->OnAssetsLoaded(std::move(assets));
   model_->background_loaded = true;
   model_->can_apply_new_background = false;
 }

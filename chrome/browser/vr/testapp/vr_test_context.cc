@@ -10,7 +10,10 @@
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/version.h"
+#include "chrome/browser/vr/assets_load_status.h"
 #include "chrome/browser/vr/controller_mesh.h"
+#include "chrome/browser/vr/model/loaded_assets.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
@@ -35,6 +38,10 @@
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/angle_conversions.h"
+
+#include "base/files/file_util.h"
+#include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/gfx/codec/png_codec.h"
 
 namespace vr {
 
@@ -73,8 +80,10 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   text_input_delegate_ = base::MakeUnique<TextInputDelegate>();
   keyboard_delegate_ = base::MakeUnique<TestKeyboardDelegate>();
 
+  UiInitialState ui_state;
+  ui_state.assets_available = true;
   ui_ = base::MakeUnique<Ui>(this, nullptr, keyboard_delegate_.get(),
-                             text_input_delegate_.get(), UiInitialState());
+                             text_input_delegate_.get(), ui_state);
 
   text_input_delegate_->SetRequestFocusCallback(
       base::BindRepeating(&vr::Ui::RequestFocus, base::Unretained(ui_.get())));
@@ -98,6 +107,45 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   ui_->SetLocationAccess(true);
   ui_->input_manager()->set_hit_test_strategy(
       UiInputManager::PROJECT_TO_LASER_ORIGIN_FOR_TEST);
+
+  const base::FilePath filename("/tmp/background.png");
+  std::string data;
+  DCHECK(base::ReadFileToString(filename, &data));
+  auto assets = base::MakeUnique<LoadedAssets>();
+  assets->background = base::MakeUnique<SkBitmap>();
+  DCHECK(
+      gfx::PNGCodec::Decode(reinterpret_cast<const unsigned char*>(data.data()),
+                            data.size(), assets->background.get()));
+
+  // const base::FilePath filename_normal("/tmp/red_gradient.png");
+  const base::FilePath filename_normal("/tmp/day_bg_slice_001.png");
+  std::string data_normal;
+  assets->normal_gradient = base::MakeUnique<SkBitmap>();
+  DCHECK(base::ReadFileToString(filename_normal, &data_normal));
+  DCHECK(gfx::PNGCodec::Decode(
+      reinterpret_cast<const unsigned char*>(data_normal.data()),
+      data_normal.size(), assets->normal_gradient.get()));
+
+  // const base::FilePath filename_incognito("/tmp/green_gradient.png");
+  const base::FilePath filename_incognito("/tmp/incognito_bg_slice_001.png");
+  std::string data_incognito;
+  assets->incognito_gradient = base::MakeUnique<SkBitmap>();
+  DCHECK(base::ReadFileToString(filename_incognito, &data_incognito));
+  DCHECK(gfx::PNGCodec::Decode(
+      reinterpret_cast<const unsigned char*>(data_incognito.data()),
+      data_incognito.size(), assets->incognito_gradient.get()));
+
+  // const base::FilePath filename_fullscreen("/tmp/blue_gradient.png");
+  const base::FilePath filename_fullscreen("/tmp/cinema_bg_slice_001.png");
+  std::string data_fullscreen;
+  assets->fullscreen_gradient = base::MakeUnique<SkBitmap>();
+  DCHECK(base::ReadFileToString(filename_fullscreen, &data_fullscreen));
+  DCHECK(gfx::PNGCodec::Decode(
+      reinterpret_cast<const unsigned char*>(data_fullscreen.data()),
+      data_fullscreen.size(), assets->fullscreen_gradient.get()));
+
+  ui_->OnAssetsLoaded(AssetsLoadStatus::kSuccess, std::move(assets),
+                      base::Version("1.0"));
 }
 
 VrTestContext::~VrTestContext() = default;

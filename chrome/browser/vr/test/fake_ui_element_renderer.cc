@@ -79,4 +79,16 @@ void FakeUiElementRenderer::DrawShadow(
   // last moment before calling into the UiElementRenderer.
 }
 
+void FakeUiElementRenderer::DrawSky(
+    const gfx::Transform& model_view_proj_matrix,
+    const EnvironmentGradientColors& colors,
+    float opacity) {
+  opacity_ = opacity;
+  called_ = true;
+}
+
+void FakeUiElementRenderer::DrawStars(
+    float t,
+    const gfx::Transform& model_view_proj_matrix) {}
+
 }  // namespace vr
