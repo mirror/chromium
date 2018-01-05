@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "194681b5_f7ce8f5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-05T00:59:21Z",
+      "side": 1,
+      "message": "Sorry, will revert this and fix the mark color in different modes in another CL.",
+      "parentUuid": "60695889_b2708d97",
+      "range": {
+        "startLine": 56,
+        "startChar": 66,
+        "endLine": 56,
+        "endChar": 85
+      },
+      "revId": "c7ab14d2ac578988c3cf2e23b138b149d7291849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43785e20_094aa016",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
         "patchSetId": 1
@@ -63,6 +87,24 @@
       "revId": "c7ab14d2ac578988c3cf2e23b138b149d7291849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f2ed98_de0101d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguagesManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2018-01-05T00:59:21Z",
+      "side": 1,
+      "message": "Done for both metrics.",
+      "parentUuid": "43785e20_094aa016",
+      "revId": "c7ab14d2ac578988c3cf2e23b138b149d7291849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
