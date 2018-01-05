@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dcf1205_9f8726ce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T19:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e26b9780_90dbd7cd",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "81303ff49b3297b2e7ad2f2033c1bfafbd095a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b39c94_275628dc",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "81303ff49b3297b2e7ad2f2033c1bfafbd095a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db56e68_92246e7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T19:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b39c94_275628dc",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "81303ff49b3297b2e7ad2f2033c1bfafbd095a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
