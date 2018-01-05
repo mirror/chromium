@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2325dcd1_8166f052",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "nit: May be easier to return FilePath and use empty FilePath to indicate an error.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b2da80_10d81f3c",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "nit: use base::MakeAbsoluteFilePath()",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86af55ca_51f95aa4",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c162deaa_fdefca32",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "There is a lot of overlap between package and non-packaged branches. Maybe move these check in to the cases that differ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936ac332_51efb029",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "maybe just return pkg/lib?",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 80
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86076e19_70416aab",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "Maybe all add DIR_MODULE here?",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941e5903_a196ba59",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2018-01-05T18:31:41Z",
+      "side": 1,
+      "message": "why /pkg/lib instead of /pkg/bin",
+      "range": {
+        "startLine": 74,
+        "startChar": 29,
+        "endLine": 74,
+        "endChar": 36
+      },
+      "revId": "21ebe3445c9b18be184b99ef32a64d4823044aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
