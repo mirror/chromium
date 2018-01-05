@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51b1a656_905ba48d",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T21:26:11Z",
+      "side": 1,
+      "message": "Yeah, it breaks tests too.\n\nSome network UI uses LoginState but that seems to be it, so I agree that we should fix that and DEPS ban it.\n\nIt seems like setting session state before Shell::Init is the right thing to do. Currently it starts at UNKNOWN then gets set to ACTIVE sometime after Init when starting after a crash.\n\nI will try that and see what breaks.",
+      "parentUuid": "58f2498a_14a51374",
+      "revId": "5a8a1f8644f05ee20d6a0210ba2146ea6e8146dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d089d7d7_1c831527",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 1
