@@ -41,6 +41,7 @@ namespace chromeos {
 
 class AccessibilityExtensionLoader;
 class AccessibilityHighlightManager;
+class Dictation;
 class ScopedKeyboardStateSetter;
 class SwitchAccessEventHandler;
 
@@ -309,6 +310,8 @@ class AccessibilityManager
   // Set the keys to be captured by Switch Access.
   void SetSwitchAccessKeys(const std::set<int>& key_codes);
 
+  void ToggleDictation();
+
  protected:
   AccessibilityManager();
   ~AccessibilityManager() override;
@@ -448,6 +451,8 @@ class AccessibilityManager
   std::unique_ptr<ash::ScopedBacklightsForcedOff> scoped_backlights_forced_off_;
 
   std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
+
+  std::unique_ptr<Dictation> dictation_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 

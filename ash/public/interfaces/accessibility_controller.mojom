@@ -65,4 +65,7 @@ interface AccessibilityControllerClient {
   // TODO(warx): replace string with enum once ax_enums.idl is converted to
   // mojom file.
   HandleAccessibilityGesture(string gesture);
+
+  // Toggle dictation.
+  ToggleDictation();
 };
