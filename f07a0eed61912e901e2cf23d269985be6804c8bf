@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47b490ca_1ea09df7",
+        "filename": "content/browser/loader/mojo_async_resource_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2018-01-05T10:28:53Z",
+      "side": 1,
+      "message": "Oops. I didn\u0027t re-run the full set of SSL tests with NavigationMojoResponse enabled after adding this DCHECK.",
+      "parentUuid": "50677ca6_ad3747e9",
+      "revId": "f07a0eed61912e901e2cf23d269985be6804c8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae4357f_c4fcc49b",
         "filename": "content/browser/loader/mojo_async_resource_handler_unittest.cc",
         "patchSetId": 9
