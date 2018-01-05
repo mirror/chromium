@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e476c9_d481b428",
+        "filename": "chrome/common/chrome_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-05T17:58:52Z",
+      "side": 1,
+      "message": "Could you motivate why we need separate extensions for child profiles? Also, why is this directory in the extensions directory? Might it be possible for an extension to also have the child_users directory name?",
+      "range": {
+        "startLine": 573,
+        "startChar": 6,
+        "endLine": 575,
+        "endChar": 57
+      },
+      "revId": "3c56846be561afeadd571369600e6931a726b4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
