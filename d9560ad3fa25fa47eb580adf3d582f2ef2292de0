@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84b655f1_99d05440",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c14b704a_305e41ab",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5daaa934_fccfd527",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb4b12c_d2b3c480",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5daaa934_fccfd527",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5f6ac9a4_58013501",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18bd8064_e0a00ffb",
+      "range": {
+        "startLine": 41,
+        "startChar": 16,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bc32535_ee94c3b9",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-01-05T17:55:08Z",
       "side": 1,
       "message": "Since you\u0027ve already checked above, this might read more clearly as just \"256\"?",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b036f36e_502bf31b",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "I hope we can relax the restriction in the future with some more validation.",
+      "parentUuid": "0bc32535_ee94c3b9",
       "range": {
         "startLine": 42,
         "startChar": 19,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "e6bf531f_8c2a73c7",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "According to https://www.w3.org/TR/2003/REC-PNG-20031110/#11PLTE (section 11.3.2), num_trans is guaranteed to never be more than the number of palette entries, but it can be less. One pass could work, as the `if (i \u003c num_trans) vld1_u8 else vdup` is likely something all branch predictors can handle.",
+      "parentUuid": "6ad08af6_c2a06f5b",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66fb2e37_0d597285",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 5
@@ -122,6 +236,24 @@
       "writtenOn": "2018-01-05T18:08:49Z",
       "side": 1,
       "message": "Did you happen to time the performance of an approach using vld4 and vst4, similar to _rgb() below?\n\nI see that it\u0027s nice and easy here to fill 32-bit lanes with 32-bit pixels, and that vld3/vst3 is more natural/essential for the 24-bit pixels in _rgb(), but it might be interesting to know how that strategy performs even when not so strictly necessary.",
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d53cb0_c63281eb",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "As far as I can remember I chose the vld1q instruction because (in theory) it reduces execution latency on the A72.",
+      "parentUuid": "66fb2e37_0d597285",
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,53 @@
         "startChar": 21,
         "endLine": 103,
         "endChar": 41
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7523a3_12edce48",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "I\u0027ll give it a try next week.",
+      "parentUuid": "c909f0fb_5bc8fd4d",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 41
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7827dfe3_947753f1",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "Typo, \"output\"",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 21
       },
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -224,6 +403,30 @@
       "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042ab0ae_5fe04ff0",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 4218,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2018-01-05T18:39:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48fee479_4a2150a6",
+      "range": {
+        "startLine": 4218,
+        "startChar": 15,
+        "endLine": 4218,
+        "endChar": 27
+      },
+      "revId": "d9560ad3fa25fa47eb580adf3d582f2ef2292de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
