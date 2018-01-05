@@ -804,13 +804,12 @@ bool ExtensionService::UninstallExtension(
       NOTREACHED();
   }
 
-  extensions::DataDeleter::StartDeleting(profile_, extension.get());
+  extensions::DataDeleter::StartDeleting(
+      profile_, extension.get(),
+      base::BindOnce(&ExtensionService::OnUninstallFinished, AsWeakPtr(),
+                     extension, reason));
 
   extension_registrar_.UntrackTerminatedExtension(extension->id());
-
-  // Notify interested parties that we've uninstalled this extension.
-  ExtensionRegistry::Get(profile_)
-      ->TriggerOnUninstalled(extension.get(), reason);
 
   delayed_installs_.Remove(extension->id());
 
@@ -821,6 +820,14 @@ bool ExtensionService::UninstallExtension(
   UMA_HISTOGRAM_ENUMERATION("Extensions.ExtensionUninstalled", 1, 2);
 
   return true;
+}
+
+void ExtensionService::OnUninstallFinished(
+    scoped_refptr<const extensions::Extension> extension,
+    extensions::UninstallReason reason) {
+  // Notify interested parties that we've uninstalled this extension.
+  ExtensionRegistry::Get(profile_)->TriggerOnUninstalled(extension.get(),
+                                                         reason);
 }
 
 // static

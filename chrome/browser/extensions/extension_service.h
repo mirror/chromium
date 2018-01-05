@@ -271,6 +271,9 @@ class ExtensionService
                           extensions::UninstallReason reason,
                           base::string16* error);
 
+  void OnUninstallFinished(scoped_refptr<const extensions::Extension> extension,
+                           extensions::UninstallReason reason);
+
   // Enables the extension.  If the extension is already enabled, does
   // nothing.
   void EnableExtension(const std::string& extension_id);

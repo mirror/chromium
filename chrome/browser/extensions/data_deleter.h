@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_DATA_DELETER_H_
 #define CHROME_BROWSER_EXTENSIONS_DATA_DELETER_H_
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 
 class Profile;
@@ -21,7 +22,9 @@ class DataDeleter {
   // threads, respectively. This function must be called from the UI thread.
   // This method only starts the deletion process in a fire-and-forget fashion;
   // the deletion will finish asynchronously.
-  static void StartDeleting(Profile* profile, const Extension* extenion);
+  static void StartDeleting(Profile* profile,
+                            const Extension* extenion,
+                            base::OnceClosure callback);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DataDeleter);
