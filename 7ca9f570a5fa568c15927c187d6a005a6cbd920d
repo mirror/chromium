@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ccffc5ed_79d45349",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T14:54:17Z",
+      "side": 1,
+      "message": "Yes, that\u0027s probably a good idea.",
+      "parentUuid": "5d42d0a8_371261fa",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28b95abf_bb3e7133",
         "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
         "patchSetId": 2
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Yes, I think this CL is correct. I\u0027m just confused by the complexity of TraceInCollection while reviewing this CL.\n\n\u003e This weak handling is different from the weak handling were slots are registered that are then processed in the atomic pause.\n\nYes, they are different.\n\nHowever, is there any case where we want to specify kWeakHandlingInCollection but specify kWeakPointersActStrong? (I don\u0027t think so.)\n\nI think that kWeakHandlingInCollection should imply kWeakPointersActWeak and kNoWeakHandlingInCollection should imply kWeakPointersActStrong. If that is the case, can we remove one of the flags?\n\n(Sorry, I\u0027m talking about a refactoring not related to your CL.)",
       "parentUuid": "3334c39d_e7ec840f",
+      "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c63a24d_a0b08bee",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2018-01-05T14:54:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we want kWeakHandlingInCollection and kWeakPointersActStrong, yes.\n\nYeah, I need to think through whether we can maybe simplify the two modes a bit.",
+      "parentUuid": "c41852a0_7e407c92",
       "revId": "7ca9f570a5fa568c15927c187d6a005a6cbd920d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
