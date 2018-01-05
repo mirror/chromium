@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e1305c_d5d95392",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2018-01-05T16:13:18Z",
+      "side": 1,
+      "message": "You still need to define the base::Feature in C++ and add it to kFeaturesExposedToJava, see this comment.",
+      "range": {
+        "startLine": 134,
+        "startChar": 80,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "62c0e0d6f9e56e06b18de7c2f7ca29c0c9ed5207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
