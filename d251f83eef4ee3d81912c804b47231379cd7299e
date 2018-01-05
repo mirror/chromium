@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745fa186_dfb135a2",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2326,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-05T13:36:59Z",
+      "side": 1,
+      "message": "Do you know of any constant / other way to infer what size do synced favicons have?",
+      "range": {
+        "startLine": 2326,
+        "startChar": 36,
+        "endLine": 2326,
+        "endChar": 38
+      },
+      "revId": "d251f83eef4ee3d81912c804b47231379cd7299e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0730b9_43d5132e",
+        "filename": "components/history/core/browser/history_backend.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2018-01-05T13:36:59Z",
+      "side": 1,
+      "message": "In a later version of this CL, I plan to reveal this function via FaviconService.",
+      "range": {
+        "startLine": 343,
+        "startChar": 7,
+        "endLine": 343,
+        "endChar": 29
+      },
+      "revId": "d251f83eef4ee3d81912c804b47231379cd7299e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
