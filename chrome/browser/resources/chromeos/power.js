@@ -818,6 +818,12 @@ document.addEventListener('DOMContentLoaded', function() {
       'cpu-idle-section', 'cpu-idle-show-button', requestCpuIdleData);
   $('cpu-idle-reload-button').onclick = requestCpuIdleData;
 
+  $('cpu-temperature-section').hidden = true;
+  $('cpu-temperature-show-button').onclick = showHideCallback(
+      'cpu-temperature-section', 'cpu-temperature-show-button',
+      requestCpuIdleData);
+  $('cpu-temperature-reload-button').onclick = requestCpuIdleData;
+
   $('cpu-freq-section').hidden = true;
   $('cpu-freq-show-button').onclick = showHideCallback(
       'cpu-freq-section', 'cpu-freq-show-button', requestCpuFreqData);
