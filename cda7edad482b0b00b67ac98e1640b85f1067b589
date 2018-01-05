@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28189ecc_2a737835",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigator/device-memory.https.any.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-01-05T19:00:27Z",
+      "side": 1,
+      "message": "inlined.",
+      "parentUuid": "c3866058_cf801cf3",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26ac4448_effd5ea4",
         "filename": "third_party/WebKit/LayoutTests/fast/workers/resources/worker-navigator-device-memory.js",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a573ee_d0c40837",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/resources/worker-navigator-device-memory.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2018-01-05T19:00:27Z",
+      "side": 1,
+      "message": "No, removed.",
+      "parentUuid": "26ac4448_effd5ea4",
+      "revId": "cda7edad482b0b00b67ac98e1640b85f1067b589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
