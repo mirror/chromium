@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd29cba6_60b6024a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Bug: 613640",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b683fd8_fcf6d7e9",
+        "filename": "content/browser/resolve_proxy_msg_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Can you rename this to |req| or |request| to match new type name?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6eac19_d0f1cb53",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Can you rename this to |request| or |proxy_request| ?",
+      "range": {
+        "startLine": 622,
+        "startChar": 30,
+        "endLine": 622,
+        "endChar": 41
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0617d2_8d51a28b",
+        "filename": "google_apis/gcm/engine/connection_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "proxy resolution request",
+      "range": {
+        "startLine": 162,
+        "startChar": 17,
+        "endLine": 162,
+        "endChar": 28
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7e87fa_35995897",
+        "filename": "google_apis/gcm/engine/connection_factory_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please rename to remove \"pac\". How about |proxy_service_request_| or |proxy_resolve_request_| ?",
+      "range": {
+        "startLine": 163,
+        "startChar": 30,
+        "endLine": 163,
+        "endChar": 42
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b266ff4_e5ea88bb",
+        "filename": "jingle/glue/proxy_resolving_client_socket.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please rename",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 42
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b003e20_b90eccd8",
+        "filename": "net/http/http_stream_factory_impl_job_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please rename",
+      "range": {
+        "startLine": 376,
+        "startChar": 25,
+        "endLine": 376,
+        "endChar": 37
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f218c56_e2523214",
+        "filename": "net/proxy/proxy_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please re-run formatting (git cl format)",
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1829d0cf_51ce88a2",
+        "filename": "net/proxy/proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Used to track proxy resolution requests that complete asynchronously.",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 42
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92188c1c_c22de1b4",
+        "filename": "net/proxy/proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Delete this comment.",
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b91bee1_8411b6e7",
+        "filename": "net/proxy/proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please rename (here and in the rest of file).",
+      "range": {
+        "startLine": 137,
+        "startChar": 26,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb33c54e_731462c4",
+        "filename": "net/url_request/url_request_ftp_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2018-01-05T00:20:51Z",
+      "side": 1,
+      "message": "Please rename",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "d73e227850ed79d26420b1b145c3770782baf6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
