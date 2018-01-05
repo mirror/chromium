@@ -16,6 +16,24 @@
       "revId": "7c413fc5da1c23a0aeda4f0b555ed8d3d65d2bb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060a79b8_a7876722",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2018-01-05T04:05:51Z",
+      "side": 1,
+      "message": "\u003e nits: Although all transforms involved here must be integer translation, thus are commutative, it is nicer to convert in canonical order:\n\u003e \n\u003e FloatRect layer_bounds(FloatPoint(fragment_data.PaintOffset()), FloatSize(layer_.Size()));\n\u003e GeometryMapper::SourceToDestinationRect(current_transform,\n\u003e                                         root_transform, layer_bounds);\n\u003e DCHECK_EQ(root_fragment.PaintOffset(), context.sub_pixel_accumulation);\n\u003e offset \u003d LayoutPoint(layer_bounds.Location());\n\nI don\u0027t think it is correct. PaintOffset for one or both of the fragments can be zero\n(or subpixel accumulation, but it could be neither - there could be a paint offset translation\nfor an intermediate PaintLayer.\n\n\u003e \n\u003e OPTIONAL: Even better if we actually inspect into the matrix. Not only we save some computation, but also preserve full precision!:\n\u003e \n\u003e const TransformationMatrix\u0026 transform \u003d \n\u003e     GeometryMapper::SourceToDestinationProjection(current_transform, root_transform);\n\u003e DCHECK(transform.IsIntegerTranslation());\n\u003e offset \u003d fragment_data.PaintOffset() + LayoutSize(((int)transform.E(), (int)transform.F());\n\u003e DCHECK_EQ(root_fragment.PaintOffset(), context.sub_pixel_accumulation);\n\nDone.",
+      "parentUuid": "6b390d15_9d8aacf9",
+      "revId": "7c413fc5da1c23a0aeda4f0b555ed8d3d65d2bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
