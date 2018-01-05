@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2a566cd_6221dcde",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Can you move this to after line 74. usually from clauses come after all imports.",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76da76b3_3e08eb74",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Can you remove this empty line to match the next block.",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed2a121_4fadbe49",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "s/another/other throughout function.",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4fb2be_0af3a561",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Put bracket around (float(summary_dict[feature][\u0027covered\u0027]) / summary_dict[feature][\u0027total\u0027])",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6aec899_323d6acf",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "typo column instead of colum, also why not just color name and remove column-entry-",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0ea1bf_627aa5ba",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Did you \"pyformat -i --force_quote_type single\", these () shouldn\u0027t be needed.",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379f091a_7ffa3c54",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "This can get slow, why not we just calculate this while creating self._table_entries and set like [\u0027is_dir\u0027] and [\u0027is_file\u0027] attributes ?",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe75ac3_8d965ec8",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Why do we use a + here ?",
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de9d1522_4a440ad2",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 8
@@ -84,6 +220,30 @@
       "side": 1,
       "message": "sg, I\u0027ll file a bug.",
       "parentUuid": "ae266bf5_fa21a522",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "1329234b8411f27f74df599d6db51f0c36ce938c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3ed5c3_4c7ef443",
+        "filename": "tools/code_coverage/html_templates/footer.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2018-01-05T18:02:23Z",
+      "side": 1,
+      "message": "Yes please, we definitely need the total row in next cl.",
+      "parentUuid": "eb8c6b68_415da5f7",
       "range": {
         "startLine": 1,
         "startChar": 0,
