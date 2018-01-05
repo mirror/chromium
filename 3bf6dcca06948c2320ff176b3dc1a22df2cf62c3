@@ -69,6 +69,24 @@
       "revId": "3bf6dcca06948c2320ff176b3dc1a22df2cf62c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc3b327_5c2c42d6",
+        "filename": "chrome/browser/prerender/prerender_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3298,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2018-01-05T15:05:09Z",
+      "side": 1,
+      "message": "Oh, I see, it was nested inside the ftn.\n\nAt any rate, if the next change is removing it, NBD.",
+      "parentUuid": "9cddeb0e_adead378",
+      "revId": "3bf6dcca06948c2320ff176b3dc1a22df2cf62c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
