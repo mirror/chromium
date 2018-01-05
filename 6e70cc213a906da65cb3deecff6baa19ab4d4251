@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d316f348_e8b935ad",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5386,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2018-01-05T01:21:51Z",
+      "side": 1,
+      "message": "Is \"true\" the value we always want to pass for unpack_premultiply_alpha? I\u0027m guessing that you\u0027ve already tested passing \"false\" and it caused tests to fail, but I\u0027m surprised that we do any manipulation of the ImageBitmap\u0027s data during upload. The point of ImageBitmap was that all of the operations like Y-flip, premultiplying alpha, etc. were done during construction of the ImageBitmap.",
+      "revId": "6e70cc213a906da65cb3deecff6baa19ab4d4251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
