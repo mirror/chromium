@@ -6,11 +6,28 @@
 
 #import <AppKit/AppKit.h>
 
+// A ref-counted object to allow the Closer to communicate with the block.
+// AppKit posts to all event monitors active when an event is received, so it's
+// possible for one monitor to remove another, and the removed monitor to still
+// see the event.
+@interface BubbleCloserHandleToClosure : NSObject {
+ @public
+  base::RepeatingClosure onClickOutside;
+}
+@end
+@implementation BubbleCloserHandleToClosure
+@end
+
 namespace ui {
 
 BubbleCloser::BubbleCloser(gfx::NativeWindow window,
-                           base::RepeatingClosure on_click_outside)
-    : on_click_outside_(std::move(on_click_outside)) {
+                           base::RepeatingClosure on_click_outside) {
+  handle_to_closure_ = [[BubbleCloserHandleToClosure alloc] init];
+  handle_to_closure_->onClickOutside = on_click_outside;
+
+  // Ensure the block captures the object (objects via |this| are not retained).
+  BubbleCloserHandleToClosure* handle = handle_to_closure_;
+
   // Note that |window| will be retained when captured by the block below.
   // |this| is captured, but not retained.
   auto block = ^NSEvent*(NSEvent* event) {
@@ -33,7 +50,9 @@ BubbleCloser::BubbleCloser(gfx::NativeWindow window,
         return event;
       ancestor = [ancestor parentWindow];
     }
-    OnClickOutside();
+
+    if (handle->onClickOutside)
+      handle->onClickOutside.Run();  // Note: May delete |this|.
     return event;
   };
   event_tap_ =
@@ -43,11 +62,9 @@ BubbleCloser::BubbleCloser(gfx::NativeWindow window,
 }
 
 BubbleCloser::~BubbleCloser() {
+  handle_to_closure_->onClickOutside.Reset();
   [NSEvent removeMonitor:event_tap_];
-}
-
-void BubbleCloser::OnClickOutside() {
-  on_click_outside_.Run();  // Note: May delete |this|.
+  [handle_to_closure_ release];  // Note the block may still have a reference.
 }
 
 }  // namespace ui
