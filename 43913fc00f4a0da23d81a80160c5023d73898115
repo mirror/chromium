@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5843ce3_55e21f67",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd3aa3f_409539cd",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e40f06_cc1520d9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9a6da9_7691f33d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e40f06_cc1520d9",
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5fb83d11_37c22b7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "No, async is fine here and it\u0027s what the production SafeBrowsingApiHandler does.",
+      "parentUuid": "3762f060_30db5c40",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702d5107_5b83d0b1",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
         "patchSetId": 4
@@ -85,6 +151,30 @@
       "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4465a00_e3ed2765",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/MockSafeBrowsingApiHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "702d5107_5b83d0b1",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ce29a12e_a409970a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Ha! I don\u0027t have any excuse for this one except blatant copy-paste :) done.",
+      "parentUuid": "3cf54d82_c33d14dd",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f59c49_2b91260c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b527035d_9e16a1b3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17f59c49_2b91260c",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "ce6c7533_5216c635",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d88529_125799dd",
+      "range": {
+        "startLine": 65,
+        "startChar": 11,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "556581a7_dc77b325",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
         "patchSetId": 4
@@ -168,6 +330,30 @@
       "writtenOn": "2018-01-05T17:06:16Z",
       "side": 1,
       "message": "should you do this before adding the mock response above?  Will the initial page load also be showing an interstitial?",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 54
+      },
+      "revId": "43913fc00f4a0da23d81a80160c5023d73898115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2747a1_bbf640df",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2018-01-05T17:34:47Z",
+      "side": 1,
+      "message": "No, the initial page load to about:blank won\u0027t show the interstitial. The reason I added the mock response before starting the activity was to avoid thread unsafe behavior because the mock responses are read on the IO thread but added on the testing thread.",
+      "parentUuid": "556581a7_dc77b325",
       "range": {
         "startLine": 102,
         "startChar": 26,
