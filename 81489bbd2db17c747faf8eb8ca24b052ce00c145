@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c6c66b4_3ce4eff9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T22:50:49Z",
+      "side": 1,
+      "message": "FYI: network_dropdown should be gooing away soonish.",
+      "revId": "81489bbd2db17c747faf8eb8ca24b052ce00c145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7156233_043e5faa",
+        "filename": "chrome/browser/ui/webui/settings/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T22:50:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to be actually needed?",
+      "revId": "81489bbd2db17c747faf8eb8ca24b052ce00c145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
