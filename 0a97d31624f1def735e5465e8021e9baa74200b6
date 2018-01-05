@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4d0d740_0d98c17e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationFactory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-05T19:40:24Z",
+      "side": 1,
+      "message": "Good point. I forgot to change this line when I made changes in response to previous comments.\n\nI can change the check to:\n\nif (downloadUpdate.getPendingState() !\u003d PendingState.NOT_PENDING) {\n  // cases for enum values PENDING_NETWORK, PENDING_ANOTHER_DOWNLOAD\n  default:\n    // R.string.download_notification_pending\n}\n\nThis would eliminate the getIsDownloadPending check. This brings up the question about whether DownloadUpdate\u0027s mIsDownloadPending is really necessary if getIsDownloadPending() \u003d true is the same as getPendingState() !\u003d PendingState.NOT_NULL (not as easy to read though). Thoughts?",
+      "parentUuid": "9e047230_b523ffdb",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 87,
+        "endChar": 88
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fcf5b3e_8960a8e0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-01-05T19:04:43Z",
       "side": 1,
       "message": "Would it make sense to pass a more distinguishing param in the cases that don\u0027t include the pendingState parameter and !isOfflinePagesDescriptivePendingStatusEnabled? Would there be a difference in behavior in those cases that isn\u0027t captured by NOT_PENDING? If not, then why not just pass the PendingState.NOT_PENDING instead of having the additional method?\n\n(Same goes for other instances with the two versions of each of the methods, ie notifyDownloadPending, notifyDownloadPaused, notifyDownloadInterrupted, etc).",
+      "range": {
+        "startLine": 229,
+        "startChar": 32,
+        "endLine": 229,
+        "endChar": 56
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df4d3d7_1a1dd876",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-05T19:40:24Z",
+      "side": 1,
+      "message": "I kept the original method signature as a safety net in case I missed any calls. You\u0027re right, I can remove this method, use the one with PendingState and have PendingState.NOT_PENDING if the original \"Downloading pending...\" text should be used. I will have to go back and modify all calls to the original signature. I may need more context for certain situations, such as the following which calls notifyDownloadInterrupted for a DownloadInfo created from an OfflineItem: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/download/items/OfflineContentAggregatorNotificationBridgeUi.java?rcl\u003d44e01ce042493dbc6289e0d148b6bcc6f258e537\u0026l\u003d166",
+      "parentUuid": "6fcf5b3e_8960a8e0",
       "range": {
         "startLine": 229,
         "startChar": 32,
@@ -68,6 +116,30 @@
       "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a771bf0e_cce02f0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1250536
+      },
+      "writtenOn": "2018-01-05T19:40:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c13daa97_46a6554f",
+      "range": {
+        "startLine": 689,
+        "startChar": 16,
+        "endLine": 689,
+        "endChar": 89
+      },
+      "revId": "0a97d31624f1def735e5465e8021e9baa74200b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
