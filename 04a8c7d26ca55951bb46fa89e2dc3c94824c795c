@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7fced7_ddb57bd1",
+        "filename": "tools/gn/analyzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "For consistency with the rest of the file (and some of the code you wrote below), don\u0027t use {} for single line blocks.",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0aa662a_1e7ae633",
+        "filename": "tools/gn/analyzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c2f375_a657fefe",
+        "filename": "tools/gn/analyzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2940c168_cad19359",
+        "filename": "tools/gn/analyzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "Typo \"handles\"",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ebc7c3_824b4c92",
+        "filename": "tools/gn/analyzer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be injecting these into the global namespace. This kind of thing is OK at the top of the Analyzer class, but I would actually prefer not to do the usings for these: they\u0027re all short and simple to write out, and the using requires an extra level of indirection for a human to understand exactly what they are.",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61419d7b_292ec153",
+        "filename": "tools/gn/analyzer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "You can remove explicit now that it has \u003e1 parameter.",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce4e471_ad26cb53",
+        "filename": "tools/gn/analyzer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "Can you make clear that this returns ownership of the pointer? I was going to suggest returning a unique_ptr. If this was non-test code I would suggest that, but this is test code so leaks are less bad, and the way that you use the pointers below makes the unique_ptr approach inconvenient.",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e7801d_4b4b3c87",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "This implementation doesn\u0027t set the files, but rather appends new ones. If we wanted that behavior we should rename this function. But I think we\u0027re actually fine with a set, so the implementation here can just be:\n  build_args_dependency_files_ \u003d build_args_dependency_files;",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64627589_fb868233",
+        "filename": "tools/gn/args.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2018-01-05T21:27:23Z",
+      "side": 1,
+      "message": "Can you document what this set is?",
+      "revId": "04a8c7d26ca55951bb46fa89e2dc3c94824c795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
