@@ -311,7 +311,15 @@ NSTextField* MakeLabel(
         [NSView cr_localizedAutoresizingMask:NSViewMaxXMargin];
     [self addSubview:filenameView_];
 
-    statusTextView_ = MakeLabel([NSFont systemFontOfSize:12]);
+    NSFont* statusFont;
+    if (@available(macOS 10.11, *)) {
+      statusFont = [NSFont monospacedDigitSystemFontOfSize:12
+                                                    weight:NSFontWeightRegular];
+    } else {
+      statusFont = [NSFont systemFontOfSize:12];
+    }
+    statusTextView_ = MakeLabel(statusFont);
+
     NSRect statusTextRect =
         NSMakeRect(kTextX, kStatusTextY, NSWidth(filenameRect),
                    NSHeight(statusTextView_.bounds));
