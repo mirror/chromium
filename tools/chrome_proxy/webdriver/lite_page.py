@@ -278,6 +278,8 @@ class LitePage(IntegrationTest):
           continue
         # Make sure non-video requests are proxied.
         self.assertHasChromeProxyViaHeader(response)
+        # Make sure there are no 4XX or 5xx status codes.
+        self.assertLess(response.status, 400)
       self.assertEqual(1, lite_page_responses)
 
   # Lo-Fi fallback is not supported without the
