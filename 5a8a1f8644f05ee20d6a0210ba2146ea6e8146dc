@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "80a02ebf_c1458a28",
+        "filename": "ash/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:14:53Z",
+      "side": 1,
+      "message": "OK, I did some experimenting and learned two things:\n1. LoginState (and SessionState) are both UNKNOWN in ash_init.cc (where the test used to be) after a crash or in guest mode. As near as I can tel, this code only affects the case of running chrome without --login-manager in Linux.\n2. Running in Linux without --login-manager and always hiding the cursor seems to work just fine (i.e. the cursor still shows up).\n\nThis code has been around since 2012 and has been moved around a bit, so I think the best thing to do is to remove the hack and always hide the cursor.",
+      "parentUuid": "51b1a656_905ba48d",
+      "revId": "5a8a1f8644f05ee20d6a0210ba2146ea6e8146dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d089d7d7_1c831527",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "5a8a1f8644f05ee20d6a0210ba2146ea6e8146dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71912850_b5acfd07",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T23:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d089d7d7_1c831527",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "5a8a1f8644f05ee20d6a0210ba2146ea6e8146dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
