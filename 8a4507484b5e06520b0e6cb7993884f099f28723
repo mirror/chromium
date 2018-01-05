@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f367fa_b855bc5c",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2018-01-05T00:11:44Z",
+      "side": 1,
+      "message": "It was not 100% clear to me whether this is only needed for Ash, or whether or not Chrome proper depends on it. This seemed safer than moving this to ash::Shell.",
+      "revId": "8a4507484b5e06520b0e6cb7993884f099f28723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
