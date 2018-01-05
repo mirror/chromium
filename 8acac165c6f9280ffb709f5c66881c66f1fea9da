@@ -178,6 +178,47 @@
     },
     {
       "key": {
+        "uuid": "d3912b2d_5880fbba",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T00:41:28Z",
+      "side": 1,
+      "message": "No, that would add more indirection unnecessarily. See other related comment for improvement suggestion.",
+      "parentUuid": "943ceee9_6555d741",
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2d185e_8a1686a3",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T00:41:28Z",
+      "side": 1,
+      "message": "Should we add certificateStatus too?",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f7043f5_ea101b16",
         "filename": "chrome/browser/resources/print_preview/search/destination_list_item.js",
         "patchSetId": 6
@@ -222,6 +263,30 @@
       "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd4ec5d_c79543f8",
+        "filename": "chrome/browser/resources/print_preview/search/destination_list_item.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T00:41:28Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "52b8e7b4_410f0ad0",
+      "range": {
+        "startLine": 199,
+        "startChar": 64,
+        "endLine": 199,
+        "endChar": 71
+      },
+      "revId": "8acac165c6f9280ffb709f5c66881c66f1fea9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

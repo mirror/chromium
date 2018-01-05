@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55af2f0_a2800b37",
+        "filename": "chrome/browser/resources/print_preview/data/cloud_parsers.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T00:41:28Z",
+      "side": 1,
+      "message": "IIUC, current logic mishandles the NONE cases, since we would be calling\n\n\"NONE\".substring(CERT_TAG.length), which would return the empty string.\n\nCan we extract this logic to a helper method and add assertions? Something like\n\nextractCertificateStatus(tags) {\n  const certTag \u003d tags.find(tag \u003d\u003e tag.startsWith(CERT_TAG));\n  if (!certTag)\n    return  print_preview.DestinationCertificateStatus.NONE;\n\n  const value \u003d certTag.substring(CERT_TAG.length);\n  // assert that |value| is one of NO,UNKNOWN,YES.\n  return value;\n}",
+      "range": {
+        "startLine": 100,
+        "startChar": 25,
+        "endLine": 100,
+        "endChar": 59
+      },
+      "revId": "8c1db9e588e13601a0cceda63b46db9950e6c1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca5056d_52a86ce8",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T00:41:28Z",
+      "side": 1,
+      "message": "Can we explicitly mention that \u0027NO\u0027, \u0027UNKNOWN\u0027 and \u0027YES\u0027 values are coming from the server?",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 73
+      },
+      "revId": "8c1db9e588e13601a0cceda63b46db9950e6c1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
