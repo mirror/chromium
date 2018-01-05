@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee64f19c_e31885e3",
+        "filename": "ash/app_list/controller/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T17:57:01Z",
+      "side": 1,
+      "message": "This probably should be a source_set and be part of component \"ash\" instead.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 9
+      },
+      "revId": "64620af0fa594c9757cf8bf4faf1f8c5cefa9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b95da36_ada4458a",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T17:57:01Z",
+      "side": 1,
+      "message": "nit: available to -\u003e part of",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "64620af0fa594c9757cf8bf4faf1f8c5cefa9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8be483_6a6d2dc8",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T17:57:01Z",
+      "side": 1,
+      "message": "I don\u0027t think we can do this even temporarily. AppListSyncableService is keyed service and we will have one for each profile. Making it own AppListController breaks the singleton assumption.\n\nYou need to find a better home for the controller and the client. The pattern of current code is that ash::Shell owns the controller and browser owns the client in ChromeBrowserMainExtraPartsAsh.",
+      "revId": "64620af0fa594c9757cf8bf4faf1f8c5cefa9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26666dbc_48ca4b3b",
+        "filename": "ui/app_list/views/app_list_main_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2018-01-05T17:57:01Z",
+      "side": 1,
+      "message": "This feels wrong. I think we should make ActivateItem part of AppListViewDelegate interface. The AppListViewDelegate impl then figure out a way to call AppListController.\n\nAnd looks like AppListControllerClient does not implement ActivateItem, wouldn\u0027t this break the current behavior?",
+      "revId": "64620af0fa594c9757cf8bf4faf1f8c5cefa9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
