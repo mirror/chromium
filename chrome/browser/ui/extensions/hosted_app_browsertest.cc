@@ -9,9 +9,11 @@
 #include "base/json/json_reader.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -57,6 +59,7 @@ using extensions::Extension;
 namespace {
 
 constexpr const char kExampleURL[] = "http://example.org/";
+constexpr const char kExampleURL2[] = "http://example.com/";
 constexpr const char kAppDotComManifest[] = R"( { "name": "Hosted App",
   "version": "1",
   "manifest_version": 2,
@@ -466,6 +469,82 @@ IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, AppInfo) {
   // The test closure should have run. But clear the global in case it hasn't.
   EXPECT_FALSE(GetAppInfoDialogCreatedCallbackForTesting());
   GetAppInfoDialogCreatedCallbackForTesting().Reset();
+}
+
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, EngagementHistograms) {
+  base::HistogramTester histograms;
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL(kExampleURL);
+  web_app_info.scope = GURL(kExampleURL);
+  web_app_info.theme_color = base::Optional<SkColor>();
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  EXPECT_EQ(web_app::GetExtensionIdFromApplicationName(app_browser->app_name()),
+            app->id());
+
+  histograms.ExpectTotalCount(extensions::kAppWindowEngagementTypeHistogram, 1);
+  histograms.ExpectBucketCount(
+      extensions::kAppWindowEngagementTypeHistogram,
+      SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 1);
+}
+
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, EngagementHistogramsNoScope) {
+  base::HistogramTester histograms;
+  WebApplicationInfo web_app_info;
+  // App with no scope.
+  web_app_info.app_url = GURL(kExampleURL);
+  web_app_info.theme_color = base::Optional<SkColor>();
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  EXPECT_EQ(web_app::GetExtensionIdFromApplicationName(app_browser->app_name()),
+            app->id());
+
+  histograms.ExpectTotalCount(extensions::kAppWindowEngagementTypeHistogram, 0);
+}
+
+IN_PROC_BROWSER_TEST_P(HostedAppPWAOnlyTest, EngagementHistogramsTwoApps) {
+  base::HistogramTester histograms;
+  const extensions::Extension *app1, *app2;
+
+  // Install two apps.
+  {
+    WebApplicationInfo web_app_info;
+    web_app_info.app_url = GURL(kExampleURL);
+    web_app_info.scope = GURL(kExampleURL);
+    web_app_info.theme_color = base::Optional<SkColor>();
+    app1 = InstallBookmarkApp(web_app_info);
+  }
+  {
+    WebApplicationInfo web_app_info;
+    web_app_info.app_url = GURL(kExampleURL2);
+    web_app_info.scope = GURL(kExampleURL2);
+    web_app_info.theme_color = base::Optional<SkColor>();
+    app2 = InstallBookmarkApp(web_app_info);
+  }
+
+  // Launch them three times. This ensures that each launch only logs once.
+  // (Since all apps receive the notification on launch, there is a danger that
+  // we might log too many times.)
+  Browser* app_browser1 = LaunchAppBrowser(app1);
+  Browser* app_browser2 = LaunchAppBrowser(app1);
+  Browser* app_browser3 = LaunchAppBrowser(app2);
+
+  EXPECT_EQ(
+      web_app::GetExtensionIdFromApplicationName(app_browser1->app_name()),
+      app1->id());
+  EXPECT_EQ(
+      web_app::GetExtensionIdFromApplicationName(app_browser2->app_name()),
+      app1->id());
+  EXPECT_EQ(
+      web_app::GetExtensionIdFromApplicationName(app_browser3->app_name()),
+      app2->id());
+
+  histograms.ExpectTotalCount(extensions::kAppWindowEngagementTypeHistogram, 3);
+  histograms.ExpectBucketCount(
+      extensions::kAppWindowEngagementTypeHistogram,
+      SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 3);
 }
 
 // Common app manifest for HostedAppProcessModelTests.
