@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc9a03b_36e6d33f",
+        "filename": "net/disk_cache/simple/simple_histogram_macros.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T13:14:12Z",
+      "side": 1,
+      "message": "ouch :)\n\nThis is used only to record \"SimpleCache.{App,Http,Media}.FileDescriptorLimit{Soft,Hard}\" (bash expansions). The separation into backend types (App, Http, Media) does not provide us with any additional useful bits, since the number reported depends only on the system configuration, and is exactly the same for all backend types. A cleaner way would be to just record \"SimpleCache.FileDescriptorLimit{Soft,Hard}\" with base::UmaHistogramSparse() in two places in simple_backend_impl.cc (and updating the histograms.xml). Can you please do it in this change?",
+      "range": {
+        "startLine": 18,
+        "startChar": 36,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "3ec7a696efd47939df2935d439eac01b5a4799f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1ead8b_9ff32599",
+        "filename": "tools/metrics/histograms/find_unmapped_histograms.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2018-01-05T13:14:12Z",
+      "side": 1,
+      "message": "Did you mean s/Looks/Look/ ?",
+      "range": {
+        "startLine": 255,
+        "startChar": 22,
+        "endLine": 255,
+        "endChar": 27
+      },
+      "revId": "3ec7a696efd47939df2935d439eac01b5a4799f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
