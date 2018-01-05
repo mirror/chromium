@@ -70,6 +70,7 @@ ResultExpr BaselinePolicyAndroid::EvaluateSyscall(int sysno) const {
 
   switch (sysno) {
     // TODO(rsesek): restrict clone parameters.
+    case __NR_clock_gettime:
     case __NR_clone:
     case __NR_epoll_pwait:
     case __NR_fdatasync:
