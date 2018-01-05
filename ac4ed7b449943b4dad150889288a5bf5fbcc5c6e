@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88669dac_064aeca9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 6001,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T21:40:45Z",
+      "side": 1,
+      "message": "A generic IDS_LEARN_MORE exists for this. Do we need a new one? See\nhttps://cs.chromium.org/chromium/src/components/components_strings.grd?type\u003dcs\u0026q\u003dIDS_LEARN_MORE\u0026sq\u003dpackage:chromium\u0026l\u003d229",
+      "range": {
+        "startLine": 6001,
+        "startChar": 10,
+        "endLine": 6001,
+        "endChar": 20
+      },
+      "revId": "ac4ed7b449943b4dad150889288a5bf5fbcc5c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
