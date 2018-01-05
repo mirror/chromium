@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9889d7c4_f10c83bf",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2018-01-05T01:01:37Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Had a quick chat with miu@ on this. Finally decided to remove the using of BindToCurrentLoop, and instead always force a post task in OnInputTaskComplete(). Will try removing the post task in a separate CL.",
+      "parentUuid": "76cdc5d4_b2f4c7e9",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 33
+      },
+      "revId": "2dec7130fb01d047a6110571b1ef3b84ece79844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1995fb3_9279f9a6",
         "filename": "chrome/browser/media/cast_remoting_sender.cc",
         "patchSetId": 5
