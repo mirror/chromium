@@ -22,6 +22,30 @@
       "revId": "e8136f3a68ffa6b12cff9311534a79cc0e3d45dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9b312d_2a4f6f29",
+        "filename": "media/media_options.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2018-01-05T23:35:32Z",
+      "side": 1,
+      "message": "Changed to an unambiguous structure.",
+      "parentUuid": "f96cac0e_b5f47b2d",
+      "range": {
+        "startLine": 237,
+        "startChar": 13,
+        "endLine": 237,
+        "endChar": 28
+      },
+      "revId": "e8136f3a68ffa6b12cff9311534a79cc0e3d45dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
