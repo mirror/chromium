@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8a27550_d44a66a0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2018-01-05T06:41:26Z",
+      "side": 1,
+      "message": "If we\u0027re going this path, how about changing this method to the following for better readability?\n\nprivate static boolean isDisabledByCommandline() {\n    return cli.hasSwitch(...DISABLE...);\n}\n\nI\u0027m assuming\n1) We\u0027re getting command line opt out instead of opt in.\n2) Setting the switch to true is equally as easy to turn off safe browsing by default, as it is to change DEFAULT_APP_OPT_IN. Then it is easier to control this by one switch instead of two.",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "53fbac5ec729a764c9f67eb2ffb629f50d5f5af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
