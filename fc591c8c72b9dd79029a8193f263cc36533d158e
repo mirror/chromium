@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c2f9952_b77ade05",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2018-01-05T08:58:02Z",
+      "side": 0,
+      "message": "I don\u0027t see the tuple usage?",
+      "parentUuid": "2dc92ffb_73565e9b",
+      "revId": "fc591c8c72b9dd79029a8193f263cc36533d158e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0dc2af9_14cb55f9",
         "filename": "device/u2f/u2f_request.h",
         "patchSetId": 5
