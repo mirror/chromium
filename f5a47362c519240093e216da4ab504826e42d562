@@ -324,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "1ddd7190_7ab835c6",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2018-01-05T00:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7914d70_c1873f01",
+      "revId": "f5a47362c519240093e216da4ab504826e42d562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b4fdf9_0ac98fe5",
         "filename": "mojo/public/tools/bindings/pylib/mojom/parse/conditional_features.py",
         "patchSetId": 6
