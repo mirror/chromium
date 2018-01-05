@@ -46,6 +46,30 @@
       "revId": "3c56846be561afeadd571369600e6931a726b4cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e5a313_55a087f0",
+        "filename": "chrome/common/chrome_paths.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2018-01-05T20:19:53Z",
+      "side": 1,
+      "message": "Does that mean we\u0027re duplicating the files in the two directories? Would it be better to have a single file with a list of the extensions that are allowed for child users?",
+      "parentUuid": "313c9922_a21caf69",
+      "range": {
+        "startLine": 573,
+        "startChar": 6,
+        "endLine": 575,
+        "endChar": 57
+      },
+      "revId": "3c56846be561afeadd571369600e6931a726b4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
