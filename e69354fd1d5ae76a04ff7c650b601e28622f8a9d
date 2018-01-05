@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f695018d_74b8bce6",
+        "filename": ".gitignore",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T20:37:06Z",
+      "side": 1,
+      "message": "I don\u0027t think it will, actually, since if we add more files they\u0027ll show up in `git status` and people will complain pretty quickly. I think even some automatic checks will complain.",
+      "parentUuid": "d7a61578_64e4c7d1",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38cf7d85_c567d1c5",
         "filename": "DEPS",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-05T19:22:31Z",
       "side": 1,
       "message": "To confirm - this CL has been tested to not break anything in the \"no internal repo\" case, right?",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f0bbce_e5e3a2af",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T20:37:06Z",
+      "side": 1,
+      "message": "All of the trybots are the \"no internal repo\" case, so if it does, we\u0027ll know :).",
+      "parentUuid": "38cf7d85_c567d1c5",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2018-01-05T19:22:31Z",
       "side": 1,
       "message": "Does this need 10 threads?  Not sure if it matters.",
+      "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072e7060_50a873b0",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2018-01-05T20:37:06Z",
+      "side": 1,
+      "message": "It doesn\u0027t, and it will just chew up extra cpu. I\u0027d drop the arg.",
+      "parentUuid": "55efb31e_1429451d",
       "revId": "e69354fd1d5ae76a04ff7c650b601e28622f8a9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
