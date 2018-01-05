@@ -51,6 +51,24 @@
       "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a2b6f0_af095592",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2018-01-05T12:36:48Z",
+      "side": 1,
+      "message": "The non-skip-path is already tested in LayerTreeHostTestDeferCommitsInsideBeginMainFrame and LayerTreeHostTestDeferCommitsInsideBeginMainFrameWithCommitAfter.\n\nFor the skip-path, I\u0027m not sure how to best do that as LayerTreeTest - I think we\u0027d need an ExternalBeginFrameSource to inject the BeginFrame with the side_effects_only flag set, which seems tricky. Is that correct?\n\nThe skip-path is however tested (through side effects) in the integration test in compositor_controller_browsertest.cc.",
+      "parentUuid": "237fb620_bb015714",
+      "revId": "05472ba3f2112324987f7cb6a506189a9fbdf3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
