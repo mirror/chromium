@@ -18,6 +18,7 @@ static_library("browser") {
 
   public_deps = [
     ":risk_proto",
+    "//components/autofill/content/common",
     "//components/autofill/content/common:mojo_interfaces",
     "//components/autofill/core/browser",
     "//components/autofill/core/common",
