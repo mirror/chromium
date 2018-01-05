@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d800de57_fd40921a",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T23:53:04Z",
+      "side": 1,
+      "message": "Can we add A11Y somewhere in the name of this string, to indicate that it is only used for screen reader users, similar to IDS_MD_EXTENSIONS_EXTENSION_A11Y_ASSOCIATION?",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d52a3e45_ae7cbb70",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 5
@@ -71,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "7f72f1fe_9ec840dd",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T23:53:04Z",
+      "side": 1,
+      "message": "Is this necessary? Don\u0027t see it being used in other similar cases, for example see https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?type\u003dcs\u0026q\u003d%22id%3D%5C%22%5B%5B%22+lang:html\u0026sq\u003dpackage:chromium\u0026l\u003d80.",
+      "range": {
+        "startLine": 201,
+        "startChar": 27,
+        "endLine": 201,
+        "endChar": 28
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0d66b4_8c142a95",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 5
@@ -87,6 +133,52 @@
         "startChar": 0,
         "endLine": 212,
         "endChar": 69
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce36731f_3f7ff171",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T23:53:04Z",
+      "side": 1,
+      "message": "This method does not access |this|, nor is it referred to by the HTML. Can we make it a helper function similar to getRelativeUrl() earlier in this file?",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b510aaa_9a781ad9",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2018-01-05T23:53:04Z",
+      "side": 1,
+      "message": "Does this differentiation add much value, given that we already indicate what type of error this is with computeErrorTypeLabel_? Could we simply reuse the same \"Clear\" string for all 3 cases?",
+      "range": {
+        "startLine": 183,
+        "startChar": 17,
+        "endLine": 185,
+        "endChar": 46
       },
       "revId": "a05ea697ddb746176c22bf0a58f889841ad8c588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
