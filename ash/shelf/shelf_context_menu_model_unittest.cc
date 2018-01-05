@@ -35,6 +35,9 @@ class ShelfContextMenuModelTest : public AshTestBase {
     session->AddUserSession("user1@test.com");
     session->SetSessionState(session_manager::SessionState::ACTIVE);
     session->SwitchActiveUser(AccountId::FromUserEmail("user1@test.com"));
+    Shell::Get()
+        ->wallpaper_controller()
+        ->set_allow_wallpaper_picker_for_testing(true);
   }
 
  private:
