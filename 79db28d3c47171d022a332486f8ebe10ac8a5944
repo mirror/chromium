@@ -16,6 +16,24 @@
       "revId": "79db28d3c47171d022a332486f8ebe10ac8a5944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730309c2_522a4951",
+        "filename": "chrome/browser/vr/model/model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2018-01-05T22:11:27Z",
+      "side": 1,
+      "message": "talked offline. use opaque and translucent to avoid confusion to mode such as kModeVoiceSearch. Also, I added a IsOpaqueUiMode function with a switch statement instead of using a std::set. This way we could make sure that we don\u0027t forget about update the function after we add new translucent ui mode. I think it is slightly better. WDYT?",
+      "parentUuid": "37b227a6_58b5cd89",
+      "revId": "79db28d3c47171d022a332486f8ebe10ac8a5944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
