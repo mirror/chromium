@@ -10,6 +10,7 @@
 #include <set>
 #include <vector>
 
+#include "base/barrier_closure.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -169,18 +170,21 @@ void OnLocalStorageUsageInfo(
     const std::vector<LocalStorageUsageInfo>& infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  base::RepeatingClosure barrier = base::BarrierClosure(infos.size(), callback);
   for (size_t i = 0; i < infos.size(); ++i) {
     if (!origin_matcher.is_null() &&
         !origin_matcher.Run(infos[i].origin, special_storage_policy.get())) {
+      barrier.Run();
       continue;
     }
 
     if (infos[i].last_modified >= delete_begin &&
         infos[i].last_modified <= delete_end) {
-      dom_storage_context->DeleteLocalStorage(infos[i].origin);
+      dom_storage_context->DeleteLocalStorage(infos[i].origin, barrier);
+    } else {
+      barrier.Run();
     }
   }
-  callback.Run();
 }
 
 void OnSessionStorageUsageInfo(
@@ -216,10 +220,12 @@ void ClearLocalStorageOnUIThread(
     bool can_delete = origin_matcher.is_null() ||
                       origin_matcher.Run(storage_origin,
                                          special_storage_policy.get());
-    if (can_delete)
-      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin);
-
-    callback.Run();
+    if (can_delete) {
+      dom_storage_context->DeleteLocalStorageForPhysicalOrigin(storage_origin,
+                                                               callback);
+    } else {
+      callback.Run();
+    }
     return;
   }
 
