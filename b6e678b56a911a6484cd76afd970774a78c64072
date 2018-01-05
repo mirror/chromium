@@ -16,6 +16,24 @@
       "revId": "b6e678b56a911a6484cd76afd970774a78c64072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21b2a0d_09fdf9ab",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2018-01-05T17:41:18Z",
+      "side": 1,
+      "message": "kNullFilter sgtm. Done.",
+      "parentUuid": "389fd3a8_2a391dcf",
+      "revId": "b6e678b56a911a6484cd76afd970774a78c64072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
