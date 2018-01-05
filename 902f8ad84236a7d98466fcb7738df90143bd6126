@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0239173f_57d08c53",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "const GURL\u0026 file_url",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5fff87_3c3218bc",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "Nit: remove this semicolon so clang-format won\u0027t be confused.",
+      "range": {
+        "startLine": 217,
+        "startChar": 53,
+        "endLine": 217,
+        "endChar": 54
+      },
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904181cb_5ea6a316",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "Nit: it\u0027s OK to omit this line: timers don\u0027t fire once deleted.",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fb01bd_ee23a8b5",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9332e8b4_ba6ff2a6",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "This isn\u0027t actually needed. I would suggest one of two things:\n\n1) Just call delete this, get rid of |can_delete_now|, and make this class final. The class is fully constructed once in the body of the constructor, so calling delete this is perfectly safe, as long as class members aren\u0027t dereferenced after that point. Marking it final guarantees it won\u0027t be inherited.\n\n2) Create a factory function to call the setup outside the constructor.\n\nI personally prefer (1) but I recognize that might be slightly controversial \u003d)",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61a65d7_0ede8217",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "DLOG, unless we expect this to be actionable by users.",
+      "revId": "902f8ad84236a7d98466fcb7738df90143bd6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

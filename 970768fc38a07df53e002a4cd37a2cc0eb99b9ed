@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "aea87ca3_b6ae037f",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2018-01-05T11:42:42Z",
+      "side": 1,
+      "message": "The superfluous semicolon is confusing clang-format here: remove it, and the formatting will be correct.\n\n(clang-format gets confused and thinks this is uniform initialization syntax with the semicolon)",
+      "parentUuid": "c5b11780_610895e9",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8cc68d_584aa62a",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
