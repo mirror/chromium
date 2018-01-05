@@ -38,11 +38,22 @@ const std::set<UiElementName> kFloorCeilingBackgroundElements = {
     kBackgroundFront, kBackgroundLeft,   kBackgroundBack, kBackgroundRight,
     kBackgroundTop,   kBackgroundBottom, kCeiling,        kFloor};
 const std::set<UiElementName> kElementsVisibleInBrowsing = {
-    kBackgroundFront,   kBackgroundLeft, kBackgroundBack,
-    kBackgroundRight,   kBackgroundTop,  kBackgroundBottom,
-    kCeiling,           kFloor,          kContentQuad,
-    kBackplane,         kUrlBar,         kUnderDevelopmentNotice,
-    kController,        kReticle,        kLaser,
+    kBackgroundFront,
+    kBackgroundLeft,
+    kBackgroundBack,
+    kBackgroundRight,
+    kBackgroundTop,
+    kBackgroundBottom,
+    kCeiling,
+    kFloor,
+    kContentQuad,
+    kContentQuadShadow,
+    kBackplane,
+    kUrlBar,
+    kUnderDevelopmentNotice,
+    kController,
+    kReticle,
+    kLaser,
     kVoiceSearchButton,
 };
 const std::set<UiElementName> kElementsVisibleWithExitPrompt = {
@@ -425,6 +436,7 @@ TEST_F(UiTest, AppButtonClickForAutopresentation) {
 TEST_F(UiTest, UiUpdatesForFullscreenChanges) {
   auto visible_in_fullscreen = kFloorCeilingBackgroundElements;
   visible_in_fullscreen.insert(kContentQuad);
+  visible_in_fullscreen.insert(kContentQuadShadow);
   visible_in_fullscreen.insert(kBackplane);
   visible_in_fullscreen.insert(kCloseButton);
   visible_in_fullscreen.insert(kExclusiveScreenToast);
